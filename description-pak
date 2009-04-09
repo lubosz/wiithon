@@ -1,0 +1,12 @@
+- Detección automatica de particion WBFS (facil y simple).
+- Es para Linux.
+- He traducido y modificado el WBFS original.
+- Lo distribuyo en un simple paquete .deb. Instalarlo es doble clic.
+- Esta orientado a la minima intervención del usuario, facilita la automatización de tareas
+- Más fácil que cualquier GUI de windows a día de hoy 6/4/2009 (no conozco todos, ni he probado todos)
+- Script de Nautilus: Los archivos con extensión ISO tienen una nueva función : "Copiar al HD Wii"
+- AÑADE UN ISO EN 2 CLICKS : 1. drecho sobre el iso  2. izquierdo sobre "Copiar al HD Wii"
+- Gracias a lo anterior PODEMOS PASAR VARIAS ISOS A LA VEZ
+- Listar y borrar juegos
+- Añadir y extraer ISOs
+- Posibilidad de RENOMBRAR los juegos que estan en la partición WBFS

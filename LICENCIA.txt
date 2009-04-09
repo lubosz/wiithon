@@ -1,0 +1,24 @@
+Creative Commons License Deed
+Reconocimiento-No comercial-Compartir bajo la misma licencia 3.0 Unported
+Usted es libre de:
+
+    * copiar, distribuir y comunicar públicamente la obra
+    * hacer obras derivadas
+
+Bajo las condiciones siguientes:
+
+    * Reconocimiento. Debe reconocer los créditos de la obra de la manera especificada por el autor o el licenciador (pero no de una manera que sugiera que tiene su apoyo o apoyan el uso que hace de su obra).
+
+      Attribute this work:
+      Information
+      What does “Attribute this work” mean?
+      The page you came from contained embedded licensing metadata, including how the creator wishes to be attributed for re-use. You can use the HTML here to cite the work. Doing so will also include metadata on your page so that others can find the original work as well.
+
+    * No comercial. No puede utilizar esta obra para fines comerciales.
+    * Compartir bajo la misma licencia. Si altera o transforma esta obra, o genera una obra derivada, sólo puede distribuir la obra generada bajo una licencia idéntica a ésta.
+    * Al reutilizar o distribuir la obra, tiene que dejar bien claro los términos de la licencia de esta obra.
+    * Alguna de estas condiciones puede no aplicarse si se obtiene el permiso del titular de los derechos de autor
+    * Nada en esta licencia menoscaba o restringe los derechos morales del autor.
+
+Esto es un resumen fácilmente legible del texto legal (la licencia completa).
+http://creativecommons.org/licenses/by-nc-sa/3.0/
