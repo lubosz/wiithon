@@ -5,13 +5,10 @@ do
 	RES=`udevinfo -a -p $(udevinfo -q path -n $i) | grep 'SUBSYSTEMS=="usb"' | wc -l 2> /dev/null`
 	if [ $RES -gt 0 ]; then
 		MAGICO=`sudo head --bytes=4 $i`
-		if [ $MAGICO = "WBFS" ]; then
-			echo $i
+		if [ $MAGICO == "WBFS" ]; then
+			echo $i;
 		fi
 	fi
 done
 
 #udevinfo -a -p $(udevinfo -q path -n /dev/sdb1) | egrep 'ATTRS{product}|ATTRS{manufacturer}' | awk -F== '{print $2}' | xargs
-#udevinfo -a -p $(udevinfo -q path -n /dev/sdb1) | grep 'ATTRS{manufacturer}|ATTRS{product}'
-#ATTRS{manufacturer}=="SanDisk"
-#ATTRS{product}=="Cruzer Micro"
