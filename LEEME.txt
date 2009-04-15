@@ -2,14 +2,37 @@
 + Caracteristicas:
 ===================================================================================
 
+Versión 0.96
+miércoles, 15 de abril de 2009
+--------------------------------------------------------------------------------------------------------
+NUEVA FUNCIONALIDAD
+- Descarga de caratulas facilmente y automaticamente
+- Cuando detecta más de una partición WBFS ahora aparece al lado el nombre del disco duro
+- A partir de esta versión si un parametro no se le pasa el engorroso IDGAME, se pregunta el ID del juego (autonumeración hecha por wiithon)
+- En Nautilus ahora hay 5 acciones, 5 de ellas siempre disponibles (listar,renombrar,extraer,borrar,descargar caratulas) y 1 (añadir ISO) solo cuando estamos sobre una imagen ISO.
+- Al final he quitado que renombre al nombre del ISO cuando añades un ISO, el juego se metera con el nombre que propone el ISO y después se puede renombrar muy fácil desde el script de nautilus
+
+BUGS CORREGIDOS
+- Corregido el bug de wbfs del borrado. Gracias Pedja
+- Ahora instala en KDE sin problemas
+- Mejorada autodetección de particiones. Detectaba como una partición el error del sudo si introducías mal la contraseña.
+- Corregido en algunos puntos donde ponía WDFS en lugar de WBFS
+- Existía un problema al añadir una ISO si en la ruta hay alguno de esto 2 caracteres : "[" o "]"
+
+CAMBIOS INTERNOS
+- Muchas variables globales convertidas en locales
+- Modificado el WBFS para que muestro los resultados en CSV y crear un interfaz entre withon y la librería WBFS modificada
+
+Versión Inicial 0.95
+lunes, 4 de abril de 2009
+--------------------------------------------------------------------------------------------------------
 - Detección automatica de particion WBFS (facil y simple).
 - Es para Linux.
 - He traducido y modificado el WBFS original.
-- Lo distribuyo en un simple paquete .deb. Instalarlo es doble clic.
 - Esta orientado a la minima intervención del usuario, facilita la automatización de tareas
 - Más fácil que cualquier GUI de windows a día de hoy 6/4/2009 (no conozco todos, ni he probado todos)
 - Script de Nautilus: Permite selecciones multiples y trabajo en paralelo.
-- AÑADE UN ISO EN 2 CLICKS : 1. derecho sobre el iso 2. izquierdo sobre “Añadir ISO a Wii”
+- AÑADE UN ISO EN 2 CLICKS : 1. derecho sobre el iso 2. izquierdo sobre "Añadir ISO a Wii"
 - Gracias a lo anterior PODEMOS PASAR VARIAS ISOS A LA VEZ
 - Listar y borrar juegos
 - Añadir y extraer ISOs
@@ -20,26 +43,25 @@
 + Instalación
 ===================================================================================
 
-1º
-	Si tienes el .tar.gz
-		- sudo apt-get install libssl-dev
-		- make
-		- sudo make install
+1º Instalar : sudo make install
 
-	Si tienes el -deb:
-		- Por debi o sudo dpkg - i wiithon-wbfs_0.95-1_i386.deb
+2º Dependencias : Instalar estos paquetes de los repositorios de ubuntu : sudo apt-get install nautilus-actions imagemagick wget rar
 
-2º Instalar 2 paquetes de los repos de ubuntu : sudo apt-get install nautilus-actions rar
+3º 	Instalar scripts de nautilus : Nos vamos a Sistema -> Preferencias -> Configuración de acciones de Nautilus.
+	Y le damos a Importar / Exportar 6 archivos. (Tenemos que ir de uno en uno).
+	El makefile lo instala y lo desinstala pero tengo problemas para registrarlo así lo mejor es hacerlo a mano, hasta que vea una mejor solución.
+	Importar estos 6 ficheros:
 
-3º Nos vamos a Sistema -> Preferencias -> Configuración de acciones de Nautilus. Y le damos a Importar / Exportar 3 archivos. (Tenemos que ir de uno en uno). El paquete lo instala pero tengo problemas para registrarlo así lo mejor es hacerlo a mano, hasta que vea una mejor solución. Importar estos 3 ficheros:
+	1. /usr/share/gconf/schemas/wiithon1.schemas
+	2. /usr/share/gconf/schemas/wiithon2.schemas
+	3. /usr/share/gconf/schemas/wiithon3.schemas
+	4. /usr/share/gconf/schemas/wiithon4.schemas
+	5. /usr/share/gconf/schemas/wiithon5.schemas
+	6. /usr/share/gconf/schemas/wiithon6.schemas
 
-	1. rm /usr/share/gconf/schemas/wiithon1.schemas
-	2. rm /usr/share/gconf/schemas/wiithon2.schemas
-	3. rm /usr/share/gconf/schemas/wiithon3.schemas
+	Si os fijais cada fichero es una de las 6 opciones del script de nautilus.
 
-	Si os fijais cada fichero es una de las 3 opciones del script de nautilus.
-
-4º Seguramente tengais que reiniciar o hacer killall nautilus para que os salga lo de la siguiente imagen:
+4º Seguramente tengais que reiniciar o hacer *killall nautilus*
 
 ===================================================================================
 + Documentación
@@ -47,40 +69,66 @@
 
 Podeis utilizar el GUI de nautilus que es muy comodo y rápido, pero lo verdaderamente potente es el propio programa hecho en python : wiithon (proponer otros nombres, si no triunfa lo cambiaré xD)
 
-Os imprimo la salida de : wiithon ayuda
+Os imprimo la salida de : *wiithon ayuda*
 
-Añadir ISO mediante una lista explicita de las ISOS :
-wiithon "/usr/bin/wii/mario.iso" "iso2 "iso3" "isoN"
+Listar juegos. El programa por defecto, sin parametros, hace un listado de los juegos : 
+		wiithon
 
-Añadir ISO con exp. reg. La expresión solo afecta al directorio actual, actualmente no es recursivo :
-wiithon *.iso
+Añadir ISO mediante una lista explicita de las ISOS : 
+		wiithon "./wii/mario.iso" "iso2" "iso3" "isoN"
 
-Buscar y Añadir ISO’s recursivamente. Busca todos las imagenes isos RECURSIVAMENTE, incluso tambien busca dentro de RAR, a falta de implementar zip), tal vez necesites sudo apt-get install rar.
-wiithon buscar
+Añadir ISO con exp. reg. La expresión solo afecta al directorio actual, actualmente no es recursivo : 
+		wiithon *.iso
 
-Listar juegos. El programa por defecto, sin parametros, hace un listado de los juegos :
-wiithon
+Buscar y Añadir ISO's recursivamente. Busca todos las imagenes isos RECURSIVAMENTE, incluso tambien busca dentro de RAR, a falta de implementar zip), tal vez necesites sudo apt-get install rar.
+		wiithon buscar
 
-Borrar juegos. Podemos borrar con el IDGAME.:
-wiithon borrar IDJUEGO
+Borrar juegos. Especificando el juego mediante un menú.: 
+		wiithon borrar
 
-Borrar juegos. Podemos borrar con el IDGAME obtenido a partir de un ISO local. El archivo ISO local NO es borrado :
-wiithon borrar "/usr/bin/wii/mario.iso"
+Borrar juegos. Podemos borrar con el IDGAME.: 
+		wiithon borrar IDJUEGO
 
-Renombrar juegos, puedes cambiar el nombre de los juegos ya metidos en HD, útil para que nos enteremos cuando estemos con el USB Loader :
-wiithon renombrar IDGAME "Mario Kart Wii"
+Borrar juegos. Podemos borrar con el IDGAME obtenido a partir de un ISO local. El archivo ISO local NO es borrado : 
+		wiithon borrar "./wii/mario.iso"
 
-Extraer juegos a un archivo ISO. OJO! : El archivo ISO de salida pertenecerá a root :
-wiithon extraer IDJUEGO
+Renombrar juegos. Especificando el juego mediante un menú.: 
+		wiithon renombrar
 
-El programa tiene mas cosillas como alias:
-renombrar = rename
+Renombrar juegos, puedes cambiar el nombre de los juegos ya metidos en HD, útil para que nos enteremos cuando estemos con el USB Loader : 
+		wiithon renombrar IDGAME "Mario Kart Wii"
+
+Extraer juegos a un archivo ISO. El juego es especificado mediante un menú.
+		wiithon extraer
+
+Extraer juegos a un archivo ISO. OJO! : El archivo ISO de salida pertenecerá a root : 
+		wiithon extraer IDJUEGO
+
+Descargar todas las caratulas automaticamente a 160x225. Ojo puede que el servidor te banee, si te ocurre intentalo 5 minutos más tarde: 
+		wiithon caratulas
+
+Descargar la caratulas de un juego especificado por su IDGAME, la imagen es bajada a 160x225. El comando es un singular, es "caratula" ya que "caratulas" descarga todo: 
+		wiithon caratula IDGAME
+
+Descargar la caratulas de un juego especificado por menú, la imagen es bajada a 160x225. El comando es un singular, es "caratula" ya que "caratulas" descarga todo: 
+		wiithon caratula
+
+
+El programa tiene mas cosillas como alias en algunos palabras reservadas:
+renombrar = rename = r
 borrar = rm
 extraer = x
 ayuda = -h = --help
 buscar = meter = metertodo = buscartodo
+caratulas = covers
+caratula = cover
+listar = ls
 
 Tambien tiene un parametro oculto sin documentar, el parametro -p:
 Obliga a una pausa al final de la ejecución. Este es usado por los comandos lanzados desde nautilus, si no lo pusiera las ventanas se cerrarian ya que mayoritariamente no requieren intervención del usuario. Se requiere interactividad con el usuario en 2 casos, para aceptar el acuerdo de que no me hago responsable de daños y tal (solo sale la primera vez) y si el programa detecta más de una 1 partición WBFS, nos pregunta con cual trabajar con un menú.
 
 La licencia es creative commons con reconocimiento, podeis modificar el código.
+
+Versión actual : 0.96
+:: Ultima versión en mi blog "Invasion Tux"
+:: http://blogricardo.wordpress.com/2009/04/07/wiithon-wbfs-gui-para-wii

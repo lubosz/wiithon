@@ -2,10 +2,10 @@
 # vim: set fileencoding=utf8 :
 #
 # :: Invasion Tux
-# :: Ultima modificacion : martes, 07 de abril de 2009
+# :: Ultima modificacion : miércoles, 15 de abril de 2009
 # :: Script realizado por makiolo (makiolo@gmail.com)  (Licencia ver LICENCIA.txt)
 # :: Ultima version : http://blogricardo.wordpress.com/2009/04/07/wiithon-wbfs-gui-para-wii/
-# :: Dependencias : nautilus-actions , rar
+# :: Dependencias : sudo apt-get install nautilus-actions imagemagick wget rar
 #
 
 import sys , os , subprocess , time , glob , fnmatch
@@ -13,7 +13,7 @@ import sys , os , subprocess , time , glob , fnmatch
 # variables , cambialo si sabes lo que haces
 RUTA = os.path.dirname(sys.argv[0]) # deben estar junto al script las dependencias
 WBFS_APP = RUTA+"/"+"wbfs"
-DETECTOR_WDFS = RUTA+"/"+"wiithon_autodetectar"
+DETECTOR_WBFS = RUTA+"/"+"wiithon_autodetectar"
 HOME = os.path.expanduser("~")
 ACUERDO = HOME+"/.wiithon_acuerdo"
 
@@ -22,7 +22,6 @@ DEVICE = ""
 ISO = ""
 COMANDO = ""
 ID_JUEGO = ""
-PARTICION_AUTOMATICA = False
 listaISOS = []
 correctos = []
 erroneos = []
@@ -48,40 +47,110 @@ def getMagicISO(imagenISO):
 	f.close()
 	return magic
 
-# Precondicion : DEVICE existe
-def listarISOs():
-	global WBFS_APP , DEVICE , RUTA
-	salida = os.system("sudo "+WBFS_APP+" -p "+DEVICE+" ls")
-	return salida == 0
+def getListaJuegos(DEVICE):
+	global WBFS_APP
+	subProceso = getPopen("sudo "+WBFS_APP+" -p "+DEVICE+" ls")
+	#Espera que acabe
+	subProceso.wait()
+	salida = []
+	for linea in subProceso.stdout:
+		cachos = linea.split(";")
+		if(len(cachos)==3):
+			#Elimina el salto de linea del ultimo cacho
+			cachos[2] = cachos[2][:-1].split("\n")[0]
+			#Añade el juego a la lista
+			salida.append( [ cachos[0] , cachos[1] , cachos[2] ] )
+	return salida
+
+def get_IDJUEGO_de_Lista(DEVICE):
+	listaIDGAME = getListaJuegos(DEVICE)
+	numJuegos = len(listaIDGAME)
+	if(numJuegos > 0):
+		print "--------------------------------------------------------------------------------"
+		print "%3s\t%6s\t%-40s\t%7s\t%6s" % ("NUM","IDGAME","TITULO","TAMAÑO" , "¿Car.?")
+		print "--------------------------------------------------------------------------------"
+		i = 1
+		for IDGAME in listaIDGAME:
+			ocupado = float(IDGAME[2])
+			if (existeCaratula(IDGAME[0])):
+				caratula = "SI"
+			else:
+				caratula = "NO"
+			print "%3s\t%s\t%-40s\t%.2f GB\t%6s" % ( i , IDGAME[0] , IDGAME[1] , ocupado , caratula)
+			i = i + 1
+		print "--------------------------------------------------------------------------------"
+
+		try:
+			numJuego = int( raw_input("¿Indique el NUM del juego? : ") )
+			# 1 <= numJuego <= numJuegos
+			if ((1 <= numJuego) and (numJuego <= numJuegos)):
+				try:
+					return listaIDGAME[numJuego-1][0]
+				except IndexError:
+					print "Numero fuera de rango"
+		except ValueError:
+			print "El numero dado es incorrecto"
+	return "DESCONOCIDO"
+
 
 # Precondicion : DEVICE existe
-def mostrarEspacioLibre():
-	global WBFS_APP , DEVICE , RUTA
-	salida = os.system("sudo "+WBFS_APP+" -p "+DEVICE+" df")
-	return salida == 0
+def listarISOs(DEVICE):
+	listaIDGAME = getListaJuegos(DEVICE)
+	numJuegos = len(listaIDGAME)
+	if(numJuegos > 0):
+		print "--------------------------------------------------------------------------------"
+		print "%6s\t%-55s\t%7s\t%6s" % ("IDGAME","TITULO","TAMAÑO" , "¿Car.?")
+		print "--------------------------------------------------------------------------------"
+		for IDGAME in listaIDGAME:
+			ocupado = float(IDGAME[2])
+			if (existeCaratula(IDGAME[0])):
+				caratula = "SI"
+			else:
+				caratula = "NO"
+			print "%s\t%-55s\t%.2f GB\t%6s" % ( IDGAME[0] , IDGAME[1] , ocupado , caratula)
+		print "--------------------------------------------------------------------------------"
+		print "\t\t\t\t\t\t\t\t%d juegos de WII" % numJuegos
+	return numJuegos
+
+# Precondicion : DEVICE existe
+def mostrarEspacioLibre(DEVICE):
+	global WBFS_APP
+	subProceso = getPopen("sudo "+WBFS_APP+" -p "+DEVICE+" df")
+	subProceso.wait()
+	salida = ""
+	for linea in subProceso.stdout:
+		salida = salida + linea
+	cachos = salida.split(";")
+	if(len(cachos) == 3):
+		print "\t\t\t\t\t\t\t\tUsado : %.2f GB" % float(cachos[0])
+		print "\t\t\t\t\t\t\t\tLibre : %.2f GB" % float(cachos[1])
+		print "\t\t\t\t\t\t\t\tTotal : %.2f GB" % float(cachos[2])
+		return True
+	else:
+		return False
 
 # Precondicion : DEVICE , ISO existen
-def anadirISO():
-	global WBFS_APP , DEVICE , ISO , RUTA
+def anadirISO(DEVICE , ISO):
+	global WBFS_APP
 	salida = os.system("sudo "+WBFS_APP+" -p "+DEVICE+" add \""+ISO+"\"")
 	return salida == 0
 
 # Precondicion : DEVICE , ISO existen
-def renombrarISO(device , idgame , nuevoNombre):
+def renombrarISO(DEVICE , IDGAME , NUEVO_NOMBRE):
 	global WBFS_APP
-	salida = os.system("sudo "+WBFS_APP+" -p "+device+" rename "+idgame+" \""+nuevoNombre+"\"")
+	salida = os.system("sudo "+WBFS_APP+" -p "+DEVICE+" rename "+IDGAME+" \""+NUEVO_NOMBRE+"\"")
 	return salida == 0
 
-def borrarJuego():
-	global WBFS_APP , DEVICE , ID_JUEGO , RUTA
+def borrarJuego(DEVICE , ID_JUEGO):
+	global WBFS_APP
 	try:
 		salida = os.system("sudo "+WBFS_APP+" -p "+DEVICE+" rm "+ID_JUEGO)
 		return salida == 0
 	except TypeError:
 		return False
 
-def extraerJuego():
-	global WBFS_APP , DEVICE , ID_JUEGO , RUTA
+def extraerJuego(DEVICE , ID_JUEGO):
+	global WBFS_APP
 	salida = os.system("sudo "+WBFS_APP+" -p "+DEVICE+" extract "+ID_JUEGO)
 	return salida == 0
 	
@@ -139,27 +208,56 @@ def rec_glob(path, mask):
 		#print "ERROR en rec_glob()"
 		pass
 	return l
-
+	
 def informarAcuerdo():
+	global SALIDA_FORZADA
 	print "No me hago responsable de la aplicacion ni de la perdida de datos. No obstante, la particion NO va ha ser formateada, esta aplicacion añade , borra y lista juegos explicitamente mediante la ayuda de " + os.path.basename(WBFS_APP) + ". Esta información no volverá a aparecer si acepta el acuerdo."
 	haElegido = False
 	while( not haElegido ):
 		respuesta = raw_input("Esta de acuerdo (S/N)? ")
-		if( respuesta.lower() == "n" or respuesta.lower() == "no"):
+		if  ( respuesta.lower() == "n" or respuesta.lower() == "no" ):
 			print "No puedes usar esta aplicacion si no estas deacuerdo"
 			SALIDA_FORZADA = True
-		elif( respuesta.lower() == "s" or respuesta.lower() == "si"):
+		elif( respuesta.lower() == "s" or respuesta.lower() == "si" ):
 			fAcuerdo = open(ACUERDO , "w")
 			fAcuerdo.write("Acuerdo aceptado en la fecha " + time.asctime() + "\n")
 			fAcuerdo.close()
 			haElegido = True
 		else:
 			print "Opcion incorrecta"
-	
-def buscarParticionWDFS():
-	global DEVICE , DETECTOR_WDFS , PARTICION_AUTOMATICA
+
+def existeCaratula(IDGAME):
+	return (comprobarExistencia(IDGAME+".png"))
+
+def descargarCaratula(IDGAME):
+	if (existeCaratula(IDGAME)):
+		return True
+	else:
+		salida = os.system("wget --no-cache http://www.theotherzone.com/wii/pal/"+IDGAME+".png")
+		if (salida == 0):
+			salida = os.system("mogrify -resize 160x225 "+IDGAME+".png")
+			return salida == 0
+		else:
+			salida = os.system("wget --no-cache http://www.theotherzone.com/wii/ntsc/"+IDGAME+".png")
+			if (salida == 0):
+				salida = os.system("mogrify -resize 160x225 "+IDGAME+".png")
+				return salida == 0
+			else:
+				return False
+
+def descargarTodasLasCaratula(DEVICE):
+	listaIDGAME = getListaJuegos(DEVICE)
+	ok = True
+	for juego in listaIDGAME:
+		if ( not descargarCaratula(juego[0]) ):
+			ok = False
+	return ok
+
+def buscarParticionWBFS():
+	global DETECTOR_WBFS , SALIDA_FORZADA
+	DEVICE = ""
 	salida = ""
-	subProceso = getPopen(DETECTOR_WDFS)
+	subProceso = getPopen(DETECTOR_WBFS)
 	#Espera que acabe
 	subProceso.wait()
 	for linea in subProceso.stdout:
@@ -169,9 +267,19 @@ def buscarParticionWDFS():
 	listaParticiones = []
 	if (salida <> ""):
 		listaParticiones = salida[:-1].split("\n")
+
+	# Borramos los elementos que no contengan /dev/
+	# los que tengan /dev/ se corta por : y se coge el primer cacho
+	i = 0	
+	while ( i  < len(listaParticiones) ):
+		if(listaParticiones[i].find("/dev/") == -1):
+			del listaParticiones[i]
+		else: # es una particion WBFS
+			listaParticiones[i] = listaParticiones[i].split(":")[0]
+			i = i + 1
+
 	if(len(listaParticiones) <= 0):
-		print "No se ha encontrado ningun dispositivo USB con particion WDFS."
-		
+		print "No se ha encontrado ningun dispositivo USB con particion WBFS."
 	elif(len(listaParticiones) > 1):
 		print "Lista de particiones autodetectadas : "
 		haElegido = False
@@ -182,7 +290,7 @@ def buscarParticionWDFS():
 				i = i + 1
 			iSalir = str(i)
 			print iSalir + " - Salir"	
-			iElegido = raw_input("Elige la particion WDFS con la que va ha trabajar : ")
+			iElegido = raw_input("Elige la particion WBFS con la que va ha trabajar : ")
 			if( iElegido == iSalir ):
 				SALIDA_FORZADA = True
 			else:
@@ -193,9 +301,10 @@ def buscarParticionWDFS():
 					print "Fuera de rango"
 				except ValueError:
 					print "Valor incorrecto"
-	else:
+	else: # len(listaParticiones) == 1)
 		DEVICE = listaParticiones[0]
-		PARTICION_AUTOMATICA = True
+
+	return DEVICE
 
 ############## MAIN ###########################
 
@@ -204,66 +313,97 @@ if( not comprobarExistencia(ACUERDO)):
 	informarAcuerdo()
 
 #Se puede forzar la salida por no encontrar particion
-buscarParticionWDFS()
+DEVICE = buscarParticionWBFS()
 
 if ( not SALIDA_FORZADA ):
-	if(len(sys.argv) == (1 + 0) or sys.argv[1].lower() == "listar" or sys.argv[1].lower() == "ls" or ((len(sys.argv) == (1 + 1)) and (sys.argv[1].lower() == "-p"))):
+
+	numParametros = 0
+	for parametro in sys.argv:
+		if (parametro != "-p" and parametro != sys.argv[0]):
+			numParametros = numParametros + 1
+	
+	if((numParametros == 0) or sys.argv[1].lower() == "listar" or sys.argv[1].lower() == "ls"):
 		if ( comprobarExistencia(DEVICE) ):
 			print "Listando juegos de : " + DEVICE
-			if( not ( listarISOs() and mostrarEspacioLibre() ) ):
-				print "Error listando juegos de " + DEVICE
+			if( not ( listarISOs(DEVICE)>0 and mostrarEspacioLibre(DEVICE) ) ):
+				print "La partición " + DEVICE + " es WBFS pero actualmente NO tiene ningún juego"
 	elif ( sys.argv[1].lower() == "borrar" or sys.argv[1].lower() == "rm"): # rm
-		if(len(sys.argv) >= 1 + 2): # 2 parametros
+		if(numParametros >= 2): # 2 parametros
 			parametro = sys.argv[2]
 			if (getExtension(parametro) == "iso"):
-				ID_JUEGO = getMagicISO(sys.argv[2])
+				IDGAME = getMagicISO(sys.argv[2])
 			else:
-				ID_JUEGO = sys.argv[2]
-			print "Borrar juego con ID : " + ID_JUEGO + " en particion " + DEVICE
-			if( borrarJuego() ):				
-				print "Refrescando lista ..."
-				if( comprobarExistencia(DEVICE) and listarISOs() and mostrarEspacioLibre() ):
-					print "juego " + ID_JUEGO + " borrado correctamente"
-				else:
-					print "Error al refrescar"
-			else:
-				print "ERROR borrando el juego " + ID_JUEGO
+				IDGAME = sys.argv[2]
 		else:
-			print "No ha especificado el IDGAME o el ISO del juego que desea borrar"
-	elif ( sys.argv[1].lower() == "renombrar" or sys.argv[1].lower() == "rename"):
-		if(len(sys.argv) >= 1 + 3): # 3 parametros
+			IDGAME = get_IDJUEGO_de_Lista(DEVICE)
+		print "Borrar juego con ID : " + IDGAME + " en particion " + DEVICE
+		if( borrarJuego(DEVICE , IDGAME) ):				
+			print "Refrescando lista ..."
+			if( comprobarExistencia(DEVICE) and listarISOs(DEVICE)>0 and mostrarEspacioLibre(DEVICE) ):
+				print "juego " + IDGAME + " borrado correctamente"
+			else:
+				print "Error al refrescar"
+		else:
+			print "ERROR borrando el juego " + ID_JUEGO
+			
+	elif ( sys.argv[1].lower() == "caratula" or sys.argv[1].lower() == "cover"):
+		if(numParametros >= 2): # 2 parametros
+			IDGAME = sys.argv[2]
+		else:
+			IDGAME = get_IDJUEGO_de_Lista(DEVICE)
+		if(descargarCaratula(IDGAME)):
+			print "OK, descargado " + IDGAME + ".png"
+		else:
+			print "ERROR, descargando " + IDGAME + ".png"
+	elif ( sys.argv[1].lower() == "caratulas" or sys.argv[1].lower() == "covers"):
+		if(descargarTodasLasCaratula(DEVICE)):
+			print "OK, todas las caratulas se han descagado"
+		else:
+			print "ERROR, descargando alguna caratula"
+	elif ( sys.argv[1].lower() == "renombrar" or sys.argv[1].lower() == "rename" or sys.argv[1].lower() == "r"):
+		if(numParametros >= 3): # 3 parametros
 			IDGAME = sys.argv[2]
 			NUEVO_NOMBRE = sys.argv[3]
-			print "Renombrar juego ID : " + ID_JUEGO + " como " + NUEVO_NOMBRE
-			if ( renombrarISO(DEVICE , IDGAME , NUEVO_NOMBRE) ):
-				print "Refrescando lista ..."
-				if( comprobarExistencia(DEVICE) and listarISOs() and mostrarEspacioLibre() ):
-					print "ISO renombrada correctamente a \""+NUEVO_NOMBRE+"\""
-				else:
-					print "Renombrado OK aunque ocurrio un error al refrescar"
-			else:
-				print "ERROR al renombrar"
 		else:
-			print "Debes especificar el IDGAME y el nuevo nombre entre comillas"
-	elif ( sys.argv[1].lower() == "extraer" or sys.argv[1].lower() == "x"): #x
-		if(len(sys.argv) >= 1 + 2): # 2 parametros
+			IDGAME = get_IDJUEGO_de_Lista(DEVICE)
+			NUEVO_NOMBRE = raw_input("Escriba el nuevo nombre : ")
+		print "Renombrar juego ID : " + IDGAME + " como " + NUEVO_NOMBRE
+		if ( renombrarISO(DEVICE , IDGAME , NUEVO_NOMBRE) ):
+			print "Refrescando lista ..."
+			if( comprobarExistencia(DEVICE) and listarISOs(DEVICE)>0 and mostrarEspacioLibre(DEVICE) ):
+				print "ISO renombrada correctamente a \""+NUEVO_NOMBRE+"\""
+			else:
+				print "Renombrado OK aunque ocurrio un error al refrescar"
+		else:
+			print "ERROR al renombrar"
+	elif ( sys.argv[1].lower() == "extraer" or sys.argv[1].lower() == "x"):
+		if(numParametros >= 2): # 2 parametros
 			ID_JUEGO = sys.argv[2]
-			print "Extraer ISO de juego con ID : " + ID_JUEGO + " en particion " + DEVICE
-			if( extraerJuego() ):				
-				print "Juego " + ID_JUEGO + " extraido OK"
-			else:
-				print "ERROR extrayendo a ISO " + ID_JUEGO
 		else:
-			print "No ha especificado el IDGAME del juego que desea extraer"
+			ID_JUEGO = get_IDJUEGO_de_Lista(DEVICE)
+		print "Extraer ISO de juego con ID : " + ID_JUEGO + " en particion " + DEVICE
+		if( extraerJuego(DEVICE , ID_JUEGO) ):
+			print "Juego " + ID_JUEGO + " extraido OK"
+		else:
+			print "ERROR extrayendo la ISO de "+ID_JUEGO
 	elif ( sys.argv[1].lower() == "ayuda" or sys.argv[1].lower() == "h" or sys.argv[1].lower() == "-h" or sys.argv[1].lower() == "--help" ): #x
+		print "Listar juegos. El programa por defecto, sin parametros, hace un listado de los juegos : \n\t\t" + os.path.basename(sys.argv[0]) + "\n"
 		print "Añadir ISO mediante una lista explicita de las ISOS : \n\t\t" + os.path.basename(sys.argv[0]) + " \""+RUTA+"/wii/mario.iso\" \"iso2\" \"iso3\" \"isoN\"\n"
 		print "Añadir ISO con exp. reg. La expresión solo afecta al directorio actual, actualmente no es recursivo : \n\t\t" + os.path.basename(sys.argv[0]) + " *.iso\n"
 		print "Buscar y Añadir ISO's recursivamente. Busca todos las imagenes isos RECURSIVAMENTE, incluso tambien busca dentro de RAR, a falta de implementar zip), tal vez necesites sudo apt-get install rar.\n\t\t" + os.path.basename(sys.argv[0]) + " buscar\n"
-		print "Listar juegos. El programa por defecto, sin parametros, hace un listado de los juegos : \n\t\t" + os.path.basename(sys.argv[0]) + "\n"
+		print "Borrar juegos. Especificando el juego mediante un menú.: \n\t\t" + os.path.basename(sys.argv[0]) + " borrar\n"
 		print "Borrar juegos. Podemos borrar con el IDGAME.: \n\t\t" + os.path.basename(sys.argv[0]) + " borrar IDJUEGO\n"
 		print "Borrar juegos. Podemos borrar con el IDGAME obtenido a partir de un ISO local. El archivo ISO local NO es borrado : \n\t\t" + os.path.basename(sys.argv[0]) + " borrar \""+RUTA+"/wii/mario.iso\"\n"
+		print "Renombrar juegos. Especificando el juego mediante un menú.: \n\t\t" + os.path.basename(sys.argv[0]) + " renombrar\n"
 		print "Renombrar juegos, puedes cambiar el nombre de los juegos ya metidos en HD, útil para que nos enteremos cuando estemos con el USB Loader : \n\t\t" + os.path.basename(sys.argv[0]) + " renombrar IDGAME \"Mario Kart Wii\"\n"
+		print "Extraer juegos a un archivo ISO. El juego es especificado mediante un menú.\n\t\t" + os.path.basename(sys.argv[0]) + " extraer\n"
 		print "Extraer juegos a un archivo ISO. OJO! : El archivo ISO de salida pertenecerá a root : \n\t\t" + os.path.basename(sys.argv[0]) + " extraer IDJUEGO\n"
+		print "Descargar todas las caratulas automaticamente a 160x225. Ojo puede que el servidor te banee, si te ocurre intentalo 5 minutos más tarde: \n\t\t" + os.path.basename(sys.argv[0]) + " caratulas\n"
+		print "Descargar la caratulas de un juego especificado por su IDGAME, la imagen es bajada a 160x225. El comando es un singular, es \"caratula\" ya que \"caratulas\" descarga todo: \n\t\t" + os.path.basename(sys.argv[0]) + " caratula IDGAME\n"
+		print "Descargar la caratulas de un juego especificado por menú, la imagen es bajada a 160x225. El comando es un singular, es \"caratula\" ya que \"caratulas\" descarga todo: \n\t\t" + os.path.basename(sys.argv[0]) + " caratula\n"
+		print
+		print "Versión actual : 0.96"
+		print "Web : http://blogricardo.wordpress.com/2009/04/07/wiithon-wbfs-gui-para-wii"
 	elif ( sys.argv[1].lower() == "buscar" or sys.argv[1].lower() == "meter" or sys.argv[1].lower() == "-r" or sys.argv[1].lower() == "metertodo" or sys.argv[1].lower() == "buscartodo"):
 		print "Buscando Imagenes ISO dentro de RAR"
 		# Busca todos los rar recursivamente, y descomprime en el directorio actual el ISO
@@ -283,7 +423,11 @@ if ( not SALIDA_FORZADA ):
 		#Los parametros es una lista de ISOS explicita
 		for i in range(1,len(sys.argv)):
 			parametro = sys.argv[i]
-			expresionExpandida = glob.glob(parametro)
+			# hack, si tiene corchetes -> no es expresión regular
+			if(parametro.find("[") != -1 or parametro.find("]")):
+				expresionExpandida = [parametro]
+			else:
+				expresionExpandida = glob.glob(parametro)
 			for archivo in expresionExpandida:
 				if( os.path.isfile(archivo) and getExtension(archivo) == "iso" ):
 					listaISOS.append(archivo)
@@ -297,29 +441,19 @@ if ( not SALIDA_FORZADA ):
 
 	if(numImagenesISO>0):
 		for imagenISO in listaISOS:
-			ISO = imagenISO
 			imagenesISOProcesadas = imagenesISOProcesadas + 1
 			print "===================== "+os.path.basename(imagenISO)+" ("+str(imagenesISOProcesadas)+"/"+str(numImagenesISO)+") ===================="
 			print "{"
 			print "Añadir ISO : " + os.path.basename(imagenISO) + " a la particion " + DEVICE
-			if( comprobarExistencia(DEVICE) and comprobarExistencia(ISO) ):
-				if ( anadirISO() ):
-					idgame = getMagicISO(ISO)
-					nuevoNombre = getNombreFichero( os.path.basename(ISO) )
-					if ( renombrarISO(DEVICE , idgame , nuevoNombre) ):
+			if( comprobarExistencia(DEVICE) and comprobarExistencia(imagenISO) ):
+				if ( anadirISO(DEVICE , imagenISO) ):
 						mensaje = "ISO añadida correctamente"
 						print "OK"
 						print "}"
 						print
 						correctos.append(mensaje)
-					else:
-						mensaje = "ISO añadida, pero no se pudo renombrar"
-						print "ERROR"
-						print "}"
-						print
-						correctos.append(mensaje)
 				else:
-					mensaje = "ERROR añadiendo la ISO : " + ISO + " (comprueba que sea una ISO de WII)"
+					mensaje = "ERROR añadiendo la ISO : " + imagenISO + " (comprueba que sea una ISO de WII)"
 					print "ERROR"
 					print "}"
 					print
@@ -330,8 +464,7 @@ if ( not SALIDA_FORZADA ):
 				print "}"
 				print
 				erroneos.append(mensaje)
-			
-			
+
 		print "================= INFORME DE RESULTADOS ========================="
 		print "{"
 
@@ -356,13 +489,10 @@ if ( not SALIDA_FORZADA ):
 
 		print "}"
 
-print ":: Ultima versión: http://blogricardo.wordpress.com/2009/04/07/wiithon-wbfs-gui-para-wii/"
-
 # Pausa si hay algun parametro con -p
 for i in range(1,len(sys.argv)):
 	parametro = sys.argv[i]
 	if(parametro == "-p"):
 		raw_input("Pulse cualquier tecla para continuar ...\n")
-	
 
 ############################################################################################################################

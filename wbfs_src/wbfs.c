@@ -59,9 +59,9 @@ int wbfs_applet_ls(wbfs_t *p)
         if(count==0)
                 fprintf(stderr,"Sistemas de ficheros seleccionado vacio\n");
         else{
-        		fprintf(stderr, "--------------------------------------------------------------------------------\n");
-        		fprintf(stderr, "IDGAME\t\t                 TITULO                 \t\tTAMAÑO\n");
-        		fprintf(stderr, "--------------------------------------------------------------------------------\n");
+        		//fprintf(stderr, "--------------------------------------------------------------------------------\n");
+        		//fprintf(stderr, "IDGAME\t\t                 TITULO                 \t\tTAMAÑO\n");
+        		//fprintf(stderr, "--------------------------------------------------------------------------------\n");
         	
                 int i;
                 u32 size;
@@ -69,11 +69,12 @@ int wbfs_applet_ls(wbfs_t *p)
                 for (i=0;i<count;i++)
                 {
                         if(!wbfs_get_disc_info(p,i,b,0x100,&size))
-                                fprintf(stderr, "%c%c%c%c%c%c\t\t%42s\t\t%.2fG\n",b[0], b[1], b[2], b[3], b[4], b[5],
-                                        b + 0x20,size*4ULL/(GB));
+                        {
+                        	fprintf(stderr, "%c%c%c%c%c%c;%s;%f\n",b[0], b[1], b[2], b[3], b[4], b[5], b + 0x20,size*4ULL/(GB));
+						}
                 }
-                fprintf(stderr, "--------------------------------------------------------------------------------\n");
-                fprintf(stderr , "\t\t\t\t\t\t\tTienes %d juegos de Wii\n" , count);
+                //fprintf(stderr, "--------------------------------------------------------------------------------\n");
+                //fprintf(stderr , "\t\t\t\t\t\t\tTienes %d juegos de Wii\n" , count);
                 wbfs_iofree(b);
         }   
         return 0;
@@ -82,11 +83,16 @@ int wbfs_applet_ls(wbfs_t *p)
 int wbfs_applet_df(wbfs_t *p)
 {
         u32 count = wbfs_count_usedblocks(p);
+        /*
 		fprintf(stderr , "\t\t\t\t\t\t\t\tUsado: %.2f GB\n" , (float)(p->n_wbfs_sec-count)*p->wbfs_sec_sz/GB );
 		fprintf(stderr , "\t\t\t\t\t\t\t\tLibre: %.2f GB\n" , (float)(count)*p->wbfs_sec_sz/GB );
 		fprintf(stderr , "\t\t\t\t\t\t\t\t----------------\n" );
 		fprintf(stderr , "\t\t\t\t\t\t\t\tTotal: %.2f GB\n" , (float)p->n_wbfs_sec*p->wbfs_sec_sz/GB );
-                
+        */
+		fprintf(stderr , "%f;%f;%f" , 	(float)(p->n_wbfs_sec-count)*p->wbfs_sec_sz/GB ,
+										(float)(count)*p->wbfs_sec_sz/GB ,
+										(float)p->n_wbfs_sec*p->wbfs_sec_sz/GB
+									);
         return p!=0;
 }
 

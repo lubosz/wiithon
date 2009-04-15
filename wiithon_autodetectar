@@ -6,9 +6,8 @@ do
 	if [ $RES -gt 0 ]; then
 		MAGICO=`sudo head --bytes=4 $i`
 		if [ $MAGICO == "WBFS" ]; then
-			echo $i;
+			NOMBRE=`udevinfo -a -p $(udevinfo -q path -n $i) | egrep 'ATTRS{vendor}|ATTRS{model}' | awk -F== '{print $2}' | sed '3,$d' | sed 's/\"//g' | xargs`;
+			echo $i":( "$NOMBRE" )";
 		fi
 	fi
 done
-
-#udevinfo -a -p $(udevinfo -q path -n /dev/sdb1) | egrep 'ATTRS{product}|ATTRS{manufacturer}' | awk -F== '{print $2}' | xargs

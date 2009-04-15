@@ -2,19 +2,19 @@
 <gconfschemafile>
   <schemalist>
     <schema>
-      <key>/schemas/apps/nautilus-actions/configurations/4d07460a-6456-48f9-9d73-edfdbd90df0f/label</key>
-      <applyto>/apps/nautilus-actions/configurations/4d07460a-6456-48f9-9d73-edfdbd90df0f/label</applyto>
+      <key>/schemas/apps/nautilus-actions/configurations/2a03b436-d114-416b-a2dc-dfb790fa0758/label</key>
+      <applyto>/apps/nautilus-actions/configurations/2a03b436-d114-416b-a2dc-dfb790fa0758/label</applyto>
       <owner>nautilus-actions</owner>
       <type>string</type>
       <locale name="C">
-        <default>Añadir/Renombrar ISO a Wii</default>
+        <default>Wii - Añadir esta ISO</default>
         <short>La etiqueta del elemento del menú</short>
         <long>La etiqueta del elemento del menú que aparecerá en el menú emergente de nautilus cuando la selección coincida con los ajustes de condiciones de aparición</long>
       </locale>
     </schema>
     <schema>
-      <key>/schemas/apps/nautilus-actions/configurations/4d07460a-6456-48f9-9d73-edfdbd90df0f/tooltip</key>
-      <applyto>/apps/nautilus-actions/configurations/4d07460a-6456-48f9-9d73-edfdbd90df0f/tooltip</applyto>
+      <key>/schemas/apps/nautilus-actions/configurations/2a03b436-d114-416b-a2dc-dfb790fa0758/tooltip</key>
+      <applyto>/apps/nautilus-actions/configurations/2a03b436-d114-416b-a2dc-dfb790fa0758/tooltip</applyto>
       <owner>nautilus-actions</owner>
       <type>string</type>
       <locale name="C">
@@ -24,19 +24,19 @@
       </locale>
     </schema>
     <schema>
-      <key>/schemas/apps/nautilus-actions/configurations/4d07460a-6456-48f9-9d73-edfdbd90df0f/icon</key>
-      <applyto>/apps/nautilus-actions/configurations/4d07460a-6456-48f9-9d73-edfdbd90df0f/icon</applyto>
+      <key>/schemas/apps/nautilus-actions/configurations/2a03b436-d114-416b-a2dc-dfb790fa0758/icon</key>
+      <applyto>/apps/nautilus-actions/configurations/2a03b436-d114-416b-a2dc-dfb790fa0758/icon</applyto>
       <owner>nautilus-actions</owner>
       <type>string</type>
       <locale name="C">
         <short>El icono del elemento del menú</short>
         <long>El icono del elemento del menú que aparecerá en la barra al lado de la etiqueta en el menú emergente de nautilus cuando la selección coincida con los ajustes de las condiciones de aparición</long>
       </locale>
-      <default>gtk-media-record</default>
+      <default>gtk-add</default>
     </schema>
     <schema>
-      <key>/schemas/apps/nautilus-actions/configurations/4d07460a-6456-48f9-9d73-edfdbd90df0f/path</key>
-      <applyto>/apps/nautilus-actions/configurations/4d07460a-6456-48f9-9d73-edfdbd90df0f/path</applyto>
+      <key>/schemas/apps/nautilus-actions/configurations/2a03b436-d114-416b-a2dc-dfb790fa0758/path</key>
+      <applyto>/apps/nautilus-actions/configurations/2a03b436-d114-416b-a2dc-dfb790fa0758/path</applyto>
       <owner>nautilus-actions</owner>
       <type>string</type>
       <locale name="C">
@@ -46,8 +46,8 @@
       <default>gnome-terminal</default>
     </schema>
     <schema>
-      <key>/schemas/apps/nautilus-actions/configurations/4d07460a-6456-48f9-9d73-edfdbd90df0f/parameters</key>
-      <applyto>/apps/nautilus-actions/configurations/4d07460a-6456-48f9-9d73-edfdbd90df0f/parameters</applyto>
+      <key>/schemas/apps/nautilus-actions/configurations/2a03b436-d114-416b-a2dc-dfb790fa0758/parameters</key>
+      <applyto>/apps/nautilus-actions/configurations/2a03b436-d114-416b-a2dc-dfb790fa0758/parameters</applyto>
       <owner>nautilus-actions</owner>
       <type>string</type>
       <locale name="C">
@@ -69,8 +69,8 @@ Los parámetros pueden contener algunos tokens especiales que se reemplazan por 
       <default>-e "/usr/bin/wiithon %M -p"</default>
     </schema>
     <schema>
-      <key>/schemas/apps/nautilus-actions/configurations/4d07460a-6456-48f9-9d73-edfdbd90df0f/basenames</key>
-      <applyto>/apps/nautilus-actions/configurations/4d07460a-6456-48f9-9d73-edfdbd90df0f/basenames</applyto>
+      <key>/schemas/apps/nautilus-actions/configurations/2a03b436-d114-416b-a2dc-dfb790fa0758/basenames</key>
+      <applyto>/apps/nautilus-actions/configurations/2a03b436-d114-416b-a2dc-dfb790fa0758/basenames</applyto>
       <owner>nautilus-actions</owner>
       <type>list</type>
       <list_type>string</list_type>
@@ -81,8 +81,8 @@ Los parámetros pueden contener algunos tokens especiales que se reemplazan por 
       <default>[*.iso]</default>
     </schema>
     <schema>
-      <key>/schemas/apps/nautilus-actions/configurations/4d07460a-6456-48f9-9d73-edfdbd90df0f/matchcase</key>
-      <applyto>/apps/nautilus-actions/configurations/4d07460a-6456-48f9-9d73-edfdbd90df0f/matchcase</applyto>
+      <key>/schemas/apps/nautilus-actions/configurations/2a03b436-d114-416b-a2dc-dfb790fa0758/matchcase</key>
+      <applyto>/apps/nautilus-actions/configurations/2a03b436-d114-416b-a2dc-dfb790fa0758/matchcase</applyto>
       <owner>nautilus-actions</owner>
       <type>bool</type>
       <locale name="C">
@@ -92,8 +92,8 @@ Los parámetros pueden contener algunos tokens especiales que se reemplazan por 
       <default>false</default>
     </schema>
     <schema>
-      <key>/schemas/apps/nautilus-actions/configurations/4d07460a-6456-48f9-9d73-edfdbd90df0f/mimetypes</key>
-      <applyto>/apps/nautilus-actions/configurations/4d07460a-6456-48f9-9d73-edfdbd90df0f/mimetypes</applyto>
+      <key>/schemas/apps/nautilus-actions/configurations/2a03b436-d114-416b-a2dc-dfb790fa0758/mimetypes</key>
+      <applyto>/apps/nautilus-actions/configurations/2a03b436-d114-416b-a2dc-dfb790fa0758/mimetypes</applyto>
       <owner>nautilus-actions</owner>
       <type>list</type>
       <list_type>string</list_type>
@@ -104,8 +104,8 @@ Los parámetros pueden contener algunos tokens especiales que se reemplazan por 
       <default>[*/*]</default>
     </schema>
     <schema>
-      <key>/schemas/apps/nautilus-actions/configurations/4d07460a-6456-48f9-9d73-edfdbd90df0f/isfile</key>
-      <applyto>/apps/nautilus-actions/configurations/4d07460a-6456-48f9-9d73-edfdbd90df0f/isfile</applyto>
+      <key>/schemas/apps/nautilus-actions/configurations/2a03b436-d114-416b-a2dc-dfb790fa0758/isfile</key>
+      <applyto>/apps/nautilus-actions/configurations/2a03b436-d114-416b-a2dc-dfb790fa0758/isfile</applyto>
       <owner>nautilus-actions</owner>
       <type>bool</type>
       <locale name="C">
@@ -120,8 +120,8 @@ isfile=FALSE and isdir=FALSE: this is an invalid combination (your configuration
       <default>true</default>
     </schema>
     <schema>
-      <key>/schemas/apps/nautilus-actions/configurations/4d07460a-6456-48f9-9d73-edfdbd90df0f/isdir</key>
-      <applyto>/apps/nautilus-actions/configurations/4d07460a-6456-48f9-9d73-edfdbd90df0f/isdir</applyto>
+      <key>/schemas/apps/nautilus-actions/configurations/2a03b436-d114-416b-a2dc-dfb790fa0758/isdir</key>
+      <applyto>/apps/nautilus-actions/configurations/2a03b436-d114-416b-a2dc-dfb790fa0758/isdir</applyto>
       <owner>nautilus-actions</owner>
       <type>bool</type>
       <locale name="C">
@@ -136,19 +136,19 @@ isfile=FALSE and isdir=FALSE: this is an invalid combination (your configuration
       <default>false</default>
     </schema>
     <schema>
-      <key>/schemas/apps/nautilus-actions/configurations/4d07460a-6456-48f9-9d73-edfdbd90df0f/accept-multiple-files</key>
-      <applyto>/apps/nautilus-actions/configurations/4d07460a-6456-48f9-9d73-edfdbd90df0f/accept-multiple-files</applyto>
+      <key>/schemas/apps/nautilus-actions/configurations/2a03b436-d114-416b-a2dc-dfb790fa0758/accept-multiple-files</key>
+      <applyto>/apps/nautilus-actions/configurations/2a03b436-d114-416b-a2dc-dfb790fa0758/accept-multiple-files</applyto>
       <owner>nautilus-actions</owner>
       <type>bool</type>
       <locale name="C">
         <short>«True» si la selección debe tener varios elementos, «false» en otro caso</short>
         <long>Si necesita que se selecciones uno o más archivos o carpetas, ponga a 'true' esta clave. Si tan sólo quiere un archivo o carpeta, póngala a 'false'</long>
       </locale>
-      <default>false</default>
+      <default>true</default>
     </schema>
     <schema>
-      <key>/schemas/apps/nautilus-actions/configurations/4d07460a-6456-48f9-9d73-edfdbd90df0f/schemes</key>
-      <applyto>/apps/nautilus-actions/configurations/4d07460a-6456-48f9-9d73-edfdbd90df0f/schemes</applyto>
+      <key>/schemas/apps/nautilus-actions/configurations/2a03b436-d114-416b-a2dc-dfb790fa0758/schemes</key>
+      <applyto>/apps/nautilus-actions/configurations/2a03b436-d114-416b-a2dc-dfb790fa0758/schemes</applyto>
       <owner>nautilus-actions</owner>
       <type>list</type>
       <list_type>string</list_type>
@@ -173,8 +173,8 @@ Se pueden usar todos los esquemas GnomeVFS que use Nautilus aquí.</long>
       <default>[file]</default>
     </schema>
     <schema>
-      <key>/schemas/apps/nautilus-actions/configurations/4d07460a-6456-48f9-9d73-edfdbd90df0f/version</key>
-      <applyto>/apps/nautilus-actions/configurations/4d07460a-6456-48f9-9d73-edfdbd90df0f/version</applyto>
+      <key>/schemas/apps/nautilus-actions/configurations/2a03b436-d114-416b-a2dc-dfb790fa0758/version</key>
+      <applyto>/apps/nautilus-actions/configurations/2a03b436-d114-416b-a2dc-dfb790fa0758/version</applyto>
       <owner>nautilus-actions</owner>
       <type>string</type>
       <locale name="C">
