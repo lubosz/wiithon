@@ -6,9 +6,9 @@ Versión 0.96
 miércoles, 15 de abril de 2009
 --------------------------------------------------------------------------------------------------------
 NUEVA FUNCIONALIDAD
-- Descarga de caratulas facilmente y automaticamente
+- Descarga de caratulas automaticamente con una resolución optima para USB Loader 1.4 (160x225)
 - Cuando detecta más de una partición WBFS ahora aparece al lado el nombre del disco duro
-- A partir de esta versión si un parametro no se le pasa el engorroso IDGAME, se pregunta el ID del juego (autonumeración hecha por wiithon)
+- A partir de esta versión si un parametro no se le pasa el engorroso IDGAME, se pregunta el ID del juego mediante una lista (autonumeración hecha por wiithon)
 - En Nautilus ahora hay 5 acciones, 5 de ellas siempre disponibles (listar,renombrar,extraer,borrar,descargar caratulas) y 1 (añadir ISO) solo cuando estamos sobre una imagen ISO.
 - Al final he quitado que renombre al nombre del ISO cuando añades un ISO, el juego se metera con el nombre que propone el ISO y después se puede renombrar muy fácil desde el script de nautilus
 
@@ -67,7 +67,7 @@ lunes, 4 de abril de 2009
 + Documentación
 ===================================================================================
 
-Podeis utilizar el GUI de nautilus que es muy comodo y rápido, pero lo verdaderamente potente es el propio programa hecho en python : wiithon (proponer otros nombres, si no triunfa lo cambiaré xD)
+Podeis utilizar el GUI de nautilus que es muy comodo y rápido, pero lo verdaderamente potente es el propio programa hecho en python : 
 
 Os imprimo la salida de : *wiithon ayuda*
 

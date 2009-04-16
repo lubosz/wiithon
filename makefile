@@ -28,7 +28,8 @@ limpiar_wbfs:
 compilar_wbfs:
 	cd wbfs_src && make && cd ..
 
-
 empaquetar: compilar_wbfs limpiar
 	tar zcvf wiithon_v${VERSION}_r${REVISION}.tar.gz *
 
+commit:
+	bzr commit --file=COMMIT

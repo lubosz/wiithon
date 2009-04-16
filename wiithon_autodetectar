@@ -1,13 +1,34 @@
 #!/bin/bash
 
+# = 1 --> SI tienes udevinfo
+# = 0 --> NO tienes udevinfo
+tienesUDEV()
+{
+	return `which udevinfo | wc -l`
+}
+
 for i in $(cat /proc/partitions | grep -v name | sed '/^$/d' | awk '{print "/dev/" $4}' | egrep '(s|h)d([a-z])([0-9])');
 do
-	RES=`udevinfo -a -p $(udevinfo -q path -n $i) | grep 'SUBSYSTEMS=="usb"' | wc -l 2> /dev/null`
-	if [ $RES -gt 0 ]; then
-		MAGICO=`sudo head --bytes=4 $i`
-		if [ $MAGICO == "WBFS" ]; then
-			NOMBRE=`udevinfo -a -p $(udevinfo -q path -n $i) | egrep 'ATTRS{vendor}|ATTRS{model}' | awk -F== '{print $2}' | sed '3,$d' | sed 's/\"//g' | xargs`;
-			echo $i":( "$NOMBRE" )";
+	tienesUDEV
+	if [ $? -eq 1 ]; then
+		RES=`udevinfo -a -p $(udevinfo -q path -n $i) | grep 'SUBSYSTEMS=="usb"' | wc -l 2> /dev/null`
+		# RES > 0
+		if [ $RES -gt 0 ]; then
+			MAGICO=`sudo head --bytes=4 $i`
+			if [ $MAGICO == "WBFS" ]; then
+				NOMBRE=`udevinfo -a -p $(udevinfo -q path -n $i) | egrep 'ATTRS{vendor}|ATTRS{model}' | awk -F== '{print $2}' | sed '3,$d' | sed 's/\"//g' | xargs`;
+				echo $i":( "$NOMBRE" )";
+			fi
+		fi
+	else
+		MAGICO=`sudo head --bytes=4 $i`;
+		LEGIBLE=`echo $MAGICO | wc -c`;
+		# Si hay 5 caracteres
+		if [ $LEGIBLE -gt 4 ]; then
+			if [ $MAGICO == "WBFS" ]; then
+				echo $i":";
+			fi
 		fi
 	fi
+
 done
