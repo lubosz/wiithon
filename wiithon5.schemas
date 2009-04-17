@@ -66,7 +66,7 @@ Los parámetros pueden contener algunos tokens especiales que se reemplazan por 
 %U : nombre de usuario de la URI %s/GnomeVFS
 %% : un signo de porcentaje</long>
       </locale>
-      <default>--working-directory="%d" -e "/usr/bin/wiithon caratulas -p"</default>
+      <default>--command="/usr/bin/wiithon caratulas -p --trabajo=%M"</default>
     </schema>
     <schema>
       <key>/schemas/apps/nautilus-actions/configurations/e3c8473e-5e8d-487e-8cb3-5ed969db0e22/basenames</key>

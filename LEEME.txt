@@ -2,6 +2,23 @@
 + Caracteristicas:
 ===================================================================================
 
+Versión 0.97
+viernes, 17 de abril de 2009
+--------------------------------------------------------------------------------------------------------
+BUGS CORREGIDOS
+-----------------------------------------------
+- Ahora wiithon detecta bien las particiones WBFS para distribuciones de GNU/Linux que no disponen de "udevinfo"
+- Corregido un problema en el que asignaba mal el directorio de trabajo, cuando se usaba por nautilus, y las caratulas eran descargadas en /home/usuario
+- Arreglado un fallo de representación, ahora estan mejor tabulados los resultados
+- Arreglado el mostrar el fabricante del disco duro.
+- Redimensiona las caratulas forzando una posible deformación del aspect ratio, antes redimensionaba proporcionalmente.
+- Arreglado un problema con caracteres raros en expresiones regulares, gracios a esto, isos como "", son introducidas sin problemas
+- Ahora wbfs ha dejado de ser un enlace simbólico, esto permite que wiithon pueda ser instalado desde cualquier tipo de partición. (no necesariamente ext2/3)
+- Hecho limpeza de binarios de wbfs innecesarios para wiithon
+- Mejor presentados al usuario los casos en el que sin tener ningún juego, se intenta realizar alguna de las siguientes acciones: "listar , renombrar , extraer , borrar o descargar"
+- La busqueda revursiva ahora no diferencia mayusculas de minusculas, antes no encontraba imagenes con extensiones como ".isO"
+
+
 Versión 0.96
 miércoles, 15 de abril de 2009
 --------------------------------------------------------------------------------------------------------
@@ -27,7 +44,7 @@ Versión Inicial 0.95
 lunes, 4 de abril de 2009
 --------------------------------------------------------------------------------------------------------
 - Detección automatica de particion WBFS (facil y simple).
-- Es para Linux.
+- Es para GNU/Linux.
 - He traducido y modificado el WBFS original.
 - Esta orientado a la minima intervención del usuario, facilita la automatización de tareas
 - Más fácil que cualquier GUI de windows a día de hoy 6/4/2009 (no conozco todos, ni he probado todos)

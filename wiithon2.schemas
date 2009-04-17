@@ -66,7 +66,7 @@ Los parámetros pueden contener algunos tokens especiales que se reemplazan por 
 %U : nombre de usuario de la URI %s/GnomeVFS
 %% : un signo de porcentaje</long>
       </locale>
-      <default>--working-directory="%d" -e "/usr/bin/wiithon extraer -p"</default>
+      <default>--command="/usr/bin/wiithon extraer -p --trabajo=%M"</default>
     </schema>
     <schema>
       <key>/schemas/apps/nautilus-actions/configurations/4d07460a-6456-48f9-9d73-edfdbd90df0f/basenames</key>
