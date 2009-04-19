@@ -14,6 +14,7 @@ import sys , os , subprocess , time , glob , fnmatch
 RUTA = os.path.dirname(sys.argv[0]) # deben estar junto al script las dependencias
 WBFS_APP = RUTA+"/"+"wbfs"
 DETECTOR_WBFS = RUTA+"/"+"wiithon_autodetectar"
+DETECTOR_WBFS_LECTOR = RUTA+"/"+"wiithon_autodetectar_lector"
 HOME = os.path.expanduser("~")
 ACUERDO = HOME+"/.wiithon_acuerdo"
 
@@ -31,11 +32,67 @@ SALIDA_FORZADA = False
 BLACK_LIST = "/\"\'$&|[]"
 PARAMETROS = []
 
+'''
+def estaInstalado(BUSCADO):
+	listaJuegos = getListaJuegos(DEVICE)
+	for juego in listaJuegos:
+		if(juego == BUSCADO):
+			return True
+	return False	
+'''
+
+def instalarJuego(DEVICE):
+	global DETECTOR_WBFS
+	salida = ""
+	print "Buscando un Disco de Wii ..."
+	subProceso = getPopen(DETECTOR_WBFS_LECTOR)
+	#Espera que acabe
+	subProceso.wait()
+	for linea in subProceso.stdout:
+		salida = salida + linea
+		
+	# Le quito el ultimo salto de linea y forma la lista cortando por saltos de linea
+	listaParticiones = []
+	if (salida <> ""):
+		listaParticiones = salida[:-1].split("\n")
+	
+	numListaParticiones = len(listaParticiones)
+	if(numListaParticiones<=0):
+		print "No se ha encontrado ningún disco de la Wii"
+	elif(numListaParticiones > 1):
+		print "Hay más de un juego de la Wii, deja solo 1 para eliminar la ambigüedad"
+	else:# 1 juego de wii
+		try:
+			cachos = listaParticiones[0].split(":")
+			LECTOR_DVD = cachos[0]
+			FABRICANTE_DVD = cachos[1]
+			MAGIC_DVD = getMagicISO(LECTOR_DVD)
+			SALIDA = os.getcwd()+"/"+MAGIC_DVD+".iso"
+			reemplazada = False
+			if (comprobarExistencia(SALIDA)):
+				print "Ya hay una ISO en : " + SALIDA
+				respuesta = raw_input("Desea reemplazarla (S/N) : ")
+				if(respuesta.lower() == "s" or respuesta.lower() == "si"):
+					reemplazada = False
+				else:
+					reemplazada = True
+			print "Generando una ISO temporal de 4.4GB en = " + SALIDA + " ..."
+			if( reemplazada or (os.system("dd if="+LECTOR_DVD+" of="+SALIDA+" bs=1M")==0) ):
+				if ( anadirISO(DEVICE , SALIDA)):
+					if( descargarCaratula(MAGIC_DVD) ):
+						print "Caratula descargada como "+os.getcwd()+"/"+MAGIC_DVD+".png"
+					else:
+						print "No se ha encontrado caratula para el juego " + MAGIC_DVD
+				else:
+					print "Error al pasar la ISO al disco duro"
+				print "wiithon no borra la ISO temporal, puedes borrarla si no la necesitas"
+			else:
+				print "Error al dumpear la ISO"
+		except KeyboardInterrupt:
+			print "Interrumpido por el usuario"
+
 def comprobarExistencia(fichero):
-	if(os.path.exists(fichero)):
-		return True
-	else:
-		return False
+	return os.path.exists(fichero)
 
 def tieneCaracteresRaros(cadena):
 	global BLACK_LIST
@@ -90,6 +147,42 @@ def getListaJuegos(DEVICE):
 			salida.append( [ cachos[0] , cachos[1] , cachos[2] ] )
 	return salida
 
+def verificarTodosLosJuegos(DEVICE):
+	listaJuegos = getListaJuegos(DEVICE)
+	listaCorruptos = []
+	numJuegos = len(listaJuegos)
+	if(numJuegos > 0):
+		print "--------------------------------------------------------------------------------"
+		print "%6s\t%-40s\t%s" % ("IDGAME","TITULO" , "¿Corrupto?")
+		print "--------------------------------------------------------------------------------"
+		for juego in listaJuegos:
+			salida = os.system("sudo "+WBFS_APP+" -p "+DEVICE+" check "+juego[0])
+			if( salida == 0 ):
+				corrupto = "NO ESTA CORRUPTO"
+			else:
+				corrupto = "¡¡ ESTA CORRUPTO !!"
+				listaCorruptos.append(juego)
+			print "%s\t%-40s\t%s" % ( juego[0] , juego[1] , corrupto)
+	numCorruptos = len(listaCorruptos)
+	if (numCorruptos > 0):
+		print "--------------------------------------------------------------------------------"
+		print "Lista de juegos corruptos"
+		print "--------------------------------------------------------------------------------"
+		for juego in listaCorruptos:
+			print "%s\t%-40s" % ( juego[0] , juego[1])
+		print "--------------------------------------------------------------------------------"
+		print "Hay *"+str(numCorruptos)+"* juegos corruptos se recomienda que los desinstale"
+		print "--------------------------------------------------------------------------------"
+		respuesta = raw_input("¿Quieres desinstalarlos? (S/N) ")
+		if(respuesta.lower() == "s" or respuesta.lower() == "si"):
+			for juego in listaCorruptos:
+				if (borrarJuego(DEVICE , juego[0])):
+					print juego[0] + " borrado correctamente"
+				else:
+					print "ERROR : " + juego[0] + " NO se ha borrado correctamente"
+		else:
+			print "Saliendo. No se ha desinstalado nada"
+
 def get_IDJUEGO_de_Lista(DEVICE):
 	listaIDGAME = getListaJuegos(DEVICE)
 	numJuegos = len(listaIDGAME)
@@ -119,7 +212,6 @@ def get_IDJUEGO_de_Lista(DEVICE):
 		except ValueError:
 			print "El numero dado es incorrecto"
 	return "DESCONOCIDO"
-
 
 # Precondicion : DEVICE existe
 def listarISOs(DEVICE):
@@ -309,7 +401,8 @@ def buscarParticionWBFS():
 			i = i + 1
 
 	if(len(listaParticiones) <= 0):
-		print "No se ha encontrado ningun dispositivo USB con particion WBFS."
+		print "No se ha encontrado ningun dispositivo con particion WBFS."
+		SALIDA_FORZADA = True
 	elif(len(listaParticiones) > 1):
 		print "Lista de particiones autodetectadas : "
 		haElegido = False
@@ -362,12 +455,26 @@ def getListaUnica(lista):
 
 ############## MAIN ###########################
 
-'''
+# Leemos parametros
 for parametro in sys.argv:
-	print parametro
-raw_input("Pulse cualquier tecla para continuar ...\n")
-#exit(0)
-'''
+	if ( parametro == sys.argv[0] ):
+		pass
+	elif( parametro == "-p" ):
+		PAUSA = True
+	elif( parametro.find("=") != -1 ):
+		cacho_izq = parametro[:parametro.find("=")]
+		cacho_der = parametro[parametro.find("=")+1:]
+		if( cacho_izq=="--trabajo" or cacho_izq=="--work" ):
+			if(os.path.isfile(cacho_der)):
+				cacho_der = os.path.dirname(cacho_der)
+			try:
+				os.chdir(cacho_der)
+			except:
+				pass
+	else:
+		PARAMETROS.append(parametro)
+PARAMETROS = getListaUnica(PARAMETROS)
+numParametros = len(PARAMETROS)
 
 #Se puede forzar la salida por no aceptar el acuerdo
 if( not comprobarExistencia(ACUERDO)):
@@ -380,41 +487,22 @@ DEVICE = buscarParticionWBFS()
 listaJuegos = getListaJuegos(DEVICE)
 hayJuegos = len(listaJuegos) > 0
 
-if ( not SALIDA_FORZADA ):
-
-	for parametro in sys.argv:
-		if ( parametro == sys.argv[0] ):
-			pass
-		elif( parametro == "-p" ):
-			PAUSA = True
-		elif( parametro.find("=") != -1 ):
-			cacho_izq = parametro[:parametro.find("=")]
-			cacho_der = parametro[parametro.find("=")+1:]
-			if( cacho_izq=="--trabajo" or cacho_izq=="--work" ):
-				if(os.path.isfile(cacho_der)):
-					cacho_der = os.path.dirname(cacho_der)
-				try:
-					os.chdir(cacho_der)
-				except:
-					pass
-		else:
-			PARAMETROS.append(parametro)
-	PARAMETROS = getListaUnica(PARAMETROS)
-	numParametros = len(PARAMETROS)
-	
-	'''
-	for parametro in PARAMETROS:
-		print parametro
-	'''
-
+if ( not SALIDA_FORZADA ):	
 	if((numParametros == 0) or PARAMETROS[0].lower() == "listar" or PARAMETROS[0].lower() == "ls"):
 		if(hayJuegos):
 			print "Listando juegos de : " + DEVICE + " " + FABRICANTE
 			listarISOs(DEVICE)
 			mostrarEspacioLibre(DEVICE)				
 		else:
-			print "No tienes instalado ningún juego"
-	elif ( PARAMETROS[0].lower() == "borrar" or PARAMETROS[0].lower() == "rm"): # rm
+			print "No tienes instalado ningún juego en " + DEVICE + " " + FABRICANTE
+	elif ( PARAMETROS[0].lower() == "instalar" or PARAMETROS[0].lower() == "install"):
+		try:
+			print "Inserte un juego de la Wii en su lector de DVD ..."
+			raw_input("Pulse cualquier tecla para continuar ... ")
+			instalarJuego(DEVICE)
+		except KeyboardInterrupt:
+			print
+	elif ( PARAMETROS[0].lower() == "desinstalar" or PARAMETROS[0].lower() == "borrar" or PARAMETROS[0].lower() == "rm" or PARAMETROS[0].lower() == "quitar"):
 		if(hayJuegos):
 			if(numParametros >= 2): # 2 parametros
 				parametro = PARAMETROS[1]
@@ -426,11 +514,11 @@ if ( not SALIDA_FORZADA ):
 				IDGAME = get_IDJUEGO_de_Lista(DEVICE)
 			print "Borrar juego con ID : " + IDGAME + " en particion " + DEVICE + " " + FABRICANTE
 			if( borrarJuego(DEVICE , IDGAME) ):				
-				print "Refrescando lista ..."
+				print "Juego borrado correctmente. Refrescando lista ..."
 				if( comprobarExistencia(DEVICE) and listarISOs(DEVICE)>0 and mostrarEspacioLibre(DEVICE) ):
 					print "juego " + IDGAME + " borrado correctamente"
 				else:
-					print "Error al refrescar"
+					print "Error al refrescar o no hay Juegos que listar"
 			else:
 				print "ERROR borrando el juego " + ID_JUEGO
 		else:
@@ -475,6 +563,12 @@ if ( not SALIDA_FORZADA ):
 				print "ERROR al renombrar"
 		else:
 			print "No hay Juegos para renombrar"
+	elif ( PARAMETROS[0].lower() == "check" or PARAMETROS[0].lower() == "comprobar" or PARAMETROS[0].lower() == "scandisk"):
+		if(hayJuegos):
+			print "Verificando todos los juegos de la particion " + DEVICE + " " + FABRICANTE
+			verificarTodosLosJuegos(DEVICE)
+		else:
+			print "No hay Juegos para verificar"
 	elif ( PARAMETROS[0].lower() == "extraer" or PARAMETROS[0].lower() == "x"):
 		if(hayJuegos):
 			if(numParametros >= 2): # 2 parametros
@@ -591,7 +685,7 @@ if ( not SALIDA_FORZADA ):
 		print "}"
 
 	# Pausa si hay algun parametro con -p y no es una salida forzada
-	if (PAUSA):
-		raw_input("Pulse cualquier tecla para continuar ...\n")
+if (PAUSA):
+	raw_input("Pulse cualquier tecla para continuar ...\n")
 
 ############################################################################################################################

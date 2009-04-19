@@ -1,4 +1,6 @@
 // Copyright 2009 Kwiirk
+// Modified by makiolo <makiolo@gmail.com>
+// Modified for add Hermes wbfs_integrity_check
 // Licensed under the terms of the GNU GPL, version 2
 // http://www.gnu.org/licenses/old-licenses/gpl-2.0.txt
 
@@ -139,6 +141,22 @@ int wbfs_applet_init(wbfs_t *p)
         return p!=0;
         
 }
+
+int wbfs_applet_check(wbfs_t *p , char * argv)
+{
+	if( wbfs_integrity_check(p , (u8*)argv) == TRUE)
+	{
+		//fprintf(stderr,"Integridad de %s es OK\n",argv);
+		exit(TRUE);
+	}
+	else
+	{
+		//fprintf(stderr,"ERROR!! : Integridad de %s esta corrupto.\n",argv);	
+		exit(FALSE);
+	}
+	
+}
+
 static void _spinner(int x,int y){ spinner(x,y);}
 int wbfs_applet_add(wbfs_t *p,char*argv)
 {
@@ -146,37 +164,38 @@ int wbfs_applet_add(wbfs_t *p,char*argv)
         u8 discinfo[7];
         wbfs_disc_t *d;
         if(!f)
-                wbfs_error("No se puede abrir la ISO, tal vez no exista. Pruebe a indicar la ruta completa entre comillas");
+        {
+			fprintf(stderr,"No se puede abrir la ISO, tal vez no exista. Pruebe a indicar la ruta completa entre comillas");
+			return FALSE;
+		}
         else
         {
-                fread(discinfo,6,1,f);
-                d = wbfs_open_disc(p,discinfo);
-                if(d)
-                {
-					discinfo[6]=0;
-					fprintf(stderr,"%s ya está en el disco ...\n",discinfo);
-					wbfs_close_disc(d);
-					return 0;
-                }
-                else
-                {
-                	//cambiar nombre
-                    return wbfs_add_disc(p,read_wii_file,f,_spinner,ONLY_GAME_PARTITION,0);
-				}
+			fread(discinfo,6,1,f);
+			d = wbfs_open_disc(p,discinfo);
+			if(d)
+			{
+				discinfo[6]=0;
+				fprintf(stderr,"%s ya está en el disco ...\n",discinfo);
+				wbfs_close_disc(d);
+				return TRUE;
+			}
+			else
+			{
+				return wbfs_add_disc(p,read_wii_file,f,_spinner,ONLY_GAME_PARTITION,0);
+			}
         }
-        return 1;
 }
 int wbfs_applet_rm(wbfs_t *p,char*argv)
 {
 	if( wbfs_rm_disc(p,(u8*)argv) == 1)
 	{
-		fprintf(stderr,"%s no existe. Elija un IDGAME de la lista ...\n",argv);
-		return 1;
+		//fprintf(stderr,"%s no existe. Elija un IDGAME de la lista ...\n",argv);
+		exit(FALSE);
 	}
 	else
 	{
-		fprintf(stderr,"%s ha sido borrado.\n",argv);	
-		return 0;
+		//fprintf(stderr,"%s ha sido borrado.\n",argv);	
+		exit(TRUE);
 	}
 		
 }
@@ -244,12 +263,22 @@ int wbfs_applet_create(char*argv)
 
 void wbfs_applet_rename(wbfs_t *p , int argc , char * idgame , char * nuevoNombre)
 {
-	if(wbfs_ren_disc(p, (u8*)idgame, (u8*)nuevoNombre))
+	//Espera 6 parametros de wiithon, lo dejo fuera del interface de wbfs
+	if(argc==6)
 	{
-		wbfs_error("error renombrando");
+		if (wbfs_ren_disc(p, (u8*)idgame, (u8*)nuevoNombre) == TRUE)
+		{
+			printf ("Cambiado nombre a %s\n" , nuevoNombre);
+		}
+		else
+		{
+			printf ("ERROR: Cambiado nombre a %s\n" , nuevoNombre);	
+		}
 	}
-
-	printf ("Cambiado nombre a %s\n" , nuevoNombre);
+	else
+	{
+		wbfs_error("ERROR: Renombra a través de wiithon");	
+	}
 }
 
 struct wbfs_applets{
@@ -266,6 +295,8 @@ struct wbfs_applets{
         APPLET(add),
         APPLET(rm),
         APPLET(extract),
+        //APPLET_NOARG(check),
+        APPLET(check),
 };
 static int num_applets = sizeof(wbfs_applets)/sizeof(wbfs_applets[0]);
 void usage(char **argv)
@@ -313,8 +344,7 @@ main(int argc, char *argv[])
                         return wbfs_applet_create(argv[optind+1]);
                 
         }
-        
-        
+
         for (i=0;i<num_applets;i++)
         {
                 struct wbfs_applets *ap = &wbfs_applets[i];
@@ -335,7 +365,7 @@ main(int argc, char *argv[])
 						break;
                 }
         }
-        
+
 		if (strcmp(argv[optind], "rename") == 0)
 		{
 			wbfs_t *p = wbfs_try_open(disc , partition, 0);

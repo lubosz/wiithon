@@ -57,6 +57,8 @@ Then copy all the directories in the apps directory of your sdcard.
 *create a standalone compressed version of one iso using the wbfs mechanism
  ./wbfs create <disc.iso>
 
+*check wiidiscs at wbfs partition (affected by previous libwbfs bug)
+ ./wbfs check
 
 
 === Programmers usage ===

@@ -10,13 +10,14 @@ comprobarTienesUDEV()
 comprobarTienesUDEV
 hayUDEV=$?
 
-for i in $(cat /proc/partitions | grep -v name | sed '/^$/d' | awk '{print "/dev/" $4}' | egrep '(s|h)d([a-z])([0-9]){0,}');
+for i in $(ls /dev/*cd* -l | grep '^l'  | awk '{print $10}' | uniq | awk '{print "/dev/" $1}');
 do
-	MAGICO=`sudo head --bytes=4 $i`;
+	MAGICO=`sudo head --bytes=6 $i 2> /dev/null`;
 	LEGIBLE=`echo $MAGICO | wc -c`;
-	# Si hay 5 caracteres = WBFS\n
-	if [ $LEGIBLE -eq 5 ]; then
-		if [ $MAGICO == "WBFS" ]; then
+	# Si hay 7 caracteres = ASDASD\n
+	if [ $LEGIBLE -eq 7 ]; then
+		RES=`echo $MAGICO | egrep '([A-Z0-9]{6})' | wc -l`;
+		if [ $RES -gt 0 ]; then
 			if [ $hayUDEV -eq 1 ]; then
 				NOMBRE=`udevinfo -a -p $(udevinfo -q path -n $i) | egrep 'ATTRS{vendor}|ATTRS{model}' | awk -F== '{print $2}' | sed '3,$d' | sed 's/\"//g' | xargs`;
 				echo $i":( "$NOMBRE" )";

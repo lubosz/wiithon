@@ -1,3 +1,5 @@
+// Modified by makiolo <makiolo@gmail.com>
+
 #ifdef __linux__
 #include <stdio.h>
 #include <sys/ioctl.h>

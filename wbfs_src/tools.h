@@ -1,4 +1,5 @@
 // Copyright 2007,2008  Segher Boessenkool  <segher@kernel.crashing.org>
+// Modified by makiolo <makiolo@gmail.com>
 // Licensed under the terms of the GNU GPL, version 2
 // http://www.gnu.org/licenses/old-licenses/gpl-2.0.txt
 

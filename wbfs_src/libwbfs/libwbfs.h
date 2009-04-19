@@ -11,7 +11,8 @@
 typedef u32 be32_t;
 typedef u16 be16_t;
 
-
+#define TRUE 0
+#define FALSE 1
  
 typedef struct wbfs_head
 {
@@ -206,6 +207,10 @@ u32 wbfs_extract_disc(wbfs_disc_t*d, rw_sector_callback_t write_dst_wii_sector,v
   E.G. Allows to extract the opening.bnr to install a game as a system menu channel
  */
 u32 wbfs_extract_file(wbfs_disc_t*d, char *path);
+
+wbfs_disc_t *wbfs_open_index_disc(wbfs_t* p, u32 i);
+
+int wbfs_integrity_check(wbfs_t* p , u8* discid);
 
 // remove some sanity checks
 void wbfs_set_force_mode(int force);
