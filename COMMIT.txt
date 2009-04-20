@@ -1,4 +1,0 @@
-- Creando un proyecto en launchpad
-- Corregido un problema al ordenar listas por titulo del juego
-- LEEME.txt dividido en LEEME.txt e INSTALAR.txt
-- Cambiada la licencia de Creative Commons con reconocimiento a GPLv3

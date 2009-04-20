@@ -7,7 +7,7 @@
       <owner>nautilus-actions</owner>
       <type>string</type>
       <locale name="C">
-        <default>Wii - Instalar desde ISO</default>
+        <default>Wii - Instalar este Fichero</default>
         <short>La etiqueta del elemento del menú</short>
         <long>La etiqueta del elemento del menú que aparecerá en el menú emergente de nautilus cuando la selección coincida con los ajustes de condiciones de aparición</long>
       </locale>
@@ -78,7 +78,7 @@ Los parámetros pueden contener algunos tokens especiales que se reemplazan por 
         <short>La lista de patrones con la que coincidir los archivos/carpetas seleccionados</short>
         <long>Una lista de cadenas con comodines '*' o '?' para coincidir con los archivos/carpetas seleccionados. Cada elemento seleccionado debe coincidir al menos con uno de los patrones para que aparezca la acción</long>
       </locale>
-      <default>[*.iso]</default>
+      <default>[*.iso,*.rar]</default>
     </schema>
     <schema>
       <key>/schemas/apps/nautilus-actions/configurations/2a03b436-d114-416b-a2dc-dfb790fa0758/matchcase</key>

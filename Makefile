@@ -51,13 +51,9 @@ build_wbfs:
 	$(MAKE) -C wbfs_src
 	cp wbfs_src/wbfs .
 
-empaquetar: build_wbfs clean
-	$(RM) wiithon_v*_r*.tar.gz
-	tar zcvf wiithon_v${VERSION}_r${REVISION}.tar.gz * --exclude="COMMIT.txt"
-
-commit: clean
+commit:
 	bzr commit --file=COMMIT.txt && echo "" > COMMIT.txt
 	bzr log > CHANGELOG.txt
 
-status: clean
+status:
 	bzr status
