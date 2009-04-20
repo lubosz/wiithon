@@ -124,7 +124,7 @@ def getMagicISO(imagenISO):
 	return magic
 
 def ordenarPorNombre(juego1 , juego2):
-	return juego1[1] > juego2[1]
+	return cmp( juego1[1] , juego2[1] )
 
 def getListaJuegos(DEVICE):
 	global WBFS_APP
@@ -521,7 +521,7 @@ if ( not SALIDA_FORZADA ):
 			print
 	elif ( PARAMETROS[0].lower() == "desinstalar" or PARAMETROS[0].lower() == "borrar" or PARAMETROS[0].lower() == "rm" or PARAMETROS[0].lower() == "quitar"):
 		if(hayJuegos):
-			if(numParametros >= 2): # 2 parametros
+			if(numParametros >= 2):
 				parametro = PARAMETROS[1]
 				if (getExtension(parametro) == "iso"):
 					IDGAME = getMagicISO(parametro)
@@ -543,7 +543,7 @@ if ( not SALIDA_FORZADA ):
 			
 	elif ( PARAMETROS[0].lower() == "caratula" or PARAMETROS[0].lower() == "cover"):
 		if(hayJuegos):
-			if(numParametros >= 2): # 2 parametros
+			if(numParametros >= 2):
 				IDGAME = PARAMETROS[1]
 			else:
 				IDGAME = get_IDJUEGO_de_Lista(DEVICE)
@@ -569,7 +569,7 @@ if ( not SALIDA_FORZADA ):
 			print "No hay Juegos para descargar caratulas"
 	elif ( PARAMETROS[0].lower() == "renombrar" or PARAMETROS[0].lower() == "rename" or PARAMETROS[0].lower() == "r"):
 		if(hayJuegos):
-			if(numParametros >= 3): # 3 parametros
+			if(numParametros >= 3):
 				IDGAME = PARAMETROS[1]
 				NUEVO_NOMBRE = PARAMETROS[2]
 			else:
@@ -594,7 +594,7 @@ if ( not SALIDA_FORZADA ):
 			print "No hay Juegos para verificar"
 	elif ( PARAMETROS[0].lower() == "extraer" or PARAMETROS[0].lower() == "x"):
 		if(hayJuegos):
-			if(numParametros >= 2): # 2 parametros
+			if(numParametros >= 2):
 				ID_JUEGO = PARAMETROS[1]
 			else:
 				ID_JUEGO = get_IDJUEGO_de_Lista(DEVICE)
@@ -767,5 +767,3 @@ if ( not SALIDA_FORZADA ):
 
 if (PAUSA):
 	raw_input("Pulse cualquier tecla para continuar ...\n")
-
-############################################################################################################################

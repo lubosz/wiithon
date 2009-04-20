@@ -1,4 +1,10 @@
 ===================================================================================
++ Instalación
+===================================================================================
+
+Ver archivo INSTALAR.txt
+
+===================================================================================
 + Caracteristicas:
 ===================================================================================
 
@@ -79,35 +85,6 @@ lunes, 4 de abril de 2009
 - Una última cosa para aclarar lo de los nombres. Si metemos el Trivial Pursuit.iso en el USB loader aparecerá logicamente Trivial Pursuit. Si renombramos la ISO y le damos a Añadir/Renombrar como el juego ya esta en el disco simplemente se renombrará. Es decir cambiar de nombre los juegos es tan fácil como cambiar de nombre la ISO con el nautilus y darle a Añadir / Renombrar.
 
 ===================================================================================
-+ Instalación
-===================================================================================
-
-1º  Instalar :
-		sudo make uninstall (opcionalmente aunque aconsejable desinstala primero, si tenias una versión anterior)
-		sudo make install (instala)
-
-2º  Dependencias : Instalar estos paquetes de los repositorios de ubuntu : sudo apt-get install nautilus-actions imagemagick wget rar
-
-3º 	Instalar scripts de nautilus : Nos vamos a Sistema -> Preferencias -> Configuración de acciones de Nautilus.
-	En tipo de configuración: ponemos automático.
-	Y le damos a Importar / Exportar 8 archivos. (Tenemos que ir de uno en uno).
-	El makefile lo instala y lo desinstala pero tengo problemas para registrarlo así lo mejor es hacerlo a mano, hasta que vea una mejor solución.
-	Importar estos 8 ficheros:
-
-	1. /usr/share/gconf/schemas/wiithon1.schemas
-	2. /usr/share/gconf/schemas/wiithon2.schemas
-	3. /usr/share/gconf/schemas/wiithon3.schemas
-	4. /usr/share/gconf/schemas/wiithon4.schemas
-	5. /usr/share/gconf/schemas/wiithon5.schemas
-	6. /usr/share/gconf/schemas/wiithon6.schemas
-	7. /usr/share/gconf/schemas/wiithon7.schemas
-	8. /usr/share/gconf/schemas/wiithon8.schemas
-
-	Si os fijais cada fichero es una de las 8 opciones del script de nautilus.
-
-4º Seguramente tengais que reiniciar o hacer *killall nautilus*
-
-===================================================================================
 + Documentación
 ===================================================================================
 
@@ -177,9 +154,3 @@ listar = ls
 
 Tambien tiene un parametro oculto sin documentar, el parametro -p:
 Obliga a una pausa al final de la ejecución. Este es usado por los comandos lanzados desde nautilus, si no lo pusiera las ventanas se cerrarian ya que mayoritariamente no requieren intervención del usuario. Se requiere interactividad con el usuario en 2 casos, para aceptar el acuerdo de que no me hago responsable de daños y tal (solo sale la primera vez) y si el programa detecta más de una 1 partición WBFS, nos pregunta con cual trabajar con un menú.
-
-La licencia es creative commons con reconocimiento, podeis modificar el código.
-
-Versión actual : 0.96
-:: Ultima versión en mi blog "Invasion Tux"
-:: http://blogricardo.wordpress.com/2009/04/07/wiithon-wbfs-gui-para-wii
