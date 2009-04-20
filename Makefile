@@ -13,7 +13,7 @@ install:
 	cp wiithon_autodetectar_lector /usr/local/bin
 	cp wbfs /usr/local/bin
 
-	-cp wiithon*.schemas /usr/share/gconf/schemas/
+	-cp ./schemas/wiithon*.schemas /usr/share/gconf/schemas/
 
 	chmod 755 /usr/local/bin/wiithon
 	chmod 755 /usr/local/bin/wiithon_autodetectar
@@ -53,7 +53,6 @@ build_wbfs:
 
 commit:
 	bzr commit --file=COMMIT.txt && echo "" > COMMIT.txt
-	bzr log > CHANGELOG.txt
 
 status:
 	bzr status

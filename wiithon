@@ -67,7 +67,7 @@ def instalarJuego(DEVICE):
 					reemplazada = False
 				else:
 					reemplazada = True
-			print FABRICANTE_DVD + " a un ISO temporal de 4.4GB en = " + SALIDA + " ..."
+			print FABRICANTE_DVD + " a un ISO temporal de 4.4GB en = " + MAGIC_DVD+".iso ..."
 			if( reemplazada or (os.system("dd if="+LECTOR_DVD+" of="+SALIDA+" bs=1M")==0) ):
 				if ( anadirISO(DEVICE , SALIDA)):
 					if( descargarCaratula(MAGIC_DVD) ):
@@ -124,7 +124,7 @@ def getMagicISO(imagenISO):
 	return magic
 
 def ordenarPorNombre(juego1 , juego2):
-	return cmp( juego1[1] , juego2[1] )
+	return cmp( juego1[1].lower() , juego2[1].lower() )
 
 def getListaJuegos(DEVICE):
 	global WBFS_APP
