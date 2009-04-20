@@ -83,19 +83,33 @@ wbfs_t*wbfs_open_partition(rw_sector_callback_t read_hdsector,
         // init the partition
         if (reset)
         {
+        	printf("Se va ha formatear\n");
                 u8 sz_s;
                 wbfs_memset(head,0,hd_sector_size);
+			printf("head = %d\n",&head);                
+            printf("hd_sector_size = %d\n",hd_sector_size);
                 head->magic = wbfs_htonl(WBFS_MAGIC);
+			printf("head->magic = %d\n",head->magic);
                 head->hd_sec_sz_s = size_to_shift(hd_sector_size);
+			printf("head->hd_sec_sz_s = %d\n",head->hd_sec_sz_s);
+			printf("SECTORES TOTALES = %d\n",num_hd_sector);
                 head->n_hd_sec = wbfs_htonl(num_hd_sector);
+			printf("head->n_hd_sec = %d\n",head->n_hd_sec);
                 // choose minimum wblk_sz that fits this partition size
                 for(sz_s=6;sz_s<11;sz_s++)
                 {
+                	printf("sz_s = %d\n" , sz_s);
                         // ensure that wbfs_sec_sz is big enough to address every blocks using 16 bits
                         if(p->n_wii_sec <((1U<<16)*(1<<sz_s)))
-                                break;
+                        {
+                        	printf("ensure that wbfs_sec_sz is big enough to address every blocks using 16 bits\n");
+                            break;
+						}
                 }
+                printf("p->wii_sec_sz_s = %d\n" , p->wii_sec_sz_s);
+                printf("sz_s = %d\n" , sz_s);
                 head->wbfs_sec_sz_s = sz_s+p->wii_sec_sz_s;
+			printf("head->wbfs_sec_sz_s = %d\n",head->wbfs_sec_sz_s);
         }else
                 read_hdsector(callback_data,p->part_lba,1,head);
         if (head->magic != wbfs_htonl(WBFS_MAGIC))

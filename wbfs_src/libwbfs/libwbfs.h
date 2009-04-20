@@ -17,10 +17,10 @@ typedef u16 be16_t;
 typedef struct wbfs_head
 {
         be32_t magic;
-        // parameters copied in the partition for easy dumping, and bug reports
-        be32_t n_hd_sec;	       // total number of hd_sec in this partition
-        u8  hd_sec_sz_s;       // sector size in this partition
-        u8  wbfs_sec_sz_s;     // size of a wbfs sec
+        // parameters copied in the partition for easy dumping, and bug reports ----> WBFS
+        be32_t n_hd_sec;	       // total number of hd_sec in this partition -----> 1378608 ---> 1378795
+        u8  hd_sec_sz_s;       // sector size in this partition --------------------> 9 ---> 2900
+        u8  wbfs_sec_sz_s;     // size of a wbfs sec -------------------------------> 21 ---> ebea
         u8  padding3[2];
         u8  disc_table[0];	// size depends on hd sector size
 }__attribute((packed)) wbfs_head_t ;
