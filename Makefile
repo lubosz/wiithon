@@ -15,10 +15,10 @@ install:
 
 	-cp wiithon*.schemas /usr/share/gconf/schemas/
 
-	chmod +x /usr/local/bin/wiithon
-	chmod +x /usr/local/bin/wiithon_autodetectar
-	chmod +x /usr/local/bin/wiithon_autodetectar_lector
-	chmod +x /usr/local/bin/wbfs
+	chmod 755 /usr/local/bin/wiithon
+	chmod 755 /usr/local/bin/wiithon_autodetectar
+	chmod 755 /usr/local/bin/wiithon_autodetectar_lector
+	chmod 755 /usr/local/bin/wbfs
 
 	@echo "=================================================================="	
 	@echo "Instalado OK, instala manualmente los acciones de nautilus"

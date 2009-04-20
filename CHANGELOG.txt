@@ -1,4 +1,18 @@
 ------------------------------------------------------------
+revno: 7
+committer: Ricardo Marmolejo García <makiolo@gmail.com>
+branch nick: wiithon
+timestamp: Mon 2009-04-20 03:30:19 +0200
+message:
+  NOVEDADES
+  ------------------------------------
+  - Ahora cuando descomprimimos el ISO de un RAR , el ISO es borrado, pudiendo descomprimir infinitos RARs con solo 4,5 GB libres.
+  - Juegos ordenados alfabeticamente
+  
+  BUGS CORREGIDOS
+  ------------------------------------
+  - Arreglos menores
+------------------------------------------------------------
 revno: 6
 committer: Ricardo Marmolejo García <makiolo@gmail.com>
 branch nick: wiithon

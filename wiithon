@@ -365,11 +365,11 @@ def descargarCaratula(IDGAME, panoramica = False):
 			i = i + 1
 		return descargada
 
-def descargarTodasLasCaratula(DEVICE):
+def descargarTodasLasCaratula(DEVICE , panoramica):
 	listaIDGAME = getListaJuegos(DEVICE)
 	ok = True
 	for juego in listaIDGAME:
-		if ( not descargarCaratula(juego[0]) ):
+		if ( not descargarCaratula(juego[0] , panoramica) ):
 			ok = False
 	return ok
 

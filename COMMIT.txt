@@ -1,8 +1,1 @@
-NOVEDADES
-------------------------------------
-- Ahora cuando descomprimimos el ISO de un RAR , el ISO es borrado, pudiendo descomprimir infinitos RARs con solo 4,5 GB libres.
-- Juegos ordenados alfabeticamente
 
-BUGS CORREGIDOS
-------------------------------------
-- Arreglos menores
