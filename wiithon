@@ -2,7 +2,7 @@
 # vim: set fileencoding=utf8 :
 #
 # :: Invasion Tux
-# :: Ultima modificacion : miércoles, 15 de abril de 2009
+# :: Ultima modificacion : lunes, 20 de abril de 2009
 # :: Script realizado por makiolo (makiolo@gmail.com)  (Licencia ver LICENCIA.txt)
 # :: Ultima version : http://blogricardo.wordpress.com/2009/04/07/wiithon-wbfs-gui-para-wii/
 # :: Dependencias : sudo apt-get install nautilus-actions imagemagick wget rar
@@ -10,7 +10,7 @@
 
 import sys , os , subprocess , time , glob , fnmatch
 
-# variables , cambialo si sabes lo que haces
+# Constantes
 RUTA = os.path.dirname(sys.argv[0]) # deben estar junto al script las dependencias
 WBFS_APP = RUTA+"/"+"wbfs"
 DETECTOR_WBFS = RUTA+"/"+"wiithon_autodetectar"
@@ -25,21 +25,12 @@ COMANDO = ""
 ID_JUEGO = ""
 PAUSA = False
 FABRICANTE = ""
-listaISOS = []
+listaFicheros = []
 correctos = []
 erroneos = []
 SALIDA_FORZADA = False
 BLACK_LIST = "/\"\'$&|[]"
 PARAMETROS = []
-
-'''
-def estaInstalado(BUSCADO):
-	listaJuegos = getListaJuegos(DEVICE)
-	for juego in listaJuegos:
-		if(juego == BUSCADO):
-			return True
-	return False	
-'''
 
 def instalarJuego(DEVICE):
 	global DETECTOR_WBFS
@@ -76,7 +67,7 @@ def instalarJuego(DEVICE):
 					reemplazada = False
 				else:
 					reemplazada = True
-			print "Generando una ISO temporal de 4.4GB en = " + SALIDA + " ..."
+			print FABRICANTE_DVD + " a un ISO temporal de 4.4GB en = " + SALIDA + " ..."
 			if( reemplazada or (os.system("dd if="+LECTOR_DVD+" of="+SALIDA+" bs=1M")==0) ):
 				if ( anadirISO(DEVICE , SALIDA)):
 					if( descargarCaratula(MAGIC_DVD) ):
@@ -132,6 +123,9 @@ def getMagicISO(imagenISO):
 	f.close()
 	return magic
 
+def ordenarPorNombre(juego1 , juego2):
+	return juego1[1] > juego2[1]
+
 def getListaJuegos(DEVICE):
 	global WBFS_APP
 	subProceso = getPopen("sudo "+WBFS_APP+" -p "+DEVICE+" ls")
@@ -145,6 +139,7 @@ def getListaJuegos(DEVICE):
 			cachos[2] = cachos[2][:-1].split("\n")[0]
 			#Añade el juego a la lista
 			salida.append( [ cachos[0] , cachos[1] , cachos[2] ] )
+	salida.sort(ordenarPorNombre)
 	return salida
 
 def verificarTodosLosJuegos(DEVICE):
@@ -191,13 +186,13 @@ def get_IDJUEGO_de_Lista(DEVICE):
 		print "%3s\t%6s\t%-40s\t%7s\t%6s" % ("NUM","IDGAME","TITULO","TAMAÑO" , "¿Car.?")
 		print "--------------------------------------------------------------------------------"
 		i = 1
-		for IDGAME in listaIDGAME:
-			ocupado = float(IDGAME[2])
-			if (existeCaratula(IDGAME[0])):
+		for juego in listaIDGAME:
+			ocupado = float(juego[2])
+			if (existeCaratula(juego[0])):
 				caratula = "SI"
 			else:
 				caratula = "NO"
-			print "%3s\t%s\t%-40s\t%.2f GB\t%6s" % ( i , IDGAME[0] , IDGAME[1] , ocupado , caratula)
+			print "%3s\t%s\t%-40s\t%.2f GB\t%6s" % ( i , juego[0] , juego[1] , ocupado , caratula)
 			i = i + 1
 		print "--------------------------------------------------------------------------------"
 
@@ -213,7 +208,6 @@ def get_IDJUEGO_de_Lista(DEVICE):
 			print "El numero dado es incorrecto"
 	return "DESCONOCIDO"
 
-# Precondicion : DEVICE existe
 def listarISOs(DEVICE):
 	listaIDGAME = getListaJuegos(DEVICE)
 	numJuegos = len(listaIDGAME)
@@ -221,18 +215,17 @@ def listarISOs(DEVICE):
 		print "--------------------------------------------------------------------------------"
 		print "%6s\t%-55s\t%7s\t%6s" % ("IDGAME","TITULO","TAMAÑO" , "¿Car.?")
 		print "--------------------------------------------------------------------------------"
-		for IDGAME in listaIDGAME:
-			ocupado = float(IDGAME[2])
-			if (existeCaratula(IDGAME[0])):
+		for juego in listaIDGAME:
+			ocupado = float(juego[2])
+			if (existeCaratula(juego[0])):
 				caratula = "SI"
 			else:
 				caratula = "NO"
-			print "%s\t%-55s\t%.2f GB\t%6s" % ( IDGAME[0] , IDGAME[1] , ocupado , caratula)
+			print "%s\t%-55s\t%.2f GB\t%6s" % ( juego[0] , juego[1] , ocupado , caratula)
 		print "--------------------------------------------------------------------------------"
 		print "\t\t\t\t\t\t\t%d juegos de WII" % numJuegos
 	return numJuegos
 
-# Precondicion : DEVICE existe
 def mostrarEspacioLibre(DEVICE):
 	global WBFS_APP
 	subProceso = getPopen("sudo "+WBFS_APP+" -p "+DEVICE+" df")
@@ -249,30 +242,40 @@ def mostrarEspacioLibre(DEVICE):
 	else:
 		return False
 
-# Precondicion : DEVICE , ISO existen
 def anadirISO(DEVICE , ISO):
 	global WBFS_APP
-	salida = os.system("sudo "+WBFS_APP+" -p "+DEVICE+" add \""+ISO+"\"")
-	return salida == 0
+	try:
+		salida = os.system("sudo "+WBFS_APP+" -p "+DEVICE+" add \""+ISO+"\"")
+		return salida == 0
+	except KeyboardInterrupt:
+		return False
 
-# Precondicion : DEVICE , ISO existen
 def renombrarISO(DEVICE , IDGAME , NUEVO_NOMBRE):
 	global WBFS_APP
-	salida = os.system("sudo "+WBFS_APP+" -p "+DEVICE+" rename "+IDGAME+" \""+NUEVO_NOMBRE+"\"")
-	return salida == 0
+	try:
+		salida = os.system("sudo "+WBFS_APP+" -p "+DEVICE+" rename "+IDGAME+" \""+NUEVO_NOMBRE+"\"")
+		return salida == 0
+	except KeyboardInterrupt:
+		return False
 
 def borrarJuego(DEVICE , ID_JUEGO):
 	global WBFS_APP
 	try:
 		salida = os.system("sudo "+WBFS_APP+" -p "+DEVICE+" rm "+ID_JUEGO)
 		return salida == 0
+	except KeyboardInterrupt:
+		return False
 	except TypeError:
 		return False
 
 def extraerJuego(DEVICE , ID_JUEGO):
 	global WBFS_APP
-	salida = os.system("sudo "+WBFS_APP+" -p "+DEVICE+" extract "+ID_JUEGO)
-	return salida == 0
+	try:
+		salida = os.system("sudo "+WBFS_APP+" -p "+DEVICE+" extract "+ID_JUEGO)
+		return salida == 0
+	except KeyboardInterrupt:
+		return False
+
 	
 def getPopen(comando):
 	sp = subprocess
@@ -292,16 +295,10 @@ def glob_get_dirs(path):
 	except NameError, ne:
 		print "NameError thrown=", ne
 	except:
-		#print sys.exc_info()[0]
-		#print "ERROR en get_dirs()"
 		pass
 	return d
 
 def rec_glob(path, mask):
-	''' 
-	Recursivo glob en el actual directorio 
-	http://newspiritcompany.infogami.com/recursive_glob_py
-	'''
 	l = []
 	if (sys.platform[:5] == "linux"):
 		if path[-1] != '/':
@@ -327,8 +324,6 @@ def rec_glob(path, mask):
 	except NameError, ne:
 		print "NameError=", ne
 	except:
-		#print sys.exc_info()[0]
-		#print "ERROR en rec_glob()"
 		pass
 	return l
 	
@@ -352,21 +347,23 @@ def informarAcuerdo():
 def existeCaratula(IDGAME):
 	return (comprobarExistencia(IDGAME+".png"))
 
-def descargarCaratula(IDGAME):
+def descargarCaratula(IDGAME, panoramica = False):
 	if (existeCaratula(IDGAME)):
 		return True
 	else:
-		salida = os.system("wget --no-cache http://www.theotherzone.com/wii/pal/"+IDGAME+".png")
-		if (salida == 0):
-			salida = os.system("mogrify -resize 160x225 "+IDGAME+".png")
-			return salida == 0
-		else:
-			salida = os.system("wget --no-cache http://www.theotherzone.com/wii/ntsc/"+IDGAME+".png")
-			if (salida == 0):
-				salida = os.system("mogrify -resize 160x225 "+IDGAME+".png")
-				return salida == 0
-			else:
-				return False
+		origen = 'http://www.theotherzone.com/wii/'
+		regiones = ['pal' , 'ntsc' , 'ntscj']
+		if(panoramica):
+			origen = origen + "widescreen/"
+		descargada = False
+		i = 0
+		while ( not descargada and i<len(regiones)  ):
+			origenGen = origen + regiones[i] + "/" + IDGAME + ".png"
+			salida = os.system("wget --no-cache " + origenGen)
+			descargada = (salida == 0)
+			os.system("mogrify -resize 160x225 "+IDGAME+".png")
+			i = i + 1
+		return descargada
 
 def descargarTodasLasCaratula(DEVICE):
 	listaIDGAME = getListaJuegos(DEVICE)
@@ -451,7 +448,26 @@ def getListaUnica(lista):
 			u.append(x)
 	return u
 
-	
+def getNombreISOenRAR(nombreRAR):
+	comando = "rar lt -c- '"+nombreRAR+"' | grep -i '.iso' | awk -F'.iso'  '{print $1}' | awk -F' ' '{print $0\".iso\"}' | sed 's/^ *//' | sed 's/ *$//'"
+	tuberia = os.popen(comando)
+	salida_estandar = tuberia.readlines()
+	tuberia.close()
+	for linea in salida_estandar:
+		# Quitar el salto de linea
+		linea = linea[:-1]
+		
+		if( getExtension(linea)=="iso" ):
+			return linea
+
+	return ""
+
+def descomprimirRARconISODentro( nombreRAR , nombreISO ):
+	try:
+		salida = os.system("rar e -o- \""+nombreRAR+"\" \""+nombreISO+"\"")
+		return (salida == 0)
+	except KeyboardInterrupt:
+		return False
 
 ############## MAIN ###########################
 
@@ -473,6 +489,7 @@ for parametro in sys.argv:
 				pass
 	else:
 		PARAMETROS.append(parametro)
+
 PARAMETROS = getListaUnica(PARAMETROS)
 numParametros = len(PARAMETROS)
 
@@ -538,10 +555,16 @@ if ( not SALIDA_FORZADA ):
 			print "No hay Juegos para descargar una caratula"
 	elif ( PARAMETROS[0].lower() == "caratulas" or PARAMETROS[0].lower() == "covers"):
 		if(hayJuegos):
-			if(descargarTodasLasCaratula(DEVICE)):
+			panoramico = False
+			if(numParametros >= 2): # 3 parametros
+				panoramico = PARAMETROS[1].lower() == "panoramico" or PARAMETROS[1].lower() == "widescreen"
+				if (panoramico):
+					print "Se descargaran en formato paronámico"
+			if(descargarTodasLasCaratula(DEVICE , panoramico)):
 				print "OK, todas las caratulas se han descagado"
 			else:
 				print "ERROR, descargando alguna caratula"
+				print "Vuelvelo a intentar o mira en : http://www.theotherzone.com/wii/pal.php"
 		else:
 			print "No hay Juegos para descargar caratulas"
 	elif ( PARAMETROS[0].lower() == "renombrar" or PARAMETROS[0].lower() == "rename" or PARAMETROS[0].lower() == "r"):
@@ -597,23 +620,18 @@ if ( not SALIDA_FORZADA ):
 		print "Descargar todas las caratulas automaticamente a 160x225. Ojo puede que el servidor te banee, si te ocurre intentalo 5 minutos más tarde: \n\t\t" + os.path.basename(sys.argv[0]) + " caratulas\n"
 		print "Descargar la caratulas de un juego especificado por su IDGAME, la imagen es bajada a 160x225. El comando es un singular, es \"caratula\" ya que \"caratulas\" descarga todo: \n\t\t" + os.path.basename(sys.argv[0]) + " caratula IDGAME\n"
 		print "Descargar la caratulas de un juego especificado por menú, la imagen es bajada a 160x225. El comando es un singular, es \"caratula\" ya que \"caratulas\" descarga todo: \n\t\t" + os.path.basename(sys.argv[0]) + " caratula\n"
+		print "Comprobar Integridad de los juegos. Muchos de nuestros juegos pueden estar corruptos sin aún saberlo debido a el bug de borrado de las primeras versiones de WBFS\n\t\t" + os.path.basename(sys.argv[0]) + " comprobar\n"
+		print "Instar juegos desde el DVD, al estilo del usb loader, pero algo más lento porque dumpea a ISO y cuando termina mete la ISO.\n\t\t" + os.path.basename(sys.argv[0]) + " instalar\n"
 		print
 		print "Web : http://blogricardo.wordpress.com/2009/04/07/wiithon-wbfs-gui-para-wii"
 	elif ( PARAMETROS[0].lower() == "buscar" or PARAMETROS[0].lower() == "meter" or PARAMETROS[0].lower() == "-r" or PARAMETROS[0].lower() == "metertodo" or PARAMETROS[0].lower() == "buscartodo"):
-		print "Buscando Imagenes ISO dentro de RAR"
-		# Busca todos los rar recursivamente, y descomprime en el directorio actual el ISO
-		listaRAR = []
-		listaRAR += rec_glob(".", "*.rar")
-		if(len(listaRAR) > 0):
-			print "Se van ha descomprimir todos los ISO que hay en los rar"
-		for comprimido in listaRAR:
-			print "Buscando ISO en " + comprimido
-			# linea cojunuda, requiere un largo estudio xD entre escape del escape del escape de awk, bash y el propio python
-			os.system("rar lt -c- \""+comprimido+"\" | grep '\.iso' | awk -F.iso  '{print $1}' | awk -F\" \"  '{print $0\".iso\"}' | sed 's/^ *//' | sed 's/ *$//' | awk '{system(\"rar e -o- \\\""+comprimido+"\\\" \\\"\"$0\"\\\"\")}'")
-
-		print "Buscando Imagenes ISO"
-		# Hacer un listados de todos los isos del directorio actual recursivamente
-		listaISOS += rec_glob(".", "*.iso")
+		print "Buscando ficheros RAR ... ",
+		listaFicheros += rec_glob(".", "*.rar")
+		print "OK!"
+		
+		print "Buscando Imagenes ISO ... ",
+		listaFicheros += rec_glob(".", "*.iso")
+		print "OK!"
 	else:
 		#Los parametros es una lista de ISOS explicita
 		for parametro in PARAMETROS:
@@ -624,35 +642,98 @@ if ( not SALIDA_FORZADA ):
 			else:
 				expresionExpandida = glob.glob(parametro)
 			for archivo in expresionExpandida:
-				if( os.path.isfile(archivo) and getExtension(archivo) == "iso" ):
-					listaISOS.append(archivo)
-		if (len(listaISOS) == 0):
+				if	(
+						os.path.isfile(archivo) and 
+						(
+							getExtension(archivo) == "iso" or 
+							getExtension(archivo) == "rar"
+						)
+					):
+					listaFicheros.append(archivo)
+		if (len(listaFicheros) == 0):
 			print "No se ha encontrado ninguna imagen ISO"
 
 	#Ordenamos la lista
-	listaISOS.sort()
-	numImagenesISO = len(listaISOS)
+	listaFicheros.sort()
+	numImagenesISO = len(listaFicheros)
 	imagenesISOProcesadas=0
 
 	if(numImagenesISO>0):
-		for imagenISO in listaISOS:
+		for fichero in listaFicheros:
 			imagenesISOProcesadas = imagenesISOProcesadas + 1
-			print "===================== "+os.path.basename(imagenISO)+" ("+str(imagenesISOProcesadas)+"/"+str(numImagenesISO)+") ===================="
+			print "===================== "+os.path.basename(fichero)+" ("+str(imagenesISOProcesadas)+"/"+str(numImagenesISO)+") ===================="
 			print "{"
-			print "Añadir ISO : " + os.path.basename(imagenISO) + " a la particion " + DEVICE + " " + FABRICANTE
-			if( comprobarExistencia(DEVICE) and comprobarExistencia(imagenISO) ):
-				if ( anadirISO(DEVICE , imagenISO) ):
+			if( comprobarExistencia(DEVICE) and comprobarExistencia(fichero) ):
+				if( getExtension(fichero) == "rar" ):
+					print "Añadir RAR con ISO dentro : " + os.path.basename(fichero) + " a la particion " + DEVICE + " " + FABRICANTE
+					nombreRAR = fichero
+					nombreISO = getNombreISOenRAR(nombreRAR)
+					if (nombreISO != ""):
+						if( not comprobarExistencia(nombreISO) ):
+							# Paso 1 : Descomprimir
+							if (descomprimirRARconISODentro(nombreRAR , nombreISO) ):
+								print "Descomprimido correctamente"
+								# Paso 2 : Añadir la ISO
+								if ( anadirISO(DEVICE , nombreISO) ):
+										mensaje = "ISO descomprimida y añadida correctamente"
+										print "OK"
+										print "}"
+										print
+										correctos.append(mensaje)
+								else:
+									mensaje = "ERROR añadiendo la ISO : " + nombreISO + " (comprueba que sea una ISO de WII)"
+									print "ERROR"
+									print "}"
+									print
+									erroneos.append(mensaje)
+									
+								# Paso 3 : Borrar la iso descomprimida
+								try:
+									print "Se va ha borrar la ISO descomprimida"
+									os.remove(nombreISO)
+									mensaje = "La ISO "+nombreISO+" temporal fue borrada"
+									print "OK"
+									print "}"
+									print
+									correctos.append(mensaje)
+								except:
+									mensaje = "ERROR al borrar la ISO : " + nombreISO
+									print "ERROR"
+									print "}"
+									print
+									erroneos.append(mensaje)
+							else:
+								mensaje = "ERROR al descomrpimir el RAR : " + nombreRAR
+								print "ERROR"
+								print "}"
+								print
+								erroneos.append(mensaje)
+						else:
+							mensaje = "ERROR no se puede descomrpimir por que reemplazaría el ISO : " + nombreISO
+							print "ERROR"
+							print "}"
+							print
+							erroneos.append(mensaje)
+					else:
+						mensaje = "ERROR el RAR " + nombreRAR + " no tenía ninguna ISO"
+						print "ERROR"
+						print "}"
+						print
+						erroneos.append(mensaje)
+				elif( getExtension(fichero) == "iso" ):					
+					print "Añadir ISO : " + os.path.basename(fichero) + " a la particion " + DEVICE + " " + FABRICANTE
+					if ( anadirISO(DEVICE , fichero) ):
 						mensaje = "ISO añadida correctamente"
 						print "OK"
 						print "}"
 						print
 						correctos.append(mensaje)
-				else:
-					mensaje = "ERROR añadiendo la ISO : " + imagenISO + " (comprueba que sea una ISO de WII)"
-					print "ERROR"
-					print "}"
-					print
-					erroneos.append(mensaje)
+					else:
+						mensaje = "ERROR añadiendo la ISO : " + fichero + " (comprueba que sea una ISO de WII)"
+						print "ERROR"
+						print "}"
+						print
+						erroneos.append(mensaje)
 			else:
 				mensaje = "ERROR la ISO o la partición no existe"
 				print "ERROR"
@@ -684,7 +765,6 @@ if ( not SALIDA_FORZADA ):
 
 		print "}"
 
-	# Pausa si hay algun parametro con -p y no es una salida forzada
 if (PAUSA):
 	raw_input("Pulse cualquier tecla para continuar ...\n")
 

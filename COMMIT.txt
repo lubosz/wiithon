@@ -1,19 +1,8 @@
 NOVEDADES
-----------------------------------
-- Instar juegos desde el DVD, al estilo del usb loader, pero algo más lento porque dumpea a ISO y cuando termina mete la ISO.
-- Comprobar Integridad de los juegos. Muchos de nuestros juegos pueden estar corruptos sin aún saberlo debido a el bug de borrado de las primeras versiones de WBFS
-- Por tanto surgen 2 nuevos comandos:
-	wiithon instalar
-	wiithon comprobar
+------------------------------------
+- Ahora cuando descomprimimos el ISO de un RAR , el ISO es borrado, pudiendo descomprimir infinitos RARs con solo 4,5 GB libres.
+- Juegos ordenados alfabeticamente
 
 BUGS CORREGIDOS
-----------------------------------
-- Ahora busca particiones WBFS en todo tipo de particiones, antes solo en discos USB.
-- Corregido un problema detectando la partición en algunas distribuciones de GNU/Linux. En discos de 1 partición no asignan numero tipo /dev/sdaX llamandola /dev/sda, por tanto no cumplen el patrón y no eran detectados.
-- Añadida la comprobación de Hermes (modificada por mi) para verificar qué juegos instalados se han visto afectados por el bug de borrado en libwbfs. Gracias kraff por el aviso
-- Ahora muestra el nombre de la partición y el fabricante cuando no tengas juegos.
-
-CAMBIOS INTERNOS
-----------------------------------
-- He hecho unos primeros cambios en el Makefile segun consejos de Lk2
-- He rediseñado el código del check de Hermes (goto para los errores , flags sin enumerados y "for" donde hay k poner "while")
+------------------------------------
+- Arreglos menores
