@@ -31,7 +31,3 @@ treeview.connect('row-activated', cb)
 
 xml.get_widget('main_window').connect('destroy', gtk.main_quit)
 gtk.main()
-
-
-
-

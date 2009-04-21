@@ -9,6 +9,10 @@
 #
 
 import sys , os , subprocess , time , glob , fnmatch
+import pygtk
+pygtk.require('2.0')
+import gtk
+from gtk import glade
 
 # Constantes
 RUTA = os.path.dirname(sys.argv[0]) # deben estar junto al script las dependencias
@@ -31,6 +35,7 @@ erroneos = []
 SALIDA_FORZADA = False
 BLACK_LIST = "/\"\'$&|[]"
 PARAMETROS = []
+GUI = False
 
 def instalarJuego(DEVICE):
 	global DETECTOR_WBFS
@@ -456,10 +461,8 @@ def getNombreISOenRAR(nombreRAR):
 	for linea in salida_estandar:
 		# Quitar el salto de linea
 		linea = linea[:-1]
-		
 		if( getExtension(linea)=="iso" ):
 			return linea
-
 	return ""
 
 def descomprimirRARconISODentro( nombreRAR , nombreISO ):
@@ -493,19 +496,25 @@ for parametro in sys.argv:
 PARAMETROS = getListaUnica(PARAMETROS)
 numParametros = len(PARAMETROS)
 
-#Se puede forzar la salida por no aceptar el acuerdo
-if( not comprobarExistencia(ACUERDO)):
-	informarAcuerdo()
+GUI = numParametros == 0
 
-#Se puede forzar la salida por no encontrar particion
-DEVICE = buscarParticionWBFS()
+if(not GUI):
+	#Se puede forzar la salida por no aceptar el acuerdo
+	if( not comprobarExistencia(ACUERDO)):
+		informarAcuerdo()
 
-#Comprobamos si tiene algun juego
-listaJuegos = getListaJuegos(DEVICE)
-hayJuegos = len(listaJuegos) > 0
+	#Se puede forzar la salida por no encontrar particion
+	DEVICE = buscarParticionWBFS()
+
+	#Comprobamos si tiene algun juego
+	listaJuegos = getListaJuegos(DEVICE)
+	hayJuegos = len(listaJuegos) > 0
+else:
+	glade.XML('me_gusta_tipo_rythimbox.glade')
+	gtk.main()	
 
 if ( not SALIDA_FORZADA ):	
-	if((numParametros == 0) or PARAMETROS[0].lower() == "listar" or PARAMETROS[0].lower() == "ls"):
+	if( PARAMETROS[0].lower() == "listar" or PARAMETROS[0].lower() == "ls" ):
 		if(hayJuegos):
 			print "Listando juegos de : " + DEVICE + " " + FABRICANTE
 			listarISOs(DEVICE)
@@ -765,5 +774,5 @@ if ( not SALIDA_FORZADA ):
 
 		print "}"
 
-if (PAUSA):
+if (not GUI and PAUSA):
 	raw_input("Pulse cualquier tecla para continuar ...\n")
