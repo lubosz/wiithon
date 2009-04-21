@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <!DOCTYPE glade-interface SYSTEM "glade-2.0.dtd">
-<!--Generated with glade3 3.4.5 on Tue Apr 21 16:47:12 2009 -->
+<!--Generated with glade3 3.4.5 on Tue Apr 21 20:40:21 2009 -->
 <glade-interface>
   <widget class="GtkWindow" id="main_window">
+    <property name="width_request">640</property>
+    <property name="height_request">480</property>
     <property name="visible">True</property>
     <property name="title" translatable="yes">Wiithon - GUI</property>
     <child>
@@ -67,7 +69,6 @@
                 <child>
                   <widget class="GtkImage" id="image1">
                     <property name="visible">True</property>
-                    <property name="stock">gtk-missing-image</property>
                   </widget>
                 </child>
                 <child>
