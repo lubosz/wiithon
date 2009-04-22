@@ -21,6 +21,8 @@ install:
 	chmod 755 $(PREFIX)/bin/wiithon_autodetectar
 	chmod 755 $(PREFIX)/bin/wiithon_autodetectar_lector
 	chmod 755 $(PREFIX)/bin/wbfs
+	
+	-chmod 644 /usr/share/gconf/schemas/wiithon*.schemas
 
 	@echo "=================================================================="
 	@echo "Instalado OK, instala manualmente los acciones de nautilus"
@@ -66,6 +68,3 @@ empaquetar: wbfs clean
 commit: clean
 	bzr commit --file=COMMIT.txt && echo "" > COMMIT.txt
 	bzr log > CHANGELOG.txt
-
-status: clean
-	bzr status
