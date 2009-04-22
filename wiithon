@@ -147,8 +147,7 @@ def getListaJuegos(DEVICE):
 	salida.sort(ordenarPorNombre)
 	return salida
 
-def verificarTodosLosJuegos(DEVICE):
-	listaJuegos = getListaJuegos(DEVICE)
+def verificarTodosLosJuegos(DEVICE , listaJuegos):
 	listaCorruptos = []
 	numJuegos = len(listaJuegos)
 	if(numJuegos > 0):
@@ -183,15 +182,15 @@ def verificarTodosLosJuegos(DEVICE):
 		else:
 			print "Saliendo. No se ha desinstalado nada"
 
-def get_IDJUEGO_de_Lista(DEVICE):
-	listaIDGAME = getListaJuegos(DEVICE)
-	numJuegos = len(listaIDGAME)
+def get_IDJUEGO_de_Lista(DEVICE , listaJuegos):
+	listaJuegos = getListaJuegos(DEVICE)
+	numJuegos = len(listaJuegos)
 	if(numJuegos > 0):
 		print "--------------------------------------------------------------------------------"
 		print "%3s\t%6s\t%-40s\t%7s\t%6s" % ("NUM","IDGAME","TITULO","TAMAÑO" , "¿Car.?")
 		print "--------------------------------------------------------------------------------"
 		i = 1
-		for juego in listaIDGAME:
+		for juego in listaJuegos:
 			ocupado = float(juego[2])
 			if (existeCaratula(juego[0])):
 				caratula = "SI"
@@ -206,21 +205,20 @@ def get_IDJUEGO_de_Lista(DEVICE):
 			# 1 <= numJuego <= numJuegos
 			if ((1 <= numJuego) and (numJuego <= numJuegos)):
 				try:
-					return listaIDGAME[numJuego-1][0]
+					return listaJuegos[numJuego-1][0]
 				except IndexError:
 					print "Numero fuera de rango"
 		except ValueError:
 			print "El numero dado es incorrecto"
 	return "DESCONOCIDO"
 
-def listarISOs(DEVICE):
-	listaIDGAME = getListaJuegos(DEVICE)
-	numJuegos = len(listaIDGAME)
+def listarISOs(DEVICE , listaJuegos):
+	numJuegos = len(listaJuegos)
 	if(numJuegos > 0):
 		print "--------------------------------------------------------------------------------"
 		print "%6s\t%-55s\t%7s\t%6s" % ("IDGAME","TITULO","TAMAÑO" , "¿Car.?")
 		print "--------------------------------------------------------------------------------"
-		for juego in listaIDGAME:
+		for juego in listaJuegos:
 			ocupado = float(juego[2])
 			if (existeCaratula(juego[0])):
 				caratula = "SI"
@@ -249,28 +247,13 @@ def mostrarEspacioLibre(DEVICE):
 
 def anadirISO(DEVICE , ISO):
 	global WBFS_APP
-	'''
 	try:
 		salida = os.system("sudo "+WBFS_APP+" -p "+DEVICE+" add \""+ISO+"\"")
 		return salida == 0
 	except KeyboardInterrupt:
 		return False
 	'''
-	
-	'''
-	salida = ""
-	subProceso = getPopen("sudo "+WBFS_APP+" -p "+DEVICE+" add \""+ISO+"\"")
-
-	#Espera que acabe
-	subProceso.wait()
-
-	for linea in subProceso.stdout:
-		salida = salida + linea
-		print "----> " + salida
-	'''	
-	
 	comando = "sudo "+WBFS_APP+" -p "+DEVICE+" add \""+ISO+"\""
-	#comando = 'zenity --text "¿Cual es tu nombre?" --entry'
 	entrada, salida = os.popen2(comando)
 	linea = ""
 	while True:
@@ -291,7 +274,7 @@ def anadirISO(DEVICE , ISO):
 	entrada.close()
 	salida.close()
 	return True
-
+	'''
 
 def renombrarISO(DEVICE , IDGAME , NUEVO_NOMBRE):
 	global WBFS_APP
@@ -319,7 +302,6 @@ def extraerJuego(DEVICE , ID_JUEGO):
 	except KeyboardInterrupt:
 		return False
 
-	
 def getPopen(comando):
 	sp = subprocess
 	return sp.Popen(comando.split() , stdout=sp.PIPE ,stderr=sp.STDOUT , close_fds=False , shell=False, universal_newlines= True)
@@ -343,12 +325,9 @@ def glob_get_dirs(path):
 
 def rec_glob(path, mask):
 	l = []
-	if (sys.platform[:5] == "linux"):
-		if path[-1] != '/':
-			path = path + '/'
-	else: # Realmente no lo he probado en windows
-		if path[-1] != '\\':
-			path = path + '\\'
+	#Para linux
+	if path[-1] != '/':
+		path = path + '/'
 
 	for i in glob_get_dirs(path):
 		res = rec_glob(path + i, mask)
@@ -372,20 +351,16 @@ def rec_glob(path, mask):
 	
 def informarAcuerdo():
 	global SALIDA_FORZADA
-	print "No me hago responsable de la aplicacion ni de la perdida de datos. No obstante, la particion NO va ha ser formateada, esta aplicacion añade , borra y lista juegos explicitamente mediante la ayuda de " + os.path.basename(WBFS_APP) + ". Esta información no volverá a aparecer si acepta el acuerdo."
 	haElegido = False
 	while( not haElegido ):
-		respuesta = raw_input("Esta de acuerdo (S/N)? ")
-		if  ( respuesta.lower() == "n" or respuesta.lower() == "no" ):
-			print "No puedes usar esta aplicacion si no estas deacuerdo"
-			SALIDA_FORZADA = True
-		elif( respuesta.lower() == "s" or respuesta.lower() == "si" ):
+		if( zenity_pregunta("No me hago responsable de la aplicacion ni de la perdida de datos. No obstante, la particion NO va ha ser formateada, esta aplicacion añade , borra y lista juegos explicitamente mediante la ayuda de " + os.path.basename(WBFS_APP) + ". Esta información no volverá a aparecer si acepta el acuerdo. Esta de acuerdo (S/N)? ") ):
 			fAcuerdo = open(ACUERDO , "w")
 			fAcuerdo.write("Acuerdo aceptado en la fecha " + time.asctime() + "\n")
 			fAcuerdo.close()
 			haElegido = True
 		else:
-			print "Opcion incorrecta"
+			zenity_alerta("No puedes usar esta aplicacion si no estas deacuerdo")
+			SALIDA_FORZADA = True
 
 def existeCaratula(IDGAME):
 	return (comprobarExistencia(IDGAME+".png"))
@@ -408,10 +383,9 @@ def descargarCaratula(IDGAME, panoramica = False):
 			i = i + 1
 		return descargada
 
-def descargarTodasLasCaratula(DEVICE , panoramica):
-	listaIDGAME = getListaJuegos(DEVICE)
+def descargarTodasLasCaratula(DEVICE , listaJuegos , panoramica):
 	ok = True
-	for juego in listaIDGAME:
+	for juego in listaJuegos:
 		if ( not descargarCaratula(juego[0] , panoramica) ):
 			ok = False
 	return ok
@@ -441,37 +415,25 @@ def buscarParticionWBFS():
 			i = i + 1
 
 	if(len(listaParticiones) <= 0):
-		print "No se ha encontrado ningun dispositivo con particion WBFS."
+		zenity_alerta("No se ha encontrado ningun dispositivo con particion WBFS.")
 		SALIDA_FORZADA = True
 	elif(len(listaParticiones) > 1):
-		print "Lista de particiones autodetectadas : "
 		haElegido = False
 		while( not haElegido ):
-			i = 1
-			for dispositivo in listaParticiones:
-				print str(i) + " - Particion : " + dispositivo
-				i = i + 1
-			iSalir = str(i)
-			print iSalir + " - Salir"	
-			iElegido = raw_input("Elige la particion WBFS con la que va ha trabajar : ")
-			if( iElegido == iSalir ):
-				SALIDA_FORZADA = True
-				haElegido = True
-			else:
+			try:
+				DEVICE = zenity_lista("Lista de particiones autodetectadas : " , listaParticiones)
 				try:
-					DEVICE = listaParticiones[ int(iElegido) - 1 ]
-					try:
-						cachos = DEVICE.split(":")
-						DEVICE = cachos[0]
-						FABRICANTE = cachos[1]
-					except:
-						print "Error obteniendo el Fabricando del HD"
-						SALIDA_FORZADA = True
-					haElegido = True
-				except IndexError:
-					print "Fuera de rango"
-				except ValueError:
-					print "Valor incorrecto"
+					cachos = DEVICE.split(":")
+					DEVICE = cachos[0]
+					FABRICANTE = cachos[1]
+				except:
+					zenity_alerta( "Error obteniendo el Fabricando del HD" )
+					SALIDA_FORZADA = True
+				haElegido = True
+			except IndexError:
+				zenity_alerta( "Fuera de rango" )
+			except ValueError:
+				zenity_alerta( "Valor incorrecto" )
 	else: # len(listaParticiones) == 1)
 		DEVICE = listaParticiones[0]
 		try:
@@ -479,7 +441,7 @@ def buscarParticionWBFS():
 			DEVICE = cachos[0]
 			FABRICANTE = cachos[1]
 		except:
-			print "Error obteniendo el Fabricando del HD"
+			zenity_alerta( "Error obteniendo el Fabricando del HD" )
 			SALIDA_FORZADA = True
 
 	return DEVICE
@@ -540,6 +502,31 @@ def redimensionarParticionWBFS(particion):
 	else:
 		print "sin cambios."
 
+def zenity_pedir_texto(pregunta):
+	comando = 'zenity --text "'+pregunta+'" --entry'
+	entrada, salida = os.popen2(comando)
+	salida = salida.read()
+	salida = salida.strip()
+	return salida
+	
+def zenity_pregunta(pregunta):
+	comando = 'zenity --text "'+pregunta+'" --question'
+	salida = os.system(comando)
+	return salida == 0
+
+def zenity_alerta(texto):
+	comando = 'zenity --text "'+texto+'" --info'
+	salida = os.system(comando)
+
+def zenity_lista(titulo , listaOpciones):
+	comando = "zenity --list --column=\""+titulo+"\""
+	for opcion in listaOpciones:
+		comando = comando +  " \""+opcion+"\""
+	entrada, salida = os.popen2(comando)
+	salida = salida.read()
+	salida = salida.strip()
+	return salida
+
 ############# GUI GTK #########################
 
 def cb(treeview, path, view_column):
@@ -572,73 +559,70 @@ numParametros = len(PARAMETROS)
 
 GUI = numParametros == 0
 
-if(not GUI):
-	#Se puede forzar la salida por no aceptar el acuerdo
-	if( not comprobarExistencia(ACUERDO)):
-		informarAcuerdo()
+#Se puede forzar la salida por no aceptar el acuerdo
+if( not comprobarExistencia(ACUERDO)):
+	informarAcuerdo()
 
-	#Se puede forzar la salida por no encontrar particion
-	DEVICE = buscarParticionWBFS()
+#Se puede forzar la salida por no encontrar particion
+DEVICE = buscarParticionWBFS()
 
-	#Comprobamos si tiene algun juego
-	listaJuegos = getListaJuegos(DEVICE)
-	hayJuegos = len(listaJuegos) > 0
-else:
-	SALIDA_FORZADA = True
+#Comprobamos si tiene algun juego
+listaJuegos = getListaJuegos(DEVICE)
+hayJuegos = len(listaJuegos) > 0
 
-	print " ***********************************"
-	print " ******** GUI EN DESARROLLO ********"
-	print " ***********************************"
-	xml = gtk.glade.XML('glade/me_gusta_tipo_rythimbox.glade')
+if ( not SALIDA_FORZADA ):
+	if( GUI ):
+		print " ***********************************"
+		print " ******** GUI EN DESARROLLO ********"
+		print " ***********************************"
+		xml = gtk.glade.XML('glade/me_gusta_tipo_rythimbox.glade')
 
-	ls = gtk.ListStore(str,str,str,str,str)
+		ls = gtk.ListStore(str,str,str,str,str)
 
-	ls.append(('Rock Band 2','asdas','asdas','asdas','asdas',))
-	ls.append(('Animal Crossing','asdas','asdas','asdas','asdas', ))
-	ls.append(('Resident EVIL 4','asdas','asdas','asdas','asdas', ))
+		ls.append(('Rock Band 2','asdas','asdas','asdas','asdas',))
+		ls.append(('Animal Crossing','asdas','asdas','asdas','asdas', ))
+		ls.append(('Resident EVIL 4','asdas','asdas','asdas','asdas', ))
 
-	cell = gtk.CellRendererText()
-	tvcolumn1 = gtk.TreeViewColumn('ID', cell, text=0)
-	tvcolumn2 = gtk.TreeViewColumn('Juego', cell, text=0)
-	tvcolumn3 = gtk.TreeViewColumn('Tamaño', cell, text=0)
-	tvcolumn4 = gtk.TreeViewColumn('Tipo de juego', cell, text=0)
-	tvcolumn5 = gtk.TreeViewColumn('Año', cell, text=0)
+		cell = gtk.CellRendererText()
+		tvcolumn1 = gtk.TreeViewColumn('ID', cell, text=0)
+		tvcolumn2 = gtk.TreeViewColumn('Juego', cell, text=0)
+		tvcolumn3 = gtk.TreeViewColumn('Tamaño', cell, text=0)
+		tvcolumn4 = gtk.TreeViewColumn('Tipo de juego', cell, text=0)
+		tvcolumn5 = gtk.TreeViewColumn('Año', cell, text=0)
 
-	treeview = xml.get_widget('TablaJuegos')
-	treeview.append_column(tvcolumn1)
-	treeview.append_column(tvcolumn2)
-	treeview.append_column(tvcolumn3)
-	treeview.append_column(tvcolumn4)
-	treeview.append_column(tvcolumn5)
-	treeview.set_model(ls)
-	treeview.connect('row-activated', cb)
+		treeview = xml.get_widget('TablaJuegos')
+		treeview.append_column(tvcolumn1)
+		treeview.append_column(tvcolumn2)
+		treeview.append_column(tvcolumn3)
+		treeview.append_column(tvcolumn4)
+		treeview.append_column(tvcolumn5)
+		treeview.set_model(ls)
+		treeview.connect('row-activated', cb)
 
-	ls2 = gtk.ListStore(str)
-	ls3 = gtk.ListStore(str)
-	ls2.append(('Accion',))
-	ls2.append(('Futbol',))
-	ls3.append(('2009',))
-	ls3.append(('2008',))
-	cell2 = gtk.CellRendererText()
-	cell3 = gtk.CellRendererText()
-	col2 = gtk.TreeViewColumn('Tipo de Juego', cell2, text=0)
-	col3 = gtk.TreeViewColumn('Año', cell3, text=0)
-	treeview2 = xml.get_widget('ListaTipoJuego')
-	treeview2.append_column(col2)
-	treeview3 = xml.get_widget('ListaAnio')
-	treeview3.append_column(col3)
-	treeview2.set_model(ls2)
-	treeview3.set_model(ls3)
+		ls2 = gtk.ListStore(str)
+		ls3 = gtk.ListStore(str)
+		ls2.append(('Accion',))
+		ls2.append(('Futbol',))
+		ls3.append(('2009',))
+		ls3.append(('2008',))
+		cell2 = gtk.CellRendererText()
+		cell3 = gtk.CellRendererText()
+		col2 = gtk.TreeViewColumn('Tipo de Juego', cell2, text=0)
+		col3 = gtk.TreeViewColumn('Año', cell3, text=0)
+		treeview2 = xml.get_widget('ListaTipoJuego')
+		treeview2.append_column(col2)
+		treeview3 = xml.get_widget('ListaAnio')
+		treeview3.append_column(col3)
+		treeview2.set_model(ls2)
+		treeview3.set_model(ls3)
+		
+		xml.get_widget('main_window').connect('destroy', gtk.main_quit)
+		gtk.main()
 
-	
-	xml.get_widget('main_window').connect('destroy', gtk.main_quit)
-	gtk.main()
-
-if ( not SALIDA_FORZADA ):	
-	if( PARAMETROS[0].lower() == "listar" or PARAMETROS[0].lower() == "ls" ):
+	elif( PARAMETROS[0].lower() == "listar" or PARAMETROS[0].lower() == "ls" ):
 		if(hayJuegos):
 			print "Listando juegos de : " + DEVICE + " " + FABRICANTE
-			listarISOs(DEVICE)
+			listarISOs(DEVICE , listaJuegos)
 			mostrarEspacioLibre(DEVICE)				
 		else:
 			print "No tienes instalado ningún juego en " + DEVICE + " " + FABRICANTE
@@ -658,11 +642,11 @@ if ( not SALIDA_FORZADA ):
 				else:
 					IDGAME = parametro
 			else:
-				IDGAME = get_IDJUEGO_de_Lista(DEVICE)
+				IDGAME = get_IDJUEGO_de_Lista(DEVICE , listaJuegos)
 			print "Borrar juego con ID : " + IDGAME + " en particion " + DEVICE + " " + FABRICANTE
 			if( borrarJuego(DEVICE , IDGAME) ):				
 				print "Juego borrado correctmente. Refrescando lista ..."
-				if( comprobarExistencia(DEVICE) and listarISOs(DEVICE)>0 and mostrarEspacioLibre(DEVICE) ):
+				if( comprobarExistencia(DEVICE) and listarISOs(DEVICE , listaJuegos)>0 and mostrarEspacioLibre(DEVICE) ):
 					print "juego " + IDGAME + " borrado correctamente"
 				else:
 					print "Error al refrescar o no hay Juegos que listar"
@@ -676,7 +660,7 @@ if ( not SALIDA_FORZADA ):
 			if(numParametros >= 2):
 				IDGAME = PARAMETROS[1]
 			else:
-				IDGAME = get_IDJUEGO_de_Lista(DEVICE)
+				IDGAME = get_IDJUEGO_de_Lista(DEVICE , listaJuegos)
 			if(descargarCaratula(IDGAME)):
 				print "OK, descargado " + IDGAME + ".png"
 			else:
@@ -690,7 +674,7 @@ if ( not SALIDA_FORZADA ):
 				panoramico = PARAMETROS[1].lower() == "panoramico" or PARAMETROS[1].lower() == "widescreen"
 				if (panoramico):
 					print "Se descargaran en formato paronámico"
-			if(descargarTodasLasCaratula(DEVICE , panoramico)):
+			if(descargarTodasLasCaratula(DEVICE , listaJuegos , panoramico)):
 				print "OK, todas las caratulas se han descagado"
 			else:
 				print "ERROR, descargando alguna caratula"
@@ -703,12 +687,12 @@ if ( not SALIDA_FORZADA ):
 				IDGAME = PARAMETROS[1]
 				NUEVO_NOMBRE = PARAMETROS[2]
 			else:
-				IDGAME = get_IDJUEGO_de_Lista(DEVICE)
+				IDGAME = get_IDJUEGO_de_Lista(DEVICE , listaJuegos)
 				NUEVO_NOMBRE = raw_input("Escriba el nuevo nombre : ")
 			print "Renombrar juego ID : " + IDGAME + " como " + NUEVO_NOMBRE
 			if ( renombrarISO(DEVICE , IDGAME , NUEVO_NOMBRE) ):
 				print "Refrescando lista ..."
-				if( comprobarExistencia(DEVICE) and listarISOs(DEVICE)>0 and mostrarEspacioLibre(DEVICE) ):
+				if( comprobarExistencia(DEVICE) and listarISOs(DEVICE , listaJuegos)>0 and mostrarEspacioLibre(DEVICE) ):
 					print "ISO renombrada correctamente a \""+NUEVO_NOMBRE+"\""
 				else:
 					print "Renombrado OK aunque ocurrio un error al refrescar"
@@ -719,7 +703,7 @@ if ( not SALIDA_FORZADA ):
 	elif ( PARAMETROS[0].lower() == "check" or PARAMETROS[0].lower() == "comprobar" or PARAMETROS[0].lower() == "scandisk"):
 		if(hayJuegos):
 			print "Verificando todos los juegos de la particion " + DEVICE + " " + FABRICANTE
-			verificarTodosLosJuegos(DEVICE)
+			verificarTodosLosJuegos(DEVICE , listaJuegos)
 		else:
 			print "No hay Juegos para verificar"
 	elif ( PARAMETROS[0].lower() == "extraer" or PARAMETROS[0].lower() == "x"):
@@ -727,7 +711,7 @@ if ( not SALIDA_FORZADA ):
 			if(numParametros >= 2):
 				ID_JUEGO = PARAMETROS[1]
 			else:
-				ID_JUEGO = get_IDJUEGO_de_Lista(DEVICE)
+				ID_JUEGO = get_IDJUEGO_de_Lista(DEVICE , listaJuegos)
 			print "Extraer ISO de juego con ID : " + ID_JUEGO + " en particion " + DEVICE + " " + FABRICANTE
 			if( extraerJuego(DEVICE , ID_JUEGO) ):
 				print "Juego " + ID_JUEGO + " extraido OK"
@@ -754,14 +738,6 @@ if ( not SALIDA_FORZADA ):
 		print "Instar juegos desde el DVD, al estilo del usb loader, pero algo más lento porque dumpea a ISO y cuando termina mete la ISO.\n\t\t" + os.path.basename(sys.argv[0]) + " instalar\n"
 		print
 		print "Web : http://blogricardo.wordpress.com/2009/04/07/wiithon-wbfs-gui-para-wii"
-	elif ( PARAMETROS[0].lower() == "buscar" or PARAMETROS[0].lower() == "meter" or PARAMETROS[0].lower() == "-r" or PARAMETROS[0].lower() == "metertodo" or PARAMETROS[0].lower() == "buscartodo"):
-		print "Buscando ficheros RAR ... ",
-		listaFicheros += rec_glob(".", "*.rar")
-		print "OK!"
-		
-		print "Buscando Imagenes ISO ... ",
-		listaFicheros += rec_glob(".", "*.iso")
-		print "OK!"
 	else:
 		#Los parametros es una lista de ISOS explicita
 		for parametro in PARAMETROS:
@@ -780,6 +756,18 @@ if ( not SALIDA_FORZADA ):
 						)
 					):
 					listaFicheros.append(archivo)
+				#Buscar ISOs y RARs en parametros que son carpetas
+				elif( os.path.isdir(archivo) or archivo.lower() == "buscar" or archivo.lower() == "meter" or archivo.lower() == "-r" or archivo.lower() == "metertodo" or archivo.lower() == "buscartodo" ):
+					if( not os.path.isdir(archivo) ):
+						archivo = "."
+					
+					print "Buscando end "+os.path.dirname(archivo)+" ficheros RAR ... ",
+					listaFicheros += rec_glob(archivo, "*.rar")
+					print "OK!"
+					
+					print "Buscando en "+os.path.dirname(archivo)+" Imagenes ISO ... ",
+					listaFicheros += rec_glob(archivo, "*.iso")
+					print "OK!"
 		if (len(listaFicheros) == 0):
 			print "No se ha encontrado ninguna imagen ISO"
 
@@ -895,5 +883,5 @@ if ( not SALIDA_FORZADA ):
 
 		print "}"
 
-if (not GUI and PAUSA):
-	raw_input("Pulse cualquier tecla para continuar ...\n")
+	if (not GUI and PAUSA):
+		raw_input("Pulse cualquier tecla para continuar ...\n")
