@@ -9,10 +9,10 @@ all: wbfs
 	@echo Escribe "sudo make uninstall" para desinstalar
 	@echo ==================================================================
 
-install: uninstall
+install: wbfs uninstall
 
 	@echo "=================================================================="
-	@echo "Antes de instalar, se va ha desinstalar
+	@echo "Antes de instalar, se ha desinstalado"
 	@echo "=================================================================="
 
 	cp wiithon $(PREFIX)/bin
@@ -34,17 +34,17 @@ install: uninstall
 	@echo "=================================================================="
 
 uninstall:
-	-rm /usr/bin/wiithon
-	-rm /usr/bin/wiithon_autodetectar
-	-rm /usr/bin/wiithon_autodetectar_lector
-	-rm /usr/bin/wbfs
+	-$(RM) /usr/bin/wiithon
+	-$(RM) /usr/bin/wiithon_autodetectar
+	-$(RM) /usr/bin/wiithon_autodetectar_lector
+	-$(RM) /usr/bin/wbfs
 
-	-rm $(PREFIX)/bin/wiithon
-	-rm $(PREFIX)/bin/wiithon_autodetectar
-	-rm $(PREFIX)/bin/wiithon_autodetectar_lector
-	-rm $(PREFIX)/bin/wbfs
+	-$(RM) $(PREFIX)/bin/wiithon
+	-$(RM) $(PREFIX)/bin/wiithon_autodetectar
+	-$(RM) $(PREFIX)/bin/wiithon_autodetectar_lector
+	-$(RM) $(PREFIX)/bin/wbfs
 
-	-rm /usr/share/gconf/schemas/wiithon*.schemas
+	-$(RM) /usr/share/gconf/schemas/wiithon*.schemas
 
 	@echo "=================================================================="
 	@echo "Desinstalado OK, desinstala las acciones de nautilus manualmente"
@@ -55,7 +55,7 @@ clean: clean_wbfs
 
 clean_wbfs:
 	$(MAKE) -C wbfs_src clean
-	-rm wbfs
+	-$(RM) wbfs
 
 wbfs: /usr/include/openssl/aes.h /usr/include/openssl/md5.h /usr/include/openssl/sha.h
 	$(MAKE) -C wbfs_src
