@@ -472,6 +472,12 @@ def descomprimirRARconISODentro( nombreRAR , nombreISO ):
 	except KeyboardInterrupt:
 		return False
 
+############# GUI GTK #########################
+
+def cb(treeview, path, view_column):
+    global xml
+    xml.get_widget('caratula').set_from_file('glade/images/rock2.jpg')
+
 ############## MAIN ###########################
 
 # Leemos parametros
@@ -510,8 +516,52 @@ if(not GUI):
 	listaJuegos = getListaJuegos(DEVICE)
 	hayJuegos = len(listaJuegos) > 0
 else:
-	glade.XML('me_gusta_tipo_rythimbox.glade')
-	gtk.main()	
+	SALIDA_FORZADA = True
+
+	xml = gtk.glade.XML('glade/me_gusta_tipo_rythimbox.glade')
+
+	ls = gtk.ListStore(str,str,str,str,str)
+
+	ls.append(('Rock Band 2','asdas','asdas','asdas','asdas',))
+	ls.append(('Animal Crossing','asdas','asdas','asdas','asdas', ))
+	ls.append(('Resident EVIL 4','asdas','asdas','asdas','asdas', ))
+
+	cell = gtk.CellRendererText()
+	tvcolumn1 = gtk.TreeViewColumn('ID', cell, text=0)
+	tvcolumn2 = gtk.TreeViewColumn('Juego', cell, text=0)
+	tvcolumn3 = gtk.TreeViewColumn('Tamaño', cell, text=0)
+	tvcolumn4 = gtk.TreeViewColumn('Tipo de juego', cell, text=0)
+	tvcolumn5 = gtk.TreeViewColumn('Año', cell, text=0)
+
+	treeview = xml.get_widget('TablaJuegos')
+	treeview.append_column(tvcolumn1)
+	treeview.append_column(tvcolumn2)
+	treeview.append_column(tvcolumn3)
+	treeview.append_column(tvcolumn4)
+	treeview.append_column(tvcolumn5)
+	treeview.set_model(ls)
+	treeview.connect('row-activated', cb)
+
+	ls2 = gtk.ListStore(str)
+	ls3 = gtk.ListStore(str)
+	ls2.append(('Accion',))
+	ls2.append(('Futbol',))
+	ls3.append(('2009',))
+	ls3.append(('2008',))
+	cell2 = gtk.CellRendererText()
+	cell3 = gtk.CellRendererText()
+	col2 = gtk.TreeViewColumn('Tipo de Juego', cell2, text=0)
+	col3 = gtk.TreeViewColumn('Año', cell3, text=0)
+	treeview2 = xml.get_widget('ListaTipoJuego')
+	treeview2.append_column(col2)
+	treeview3 = xml.get_widget('ListaAnio')
+	treeview3.append_column(col3)
+	treeview2.set_model(ls2)
+	treeview3.set_model(ls3)
+
+	
+	xml.get_widget('main_window').connect('destroy', gtk.main_quit)
+	gtk.main()
 
 if ( not SALIDA_FORZADA ):	
 	if( PARAMETROS[0].lower() == "listar" or PARAMETROS[0].lower() == "ls" ):

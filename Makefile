@@ -9,13 +9,18 @@ all: wbfs
 	@echo Escribe "sudo make uninstall" para desinstalar
 	@echo ==================================================================
 
-install:
+install: uninstall
+
+	@echo "=================================================================="
+	@echo "Antes de instalar, se va ha desinstalar
+	@echo "=================================================================="
+
 	cp wiithon $(PREFIX)/bin
 	cp wiithon_autodetectar $(PREFIX)/bin
 	cp wiithon_autodetectar_lector $(PREFIX)/bin
 	cp wbfs $(PREFIX)/bin
 
-	-cp wiithon*.schemas $(PREFIX)/share/gconf/schemas/
+	-cp ./schemas/wiithon*.schemas /usr/share/gconf/schemas/
 
 	chmod 755 $(PREFIX)/bin/wiithon
 	chmod 755 $(PREFIX)/bin/wiithon_autodetectar

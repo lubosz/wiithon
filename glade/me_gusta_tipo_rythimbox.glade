@@ -156,7 +156,7 @@ Año: 2007</property>
                   </packing>
                 </child>
                 <child>
-                  <widget class="GtkImage" id="image1">
+                  <widget class="GtkImage" id="caratula">
                     <property name="width_request">160</property>
                     <property name="height_request">225</property>
                     <property name="visible">True</property>
@@ -329,6 +329,8 @@ Año: 2007</property>
                           <widget class="GtkScrolledWindow" id="scrolledwindow4">
                             <property name="visible">True</property>
                             <property name="can_focus">True</property>
+                            <property name="hscrollbar_policy">GTK_POLICY_AUTOMATIC</property>
+                            <property name="vscrollbar_policy">GTK_POLICY_AUTOMATIC</property>
                             <property name="shadow_type">GTK_SHADOW_IN</property>
                             <child>
                               <widget class="GtkTreeView" id="ListaTipoJuego">
@@ -342,6 +344,8 @@ Año: 2007</property>
                           <widget class="GtkScrolledWindow" id="scrolledwindow5">
                             <property name="visible">True</property>
                             <property name="can_focus">True</property>
+                            <property name="hscrollbar_policy">GTK_POLICY_AUTOMATIC</property>
+                            <property name="vscrollbar_policy">GTK_POLICY_AUTOMATIC</property>
                             <property name="shadow_type">GTK_SHADOW_IN</property>
                             <child>
                               <widget class="GtkTreeView" id="ListaAnio">
@@ -376,6 +380,7 @@ Año: 2007</property>
                         <property name="visible">True</property>
                         <property name="can_focus">True</property>
                         <property name="reorderable">True</property>
+                        <property name="enable_grid_lines">GTK_TREE_VIEW_GRID_LINES_HORIZONTAL</property>
                       </widget>
                     </child>
                   </widget>
