@@ -466,6 +466,6 @@ void spinner(u64 x, u64 max)
 	s = d % 60;
 	percent = 100.0 * x / max;
 
-	fprintf(stderr, "%5.2f%% (%c) queda: %d:%02d:%02d  \r", percent, "/|\\-"[(x/10) % 4], h, m, s);
-	fflush(stderr);
+	fprintf(stdout , "%5.2f;%d;%02d;%02d\n", percent, h, m, s);
+	fflush(stdout);
 }

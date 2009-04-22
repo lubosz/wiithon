@@ -249,11 +249,49 @@ def mostrarEspacioLibre(DEVICE):
 
 def anadirISO(DEVICE , ISO):
 	global WBFS_APP
+	'''
 	try:
 		salida = os.system("sudo "+WBFS_APP+" -p "+DEVICE+" add \""+ISO+"\"")
 		return salida == 0
 	except KeyboardInterrupt:
 		return False
+	'''
+	
+	'''
+	salida = ""
+	subProceso = getPopen("sudo "+WBFS_APP+" -p "+DEVICE+" add \""+ISO+"\"")
+
+	#Espera que acabe
+	subProceso.wait()
+
+	for linea in subProceso.stdout:
+		salida = salida + linea
+		print "----> " + salida
+	'''	
+	
+	comando = "sudo "+WBFS_APP+" -p "+DEVICE+" add \""+ISO+"\""
+	#comando = 'zenity --text "¿Cual es tu nombre?" --entry'
+	entrada, salida = os.popen2(comando)
+	linea = ""
+	while True:
+		letra = salida.read(1)
+		if(letra == '\n'):
+			linea = linea.strip()
+			try:
+				cachos = linea.split(";")
+				porcentaje = float(cachos[0])
+				hora = int(cachos[1])
+				minutos = int(cachos[2])
+				segundos = int(cachos[3])
+				print "LLeva un %.2f%% quedan %d horas, %d minutos, %d segundos" % ( porcentaje , hora , minutos , segundos )
+			except TypeError:
+				pass
+			linea = ""
+		linea = linea + letra
+	entrada.close()
+	salida.close()
+	return True
+
 
 def renombrarISO(DEVICE , IDGAME , NUEVO_NOMBRE):
 	global WBFS_APP
@@ -472,6 +510,36 @@ def descomprimirRARconISODentro( nombreRAR , nombreISO ):
 	except KeyboardInterrupt:
 		return False
 
+# En desarrollo
+# Se pasa como parametro ej: /dev/sdb2
+def redimensionarParticionWBFS(particion):
+	# 57 42 46 53 00 0b 85 30
+	# 57 42 46 53 00 29 ea eb
+
+	comando = "sudo fdisk -lu | grep -v 'MB' | grep '"+particion+"' | awk '{print $3-$2+1}'"
+	entrada, salida = os.popen2(comando)
+	salida = salida.read()
+
+	offset = 0x4
+	valor = int(salida)
+
+	print "Se va escribir en la particion %s : %x:%x" % ( particion , offset , valor )
+	respuesta = raw_input("¿Seguir? (S/N)\n")
+
+	if (respuesta.lower() == 's'):
+		byte1 = (valor & 0xFF000000) >> 8*3
+		byte2 = (valor & 0x00FF0000) >> 8*2
+		byte3 = (valor & 0x0000FF00) >> 8
+		byte4 = (valor & 0x000000FF)
+
+		f = open(particion , "wb")
+		f.seek(offset , os.SEEK_SET)
+		f.write('%c%c%c%c' % ( byte1 , byte2 , byte3 , byte4 ) )
+		f.close()
+		print "4 bytes escritos."
+	else:
+		print "sin cambios."
+
 ############# GUI GTK #########################
 
 def cb(treeview, path, view_column):
@@ -518,6 +586,9 @@ if(not GUI):
 else:
 	SALIDA_FORZADA = True
 
+	print " ***********************************"
+	print " ******** GUI EN DESARROLLO ********"
+	print " ***********************************"
 	xml = gtk.glade.XML('glade/me_gusta_tipo_rythimbox.glade')
 
 	ls = gtk.ListStore(str,str,str,str,str)

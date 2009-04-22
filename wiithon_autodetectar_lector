@@ -4,11 +4,13 @@
 # = 0 --> NO tienes udevinfo
 comprobarTienesUDEV()
 {
-	return `which udevinfo | wc -l`
+	return `which udevinfo 2> /dev/null | wc -l`
 }
 
 comprobarTienesUDEV
 hayUDEV=$?
+
+sleep 5
 
 for i in $(ls /dev/*cd* -l | grep '^l'  | awk '{print $10}' | uniq | awk '{print "/dev/" $1}');
 do
