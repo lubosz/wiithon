@@ -9,10 +9,11 @@
 #
 
 import sys , os , subprocess , time , glob , fnmatch
-import pygtk
-pygtk.require('2.0')
+import getopt
 import gtk
-from gtk import glade
+
+from gui import WiithonGUI
+from util import NonRepeatList
 
 # Constantes
 RUTA = os.path.dirname(sys.argv[0]) # deben estar junto al script las dependencias
@@ -34,7 +35,7 @@ correctos = []
 erroneos = []
 SALIDA_FORZADA = False
 BLACK_LIST = "/\"\'$&|[]"
-PARAMETROS = []
+PARAMETROS = NonRepeatList()
 GUI = False
 
 def instalarJuego(DEVICE):
@@ -46,12 +47,12 @@ def instalarJuego(DEVICE):
 	subProceso.wait()
 	for linea in subProceso.stdout:
 		salida = salida + linea
-		
+
 	# Le quito el ultimo salto de linea y forma la lista cortando por saltos de linea
 	listaParticiones = []
 	if (salida <> ""):
 		listaParticiones = salida[:-1].split("\n")
-	
+
 	numListaParticiones = len(listaParticiones)
 	if(numListaParticiones<=0):
 		print "No se ha encontrado ningún disco de la Wii"
@@ -307,13 +308,13 @@ def getPopen(comando):
 	return sp.Popen(comando.split() , stdout=sp.PIPE ,stderr=sp.STDOUT , close_fds=False , shell=False, universal_newlines= True)
 
 def glob_get_dirs(path):
-	''' 
-	Devuelve una lista de directorios del directorio "path" 
+	'''
+	Devuelve una lista de directorios del directorio "path"
 	http://newspiritcompany.infogami.com/recursive_glob_py
 	'''
 	d = []
 	try:
-		for i in os.listdir(path):          
+		for i in os.listdir(path):
 			if os.path.isdir(path+i):
 				d.append(os.path.basename(i))
 
@@ -335,7 +336,7 @@ def rec_glob(path, mask):
 
 	try:
 		for i in os.listdir(path):
-				
+
 			ii = i
 			i = path + i
 			if os.path.isfile(i):
@@ -348,7 +349,7 @@ def rec_glob(path, mask):
 	except:
 		pass
 	return l
-	
+
 def informarAcuerdo():
 	global SALIDA_FORZADA
 	haElegido = False
@@ -407,7 +408,7 @@ def buscarParticionWBFS():
 
 	# Borramos los elementos que no contengan /dev/
 	# los que tengan /dev/ se corta por : y se coge el primer cacho
-	i = 0	
+	i = 0
 	while ( i  < len(listaParticiones) ):
 		if(listaParticiones[i].find("/dev/") == -1):
 			del listaParticiones[i]
@@ -446,12 +447,12 @@ def buscarParticionWBFS():
 
 	return DEVICE
 
-def getListaUnica(lista):
-	u = []
-	for x in lista:
-		if x not in u:
-			u.append(x)
-	return u
+#def getListaUnica(lista):
+#	u = []
+#	for x in lista:
+#		if x not in u:
+#			u.append(x)
+#	return u
 
 def getNombreISOenRAR(nombreRAR):
 	comando = "rar lt -c- '"+nombreRAR+"' | grep -i '.iso' | awk -F'.iso'  '{print $1}' | awk -F' ' '{print $0\".iso\"}' | sed 's/^ *//' | sed 's/ *$//'"
@@ -508,7 +509,7 @@ def zenity_pedir_texto(pregunta):
 	salida = salida.read()
 	salida = salida.strip()
 	return salida
-	
+
 def zenity_pregunta(pregunta):
 	comando = 'zenity --text "'+pregunta+'" --question'
 	salida = os.system(comando)
@@ -527,34 +528,132 @@ def zenity_lista(titulo , listaOpciones):
 	salida = salida.strip()
 	return salida
 
-############# GUI GTK #########################
-
-def cb(treeview, path, view_column):
-    global xml
-    xml.get_widget('caratula').set_from_file('glade/images/rock2.jpg')
-
 ############## MAIN ###########################
+def main(argv):
+	global PAUSA
 
-# Leemos parametros
-for parametro in sys.argv:
-	if ( parametro == sys.argv[0] ):
-		pass
-	elif( parametro == "-p" ):
-		PAUSA = True
-	elif( parametro.find("=") != -1 ):
-		cacho_izq = parametro[:parametro.find("=")]
-		cacho_der = parametro[parametro.find("=")+1:]
-		if( cacho_izq=="--trabajo" or cacho_izq=="--work" ):
-			if(os.path.isfile(cacho_der)):
-				cacho_der = os.path.dirname(cacho_der)
-			try:
-				os.chdir(cacho_der)
-			except:
-				pass
-	else:
-		PARAMETROS.append(parametro)
+	options, arguments = getopt.getopt(argv, 'p', ['trabajo=',
+						       'work='])
 
-PARAMETROS = getListaUnica(PARAMETROS)
+	for option, value in options:
+		if option == '-p':
+			PAUSA = True
+
+		elif option in ['trabajo', 'work']:
+			if os.path.isdir(value):
+				os.chdir(value)
+
+	PARAMETROS.extend(arguments)
+
+
+
+
+def uso():
+	global RUTA
+
+	wiithon = os.path.basename(sys.argv[0])
+
+	print '''Listar juegos. El programa por defecto, sin parametros, hace un listado de los juegos:
+\t\t%s
+Añadir ISO mediante una lista explicita de las ISOS:
+\t\t%s "%s/wii/mario.iso" "iso2" "iso3" "isoN"
+
+Añadir ISO con exp. reg. La expresión solo afecta al directorio actual, actualmente no es recursivo:
+\t\t%s *.iso
+
+Buscar y Añadir ISO's recursivamente. Busca todos las imagenes isos RECURSIVAMENTE, incluso tambien busca dentro de RAR, a falta de implementar zip), tal vez necesites sudo apt-get install rar.
+\t\t%s buscar
+
+Borrar juegos. Especificando el juego mediante un menú:
+\t\t%s borrar
+
+Borrar juegos. Podemos borrar con el IDGAME:
+\t\t%s borrar IDJUEGO
+
+Borrar juegos. Podemos borrar con el IDGAME obtenido a partir de un ISO local. El archivo ISO local NO es borrado:
+\t\t%s borrar "%s/wii/mario.iso"
+
+Renombrar juegos. Especificando el juego mediante un menú:
+\t\t%s renombrar
+
+Renombrar juegos, puedes cambiar el nombre de los juegos ya metidos en HD, útil para que nos enteremos cuando estemos con el USB Loader:
+\t\t%s renombrar IDGAME "Mario Kart Wii"
+
+Extraer juegos a un archivo ISO. El juego es especificado mediante un menú:
+\t\t%s extraer
+
+Extraer juegos a un archivo ISO. OJO! : El archivo ISO de salida pertenecerá a root:
+\t\t%s extraer IDJUEGO
+
+Descargar todas las caratulas automaticamente a 160x225. Ojo puede que el servidor te banee, si te ocurre intentalo 5 minutos más tarde:
+\t\t%s caratulas
+
+Descargar la caratulas de un juego especificado por su IDGAME, la imagen es bajada a 160x225. El comando es un singular, es "caratula" ya que "caratulas" descarga todas:
+\t\t%s caratula IDGAME
+
+Descargar la caratulas de un juego especificado por menú, la imagen es bajada a 160x225. El comando es un singular, es "caratula" ya que "caratulas" descarga todo:
+\t\t%s caratula"
+
+Comprobar Integridad de los juegos. Muchos de nuestros juegos pueden estar corruptos sin aún saberlo debido a el bug de borrado de las primeras versiones de WBFS
+\t\t%s comprobar
+
+Instar juegos desde el DVD, al estilo del usb loader, pero algo más lento porque dumpea a ISO y cuando termina mete la ISO:
+\t\t%s instalar
+
+
+Web : http://blogricardo.wordpress.com/2009/04/07/wiithon-wbfs-gui-para-wii
+''' %(wiithon,
+      wiithon, RUTA,
+      wiithon,
+      wiithon,
+      wiithon,
+      wiithon,
+      wiithon, RUTA,
+      wiithon,
+      wiithon,
+      wiithon,
+      wiithon,
+      wiithon,
+      wiithon,
+      wiithon,
+      wiithon,
+      wiithon
+      )
+
+
+try:
+	main(sys.argv[1:])
+	pass
+
+except getopt.GetoptError:
+	uso()
+	zenity_alerta("Programa ejecutado con las opciones incorrectas")
+	sys.exit(1)
+
+#except:
+#	print 'except'
+#	sys.exit(1)
+
+
+# el siguiente bucle se hace dentro del método main con getopt
+#for parametro in sys.argv[1:]:
+#	if( parametro == "-p" ):
+#		PAUSA = True
+#	elif( parametro.find("=") != -1 ):
+#		cacho_izq = parametro[:parametro.find("=")]
+#		cacho_der = parametro[parametro.find("=")+1:]
+#		if( cacho_izq=="--trabajo" or cacho_izq=="--work" ):
+#			if(os.path.isfile(cacho_der)):
+#				cacho_der = os.path.dirname(cacho_der)
+#			try:
+#				os.chdir(cacho_der)
+#			except:
+#				pass
+#	else:
+#		PARAMETROS.append(parametro)
+
+#No es necesario porque usamos la lista sin repeticion
+#PARAMETROS = getListaUnica(PARAMETROS)
 numParametros = len(PARAMETROS)
 
 GUI = numParametros == 0
@@ -575,55 +674,14 @@ if ( not SALIDA_FORZADA ):
 		print " ***********************************"
 		print " ******** GUI EN DESARROLLO ********"
 		print " ***********************************"
-		xml = gtk.glade.XML('glade/me_gusta_tipo_rythimbox.glade')
-
-		ls = gtk.ListStore(str,str,str,str,str)
-
-		ls.append(('Rock Band 2','asdas','asdas','asdas','asdas',))
-		ls.append(('Animal Crossing','asdas','asdas','asdas','asdas', ))
-		ls.append(('Resident EVIL 4','asdas','asdas','asdas','asdas', ))
-
-		cell = gtk.CellRendererText()
-		tvcolumn1 = gtk.TreeViewColumn('ID', cell, text=0)
-		tvcolumn2 = gtk.TreeViewColumn('Juego', cell, text=0)
-		tvcolumn3 = gtk.TreeViewColumn('Tamaño', cell, text=0)
-		tvcolumn4 = gtk.TreeViewColumn('Tipo de juego', cell, text=0)
-		tvcolumn5 = gtk.TreeViewColumn('Año', cell, text=0)
-
-		treeview = xml.get_widget('TablaJuegos')
-		treeview.append_column(tvcolumn1)
-		treeview.append_column(tvcolumn2)
-		treeview.append_column(tvcolumn3)
-		treeview.append_column(tvcolumn4)
-		treeview.append_column(tvcolumn5)
-		treeview.set_model(ls)
-		treeview.connect('row-activated', cb)
-
-		ls2 = gtk.ListStore(str)
-		ls3 = gtk.ListStore(str)
-		ls2.append(('Accion',))
-		ls2.append(('Futbol',))
-		ls3.append(('2009',))
-		ls3.append(('2008',))
-		cell2 = gtk.CellRendererText()
-		cell3 = gtk.CellRendererText()
-		col2 = gtk.TreeViewColumn('Tipo de Juego', cell2, text=0)
-		col3 = gtk.TreeViewColumn('Año', cell3, text=0)
-		treeview2 = xml.get_widget('ListaTipoJuego')
-		treeview2.append_column(col2)
-		treeview3 = xml.get_widget('ListaAnio')
-		treeview3.append_column(col3)
-		treeview2.set_model(ls2)
-		treeview3.set_model(ls3)
-		
-		xml.get_widget('main_window').connect('destroy', gtk.main_quit)
+		interfaz = WiithonGUI()
 		gtk.main()
 
 	elif( PARAMETROS[0].lower() == "listar" or PARAMETROS[0].lower() == "ls" ):
 		if(hayJuegos):
 			print "Listando juegos de : " + DEVICE + " " + FABRICANTE
 			listarISOs(DEVICE , listaJuegos)
-			mostrarEspacioLibre(DEVICE)				
+			mostrarEspacioLibre(DEVICE)
 		else:
 			print "No tienes instalado ningún juego en " + DEVICE + " " + FABRICANTE
 	elif ( PARAMETROS[0].lower() == "instalar" or PARAMETROS[0].lower() == "install"):
@@ -644,7 +702,7 @@ if ( not SALIDA_FORZADA ):
 			else:
 				IDGAME = get_IDJUEGO_de_Lista(DEVICE , listaJuegos)
 			print "Borrar juego con ID : " + IDGAME + " en particion " + DEVICE + " " + FABRICANTE
-			if( borrarJuego(DEVICE , IDGAME) ):				
+			if( borrarJuego(DEVICE , IDGAME) ):
 				print "Juego borrado correctmente. Refrescando lista ..."
 				if( comprobarExistencia(DEVICE) and listarISOs(DEVICE , listaJuegos)>0 and mostrarEspacioLibre(DEVICE) ):
 					print "juego " + IDGAME + " borrado correctamente"
@@ -654,7 +712,7 @@ if ( not SALIDA_FORZADA ):
 				print "ERROR borrando el juego " + ID_JUEGO
 		else:
 			print "No hay Juegos para borrar"
-			
+
 	elif ( PARAMETROS[0].lower() == "caratula" or PARAMETROS[0].lower() == "cover"):
 		if(hayJuegos):
 			if(numParametros >= 2):
@@ -720,24 +778,8 @@ if ( not SALIDA_FORZADA ):
 		else:
 			print "No hay Juegos para extraer"
 	elif ( PARAMETROS[0].lower() == "ayuda" or PARAMETROS[0].lower() == "h" or PARAMETROS[0].lower() == "-h" or PARAMETROS[0].lower() == "--help" or PARAMETROS[0].lower() == "help" ): #x
-		print "Listar juegos. El programa por defecto, sin parametros, hace un listado de los juegos : \n\t\t" + os.path.basename(sys.argv[0]) + "\n"
-		print "Añadir ISO mediante una lista explicita de las ISOS : \n\t\t" + os.path.basename(sys.argv[0]) + " \""+RUTA+"/wii/mario.iso\" \"iso2\" \"iso3\" \"isoN\"\n"
-		print "Añadir ISO con exp. reg. La expresión solo afecta al directorio actual, actualmente no es recursivo : \n\t\t" + os.path.basename(sys.argv[0]) + " *.iso\n"
-		print "Buscar y Añadir ISO's recursivamente. Busca todos las imagenes isos RECURSIVAMENTE, incluso tambien busca dentro de RAR, a falta de implementar zip), tal vez necesites sudo apt-get install rar.\n\t\t" + os.path.basename(sys.argv[0]) + " buscar\n"
-		print "Borrar juegos. Especificando el juego mediante un menú.: \n\t\t" + os.path.basename(sys.argv[0]) + " borrar\n"
-		print "Borrar juegos. Podemos borrar con el IDGAME.: \n\t\t" + os.path.basename(sys.argv[0]) + " borrar IDJUEGO\n"
-		print "Borrar juegos. Podemos borrar con el IDGAME obtenido a partir de un ISO local. El archivo ISO local NO es borrado : \n\t\t" + os.path.basename(sys.argv[0]) + " borrar \""+RUTA+"/wii/mario.iso\"\n"
-		print "Renombrar juegos. Especificando el juego mediante un menú.: \n\t\t" + os.path.basename(sys.argv[0]) + " renombrar\n"
-		print "Renombrar juegos, puedes cambiar el nombre de los juegos ya metidos en HD, útil para que nos enteremos cuando estemos con el USB Loader : \n\t\t" + os.path.basename(sys.argv[0]) + " renombrar IDGAME \"Mario Kart Wii\"\n"
-		print "Extraer juegos a un archivo ISO. El juego es especificado mediante un menú.\n\t\t" + os.path.basename(sys.argv[0]) + " extraer\n"
-		print "Extraer juegos a un archivo ISO. OJO! : El archivo ISO de salida pertenecerá a root : \n\t\t" + os.path.basename(sys.argv[0]) + " extraer IDJUEGO\n"
-		print "Descargar todas las caratulas automaticamente a 160x225. Ojo puede que el servidor te banee, si te ocurre intentalo 5 minutos más tarde: \n\t\t" + os.path.basename(sys.argv[0]) + " caratulas\n"
-		print "Descargar la caratulas de un juego especificado por su IDGAME, la imagen es bajada a 160x225. El comando es un singular, es \"caratula\" ya que \"caratulas\" descarga todo: \n\t\t" + os.path.basename(sys.argv[0]) + " caratula IDGAME\n"
-		print "Descargar la caratulas de un juego especificado por menú, la imagen es bajada a 160x225. El comando es un singular, es \"caratula\" ya que \"caratulas\" descarga todo: \n\t\t" + os.path.basename(sys.argv[0]) + " caratula\n"
-		print "Comprobar Integridad de los juegos. Muchos de nuestros juegos pueden estar corruptos sin aún saberlo debido a el bug de borrado de las primeras versiones de WBFS\n\t\t" + os.path.basename(sys.argv[0]) + " comprobar\n"
-		print "Instar juegos desde el DVD, al estilo del usb loader, pero algo más lento porque dumpea a ISO y cuando termina mete la ISO.\n\t\t" + os.path.basename(sys.argv[0]) + " instalar\n"
-		print
-		print "Web : http://blogricardo.wordpress.com/2009/04/07/wiithon-wbfs-gui-para-wii"
+		uso()
+
 	else:
 		#Los parametros es una lista de ISOS explicita
 		for parametro in PARAMETROS:
@@ -749,9 +791,9 @@ if ( not SALIDA_FORZADA ):
 				expresionExpandida = glob.glob(parametro)
 			for archivo in expresionExpandida:
 				if	(
-						os.path.isfile(archivo) and 
+						os.path.isfile(archivo) and
 						(
-							getExtension(archivo) == "iso" or 
+							getExtension(archivo) == "iso" or
 							getExtension(archivo) == "rar"
 						)
 					):
@@ -760,11 +802,11 @@ if ( not SALIDA_FORZADA ):
 				elif( os.path.isdir(archivo) or archivo.lower() == "buscar" or archivo.lower() == "meter" or archivo.lower() == "-r" or archivo.lower() == "metertodo" or archivo.lower() == "buscartodo" ):
 					if( not os.path.isdir(archivo) ):
 						archivo = "."
-					
+
 					print "Buscando end "+os.path.dirname(archivo)+" ficheros RAR ... ",
 					listaFicheros += rec_glob(archivo, "*.rar")
 					print "OK!"
-					
+
 					print "Buscando en "+os.path.dirname(archivo)+" Imagenes ISO ... ",
 					listaFicheros += rec_glob(archivo, "*.iso")
 					print "OK!"
@@ -804,7 +846,7 @@ if ( not SALIDA_FORZADA ):
 									print "}"
 									print
 									erroneos.append(mensaje)
-									
+
 								# Paso 3 : Borrar la iso descomprimida
 								try:
 									print "Se va ha borrar la ISO descomprimida"
@@ -838,7 +880,7 @@ if ( not SALIDA_FORZADA ):
 						print "}"
 						print
 						erroneos.append(mensaje)
-				elif( getExtension(fichero) == "iso" ):					
+				elif( getExtension(fichero) == "iso" ):
 					print "Añadir ISO : " + os.path.basename(fichero) + " a la particion " + DEVICE + " " + FABRICANTE
 					if ( anadirISO(DEVICE , fichero) ):
 						mensaje = "ISO añadida correctamente"
