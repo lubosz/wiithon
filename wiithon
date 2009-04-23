@@ -36,7 +36,7 @@ erroneos = []
 SALIDA_FORZADA = False
 BLACK_LIST = "/\"\'$&|[]"
 PARAMETROS = NonRepeatList()
-GUI = False
+GUI = True
 
 def instalarJuego(DEVICE):
 	global DETECTOR_WBFS
@@ -530,12 +530,14 @@ def zenity_lista(titulo , listaOpciones):
 
 ############## MAIN ###########################
 def main(argv):
-	global PAUSA
+	global PAUSA, GUI
 
 	options, arguments = getopt.getopt(argv, 'phH', ['trabajo=',
 							 'work=',
 							 'help',
-							 'HELP'])
+							 'HELP',
+							 'no-gui',
+							 ])
 
 	for option, value in options:
 		if option == '-p':
@@ -549,7 +551,8 @@ def main(argv):
 			if os.path.isdir(value):
 				os.chdir(value)
 
-
+		elif option == '--no-gui':
+			GUI = False
 
 	PARAMETROS.extend(arguments)
 
@@ -628,7 +631,6 @@ Web : http://blogricardo.wordpress.com/2009/04/07/wiithon-wbfs-gui-para-wii
 
 try:
 	main(sys.argv[1:])
-	pass
 
 except getopt.GetoptError:
 	uso()
@@ -661,7 +663,7 @@ except getopt.GetoptError:
 #PARAMETROS = getListaUnica(PARAMETROS)
 numParametros = len(PARAMETROS)
 
-GUI = numParametros == 0
+GUI = GUI and (numParametros == 0)
 
 #Se puede forzar la salida por no aceptar el acuerdo
 if( not comprobarExistencia(ACUERDO)):
