@@ -532,21 +532,26 @@ def zenity_lista(titulo , listaOpciones):
 def main(argv):
 	global PAUSA
 
-	options, arguments = getopt.getopt(argv, 'p', ['trabajo=',
-						       'work='])
+	options, arguments = getopt.getopt(argv, 'phH', ['trabajo=',
+							 'work=',
+							 'help',
+							 'HELP'])
 
 	for option, value in options:
 		if option == '-p':
 			PAUSA = True
 
+		elif option in ['-h', '--help']:
+			uso()
+			sys.exit(0)
+
 		elif option in ['trabajo', 'work']:
 			if os.path.isdir(value):
 				os.chdir(value)
 
+
+
 	PARAMETROS.extend(arguments)
-
-
-
 
 def uso():
 	global RUTA
@@ -777,8 +782,9 @@ if ( not SALIDA_FORZADA ):
 				print "ERROR extrayendo la ISO de "+ID_JUEGO
 		else:
 			print "No hay Juegos para extraer"
-	elif ( PARAMETROS[0].lower() == "ayuda" or PARAMETROS[0].lower() == "h" or PARAMETROS[0].lower() == "-h" or PARAMETROS[0].lower() == "--help" or PARAMETROS[0].lower() == "help" ): #x
+	elif ( PARAMETROS[0].lower() == "ayuda" or PARAMETROS[0].lower() == "h" or PARAMETROS[0].lower() == "help" ): #x
 		uso()
+		sys.exit()
 
 	else:
 		#Los parametros es una lista de ISOS explicita
