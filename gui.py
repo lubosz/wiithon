@@ -49,3 +49,22 @@ class WiithonGUI(GladeWrapper):
         treeview3.set_model(ls3)
 
         self.wg_main_window.connect('destroy', gtk.main_quit)
+
+
+    def alert(self, level, message):
+        level_icons = {
+            'info':    gtk.STOCK_DIALOG_INFO,
+            'warning': gtk.STOCK_DIALOG_WARNING,
+            'error':   gtk.STOCK_DIALOG_ERROR,
+            }
+
+        al = self.wg_alertdialog
+        self.wg_alert_message.set_text(message)
+
+        try:
+            self.wg_alert_image.set_from_stock(level_icons[level])
+
+        except IndexError:
+            self.wg_alert_image.set_from_stock(level_icons['info'])
+
+        self.wg_alertdialog.show()
