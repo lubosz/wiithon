@@ -6,9 +6,9 @@ from glade_wrapper import GladeWrapper
 class WiithonGUI(GladeWrapper):
     def __init__(self):
         def cb(treeview, path, view_column):
-            self.wg_caratula.set_from_file('glade/images/rock2.jpg')
+            self.wg_caratula.set_from_file('recursos/imagenes/rock2.png')
 
-        GladeWrapper.__init__(self, 'glade/me_gusta_tipo_rythimbox.glade')
+        GladeWrapper.__init__(self, 'recursos/glade/me_gusta_tipo_rythimbox.glade')
 
         ls = gtk.ListStore(str,str,str,str,str)
         ls.append(('Rock Band 2','asdas','asdas','asdas','asdas',))

@@ -15,25 +15,33 @@ install: wbfs uninstall
 	@echo "Antes de instalar, se ha desinstalado"
 	@echo "=================================================================="
 
-	cp wiithon $(PREFIX)/bin
-	cp wiithon_autodetectar $(PREFIX)/bin
-	cp wiithon_autodetectar_lector $(PREFIX)/bin
-	cp wbfs $(PREFIX)/bin
+	mkdir -p $(PREFIX)/share/wiithon
+	mkdir -p $(PREFIX)/share/wiithon/recursos/glade
+	mkdir -p $(PREFIX)/share/wiithon/recursos/imagenes
+	mkdir -p /usr/share/gconf/schemas/
 
-	-cp ./schemas/wiithon*.schemas /usr/share/gconf/schemas/
+	cp wiithon $(PREFIX)/share/wiithon
+	cp wiithon_autodetectar $(PREFIX)/share/wiithon
+	cp wiithon_autodetectar_lector $(PREFIX)/share/wiithon
+	cp wbfs $(PREFIX)/share/wiithon
+	cp *.py $(PREFIX)/share/wiithon
+	cp recursos/glade/*.glade $(PREFIX)/share/wiithon/recursos/glade
+	cp recursos/imagenes/*.png $(PREFIX)/share/wiithon/recursos/imagenes
 
-	chmod 755 $(PREFIX)/bin/wiithon
-	chmod 755 $(PREFIX)/bin/wiithon_autodetectar
-	chmod 755 $(PREFIX)/bin/wiithon_autodetectar_lector
-	chmod 755 $(PREFIX)/bin/wbfs
+	chmod 755 $(PREFIX)/share/wiithon/wiithon
+	chmod 755 $(PREFIX)/share/wiithon/wiithon_autodetectar
+	chmod 755 $(PREFIX)/share/wiithon/wiithon_autodetectar_lector
+	chmod 755 $(PREFIX)/share/wiithon/wbfs
+	chmod 755 $(PREFIX)/share/wiithon/*.py
 	
-	-chmod 644 /usr/share/gconf/schemas/wiithon*.schemas
+	ln -s $(PREFIX)/share/wiithon/wiithon $(PREFIX)/bin/wiithon
 
 	@echo "=================================================================="
 	@echo "Instalado OK, instala manualmente los acciones de nautilus"
 	@echo "=================================================================="
 
 uninstall:
+	# Limpiando antiguas instalaciones
 	-$(RM) /usr/bin/wiithon
 	-$(RM) /usr/bin/wiithon_autodetectar
 	-$(RM) /usr/bin/wiithon_autodetectar_lector
@@ -45,6 +53,22 @@ uninstall:
 	-$(RM) $(PREFIX)/bin/wbfs
 
 	-$(RM) /usr/share/gconf/schemas/wiithon*.schemas
+	-rmdir /usr/share/gconf/schemas/
+	
+	# Desinstalando la actual versión
+	
+	-$(RM) $(PREFIX)/share/wiithon/wiithon
+	-$(RM) $(PREFIX)/share/wiithon/wiithon_autodetectar
+	-$(RM) $(PREFIX)/share/wiithon/wiithon_autodetectar_lector
+	-$(RM) $(PREFIX)/share/wiithon/wbfs
+	-$(RM) $(PREFIX)/share/wiithon/*.py	
+	-$(RM) $(PREFIX)/share/wiithon/recursos/glade/*.glade
+	-$(RM) $(PREFIX)/share/wiithon/recursos/imagenes/*.png
+	
+	-rmdir $(PREFIX)/share/wiithon/recursos/glade
+	-rmdir $(PREFIX)/share/wiithon/recursos/imagenes
+	-rmdir $(PREFIX)/share/wiithon/recursos
+	-rmdir $(PREFIX)/share/wiithon
 
 	@echo "=================================================================="
 	@echo "Desinstalado OK, desinstala las acciones de nautilus manualmente"
@@ -72,4 +96,4 @@ empaquetar: wbfs clean
 
 commit: clean
 	bzr commit --file=COMMIT.txt && echo "" > COMMIT.txt
-	bzr log > CHANGELOG.txt
+	bzr log --short > CHANGELOG.txt

@@ -1,12 +1,11 @@
 #!/usr/bin/python
 # vim: set fileencoding=utf8 :
 #
-# :: Invasion Tux
-# :: Ultima modificacion : lunes, 20 de abril de 2009
-# :: Script realizado por makiolo (makiolo@gmail.com)  (Licencia ver LICENCIA.txt)
-# :: Ultima version : http://blogricardo.wordpress.com/2009/04/07/wiithon-wbfs-gui-para-wii/
-# :: Dependencias : sudo apt-get install nautilus-actions imagemagick wget rar
-#
+# :: Mantenedor: Ricardo Marmolejo García <makiolo@gmail.com>
+# :: Jose Luis Segura <josel.segura@gmail.com>
+# :: Web : http://blogricardo.wordpress.com/2009/04/07/wiithon-wbfs-gui-para-wii/
+# :: Dependencias : sudo apt-get install nautilus-actions imagemagick wget rar sudo
+# :: Ver LICENCIA.txt
 
 import sys , os , subprocess , time , glob , fnmatch
 import getopt
@@ -16,15 +15,16 @@ from gui import WiithonGUI
 from util import NonRepeatList
 
 # Constantes
-RUTA = os.path.dirname(sys.argv[0]) # deben estar junto al script las dependencias
+#RUTA = os.path.dirname(sys.argv[0]) # deben estar junto al script las dependencias
+RUTA = "/usr/local/share/wiithon"
 WBFS_APP = RUTA+"/"+"wbfs"
 DETECTOR_WBFS = RUTA+"/"+"wiithon_autodetectar"
 DETECTOR_WBFS_LECTOR = RUTA+"/"+"wiithon_autodetectar_lector"
+
 HOME = os.path.expanduser("~")
 ACUERDO = HOME+"/.wiithon_acuerdo"
 
 # Variables auxiliares ,  no modificar
-DEVICE = ""
 ISO = ""
 COMANDO = ""
 ID_JUEGO = ""
@@ -92,8 +92,8 @@ def comprobarExistencia(fichero):
 	return os.path.exists(fichero)
 
 def tieneCaracteresRaros(cadena):
+	# Nos dice si *cadena* tiene caracteres raros dados por una lista negra global
 	global BLACK_LIST
-	# Lista negra de caracteres que hacen que deje de ser un expresion regular
 	for i in range(len(cadena)):
 		for j in range(len(BLACK_LIST)):
 			if (cadena[i]==BLACK_LIST[j]):
@@ -342,7 +342,7 @@ def rec_glob(path, mask):
 			if os.path.isfile(i):
 					# Lo parcheo para que no diferencie mayuculas
 					#if fnmatch.fnmatch(ii, mask):
-					if fnmatch.fnmatch(ii.lower() , mask):
+					if fnmatch.fnmatch(ii.lower() , mask.lower()):
 							l.append(i)
 	except NameError, ne:
 		print "NameError=", ne
@@ -428,7 +428,7 @@ def buscarParticionWBFS():
 					DEVICE = cachos[0]
 					FABRICANTE = cachos[1]
 				except:
-					zenity_alerta( "Error obteniendo el Fabricando del HD" )
+					zenity_alerta( "Error obteniendo información del dispositivo" )
 					SALIDA_FORZADA = True
 				haElegido = True
 			except IndexError:
@@ -442,17 +442,10 @@ def buscarParticionWBFS():
 			DEVICE = cachos[0]
 			FABRICANTE = cachos[1]
 		except:
-			zenity_alerta( "Error obteniendo el Fabricando del HD" )
+			zenity_alerta( "Error obteniendo información del dispositivo" )
 			SALIDA_FORZADA = True
 
 	return DEVICE
-
-#def getListaUnica(lista):
-#	u = []
-#	for x in lista:
-#		if x not in u:
-#			u.append(x)
-#	return u
 
 def getNombreISOenRAR(nombreRAR):
 	comando = "rar lt -c- '"+nombreRAR+"' | grep -i '.iso' | awk -F'.iso'  '{print $1}' | awk -F' ' '{print $0\".iso\"}' | sed 's/^ *//' | sed 's/ *$//'"
@@ -561,8 +554,9 @@ def uso():
 
 	wiithon = os.path.basename(sys.argv[0])
 
-	print '''Listar juegos. El programa por defecto, sin parametros, hace un listado de los juegos:
+	print '''Listar juegos. El programa por defecto, sin parametros, hace un listado de los juegos (lanzara el GUI en alguna prox versión):
 \t\t%s
+
 Añadir ISO mediante una lista explicita de las ISOS:
 \t\t%s "%s/wii/mario.iso" "iso2" "iso3" "isoN"
 
@@ -637,30 +631,6 @@ except getopt.GetoptError:
 	zenity_alerta("Programa ejecutado con las opciones incorrectas")
 	sys.exit(1)
 
-#except:
-#	print 'except'
-#	sys.exit(1)
-
-
-# el siguiente bucle se hace dentro del método main con getopt
-#for parametro in sys.argv[1:]:
-#	if( parametro == "-p" ):
-#		PAUSA = True
-#	elif( parametro.find("=") != -1 ):
-#		cacho_izq = parametro[:parametro.find("=")]
-#		cacho_der = parametro[parametro.find("=")+1:]
-#		if( cacho_izq=="--trabajo" or cacho_izq=="--work" ):
-#			if(os.path.isfile(cacho_der)):
-#				cacho_der = os.path.dirname(cacho_der)
-#			try:
-#				os.chdir(cacho_der)
-#			except:
-#				pass
-#	else:
-#		PARAMETROS.append(parametro)
-
-#No es necesario porque usamos la lista sin repeticion
-#PARAMETROS = getListaUnica(PARAMETROS)
 numParametros = len(PARAMETROS)
 
 GUI = GUI and (numParametros == 0)
@@ -676,6 +646,7 @@ DEVICE = buscarParticionWBFS()
 listaJuegos = getListaJuegos(DEVICE)
 hayJuegos = len(listaJuegos) > 0
 
+# FIXME: Eliminar todo uso de variable global cuando podamos
 if ( not SALIDA_FORZADA ):
 	if( GUI ):
 		print " ***********************************"
@@ -784,7 +755,7 @@ if ( not SALIDA_FORZADA ):
 				print "ERROR extrayendo la ISO de "+ID_JUEGO
 		else:
 			print "No hay Juegos para extraer"
-	elif ( PARAMETROS[0].lower() == "ayuda" or PARAMETROS[0].lower() == "h" or PARAMETROS[0].lower() == "help" ): #x
+	elif ( PARAMETROS[0].lower() == "ayuda" or PARAMETROS[0].lower() == "h" or PARAMETROS[0].lower() == "help" ):
 		uso()
 		sys.exit()
 
@@ -811,7 +782,7 @@ if ( not SALIDA_FORZADA ):
 					if( not os.path.isdir(archivo) ):
 						archivo = "."
 
-					print "Buscando end "+os.path.dirname(archivo)+" ficheros RAR ... ",
+					print "Buscando en "+os.path.dirname(archivo)+" ficheros RAR ... ",
 					listaFicheros += rec_glob(archivo, "*.rar")
 					print "OK!"
 
@@ -821,15 +792,14 @@ if ( not SALIDA_FORZADA ):
 		if (len(listaFicheros) == 0):
 			print "No se ha encontrado ninguna imagen ISO"
 
-	#Ordenamos la lista
-	listaFicheros.sort()
-	numImagenesISO = len(listaFicheros)
-	imagenesISOProcesadas=0
-
-	if(numImagenesISO>0):
+	numFicheros = len(listaFicheros)
+	if(numFicheros>0):
+		#Ordenamos la lista
+		listaFicheros.sort()
+		numFicherosProcesados=0
 		for fichero in listaFicheros:
-			imagenesISOProcesadas = imagenesISOProcesadas + 1
-			print "===================== "+os.path.basename(fichero)+" ("+str(imagenesISOProcesadas)+"/"+str(numImagenesISO)+") ===================="
+			numFicherosProcesados = numFicherosProcesados + 1
+			print "===================== "+os.path.basename(fichero)+" ("+str(numFicherosProcesados)+"/"+str(numFicheros)+") ===================="
 			print "{"
 			if( comprobarExistencia(DEVICE) and comprobarExistencia(fichero) ):
 				if( getExtension(fichero) == "rar" ):
@@ -912,20 +882,20 @@ if ( not SALIDA_FORZADA ):
 		print "================= INFORME DE RESULTADOS ========================="
 		print "{"
 
-		if(len(correctos) == imagenesISOProcesadas):
+		if(len(correctos) == numFicherosProcesados):
 			print "\t{"
 			print "\t================= Todo metido en el HD correctamente ==================="
 			print "\t}"
 		else:
 			if(len(correctos) > 0):
-				print "\t================ Juegos correctos ("+str(len(correctos))+"/"+str(imagenesISOProcesadas)+") =============="
+				print "\t================ Juegos correctos ("+str(len(correctos))+"/"+str(numFicherosProcesados)+") =============="
 				print "\t{"
 				for mensaje in correctos:
 					print "\t"+mensaje
 				print "\t}"
 
 		if(len(erroneos) > 0):
-			print "\t=================== Juegos erroneos ("+str(len(erroneos))+"/"+str(imagenesISOProcesadas)+") ================="
+			print "\t=================== Juegos erroneos ("+str(len(erroneos))+"/"+str(numFicherosProcesados)+") ================="
 			print "\t{"
 			for mensaje in erroneos:
 				print "\t"+mensaje
@@ -933,5 +903,5 @@ if ( not SALIDA_FORZADA ):
 
 		print "}"
 
-	if (not GUI and PAUSA):
-		raw_input("Pulse cualquier tecla para continuar ...\n")
+if (PAUSA):
+	raw_input("Pulse cualquier tecla para continuar ...\n")
