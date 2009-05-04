@@ -844,18 +844,18 @@ if ( not SALIDA_FORZADA ):
 									print "ERROR"
 									erroneos.append(mensaje)
 
-                if borrarISODescomprimida:
-  								# Paso 3 : Borrar la iso descomprimida
-  								try:
-  									print "Se va ha borrar la ISO descomprimida"
-  									os.remove(nombreISO)
-  									print "La ISO "+nombreISO+" temporal fue borrada"
-  								except:
-  									print "ERROR al borrar la ISO : " + nombreISO
+								if borrarISODescomprimida:
+									# Paso 3 : Borrar la iso descomprimida
+									try:
+										print "Se va ha borrar la ISO descomprimida"
+										os.remove(nombreISO)
+										print "La ISO "+nombreISO+" temporal fue borrada"
+									except:
+										print "ERROR al borrar la ISO : " + nombreISO
 									print "}"
- 									print
-                else:
-                  print "No se ha borrado la ISO temporal"
+									print
+								else:
+									print "No se ha borrado la ISO temporal"
 							else:
 								mensaje = "ERROR al descomrpimir el RAR : " + nombreRAR
 								print "ERROR"
