@@ -655,7 +655,7 @@ if ( not SALIDA_FORZADA ):
 		print " ***********************************"
 		print " ******** GUI EN DESARROLLO ********"
 		print " ***********************************"
-		interfaz.wg_main_window.show()
+		interfaz.wg_principal.show()
 		gtk.main()
 
 	elif( PARAMETROS[0].lower() == "listar" or PARAMETROS[0].lower() == "ls" ):
