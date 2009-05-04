@@ -358,16 +358,22 @@ def rec_glob(path, mask):
 	return l
 
 def informarAcuerdo():
-	global SALIDA_FORZADA
+	global SALIDA_FORZADA, interfaz
 	haElegido = False
 	while( not haElegido ):
-		if( zenity_pregunta("No me hago responsable de la aplicacion ni de la perdida de datos. No obstante, la particion NO va ha ser formateada, esta aplicacion añade , borra y lista juegos explicitamente mediante la ayuda de " + os.path.basename(WBFS_APP) + ". Esta información no volverá a aparecer si acepta el acuerdo. Esta de acuerdo (S/N)? ") ):
+		res = interfaz.alert('question',
+			       'No me hago responsable de la aplicacion ni de la perdida de datos. No obstante, la particion NO va ha ser formateada. Esta aplicación añade, borra y lista juegos explicamente mediante la ayuda de %s. Esta información no volverá a aparecer si acepta el acuerdo. ¿Está de acuerdo?'
+			       %(os.path.basename(WBFS_APP))
+			       )
+
+
+		if res == 1:
 			fAcuerdo = open(ACUERDO , "w")
 			fAcuerdo.write("Acuerdo aceptado en la fecha " + time.asctime() + "\n")
 			fAcuerdo.close()
 			haElegido = True
 		else:
-			zenity_alerta("No puedes usar esta aplicacion si no estas deacuerdo")
+			interfaz.alert('error', 'No puedes usar esta aplicacion si no estas deacuerdo')
 			SALIDA_FORZADA = True
 
 def existeCaratula(IDGAME):
@@ -400,7 +406,7 @@ def descargarTodasLasCaratula(DEVICE , listaJuegos , panoramica):
 	return ok
 
 def buscarParticionWBFS():
-	global DETECTOR_WBFS , SALIDA_FORZADA , FABRICANTE
+	global DETECTOR_WBFS , SALIDA_FORZADA , FABRICANTE, interfaz
 	DEVICE = ""
 	salida = ""
 	subProceso = getPopen(DETECTOR_WBFS)
@@ -424,7 +430,7 @@ def buscarParticionWBFS():
 			i = i + 1
 
 	if(len(listaParticiones) <= 0):
-		zenity_alerta("No se ha encontrado ningun dispositivo con particion WBFS.")
+		interfaz.alert('error', 'No se ha encontrado ningun dispositivo con particion WBFS.')
 		SALIDA_FORZADA = True
 	elif(len(listaParticiones) > 1):
 		haElegido = False
@@ -436,13 +442,15 @@ def buscarParticionWBFS():
 					DEVICE = cachos[0]
 					FABRICANTE = cachos[1]
 				except:
-					zenity_alerta( "Error obteniendo información del dispositivo" )
+					interfaz.alert('error', 'Error obteniendo información del dispositivo')
 					SALIDA_FORZADA = True
 				haElegido = True
 			except IndexError:
-				zenity_alerta( "Fuera de rango" )
+				interfaz.alert('error', 'Fuera de rango')
+
 			except ValueError:
-				zenity_alerta( "Valor incorrecto" )
+				interfaz.alert('error', 'Valor incorrecto'
+)
 	else: # len(listaParticiones) == 1)
 		DEVICE = listaParticiones[0]
 		try:
@@ -450,7 +458,7 @@ def buscarParticionWBFS():
 			DEVICE = cachos[0]
 			FABRICANTE = cachos[1]
 		except:
-			zenity_alerta( "Error obteniendo información del dispositivo" )
+			interfaz.alert('error', 'Error obteniendo información del dispositivo' )
 			SALIDA_FORZADA = True
 
 	return DEVICE
@@ -505,21 +513,21 @@ def redimensionarParticionWBFS(particion):
 	else:
 		print "sin cambios."
 
-def zenity_pedir_texto(pregunta):
-	comando = 'zenity --text "'+pregunta+'" --entry'
-	entrada, salida = os.popen2(comando)
-	salida = salida.read()
-	salida = salida.strip()
-	return salida
-
-def zenity_pregunta(pregunta):
-	comando = 'zenity --text "'+pregunta+'" --question'
-	salida = os.system(comando)
-	return salida == 0
-
-def zenity_alerta(texto):
-	comando = 'zenity --text "'+texto+'" --info'
-	salida = os.system(comando)
+#def zenity_pedir_texto(pregunta):
+#	comando = 'zenity --text "'+pregunta+'" --entry'
+#	entrada, salida = os.popen2(comando)
+#	salida = salida.read()
+#	salida = salida.strip()
+#	return salida
+#
+#def zenity_pregunta(pregunta):
+#	comando = 'zenity --text "'+pregunta+'" --question'
+#	salida = os.system(comando)
+#	return salida == 0
+#
+#def zenity_alerta(texto):
+#	comando = 'zenity --text "'+texto+'" --info'
+#	salida = os.system(comando)
 
 def zenity_lista(titulo , listaOpciones):
 	comando = "zenity --list --column=\""+titulo+"\""
@@ -635,11 +643,12 @@ Web : http://blogricardo.wordpress.com/2009/04/07/wiithon-wbfs-gui-para-wii
 
 
 try:
+	interfaz = WiithonGUI()
 	main(sys.argv[1:])
 
 except getopt.GetoptError:
 	uso()
-	zenity_alerta("Programa ejecutado con las opciones incorrectas")
+	interfaz.alert('error', 'Programa ejecutado con las opciones incorrectas')
 	sys.exit(1)
 
 numParametros = len(PARAMETROS)
@@ -663,7 +672,7 @@ if ( not SALIDA_FORZADA ):
 		print " ***********************************"
 		print " ******** GUI EN DESARROLLO ********"
 		print " ***********************************"
-		interfaz = WiithonGUI()
+		interfaz.wg_main_window.show()
 		gtk.main()
 
 	elif( PARAMETROS[0].lower() == "listar" or PARAMETROS[0].lower() == "ls" ):

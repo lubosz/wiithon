@@ -10,12 +10,30 @@ global wt_gui
 
 def cb(widget, *args):
     global wt_gui
-    wt_gui.alert('info', 'Hola')
+    print 'exit'
+    #wt_gui.alert_off()
+
 
 wt_gui = gui.WiithonGUI()
-wt_gui.wg_button2.connect('clicked', cb)
+res = wt_gui.alert('question', 'hola')
+
+if res == gtk.RESPONSE_APPLY:
+    print 'gtk.RESPONSE_APPY'
+
+elif res == gtk.RESPONSE_YES:
+    print 'gtk.RESPONSE_YES'
+
+elif res == gtk.RESPONSE_NO:
+    print 'gtk.RESPONSE_NO'
+
+elif res == gtk.RESPONSE_NONE:
+    print 'gtk.RESPONSE_NONE'
+
+else:
+    print 'another'
+    print res
 
 
 gtk.main()
 
-print 'salir'
+
