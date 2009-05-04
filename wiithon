@@ -37,6 +37,7 @@ SALIDA_FORZADA = False
 BLACK_LIST = "/\"\'$&|[]"
 PARAMETROS = NonRepeatList()
 GUI = True
+NUM_LINEAS_PAUSA = 21
 
 def instalarJuego(DEVICE):
 	global DETECTOR_WBFS
@@ -198,6 +199,8 @@ def get_IDJUEGO_de_Lista(DEVICE , listaJuegos):
 			else:
 				caratula = "NO"
 			print "%3s\t%s\t%-40s\t%.2f GB\t%6s" % ( i , juego[0] , juego[1] , ocupado , caratula)
+			if ( (i % NUM_LINEAS_PAUSA) == 0 ):
+				raw_input("Presiona cualquier tecla para mostrar "+str(NUM_LINEAS_PAUSA)+" lineas más")
 			i = i + 1
 		print "--------------------------------------------------------------------------------"
 
@@ -219,6 +222,7 @@ def listarISOs(DEVICE , listaJuegos):
 		print "--------------------------------------------------------------------------------"
 		print "%6s\t%-55s\t%7s\t%6s" % ("IDGAME","TITULO","TAMAÑO" , "¿Car.?")
 		print "--------------------------------------------------------------------------------"
+		i = 1
 		for juego in listaJuegos:
 			ocupado = float(juego[2])
 			if (existeCaratula(juego[0])):
@@ -226,6 +230,9 @@ def listarISOs(DEVICE , listaJuegos):
 			else:
 				caratula = "NO"
 			print "%s\t%-55s\t%.2f GB\t%6s" % ( juego[0] , juego[1] , ocupado , caratula)
+			if ( (i % NUM_LINEAS_PAUSA) == 0 ):
+				raw_input("Presiona cualquier tecla para mostrar "+str(NUM_LINEAS_PAUSA)+" lineas más")
+			i = i + 1
 		print "--------------------------------------------------------------------------------"
 		print "\t\t\t\t\t\t\t%d juegos de WII" % numJuegos
 	return numJuegos
@@ -461,7 +468,8 @@ def getNombreISOenRAR(nombreRAR):
 
 def descomprimirRARconISODentro( nombreRAR , nombreISO ):
 	try:
-		salida = os.system("rar e -o- \""+nombreRAR+"\" \""+nombreISO+"\"")
+		comando = "rar e -o- \""+nombreRAR+"\" \"*.iso\""
+		salida = os.system(comando)
 		return (salida == 0)
 	except KeyboardInterrupt:
 		return False
@@ -533,6 +541,8 @@ def main(argv):
 							 ])
 
 	for option, value in options:
+		#print "opcion = " + option
+		#print "valor = " + value
 		if option == '-p':
 			PAUSA = True
 
@@ -540,7 +550,7 @@ def main(argv):
 			uso()
 			sys.exit(0)
 
-		elif option in ['trabajo', 'work']:
+		elif option in ['--trabajo', '--work']:
 			if os.path.isdir(value):
 				os.chdir(value)
 
@@ -758,37 +768,39 @@ if ( not SALIDA_FORZADA ):
 	elif ( PARAMETROS[0].lower() == "ayuda" or PARAMETROS[0].lower() == "h" or PARAMETROS[0].lower() == "help" ):
 		uso()
 		sys.exit()
-
 	else:
 		#Los parametros es una lista de ISOS explicita
 		for parametro in PARAMETROS:
+			if ( os.path.isdir(parametro) or parametro.lower() == "buscar" or parametro.lower() == "meter" or parametro.lower() == "-r" or parametro.lower() == "metertodo" or parametro.lower() == "buscartodo"):
+				if( not os.path.isdir(parametro) ):
+					archivo = "."
+
+				print "Buscando en "+os.path.dirname(archivo)+" ficheros RAR ... ",
+				listaFicheros.extend( rec_glob(archivo, "*.rar") )
+				print "OK!"
+
+				print "Buscando en "+os.path.dirname(archivo)+" Imagenes ISO ... ",
+				listaFicheros.extend( rec_glob(archivo, "*.iso") )
+				print "OK!"
+
+
+			elif	(
+					os.path.isfile(parametro) and
+					(
+						getExtension(parametro) == "iso" or
+						getExtension(parametro) == "rar"
+					)
+				):
+				listaFicheros.append( parametro )
+				print listaFicheros
+
 			# si tiene caracteres raros -> no es expresión regular
 			# porque de otro forma, peta la expresion regular.
-			if(tieneCaracteresRaros(parametro)):
-				expresionExpandida = [parametro]
+			elif( not tieneCaracteresRaros(parametro)):
+				listaFicheros.extend( glob.glob(parametro) )	
 			else:
-				expresionExpandida = glob.glob(parametro)
-			for archivo in expresionExpandida:
-				if	(
-						os.path.isfile(archivo) and
-						(
-							getExtension(archivo) == "iso" or
-							getExtension(archivo) == "rar"
-						)
-					):
-					listaFicheros.append(archivo)
-				#Buscar ISOs y RARs en parametros que son carpetas
-				elif( os.path.isdir(archivo) or archivo.lower() == "buscar" or archivo.lower() == "meter" or archivo.lower() == "-r" or archivo.lower() == "metertodo" or archivo.lower() == "buscartodo" ):
-					if( not os.path.isdir(archivo) ):
-						archivo = "."
+				listaFicheroslistaFicheros.append( parametro )
 
-					print "Buscando en "+os.path.dirname(archivo)+" ficheros RAR ... ",
-					listaFicheros += rec_glob(archivo, "*.rar")
-					print "OK!"
-
-					print "Buscando en "+os.path.dirname(archivo)+" Imagenes ISO ... ",
-					listaFicheros += rec_glob(archivo, "*.iso")
-					print "OK!"
 		if (len(listaFicheros) == 0):
 			print "No se ha encontrado ninguna imagen ISO"
 
@@ -813,7 +825,7 @@ if ( not SALIDA_FORZADA ):
 								print "Descomprimido correctamente"
 								# Paso 2 : Añadir la ISO
 								if ( anadirISO(DEVICE , nombreISO) ):
-										mensaje = "ISO descomprimida y añadida correctamente"
+										mensaje = "ISO "+nombreISO+" descomprimida y añadida correctamente"
 										print "OK"
 										print "}"
 										print
@@ -861,7 +873,7 @@ if ( not SALIDA_FORZADA ):
 				elif( getExtension(fichero) == "iso" ):
 					print "Añadir ISO : " + os.path.basename(fichero) + " a la particion " + DEVICE + " " + FABRICANTE
 					if ( anadirISO(DEVICE , fichero) ):
-						mensaje = "ISO añadida correctamente"
+						mensaje = "ISO "+fichero+" añadida correctamente"
 						print "OK"
 						print "}"
 						print

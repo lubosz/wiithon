@@ -3,12 +3,14 @@
 import gtk
 from glade_wrapper import GladeWrapper
 
+RUTA = "/usr/local/share/wiithon"
+
 class WiithonGUI(GladeWrapper):
     def __init__(self):
         def cb(treeview, path, view_column):
-            self.wg_caratula.set_from_file('recursos/imagenes/rock2.png')
+            self.wg_caratula.set_from_file(RUTA+'/'+'recursos/imagenes/re4.png')
 
-        GladeWrapper.__init__(self, 'recursos/glade/me_gusta_tipo_rythimbox.glade')
+        GladeWrapper.__init__(self, RUTA+'/'+'recursos/glade/me_gusta_tipo_rythimbox.glade')
 
         ls = gtk.ListStore(str,str,str,str,str)
         ls.append(('Rock Band 2','asdas','asdas','asdas','asdas',))

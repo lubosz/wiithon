@@ -33,6 +33,8 @@ install: wbfs uninstall
 	chmod 755 $(PREFIX)/share/wiithon/wiithon_autodetectar_lector
 	chmod 755 $(PREFIX)/share/wiithon/wbfs
 	chmod 755 $(PREFIX)/share/wiithon/*.py
+
+	chmod 644 $(PREFIX)/share/wiithon/recursos/glade/*.glade
 	
 	ln -s $(PREFIX)/share/wiithon/wiithon $(PREFIX)/bin/wiithon
 
