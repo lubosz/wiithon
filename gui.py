@@ -10,7 +10,8 @@ class WiithonGUI(GladeWrapper):
         def cb(treeview, path, view_column):
             self.wg_caratula.set_from_file(RUTA+'/'+'recursos/imagenes/re4.png')
 
-        GladeWrapper.__init__(self, RUTA+'/'+'recursos/glade/me_gusta_tipo_rythimbox.glade')
+
+        GladeWrapper.__init__(self, RUTA+'/'+'recursos/glade/gui.glade')
 
         ls = gtk.ListStore(str,str,str,str,str)
         ls.append(('Rock Band 2','asdas','asdas','asdas','asdas',))
@@ -24,7 +25,7 @@ class WiithonGUI(GladeWrapper):
         tvcolumn4 = gtk.TreeViewColumn('Tipo de juego', cell, text=0)
         tvcolumn5 = gtk.TreeViewColumn('Año', cell, text=0)
 
-        treeview = self.wg_TablaJuegos
+        treeview = self.wg_tv_games
         treeview.append_column(tvcolumn1)
         treeview.append_column(tvcolumn2)
         treeview.append_column(tvcolumn3)
@@ -43,9 +44,10 @@ class WiithonGUI(GladeWrapper):
         cell3 = gtk.CellRendererText()
         col2 = gtk.TreeViewColumn('Tipo de Juego', cell2, text=0)
         col3 = gtk.TreeViewColumn('Año', cell3, text=0)
-        treeview2 = self.wg_ListaTipoJuego
+
+        treeview2 = self.wg_tv_explorer_left
         treeview2.append_column(col2)
-        treeview3 = self.wg_ListaAnio
+        treeview3 = self.wg_tv_explorer_rigth
         treeview3.append_column(col3)
         treeview2.set_model(ls2)
         treeview3.set_model(ls3)
