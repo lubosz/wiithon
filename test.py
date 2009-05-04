@@ -15,6 +15,7 @@ def cb(widget, *args):
 wt_gui = gui.WiithonGUI()
 wt_gui.wg_button2.connect('clicked', cb)
 
+
 gtk.main()
 
 print 'salir'

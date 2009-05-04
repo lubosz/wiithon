@@ -8,7 +8,7 @@ RUTA = "/usr/local/share/wiithon"
 class WiithonGUI(GladeWrapper):
     def __init__(self):
         def cb(treeview, path, view_column):
-            self.wg_caratula.set_from_file(RUTA+'/'+'recursos/imagenes/re4.png')
+            self.wg_img_caratula.set_from_file(RUTA+'/'+'recursos/imagenes/re4.png')
 
 
         GladeWrapper.__init__(self, RUTA+'/'+'recursos/glade/gui.glade')
@@ -34,23 +34,6 @@ class WiithonGUI(GladeWrapper):
         treeview.set_model(ls)
         treeview.connect('row-activated', cb)
 
-        ls2 = gtk.ListStore(str)
-        ls3 = gtk.ListStore(str)
-        ls2.append(('Accion',))
-        ls2.append(('Futbol',))
-        ls3.append(('2009',))
-        ls3.append(('2008',))
-        cell2 = gtk.CellRendererText()
-        cell3 = gtk.CellRendererText()
-        col2 = gtk.TreeViewColumn('Tipo de Juego', cell2, text=0)
-        col3 = gtk.TreeViewColumn('Año', cell3, text=0)
-
-        treeview2 = self.wg_tv_explorer_left
-        treeview2.append_column(col2)
-        treeview3 = self.wg_tv_explorer_rigth
-        treeview3.append_column(col3)
-        treeview2.set_model(ls2)
-        treeview3.set_model(ls3)
 
         self.wg_main_window.connect('destroy', gtk.main_quit)
 
