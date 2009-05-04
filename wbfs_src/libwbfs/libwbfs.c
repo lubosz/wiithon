@@ -716,3 +716,69 @@ int wbfs_integrity_check(wbfs_t* p , u8* discid)
 		return correcto;			
 	}
 }
+
+unsigned int wbfs_copy_disc(wbfs_disc_t*d_src, wbfs_t*p_dst, progress_callback_t spinner)
+{
+	wbfs_t *p_src = d_src->p;
+	unsigned char* copy_buffer = 0;
+	int i;
+	int src_wbs_nlb=p_src->wbfs_sec_sz/p_src->hd_sec_sz;
+	int dst_wbs_nlb=p_dst->wbfs_sec_sz/p_dst->hd_sec_sz;
+
+	if( src_wbs_nlb != dst_wbs_nlb)
+	{
+		ERROR("Difference between source and dest");
+	}
+
+	copy_buffer = (unsigned char*)wbfs_ioalloc(p_src->wbfs_sec_sz);
+	if(!copy_buffer)
+		ERROR("alloc memory");
+
+	for(i=0;i<p_dst->max_disc;i++)// find a free slot.
+		if(p_dst->head->disc_table[i]==0)
+			break;
+	if(i==p_dst->max_disc)
+		ERROR("no space left on device (table full)");
+	p_dst->head->disc_table[i] = 1;
+	int discn = i;
+	load_freeblocks(p_dst);
+
+	wbfs_disc_info_t *info = (wbfs_disc_info_t*)wbfs_ioalloc(p_dst->disc_info_sz);
+	memcpy(info->disc_header_copy, d_src->header->disc_header_copy, 0x100);
+
+	for( i=0; i< p_src->n_wbfs_sec_per_disc; i++)
+	{
+		unsigned int iwlba = wbfs_ntohs(d_src->header->wlba_table[i]);
+		unsigned short bl = 0;
+		if (iwlba)
+		{
+			bl = alloc_block(p_dst);
+			if (bl==0xffff)
+				ERROR("no space left on device (disc full)");
+
+			p_src->read_hdsector( p_src->callback_data, p_src->part_lba + iwlba*src_wbs_nlb, src_wbs_nlb, copy_buffer);
+			p_dst->write_hdsector(p_dst->callback_data, p_dst->part_lba +    bl*dst_wbs_nlb, dst_wbs_nlb, copy_buffer);
+		}
+
+		info->wlba_table[i] = wbfs_htons(bl);
+
+		if(spinner)
+			spinner(i,p_src->n_wbfs_sec_per_disc);
+	}
+	
+	if(spinner)
+		spinner(p_src->n_wbfs_sec_per_disc,p_src->n_wbfs_sec_per_disc);
+
+	// write disc info
+	int disc_info_sz_lba = p_dst->disc_info_sz>>p_dst->hd_sec_sz_s;
+	p_dst->write_hdsector(p_dst->callback_data,p_dst->part_lba+1+discn*disc_info_sz_lba,disc_info_sz_lba,info);
+	wbfs_sync(p_dst);
+error:
+	if(info)
+		wbfs_iofree(info);
+	if(copy_buffer)
+		wbfs_iofree(copy_buffer);
+	// init with all free blocks
+
+	return 0;
+}

@@ -212,6 +212,8 @@ wbfs_disc_t *wbfs_open_index_disc(wbfs_t* p, u32 i);
 
 int wbfs_integrity_check(wbfs_t* p , u8* discid);
 
+unsigned int wbfs_copy_disc(wbfs_disc_t*d_src, wbfs_t*p_dst, progress_callback_t spinner);
+
 // remove some sanity checks
 void wbfs_set_force_mode(int force);
 

@@ -38,6 +38,7 @@ BLACK_LIST = "/\"\'$&|[]"
 PARAMETROS = NonRepeatList()
 GUI = True
 NUM_LINEAS_PAUSA = 21
+borrarISODescomprimida = False
 
 def instalarJuego(DEVICE):
 	global DETECTOR_WBFS
@@ -837,31 +838,24 @@ if ( not SALIDA_FORZADA ):
 								if ( anadirISO(DEVICE , nombreISO) ):
 										mensaje = "ISO "+nombreISO+" descomprimida y añadida correctamente"
 										print "OK"
-										print "}"
-										print
 										correctos.append(mensaje)
 								else:
 									mensaje = "ERROR añadiendo la ISO : " + nombreISO + " (comprueba que sea una ISO de WII)"
 									print "ERROR"
-									print "}"
-									print
 									erroneos.append(mensaje)
 
-								# Paso 3 : Borrar la iso descomprimida
-								try:
-									print "Se va ha borrar la ISO descomprimida"
-									os.remove(nombreISO)
-									mensaje = "La ISO "+nombreISO+" temporal fue borrada"
-									print "OK"
+                if borrarISODescomprimida:
+  								# Paso 3 : Borrar la iso descomprimida
+  								try:
+  									print "Se va ha borrar la ISO descomprimida"
+  									os.remove(nombreISO)
+  									print "La ISO "+nombreISO+" temporal fue borrada"
+  								except:
+  									print "ERROR al borrar la ISO : " + nombreISO
 									print "}"
-									print
-									correctos.append(mensaje)
-								except:
-									mensaje = "ERROR al borrar la ISO : " + nombreISO
-									print "ERROR"
-									print "}"
-									print
-									erroneos.append(mensaje)
+ 									print
+                else:
+                  print "No se ha borrado la ISO temporal"
 							else:
 								mensaje = "ERROR al descomrpimir el RAR : " + nombreRAR
 								print "ERROR"
