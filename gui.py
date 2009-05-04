@@ -12,7 +12,7 @@ class WiithonGUI(GladeWrapper):
 
 
         GladeWrapper.__init__(self, RUTA+'/'+'recursos/glade/gui.glade')
-                # FIXME
+		# FIXME
         self.wg_main_window.hide()
 
         ls = gtk.ListStore(str,str,str,str,str)

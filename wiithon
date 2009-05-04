@@ -4,7 +4,7 @@
 # :: Mantenedor: Ricardo Marmolejo García <makiolo@gmail.com>
 # :: Jose Luis Segura <josel.segura@gmail.com>
 # :: Web : http://blogricardo.wordpress.com/2009/04/07/wiithon-wbfs-gui-para-wii/
-# :: Dependencias : sudo apt-get install nautilus-actions imagemagick wget rar sudo
+# :: Dependencias : apt-get install nautilus-actions imagemagick wget rar sudo
 # :: Ver LICENCIA.txt
 
 import sys , os , subprocess , time , glob , fnmatch
@@ -15,14 +15,13 @@ from gui import WiithonGUI
 from util import NonRepeatList
 
 # Constantes
-#RUTA = os.path.dirname(sys.argv[0]) # deben estar junto al script las dependencias
 RUTA = "/usr/local/share/wiithon"
+HOME = os.path.expanduser("~")
+
 WBFS_APP = RUTA+"/"+"wbfs"
 DETECTOR_WBFS = RUTA+"/"+"wiithon_autodetectar"
 DETECTOR_WBFS_LECTOR = RUTA+"/"+"wiithon_autodetectar_lector"
-
-HOME = os.path.expanduser("~")
-ACUERDO = HOME+"/.wiithon_acuerdo"
+ACUERDO = RUTA+"/.acuerdo"
 
 # Variables auxiliares ,  no modificar
 ISO = ""
@@ -136,7 +135,7 @@ def ordenarPorNombre(juego1 , juego2):
 
 def getListaJuegos(DEVICE):
 	global WBFS_APP
-	subProceso = getPopen("sudo "+WBFS_APP+" -p "+DEVICE+" ls")
+	subProceso = getPopen(""+WBFS_APP+" -p "+DEVICE+" ls")
 	#Espera que acabe
 	subProceso.wait()
 	salida = []
@@ -158,7 +157,7 @@ def verificarTodosLosJuegos(DEVICE , listaJuegos):
 		print "%6s\t%-40s\t%s" % ("IDGAME","TITULO" , "¿Corrupto?")
 		print "--------------------------------------------------------------------------------"
 		for juego in listaJuegos:
-			salida = os.system("sudo "+WBFS_APP+" -p "+DEVICE+" check "+juego[0])
+			salida = os.system(""+WBFS_APP+" -p "+DEVICE+" check "+juego[0])
 			if( salida == 0 ):
 				corrupto = "NO ESTA CORRUPTO"
 			else:
@@ -240,7 +239,7 @@ def listarISOs(DEVICE , listaJuegos):
 
 def mostrarEspacioLibre(DEVICE):
 	global WBFS_APP
-	subProceso = getPopen("sudo "+WBFS_APP+" -p "+DEVICE+" df")
+	subProceso = getPopen(""+WBFS_APP+" -p "+DEVICE+" df")
 	subProceso.wait()
 	salida = ""
 	for linea in subProceso.stdout:
@@ -257,12 +256,12 @@ def mostrarEspacioLibre(DEVICE):
 def anadirISO(DEVICE , ISO):
 	global WBFS_APP
 	try:
-		salida = os.system("sudo "+WBFS_APP+" -p "+DEVICE+" add \""+ISO+"\"")
+		salida = os.system(""+WBFS_APP+" -p "+DEVICE+" add \""+ISO+"\"")
 		return salida == 0
 	except KeyboardInterrupt:
 		return False
 	'''
-	comando = "sudo "+WBFS_APP+" -p "+DEVICE+" add \""+ISO+"\""
+	comando = ""+WBFS_APP+" -p "+DEVICE+" add \""+ISO+"\""
 	entrada, salida = os.popen2(comando)
 	linea = ""
 	while True:
@@ -288,7 +287,7 @@ def anadirISO(DEVICE , ISO):
 def renombrarISO(DEVICE , IDGAME , NUEVO_NOMBRE):
 	global WBFS_APP
 	try:
-		salida = os.system("sudo "+WBFS_APP+" -p "+DEVICE+" rename "+IDGAME+" \""+NUEVO_NOMBRE+"\"")
+		salida = os.system(""+WBFS_APP+" -p "+DEVICE+" rename "+IDGAME+" \""+NUEVO_NOMBRE+"\"")
 		return salida == 0
 	except KeyboardInterrupt:
 		return False
@@ -296,7 +295,7 @@ def renombrarISO(DEVICE , IDGAME , NUEVO_NOMBRE):
 def borrarJuego(DEVICE , ID_JUEGO):
 	global WBFS_APP
 	try:
-		salida = os.system("sudo "+WBFS_APP+" -p "+DEVICE+" rm "+ID_JUEGO)
+		salida = os.system(""+WBFS_APP+" -p "+DEVICE+" rm "+ID_JUEGO)
 		return salida == 0
 	except KeyboardInterrupt:
 		return False
@@ -306,7 +305,7 @@ def borrarJuego(DEVICE , ID_JUEGO):
 def extraerJuego(DEVICE , ID_JUEGO):
 	global WBFS_APP
 	try:
-		salida = os.system("sudo "+WBFS_APP+" -p "+DEVICE+" extract "+ID_JUEGO)
+		salida = os.system(""+WBFS_APP+" -p "+DEVICE+" extract "+ID_JUEGO)
 		return salida == 0
 	except KeyboardInterrupt:
 		return False
@@ -362,11 +361,10 @@ def informarAcuerdo():
 	global SALIDA_FORZADA, interfaz
 	haElegido = False
 	while( not haElegido ):
-		res = interfaz.alert('question',
-			       'No me hago responsable de la aplicacion ni de la perdida de datos. No obstante, la particion NO va ha ser formateada. Esta aplicación añade, borra y lista juegos explicamente mediante la ayuda de %s. Esta información no volverá a aparecer si acepta el acuerdo. ¿Está de acuerdo?'
+		res = interfaz.alert('info',
+			       'El equipo de Wiithon no se hace responsable de la aplicacion ni de la perdida de datos.\nNo obstante, la particion NO va ha ser formateada.\nEsta aplicación añade, borra y lista juegos explicamente mediante la ayuda de %s.\nEsta información no volverá a aparecer si acepta el acuerdo.\n¿Está de acuerdo?'
 			       %(os.path.basename(WBFS_APP))
 			       )
-
 
 		if res == 1:
 			fAcuerdo = open(ACUERDO , "w")
@@ -490,7 +488,7 @@ def redimensionarParticionWBFS(particion):
 	# 57 42 46 53 00 0b 85 30
 	# 57 42 46 53 00 29 ea eb
 
-	comando = "sudo fdisk -lu | grep -v 'MB' | grep '"+particion+"' | awk '{print $3-$2+1}'"
+	comando = "fdisk -lu | grep -v 'MB' | grep '"+particion+"' | awk '{print $3-$2+1}'"
 	entrada, salida = os.popen2(comando)
 	salida = salida.read()
 
@@ -514,22 +512,6 @@ def redimensionarParticionWBFS(particion):
 	else:
 		print "sin cambios."
 
-#def zenity_pedir_texto(pregunta):
-#	comando = 'zenity --text "'+pregunta+'" --entry'
-#	entrada, salida = os.popen2(comando)
-#	salida = salida.read()
-#	salida = salida.strip()
-#	return salida
-#
-#def zenity_pregunta(pregunta):
-#	comando = 'zenity --text "'+pregunta+'" --question'
-#	salida = os.system(comando)
-#	return salida == 0
-#
-#def zenity_alerta(texto):
-#	comando = 'zenity --text "'+texto+'" --info'
-#	salida = os.system(comando)
-
 def zenity_lista(titulo , listaOpciones):
 	comando = "zenity --list --column=\""+titulo+"\""
 	for opcion in listaOpciones:
@@ -551,8 +533,6 @@ def main(argv):
 							 ])
 
 	for option, value in options:
-		#print "opcion = " + option
-		#print "valor = " + value
 		if option == '-p':
 			PAUSA = True
 
@@ -583,7 +563,7 @@ Añadir ISO mediante una lista explicita de las ISOS:
 Añadir ISO con exp. reg. La expresión solo afecta al directorio actual, actualmente no es recursivo:
 \t\t%s *.iso
 
-Buscar y Añadir ISO's recursivamente. Busca todos las imagenes isos RECURSIVAMENTE, incluso tambien busca dentro de RAR, a falta de implementar zip), tal vez necesites sudo apt-get install rar.
+Buscar y Añadir ISO's recursivamente. Busca todos las imagenes isos RECURSIVAMENTE, incluso tambien busca dentro de RAR, a falta de implementar zip), tal vez necesites apt-get install rar.
 \t\t%s buscar
 
 Borrar juegos. Especificando el juego mediante un menú:
@@ -652,20 +632,22 @@ except getopt.GetoptError:
 	interfaz.alert('error', 'Programa ejecutado con las opciones incorrectas')
 	sys.exit(1)
 
-numParametros = len(PARAMETROS)
+if(os.geteuid() != 0):
+	interfaz.alert('error', 'Debes ser usuario privilegiado para que wiithon pueda acceder a su partición/es WBFS.')
+	SALIDA_FORZADA = True
+else:
+	#Se puede forzar la salida por no aceptar el acuerdo
+	if( not comprobarExistencia(ACUERDO)):
+		informarAcuerdo()
 
-GUI = GUI and (numParametros == 0)
+	#Se puede forzar la salida por no encontrar particion
+	DEVICE = buscarParticionWBFS()
 
-#Se puede forzar la salida por no aceptar el acuerdo
-if( not comprobarExistencia(ACUERDO)):
-	informarAcuerdo()
-
-#Se puede forzar la salida por no encontrar particion
-DEVICE = buscarParticionWBFS()
-
-#Comprobamos si tiene algun juego
-listaJuegos = getListaJuegos(DEVICE)
-hayJuegos = len(listaJuegos) > 0
+	#Comprobamos si tiene algun juego
+	numParametros = len(PARAMETROS)
+	GUI = GUI and (numParametros == 0)
+	listaJuegos = getListaJuegos(DEVICE)
+	hayJuegos = len(listaJuegos) > 0
 
 # FIXME: Eliminar todo uso de variable global cuando podamos
 if ( not SALIDA_FORZADA ):
@@ -803,7 +785,6 @@ if ( not SALIDA_FORZADA ):
 					)
 				):
 				listaFicheros.append( parametro )
-				print listaFicheros
 
 			# si tiene caracteres raros -> no es expresión regular
 			# porque de otro forma, peta la expresion regular.
@@ -919,5 +900,5 @@ if ( not SALIDA_FORZADA ):
 
 		print "}"
 
-if (PAUSA):
-	raw_input("Pulse cualquier tecla para continuar ...\n")
+	if (not GUI and PAUSA):
+		raw_input("Pulse cualquier tecla para continuar ...\n")

@@ -14,7 +14,7 @@ sleep 5
 
 for i in $(ls /dev/*cd* -l | grep '^l'  | awk '{print $10}' | uniq | awk '{print "/dev/" $1}');
 do
-	MAGICO=`sudo head --bytes=6 $i 2> /dev/null`;
+	MAGICO=`head --bytes=6 $i 2> /dev/null`;
 	LEGIBLE=`echo $MAGICO | wc -c`;
 	# Si hay 7 caracteres = ASDASD\n
 	if [ $LEGIBLE -eq 7 ]; then
