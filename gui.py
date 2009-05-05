@@ -37,6 +37,7 @@ class WiithonGUI(GladeWrapper):
 		GladeWrapper.__init__(self, self.RUTA+'/'+'recursos/glade/gui.glade' , 'principal')
 		#self.wg_principal.hide() # hack
 
+		self.wg_principal.set_title('Wiithon')
 		ls = gtk.ListStore(str,)
 		ls.append(('Rock Band 2',))
 		ls.append(('Animal Crossing',))

@@ -99,7 +99,6 @@
             <child>
               <widget class="GtkProgressBar" id="progressbar1">
                 <property name="visible">True</property>
-                <property name="text" translatable="yes">A&#xF1;adiendo ISO...</property>
               </widget>
               <packing>
                 <property name="position">0</property>
@@ -180,6 +179,8 @@
                 </child>
                 <child>
                   <widget class="GtkImage" id="img_caratula">
+                    <property name="width_request">160</property>
+                    <property name="height_request">225</property>
                     <property name="visible">True</property>
                     <property name="stock">gtk-missing-image</property>
                   </widget>
