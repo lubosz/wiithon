@@ -6,7 +6,7 @@ from glade_wrapper import GladeWrapper
 class WiithonGUI(GladeWrapper):
 
 	core = None
-	
+
 	RUTA = "/usr/local/share/wiithon"
 	HOME = os.path.expanduser("~")
 
@@ -27,15 +27,15 @@ class WiithonGUI(GladeWrapper):
 			fc_anadir.set_local_only(True)
 			fc_anadir.set_select_multiple(True)
 			fc_anadir.show()
-							
+
 			if fc_anadir.run() == gtk.RESPONSE_OK:
 				self.core.anadirListaFicheros( fc_anadir.get_filenames() )
-			
+
 			fc_anadir.destroy()
 			self.core.procesar()
 
 		GladeWrapper.__init__(self, self.RUTA+'/'+'recursos/glade/gui.glade' , 'principal')
-		self.wg_principal.hide() # hack
+		#self.wg_principal.hide() # hack
 
 		ls = gtk.ListStore(str,)
 		ls.append(('Rock Band 2',))
@@ -60,13 +60,13 @@ class WiithonGUI(GladeWrapper):
 
 		botonbarra1 = self.wg_tb_anadir
 		botonbarra1.connect('clicked' , on_tb_anadir_clicked)
-		
+
 		botonbarra2 = self.wg_tb_anadir_directorio
 		botonbarra2.connect('clicked' , on_tb_anadir_clicked)
 
 		self.wg_principal.connect('destroy', gtk.main_quit)
 
-	def alert(self, level, message):	
+	def alert(self, level, message):
 		alert_glade = gtk.glade.XML(self.RUTA + '/recursos/glade/gui.glade', 'alert_dialog')
 
 		level_icons = {

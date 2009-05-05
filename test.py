@@ -1,12 +1,8 @@
 #!/usr/bin/env python
 #-*-coding: utf-8-*-
 
-import sys
-
 import gtk
 import gui
-
-global wt_gui
 
 def cb(widget, *args):
     global wt_gui
@@ -17,21 +13,16 @@ def cb(widget, *args):
 wt_gui = gui.WiithonGUI()
 res = wt_gui.alert('question', 'hola')
 
-if res == gtk.RESPONSE_APPLY:
-    print 'gtk.RESPONSE_APPY'
+if res == 1:
+    print 'Botón de la derecha'
 
-elif res == gtk.RESPONSE_YES:
-    print 'gtk.RESPONSE_YES'
-
-elif res == gtk.RESPONSE_NO:
-    print 'gtk.RESPONSE_NO'
-
-elif res == gtk.RESPONSE_NONE:
-    print 'gtk.RESPONSE_NONE'
+elif res == 0:
+    print 'Botón de la izquierda'
 
 else:
     print 'another'
     print res
+
 
 
 gtk.main()
