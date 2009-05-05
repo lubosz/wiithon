@@ -242,6 +242,7 @@
                 <property name="can_focus">True</property>
                 <child>
                   <widget class="GtkVBox" id="vbox3">
+                    <property name="visible">True</property>
                     <child>
                       <widget class="GtkHBox" id="hbox4">
                         <property name="visible">True</property>
