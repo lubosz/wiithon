@@ -854,8 +854,8 @@ class WiithonCORE:
 							print
 							erroneos.append(mensaje)
 					elif( self.getExtension(fichero) == "iso" ):
-						print "Añadir ISO : " + os.path.basename(fichero) + " a la particion " + DEVICE + " " + FABRICANTE
-						if ( self.anadirISO(DEVICE , fichero) ):
+						print "Añadir ISO : " + os.path.basename(fichero) + " a la particion " + self.DEVICE + " " + self.FABRICANTE
+						if ( self.anadirISO(self.DEVICE , fichero) ):
 							mensaje = "ISO "+fichero+" añadida correctamente"
 							print "OK"
 							print "}"
