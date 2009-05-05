@@ -20,23 +20,31 @@ install: wbfs uninstall
 	mkdir -p $(PREFIX)/share/wiithon/recursos/imagenes
 	mkdir -p /usr/share/gconf/schemas/
 
-	cp wiithon $(PREFIX)/share/wiithon
+	cp wiithon.py $(PREFIX)/share/wiithon
 	cp wiithon_autodetectar $(PREFIX)/share/wiithon
 	cp wiithon_autodetectar_lector $(PREFIX)/share/wiithon
 	cp wbfs $(PREFIX)/share/wiithon
-	cp *.py $(PREFIX)/share/wiithon
+	cp gui.py $(PREFIX)/share/wiithon
+	cp glade_wrapper.py $(PREFIX)/share/wiithon
+	cp util.py $(PREFIX)/share/wiithon
+	cp core.py $(PREFIX)/share/wiithon
+
 	cp recursos/glade/*.glade $(PREFIX)/share/wiithon/recursos/glade
 	cp recursos/imagenes/*.png $(PREFIX)/share/wiithon/recursos/imagenes
 
-	chmod 755 $(PREFIX)/share/wiithon/wiithon
+	chmod 755 $(PREFIX)/share/wiithon/wiithon.py
 	chmod 755 $(PREFIX)/share/wiithon/wiithon_autodetectar
 	chmod 755 $(PREFIX)/share/wiithon/wiithon_autodetectar_lector
 	chmod 755 $(PREFIX)/share/wiithon/wbfs
-	chmod 755 $(PREFIX)/share/wiithon/*.py
+	chmod 755 $(PREFIX)/share/wiithon/gui.py
+	chmod 755 $(PREFIX)/share/wiithon/glade_wrapper.py
+	chmod 755 $(PREFIX)/share/wiithon/util.py
+	chmod 755 $(PREFIX)/share/wiithon/core.py
 
 	chmod 644 $(PREFIX)/share/wiithon/recursos/glade/*.glade
+	chmod 644 $(PREFIX)/share/wiithon/recursos/imagenes/*.png
 	
-	ln -s $(PREFIX)/share/wiithon/wiithon $(PREFIX)/bin/wiithon
+	ln -s $(PREFIX)/share/wiithon/wiithon.py $(PREFIX)/bin/wiithon
 
 	@echo "=================================================================="
 	@echo "Instalado OK, instala manualmente los acciones de nautilus"
@@ -63,7 +71,11 @@ uninstall:
 	-$(RM) $(PREFIX)/share/wiithon/wiithon_autodetectar
 	-$(RM) $(PREFIX)/share/wiithon/wiithon_autodetectar_lector
 	-$(RM) $(PREFIX)/share/wiithon/wbfs
-	-$(RM) $(PREFIX)/share/wiithon/*.py	
+	-$(RM) $(PREFIX)/share/wiithon/wiithon.py	
+	-$(RM) $(PREFIX)/share/wiithon/util.py	
+	-$(RM) $(PREFIX)/share/wiithon/gui.py	
+	-$(RM) $(PREFIX)/share/wiithon/glade_wrapper.py	
+	-$(RM) $(PREFIX)/share/wiithon/core.py	
 	-$(RM) $(PREFIX)/share/wiithon/recursos/glade/*.glade
 	-$(RM) $(PREFIX)/share/wiithon/recursos/imagenes/*.png
 	

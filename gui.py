@@ -1,19 +1,40 @@
 #-*-coding: utf-8-*-
 
-import gtk
+import gtk , os
 from glade_wrapper import GladeWrapper
-
-RUTA = "/usr/local/share/wiithon"
 
 class WiithonGUI(GladeWrapper):
 
+	core = None
+	
+	RUTA = "/usr/local/share/wiithon"
+	HOME = os.path.expanduser("~")
+
 	def __init__(self):
 		def cb(treeview, path, view_column):
-			self.wg_img_caratula.set_from_file(RUTA+'/recursos/imagenes/re4.png')
-		def on_tb_anadir_clicked(id_tb):
-			print id_tb
+			self.wg_img_caratula.set_from_file(self.RUTA+'/recursos/imagenes/re4.png')
 
-		GladeWrapper.__init__(self, RUTA+'/'+'recursos/glade/gui.glade' , 'principal')
+		def on_tb_anadir_clicked(id_tb):
+			botones = (	gtk.STOCK_CANCEL,
+					gtk.RESPONSE_CANCEL,
+					gtk.STOCK_OPEN,
+					gtk.RESPONSE_OK )
+			if(id_tb == self.wg_tb_anadir):
+				fc_anadir = gtk.FileChooserDialog("Elige una ISO o un RAR", None , gtk.FILE_CHOOSER_ACTION_OPEN , botones)
+			elif(id_tb == self.wg_tb_anadir_directorio):
+				fc_anadir = gtk.FileChooserDialog("Elige un directorio", None , gtk.FILE_CHOOSER_ACTION_SELECT_FOLDER , botones)
+
+			fc_anadir.set_local_only(True)
+			fc_anadir.set_select_multiple(True)
+			fc_anadir.show()
+							
+			if fc_anadir.run() == gtk.RESPONSE_OK:
+				self.core.anadirListaFicheros( fc_anadir.get_filenames() )
+			
+			fc_anadir.destroy()
+			self.core.procesar()
+
+		GladeWrapper.__init__(self, self.RUTA+'/'+'recursos/glade/gui.glade' , 'principal')
 		self.wg_principal.hide() # hack
 
 		ls = gtk.ListStore(str,)
@@ -46,7 +67,7 @@ class WiithonGUI(GladeWrapper):
 		self.wg_principal.connect('destroy', gtk.main_quit)
 
 	def alert(self, level, message):	
-		alert_glade = gtk.glade.XML(RUTA + '/recursos/glade/gui.glade', 'alert_dialog')
+		alert_glade = gtk.glade.XML(self.RUTA + '/recursos/glade/gui.glade', 'alert_dialog')
 
 		level_icons = {
 			'question': gtk.STOCK_DIALOG_QUESTION,
@@ -99,8 +120,10 @@ class WiithonGUI(GladeWrapper):
 		return res
 
 		#def alert_off(self):
-		#    alert_glade = gtk.glade.XML(RUTA + '/recursos/glade/gui.glade', 'alert_dialog')
+		#    alert_glade = gtk.glade.XML(self.RUTA + '/recursos/glade/gui.glade', 'alert_dialog')
 		#    alert_glade.get_widget('alert_dialog').hide()
 
+	def setCore(self , core):
+		self.core = core
 
 
