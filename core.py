@@ -35,7 +35,7 @@ class WiithonCORE:
 	def __init__(self):
 		assert os.getuid() == 0, 'Debes ser usuario privilegiado para que wiithon pueda acceder a su partición WBFS'
 
-		if( not self.comprobarExistencia( self.getRutaACUERDO() )):
+		if not os.path.exist(self.getRutaACUERDO()):
 			self.informarAcuerdo()
 
 		self.DEVICE = self.buscarParticionWBFS()
@@ -70,7 +70,7 @@ class WiithonCORE:
 				MAGIC_DVD = getMagicISO(LECTOR_DVD)
 				SALIDA = os.getcwd()+"/"+MAGIC_DVD+".iso"
 				reemplazada = False
-				if (comprobarExistencia(SALIDA)):
+				if (self.comprobarExistencia(SALIDA)):
 					print "Ya hay una ISO en : " + SALIDA
 					respuesta = raw_input("Desea reemplazarla (S/N) : ")
 					if(respuesta.lower() == "s" or respuesta.lower() == "si"):
@@ -368,7 +368,7 @@ class WiithonCORE:
 			raise AttributeError("No puedes usar esta aplicacion si no estas deacuerdo")
 
 	def existeCaratula(self , IDGAME):
-		return (comprobarExistencia(IDGAME+".png"))
+		return (self.comprobarExistencia(IDGAME+".png"))
 
 	def descargarCaratula(self , IDGAME, panoramica = False):
 		if (existeCaratula(IDGAME)):
