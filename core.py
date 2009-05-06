@@ -14,11 +14,9 @@ class WiithonCORE:
 	RUTA = "/usr/local/share/wiithon"
 	HOME = os.path.expanduser("~")
 
-	WBFS_APP = RUTA+"/"+"wbfs"
-	DETECTOR_WBFS = RUTA+"/"+"wiithon_autodetectar"
-
-	DETECTOR_WBFS_LECTOR = RUTA+"/"+"wiithon_autodetectar_lector"
-	ACUERDO = RUTA+"/.acuerdo"
+	WBFS_APP = config.WIITHON_FILES + "/wbfs"
+	DETECTOR_WBFS = config.WIITHON_FILES + "/wiithon_autodetectar"
+	DETECTOR_WBFS_LECTOR = config.WIITHON_FILES + "/wiithon_autodetectar_lector"
 
 	ISO = ""
 	COMANDO = ""
@@ -35,7 +33,7 @@ class WiithonCORE:
 	def __init__(self):
 		assert os.getuid() == 0, 'Debes ser usuario privilegiado para que wiithon pueda acceder a su partición WBFS'
 
-		if not os.path.exist(self.getRutaACUERDO()):
+		if not os.path.exist(config.HOME_WIITHON):
 			self.informarAcuerdo()
 
 		self.DEVICE = self.buscarParticionWBFS()
@@ -361,7 +359,7 @@ class WiithonCORE:
 			       )
 
 		if res == 1:
-			fAcuerdo = open(ACUERDO , "w")
+			#fAcuerdo = open(config.HOME_WIITHON , "w")
 			fAcuerdo.write("Acuerdo aceptado en la fecha " + time.asctime() + "\n")
 			fAcuerdo.close()
 		else:
@@ -767,9 +765,6 @@ class WiithonCORE:
 
 	def getListaFicheros(self):
 		return self.listaFicheros
-
-	def getRutaACUERDO(self):
-		return self.ACUERDO
 
 	def getFabricante(self):
 		return self.FABRICANTE
