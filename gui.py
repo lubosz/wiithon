@@ -9,8 +9,6 @@ class WiithonGUI(GladeWrapper):
 
 	core = None
 
-	HOME = os.path.expanduser("~")
-
 	def __init__(self):
 		def cb(treeview, path, view_column):
 			self.wg_img_caratula.set_from_file(config.WIITHON_FILES+'/recursos/imagenes/re4.png')
