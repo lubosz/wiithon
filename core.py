@@ -522,7 +522,7 @@ class WiithonCORE:
 					PAUSA = True
 
 				elif option in ['-h', '--help']:
-					uso()
+					self.uso()
 					sys.exit(0)
 
 				elif option in ['--trabajo', '--work']:
@@ -743,12 +743,12 @@ class WiithonCORE:
 
 	Web : http://blogricardo.wordpress.com/2009/04/07/wiithon-wbfs-gui-para-wii
 	''' %(wiithon,
-	      wiithon, self.RUTA,
+	      wiithon, sys.argv[0],
 	      wiithon,
 	      wiithon,
 	      wiithon,
 	      wiithon,
-	      wiithon, self.RUTA,
+	      wiithon, sys.argv[0],
 	      wiithon,
 	      wiithon,
 	      wiithon,
