@@ -8,6 +8,7 @@
 # :: Ver LICENCIA.txt
 
 import sys
+import getopt
 
 from gui import WiithonGUI
 from core import WiithonCORE
@@ -53,7 +54,7 @@ except getopt.GetoptError:
 	sys.exit(1)
 
 except AssertionError, mensaje:
-	interfaz.alert('error', mensaje)
+	interfaz.alert('error', str(mensaje))
 	sys.exit(1)
 
 except AttributeError, msj:

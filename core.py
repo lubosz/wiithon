@@ -1,17 +1,16 @@
 #-*-coding: utf-8-*-
 
 import sys , os , subprocess , time , glob , fnmatch
-import getopt
 import gtk
 import commands
 
 from util import NonRepeatList
+import config
 
 class WiithonCORE:
 
 	interfaz = None
 
-	RUTA = "/usr/local/share/wiithon"
 	HOME = os.path.expanduser("~")
 
 	WBFS_APP = config.WIITHON_FILES + "/wbfs"
@@ -746,9 +745,6 @@ class WiithonCORE:
 
 	def anadirListaFicheros(self , lista):
 		self.listaFicheros.extend( lista )
-
-	def getRUTA():
-		return self.RUTA
 
 	def setInterfaz(self , interfaz):
 		self.interfaz = interfaz

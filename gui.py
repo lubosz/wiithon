@@ -1,18 +1,19 @@
 #-*-coding: utf-8-*-
 
 import gtk , os
+
 from glade_wrapper import GladeWrapper
+import config
 
 class WiithonGUI(GladeWrapper):
 
 	core = None
 
-	RUTA = "/usr/local/share/wiithon"
 	HOME = os.path.expanduser("~")
 
 	def __init__(self):
 		def cb(treeview, path, view_column):
-			self.wg_img_caratula.set_from_file(self.RUTA+'/recursos/imagenes/re4.png')
+			self.wg_img_caratula.set_from_file(config.WIITHON_FILES+'/recursos/imagenes/re4.png')
 
 		def on_tb_anadir_clicked(id_tb):
 			botones = (	gtk.STOCK_CANCEL,
@@ -34,7 +35,7 @@ class WiithonGUI(GladeWrapper):
 			fc_anadir.destroy()
 			self.core.procesar()
 
-		GladeWrapper.__init__(self, self.RUTA+'/'+'recursos/glade/gui.glade' , 'principal')
+		GladeWrapper.__init__(self, config.WIITHON_FILES + '/recursos/glade/gui.glade' , 'principal')
 		#self.wg_principal.hide() # hack
 
 		self.wg_principal.set_title('Wiithon')
@@ -68,7 +69,7 @@ class WiithonGUI(GladeWrapper):
 		self.wg_principal.connect('destroy', gtk.main_quit)
 
 	def alert(self, level, message):
-		alert_glade = gtk.glade.XML(self.RUTA + '/recursos/glade/gui.glade', 'alert_dialog')
+		alert_glade = gtk.glade.XML(config.WIITHON_FILES + '/recursos/glade/gui.glade', 'alert_dialog')
 
 		level_icons = {
 			'question': gtk.STOCK_DIALOG_QUESTION,
@@ -119,10 +120,6 @@ class WiithonGUI(GladeWrapper):
 		alert_glade.get_widget('alert_dialog').hide()
 
 		return res
-
-		#def alert_off(self):
-		#    alert_glade = gtk.glade.XML(self.RUTA + '/recursos/glade/gui.glade', 'alert_dialog')
-		#    alert_glade.get_widget('alert_dialog').hide()
 
 	def setCore(self , core):
 		self.core = core
