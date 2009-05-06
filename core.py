@@ -10,13 +10,13 @@ from util import NonRepeatList
 class WiithonCORE:
 
 	interfaz = None
-	
+
 	RUTA = "/usr/local/share/wiithon"
 	HOME = os.path.expanduser("~")
 
 	WBFS_APP = RUTA+"/"+"wbfs"
 	DETECTOR_WBFS = RUTA+"/"+"wiithon_autodetectar"
-	
+
 	DETECTOR_WBFS_LECTOR = RUTA+"/"+"wiithon_autodetectar_lector"
 	ACUERDO = RUTA+"/.acuerdo"
 
@@ -31,18 +31,17 @@ class WiithonCORE:
 	GUI = True
 	NUM_LINEAS_PAUSA = 21
 	borrarISODescomprimida = False
-	
+
 	def __init__(self):
-		if commands.getoutput( "whoami" ) != "root":
-			raise AttributeError("Debes ser usuario privilegiado para que wiithon pueda acceder a su partición/es WBFS.")
-		else:
-			if( not self.comprobarExistencia( self.getRutaACUERDO() )):
-				self.informarAcuerdo()
+		assert os.getuid() == 0, 'Debes ser usuario privilegiado para que wiithon pueda acceder a su partición WBFS'
 
-			self.DEVICE = self.buscarParticionWBFS()
+		if( not self.comprobarExistencia( self.getRutaACUERDO() )):
+			self.informarAcuerdo()
 
-			self.listaJuegos = self.getListaJuegos(self.DEVICE)
-			self.hayJuegos = len(self.listaJuegos) > 0
+		self.DEVICE = self.buscarParticionWBFS()
+
+		self.listaJuegos = self.getListaJuegos(self.DEVICE)
+		self.hayJuegos = len(self.listaJuegos) > 0
 
 	def instalarJuego(self , DEVICE):
 		salida = ""
@@ -535,14 +534,14 @@ class WiithonCORE:
 				elif option == '--no-gui':
 					GUI = False
 
-		except getopt.GetoptError:			
+		except getopt.GetoptError:
 			raise AttributeError("Programa ejecutado con las opciones incorrectas")
 
 		self.PARAMETROS.extend(arguments)
-		
-		self.numParametros = len(self.PARAMETROS)	
+
+		self.numParametros = len(self.PARAMETROS)
 		self.GUI = self.hayGUI()
-		
+
 		if( self.GUI ):
 			self.interfaz.wg_principal.show()
 			gtk.main()
@@ -762,40 +761,40 @@ class WiithonCORE:
 	      wiithon,
 	      wiithon
 	      )
-	      	
+
 	def getParametros(self):
 		return self.PARAMETROS
-		
+
 	def getListaFicheros(self):
 		return self.listaFicheros
-		
+
 	def getRutaACUERDO(self):
 		return self.ACUERDO
-		
+
 	def getFabricante(self):
 		return self.FABRICANTE
-		
+
 	def hayPausa(self):
 		return self.PAUSA
-		
+
 	def anadirListaFicheros(self , lista):
 		self.listaFicheros.extend( lista )
-		
+
 	def getRUTA():
 		return self.RUTA
-		
+
 	def setInterfaz(self , interfaz):
 		self.interfaz = interfaz
-		
+
 	def procesar(self):
 		correctos = []
 		erroneos = []
 		numFicheros = len(self.listaFicheros)
 		if(numFicheros>0):
-		
+
 			#Expandir directorios
 			# ...
-		
+
 			#Ordenamos la lista
 			self.listaFicheros.sort()
 			numFicherosProcesados=0
@@ -909,10 +908,10 @@ class WiithonCORE:
 
 		if (not self.GUI and self.hayPausa()):
 			raw_input("Pulse cualquier tecla para continuar ...\n")
-		
+
 		# vaciamos la listaFicheros a procesar
 		while len(self.listaFicheros) > 0:
 			self.listaFicheros.remove( self.listaFicheros[0] )
-	
+
 ######################### FIN CLASE CORE ####################
 

@@ -18,8 +18,11 @@ try:
 	interfaz = WiithonGUI()
 	core = WiithonCORE()
 	interfaz.setCore(core)
-	core.setInterfaz(interfaz)	
+	core.setInterfaz(interfaz)
 	core.main()
+
+except AssertionError, mensaje:
+	interfaz.alert('error', mensaje)
 
 except AttributeError, msj:
 	try:
