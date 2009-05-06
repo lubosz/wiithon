@@ -506,45 +506,17 @@ class WiithonCORE:
 		return salida
 
 	############## MAIN ###########################
-	def main(self):
-		try:
-			argv = sys.argv[1:]
+	def main(self, opciones, argumentos):
 
-			options, arguments = getopt.getopt(argv, 'phH', ['trabajo=',
-									 'work=',
-									 'help',
-									 'HELP',
-									 'no-gui',
-									 ])
-
-			for option, value in options:
-				if option == '-p':
-					PAUSA = True
-
-				elif option in ['-h', '--help']:
-					self.uso()
-					sys.exit(0)
-
-				elif option in ['--trabajo', '--work']:
-					if os.path.isdir(value):
-						os.chdir(value)
-
-				elif option == '--no-gui':
-					GUI = False
-
-		except getopt.GetoptError:
-			raise AttributeError("Programa ejecutado con las opciones incorrectas")
-
-		self.PARAMETROS.extend(arguments)
-
+		self.PARAMETROS.extend(argumentos)
 		self.numParametros = len(self.PARAMETROS)
 		self.GUI = self.hayGUI()
 
-		if( self.GUI ):
+		if self.GUI:
 			self.interfaz.wg_principal.show()
 			gtk.main()
 
-		elif( self.PARAMETROS[0].lower() == "listar" or self.PARAMETROS[0].lower() == "ls" ):
+		elif self.PARAMETROS[0].lower() == "listar" or self.PARAMETROS[0].lower() == "ls" :
 			if(self.hayJuegos):
 				print "Listando juegos de : " + self.DEVICE + " " + self.FABRICANTE
 				self.listarISOs(self.DEVICE , self.listaJuegos)
