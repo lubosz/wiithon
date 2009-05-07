@@ -9,7 +9,6 @@ import config
 
 class WiithonCORE:
 
-	WBFS_APP = config.WIITHON_FILES + "/wbfs"
 	DETECTOR_WBFS = config.WIITHON_FILES + "/wiithon_autodetectar.sh"
 	DETECTOR_WBFS_LECTOR = config.WIITHON_FILES + "/wiithon_autodetectar_lector.sh"
 
@@ -27,8 +26,6 @@ class WiithonCORE:
 
 	def __init__(self , interfaz):
 		self.interfaz = interfaz
-	
-		assert os.geteuid() == 0, 'Debes ser usuario privilegiado para que wiithon pueda acceder a su partición WBFS'
 
 		if not self.comprobarExistencia(config.HOME_WIITHON):
 			self.informarAcuerdo()
@@ -37,6 +34,19 @@ class WiithonCORE:
 
 		self.listaJuegos = self.getListaJuegos(self.DEVICE)
 		self.hayJuegos = len(self.listaJuegos) > 0
+
+	def informarAcuerdo(self):
+		res = self.interfaz.alert('question',
+			       '''El equipo de Wiithon no se hace responsable de la aplicacion ni de la perdida de datos.
+No obstante, la particion NO va ha ser formateada.
+Esta aplicación añade, borra y lista juegos explicamente mediante la ayuda de %s.
+Esta información no volverá a aparecer si acepta el acuerdo.
+¿Está de acuerdo?'''
+					  %(os.path.basename(config.WBFS_APP)) )
+
+		# gtk.RESPONSE_YES ¿que constante es GTK es 1?
+		assert res == 1, "No puedes usar esta aplicacion si no estas de acuerdo"
+		os.mkdir( config.HOME_WIITHON )
 
 	def instalarJuego(self , DEVICE):
 		salida = ""
@@ -128,25 +138,33 @@ class WiithonCORE:
 		return magic
 
 	def getListaJuegos(self , DEVICE):
-
 		def ordenarPorNombre(juego1 , juego2):
 			return cmp( juego1[1].lower() , juego2[1].lower() )
 
-		subProceso = self.getPopen(""+self.WBFS_APP+" -p "+DEVICE+" ls")
+		subProceso = self.getPopen(config.WBFS_APP+" -p "+DEVICE+" ls")
 		#Espera que acabe
-		subProceso.wait()
+		returncode = subProceso.wait()
+
 		salida = []
-		for linea in subProceso.stdout:
-			cachos = linea.split(";")
-			if(len(cachos)==3):
-				#Elimina el salto de linea del ultimo cacho
-				cachos[2] = cachos[2][:-1].split("\n")[0]
-				#Añade el juego a la lista
+		if returncode:
+			for linea in subProceso.stdout:
+				cachos = linea.split(";")
+				if(len(cachos)==3):
+				        #Elimina el salto de linea del ultimo cacho
+					cachos[2] = cachos[2][:-1].split("\n")[0]
+				        #Añade el juego a la lista
 				salida.append( [ cachos[0] , cachos[1] , cachos[2] ] )
-		salida.sort(ordenarPorNombre)
+			salida.sort(ordenarPorNombre)
+
+
+		else:
+			self.interfaz.alert('error',
+					    'Debe identificarse como root o sudo para acceder a la lista de juegos')
+
 		return salida
 
 	def verificarTodosLosJuegos(self , DEVICE , listaJuegos):
+		# FIXME: en este método se debe ser root
 		listaCorruptos = []
 		numJuegos = len(listaJuegos)
 		if(numJuegos > 0):
@@ -154,7 +172,7 @@ class WiithonCORE:
 			print "%6s\t%-40s\t%s" % ("IDGAME","TITULO" , "¿Corrupto?")
 			print "--------------------------------------------------------------------------------"
 			for juego in listaJuegos:
-				salida = os.system(""+self.WBFS_APP+" -p "+DEVICE+" check "+juego[0])
+				salida = os.system(config.WBFS_APP+" -p "+DEVICE+" check "+juego[0])
 				if( salida == 0 ):
 					corrupto = "NO ESTA CORRUPTO"
 				else:
@@ -234,7 +252,8 @@ class WiithonCORE:
 		return numJuegos
 
 	def mostrarEspacioLibre(self , DEVICE):
-		subProceso = getPopen(""+self.WBFS_APP+" -p "+DEVICE+" df")
+		# FIXME: en este método se debe ser root
+		subProceso = getPopen(config.WBFS_APP+" -p "+DEVICE+" df")
 		subProceso.wait()
 		salida = ""
 		for linea in subProceso.stdout:
@@ -249,14 +268,14 @@ class WiithonCORE:
 			return False
 
 	def anadirISO(self , DEVICE , ISO , progreso = None):
-		'''
-		try:
-			salida = os.system(""+self.WBFS_APP+" -p "+DEVICE+" add \""+ISO+"\"")
-			return salida == 0
-		except KeyboardInterrupt:
-			return False
-		'''
-		comando = ""+self.WBFS_APP+" -p "+DEVICE+" add \""+ISO+"\""
+		# FIXME: en este método se debe ser root
+		#try:
+		#	salida = os.system(config.WBFS_APP+" -p "+DEVICE+" add \""+ISO+"\"")
+		#	return salida == 0
+		#except KeyboardInterrupt:
+		#	return False
+
+		comando = config.WBFS_APP+" -p "+DEVICE+" add \""+ISO+"\""
 		entrada, salida = os.popen2(comando)
 		linea = ""
 		salir = False
@@ -287,15 +306,17 @@ class WiithonCORE:
 		return True
 
 	def renombrarISO(self , DEVICE , IDGAME , NUEVO_NOMBRE):
+		# FIXME: debe ser root
 		try:
-			salida = os.system(""+self.WBFS_APP+" -p "+DEVICE+" rename "+IDGAME+" \""+NUEVO_NOMBRE+"\"")
+			salida = os.system(config.WBFS_APP+" -p "+DEVICE+" rename "+IDGAME+" \""+NUEVO_NOMBRE+"\"")
 			return salida == 0
 		except KeyboardInterrupt:
 			return False
 
 	def borrarJuego(self , DEVICE , ID_JUEGO):
+		# FIXME: debe ser root
 		try:
-			salida = os.system(""+self.WBFS_APP+" -p "+DEVICE+" rm "+ID_JUEGO)
+			salida = os.system(config.WBFS_APP+" -p "+DEVICE+" rm "+ID_JUEGO)
 			return salida == 0
 		except KeyboardInterrupt:
 			return False
@@ -303,8 +324,9 @@ class WiithonCORE:
 			return False
 
 	def extraerJuego(self , DEVICE , ID_JUEGO):
+		# FIXME: debe ser root
 		try:
-			salida = os.system(""+self.WBFS_APP+" -p "+DEVICE+" extract "+ID_JUEGO)
+			salida = os.system(config.WBFS_APP+" -p "+DEVICE+" extract "+ID_JUEGO)
 			return salida == 0
 		except KeyboardInterrupt:
 			return False
@@ -355,18 +377,6 @@ class WiithonCORE:
 		except:
 			pass
 		return l
-
-	def informarAcuerdo(self):
-		res = self.interfaz.alert('question',
-			       'El equipo de Wiithon no se hace responsable de la aplicacion ni de la perdida de datos.\nNo obstante, la particion NO va ha ser formateada.\nEsta aplicación añade, borra y lista juegos explicamente mediante la ayuda de %s.\nEsta información no volverá a aparecer si acepta el acuerdo.\n¿Está de acuerdo?'
-			       %(os.path.basename(self.WBFS_APP))
-			       )
-
-		# gtk.RESPONSE_YES ¿que constante es GTK es 1?
-		if res == 1:
-			os.mkdir( config.HOME_WIITHON )
-		else:
-			raise AttributeError("No puedes usar esta aplicacion si no estas deacuerdo")
 
 	def existeCaratula(self , IDGAME):
 		return (self.comprobarExistencia(IDGAME+".png"))
