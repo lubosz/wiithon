@@ -22,11 +22,20 @@ class Observable:
 
 
     def subscribe(self, topic, callback):
-        if self.__observers.has_key(topic):
-            self.__observers.add(callback)
+        if isinstance(topic, list):
+            for t in topic:
+                if self.__observers.has_key(t):
+                    self.__observers[t].add(callback)
+
+                else:
+                    raise SubscriptionError(t)
 
         else:
-            raise SubscriptionError(topic)
+            if self.__observers.has_key(topic):
+                self.__observers[topic].add(callback)
+
+            else:
+                raise SubscriptionError(topic)
 
     def notify(self, topic, what):
         if self.__observers.has_key(topic):

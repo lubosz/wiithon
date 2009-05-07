@@ -1,13 +1,14 @@
-x#-*-coding: utf-8-*-
+#-*-coding: utf-8-*-
 
 import sys , os , subprocess , time , glob , fnmatch
 import gtk
 import commands
 
 from util import NonRepeatList
+from util import Observable
 import config
 
-class WiithonCORE(util.Observable):
+class WiithonCORE(Observable):
 
 	DETECTOR_WBFS = config.WIITHON_FILES + "/wiithon_autodetectar.sh"
 	DETECTOR_WBFS_LECTOR = config.WIITHON_FILES + "/wiithon_autodetectar_lector.sh"
@@ -25,8 +26,13 @@ class WiithonCORE(util.Observable):
 	borrarISODescomprimida = False
 
 	def __init__(self , interfaz):
-		util.Observable.__init__(self, ['error', 'warning', 'question', 'info'])
+		topics = ['error', 'warning', 'info']
+		# 'question' habrá que tratarlo de otra forma, ya que los topics no deben
+		# tener retorno
+		Observable.__init__(self, topics)
+
 		self.interfaz = interfaz
+		self.subscribe(topics, self.interfaz.alert)
 
 		if not self.comprobarExistencia(config.HOME_WIITHON):
 			self.informarAcuerdo()
@@ -159,8 +165,8 @@ Esta información no volverá a aparecer si acepta el acuerdo.
 
 
 		else:
-			self.interfaz.alert('error',
-					    'Debe identificarse como root o sudo para acceder a la lista de juegos')
+			self.notify('error',
+				    'Debe identificarse como root o sudo para acceder a la lista de juegos')
 
 		return salida
 
@@ -864,7 +870,7 @@ Esta información no volverá a aparecer si acepta el acuerdo.
 				print "\t{"
 				print "\t================= Todo metido en el HD correctamente ==================="
 				print "\t}"
-				self.interfaz.alert("info","Todo metido en el HD correctamente")
+				self.notify("info", "Todo metido en el HD correctamente")
 			else:
 				if(len(correctos) > 0):
 					print "\t================ Juegos correctos ("+str(len(correctos))+"/"+str(numFicherosProcesados)+") =============="
@@ -872,7 +878,8 @@ Esta información no volverá a aparecer si acepta el acuerdo.
 					for mensaje in correctos:
 						print "\t"+mensaje
 					print "\t}"
-					self.interfaz.alert("info","Juegos correctos ("+str(len(correctos))+"/"+str(numFicherosProcesados)+")")
+					self.notify("info", "Juegos correctos (%d/%d)"
+						    %(len(correctos), numFicherosProcesados))
 
 			if(len(erroneos) > 0):
 				print "\t=================== Juegos erroneos ("+str(len(erroneos))+"/"+str(numFicherosProcesados)+") ================="
@@ -880,9 +887,10 @@ Esta información no volverá a aparecer si acepta el acuerdo.
 				for mensaje in erroneos:
 					print "\t"+mensaje
 				print "\t}"
-				self.interfaz.alert("info","Juegos erroneos ("+str(len(erroneos))+"/"+str(numFicherosProcesados)+")")
+				self.notify("info","Juegos erroneos (%d/%d)"
+					    %(len(erroneos), numFicherosProcesados))
 
-			print "}"
+				print "}"
 
 		if (not self.GUI and self.hayPausa()):
 			raw_input("Pulse cualquier tecla para continuar ...\n")
