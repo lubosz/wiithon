@@ -13,3 +13,42 @@ class NonRepeatList(list):
             self.append(i)
 
 
+class Observable:
+    def __init__(self, topic_list):
+        self.__observers = {}
+
+        for topic in topic_list:
+            self.__observers[topic] = []
+
+
+    def subscribe(self, topic, callback):
+        if self.__observers.has_key(topic):
+            self.__observers.add(callback)
+
+        else:
+            raise SubscriptionError(topic)
+
+    def notify(self, topic, what):
+        if self.__observers.has_key(topic):
+            for observer_cb in self.__observers[topic]:
+                observer_cb(what)
+
+        else:
+            print 'revisa código macho, que el topic no existe'
+
+
+
+class SubscriptionError(Exception):
+    def __init__(self, topic=None):
+        Exception.__init__(self)
+        if topic:
+            self.msg = 'The topic "%s" doesn\'t exist' %(topic)
+
+        else:
+            self.msg = 'Topic not exist'
+
+    def __str__(self):
+        return self.msg
+
+
+

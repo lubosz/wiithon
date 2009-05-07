@@ -1,4 +1,4 @@
-#-*-coding: utf-8-*-
+x#-*-coding: utf-8-*-
 
 import sys , os , subprocess , time , glob , fnmatch
 import gtk
@@ -7,7 +7,7 @@ import commands
 from util import NonRepeatList
 import config
 
-class WiithonCORE:
+class WiithonCORE(util.Observable):
 
 	DETECTOR_WBFS = config.WIITHON_FILES + "/wiithon_autodetectar.sh"
 	DETECTOR_WBFS_LECTOR = config.WIITHON_FILES + "/wiithon_autodetectar_lector.sh"
@@ -25,6 +25,7 @@ class WiithonCORE:
 	borrarISODescomprimida = False
 
 	def __init__(self , interfaz):
+		util.Observable.__init__(self, ['error', 'warning', 'question', 'info'])
 		self.interfaz = interfaz
 
 		if not self.comprobarExistencia(config.HOME_WIITHON):
