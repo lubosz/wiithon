@@ -1,19 +1,34 @@
 #-*-coding: utf-8-*-
 
-import gtk , os
+import gtk , os , time , gobject
 
 from glade_wrapper import GladeWrapper
 import config
 
 class WiithonGUI(GladeWrapper):
 
-	core = None
+	# No hace falta en python, cuando haces self.core = core ya se crea
+	#core = None
 
 	def __init__(self):
 		def cb(treeview, path, view_column):
 			self.wg_img_caratula.set_from_file(config.WIITHON_FILES+'/recursos/imagenes/re4.png')
 
 		def on_tb_anadir_clicked(id_tb):
+			def anadir(progreso):
+				# Calculate the value of the progress bar using the
+				# value range set in the adjustment object
+				new_val = progreso.get_fraction() + 0.01
+				if new_val > 1.0:
+					new_val = 0.0
+				# Set the new value
+				progreso.set_fraction(new_val)
+	
+				# As this is a timeout function, return TRUE so that it
+				# continues to get called
+				return True
+
+
 			botones = (	gtk.STOCK_CANCEL,
 					gtk.RESPONSE_CANCEL,
 					gtk.STOCK_OPEN,
@@ -30,13 +45,16 @@ class WiithonGUI(GladeWrapper):
 			if fc_anadir.run() == gtk.RESPONSE_OK:
 				self.core.anadirListaFicheros( fc_anadir.get_filenames() )
 
+				self.timer = gobject.timeout_add (100, anadir , self.wg_progreso1)
+
 			fc_anadir.destroy()
-			self.core.procesar()
+			
+			#self.core.procesar( self.wg_progreso1 )
 
 		GladeWrapper.__init__(self, config.WIITHON_FILES + '/recursos/glade/gui.glade' , 'principal')
-		#self.wg_principal.hide() # hack
 
 		self.wg_principal.set_title('Wiithon')
+
 		ls = gtk.ListStore(str,)
 		ls.append(('Rock Band 2',))
 		ls.append(('Animal Crossing',))
@@ -64,7 +82,16 @@ class WiithonGUI(GladeWrapper):
 		botonbarra2 = self.wg_tb_anadir_directorio
 		botonbarra2.connect('clicked' , on_tb_anadir_clicked)
 
-		self.wg_principal.connect('destroy', gtk.main_quit)
+		self.wg_principal.connect('destroy', self.salir)
+		
+	# Clean up allocated memory and remove the timer
+	def salir(self , widget, data=None):
+		try:
+			gobject.source_remove(self.timer)
+			self.timer = 0
+		except:
+			pass
+		gtk.main_quit()
 
 	def alert(self, level, message):
 		alert_glade = gtk.glade.XML(config.WIITHON_FILES + '/recursos/glade/gui.glade', 'alert_dialog')
@@ -93,7 +120,6 @@ class WiithonGUI(GladeWrapper):
 
 		try:
 			img.set_from_stock(level_icons[level], gtk.ICON_SIZE_DIALOG)
-
 		except IndexError:
 			img.set_from_stock(level_icons['info'], gtk.ICON_SIZE_DIALOG)
 
@@ -103,13 +129,11 @@ class WiithonGUI(GladeWrapper):
 
 		if level_buttons[level][0]:
 			btn_ok.set_label(level_buttons[level][0])
-
 		else:
 			btn_ok.set_visible(False)
 
 		if level_buttons[level][1]:
 			btn_no.set_label(level_buttons[level][1])
-
 		else:
 			btn_no.hide()
 
@@ -119,7 +143,7 @@ class WiithonGUI(GladeWrapper):
 
 		return res
 
+
 	def setCore(self , core):
 		self.core = core
-
 

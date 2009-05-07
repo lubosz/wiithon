@@ -1,4 +1,5 @@
 COMMIT.txt
+DIFF.txt
 CHANGELOG.txt
 wbfs
 wbfs_src/negentig
@@ -6,4 +7,3 @@ wbfs_src/scrub
 wbfs_src/wbfs
 wbfs_src/*.o
 *~
-

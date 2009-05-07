@@ -44,24 +44,22 @@ try:
 		#	elif option == '--no-gui':
 		#		GUI = False
 
-	core = WiithonCORE()
+	core = WiithonCORE(interfaz)
 	interfaz.setCore(core)
-	core.setInterfaz(interfaz)
 	core.main(opciones_formateadas, arguments)
 
 except getopt.GetoptError:
-	interfaz.alert('error', 'Programa ejecutado con las opciones incorrectas')
-	sys.exit(1)
-
-except AssertionError, mensaje:
-	interfaz.alert('error', str(mensaje))
-	sys.exit(1)
-
-except AttributeError, msj:
 	try:
-		interfaz.alert("error", str(msj) )
+		interfaz.alert('error', 'Programa ejecutado con las opciones incorrectas')
 	except:
-		print "Error cargando interfaz: " + str(msj)
+		print "Programa ejecutado con las opciones incorrectas"
+	sys.exit(1)
+
+except (AttributeError, AssertionError), mensaje:
+	try:
+		interfaz.alert("error", str(mensaje) )
+	except:
+		print str(mensaje)
 	sys.exit(1)
 
 #############################################################

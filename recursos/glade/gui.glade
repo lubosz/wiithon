@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <!DOCTYPE glade-interface SYSTEM "glade-2.0.dtd">
-<!--Generated with glade3 3.4.5 on Tue May  5 22:28:35 2009 -->
+<!--Generated with glade3 3.4.5 on Thu May  7 05:15:03 2009 -->
 <glade-interface>
   <widget class="GtkWindow" id="principal">
     <property name="visible">True</property>
@@ -91,7 +91,7 @@
           <widget class="GtkHBox" id="hbox1">
             <property name="visible">True</property>
             <child>
-              <widget class="GtkProgressBar" id="progressbar1">
+              <widget class="GtkProgressBar" id="progreso1">
                 <property name="visible">True</property>
               </widget>
             </child>
@@ -373,7 +373,7 @@
                         <property name="vscrollbar_policy">GTK_POLICY_AUTOMATIC</property>
                         <child>
                           <widget class="GtkTreeView" id="tv_games">
-                            <property name="width_request">400</property>
+                            <property name="width_request">480</property>
                             <property name="visible">True</property>
                             <property name="can_focus">True</property>
                             <property name="reorderable">True</property>

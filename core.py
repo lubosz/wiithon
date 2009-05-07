@@ -9,13 +9,9 @@ import config
 
 class WiithonCORE:
 
-	interfaz = None
-
-	HOME = os.path.expanduser("~")
-
 	WBFS_APP = config.WIITHON_FILES + "/wbfs"
-	DETECTOR_WBFS = config.WIITHON_FILES + "/wiithon_autodetectar"
-	DETECTOR_WBFS_LECTOR = config.WIITHON_FILES + "/wiithon_autodetectar_lector"
+	DETECTOR_WBFS = config.WIITHON_FILES + "/wiithon_autodetectar.sh"
+	DETECTOR_WBFS_LECTOR = config.WIITHON_FILES + "/wiithon_autodetectar_lector.sh"
 
 	ISO = ""
 	COMANDO = ""
@@ -29,10 +25,12 @@ class WiithonCORE:
 	NUM_LINEAS_PAUSA = 21
 	borrarISODescomprimida = False
 
-	def __init__(self):
-		assert os.getuid() == 0, 'Debes ser usuario privilegiado para que wiithon pueda acceder a su partición WBFS'
+	def __init__(self , interfaz):
+		self.interfaz = interfaz
+	
+		assert os.geteuid() == 0, 'Debes ser usuario privilegiado para que wiithon pueda acceder a su partición WBFS'
 
-		if not os.path.exist(config.HOME_WIITHON):
+		if not self.comprobarExistencia(config.HOME_WIITHON):
 			self.informarAcuerdo()
 
 		self.DEVICE = self.buscarParticionWBFS()
@@ -43,7 +41,7 @@ class WiithonCORE:
 	def instalarJuego(self , DEVICE):
 		salida = ""
 		print "Buscando un Disco de Wii ..."
-		subProceso = getPopen(self.DETECTOR_WBFS_LECTOR)
+		subProceso = self.getPopen(self.DETECTOR_WBFS_LECTOR)
 		#Espera que acabe
 		subProceso.wait()
 		for linea in subProceso.stdout:
@@ -64,7 +62,7 @@ class WiithonCORE:
 				cachos = listaParticiones[0].split(":")
 				LECTOR_DVD = cachos[0]
 				FABRICANTE_DVD = cachos[1]
-				MAGIC_DVD = getMagicISO(LECTOR_DVD)
+				MAGIC_DVD = self.getMagicISO(LECTOR_DVD)
 				SALIDA = os.getcwd()+"/"+MAGIC_DVD+".iso"
 				reemplazada = False
 				if (self.comprobarExistencia(SALIDA)):
@@ -76,8 +74,8 @@ class WiithonCORE:
 						reemplazada = True
 				print FABRICANTE_DVD + " a un ISO temporal de 4.4GB en = " + MAGIC_DVD+".iso ..."
 				if( reemplazada or (os.system("dd if="+LECTOR_DVD+" of="+SALIDA+" bs=1M")==0) ):
-					if ( anadirISO(DEVICE , SALIDA)):
-						if( descargarCaratula(MAGIC_DVD) ):
+					if ( self.anadirISO(DEVICE , SALIDA)):
+						if( self.descargarCaratula(MAGIC_DVD) ):
 							print "Caratula descargada como "+os.getcwd()+"/"+MAGIC_DVD+".png"
 						else:
 							print "No se ha encontrado caratula para el juego " + MAGIC_DVD
@@ -102,8 +100,8 @@ class WiithonCORE:
 
 	def eliminarComillas(self , string):
 		'''
-		Primera letra				[:1]
-		Ultima letra				[-1:]
+		Primera letra			[:1]
+		Ultima letra			[-1:]
 		Todo excepto primera letra	[1:]
 		Todo excepto ultima letra	[:-1]
 		'''
@@ -184,7 +182,6 @@ class WiithonCORE:
 				print "Saliendo. No se ha desinstalado nada"
 
 	def get_IDJUEGO_de_Lista(self , DEVICE , listaJuegos):
-		listaJuegos = getListaJuegos(DEVICE)
 		numJuegos = len(listaJuegos)
 		if(numJuegos > 0):
 			print "--------------------------------------------------------------------------------"
@@ -193,7 +190,7 @@ class WiithonCORE:
 			i = 1
 			for juego in listaJuegos:
 				ocupado = float(juego[2])
-				if (existeCaratula(juego[0])):
+				if (self.existeCaratula(juego[0])):
 					caratula = "SI"
 				else:
 					caratula = "NO"
@@ -224,7 +221,7 @@ class WiithonCORE:
 			i = 1
 			for juego in listaJuegos:
 				ocupado = float(juego[2])
-				if (existeCaratula(juego[0])):
+				if (self.existeCaratula(juego[0])):
 					caratula = "SI"
 				else:
 					caratula = "NO"
@@ -251,35 +248,43 @@ class WiithonCORE:
 		else:
 			return False
 
-	def anadirISO(self , DEVICE , ISO):
+	def anadirISO(self , DEVICE , ISO , progreso = None):
+		'''
 		try:
 			salida = os.system(""+self.WBFS_APP+" -p "+DEVICE+" add \""+ISO+"\"")
 			return salida == 0
 		except KeyboardInterrupt:
 			return False
 		'''
-		comando = ""+WBFS_APP+" -p "+DEVICE+" add \""+ISO+"\""
+		comando = ""+self.WBFS_APP+" -p "+DEVICE+" add \""+ISO+"\""
 		entrada, salida = os.popen2(comando)
 		linea = ""
-		while True:
+		salir = False
+		while not salir:
 			letra = salida.read(1)
 			if(letra == '\n'):
 				linea = linea.strip()
-				try:
-					cachos = linea.split(";")
-					porcentaje = float(cachos[0])
-					hora = int(cachos[1])
-					minutos = int(cachos[2])
-					segundos = int(cachos[3])
-					print "LLeva un %.2f%% quedan %d horas, %d minutos, %d segundos" % ( porcentaje , hora , minutos , segundos )
-				except TypeError:
-					pass
-				linea = ""
+				if(linea != "FIN_ADD"):
+					try:
+						cachos = linea.split(";")
+						porcentaje = float(cachos[0])
+						hora = int(cachos[1])
+						minutos = int(cachos[2])
+						segundos = int(cachos[3])
+						print "LLeva un %.2f%% quedan %d horas, %d minutos, %d segundos" % ( porcentaje , hora , minutos , segundos )
+						if(progreso != None):
+							porcentual = porcentaje / 100
+							print porcentual
+							progreso.set_fraction( porcentual )
+					except TypeError:
+						pass
+					linea = ""
+				else:
+					salir = True
 			linea = linea + letra
 		entrada.close()
 		salida.close()
 		return True
-		'''
 
 	def renombrarISO(self , DEVICE , IDGAME , NUEVO_NOMBRE):
 		try:
@@ -327,7 +332,7 @@ class WiithonCORE:
 
 	def rec_glob(self , path , mask):
 		l = []
-		#Para linux
+
 		if path[-1] != '/':
 			path = path + '/'
 
@@ -352,15 +357,14 @@ class WiithonCORE:
 		return l
 
 	def informarAcuerdo(self):
-		res = self.interfaz.alert('info',
+		res = self.interfaz.alert('question',
 			       'El equipo de Wiithon no se hace responsable de la aplicacion ni de la perdida de datos.\nNo obstante, la particion NO va ha ser formateada.\nEsta aplicación añade, borra y lista juegos explicamente mediante la ayuda de %s.\nEsta información no volverá a aparecer si acepta el acuerdo.\n¿Está de acuerdo?'
-			       %(os.path.basename(WBFS_APP))
+			       %(os.path.basename(self.WBFS_APP))
 			       )
 
+		# gtk.RESPONSE_YES ¿que constante es GTK es 1?
 		if res == 1:
-			#fAcuerdo = open(config.HOME_WIITHON , "w")
-			fAcuerdo.write("Acuerdo aceptado en la fecha " + time.asctime() + "\n")
-			fAcuerdo.close()
+			os.mkdir( config.HOME_WIITHON )
 		else:
 			raise AttributeError("No puedes usar esta aplicacion si no estas deacuerdo")
 
@@ -368,7 +372,7 @@ class WiithonCORE:
 		return (self.comprobarExistencia(IDGAME+".png"))
 
 	def descargarCaratula(self , IDGAME, panoramica = False):
-		if (existeCaratula(IDGAME)):
+		if (self.existeCaratula(IDGAME)):
 			return True
 		else:
 			origen = 'http://www.theotherzone.com/wii/'
@@ -389,7 +393,7 @@ class WiithonCORE:
 	def descargarTodasLasCaratula(self , DEVICE , listaJuegos , panoramica):
 		ok = True
 		for juego in listaJuegos:
-			if ( not descargarCaratula(juego[0] , panoramica) ):
+			if ( not self.descargarCaratula(juego[0] , panoramica) ):
 				ok = False
 		return ok
 
@@ -637,8 +641,8 @@ class WiithonCORE:
 				elif	(
 						os.path.isfile(parametro) and
 						(
-							getExtension(parametro) == "iso" or
-							getExtension(parametro) == "rar"
+							self.getExtension(parametro) == "iso" or
+							self.getExtension(parametro) == "rar"
 						)
 					):
 					self.listaFicheros.append( parametro )
@@ -654,7 +658,7 @@ class WiithonCORE:
 				print "No se ha encontrado ninguna imagen ISO"
 
 		if not self.GUI:
-			self.procesar()
+			self.procesar( )
 
 	def hayGUI(self):
 		numParametros = len( self.PARAMETROS )
@@ -749,7 +753,7 @@ class WiithonCORE:
 	def setInterfaz(self , interfaz):
 		self.interfaz = interfaz
 
-	def procesar(self):
+	def procesar(self , progreso1 = None):
 		correctos = []
 		erroneos = []
 		numFicheros = len(self.listaFicheros)
@@ -776,7 +780,7 @@ class WiithonCORE:
 								if ( self.descomprimirRARconISODentro(nombreRAR , nombreISO) ):
 									print "Descomprimido correctamente"
 									# Paso 2 : Añadir la ISO
-									if ( self.anadirISO(DEVICE , nombreISO) ):
+									if ( self.anadirISO(DEVICE , nombreISO , progreso1) ):
 											mensaje = "ISO "+nombreISO+" descomprimida y añadida correctamente"
 											print "OK"
 											correctos.append(mensaje)
@@ -817,7 +821,7 @@ class WiithonCORE:
 							erroneos.append(mensaje)
 					elif( self.getExtension(fichero) == "iso" ):
 						print "Añadir ISO : " + os.path.basename(fichero) + " a la particion " + self.DEVICE + " " + self.FABRICANTE
-						if ( self.anadirISO(self.DEVICE , fichero) ):
+						if ( self.anadirISO(self.DEVICE , fichero , progreso1) ):
 							mensaje = "ISO "+fichero+" añadida correctamente"
 							print "OK"
 							print "}"
@@ -875,6 +879,4 @@ class WiithonCORE:
 		# vaciamos la listaFicheros a procesar
 		while len(self.listaFicheros) > 0:
 			self.listaFicheros.remove( self.listaFicheros[0] )
-
-######################### FIN CLASE CORE ####################
 

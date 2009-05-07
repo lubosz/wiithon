@@ -21,25 +21,27 @@ install: wbfs uninstall
 	mkdir -p /usr/share/gconf/schemas/
 
 	cp wiithon.py $(PREFIX)/share/wiithon
-	cp wiithon_autodetectar $(PREFIX)/share/wiithon
-	cp wiithon_autodetectar_lector $(PREFIX)/share/wiithon
+	cp wiithon_autodetectar.sh $(PREFIX)/share/wiithon
+	cp wiithon_autodetectar_lector.sh $(PREFIX)/share/wiithon
 	cp wbfs $(PREFIX)/share/wiithon
 	cp gui.py $(PREFIX)/share/wiithon
 	cp glade_wrapper.py $(PREFIX)/share/wiithon
 	cp util.py $(PREFIX)/share/wiithon
 	cp core.py $(PREFIX)/share/wiithon
+	cp config.py $(PREFIX)/share/wiithon
 
 	cp recursos/glade/*.glade $(PREFIX)/share/wiithon/recursos/glade
 	cp recursos/imagenes/*.png $(PREFIX)/share/wiithon/recursos/imagenes
 
 	chmod 755 $(PREFIX)/share/wiithon/wiithon.py
-	chmod 755 $(PREFIX)/share/wiithon/wiithon_autodetectar
-	chmod 755 $(PREFIX)/share/wiithon/wiithon_autodetectar_lector
+	chmod 755 $(PREFIX)/share/wiithon/wiithon_autodetectar.sh
+	chmod 755 $(PREFIX)/share/wiithon/wiithon_autodetectar_lector.sh
 	chmod 755 $(PREFIX)/share/wiithon/wbfs
 	chmod 755 $(PREFIX)/share/wiithon/gui.py
 	chmod 755 $(PREFIX)/share/wiithon/glade_wrapper.py
 	chmod 755 $(PREFIX)/share/wiithon/util.py
 	chmod 755 $(PREFIX)/share/wiithon/core.py
+	chmod 755 $(PREFIX)/share/wiithon/config.py
 
 	chmod 644 $(PREFIX)/share/wiithon/recursos/glade/*.glade
 	chmod 644 $(PREFIX)/share/wiithon/recursos/imagenes/*.png
@@ -57,25 +59,33 @@ uninstall:
 	-$(RM) /usr/bin/wiithon_autodetectar_lector
 	-$(RM) /usr/bin/wbfs
 
-	-$(RM) $(PREFIX)/bin/wiithon
 	-$(RM) $(PREFIX)/bin/wiithon_autodetectar
 	-$(RM) $(PREFIX)/bin/wiithon_autodetectar_lector
 	-$(RM) $(PREFIX)/bin/wbfs
+
+	# viejo acuerdo
+	-$(RM) ~/.wiithon_acuerdo
+
+	# Fue cambiado de nombre en el pasado
+	-$(RM) $(PREFIX)/share/wiithon/wiithon_autodetectar
+	-$(RM) $(PREFIX)/share/wiithon/wiithon_autodetectar_lector
 
 	-$(RM) /usr/share/gconf/schemas/wiithon*.schemas
 	-rmdir /usr/share/gconf/schemas/
 	
 	# Desinstalando la actual versión
 	
+	-$(RM) $(PREFIX)/bin/wiithon
 	-$(RM) $(PREFIX)/share/wiithon/wiithon
-	-$(RM) $(PREFIX)/share/wiithon/wiithon_autodetectar
-	-$(RM) $(PREFIX)/share/wiithon/wiithon_autodetectar_lector
+	-$(RM) $(PREFIX)/share/wiithon/wiithon_autodetectar.sh
+	-$(RM) $(PREFIX)/share/wiithon/wiithon_autodetectar_lector.sh
 	-$(RM) $(PREFIX)/share/wiithon/wbfs
 	-$(RM) $(PREFIX)/share/wiithon/wiithon.py	
 	-$(RM) $(PREFIX)/share/wiithon/util.py	
 	-$(RM) $(PREFIX)/share/wiithon/gui.py	
 	-$(RM) $(PREFIX)/share/wiithon/glade_wrapper.py	
 	-$(RM) $(PREFIX)/share/wiithon/core.py	
+	-$(RM) $(PREFIX)/share/wiithon/config.py
 	-$(RM) $(PREFIX)/share/wiithon/recursos/glade/*.glade
 	-$(RM) $(PREFIX)/share/wiithon/recursos/imagenes/*.png
 	
@@ -106,8 +116,13 @@ wbfs: /usr/include/openssl/aes.h /usr/include/openssl/md5.h /usr/include/openssl
 
 empaquetar: wbfs clean
 	$(RM) wiithon_v*_r*.tar.gz
-	tar zcvf wiithon_v${VERSION}_r${REVISION}.tar.gz * --exclude="COMMIT.txt"
+	# Averiguar como comprimir todo excepto lo que contiene ".bzrignore"
+	#tar zcvf wiithon_v${VERSION}_r${REVISION}.tar.gz *
 
 commit: clean
+	bzr diff > DIFF.txt
 	bzr commit --file=COMMIT.txt && echo "" > COMMIT.txt
 	bzr log --short > CHANGELOG.txt
+
+log:
+	bzr log --forward --short

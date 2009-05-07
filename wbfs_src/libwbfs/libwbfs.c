@@ -416,6 +416,7 @@ static void free_block(wbfs_t *p,int bl)
         u32 v = wbfs_ntohl(p->freeblks[i]);
         p->freeblks[i] = wbfs_htonl(v | 1<<j);
 }
+
 u32 wbfs_add_disc(wbfs_t*p,read_wiidisc_callback_t read_src_wii_disc,
                   void *callback_data,progress_callback_t spinner,partition_selector_t sel,int copy_1_1)
 {
@@ -463,7 +464,7 @@ u32 wbfs_add_disc(wbfs_t*p,read_wiidisc_callback_t read_src_wii_disc,
         info = wbfs_ioalloc(p->disc_info_sz);
         u8*b = (u8*)info;
         read_src_wii_disc(callback_data,0,0x100,info->disc_header_copy);
-        fprintf(stderr, "Añadiendo Juego con IDGAME = %c%c%c%c%c%c %s...\n",b[0], b[1], b[2], b[3], b[4], b[5], b + 0x20);
+        //fprintf(stderr, "Añadiendo Juego con IDGAME = %c%c%c%c%c%c %s...\n",b[0], b[1], b[2], b[3], b[4], b[5], b + 0x20);
 
         copy_buffer = wbfs_ioalloc(p->wbfs_sec_sz);
         if(!copy_buffer)
@@ -511,6 +512,8 @@ u32 wbfs_add_disc(wbfs_t*p,read_wiidisc_callback_t read_src_wii_disc,
         int disc_info_sz_lba = p->disc_info_sz>>p->hd_sec_sz_s;
         p->write_hdsector(p->callback_data,p->part_lba+1+discn*disc_info_sz_lba,disc_info_sz_lba,info);
         wbfs_sync(p);
+
+	printf("FIN_ADD\n");
 error:
         if(d)
                 wd_close_disc(d);
