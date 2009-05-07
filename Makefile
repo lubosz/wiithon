@@ -123,7 +123,7 @@ pull:
 	bzr pull
 
 commit: clean
-	#bzr diff > DIFF.txt
+	-@bzr diff > DIFF.txt
 	bzr commit --file="COMMIT.txt" && echo "" > COMMIT.txt
 	bzr log --short > CHANGELOG.txt
 

@@ -9,7 +9,6 @@
 
 import sys
 import getopt
-import traceback
 
 from gui import WiithonGUI
 from core import WiithonCORE
@@ -61,7 +60,6 @@ except (AttributeError, AssertionError), mensaje:
 		interfaz.alert("error", str(mensaje) )
 	except:
 		print str(mensaje)
-	traceback.print_stack()
 	sys.exit(1)
 
 #############################################################
