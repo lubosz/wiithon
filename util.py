@@ -25,6 +25,7 @@ class Observable:
         if isinstance(topic, list):
             for t in topic:
                 if self.__observers.has_key(t):
+                    # ESTO PETA
                     self.__observers[t].add(callback)
 
                 else:

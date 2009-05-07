@@ -647,7 +647,7 @@ Esta información no volverá a aparecer si acepta el acuerdo.
 						archivo = "."
 
 					print "Buscando en "+os.path.dirname(archivo)+" ficheros RAR ... ",
-					self.listaFicheros.extend( rec_glob(archivo, "*.rar") )
+					self.listaFicheross.extend( rec_glob(archivo, "*.rar") )
 					print "OK!"
 
 					print "Buscando en "+os.path.dirname(archivo)+" Imagenes ISO ... ",

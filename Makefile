@@ -119,9 +119,12 @@ empaquetar: wbfs clean
 	# Averiguar como comprimir todo excepto lo que contiene ".bzrignore"
 	#tar zcvf wiithon_v${VERSION}_r${REVISION}.tar.gz *
 
+pull:
+	bzr pull
+
 commit: clean
-	bzr diff > DIFF.txt
-	bzr commit --file=COMMIT.txt && echo "" > COMMIT.txt
+	#bzr diff > DIFF.txt
+	bzr commit --file="COMMIT.txt" && echo "" > COMMIT.txt
 	bzr log --short > CHANGELOG.txt
 
 log:

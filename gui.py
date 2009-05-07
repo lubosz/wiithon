@@ -16,16 +16,10 @@ class WiithonGUI(GladeWrapper):
 
 		def on_tb_anadir_clicked(id_tb):
 			def anadir(progreso):
-				# Calculate the value of the progress bar using the
-				# value range set in the adjustment object
-				new_val = progreso.get_fraction() + 0.01
-				if new_val > 1.0:
-					new_val = 0.0
-				# Set the new value
-				progreso.set_fraction(new_val)
-	
-				# As this is a timeout function, return TRUE so that it
-				# continues to get called
+				nuevo_valor = progreso.get_fraction() + 0.01
+				if nuevo_valor > 1.0:
+					nuevo_valor = 0.0
+				progreso.set_fraction( nuevo_valor )
 				return True
 
 
@@ -84,7 +78,6 @@ class WiithonGUI(GladeWrapper):
 
 		self.wg_principal.connect('destroy', self.salir)
 		
-	# Clean up allocated memory and remove the timer
 	def salir(self , widget, data=None):
 		try:
 			gobject.source_remove(self.timer)
