@@ -7,3 +7,5 @@ wbfs_src/scrub
 wbfs_src/wbfs
 wbfs_src/*.o
 *~
+*.pyc
+SQLAlchemy-0.5.3

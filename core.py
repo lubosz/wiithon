@@ -54,6 +54,14 @@ Esta información no volverá a aparecer si acepta el acuerdo.
 		# gtk.RESPONSE_YES ¿que constante es GTK es 1?
 		assert res == 1, "No puedes usar esta aplicacion si no estas de acuerdo"
 		os.mkdir( config.HOME_WIITHON )
+		os.mkdir( config.HOME_WIITHON_BDD )
+		os.mkdir( config.HOME_WIITHON_CARATULAS )
+		os.mkdir( config.HOME_WIITHON_DISCOS )
+
+		os.chmod( config.HOME_WIITHON , 777)
+		os.chmod( config.HOME_WIITHON_BDD , 777)
+		os.chmod( config.HOME_WIITHON_CARATULAS , 777)
+		os.chmod( config.HOME_WIITHON_DISCOS , 777)
 
 	def instalarJuego(self , DEVICE):
 		salida = ""
