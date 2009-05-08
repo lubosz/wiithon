@@ -54,7 +54,7 @@ def App():
 			print "Programa ejecutado con las opciones incorrectas"
 		sys.exit(1)
 
-	except (AttributeError, AssertionError), mensaje:
+	except AssertionError, mensaje:
 		try:
 			interfaz.alert("error", str(mensaje) )
 		except:
@@ -68,6 +68,11 @@ def App():
 # llamamos a mainloop
 
 # Ricardo : ¿Para que cojones sirve esto? xD
+# J.Luis:   Fácil: prueba a imprimir la variable __name__ en cualquier fichero Python.
+#		Si estás, como ahora, en el que se ejecuta, valdrá '__main__'
+#               Si estás, por ejemplo, en el módulo "core", valdrá 'core'.
+#               Sirve para diferenciar cuando usas un archivo como módulo de "librería"
+#               o como ejecutable
 if __name__ == '__main__':
 	App()
 

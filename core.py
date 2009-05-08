@@ -58,10 +58,10 @@ Esta información no volverá a aparecer si acepta el acuerdo.
 		os.mkdir( config.HOME_WIITHON_CARATULAS )
 		os.mkdir( config.HOME_WIITHON_DISCOS )
 
-		os.chmod( config.HOME_WIITHON , 777)
-		os.chmod( config.HOME_WIITHON_BDD , 777)
-		os.chmod( config.HOME_WIITHON_CARATULAS , 777)
-		os.chmod( config.HOME_WIITHON_DISCOS , 777)
+		#os.chmod( config.HOME_WIITHON , 777)
+		#os.chmod( config.HOME_WIITHON_BDD , 777)
+		#os.chmod( config.HOME_WIITHON_CARATULAS , 777)
+		#os.chmod( config.HOME_WIITHON_DISCOS , 777)
 
 	def instalarJuego(self , DEVICE):
 		salida = ""
@@ -445,9 +445,11 @@ Esta información no volverá a aparecer si acepta el acuerdo.
 			else: # es una particion WBFS
 				i = i + 1
 
-		if(len(listaParticiones) <= 0):
-			raise AttributeError("No se ha encontrado ningun dispositivo con particion WBFS.")
-		elif(len(listaParticiones) > 1):
+		# no hay particiones
+		assert len(listaParticiones) == 0, "No se ha encontrado ningun dispositivo con particion WBFS."
+
+		# varias particiones
+		if(len(listaParticiones) > 1):
 			haElegido = False
 			while( not haElegido ):
 				try:
@@ -463,7 +465,8 @@ Esta información no volverá a aparecer si acepta el acuerdo.
 					raise AttributeError("Fuera de rango")
 				except ValueError:
 					raise AttributeError("Valor incorrecto")
-		else: # solo hay 1 partición
+		# solo hay 1 partición
+		else:
 			DEVICE = listaParticiones[0]
 			try:
 				cachos = DEVICE.split(":")

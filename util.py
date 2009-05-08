@@ -26,14 +26,14 @@ class Observable:
             for t in topic:
                 if self.__observers.has_key(t):
                     # ESTO PETA
-                    self.__observers[t].add(callback)
+                    self.__observers[t].append(callback)
 
                 else:
                     raise SubscriptionError(t)
 
         else:
             if self.__observers.has_key(topic):
-                self.__observers[topic].add(callback)
+                self.__observers[topic].append(callback)
 
             else:
                 raise SubscriptionError(topic)
@@ -59,6 +59,7 @@ class SubscriptionError(Exception):
 
     def __str__(self):
         return self.msg
+
 
 
 
