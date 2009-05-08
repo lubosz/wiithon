@@ -446,34 +446,30 @@ Esta información no volverá a aparecer si acepta el acuerdo.
 				i = i + 1
 
 		# no hay particiones
-		assert len(listaParticiones) == 0, "No se ha encontrado ningun dispositivo con particion WBFS."
+		assert len(listaParticiones) > 0, "No se ha encontrado ningun dispositivo con particion WBFS."
 
 		# varias particiones
 		if(len(listaParticiones) > 1):
 			haElegido = False
 			while( not haElegido ):
-				try:
-					DEVICE = zenity_lista("Lista de particiones autodetectadas : " , listaParticiones)
-					try:
-						cachos = DEVICE.split(":")
-						DEVICE = cachos[0]
-						FABRICANTE = cachos[1]
-					except:
-						raise AttributeError("Error obteniendo información del dispositivo")
-					haElegido = True
-				except IndexError:
-					raise AttributeError("Fuera de rango")
-				except ValueError:
-					raise AttributeError("Valor incorrecto")
-		# solo hay 1 partición
-		else:
-			DEVICE = listaParticiones[0]
-			try:
+				DEVICE = zenity_lista("Lista de particiones autodetectadas : " , listaParticiones)
+
 				cachos = DEVICE.split(":")
+				assert len(cachos) > 1, "Error obteniendo información del dispositivo"
 				DEVICE = cachos[0]
 				FABRICANTE = cachos[1]
-			except:
-				raise AttributeError("Error obteniendo información del dispositivo")
+				haElegido = True
+
+
+		# solo hay 1 partición
+		else:
+			print listaParticiones
+			DEVICE = listaParticiones[0]
+
+			cachos = DEVICE.split(":")
+			assert len(cachos) > 1, "Error obteniendo información del dispositivo"
+			DEVICE = cachos[0]
+			FABRICANTE = cachos[1]
 
 		return DEVICE
 
