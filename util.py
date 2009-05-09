@@ -41,7 +41,7 @@ class Observable:
     def notify(self, topic, what):
         if self.__observers.has_key(topic):
             for observer_cb in self.__observers[topic]:
-                observer_cb(what)
+                observer_cb(topic, what)
 
         else:
             print 'revisa código macho, que el topic no existe'
