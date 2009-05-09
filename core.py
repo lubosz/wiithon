@@ -25,35 +25,12 @@ class WiithonCORE(Observable):
 	NUM_LINEAS_PAUSA = 21
 	borrarISODescomprimida = False
 
-	def __init__(self , interfaz):
+	def __init__(self):
+		topics = ['error', 'warning', 'info']
 		Observable.__init__(self, topics)
 
-		self.interfaz = interfaz
-
-		if not os.path.exists(config.HOME_WIITHON):
-			self.informarAcuerdo()
-
-		self.DEVICE = self.buscarParticionWBFS()
-
-		self.listaJuegos = self.getListaJuegos(self.DEVICE)
-		self.hayJuegos = len(self.listaJuegos) > 0
-
-	def informarAcuerdo(self):
-		# esto habrá que hacerlo pasándole un callback de preguntas al core o algo así
-		res = self.interfaz.alert('question',
-			       '''El equipo de Wiithon no se hace responsable de la aplicacion ni de la perdida de datos.
-No obstante, la particion NO va ha ser formateada.
-Esta aplicación añade, borra y lista juegos explicamente mediante la ayuda de %s.
-Esta información no volverá a aparecer si acepta el acuerdo.
-¿Está de acuerdo?'''
-					  %(os.path.basename(config.WBFS_APP)) )
-
-		# gtk.RESPONSE_YES ¿que constante es GTK es 1?
-		assert res == 1, "No puedes usar esta aplicacion si no estas de acuerdo"
-		os.mkdir( config.HOME_WIITHON )
-		os.mkdir( config.HOME_WIITHON_BDD )
-		os.mkdir( config.HOME_WIITHON_CARATULAS )
-		os.mkdir( config.HOME_WIITHON_DISCOS )
+	def setPregunton(self, pregunton):
+		self.pregunton = pregunton
 
 
 	def instalarJuego(self , DEVICE):
@@ -436,10 +413,13 @@ Esta información no volverá a aparecer si acepta el acuerdo.
 				i = i + 1
 
 		# no hay particiones
-		assert len(listaParticiones) > 0, "No se ha encontrado ningun dispositivo con particion WBFS."
+		#assert len(listaParticiones) > 0, "No se ha encontrado ningun dispositivo con particion WBFS."
+		if len(listaParticiones) == 0:
+			self.notify('error', "No se ha encontrado ningun dispositivo con particion WBFS.")
+			raise AssertionError, "No se ha encontrado ningun dispositivo con particion WBFS."
 
 		# varias particiones
-		if(len(listaParticiones) > 1):
+		elif(len(listaParticiones) > 1):
 			haElegido = False
 			while( not haElegido ):
 				DEVICE = zenity_lista("Lista de particiones autodetectadas : " , listaParticiones)
@@ -524,16 +504,15 @@ Esta información no volverá a aparecer si acepta el acuerdo.
 
 	############## MAIN ###########################
 	def main(self, opciones, argumentos):
+		self.DEVICE = self.buscarParticionWBFS()
+
+		self.listaJuegos = self.getListaJuegos(self.DEVICE)
+		self.hayJuegos = len(self.listaJuegos) > 0
 
 		self.PARAMETROS.extend(argumentos)
 		self.numParametros = len(self.PARAMETROS)
-		self.GUI = self.hayGUI()
 
-		if self.GUI:
-			self.interfaz.wg_principal.show()
-			gtk.main()
-
-		elif self.PARAMETROS[0].lower() == "listar" or self.PARAMETROS[0].lower() == "ls" :
+		if self.PARAMETROS[0].lower() == "listar" or self.PARAMETROS[0].lower() == "ls" :
 			if(self.hayJuegos):
 				print "Listando juegos de : " + self.DEVICE + " " + self.FABRICANTE
 				self.listarISOs(self.DEVICE , self.listaJuegos)
@@ -673,10 +652,6 @@ Esta información no volverá a aparecer si acepta el acuerdo.
 
 		if not self.GUI:
 			self.procesar( )
-
-	def hayGUI(self):
-		numParametros = len( self.PARAMETROS )
-		return self.GUI and (numParametros == 0)
 
 	def getParametros(self):
 		return self.PARAMETROS

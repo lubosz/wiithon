@@ -12,6 +12,7 @@ import getopt
 
 from gui import WiithonGUI
 from core import WiithonCORE
+import config
 
 def uso():
 	wiithon = os.path.basename(sys.argv[0])
@@ -84,6 +85,21 @@ Web : http://blogricardo.wordpress.com/2009/04/07/wiithon-wbfs-gui-para-wii
       wiithon
       )
 
+def informarAcuerdo(pregunton):
+	res = pregunton('''El equipo de Wiithon no se hace responsable de la aplicacion ni de la perdida de datos.
+No obstante, la particion NO va ha ser formateada.
+Esta aplicación añade, borra y lista juegos explicamente mediante la ayuda de %s.
+Esta información no volverá a aparecer si acepta el acuerdo.
+¿Está de acuerdo?'''
+			%(os.path.basename(config.WBFS_APP)) )
+
+	assert res == 1, "No puedes usar esta aplicacion si no estas de acuerdo"
+
+	os.mkdir( config.HOME_WIITHON )
+	os.mkdir( config.HOME_WIITHON_BDD )
+	os.mkdir( config.HOME_WIITHON_CARATULAS )
+	os.mkdir( config.HOME_WIITHON_DISCOS )
+
 def App():
 	try:
 		options, arguments = getopt.getopt(sys.argv[1:], 'phH', ['trabajo=',
@@ -116,16 +132,22 @@ def App():
 			else:
 				opciones_formateadas[option] = value
 
+		core = WiithonCORE()
+
 		if glade_gui:
-			interfaz = WiithonGUI()
+			interfaz = WiithonGUI(core)
+			interfaz.wg_principal.show()
+			core.setPregunton(interfaz.question)
 
 		else:
 			# crear interfaz terminal
 			pass
 
-		core = WiithonCORE(interfaz)
-		interfaz.setCore(core)
+		if not os.path.exists(config.HOME_WIITHON):
+			informarAcuerdo(interfaz.question)
+
 		core.main(opciones_formateadas, arguments)
+		gtk.main()
 
 	except getopt.GetoptError:
 		try:

@@ -10,7 +10,7 @@ class WiithonGUI(GladeWrapper):
 	# No hace falta en python, cuando haces self.core = core ya se crea
 	#core = None
 
-	def __init__(self):
+	def __init__(self, core):
 		def cb(treeview, path, view_column):
 			self.wg_img_caratula.set_from_file(config.WIITHON_FILES+'/recursos/imagenes/re4.png')
 
@@ -49,6 +49,7 @@ class WiithonGUI(GladeWrapper):
 			#self.core.procesar( self.wg_progreso1 )
 
 		GladeWrapper.__init__(self, config.WIITHON_FILES + '/recursos/glade/gui.glade' , 'principal')
+		self.core = core
 
 		self.wg_principal.set_title('Wiithon')
 
@@ -136,6 +137,9 @@ class WiithonGUI(GladeWrapper):
 		alert_glade.get_widget('alert_dialog').hide()
 
 		return res
+
+	def question(self, pregunta):
+		return self.alert('question', pregunta)
 
 
 	def setCore(self , core):
