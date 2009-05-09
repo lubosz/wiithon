@@ -61,5 +61,27 @@ class SubscriptionError(Exception):
         return self.msg
 
 
+def getExtension(self , fichero):
+	fichero = self.eliminarComillas(fichero)
+	posPunto = fichero.rfind(".")
+	return fichero[posPunto+1:len(fichero)].lower()
 
+def getNombreFichero(self , fichero):
+	fichero = eliminarComillas(fichero)
+	posPunto = fichero.rfind(".")
+	return fichero[0:posPunto]
+
+def getMagicISO(self , imagenISO):
+	f = open(imagenISO , "r")
+	magic = f.read(6)
+	f.close()
+	return magic
+
+def tieneCaracteresRaros(self , cadena):
+	# Nos dice si *cadena* tiene caracteres raros dados por una lista negra global
+	for i in range(len(cadena)):
+		for j in range(len(self.BLACK_LIST)):
+			if (cadena[i]==self.BLACK_LIST[j]):
+				return True
+	return False
 

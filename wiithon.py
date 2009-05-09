@@ -13,6 +13,7 @@ import getopt
 from gui import WiithonGUI
 from core import WiithonCORE
 import config
+import gtk
 
 def uso():
 	wiithon = os.path.basename(sys.argv[0])
@@ -162,19 +163,6 @@ def App():
 		except:
 			print str(mensaje)
 		sys.exit(1)
-
-# Esto es nuevo. Python mantiene constantemente un diccionario en el
-# que almacena el curso de ejecución del script. Si __name__ (el
-# diccionario) es igual a main quiere decir que acabamos de iniciar el
-# script, entonces creamos una instancia de nuestra clase App y
-# llamamos a mainloop
-
-# Ricardo : ¿Para que cojones sirve esto? xD
-# J.Luis:   Fácil: prueba a imprimir la variable __name__ en cualquier fichero Python.
-#		Si estás, como ahora, en el que se ejecuta, valdrá '__main__'
-#               Si estás, por ejemplo, en el módulo "core", valdrá 'core'.
-#               Sirve para diferenciar cuando usas un archivo como módulo de "librería"
-#               o como ejecutable
 
 if __name__ == '__main__':
 	App()

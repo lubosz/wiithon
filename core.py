@@ -7,6 +7,7 @@ import commands
 from util import NonRepeatList
 from util import Observable
 import config
+import util
 
 class WiithonCORE(Observable):
 
@@ -57,7 +58,7 @@ class WiithonCORE(Observable):
 				cachos = listaParticiones[0].split(":")
 				LECTOR_DVD = cachos[0]
 				FABRICANTE_DVD = cachos[1]
-				MAGIC_DVD = self.getMagicISO(LECTOR_DVD)
+				MAGIC_DVD = util.getMagicISO(LECTOR_DVD)
 				SALIDA = os.getcwd()+"/"+MAGIC_DVD+".iso"
 				reemplazada = False
 				if (os.path.exists(SALIDA)):
@@ -81,43 +82,6 @@ class WiithonCORE(Observable):
 					print "Error al dumpear la ISO"
 			except KeyboardInterrupt:
 				print "Interrumpido por el usuario"
-
-	def tieneCaracteresRaros(self , cadena):
-		# Nos dice si *cadena* tiene caracteres raros dados por una lista negra global
-		for i in range(len(cadena)):
-			for j in range(len(self.BLACK_LIST)):
-				if (cadena[i]==self.BLACK_LIST[j]):
-					return True
-		return False
-
-	def eliminarComillas(self , string):
-		'''
-		Primera letra			[:1]
-		Ultima letra			[-1:]
-		Todo excepto primera letra	[1:]
-		Todo excepto ultima letra	[:-1]
-		'''
-		if( string[:1]=="'" or string[:1]=="\"" ):
-			if( string[-1:]=="'" or string[-1:]=="\"" ):
-				string = string[1:]
-				string = string[:-1]
-		return string
-
-	def getExtension(self , fichero):
-		fichero = self.eliminarComillas(fichero)
-		posPunto = fichero.rfind(".")
-		return fichero[posPunto+1:len(fichero)].lower()
-
-	def getNombreFichero(self , fichero):
-		fichero = eliminarComillas(fichero)
-		posPunto = fichero.rfind(".")
-		return fichero[0:posPunto]
-
-	def getMagicISO(self , imagenISO):
-		f = open(imagenISO , "r")
-		magic = f.read(6)
-		f.close()
-		return magic
 
 	def getListaJuegos(self , DEVICE):
 		def ordenarPorNombre(juego1 , juego2):
@@ -391,10 +355,12 @@ class WiithonCORE(Observable):
 
 	def buscarParticionWBFS(self):
 		DEVICE = ""
+
 		salida = ""
 		subProceso = self.getPopen(self.DETECTOR_WBFS)
 		#Espera que acabe
 		subProceso.wait()
+		#acumulo todo el stdout
 		for linea in subProceso.stdout:
 			salida = salida + linea
 
@@ -404,7 +370,7 @@ class WiithonCORE(Observable):
 			listaParticiones = salida[:-1].split("\n")
 
 		# Borramos los elementos que no contengan /dev/
-		# los que tengan /dev/ se corta por : y se coge el primer cacho
+		# los que tengan /dev/ serán particiones wbfs en formato DEVICE:FABRICANTE ej. /dev/sda1:Sandisk
 		i = 0
 		while ( i  < len(listaParticiones) ):
 			if(listaParticiones[i].find("/dev/") == -1):
@@ -433,7 +399,6 @@ class WiithonCORE(Observable):
 
 		# solo hay 1 partición
 		else:
-			print listaParticiones
 			DEVICE = listaParticiones[0]
 
 			cachos = DEVICE.split(":")
@@ -451,7 +416,7 @@ class WiithonCORE(Observable):
 		for linea in salida_estandar:
 			# Quitar el salto de linea
 			linea = linea[:-1]
-			if( getExtension(linea)=="iso" ):
+			if( util.getExtension(linea)=="iso" ):
 				return linea
 		return ""
 
@@ -511,147 +476,148 @@ class WiithonCORE(Observable):
 
 		self.PARAMETROS.extend(argumentos)
 		self.numParametros = len(self.PARAMETROS)
-
-		if self.PARAMETROS[0].lower() == "listar" or self.PARAMETROS[0].lower() == "ls" :
-			if(self.hayJuegos):
-				print "Listando juegos de : " + self.DEVICE + " " + self.FABRICANTE
-				self.listarISOs(self.DEVICE , self.listaJuegos)
-				self.mostrarEspacioLibre(self.DEVICE)
-			else:
-				print "No tienes instalado ningún juego en " + self.DEVICE + " " + self.FABRICANTE
-		elif ( self.PARAMETROS[0].lower() == "instalar" or self.PARAMETROS[0].lower() == "install"):
-			try:
-				print "Inserte un juego de la Wii en su lector de DVD ..."
-				raw_input("Pulse cualquier tecla para continuar ... ")
-				self.instalarJuego(DEVICE)
-			except KeyboardInterrupt:
-				print
-		elif ( self.PARAMETROS[0].lower() == "desinstalar" or self.PARAMETROS[0].lower() == "borrar" or self.PARAMETROS[0].lower() == "rm" or self.PARAMETROS[0].lower() == "quitar"):
-			if(self.hayJuegos):
-				if(self.numParametros >= 2):
-					parametro = self.PARAMETROS[1]
-					if (self.getExtension(parametro) == "iso"):
-						IDGAME = self.getMagicISO(parametro)
+		
+		if self.numParametros > 0: # peta sino verificamos que haya algún parametro
+			if self.PARAMETROS[0].lower() == "listar" or self.PARAMETROS[0].lower() == "ls" :
+				if(self.hayJuegos):
+					print "Listando juegos de : " + self.DEVICE + " " + self.FABRICANTE
+					self.listarISOs(self.DEVICE , self.listaJuegos)
+					self.mostrarEspacioLibre(self.DEVICE)
+				else:
+					print "No tienes instalado ningún juego en " + self.DEVICE + " " + self.FABRICANTE
+			elif ( self.PARAMETROS[0].lower() == "instalar" or self.PARAMETROS[0].lower() == "install"):
+				try:
+					print "Inserte un juego de la Wii en su lector de DVD ..."
+					raw_input("Pulse cualquier tecla para continuar ... ")
+					self.instalarJuego(DEVICE)
+				except KeyboardInterrupt:
+					print
+			elif ( self.PARAMETROS[0].lower() == "desinstalar" or self.PARAMETROS[0].lower() == "borrar" or self.PARAMETROS[0].lower() == "rm" or self.PARAMETROS[0].lower() == "quitar"):
+				if(self.hayJuegos):
+					if(self.numParametros >= 2):
+						parametro = self.PARAMETROS[1]
+						if (util.getExtension(parametro) == "iso"):
+							IDGAME = util.getMagicISO(parametro)
+						else:
+							IDGAME = parametro
 					else:
-						IDGAME = parametro
-				else:
-					IDGAME = self.get_IDJUEGO_de_Lista(self.DEVICE , self.listaJuegos)
-				print "Borrar juego con ID : " + self.IDGAME + " en particion " + self.DEVICE + " " + self.FABRICANTE
-				if( self.borrarJuego(self.DEVICE , self.IDGAME) ):
-					print "Juego borrado correctmente. Refrescando lista ..."
-					if( os.path.exist(self.DEVICE) and self.listarISOs(self.DEVICE , self.listaJuegos)>0 and self.mostrarEspacioLibre(self.DEVICE) ):
-						print "juego " + IDGAME + " borrado correctamente"
+						IDGAME = self.get_IDJUEGO_de_Lista(self.DEVICE , self.listaJuegos)
+					print "Borrar juego con ID : " + self.IDGAME + " en particion " + self.DEVICE + " " + self.FABRICANTE
+					if( self.borrarJuego(self.DEVICE , self.IDGAME) ):
+						print "Juego borrado correctmente. Refrescando lista ..."
+						if( os.path.exist(self.DEVICE) and self.listarISOs(self.DEVICE , self.listaJuegos)>0 and self.mostrarEspacioLibre(self.DEVICE) ):
+							print "juego " + IDGAME + " borrado correctamente"
+						else:
+							print "Error al refrescar o no hay Juegos que listar"
 					else:
-						print "Error al refrescar o no hay Juegos que listar"
+						print "ERROR borrando el juego " + ID_JUEGO
 				else:
-					print "ERROR borrando el juego " + ID_JUEGO
-			else:
-				print "No hay Juegos para borrar"
+					print "No hay Juegos para borrar"
 
-		elif ( self.PARAMETROS[0].lower() == "caratula" or self.PARAMETROS[0].lower() == "cover"):
-			if(self.hayJuegos):
-				if(self.numParametros >= 2):
-					IDGAME = self.PARAMETROS[1]
-				else:
-					IDGAME = self.get_IDJUEGO_de_Lista(self.DEVICE , self.listaJuegos)
-				if(self.descargarCaratula(IDGAME)):
-					print "OK, descargado " + IDGAME + ".png"
-				else:
-					print "ERROR, descargando " + IDGAME + ".png"
-			else:
-				print "No hay Juegos para descargar una caratula"
-		elif ( self.PARAMETROS[0].lower() == "caratulas" or self.PARAMETROS[0].lower() == "covers"):
-			if(self.hayJuegos):
-				panoramico = False
-				if(self.numParametros >= 2): # 3 parametros
-					panoramico = self.PARAMETROS[1].lower() == "panoramico" or self.PARAMETROS[1].lower() == "widescreen"
-					if (panoramico):
-						print "Se descargaran en formato paronámico"
-				if(self.descargarTodasLasCaratula(self.DEVICE , self.listaJuegos , panoramico)):
-					print "OK, todas las caratulas se han descagado"
-				else:
-					print "ERROR, descargando alguna caratula"
-					print "Vuelvelo a intentar o mira en : http://www.theotherzone.com/wii/"
-			else:
-				print "No hay Juegos para descargar caratulas"
-		elif ( self.PARAMETROS[0].lower() == "renombrar" or self.PARAMETROS[0].lower() == "rename" or self.PARAMETROS[0].lower() == "r"):
-			if(self.hayJuegos):
-				if(self.numParametros >= 3):
-					IDGAME = self.PARAMETROS[1]
-					NUEVO_NOMBRE = self.PARAMETROS[2]
-				else:
-					IDGAME = self.get_IDJUEGO_de_Lista(self.DEVICE , self.listaJuegos)
-					NUEVO_NOMBRE = raw_input("Escriba el nuevo nombre : ")
-				print "Renombrar juego ID : " + IDGAME + " como " + NUEVO_NOMBRE
-				if ( self.renombrarISO( self.DEVICE , IDGAME , NUEVO_NOMBRE ) ):
-					print "Refrescando lista ..."
-					if( os.path.exist(self.DEVICE) and self.listarISOs(self.DEVICE , self.listaJuegos)>0 and self.mostrarEspacioLibre(self.DEVICE) ):
-						print "ISO renombrada correctamente a \""+NUEVO_NOMBRE+"\""
+			elif ( self.PARAMETROS[0].lower() == "caratula" or self.PARAMETROS[0].lower() == "cover"):
+				if(self.hayJuegos):
+					if(self.numParametros >= 2):
+						IDGAME = self.PARAMETROS[1]
 					else:
-						print "Renombrado OK aunque ocurrio un error al refrescar"
+						IDGAME = self.get_IDJUEGO_de_Lista(self.DEVICE , self.listaJuegos)
+					if(self.descargarCaratula(IDGAME)):
+						print "OK, descargado " + IDGAME + ".png"
+					else:
+						print "ERROR, descargando " + IDGAME + ".png"
 				else:
-					print "ERROR al renombrar"
+					print "No hay Juegos para descargar una caratula"
+			elif ( self.PARAMETROS[0].lower() == "caratulas" or self.PARAMETROS[0].lower() == "covers"):
+				if(self.hayJuegos):
+					panoramico = False
+					if(self.numParametros >= 2): # 3 parametros
+						panoramico = self.PARAMETROS[1].lower() == "panoramico" or self.PARAMETROS[1].lower() == "widescreen"
+						if (panoramico):
+							print "Se descargaran en formato paronámico"
+					if(self.descargarTodasLasCaratula(self.DEVICE , self.listaJuegos , panoramico)):
+						print "OK, todas las caratulas se han descagado"
+					else:
+						print "ERROR, descargando alguna caratula"
+						print "Vuelvelo a intentar o mira en : http://www.theotherzone.com/wii/"
+				else:
+					print "No hay Juegos para descargar caratulas"
+			elif ( self.PARAMETROS[0].lower() == "renombrar" or self.PARAMETROS[0].lower() == "rename" or self.PARAMETROS[0].lower() == "r"):
+				if(self.hayJuegos):
+					if(self.numParametros >= 3):
+						IDGAME = self.PARAMETROS[1]
+						NUEVO_NOMBRE = self.PARAMETROS[2]
+					else:
+						IDGAME = self.get_IDJUEGO_de_Lista(self.DEVICE , self.listaJuegos)
+						NUEVO_NOMBRE = raw_input("Escriba el nuevo nombre : ")
+					print "Renombrar juego ID : " + IDGAME + " como " + NUEVO_NOMBRE
+					if ( self.renombrarISO( self.DEVICE , IDGAME , NUEVO_NOMBRE ) ):
+						print "Refrescando lista ..."
+						if( os.path.exist(self.DEVICE) and self.listarISOs(self.DEVICE , self.listaJuegos)>0 and self.mostrarEspacioLibre(self.DEVICE) ):
+							print "ISO renombrada correctamente a \""+NUEVO_NOMBRE+"\""
+						else:
+							print "Renombrado OK aunque ocurrio un error al refrescar"
+					else:
+						print "ERROR al renombrar"
+				else:
+					print "No hay Juegos para renombrar"
+			elif ( self.PARAMETROS[0].lower() == "check" or self.PARAMETROS[0].lower() == "comprobar" or self.PARAMETROS[0].lower() == "scandisk"):
+				if(self.hayJuegos):
+					print "Verificando todos los juegos de la particion " + self.DEVICE + " " + self.FABRICANTE
+					self.verificarTodosLosJuegos(self.DEVICE , self.listaJuegos)
+				else:
+					print "No hay Juegos para verificar"
+			elif ( self.PARAMETROS[0].lower() == "extraer" or self.PARAMETROS[0].lower() == "x"):
+				if(self.hayJuegos):
+					if(self.numParametros >= 2):
+						ID_JUEGO = self.PARAMETROS[1]
+					else:
+						ID_JUEGO = self.get_IDJUEGO_de_Lista(self.DEVICE , self.listaJuegos)
+					print "Extraer ISO de juego con ID : " + ID_JUEGO + " en particion " + self.DEVICE + " " + self.FABRICANTE
+					if( self.extraerJuego(self.DEVICE , ID_JUEGO) ):
+						print "Juego " + ID_JUEGO + " extraido OK"
+					else:
+						print "ERROR extrayendo la ISO de "+ID_JUEGO
+				else:
+					print "No hay Juegos para extraer"
+			elif ( self.PARAMETROS[0].lower() == "ayuda" or self.PARAMETROS[0].lower() == "h" or self.PARAMETROS[0].lower() == "help" ):
+				self.uso()
+				sys.exit(1)
 			else:
-				print "No hay Juegos para renombrar"
-		elif ( self.PARAMETROS[0].lower() == "check" or self.PARAMETROS[0].lower() == "comprobar" or self.PARAMETROS[0].lower() == "scandisk"):
-			if(self.hayJuegos):
-				print "Verificando todos los juegos de la particion " + self.DEVICE + " " + self.FABRICANTE
-				self.verificarTodosLosJuegos(self.DEVICE , self.listaJuegos)
-			else:
-				print "No hay Juegos para verificar"
-		elif ( self.PARAMETROS[0].lower() == "extraer" or self.PARAMETROS[0].lower() == "x"):
-			if(self.hayJuegos):
-				if(self.numParametros >= 2):
-					ID_JUEGO = self.PARAMETROS[1]
-				else:
-					ID_JUEGO = self.get_IDJUEGO_de_Lista(self.DEVICE , self.listaJuegos)
-				print "Extraer ISO de juego con ID : " + ID_JUEGO + " en particion " + self.DEVICE + " " + self.FABRICANTE
-				if( self.extraerJuego(self.DEVICE , ID_JUEGO) ):
-					print "Juego " + ID_JUEGO + " extraido OK"
-				else:
-					print "ERROR extrayendo la ISO de "+ID_JUEGO
-			else:
-				print "No hay Juegos para extraer"
-		elif ( self.PARAMETROS[0].lower() == "ayuda" or self.PARAMETROS[0].lower() == "h" or self.PARAMETROS[0].lower() == "help" ):
-			self.uso()
-			sys.exit(1)
-		else:
-			#Los parametros es una lista de ISOS explicita
-			for parametro in self.PARAMETROS:
-				if ( os.path.isdir(parametro) or parametro.lower() == "buscar" or parametro.lower() == "meter" or parametro.lower() == "-r" or parametro.lower() == "metertodo" or parametro.lower() == "buscartodo" ):
-					if( not os.path.isdir(parametro) ):
-						archivo = "."
+				#Los parametros es una lista de ISOS explicita
+				for parametro in self.PARAMETROS:
+					if ( os.path.isdir(parametro) or parametro.lower() == "buscar" or parametro.lower() == "meter" or parametro.lower() == "-r" or parametro.lower() == "metertodo" or parametro.lower() == "buscartodo" ):
+						if( not os.path.isdir(parametro) ):
+							archivo = "."
 
-					print "Buscando en "+os.path.dirname(archivo)+" ficheros RAR ... ",
-					self.listaFicheross.extend( rec_glob(archivo, "*.rar") )
-					print "OK!"
+						print "Buscando en "+os.path.dirname(archivo)+" ficheros RAR ... ",
+						self.listaFicheross.extend( rec_glob(archivo, "*.rar") )
+						print "OK!"
 
-					print "Buscando en "+os.path.dirname(archivo)+" Imagenes ISO ... ",
-					self.listaFicheros.extend( rec_glob(archivo, "*.iso") )
-					print "OK!"
+						print "Buscando en "+os.path.dirname(archivo)+" Imagenes ISO ... ",
+						self.listaFicheros.extend( rec_glob(archivo, "*.iso") )
+						print "OK!"
 
 
-				elif	(
-						os.path.isfile(parametro) and
-						(
-							self.getExtension(parametro) == "iso" or
-							self.getExtension(parametro) == "rar"
-						)
-					):
-					self.listaFicheros.append( parametro )
+					elif	(
+							os.path.isfile(parametro) and
+							(
+								util.getExtension(parametro) == "iso" or
+								util.getExtension(parametro) == "rar"
+							)
+						):
+						self.listaFicheros.append( parametro )
 
-				# si tiene caracteres raros -> no es expresión regular
-				# porque de otro forma, peta la expresion regular.
-				elif( not self.tieneCaracteresRaros(parametro) ):
-					self.listaFicheros.extend( glob.glob(parametro) )
-				else:
-					self.listaFicheros.append( parametro )
+					# si tiene caracteres raros -> no es expresión regular
+					# porque de otro forma, peta la expresion regular.
+					elif( not util.tieneCaracteresRaros(parametro) ):
+						self.listaFicheros.extend( glob.glob(parametro) )
+					else:
+						self.listaFicheros.append( parametro )
 
-			if (len(self.listaFicheros) == 0):
-				print "No se ha encontrado ninguna imagen ISO"
+				if (len(self.listaFicheros) == 0):
+					print "No se ha encontrado ninguna imagen ISO"
 
-		if not self.GUI:
-			self.procesar( )
+			if not self.GUI:
+				self.procesar( )
 
 	def getParametros(self):
 		return self.PARAMETROS
@@ -688,7 +654,7 @@ class WiithonCORE(Observable):
 				print "===================== "+os.path.basename(fichero)+" ("+str(numFicherosProcesados)+"/"+str(numFicheros)+") ===================="
 				print "{"
 				if( os.path.exist(self.DEVICE) and os.path.exist(fichero) ):
-					if( self.getExtension(fichero) == "rar" ):
+					if( util.getExtension(fichero) == "rar" ):
 						print "Añadir RAR con ISO dentro : " + os.path.basename(fichero) + " a la particion " + DEVICE + " " + FABRICANTE
 						nombreRAR = fichero
 						nombreISO = self.getNombreISOenRAR(nombreRAR)
@@ -737,7 +703,7 @@ class WiithonCORE(Observable):
 							print "}"
 							print
 							erroneos.append(mensaje)
-					elif( self.getExtension(fichero) == "iso" ):
+					elif( util.getExtension(fichero) == "iso" ):
 						print "Añadir ISO : " + os.path.basename(fichero) + " a la particion " + self.DEVICE + " " + self.FABRICANTE
 						if ( self.anadirISO(self.DEVICE , fichero , progreso1) ):
 							mensaje = "ISO "+fichero+" añadida correctamente"
