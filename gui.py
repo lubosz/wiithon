@@ -23,12 +23,15 @@ class WiithonGUI(GladeWrapper):
 				return True
 
 
-			botones = (	gtk.STOCK_CANCEL,
-					gtk.RESPONSE_CANCEL,
-					gtk.STOCK_OPEN,
-					gtk.RESPONSE_OK )
+			botones = (gtk.STOCK_CANCEL,
+				   gtk.RESPONSE_CANCEL,
+				   gtk.STOCK_OPEN,
+				   gtk.RESPONSE_OK,
+				   )
+
 			if(id_tb == self.wg_tb_anadir):
 				fc_anadir = gtk.FileChooserDialog("Elige una ISO o un RAR", None , gtk.FILE_CHOOSER_ACTION_OPEN , botones)
+
 			elif(id_tb == self.wg_tb_anadir_directorio):
 				fc_anadir = gtk.FileChooserDialog("Elige un directorio", None , gtk.FILE_CHOOSER_ACTION_SELECT_FOLDER , botones)
 
@@ -42,17 +45,14 @@ class WiithonGUI(GladeWrapper):
 				self.timer = gobject.timeout_add (100, anadir , self.wg_progreso1)
 
 			fc_anadir.destroy()
-			
+
 			#self.core.procesar( self.wg_progreso1 )
 
 		GladeWrapper.__init__(self, config.WIITHON_FILES + '/recursos/glade/gui.glade' , 'principal')
 
 		self.wg_principal.set_title('Wiithon')
 
-		ls = gtk.ListStore(str,)
-		ls.append(('Rock Band 2',))
-		ls.append(('Animal Crossing',))
-		ls.append(('Resident EVIL 4',))
+		self.model = gtk.ListStore(str,)
 
 		cell = gtk.CellRendererText()
 		tvcolumn1 = gtk.TreeViewColumn('ID', cell, text=0)
@@ -67,7 +67,8 @@ class WiithonGUI(GladeWrapper):
 		treeview.append_column(tvcolumn3)
 		treeview.append_column(tvcolumn4)
 		treeview.append_column(tvcolumn5)
-		treeview.set_model(ls)
+		treeview.set_model(self.model)
+
 		treeview.connect('row-activated', cb)
 
 		botonbarra1 = self.wg_tb_anadir
@@ -77,7 +78,7 @@ class WiithonGUI(GladeWrapper):
 		botonbarra2.connect('clicked' , on_tb_anadir_clicked)
 
 		self.wg_principal.connect('destroy', self.salir)
-		
+
 	def salir(self , widget, data=None):
 		try:
 			gobject.source_remove(self.timer)
@@ -139,4 +140,7 @@ class WiithonGUI(GladeWrapper):
 
 	def setCore(self , core):
 		self.core = core
+
+		topics = ['error', 'warning', 'info']
+		self.core.subscribe(topics, self.alert)
 

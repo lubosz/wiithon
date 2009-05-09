@@ -26,15 +26,11 @@ class WiithonCORE(Observable):
 	borrarISODescomprimida = False
 
 	def __init__(self , interfaz):
-		topics = ['error', 'warning', 'info']
-		# 'question' habrá que tratarlo de otra forma, ya que los topics no deben
-		# tener retorno
 		Observable.__init__(self, topics)
 
 		self.interfaz = interfaz
-		self.subscribe(topics, self.interfaz.alert)
 
-		if not self.comprobarExistencia(config.HOME_WIITHON):
+		if not os.path.exists(config.HOME_WIITHON):
 			self.informarAcuerdo()
 
 		self.DEVICE = self.buscarParticionWBFS()
@@ -43,6 +39,7 @@ class WiithonCORE(Observable):
 		self.hayJuegos = len(self.listaJuegos) > 0
 
 	def informarAcuerdo(self):
+		# esto habrá que hacerlo pasándole un callback de preguntas al core o algo así
 		res = self.interfaz.alert('question',
 			       '''El equipo de Wiithon no se hace responsable de la aplicacion ni de la perdida de datos.
 No obstante, la particion NO va ha ser formateada.
@@ -58,10 +55,6 @@ Esta información no volverá a aparecer si acepta el acuerdo.
 		os.mkdir( config.HOME_WIITHON_CARATULAS )
 		os.mkdir( config.HOME_WIITHON_DISCOS )
 
-		#os.chmod( config.HOME_WIITHON , 777)
-		#os.chmod( config.HOME_WIITHON_BDD , 777)
-		#os.chmod( config.HOME_WIITHON_CARATULAS , 777)
-		#os.chmod( config.HOME_WIITHON_DISCOS , 777)
 
 	def instalarJuego(self , DEVICE):
 		salida = ""
@@ -90,7 +83,7 @@ Esta información no volverá a aparecer si acepta el acuerdo.
 				MAGIC_DVD = self.getMagicISO(LECTOR_DVD)
 				SALIDA = os.getcwd()+"/"+MAGIC_DVD+".iso"
 				reemplazada = False
-				if (self.comprobarExistencia(SALIDA)):
+				if (os.path.exists(SALIDA)):
 					print "Ya hay una ISO en : " + SALIDA
 					respuesta = raw_input("Desea reemplazarla (S/N) : ")
 					if(respuesta.lower() == "s" or respuesta.lower() == "si"):
@@ -111,9 +104,6 @@ Esta información no volverá a aparecer si acepta el acuerdo.
 					print "Error al dumpear la ISO"
 			except KeyboardInterrupt:
 				print "Interrumpido por el usuario"
-
-	def comprobarExistencia(self , fichero):
-		return os.path.exists(fichero)
 
 	def tieneCaracteresRaros(self , cadena):
 		# Nos dice si *cadena* tiene caracteres raros dados por una lista negra global
@@ -394,7 +384,7 @@ Esta información no volverá a aparecer si acepta el acuerdo.
 		return l
 
 	def existeCaratula(self , IDGAME):
-		return (self.comprobarExistencia(IDGAME+".png"))
+		return (os.path.exists(IDGAME+".png"))
 
 	def descargarCaratula(self , IDGAME, panoramica = False):
 		if (self.existeCaratula(IDGAME)):
@@ -570,7 +560,7 @@ Esta información no volverá a aparecer si acepta el acuerdo.
 				print "Borrar juego con ID : " + self.IDGAME + " en particion " + self.DEVICE + " " + self.FABRICANTE
 				if( self.borrarJuego(self.DEVICE , self.IDGAME) ):
 					print "Juego borrado correctmente. Refrescando lista ..."
-					if( self.comprobarExistencia(self.DEVICE) and self.listarISOs(self.DEVICE , self.listaJuegos)>0 and self.mostrarEspacioLibre(self.DEVICE) ):
+					if( os.path.exist(self.DEVICE) and self.listarISOs(self.DEVICE , self.listaJuegos)>0 and self.mostrarEspacioLibre(self.DEVICE) ):
 						print "juego " + IDGAME + " borrado correctamente"
 					else:
 						print "Error al refrescar o no hay Juegos que listar"
@@ -616,7 +606,7 @@ Esta información no volverá a aparecer si acepta el acuerdo.
 				print "Renombrar juego ID : " + IDGAME + " como " + NUEVO_NOMBRE
 				if ( self.renombrarISO( self.DEVICE , IDGAME , NUEVO_NOMBRE ) ):
 					print "Refrescando lista ..."
-					if( self.comprobarExistencia(self.DEVICE) and self.listarISOs(self.DEVICE , self.listaJuegos)>0 and self.mostrarEspacioLibre(self.DEVICE) ):
+					if( os.path.exist(self.DEVICE) and self.listarISOs(self.DEVICE , self.listaJuegos)>0 and self.mostrarEspacioLibre(self.DEVICE) ):
 						print "ISO renombrada correctamente a \""+NUEVO_NOMBRE+"\""
 					else:
 						print "Renombrado OK aunque ocurrio un error al refrescar"
@@ -688,77 +678,6 @@ Esta información no volverá a aparecer si acepta el acuerdo.
 		numParametros = len( self.PARAMETROS )
 		return self.GUI and (numParametros == 0)
 
-	def uso(self):
-		wiithon = os.path.basename(sys.argv[0])
-
-		print '''Listar juegos. El programa por defecto, sin parametros, hace un listado de los juegos (lanzara el GUI en alguna prox versión):
-	\t\t%s
-
-	Añadir ISO mediante una lista explicita de las ISOS:
-	\t\t%s "%s/wii/mario.iso" "iso2" "iso3" "isoN"
-
-	Añadir ISO con exp. reg. La expresión solo afecta al directorio actual, actualmente no es recursivo:
-	\t\t%s *.iso
-
-	Buscar y Añadir ISO's recursivamente. Busca todos las imagenes isos RECURSIVAMENTE, incluso tambien busca dentro de RAR, a falta de implementar zip), tal vez necesites apt-get install rar.
-	\t\t%s buscar
-
-	Borrar juegos. Especificando el juego mediante un menú:
-	\t\t%s borrar
-
-	Borrar juegos. Podemos borrar con el IDGAME:
-	\t\t%s borrar IDJUEGO
-
-	Borrar juegos. Podemos borrar con el IDGAME obtenido a partir de un ISO local. El archivo ISO local NO es borrado:
-	\t\t%s borrar "%s/wii/mario.iso"
-
-	Renombrar juegos. Especificando el juego mediante un menú:
-	\t\t%s renombrar
-
-	Renombrar juegos, puedes cambiar el nombre de los juegos ya metidos en HD, útil para que nos enteremos cuando estemos con el USB Loader:
-	\t\t%s renombrar IDGAME "Mario Kart Wii"
-
-	Extraer juegos a un archivo ISO. El juego es especificado mediante un menú:
-	\t\t%s extraer
-
-	Extraer juegos a un archivo ISO. OJO! : El archivo ISO de salida pertenecerá a root:
-	\t\t%s extraer IDJUEGO
-
-	Descargar todas las caratulas automaticamente a 160x225. Ojo puede que el servidor te banee, si te ocurre intentalo 5 minutos más tarde:
-	\t\t%s caratulas
-
-	Descargar la caratulas de un juego especificado por su IDGAME, la imagen es bajada a 160x225. El comando es un singular, es "caratula" ya que "caratulas" descarga todas:
-	\t\t%s caratula IDGAME
-
-	Descargar la caratulas de un juego especificado por menú, la imagen es bajada a 160x225. El comando es un singular, es "caratula" ya que "caratulas" descarga todo:
-	\t\t%s caratula"
-
-	Comprobar Integridad de los juegos. Muchos de nuestros juegos pueden estar corruptos sin aún saberlo debido a el bug de borrado de las primeras versiones de WBFS
-	\t\t%s comprobar
-
-	Instar juegos desde el DVD, al estilo del usb loader, pero algo más lento porque dumpea a ISO y cuando termina mete la ISO:
-	\t\t%s instalar
-
-
-	Web : http://blogricardo.wordpress.com/2009/04/07/wiithon-wbfs-gui-para-wii
-	''' %(wiithon,
-	      wiithon, sys.argv[0],
-	      wiithon,
-	      wiithon,
-	      wiithon,
-	      wiithon,
-	      wiithon, sys.argv[0],
-	      wiithon,
-	      wiithon,
-	      wiithon,
-	      wiithon,
-	      wiithon,
-	      wiithon,
-	      wiithon,
-	      wiithon,
-	      wiithon
-	      )
-
 	def getParametros(self):
 		return self.PARAMETROS
 
@@ -793,13 +712,13 @@ Esta información no volverá a aparecer si acepta el acuerdo.
 				numFicherosProcesados = numFicherosProcesados + 1
 				print "===================== "+os.path.basename(fichero)+" ("+str(numFicherosProcesados)+"/"+str(numFicheros)+") ===================="
 				print "{"
-				if( self.comprobarExistencia(self.DEVICE) and self.comprobarExistencia(fichero) ):
+				if( os.path.exist(self.DEVICE) and os.path.exist(fichero) ):
 					if( self.getExtension(fichero) == "rar" ):
 						print "Añadir RAR con ISO dentro : " + os.path.basename(fichero) + " a la particion " + DEVICE + " " + FABRICANTE
 						nombreRAR = fichero
 						nombreISO = self.getNombreISOenRAR(nombreRAR)
 						if (nombreISO != ""):
-							if( not self.comprobarExistencia(nombreISO) ):
+							if( not os.path.exist(nombreISO) ):
 								# Paso 1 : Descomprimir
 								if ( self.descomprimirRARconISODentro(nombreRAR , nombreISO) ):
 									print "Descomprimido correctamente"
