@@ -33,7 +33,7 @@ class WiithonCORE(Observable):
 	listaFicheros = NonRepeatList()
 
 	#globales privadas
-	
+
 	# Variable para leer por clases externas de 0 a 1 el progreso de un archivo actual
 	PORCENTUAL = 0
 
@@ -240,7 +240,7 @@ class WiithonCORE(Observable):
 			return salida == 0
 		except KeyboardInterrupt:
 			return False
-	
+
 	# borra el juego IDGAME
 	def borrarJuego(self , DEVICE , IDGAME):
 		# FIXME: debe ser root
@@ -275,7 +275,7 @@ class WiithonCORE(Observable):
 		except:
 			pass
 		return d
-		
+
 	# Devuelve la lista de resultados que cumplen la Exp.Reg.
 	# Recorre a partir de "path" y recursivamente.
 	def rec_glob(self , path , mask):
@@ -375,7 +375,7 @@ class WiithonCORE(Observable):
 		#acumulo todo el stdout
 		for linea in subProceso.stdout:
 			salida = salida + linea
-	
+
 		# Le quito el ultimo salto de linea y forma la lista cortando por saltos de linea
 		self.listaParticiones = []
 		if (salida <> ""):
@@ -386,7 +386,7 @@ class WiithonCORE(Observable):
 		i = 0
 		while ( i  < len(self.listaParticiones) ):
 			if(self.listaParticiones[i].find("/dev/") == -1):
-				del listaParticiones[i]
+				del self.listaParticiones[i]
 			else: # es una particion WBFS
 				i = i + 1
 
@@ -443,14 +443,14 @@ class WiithonCORE(Observable):
 
 	def setParticionSeleccionada(self , particionSeleccionada):
 		self.particionSeleccionada = particionSeleccionada
-		
+
 	def getDeviceSeleccionado(self):
 		try:
 			#print self.listaParticiones[self.particionSeleccionada].split(":")[0]
 			return self.listaParticiones[self.particionSeleccionada].split(":")[0]
 		except IndexError:
 			raise AssertionError, "Error obteniendo información del dispositivo"
-		
+
 	def getFabricanteSeleccionado(self):
 		try:
 			#print self.listaParticiones[self.particionSeleccionada].split(":")[1]
@@ -464,10 +464,10 @@ class WiithonCORE(Observable):
 
 	def setInterfaz(self , interfaz):
 		self.interfaz = interfaz
-		
+
 	def encolar(self , lista):
 		self.listaFicheros.extend( lista )
-		
+
 	def vaciarLista(self , lista):
 		# vaciamos la listaFicheros a procesar
 		while len( lista ) > 0:
