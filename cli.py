@@ -9,6 +9,9 @@ class WiithonCLI:
 		self.core = core
 		# varias particiones
 		listaParticiones = self.core.getListaParticiones()
+		# Del error SI se dan cuenta el GUI o CLI
+		if(len(self.core.listaParticiones) == 0):
+			raise AssertionError, "¿Has conectado el disco duro? No se ha encontrado ninguna partición válida. (WBFS)"
 		if(len(listaParticiones) > 1):
 			haElegido = False
 			print "Lista de particiones autodetectadas : "

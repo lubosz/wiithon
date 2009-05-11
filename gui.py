@@ -49,14 +49,15 @@ class WiithonGUI(GladeWrapper):
 
 		self.wg_principal.set_title('Wiithon')
 
-		# Lo necesita el GUI para cargar la lista de particiones
-		self.core.refrescarParticionWBFS()
-
 		botonbarra1 = self.wg_tb_anadir
 		botonbarra1.connect('clicked' , on_tb_anadir_clicked)
 
 		botonbarra2 = self.wg_tb_anadir_directorio
 		botonbarra2.connect('clicked' , on_tb_anadir_clicked)
+		
+		# Del error SI se dan cuenta el GUI o CLI
+		if(len(self.core.listaParticiones) == 0):
+			raise AssertionError, "¿Has conectado el disco duro? No se ha encontrado ninguna partición válida. (WBFS)"
 
 		self.tv_games_modelo = self.cargarJuegosVista()
 
@@ -227,8 +228,8 @@ class WiithonGUI(GladeWrapper):
 			IDGAME = seleccion.get_value(iterador,1)
 
 			destinoCaratula = os.path.join(config.HOME_WIITHON_CARATULAS , IDGAME+".png")
-			self.wg_img_caratula.set_from_file( destinoCaratula )
+			self.wg_img_caratula1.set_from_file( destinoCaratula )
 
 			destinoDisco = os.path.join(config.HOME_WIITHON_DISCOS , IDGAME+".png")
-			self.wg_img_disco.set_from_file( destinoDisco )
+			self.wg_img_disco1.set_from_file( destinoDisco )
 

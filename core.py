@@ -40,6 +40,9 @@ class WiithonCORE(Observable):
 	#constructor
 	def __init__(self):
 		Observable.__init__(self, config.topics)
+		
+		# Lo necesita el GUI y CLI para cargar la lista de particiones (es parte del CORE)
+		self.refrescarParticionWBFS()
 
 	# documenta esto
 	def setPregunton(self, pregunton):
@@ -440,14 +443,12 @@ class WiithonCORE(Observable):
 
 	def getDeviceSeleccionado(self):
 		try:
-			#print self.listaParticiones[self.particionSeleccionada].split(":")[0]
 			return self.listaParticiones[self.particionSeleccionada].split(":")[0]
 		except IndexError:
 			raise AssertionError, "Error obteniendo información del dispositivo"
 
 	def getFabricanteSeleccionado(self):
 		try:
-			#print self.listaParticiones[self.particionSeleccionada].split(":")[1]
 			return self.listaParticiones[self.particionSeleccionada].split(":")[1]
 		except IndexError:
 			# Repasar que pasa cuando no hay fabricante

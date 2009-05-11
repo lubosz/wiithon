@@ -74,22 +74,22 @@ def App():
 		else:
 			interfaz = WiithonCLI(core)
 			interfaz.main(opciones_formateadas, arguments)
-			if PAUSA:
-				raw_input("Pulse cualquier tecla para continuar ...\n")
 
 	except getopt.GetoptError:
 		try:
 			interfaz.alert('error', 'Programa ejecutado con las opciones incorrectas')
 		except:
 			print "Programa ejecutado con las opciones incorrectas"
-		sys.exit(1)
 
 	except AssertionError, mensaje:
 		try:
 			interfaz.alert("error", str(mensaje) )
 		except:
 			print str(mensaje)
-		sys.exit(1)
+		
+	if PAUSA:
+		raw_input("Pulse cualquier tecla para continuar ...\n")
+	sys.exit(0)
 
 if __name__ == '__main__':
 	App()

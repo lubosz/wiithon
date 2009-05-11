@@ -134,3 +134,4 @@ log:
 
 diff:
 	-@bzr diff > DIFF.txt
+

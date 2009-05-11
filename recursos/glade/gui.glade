@@ -1,7 +1,7 @@
-<?xml version="1.0"?>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE glade-interface SYSTEM "glade-2.0.dtd">
+<!--Generated with glade3 3.4.5 on Mon May 11 22:29:30 2009 -->
 <glade-interface>
-  <!-- interface-requires gtk+ 2.16 -->
-  <!-- interface-naming-policy toplevel-contextual -->
   <widget class="GtkWindow" id="principal">
     <property name="visible">True</property>
     <child>
@@ -14,12 +14,11 @@
               <widget class="GtkToolButton" id="tb_anadir">
                 <property name="visible">True</property>
                 <property name="has_tooltip">True</property>
-                <property name="label" translatable="yes">A&#xF1;adir</property>
+                <property name="label" translatable="yes">Añadir</property>
                 <property name="stock_id">gtk-add</property>
                 <signal name="clicked" handler="on_tb_anadir_clicked"/>
               </widget>
               <packing>
-                <property name="expand">False</property>
                 <property name="homogeneous">True</property>
               </packing>
             </child>
@@ -27,12 +26,11 @@
               <widget class="GtkToolButton" id="tb_anadir_directorio">
                 <property name="visible">True</property>
                 <property name="has_tooltip">True</property>
-                <property name="label" translatable="yes">A&#xF1;adir directorio</property>
+                <property name="label" translatable="yes">Añadir directorio</property>
                 <property name="stock_id">gtk-open</property>
                 <signal name="clicked" handler="on_anadirDirectorio_clicked"/>
               </widget>
               <packing>
-                <property name="expand">False</property>
                 <property name="homogeneous">True</property>
               </packing>
             </child>
@@ -42,7 +40,6 @@
                 <property name="stock_id">gtk-delete</property>
               </widget>
               <packing>
-                <property name="expand">False</property>
                 <property name="homogeneous">True</property>
               </packing>
             </child>
@@ -53,7 +50,6 @@
                 <property name="stock_id">gtk-convert</property>
               </widget>
               <packing>
-                <property name="expand">False</property>
                 <property name="homogeneous">True</property>
               </packing>
             </child>
@@ -64,7 +60,6 @@
                 <property name="stock_id">gtk-yes</property>
               </widget>
               <packing>
-                <property name="expand">False</property>
                 <property name="homogeneous">True</property>
               </packing>
             </child>
@@ -73,7 +68,6 @@
                 <property name="visible">True</property>
               </widget>
               <packing>
-                <property name="expand">False</property>
                 <property name="homogeneous">True</property>
               </packing>
             </child>
@@ -83,14 +77,12 @@
                 <property name="stock_id">gtk-preferences</property>
               </widget>
               <packing>
-                <property name="expand">False</property>
                 <property name="homogeneous">True</property>
               </packing>
             </child>
           </widget>
           <packing>
             <property name="expand">False</property>
-            <property name="position">0</property>
           </packing>
         </child>
         <child>
@@ -100,9 +92,6 @@
               <widget class="GtkProgressBar" id="progreso1">
                 <property name="visible">True</property>
               </widget>
-              <packing>
-                <property name="position">0</property>
-              </packing>
             </child>
             <child>
               <widget class="GtkVSeparator" id="vseparator1">
@@ -118,6 +107,7 @@
                 <property name="visible">True</property>
                 <property name="can_focus">True</property>
                 <property name="receives_default">True</property>
+                <property name="response_id">0</property>
                 <child>
                   <widget class="GtkArrow" id="arrow1">
                     <property name="visible">True</property>
@@ -143,13 +133,12 @@
               <widget class="GtkVPaned" id="vpaned1">
                 <property name="visible">True</property>
                 <property name="can_focus">True</property>
-                <property name="orientation">vertical</property>
                 <child>
                   <widget class="GtkScrolledWindow" id="scrolledwindow5">
                     <property name="visible">True</property>
                     <property name="can_focus">True</property>
-                    <property name="hscrollbar_policy">automatic</property>
-                    <property name="vscrollbar_policy">automatic</property>
+                    <property name="hscrollbar_policy">GTK_POLICY_AUTOMATIC</property>
+                    <property name="vscrollbar_policy">GTK_POLICY_AUTOMATIC</property>
                     <child>
                       <widget class="GtkTreeView" id="tv_partitions">
                         <property name="visible">True</property>
@@ -165,18 +154,14 @@
                 <child>
                   <widget class="GtkVBox" id="vbox2">
                     <property name="visible">True</property>
-                    <property name="orientation">vertical</property>
                     <child>
                       <widget class="GtkImage" id="img_disco1">
                         <property name="width_request">160</property>
                         <property name="height_request">160</property>
                         <property name="visible">True</property>
                         <property name="stock">gtk-cdrom</property>
-                        <property name="icon-size">6</property>
+                        <property name="icon_size">6</property>
                       </widget>
-                      <packing>
-                        <property name="position">0</property>
-                      </packing>
                     </child>
                     <child>
                       <widget class="GtkHSeparator" id="hseparator4">
@@ -193,7 +178,7 @@
                         <property name="height_request">225</property>
                         <property name="visible">True</property>
                         <property name="stock">gtk-new</property>
-                        <property name="icon-size">6</property>
+                        <property name="icon_size">6</property>
                       </widget>
                       <packing>
                         <property name="position">2</property>
@@ -214,16 +199,13 @@
             <child>
               <widget class="GtkVBox" id="vbox6">
                 <property name="visible">True</property>
-                <property name="orientation">vertical</property>
                 <child>
                   <widget class="GtkVPaned" id="vpaned2">
                     <property name="visible">True</property>
                     <property name="can_focus">True</property>
-                    <property name="orientation">vertical</property>
                     <child>
                       <widget class="GtkVBox" id="vbox7">
                         <property name="visible">True</property>
-                        <property name="orientation">vertical</property>
                         <child>
                           <widget class="GtkHBox" id="hbox6">
                             <property name="visible">True</property>
@@ -234,12 +216,15 @@
                               </widget>
                               <packing>
                                 <property name="expand">False</property>
-                                <property name="position">0</property>
                               </packing>
                             </child>
                             <child>
                               <widget class="GtkComboBoxEntry" id="comboboxentry2">
                                 <property name="visible">True</property>
+                                <child internal-child="entry">
+                                  <widget class="GtkEntry" id="comboboxentry-entry1">
+                                  </widget>
+                                </child>
                               </widget>
                               <packing>
                                 <property name="expand">False</property>
@@ -255,7 +240,6 @@
                                     <property name="label" translatable="yes">Todo</property>
                                   </widget>
                                   <packing>
-                                    <property name="expand">False</property>
                                     <property name="homogeneous">True</property>
                                   </packing>
                                 </child>
@@ -265,7 +249,6 @@
                                     <property name="label" translatable="yes">ID</property>
                                   </widget>
                                   <packing>
-                                    <property name="expand">False</property>
                                     <property name="homogeneous">True</property>
                                   </packing>
                                 </child>
@@ -275,7 +258,6 @@
                                     <property name="label" translatable="yes">Nombre</property>
                                   </widget>
                                   <packing>
-                                    <property name="expand">False</property>
                                     <property name="homogeneous">True</property>
                                   </packing>
                                 </child>
@@ -285,17 +267,15 @@
                                     <property name="label" translatable="yes">Tipo de juego</property>
                                   </widget>
                                   <packing>
-                                    <property name="expand">False</property>
                                     <property name="homogeneous">True</property>
                                   </packing>
                                 </child>
                                 <child>
                                   <widget class="GtkToolButton" id="toolbutton15">
                                     <property name="visible">True</property>
-                                    <property name="label" translatable="yes">A&#xF1;o</property>
+                                    <property name="label" translatable="yes">Año</property>
                                   </widget>
                                   <packing>
-                                    <property name="expand">False</property>
                                     <property name="homogeneous">True</property>
                                   </packing>
                                 </child>
@@ -307,7 +287,6 @@
                           </widget>
                           <packing>
                             <property name="expand">False</property>
-                            <property name="position">0</property>
                           </packing>
                         </child>
                         <child>
@@ -317,8 +296,8 @@
                               <widget class="GtkScrolledWindow" id="scrolledwindow6">
                                 <property name="visible">True</property>
                                 <property name="can_focus">True</property>
-                                <property name="hscrollbar_policy">automatic</property>
-                                <property name="vscrollbar_policy">automatic</property>
+                                <property name="hscrollbar_policy">GTK_POLICY_AUTOMATIC</property>
+                                <property name="vscrollbar_policy">GTK_POLICY_AUTOMATIC</property>
                                 <child>
                                   <widget class="GtkTreeView" id="tv_explorer_left1">
                                     <property name="visible">True</property>
@@ -326,14 +305,10 @@
                                   </widget>
                                 </child>
                               </widget>
-                              <packing>
-                                <property name="position">0</property>
-                              </packing>
                             </child>
                             <child>
                               <widget class="GtkVSeparator" id="vseparator2">
                                 <property name="visible">True</property>
-                                <property name="orientation">vertical</property>
                               </widget>
                               <packing>
                                 <property name="expand">False</property>
@@ -344,8 +319,8 @@
                               <widget class="GtkScrolledWindow" id="scrolledwindow7">
                                 <property name="visible">True</property>
                                 <property name="can_focus">True</property>
-                                <property name="hscrollbar_policy">automatic</property>
-                                <property name="vscrollbar_policy">automatic</property>
+                                <property name="hscrollbar_policy">GTK_POLICY_AUTOMATIC</property>
+                                <property name="vscrollbar_policy">GTK_POLICY_AUTOMATIC</property>
                                 <child>
                                   <widget class="GtkTreeView" id="tv_explorer_rigth1">
                                     <property name="visible">True</property>
@@ -372,8 +347,8 @@
                       <widget class="GtkScrolledWindow" id="scrolledwindow8">
                         <property name="visible">True</property>
                         <property name="can_focus">True</property>
-                        <property name="hscrollbar_policy">automatic</property>
-                        <property name="vscrollbar_policy">automatic</property>
+                        <property name="hscrollbar_policy">GTK_POLICY_AUTOMATIC</property>
+                        <property name="vscrollbar_policy">GTK_POLICY_AUTOMATIC</property>
                         <child>
                           <widget class="GtkTreeView" id="tv_games">
                             <property name="width_request">480</property>
@@ -390,9 +365,6 @@
                       </packing>
                     </child>
                   </widget>
-                  <packing>
-                    <property name="position">0</property>
-                  </packing>
                 </child>
               </widget>
               <packing>
@@ -420,8 +392,8 @@
   </widget>
   <widget class="GtkDialog" id="alert_dialog">
     <property name="border_width">5</property>
-    <property name="window_position">center-on-parent</property>
-    <property name="type_hint">dialog</property>
+    <property name="window_position">GTK_WIN_POS_CENTER_ON_PARENT</property>
+    <property name="type_hint">GDK_WINDOW_TYPE_HINT_DIALOG</property>
     <property name="opacity">0.80000000000000004</property>
     <property name="has_separator">False</property>
     <child internal-child="vbox">
@@ -429,16 +401,13 @@
         <property name="visible">True</property>
         <property name="spacing">2</property>
         <child>
-          <widget class="GtkHBox" id="hbox6">
+          <widget class="GtkHBox" id="hbox2">
             <property name="visible">True</property>
             <child>
               <widget class="GtkImage" id="img_alert">
                 <property name="visible">True</property>
                 <property name="stock">gtk-missing-image</property>
               </widget>
-              <packing>
-                <property name="position">0</property>
-              </packing>
             </child>
             <child>
               <widget class="GtkLabel" id="lbl_message">
@@ -456,29 +425,29 @@
         <child internal-child="action_area">
           <widget class="GtkHButtonBox" id="dialog-action_area1">
             <property name="visible">True</property>
-            <property name="layout_style">end</property>
+            <property name="layout_style">GTK_BUTTONBOX_END</property>
             <child>
               <widget class="GtkButton" id="btn_no">
-                <property name="label" translatable="yes">gtk-cancel</property>
                 <property name="visible">True</property>
                 <property name="can_focus">True</property>
                 <property name="receives_default">True</property>
+                <property name="label" translatable="yes">gtk-cancel</property>
                 <property name="use_stock">True</property>
+                <property name="response_id">0</property>
               </widget>
               <packing>
                 <property name="expand">False</property>
                 <property name="fill">False</property>
-                <property name="position">0</property>
               </packing>
             </child>
             <child>
               <widget class="GtkButton" id="btn_ok">
-                <property name="label" translatable="yes">gtk-ok</property>
-                <property name="response_id">1</property>
                 <property name="visible">True</property>
                 <property name="can_focus">True</property>
                 <property name="receives_default">True</property>
+                <property name="label" translatable="yes">gtk-ok</property>
                 <property name="use_stock">True</property>
+                <property name="response_id">1</property>
               </widget>
               <packing>
                 <property name="expand">False</property>
@@ -489,16 +458,10 @@
           </widget>
           <packing>
             <property name="expand">False</property>
-            <property name="pack_type">end</property>
-            <property name="position">0</property>
+            <property name="pack_type">GTK_PACK_END</property>
           </packing>
         </child>
       </widget>
-    </child>
-  </widget>
-  <widget class="GtkWindow" id="window1">
-    <child>
-      <placeholder/>
     </child>
   </widget>
 </glade-interface>
