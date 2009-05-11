@@ -367,28 +367,22 @@ class WiithonCORE(Observable):
 
 	# Procedimiento que refresca la lista de particiones
 	def refrescarParticionWBFS(self):
-
-		salida = ""
 		subProceso = util.getPopen(self.DETECTOR_WBFS)
-		#Espera que acabe
 		subProceso.wait()
+
 		#acumulo todo el stdout
+		salida = ""
 		for linea in subProceso.stdout:
 			salida = salida + linea
 
 		# Le quito el ultimo salto de linea y forma la lista cortando por saltos de linea
 		self.listaParticiones = []
-		if (salida <> ""):
-			self.listaParticiones = salida[:-1].split("\n")
 
-		# Borramos los elementos que no contengan /dev/
-		# los que tengan /dev/ serán particiones wbfs en formato DEVICE:FABRICANTE ej. /dev/sda1:Sandisk
-		i = 0
-		while ( i  < len(self.listaParticiones) ):
-			if(self.listaParticiones[i].find("/dev/") == -1):
-				del self.listaParticiones[i]
-			else: # es una particion WBFS
-				i = i + 1
+		# en lugar de borrar los que no tengan /dev/ solo añadimos los que no lo
+		# tengan
+		for part in salida[:-1].split("\n"):
+			if part.find("/dev/") != -1:
+				self.listaParticiones.append(part)
 
 	# Devuelve el nombre del ISO que hay dentro de un RAR
 	def getNombreISOenRAR(self , nombreRAR):

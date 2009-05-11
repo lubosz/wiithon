@@ -49,6 +49,9 @@ class WiithonGUI(GladeWrapper):
 
 		self.wg_principal.set_title('Wiithon')
 
+		# Lo necesita el GUI para cargar la lista de particiones
+		self.core.refrescarParticionWBFS()
+
 		botonbarra1 = self.wg_tb_anadir
 		botonbarra1.connect('clicked' , on_tb_anadir_clicked)
 
@@ -59,7 +62,7 @@ class WiithonGUI(GladeWrapper):
 
 		self.tv_partitions_modelo = self.cargarParticionesVista()
 		self.cargarParticionesModelo(self.tv_partitions_modelo , core.getListaParticiones())
-		
+
 		# selecciono el primero y provoco el evento
 		iter_primero = self.wg_tv_partitions.get_model().get_iter_first()
 		if iter_primero != None:
@@ -71,30 +74,30 @@ class WiithonGUI(GladeWrapper):
 		if iter_primero != None:
 			self.wg_tv_games.get_selection().select_iter( iter_primero )
 			self.on_tv_games_cursor_changed( self.wg_tv_games )
-			
+
 		# pongo el foco en los TreeView de juegos
 		self.wg_tv_games.grab_focus()
 
 		self.wg_principal.connect('destroy', self.salir)
-		
+
 	def cargarParticionesVista(self):
 		tv_partitions = self.wg_tv_partitions
-		
+
 		render = gtk.CellRendererText()
-		
+
 		columna1 = gtk.TreeViewColumn('Dispositivo', render , text=1)
 		columna2 = gtk.TreeViewColumn('Fabricante', render , text=2)
-		
+
 		tv_partitions.append_column(columna1)
 		tv_partitions.append_column(columna2)
-		
+
 		tv_partitions.connect('cursor-changed', self.on_tv_partitions_cursor_changed)
-		
+
 		modelo = gtk.ListStore (gobject.TYPE_INT , gobject.TYPE_STRING, gobject.TYPE_STRING)
 		tv_partitions.set_model(modelo)
-		
+
 		return modelo
-		
+
 	def cargarParticionesModelo(self , modelo , listaParticiones):
 		if listaParticiones:
 			modelo.clear()
@@ -103,34 +106,34 @@ class WiithonGUI(GladeWrapper):
 				iterador = modelo.insert(i)
 				modelo.set_value(iterador,0,i)
 				modelo.set_value(iterador,1,particion.split(":")[0])
-				modelo.set_value(iterador,2,particion.split(":")[1])		
+				modelo.set_value(iterador,2,particion.split(":")[1])
 				i = i + 1
 
 	def cargarJuegosVista(self):
 		# Documentacion útil: http://blog.rastersoft.com/index.php/2007/01/27/trabajando-con-gtktreeview-en-python/
 		tv_games = self.wg_tv_games
-		
+
 		render = gtk.CellRendererText()
-		
+
 		columna1 = gtk.TreeViewColumn('ID', render , text=1)
 		columna2 = gtk.TreeViewColumn('Nombre', render , text=2)
 		columna3 = gtk.TreeViewColumn('Tamaño', render , text=3)
 		columna4 = gtk.TreeViewColumn('Tipo de Juego', render , text=4)
 		columna5 = gtk.TreeViewColumn('Año', render , text=5)
-		
+
 		tv_games.append_column(columna1)
 		tv_games.append_column(columna2)
 		tv_games.append_column(columna3)
 		tv_games.append_column(columna4)
 		tv_games.append_column(columna5)
-		
+
 		tv_games.connect('cursor-changed', self.on_tv_games_cursor_changed)
-		
+
 		modelo = gtk.ListStore (gobject.TYPE_INT , gobject.TYPE_STRING, gobject.TYPE_STRING, gobject.TYPE_STRING,gobject.TYPE_STRING,gobject.TYPE_STRING)
 		tv_games.set_model(modelo)
-		
+
 		return modelo
-		
+
 	def cargarJuegosModelo(self , modelo , listaJuegos):
 		if listaJuegos:
 			modelo.clear()
@@ -215,7 +218,7 @@ class WiithonGUI(GladeWrapper):
 			DEVICE = self.core.getDeviceSeleccionado()
 			listaJuegos = self.core.getListaJuegos( DEVICE )
 			self.cargarJuegosModelo( self.tv_games_modelo , listaJuegos )
-		
+
 			self.core.descargarTodasLasCaratulaYDiscos( DEVICE , listaJuegos )
 
 	def on_tv_games_cursor_changed(self , treeview):

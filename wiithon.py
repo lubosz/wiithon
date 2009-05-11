@@ -61,18 +61,15 @@ def App():
 
 		core = WiithonCORE()
 
-		# Lo necesita el GUI para cargar la lista de particiones
-		core.refrescarParticionWBFS()
-
 		if glade_gui:
 			interfaz = WiithonGUI(core)
 			interfaz.wg_principal.show()
 			core.setPregunton(interfaz.question)
-			
+
 			# solo pregunta el acuerdo por GUI
 			if not os.path.exists(config.HOME_WIITHON):
 				informarAcuerdo(interfaz.question)
-			
+
 			gtk.main()
 		else:
 			interfaz = WiithonCLI(core)
