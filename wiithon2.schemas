@@ -1,0 +1,187 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<gconfschemafile>
+  <schemalist>
+    <schema>
+      <key>/schemas/apps/nautilus-actions/configurations/4d07460a-6456-48f9-9d73-edfdbd90df0f/label</key>
+      <applyto>/apps/nautilus-actions/configurations/4d07460a-6456-48f9-9d73-edfdbd90df0f/label</applyto>
+      <owner>nautilus-actions</owner>
+      <type>string</type>
+      <locale name="C">
+        <default>Wii - Extraer Juego a ISO</default>
+        <short>La etiqueta del elemento del menú</short>
+        <long>La etiqueta del elemento del menú que aparecerá en el menú emergente de nautilus cuando la selección coincida con los ajustes de condiciones de aparición</long>
+      </locale>
+    </schema>
+    <schema>
+      <key>/schemas/apps/nautilus-actions/configurations/4d07460a-6456-48f9-9d73-edfdbd90df0f/tooltip</key>
+      <applyto>/apps/nautilus-actions/configurations/4d07460a-6456-48f9-9d73-edfdbd90df0f/tooltip</applyto>
+      <owner>nautilus-actions</owner>
+      <type>string</type>
+      <locale name="C">
+        <default>Extrae un ISO al directorio actual</default>
+        <short>El consejo del elemento del menú</short>
+        <long>El consejo del elemento del menú que aparecerá en la barra de estado de Nautilus cuando se apunte al elemento del menú emergente de Nautilus con su ratón</long>
+      </locale>
+    </schema>
+    <schema>
+      <key>/schemas/apps/nautilus-actions/configurations/4d07460a-6456-48f9-9d73-edfdbd90df0f/icon</key>
+      <applyto>/apps/nautilus-actions/configurations/4d07460a-6456-48f9-9d73-edfdbd90df0f/icon</applyto>
+      <owner>nautilus-actions</owner>
+      <type>string</type>
+      <locale name="C">
+        <short>El icono del elemento del menú</short>
+        <long>El icono del elemento del menú que aparecerá en la barra al lado de la etiqueta en el menú emergente de nautilus cuando la selección coincida con los ajustes de las condiciones de aparición</long>
+      </locale>
+      <default>gtk-leave-fullscreen</default>
+    </schema>
+    <schema>
+      <key>/schemas/apps/nautilus-actions/configurations/4d07460a-6456-48f9-9d73-edfdbd90df0f/path</key>
+      <applyto>/apps/nautilus-actions/configurations/4d07460a-6456-48f9-9d73-edfdbd90df0f/path</applyto>
+      <owner>nautilus-actions</owner>
+      <type>string</type>
+      <locale name="C">
+        <short>La ruta del comando</short>
+        <long>La ruta del comando a iniciar cuando el usuario selecciona el elemento del menú en el menú emergente de Nautilus</long>
+      </locale>
+      <default>gnome-terminal</default>
+    </schema>
+    <schema>
+      <key>/schemas/apps/nautilus-actions/configurations/4d07460a-6456-48f9-9d73-edfdbd90df0f/parameters</key>
+      <applyto>/apps/nautilus-actions/configurations/4d07460a-6456-48f9-9d73-edfdbd90df0f/parameters</applyto>
+      <owner>nautilus-actions</owner>
+      <type>string</type>
+      <locale name="C">
+        <short>Los parámetros del comando</short>
+        <long>Los parámetros del comando para iniciar cuando el usuario seleccione el elemento del menú en el menú contextual de Nautilus.
+
+Los parámetros pueden contener algunos tokens especiales que se reemplazan por información de Nautilus antes de iniciar el comando:
+
+%d : carpeta base de los archivos seleccionados
+%f : el nombre del archivo seleccionado o el del primer archivo si hay varios seleccionados
+%m : lista de los nombres base de los archivos/carpetas seleccionados separados por un espacio
+%M : lista de los archivos/carpetas seleccionados con su ruta completa separada por un espacio
+%u : URI GnomeVFS 
+%s : esquema de la URI de GnomeVFS
+%h : nombre de host de la URI GnomeVFS
+%U : nombre de usuario de la URI %s/GnomeVFS
+%% : un signo de porcentaje</long>
+      </locale>
+      <default>--command="sudo /usr/local/bin/wiithon -p --trabajo=%M extraer"</default>
+    </schema>
+    <schema>
+      <key>/schemas/apps/nautilus-actions/configurations/4d07460a-6456-48f9-9d73-edfdbd90df0f/basenames</key>
+      <applyto>/apps/nautilus-actions/configurations/4d07460a-6456-48f9-9d73-edfdbd90df0f/basenames</applyto>
+      <owner>nautilus-actions</owner>
+      <type>list</type>
+      <list_type>string</list_type>
+      <locale name="C">
+        <short>La lista de patrones con la que coincidir los archivos/carpetas seleccionados</short>
+        <long>Una lista de cadenas con comodines '*' o '?' para coincidir con los archivos/carpetas seleccionados. Cada elemento seleccionado debe coincidir al menos con uno de los patrones para que aparezca la acción</long>
+      </locale>
+      <default>[*]</default>
+    </schema>
+    <schema>
+      <key>/schemas/apps/nautilus-actions/configurations/4d07460a-6456-48f9-9d73-edfdbd90df0f/matchcase</key>
+      <applyto>/apps/nautilus-actions/configurations/4d07460a-6456-48f9-9d73-edfdbd90df0f/matchcase</applyto>
+      <owner>nautilus-actions</owner>
+      <type>bool</type>
+      <locale name="C">
+        <short>«True» si la los patrones del nombre del archivo deben discriminar según la capitalización, «false» en otro caso</short>
+        <long>Si necesita que hacer coincidir un nombre de archivo discriminando según capitalización, ponga a 'true' esta clave. Si quiere, por ejemplo que '*.jpg' coincida con 'foto.JPG', póngala a 'false'</long>
+      </locale>
+      <default>false</default>
+    </schema>
+    <schema>
+      <key>/schemas/apps/nautilus-actions/configurations/4d07460a-6456-48f9-9d73-edfdbd90df0f/mimetypes</key>
+      <applyto>/apps/nautilus-actions/configurations/4d07460a-6456-48f9-9d73-edfdbd90df0f/mimetypes</applyto>
+      <owner>nautilus-actions</owner>
+      <type>list</type>
+      <list_type>string</list_type>
+      <locale name="C">
+        <short>La lista de patrones con la que coincidir los tipos MIME de los archivos seleccionados</short>
+        <long>Una lista de cadenas con comodines '*' o '?' para coincidir con los tipos MIME de los archivos seleccionados. Cada elemento seleccionado debe coincidir al menos con uno de los patrones de tipos MIME para que aparezca la acción</long>
+      </locale>
+      <default>[*/*]</default>
+    </schema>
+    <schema>
+      <key>/schemas/apps/nautilus-actions/configurations/4d07460a-6456-48f9-9d73-edfdbd90df0f/isfile</key>
+      <applyto>/apps/nautilus-actions/configurations/4d07460a-6456-48f9-9d73-edfdbd90df0f/isfile</applyto>
+      <owner>nautilus-actions</owner>
+      <type>bool</type>
+      <locale name="C">
+        <short>«true» si la selección debe tener archivos, «false» en otro caso</short>
+        <long>This setting is tied in with the 'isdir' setting. The valid combinations are:
+
+isfile=TRUE and isdir=FALSE: the selection may hold only files
+isfile=FALSE and isdir=TRUE: the selection may hold only folders
+isfile=TRUE and isdir=TRUE': the selection may hold both files and folders
+isfile=FALSE and isdir=FALSE: this is an invalid combination (your configuration will never appear)</long>
+      </locale>
+      <default>true</default>
+    </schema>
+    <schema>
+      <key>/schemas/apps/nautilus-actions/configurations/4d07460a-6456-48f9-9d73-edfdbd90df0f/isdir</key>
+      <applyto>/apps/nautilus-actions/configurations/4d07460a-6456-48f9-9d73-edfdbd90df0f/isdir</applyto>
+      <owner>nautilus-actions</owner>
+      <type>bool</type>
+      <locale name="C">
+        <short>«true» si la selección debe tener carpetas, «false» en otro caso</short>
+        <long>This setting is tied in with the 'isfile' setting. The valid combinations are:
+
+isfile=TRUE and isdir=FALSE: the selection may hold only files
+isfile=FALSE and isdir=TRUE: the selection may hold only folders
+isfile=TRUE and isdir=TRUE': the selection may hold both files and folders
+isfile=FALSE and isdir=FALSE: this is an invalid combination (your configuration will never appear)</long>
+      </locale>
+      <default>true</default>
+    </schema>
+    <schema>
+      <key>/schemas/apps/nautilus-actions/configurations/4d07460a-6456-48f9-9d73-edfdbd90df0f/accept-multiple-files</key>
+      <applyto>/apps/nautilus-actions/configurations/4d07460a-6456-48f9-9d73-edfdbd90df0f/accept-multiple-files</applyto>
+      <owner>nautilus-actions</owner>
+      <type>bool</type>
+      <locale name="C">
+        <short>«True» si la selección debe tener varios elementos, «false» en otro caso</short>
+        <long>Si necesita que se selecciones uno o más archivos o carpetas, ponga a 'true' esta clave. Si tan sólo quiere un archivo o carpeta, póngala a 'false'</long>
+      </locale>
+      <default>true</default>
+    </schema>
+    <schema>
+      <key>/schemas/apps/nautilus-actions/configurations/4d07460a-6456-48f9-9d73-edfdbd90df0f/schemes</key>
+      <applyto>/apps/nautilus-actions/configurations/4d07460a-6456-48f9-9d73-edfdbd90df0f/schemes</applyto>
+      <owner>nautilus-actions</owner>
+      <type>list</type>
+      <list_type>string</list_type>
+      <locale name="C">
+        <short>La lista de esquemas de GnomeVFS donde los archivos seleccionados deberían ser ubicados</short>
+        <long>Define la lista de esquemas GnomeVFS válidos para coincidir con los elementos seleccionados. El esquema GnomeVFS es el protocolo que se usa para acceder a los archivos. La palabra clave para usar es la que se usa en el URI de GnomeVFS:
+
+Ejemplo de URI GnomeVFS:
+file:///tmp/foo.txt
+sftp:///root@prueba.ejemplo.net/tmp/foo.txt
+
+Los esquemas más comunes son:
+
+«file»: archivos locales
+«sftp»: archivos accedidos por ssh
+«ftp»: archivos accedidos por FTP
+«smb»: archivos accedidos por Samba (Compartido por Windows)
+«dav»: archivos accedidos por WebDav
+
+Se pueden usar todos los esquemas GnomeVFS que use Nautilus aquí.</long>
+      </locale>
+      <default>[file]</default>
+    </schema>
+    <schema>
+      <key>/schemas/apps/nautilus-actions/configurations/4d07460a-6456-48f9-9d73-edfdbd90df0f/version</key>
+      <applyto>/apps/nautilus-actions/configurations/4d07460a-6456-48f9-9d73-edfdbd90df0f/version</applyto>
+      <owner>nautilus-actions</owner>
+      <type>string</type>
+      <locale name="C">
+        <short>La versión del formato de configuración</short>
+        <long>La versión del formato de configuración que se usará para gestionar la compatibilidad hacia atrás</long>
+      </locale>
+      <default>1.1</default>
+    </schema>
+  </schemalist>
+</gconfschemafile>

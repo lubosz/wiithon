@@ -1,5 +1,10 @@
 #-*-coding: utf-8-*-
 
+import subprocess
+
+# Caracteres que hacen que una expresión no pueda ser expresión regular	
+BLACK_LIST = "/\"\'$&|[]"
+
 class NonRepeatList(list):
     def __init__(self, *args):
         list.__init__(self, *args)
@@ -25,7 +30,6 @@ class Observable:
         if isinstance(topic, list):
             for t in topic:
                 if self.__observers.has_key(t):
-                    # ESTO PETA
                     self.__observers[t].append(callback)
 
                 else:
@@ -44,8 +48,7 @@ class Observable:
                 observer_cb(topic, what)
 
         else:
-            print 'revisa código macho, que el topic no existe'
-
+            print 'El topic no existe, reporta el bug'
 
 
 class SubscriptionError(Exception):
@@ -61,27 +64,32 @@ class SubscriptionError(Exception):
         return self.msg
 
 
-def getExtension(self , fichero):
-	fichero = self.eliminarComillas(fichero)
+def getExtension(fichero):
+	#fichero = eliminarComillas(fichero)
 	posPunto = fichero.rfind(".")
 	return fichero[posPunto+1:len(fichero)].lower()
 
-def getNombreFichero(self , fichero):
-	fichero = eliminarComillas(fichero)
+def getNombreFichero(fichero):
+	#fichero = eliminarComillas(fichero)
 	posPunto = fichero.rfind(".")
 	return fichero[0:posPunto]
 
-def getMagicISO(self , imagenISO):
+def getMagicISO(imagenISO):
 	f = open(imagenISO , "r")
 	magic = f.read(6)
 	f.close()
 	return magic
 
-def tieneCaracteresRaros(self , cadena):
+def tieneCaracteresRaros(cadena):
 	# Nos dice si *cadena* tiene caracteres raros dados por una lista negra global
 	for i in range(len(cadena)):
-		for j in range(len(self.BLACK_LIST)):
-			if (cadena[i]==self.BLACK_LIST[j]):
+		for j in range(len(BLACK_LIST)):
+			if (cadena[i]==BLACK_LIST[j]):
 				return True
 	return False
 
+# esta función la voy a evitar y acabaré por eliminarla
+def getPopen( comando ):
+	sp = subprocess
+	return sp.Popen(comando.split() , stdout=sp.PIPE ,stderr=sp.STDOUT , close_fds=False , shell=False, universal_newlines= True)
+		

@@ -10,89 +10,18 @@
 import sys, os
 import getopt
 
+from cli import WiithonCLI
 from gui import WiithonGUI
 from core import WiithonCORE
 import config
 import gtk
-
-def uso():
-	wiithon = os.path.basename(sys.argv[0])
-
-	print '''Listar juegos. El programa por defecto, sin parametros, hace un listado de los juegos (lanzara el GUI en alguna prox versión):
-\t\t%s
-
-Añadir ISO mediante una lista explicita de las ISOS:
-\t\t%s "%s/wii/mario.iso" "iso2" "iso3" "isoN"
-
-Añadir ISO con exp. reg. La expresión solo afecta al directorio actual, actualmente no es recursivo:
-\t\t%s *.iso
-
-Buscar y Añadir ISO's recursivamente. Busca todos las imagenes isos RECURSIVAMENTE, incluso tambien busca dentro de RAR, a falta de implementar zip), tal vez necesites apt-get install rar.
-\t\t%s buscar
-
-Borrar juegos. Especificando el juego mediante un menú:
-\t\t%s borrar
-
-Borrar juegos. Podemos borrar con el IDGAME:
-\t\t%s borrar IDJUEGO
-
-Borrar juegos. Podemos borrar con el IDGAME obtenido a partir de un ISO local. El archivo ISO local NO es borrado:
-\t\t%s borrar "%s/wii/mario.iso"
-
-Renombrar juegos. Especificando el juego mediante un menú:
-\t\t%s renombrar
-
-Renombrar juegos, puedes cambiar el nombre de los juegos ya metidos en HD, útil para que nos enteremos cuando estemos con el USB Loader:
-\t\t%s renombrar IDGAME "Mario Kart Wii"
-
-Extraer juegos a un archivo ISO. El juego es especificado mediante un menú:
-\t\t%s extraer
-
-Extraer juegos a un archivo ISO. OJO! : El archivo ISO de salida pertenecerá a root:
-\t\t%s extraer IDJUEGO
-
-Descargar todas las caratulas automaticamente a 160x225. Ojo puede que el servidor te banee, si te ocurre intentalo 5 minutos más tarde:
-\t\t%s caratulas
-
-Descargar la caratulas de un juego especificado por su IDGAME, la imagen es bajada a 160x225. El comando es un singular, es "caratula" ya que "caratulas" descarga todas:
-\t\t%s caratula IDGAME
-
-Descargar la caratulas de un juego especificado por menú, la imagen es bajada a 160x225. El comando es un singular, es "caratula" ya que "caratulas" descarga todo:
-\t\t%s caratula"
-
-Comprobar Integridad de los juegos. Muchos de nuestros juegos pueden estar corruptos sin aún saberlo debido a el bug de borrado de las primeras versiones de WBFS
-\t\t%s comprobar
-
-Instar juegos desde el DVD, al estilo del usb loader, pero algo más lento porque dumpea a ISO y cuando termina mete la ISO:
-\t\t%s instalar
-
-
-Web : http://blogricardo.wordpress.com/2009/04/07/wiithon-wbfs-gui-para-wii
-''' %(wiithon,
-      wiithon, sys.argv[0],
-      wiithon,
-      wiithon,
-      wiithon,
-      wiithon,
-      wiithon, sys.argv[0],
-      wiithon,
-      wiithon,
-      wiithon,
-      wiithon,
-      wiithon,
-      wiithon,
-      wiithon,
-      wiithon,
-      wiithon
-      )
 
 def informarAcuerdo(pregunton):
 	res = pregunton('''El equipo de Wiithon no se hace responsable de la aplicacion ni de la perdida de datos.
 No obstante, la particion NO va ha ser formateada.
 Esta aplicación añade, borra y lista juegos explicamente mediante la ayuda de %s.
 Esta información no volverá a aparecer si acepta el acuerdo.
-¿Está de acuerdo?'''
-			%(os.path.basename(config.WBFS_APP)) )
+¿Está de acuerdo?''' % ( os.path.basename(config.WBFS_APP) ) )
 
 	assert res == 1, "No puedes usar esta aplicacion si no estas de acuerdo"
 
@@ -110,23 +39,20 @@ def App():
 								 'no-gui',
 								 ])
 
+		# Por defecto es GUI
 		glade_gui = True
+		# controla si se ha pasado el parametro "-p"
+		PAUSA = False
 		opciones_formateadas = {}
 
 		for option, value in options:
-			#if option == '-p':
-			#	PAUSA = True
-			#
-			if option in ['-h', '--help']:
-				uso()
-				sys.exit(0)
-
-			#
-			#elif option in ['--trabajo', '--work']:
-			#	if os.path.isdir(value):
-			#		os.chdir(value)
-			#
-
+			if option == '-p':
+				PAUSA = True
+				# si pausamos -> es CLI
+				glade_gui = False
+			elif option in ['--trabajo', '--work']:
+				if os.path.isdir(value):
+					os.chdir(value)
 			elif option == '--no-gui':
 				glade_gui = False
 
@@ -135,20 +61,24 @@ def App():
 
 		core = WiithonCORE()
 
+		# Lo necesita el GUI para cargar la lista de particiones
+		core.refrescarParticionWBFS()
+
 		if glade_gui:
 			interfaz = WiithonGUI(core)
 			interfaz.wg_principal.show()
 			core.setPregunton(interfaz.question)
-
+			
+			# solo pregunta el acuerdo por GUI
+			if not os.path.exists(config.HOME_WIITHON):
+				informarAcuerdo(interfaz.question)
+			
+			gtk.main()
 		else:
-			# crear interfaz terminal
-			pass
-
-		if not os.path.exists(config.HOME_WIITHON):
-			informarAcuerdo(interfaz.question)
-
-		core.main(opciones_formateadas, arguments)
-		gtk.main()
+			interfaz = WiithonCLI(core)
+			interfaz.main(opciones_formateadas, arguments)
+			if PAUSA:
+				raw_input("Pulse cualquier tecla para continuar ...\n")
 
 	except getopt.GetoptError:
 		try:

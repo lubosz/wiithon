@@ -24,6 +24,7 @@ install: wbfs uninstall
 	cp wiithon_autodetectar.sh $(PREFIX)/share/wiithon
 	cp wiithon_autodetectar_lector.sh $(PREFIX)/share/wiithon
 	cp wbfs $(PREFIX)/share/wiithon
+	cp cli.py $(PREFIX)/share/wiithon
 	cp gui.py $(PREFIX)/share/wiithon
 	cp glade_wrapper.py $(PREFIX)/share/wiithon
 	cp util.py $(PREFIX)/share/wiithon
@@ -37,6 +38,7 @@ install: wbfs uninstall
 	chmod 755 $(PREFIX)/share/wiithon/wiithon_autodetectar.sh
 	chmod 755 $(PREFIX)/share/wiithon/wiithon_autodetectar_lector.sh
 	chmod 755 $(PREFIX)/share/wiithon/wbfs
+	chmod 755 $(PREFIX)/share/wiithon/cli.py
 	chmod 755 $(PREFIX)/share/wiithon/gui.py
 	chmod 755 $(PREFIX)/share/wiithon/glade_wrapper.py
 	chmod 755 $(PREFIX)/share/wiithon/util.py
@@ -82,6 +84,7 @@ uninstall:
 	-$(RM) $(PREFIX)/share/wiithon/wbfs
 	-$(RM) $(PREFIX)/share/wiithon/wiithon.py	
 	-$(RM) $(PREFIX)/share/wiithon/util.py	
+	-$(RM) $(PREFIX)/share/wiithon/cli.py	
 	-$(RM) $(PREFIX)/share/wiithon/gui.py	
 	-$(RM) $(PREFIX)/share/wiithon/glade_wrapper.py	
 	-$(RM) $(PREFIX)/share/wiithon/core.py	
@@ -122,10 +125,12 @@ empaquetar: wbfs clean
 pull:
 	bzr pull
 
-commit: clean
-	-@bzr diff > DIFF.txt
+commit: clean diff
 	bzr commit --file="COMMIT.txt" && echo "" > COMMIT.txt
 	bzr log --short > CHANGELOG.txt
 
 log:
 	bzr log --forward --short
+
+diff:
+	-@bzr diff > DIFF.txt

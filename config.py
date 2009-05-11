@@ -13,3 +13,12 @@ WIITHON_FILES = os.path.dirname(__file__)
 
 WBFS_APP = os.path.join(WIITHON_FILES , "wbfs")
 
+# Aunque este no es su sitio
+topics = ['error', 'warning', 'info']
+
+# Cuando se descomprime un RAR, definimos si despues se borra la ISO
+borrarISODescomprimida = False
+
+# Lineas de pantallazo en consola (esta variable hay que trasladarlo a WiithonCLI)
+NUM_LINEAS_PAUSA = 21
+

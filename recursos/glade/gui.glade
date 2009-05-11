@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <!DOCTYPE glade-interface SYSTEM "glade-2.0.dtd">
-<!--Generated with glade3 3.4.5 on Thu May  7 05:15:03 2009 -->
+<!--Generated with glade3 3.4.5 on Mon May 11 04:47:23 2009 -->
 <glade-interface>
   <widget class="GtkWindow" id="principal">
     <property name="visible">True</property>
@@ -134,16 +134,6 @@
               <widget class="GtkVBox" id="vbox2">
                 <property name="visible">True</property>
                 <child>
-                  <widget class="GtkLabel" id="label1">
-                    <property name="height_request">32</property>
-                    <property name="visible">True</property>
-                    <property name="label" translatable="yes">Particiones WBFS:</property>
-                  </widget>
-                  <packing>
-                    <property name="expand">False</property>
-                  </packing>
-                </child>
-                <child>
                   <widget class="GtkScrolledWindow" id="scrolledwindow4">
                     <property name="visible">True</property>
                     <property name="can_focus">True</property>
@@ -153,12 +143,10 @@
                       <widget class="GtkTreeView" id="tv_partitions">
                         <property name="visible">True</property>
                         <property name="can_focus">True</property>
+                        <signal name="columns_changed" handler="on_tv_partitions_columns_changed"/>
                       </widget>
                     </child>
                   </widget>
-                  <packing>
-                    <property name="position">1</property>
-                  </packing>
                 </child>
                 <child>
                   <widget class="GtkHSeparator" id="hseparator1">
@@ -166,7 +154,28 @@
                   </widget>
                   <packing>
                     <property name="expand">False</property>
+                    <property name="position">1</property>
+                  </packing>
+                </child>
+                <child>
+                  <widget class="GtkImage" id="img_disco">
+                    <property name="width_request">160</property>
+                    <property name="height_request">160</property>
+                    <property name="visible">True</property>
+                    <property name="stock">gtk-cdrom</property>
+                    <property name="icon_size">6</property>
+                  </widget>
+                  <packing>
                     <property name="position">2</property>
+                  </packing>
+                </child>
+                <child>
+                  <widget class="GtkHSeparator" id="hseparator2">
+                    <property name="visible">True</property>
+                  </widget>
+                  <packing>
+                    <property name="expand">False</property>
+                    <property name="position">3</property>
                   </packing>
                 </child>
                 <child>
@@ -174,41 +183,10 @@
                     <property name="width_request">160</property>
                     <property name="height_request">225</property>
                     <property name="visible">True</property>
-                    <property name="stock">gtk-missing-image</property>
+                    <property name="stock">gtk-new</property>
+                    <property name="icon_size">6</property>
                   </widget>
                   <packing>
-                    <property name="position">3</property>
-                  </packing>
-                </child>
-                <child>
-                  <widget class="GtkButton" id="button2">
-                    <property name="visible">True</property>
-                    <property name="can_focus">True</property>
-                    <property name="receives_default">True</property>
-                    <property name="response_id">0</property>
-                    <child>
-                      <widget class="GtkHBox" id="hbox3">
-                        <property name="visible">True</property>
-                        <child>
-                          <widget class="GtkImage" id="image2">
-                            <property name="visible">True</property>
-                            <property name="stock">gtk-copy</property>
-                          </widget>
-                        </child>
-                        <child>
-                          <widget class="GtkLabel" id="label2">
-                            <property name="visible">True</property>
-                            <property name="label" translatable="yes">Copiar carátulas a la SD</property>
-                          </widget>
-                          <packing>
-                            <property name="position">1</property>
-                          </packing>
-                        </child>
-                      </widget>
-                    </child>
-                  </widget>
-                  <packing>
-                    <property name="expand">False</property>
                     <property name="position">4</property>
                   </packing>
                 </child>
