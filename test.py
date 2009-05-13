@@ -1,6 +1,31 @@
 #!/usr/bin/env python
 #-*-coding: utf-8-*-
 
+import time
+from pool import HiloPool
+
+hilo = HiloPool()
+hilo.start()
+
+i=0
+while hilo.isAlive():
+	print "Aún no ha terminado %d" % i
+	time.sleep(2)
+	i = i + 1
+
+print "YA ha terminado!"
+
+'''
+p = subprocess.Popen("sudo /usr/local/share/wiithon/wbfs -p /dev/sdb1 add /home/makiolo/descargas/Resident\ Evil\ 4\ Wii\ Edition.iso" , shell=True , stdout=subprocess.PIPE)
+out = p.stdout.readlines()
+for linea in out:
+	print "---------------"
+	print linea.strip()
+'''
+
+#main()
+
+'''
 import os , config , almacen
 from juego import session , Juego
 
@@ -27,7 +52,7 @@ print "Commit definitivo"
 print "Juegos DESPUES de insertar"
 for j in session.query(Juego):
 	print j
-
+'''
 '''
 import gtk
 import gui

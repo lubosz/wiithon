@@ -17,7 +17,6 @@ class WiithonGUI(GladeWrapper):
 				progreso.set_fraction( nuevo_valor )
 				return True
 
-
 			botones = (gtk.STOCK_CANCEL,
 				   gtk.RESPONSE_CANCEL,
 				   gtk.STOCK_OPEN,
