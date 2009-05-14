@@ -30,6 +30,7 @@ install: wbfs uninstall
 	cp util.py $(PREFIX)/share/wiithon
 	cp core.py $(PREFIX)/share/wiithon
 	cp config.py $(PREFIX)/share/wiithon
+	cp pool.py $(PREFIX)/share/wiithon
 
 	cp recursos/glade/*.glade $(PREFIX)/share/wiithon/recursos/glade
 	cp recursos/imagenes/*.png $(PREFIX)/share/wiithon/recursos/imagenes
@@ -44,6 +45,7 @@ install: wbfs uninstall
 	chmod 755 $(PREFIX)/share/wiithon/util.py
 	chmod 755 $(PREFIX)/share/wiithon/core.py
 	chmod 755 $(PREFIX)/share/wiithon/config.py
+	chmod 755 $(PREFIX)/share/wiithon/pool.py
 
 	chmod 644 $(PREFIX)/share/wiithon/recursos/glade/*.glade
 	chmod 644 $(PREFIX)/share/wiithon/recursos/imagenes/*.png
@@ -89,6 +91,7 @@ uninstall:
 	-$(RM) $(PREFIX)/share/wiithon/glade_wrapper.py	
 	-$(RM) $(PREFIX)/share/wiithon/core.py	
 	-$(RM) $(PREFIX)/share/wiithon/config.py
+	-$(RM) $(PREFIX)/share/wiithon/pool.py
 	-$(RM) $(PREFIX)/share/wiithon/recursos/glade/*.glade
 	-$(RM) $(PREFIX)/share/wiithon/recursos/imagenes/*.png
 	

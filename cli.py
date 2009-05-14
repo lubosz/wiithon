@@ -5,6 +5,14 @@ import config
 from util import NonRepeatList
 
 class WiithonCLI:
+
+	# Lista de ficheros pendientes de añadir, estos pueden ser:
+	# Tipo 1: Imagenes ISO
+	# Tipo 2: Comprimidos RAR
+	# Tipo 3: Carpetas
+	# La lista de ficheros debería ser una cola mejor que una lista
+	listaFicheros = NonRepeatList()
+
 	def __init__(self , core):
 		self.core = core
 		# varias particiones
@@ -184,11 +192,11 @@ class WiithonCLI:
 							archivo = "."
 
 						print "Buscando en "+os.path.dirname(archivo)+" ficheros RAR ... ",
-						self.core.encolar( rec_glob(archivo, "*.rar") )
+						self.encolar( rec_glob(archivo, "*.rar") )
 						print "OK!"
 
 						print "Buscando en "+os.path.dirname(archivo)+" Imagenes ISO ... ",
-						self.core.encolar( rec_glob(archivo, "*.iso") )
+						self.encolar( rec_glob(archivo, "*.iso") )
 						print "OK!"
 
 
@@ -199,16 +207,16 @@ class WiithonCLI:
 								util.getExtension(parametro) == "rar"
 							)
 						):
-						self.core.encolar( [parametro] )
+						self.encolar( [parametro] )
 
 					# si tiene caracteres raros -> no es expresión regular
 					# porque de otro forma, peta la expresion regular.
 					elif( not util.tieneCaracteresRaros(parametro) ):
-						self.core.encolar( glob.glob(parametro) )
+						self.encolar( glob.glob(parametro) )
 					else:
-						self.core.encolar( [parametro] )
+						self.encolar( [parametro] )
 
-				if (len(self.core.getListaFicheros()) == 0):
+				if (len(self.listaFicheros) == 0):
 					print "No se ha encontrado ninguna imagen ISO"
 
 			self.procesar( )
@@ -224,7 +232,7 @@ class WiithonCLI:
 		DEVICE = self.core.getDeviceSeleccionado()
 		FABRICANTE = self.core.getFabricanteSeleccionado()
 		
-		listaFicheros = self.core.getListaFicheros() 
+		listaFicheros = self.listaFicheros
 		
 		numFicheros = len(listaFicheros)
 		if(numFicheros>0):
@@ -342,8 +350,6 @@ class WiithonCLI:
 				# self.notify("info","Juegos erroneos (%d/%d)" % (len(erroneos), numFicherosProcesados))
 
 				print "}"
-
-			self.core.vaciarLista(self.core.getListaFicheros())
 		#else:
 			#print "Nada que procesar"
 
@@ -464,4 +470,8 @@ Web : http://blogricardo.wordpress.com/2009/04/07/wiithon-wbfs-gui-para-wii
       wiithon,
       wiithon
       )
+
+	def encolar(self , lista):
+		self.listaFicheros.extend( lista )
+
 

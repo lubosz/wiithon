@@ -3,44 +3,17 @@
 import gtk , os , time , gobject
 
 from glade_wrapper import GladeWrapper
-import config
+import config , sys
+
+from core import HiloPoolAnadir
+from core import HiloDescargarTodasLasCaratulaYDiscos
 
 class WiithonGUI(GladeWrapper):
 
 	def __init__(self, core):
-
-		def on_tb_anadir_clicked(id_tb):
-			def anadir(progreso):
-				nuevo_valor = progreso.get_fraction() + 0.01
-				if nuevo_valor > 1.0:
-					nuevo_valor = 0.0
-				progreso.set_fraction( nuevo_valor )
-				return True
-
-			botones = (gtk.STOCK_CANCEL,
-				   gtk.RESPONSE_CANCEL,
-				   gtk.STOCK_OPEN,
-				   gtk.RESPONSE_OK,
-				   )
-
-			if(id_tb == self.wg_tb_anadir):
-				fc_anadir = gtk.FileChooserDialog("Elige una ISO o un RAR", None , gtk.FILE_CHOOSER_ACTION_OPEN , botones)
-
-			elif(id_tb == self.wg_tb_anadir_directorio):
-				fc_anadir = gtk.FileChooserDialog("Elige un directorio", None , gtk.FILE_CHOOSER_ACTION_SELECT_FOLDER , botones)
-
-			fc_anadir.set_local_only(True)
-			fc_anadir.set_select_multiple(True)
-			fc_anadir.show()
-
-			if fc_anadir.run() == gtk.RESPONSE_OK:
-				self.core.encolar( fc_anadir.get_filenames() )
-
-				self.timer = gobject.timeout_add (100, anadir , self.wg_progreso1)
-
-			fc_anadir.destroy()
-
-			#self.core.procesar( self.wg_progreso1 )
+	
+		self.hiloAnadir = None
+		self.hiloCaratulas = None
 
 		GladeWrapper.__init__(self, config.WIITHON_FILES + '/recursos/glade/gui.glade' , 'principal')
 		self.core = core
@@ -49,10 +22,17 @@ class WiithonGUI(GladeWrapper):
 		self.wg_principal.set_title('Wiithon')
 
 		botonbarra1 = self.wg_tb_anadir
-		botonbarra1.connect('clicked' , on_tb_anadir_clicked)
-
 		botonbarra2 = self.wg_tb_anadir_directorio
-		botonbarra2.connect('clicked' , on_tb_anadir_clicked)
+		botonbarra3 = self.wg_tb_borrar
+		botonbarra4 = self.wg_tb_extraer
+		botonbarra5 = self.wg_tb_chequear
+		botonbarra6 = self.wg_tb_preferencias
+		botonbarra1.connect('clicked' , self.on_tb_toolbar_clicked)
+		botonbarra2.connect('clicked' , self.on_tb_toolbar_clicked)
+		botonbarra3.connect('clicked' , self.on_tb_toolbar_clicked)
+		botonbarra4.connect('clicked' , self.on_tb_toolbar_clicked)
+		botonbarra5.connect('clicked' , self.on_tb_toolbar_clicked)
+		botonbarra6.connect('clicked' , self.on_tb_toolbar_clicked)
 		
 		# Del error SI se dan cuenta el GUI o CLI
 		if(len(self.core.listaParticiones) == 0):
@@ -63,20 +43,20 @@ class WiithonGUI(GladeWrapper):
 		self.tv_partitions_modelo = self.cargarParticionesVista()
 		self.cargarParticionesModelo(self.tv_partitions_modelo , core.getListaParticiones())
 
-		# selecciono el primero y provoco el evento
+		# selecciono la primera partición
 		iter_primero = self.wg_tv_partitions.get_model().get_iter_first()
 		if iter_primero != None:
 			self.wg_tv_partitions.get_selection().select_iter( iter_primero )
 			self.on_tv_partitions_cursor_changed( self.wg_tv_partitions )
 
-		# selecciono el primero y provoco el evento
-		iter_primero = self.wg_tv_games.get_model().get_iter_first()
-		if iter_primero != None:
-			self.wg_tv_games.get_selection().select_iter( iter_primero )
-			self.on_tv_games_cursor_changed( self.wg_tv_games )
-
 		# pongo el foco en los TreeView de juegos
 		self.wg_tv_games.grab_focus()
+	
+		# descargar caratulas desde un hilo		
+		DEVICE = self.core.getDeviceSeleccionado()
+		listaJuegos = self.core.getListaJuegos( DEVICE )			
+		self.hiloCaratulas = HiloDescargarTodasLasCaratulaYDiscos(self.core , DEVICE , listaJuegos)
+		self.hiloCaratulas.start()
 
 		self.wg_principal.connect('destroy', self.salir)
 
@@ -218,8 +198,12 @@ class WiithonGUI(GladeWrapper):
 			DEVICE = self.core.getDeviceSeleccionado()
 			listaJuegos = self.core.getListaJuegos( DEVICE )
 			self.cargarJuegosModelo( self.tv_games_modelo , listaJuegos )
-
-			self.core.descargarTodasLasCaratulaYDiscos( DEVICE , listaJuegos )
+			
+			# selecciono el primero y provoco el evento
+			iter_primero = self.wg_tv_games.get_model().get_iter_first()
+			if iter_primero != None:
+				self.wg_tv_games.get_selection().select_iter( iter_primero )
+				self.on_tv_games_cursor_changed( self.wg_tv_games )
 
 	def on_tv_games_cursor_changed(self , treeview):
 		seleccion,iterador = treeview.get_selection().get_selected()
@@ -231,4 +215,107 @@ class WiithonGUI(GladeWrapper):
 
 			destinoDisco = os.path.join(config.HOME_WIITHON_DISCOS , IDGAME+".png")
 			self.wg_img_disco1.set_from_file( destinoDisco )
+			
+			
+	def on_tb_toolbar_clicked(self , id_tb):
+		if(id_tb == self.wg_tb_borrar):
+			seleccion,iterador = self.wg_tv_games.get_selection().get_selected()
+			if iterador != None:
+				DEVICE = self.core.getDeviceSeleccionado()
+				IDGAME = seleccion.get_value(iterador,1)
+				self.core.borrarJuego( DEVICE , IDGAME )
+		elif(id_tb == self.wg_tb_extraer):
+			seleccion,iterador = self.wg_tv_games.get_selection().get_selected()
+			if iterador != None:
+				DEVICE = self.core.getDeviceSeleccionado()
+				IDGAME = seleccion.get_value(iterador,1)
+				self.core.extraerJuego( DEVICE , IDGAME )
+		elif(id_tb == self.wg_tb_chequear):
+			seleccion,iterador = self.wg_tv_games.get_selection().get_selected()
+			if iterador != None:
+				DEVICE = self.core.getDeviceSeleccionado()
+				IDGAME = seleccion.get_value(iterador,1)
+				self.core.verificarJuego( DEVICE , IDGAME )
+		else:
+			botones = (gtk.STOCK_CANCEL,
+				   gtk.RESPONSE_CANCEL,
+				   gtk.STOCK_OPEN,
+				   gtk.RESPONSE_OK,
+				   )
+
+			if(id_tb == self.wg_tb_anadir):
+				fc_anadir = gtk.FileChooserDialog("Elige una ISO o un RAR", None , gtk.FILE_CHOOSER_ACTION_OPEN , botones)
+
+			elif(id_tb == self.wg_tb_anadir_directorio):
+				fc_anadir = gtk.FileChooserDialog("Elige un directorio", None , gtk.FILE_CHOOSER_ACTION_SELECT_FOLDER , botones)
+
+			fc_anadir.set_local_only(True)
+			fc_anadir.set_select_multiple(True)
+			fc_anadir.show()
+
+			if fc_anadir.run() == gtk.RESPONSE_OK:
+				if ( self.hiloAnadir != None and self.hiloAnadir.isAlive() ):
+					# test
+					self.alert("info" , "Hilo ocupado ...")
+				else:
+					progreso = self.wg_progreso1
+					progreso.set_text("Iniciando ...")
+		
+					DEVICE = self.core.getDeviceSeleccionado()
+					FABRICANTE = self.core.getFabricanteSeleccionado()
+							
+					self.hiloAnadir = HiloPoolAnadir( self.core , fc_anadir.get_filenames() , DEVICE , FABRICANTE )
+					self.hiloAnadir.setDaemon(True)
+					self.hiloAnadir.start()
+
+					self.timer = gobject.timeout_add ( 100, self.anadir , progreso , self.hiloAnadir )
+
+			fc_anadir.destroy()
+			
+	def anadir(self , progreso , hilo):
+		if hilo.isAlive():
+			# pruebas
+			sys.stdout.flush()
+			comando = "cat /tmp/anadir.log | tail -n 1"
+			entrada, salida = os.popen2(comando)
+			salida = salida.read()
+			if(salida == "FIN_ADD"):
+				progreso.set_text("Añadido correctamente")
+				progreso.set_fraction( 1.0 )
+				try:
+					gobject.source_remove(self.timer)
+					self.timer = 0
+				except:
+					pass
+			elif(salida != ""):
+				try:
+					cachos = salida.split(";")
+					porcentaje = float(cachos[0])
+		
+					hora = int(cachos[1])
+					minutos = int(cachos[2])
+					segundos = int(cachos[3])
+		
+					if(hora > 0):
+						progreso.set_text("%d%% - quedan %dh%dm%ds" % ( porcentaje , hora , minutos , segundos ))
+					elif(minutos > 0):
+						progreso.set_text("%d%% - quedan %dm%ds" % ( porcentaje , minutos , segundos ))
+					else:
+						progreso.set_text("%d%% - quedan %ds" % ( porcentaje , segundos ))
+		
+					porcentual = porcentaje / 100
+					progreso.set_fraction( porcentual )
+				except ValueError:
+					progreso.set_text("ERROR")							
+		'''
+		else:
+			progreso.set_text("Tareas finalizadas")
+			progreso.set_fraction(1.0)
+			try:
+				gobject.source_remove(self.timer)
+				self.timer = 0
+			except:
+				pass
+		'''
+		return True
 

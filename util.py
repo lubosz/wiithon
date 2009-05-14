@@ -93,3 +93,12 @@ def getPopen( comando ):
 	sp = subprocess
 	return sp.Popen(comando.split() , stdout=sp.PIPE ,stderr=sp.STDOUT , close_fds=False , shell=False, universal_newlines= True)
 		
+		
+def getSTDOUT(comando):
+	p = subprocess.Popen(comando , shell=True , stdout=subprocess.PIPE)
+	out = p.stdout.readlines()
+	salida = ""
+	for linea in out:
+		salida = salida + linea.strip()
+	return salida
+

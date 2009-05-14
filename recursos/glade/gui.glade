@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <!DOCTYPE glade-interface SYSTEM "glade-2.0.dtd">
-<!--Generated with glade3 3.4.5 on Mon May 11 22:29:30 2009 -->
+<!--Generated with glade3 3.4.5 on Thu May 14 06:21:34 2009 -->
 <glade-interface>
   <widget class="GtkWindow" id="principal">
     <property name="visible">True</property>
@@ -35,7 +35,7 @@
               </packing>
             </child>
             <child>
-              <widget class="GtkToolButton" id="toolbutton3">
+              <widget class="GtkToolButton" id="tb_borrar">
                 <property name="visible">True</property>
                 <property name="stock_id">gtk-delete</property>
               </widget>
@@ -44,7 +44,7 @@
               </packing>
             </child>
             <child>
-              <widget class="GtkToolButton" id="toolbutton4">
+              <widget class="GtkToolButton" id="tb_extraer">
                 <property name="visible">True</property>
                 <property name="label" translatable="yes">Extraer</property>
                 <property name="stock_id">gtk-convert</property>
@@ -54,7 +54,7 @@
               </packing>
             </child>
             <child>
-              <widget class="GtkToolButton" id="toolbutton5">
+              <widget class="GtkToolButton" id="tb_chequear">
                 <property name="visible">True</property>
                 <property name="label" translatable="yes">Chequear</property>
                 <property name="stock_id">gtk-yes</property>
@@ -72,7 +72,7 @@
               </packing>
             </child>
             <child>
-              <widget class="GtkToolButton" id="toolbutton7">
+              <widget class="GtkToolButton" id="tb_preferencias">
                 <property name="visible">True</property>
                 <property name="stock_id">gtk-preferences</property>
               </widget>

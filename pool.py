@@ -43,12 +43,14 @@ class Pool:
 
 			self.lock = False
 
-	def haTerminado(self):
-		return not self.lock
+	def esLock(self):
+		return self.lock
 
 	# metodo para sobreescribir
 	def ejecutar(self , idWorker , elemento , *arg):
-		print "Elemento = %s por Hilo = %d" % (elemento,idWorker+1)
+		#print "Elemento = %s por Hilo = %d" % (elemento,idWorker+1)
+		print "Debes sobreescribir el método"
+		raise NotImplementedError
 
 class PoolCustomizada(Pool):
 	def __init__(self , numHilos):
