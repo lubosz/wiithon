@@ -436,15 +436,15 @@ u32 wbfs_add_disc(wbfs_t*p,read_wiidisc_callback_t read_src_wii_disc,
 		}
         if(!copy_1_1)
         {
-                d = wd_open_disc(read_src_wii_disc,callback_data);
-                if(!d)
+		d = wd_open_disc(read_src_wii_disc,callback_data);
+		if(!d)
                 {
                 	SALIDA = FALSE;
                 	ERROR("No se puede añadir el disco de WII");
-				}
-                wd_build_disc_usage(d,sel,used);
-                wd_close_disc(d);
-                d = 0;
+		}
+		wd_build_disc_usage(d,sel,used);
+		wd_close_disc(d);
+		d = 0;
         }
         
 
@@ -455,7 +455,7 @@ u32 wbfs_add_disc(wbfs_t*p,read_wiidisc_callback_t read_src_wii_disc,
         {
         	SALIDA = FALSE;
         	ERROR("Tabla de particiones llena. Compruebe que hay espacio en el HD");
-		}
+	}
         p->head->disc_table[i] = 1;
         discn = i;
         load_freeblocks(p);
@@ -469,31 +469,34 @@ u32 wbfs_add_disc(wbfs_t*p,read_wiidisc_callback_t read_src_wii_disc,
         copy_buffer = wbfs_ioalloc(p->wbfs_sec_sz);
         if(!copy_buffer)
         {
-        	SALIDA = FALSE;
-			ERROR("No se pudo reservar memoria");
-		}
+	       	SALIDA = FALSE;
+		ERROR("No se pudo reservar memoria");
+	}
         tot=0;
         cur=0;
-        if(spinner){
-                // count total number to write for spinner
+        if(spinner)
+        {
+        	// count total number to write for spinner
                 for(i=0; i<p->n_wbfs_sec_per_disc;i++)
                 {
                         if(copy_1_1 || block_used(used,i,wii_sec_per_wbfs_sect))
                         {
                         	tot++;
-						}
-				}
+			}
+		}
                 spinner(0,tot);
         }
-        for(i=0; i<p->n_wbfs_sec_per_disc;i++){
+        for(i=0; i<p->n_wbfs_sec_per_disc;i++)
+        {
                 u16 bl = 0;
-                if(copy_1_1 || block_used(used,i,wii_sec_per_wbfs_sect)) {
+                if(copy_1_1 || block_used(used,i,wii_sec_per_wbfs_sect))
+                {
                         bl = alloc_block(p);
                         if (bl==0xffff)
                         {
                         	SALIDA = FALSE;
                         	ERROR("Disco duro lleno");
-						}
+			}
                         read_src_wii_disc(callback_data,i*(p->wbfs_sec_sz>>2),p->wbfs_sec_sz,copy_buffer);
 
                         //fix the partition table.
@@ -504,7 +507,9 @@ u32 wbfs_add_disc(wbfs_t*p,read_wiidisc_callback_t read_src_wii_disc,
                                           p->wbfs_sec_sz/p->hd_sec_sz,copy_buffer);
                         cur++;
                         if(spinner)
+                        {
                                 spinner(cur,tot);
+			}
                 }
                 info->wlba_table[i] = wbfs_htons(bl);
         }
@@ -513,7 +518,7 @@ u32 wbfs_add_disc(wbfs_t*p,read_wiidisc_callback_t read_src_wii_disc,
         p->write_hdsector(p->callback_data,p->part_lba+1+discn*disc_info_sz_lba,disc_info_sz_lba,info);
         wbfs_sync(p);
 
-	printf("FIN_ADD\n");
+	//printf("FIN_ADD\n");
 error:
         if(d)
                 wd_close_disc(d);
@@ -600,13 +605,16 @@ u32 wbfs_extract_disc(wbfs_disc_t*d, rw_sector_callback_t write_dst_wii_sector,v
                 u32 iwlba = wbfs_ntohs(d->header->wlba_table[i]);
                 if (iwlba)
                 {
-                        
-                        if(spinner)
-                                spinner(i,p->n_wbfs_sec_per_disc);
                         p->read_hdsector(p->callback_data, p->part_lba + iwlba*src_wbs_nlb, src_wbs_nlb, copy_buffer);
                         write_dst_wii_sector(callback_data, i*dst_wbs_nlb, dst_wbs_nlb, copy_buffer);
                 }
+                if(spinner)
+                        spinner(i,p->n_wbfs_sec_per_disc);
         }
+        
+	if(spinner)
+		spinner(p->n_wbfs_sec_per_disc,p->n_wbfs_sec_per_disc);
+        
         wbfs_iofree(copy_buffer);
         return 0;
 error:

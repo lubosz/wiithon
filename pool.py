@@ -11,14 +11,20 @@ class Pool:
 		self.cola = Queue()
 		self.numHilos = numHilos
 		self.lock = False
+		self.esperandoTrabajo = True
+		self.interrumpido = False
 
 	def intentarEmpezarTrabajo(self , cola , idWorker , *args):
 		while True:
+			print "Trabajos = " + str(cola.qsize())
+			sys.stdout.flush()
 			elemento = cola.get()
 			self.ejecutar(idWorker , elemento , *args)
 			cola.task_done()
 
 	def nuevoElemento(self, elemento):
+		if not self.esperandoTrabajo:
+			self.esperandoTrabajo = False
 		self.cola.put(elemento)
 
 	def empezar(self , args=None):
@@ -42,6 +48,7 @@ class Pool:
 			self.cola.join()
 
 			self.lock = False
+			print "fin pool"
 
 	def esLock(self):
 		return self.lock
@@ -51,6 +58,9 @@ class Pool:
 		#print "Elemento = %s por Hilo = %d" % (elemento,idWorker+1)
 		print "Debes sobreescribir el método"
 		raise NotImplementedError
+		
+	def interrumpir(self):
+		self.interrumpido = True
 
 class PoolCustomizada(Pool):
 	def __init__(self , numHilos):

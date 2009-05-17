@@ -18,8 +18,8 @@ class WiithonCLI:
 		# varias particiones
 		listaParticiones = self.core.getListaParticiones()
 		# Del error SI se dan cuenta el GUI o CLI
-		if(len(self.core.listaParticiones) == 0):
-			raise AssertionError, "¿Has conectado el disco duro? No se ha encontrado ninguna partición válida. (WBFS)"
+		if(len(listaParticiones) == 0):
+			raise AssertionError, "¿Has conectado el disco duro? No se ha encontrado ninguna partición válida."
 		if(len(listaParticiones) > 1):
 			haElegido = False
 			print "Lista de particiones autodetectadas : "
@@ -49,8 +49,6 @@ class WiithonCLI:
 						raise AssertionError, "Fuera de rango"
 					except ValueError:
 						raise AssertionError, "Valor incorrecto"
-
-		
 
 	# No entiendo muy bien lo de opciones y argumentos, aunque no me lo he podido mirar mucho
 	def main(self, opciones, argumentos):	
@@ -101,14 +99,7 @@ class WiithonCLI:
 						IDGAME = self.core.get_IDJUEGO_de_Lista(DEVICE , listaJuegos)
 					print "Borrar juego con ID : " + IDGAME + " en particion " + DEVICE + " " + FABRICANTE
 					if( self.core.borrarJuego(DEVICE , IDGAME) ):
-						print "Juego borrado correctmente."
-						'''
-						listaJuegos = self.core.getListaJuegos(DEVICE)
-						if( os.path.exists(DEVICE) and self.listarISOs(DEVICE , listaJuegos)>0 and self.mostrarEspacioLibre(DEVICE) ):
-							print "juego " + IDGAME + " borrado correctamente"
-						else:
-							print "Error al refrescar o no hay Juegos que listar"
-						'''
+						print "juego " + IDGAME + " borrado correctamente"
 					else:
 						print "ERROR borrando el juego " + ID_JUEGO
 				else:
@@ -151,14 +142,6 @@ class WiithonCLI:
 					print "Renombrar juego ID : " + IDGAME + " como " + NUEVO_NOMBRE
 					if ( self.core.renombrarISO( DEVICE , IDGAME , NUEVO_NOMBRE ) ):
 						print "ISO renombrada correctamente a \""+NUEVO_NOMBRE+"\""
-						'''
-						print "Refrescando lista ..."
-						listaJuegos = self.core.getListaJuegos(DEVICE)
-						if( os.path.exists(DEVICE) and self.listarISOs(DEVICE , listaJuegos)>0 and self.mostrarEspacioLibre(DEVICE) ):
-							print "ISO renombrada correctamente a \""+NUEVO_NOMBRE+"\""
-						else:
-							print "Renombrado OK aunque ocurrio un error al refrescar"
-						'''
 					else:
 						print "ERROR al renombrar"
 				else:
@@ -198,7 +181,6 @@ class WiithonCLI:
 						print "Buscando en "+os.path.dirname(archivo)+" Imagenes ISO ... ",
 						self.encolar( rec_glob(archivo, "*.iso") )
 						print "OK!"
-
 
 					elif	(
 							os.path.isfile(parametro) and
@@ -382,13 +364,7 @@ class WiithonCLI:
 	# en GUI se debería representar una barra de progreso que represento lo ocupado sobre 100
 	# en CLI se haría como se hace ahora
 	def mostrarEspacioLibre(self , DEVICE):
-
-		subProceso = util.getPopen(config.WBFS_APP+" -p "+DEVICE+" df")
-		subProceso.wait()
-		salida = ""
-		for linea in subProceso.stdout:
-			salida = salida + linea
-
+		salida = util.getSTDOUT( config.WBFS_APP+" -p "+DEVICE+" df" )
 		cachos = salida.split(";")
 		if(len(cachos) == 3):
 			print "\t\t\t\t\t\t\tUsado : %.2f GB" % float(cachos[0])
@@ -471,7 +447,7 @@ Web : http://blogricardo.wordpress.com/2009/04/07/wiithon-wbfs-gui-para-wii
       wiithon
       )
 
-	def encolar(self , lista):
-		self.listaFicheros.extend( lista )
+	def encolar(self , juegos):
+		self.listaFicheros.extend( juegos )
 
 

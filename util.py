@@ -17,7 +17,7 @@ class NonRepeatList(list):
         for i in iterable:
             self.append(i)
 
-
+'''
 class Observable:
     def __init__(self, topic_list):
         self.__observers = {}
@@ -62,7 +62,7 @@ class SubscriptionError(Exception):
 
     def __str__(self):
         return self.msg
-
+'''
 
 def getExtension(fichero):
 	#fichero = eliminarComillas(fichero)
@@ -92,13 +92,27 @@ def tieneCaracteresRaros(cadena):
 def getPopen( comando ):
 	sp = subprocess
 	return sp.Popen(comando.split() , stdout=sp.PIPE ,stderr=sp.STDOUT , close_fds=False , shell=False, universal_newlines= True)
-		
+	
+def getSTDOUT_iterador(comando):
+	p = subprocess.Popen(comando , shell=True , stdout=subprocess.PIPE , stderr=subprocess.STDOUT)
+	out = p.stdout.readlines()
+	return out
 		
 def getSTDOUT(comando):
-	p = subprocess.Popen(comando , shell=True , stdout=subprocess.PIPE)
-	out = p.stdout.readlines()
+	out = getSTDOUT_iterador(comando)
 	salida = ""
 	for linea in out:
 		salida = salida + linea.strip()
 	return salida
+	
+def escribir(f , texto):
+	f.write(texto + "\n")
+	f.flush()
+
+def getUltimaLinea(fichero):
+	f = open( fichero , "r")
+	ultimaLinea = ""
+	for linea in file.readlines():
+		ultimaLinea = linea
+	return ultimaLinea
 

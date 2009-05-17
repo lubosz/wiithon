@@ -7,14 +7,22 @@ HOME_WIITHON = os.path.join(HOME , '.wiithon')
 HOME_WIITHON_BDD = os.path.join(HOME_WIITHON , 'bdd')
 HOME_WIITHON_CARATULAS = os.path.join(HOME_WIITHON , 'caratulas')
 HOME_WIITHON_DISCOS = os.path.join(HOME_WIITHON , 'discos')
+HOME_WIITHON_LOGS = os.path.join(HOME_WIITHON , 'logs')
+HOME_WIITHON_LOGS_PROCESO = os.path.join(HOME_WIITHON_LOGS , "proceso.log")
 
 WIITHON_PATH = os.path.dirname(sys.argv[0])
 WIITHON_FILES = os.path.dirname(__file__)
+WIITHON_FILES_RECURSOS = os.path.join(WIITHON_FILES , "recursos")
+WIITHON_FILES_RECURSOS_IMAGENES = os.path.join(WIITHON_FILES_RECURSOS , "imagenes")
+
+GLADE_ALERTA = "alerta"
+
+DETECTOR_WBFS = WIITHON_FILES + "/wiithon_autodetectar.sh"
+DETECTOR_WBFS_LECTOR = WIITHON_FILES + "/wiithon_autodetectar_lector.sh"
 
 WBFS_APP = os.path.join(WIITHON_FILES , "wbfs")
 
-# Aunque este no es su sitio
-topics = ['error', 'warning', 'info']
+TOPICS = ['ERROR', 'INFO', 'WARNING' , 'COMANDO']
 
 # Cuando se descomprime un RAR, definimos si despues se borra la ISO
 borrarISODescomprimida = False

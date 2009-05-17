@@ -447,7 +447,7 @@ void spinner(u64 x, u64 max)
                 h = d / 3600;
                 m = (d / 60) % 60;
                 s = d % 60;
-		fprintf(stderr, "Hecho en  %d:%02d:%02d                   \n", h, m, s);
+		fprintf(stderr, "FIN;%d;%02d;%02d\n", h, m, s);
 		return;
 	}
 

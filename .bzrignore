@@ -10,4 +10,4 @@ wbfs_src/*.o
 *.pyc
 SQLAlchemy-0.5.3
 *.iso
-
+recursos/imagenes/*.xcf

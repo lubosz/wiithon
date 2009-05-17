@@ -1,26 +1,55 @@
 #-*-coding: utf-8-*-
 
-import gtk , os , time , gobject
+import gtk , os , time , gobject , util
 
 from glade_wrapper import GladeWrapper
 import config , sys
 
+from threading import Thread
+
 from core import HiloPoolAnadir
 from core import HiloDescargarTodasLasCaratulaYDiscos
+from core import Mensaje
 
 class WiithonGUI(GladeWrapper):
 
-	def __init__(self, core):
+	######### PUNTEROS ##############
 	
-		self.hiloAnadir = None
-		self.hiloCaratulas = None
+	# Referencia copia a la lista de juegos
+	listaJuegos = None
+	
+	# Juego seleccionado
+	iteradorJuegoSeleccionado = None
+	
+	# IDGAME Juego seleccionado
+	IDGAMEJuegoSeleccionado = ""
+	
+	# Copia del DEVICE seleccionado
+	DEVICE = ""
+	
+	########### HILOS ###############
+	
+	# Trabajador para Atender Mensajes
+	hiloPoolAnadir = None
+	
+	# Para atender mensajes
+	hiloAtenderMensajes = None
+	
+	# Hilo para descarga de caratulas
+	hiloCaratulas = None
+
+	def __init__(self, core):
 
 		GladeWrapper.__init__(self, config.WIITHON_FILES + '/recursos/glade/gui.glade' , 'principal')
 		self.core = core
-		self.core.subscribe(config.topics, self.alert)
+		
+		# permite usar hilos con PyGTK http://faq.pygtk.org/index.py?req=show&file=faq20.006.htp
+		# modo seguro con hilos
+		gobject.threads_init()
 
 		self.wg_principal.set_title('Wiithon')
-
+		self.wg_principal.show()
+		
 		botonbarra1 = self.wg_tb_anadir
 		botonbarra2 = self.wg_tb_anadir_directorio
 		botonbarra3 = self.wg_tb_borrar
@@ -34,31 +63,41 @@ class WiithonGUI(GladeWrapper):
 		botonbarra5.connect('clicked' , self.on_tb_toolbar_clicked)
 		botonbarra6.connect('clicked' , self.on_tb_toolbar_clicked)
 		
-		# Del error SI se dan cuenta el GUI o CLI
-		if(len(self.core.listaParticiones) == 0):
-			raise AssertionError, "¿Has conectado el disco duro? No se ha encontrado ninguna partición válida. (WBFS)"
+		# de momento no hay preferencias
+		botonbarra6.hide()
 
+		# oculto la barra de progreso		
+		self.wg_progreso1.hide()
+		
+		self.wg_principal.connect('destroy', self.salir)
+		
+		# carga la vista del TreeView de particiones
+		self.tv_partitions_modelo = self.cargarParticionesVista()
+					
+		# carga la vista del TreeView de juegos
 		self.tv_games_modelo = self.cargarJuegosVista()
 
-		self.tv_partitions_modelo = self.cargarParticionesVista()
-		self.cargarParticionesModelo(self.tv_partitions_modelo , core.getListaParticiones())
+		listaParticiones = self.core.getListaParticiones()
+		if(len(listaParticiones) == 0):
+			pass
+		else:
+			# carga el modelo de datos del TreeView de particiones
+			self.cargarParticionesModelo(self.tv_partitions_modelo , listaParticiones)
 
-		# selecciono la primera partición
-		iter_primero = self.wg_tv_partitions.get_model().get_iter_first()
-		if iter_primero != None:
-			self.wg_tv_partitions.get_selection().select_iter( iter_primero )
-			self.on_tv_partitions_cursor_changed( self.wg_tv_partitions )
-
+			# selecciono la primera partición
+			# indirectamente se carga:
+			# lee el modelo de datos de la partición seleccionada
+			# tambien refresca la lista de juegos del CORE
+			self.seleccionarPrimeraFila( self.wg_tv_partitions , self.on_tv_partitions_cursor_changed)
+	
+			# descargar caratulas desde un hilo		
+			if( len(self.listaJuegos) > 0 ):
+				self.hiloCaratulas = HiloDescargarTodasLasCaratulaYDiscos(self.core , self.listaJuegos)
+				self.hiloCaratulas.setDaemon(True)
+				self.hiloCaratulas.start()
+			
 		# pongo el foco en los TreeView de juegos
 		self.wg_tv_games.grab_focus()
-	
-		# descargar caratulas desde un hilo		
-		DEVICE = self.core.getDeviceSeleccionado()
-		listaJuegos = self.core.getListaJuegos( DEVICE )			
-		self.hiloCaratulas = HiloDescargarTodasLasCaratulaYDiscos(self.core , DEVICE , listaJuegos)
-		self.hiloCaratulas.start()
-
-		self.wg_principal.connect('destroy', self.salir)
 
 	def cargarParticionesVista(self):
 		tv_partitions = self.wg_tv_partitions
@@ -129,15 +168,16 @@ class WiithonGUI(GladeWrapper):
 				i = i + 1
 
 	def salir(self , widget, data=None):
-		try:
-			gobject.source_remove(self.timer)
-			self.timer = 0
-		except:
-			pass
+		if self.hiloCaratulas != None and self.hiloCaratulas.isAlive():
+			self.hiloCaratulas.interrumpir()
+		if self.hiloAtenderMensajes != None and self.hiloAtenderMensajes.isAlive():
+			self.hiloAtenderMensajes.interrumpir()
+		if self.hiloPoolAnadir != None and self.hiloPoolAnadir.isAlive():
+			self.hiloPoolAnadir.interrumpir()
 		gtk.main_quit()
 
 	def alert(self, level, message):
-		alert_glade = gtk.glade.XML(config.WIITHON_FILES + '/recursos/glade/gui.glade', 'alert_dialog')
+		alert_glade = gtk.glade.XML(config.WIITHON_FILES + '/recursos/glade/gui.glade', config.GLADE_ALERTA)
 
 		level_icons = {
 			'question': gtk.STOCK_DIALOG_QUESTION,
@@ -180,50 +220,68 @@ class WiithonGUI(GladeWrapper):
 		else:
 			btn_no.hide()
 
-		alert_glade.get_widget('alert_dialog').set_title(level)
-		res = alert_glade.get_widget('alert_dialog').run()
-		alert_glade.get_widget('alert_dialog').hide()
+		alert_glade.get_widget(config.GLADE_ALERTA).set_title(level)
+		res = alert_glade.get_widget(config.GLADE_ALERTA).run()
+		alert_glade.get_widget(config.GLADE_ALERTA).hide()
 
 		return res
 
 	def question(self, pregunta):
 		return self.alert('question', pregunta)
+		
+	def refrescarListaJuegos(self):
+		# recargar el modelo de datos la lista de juegos
+		self.DEVICE = self.core.getDeviceSeleccionado()
+		self.listaJuegos = self.core.getListaJuegos( self.DEVICE )
+		self.cargarJuegosModelo( self.tv_games_modelo , self.listaJuegos )
+		self.seleccionarPrimeraFila( self.wg_tv_games , self.on_tv_games_cursor_changed)
 
+	def seleccionarPrimeraFila(self , treeview , callback):
+		# selecciono el primero y provoco el evento
+		iter_primero = treeview.get_model().get_iter_first()
+		if iter_primero != None:
+			treeview.get_selection().select_iter( iter_primero )
+		callback( treeview )
+		
+		
+	# Click en particiones --> refresca la lista de juegos
 	def on_tv_partitions_cursor_changed(self , treeview):
 		seleccion,iterador = treeview.get_selection().get_selected()
 		if iterador != None:
 			self.core.setParticionSeleccionada( seleccion.get_value(iterador,0) )
 
-			# recargar la lista de juegos
-			DEVICE = self.core.getDeviceSeleccionado()
-			listaJuegos = self.core.getListaJuegos( DEVICE )
-			self.cargarJuegosModelo( self.tv_games_modelo , listaJuegos )
-			
-			# selecciono el primero y provoco el evento
-			iter_primero = self.wg_tv_games.get_model().get_iter_first()
-			if iter_primero != None:
-				self.wg_tv_games.get_selection().select_iter( iter_primero )
-				self.on_tv_games_cursor_changed( self.wg_tv_games )
+			self.refrescarListaJuegos()
 
 	def on_tv_games_cursor_changed(self , treeview):
-		seleccion,iterador = treeview.get_selection().get_selected()
-		if iterador != None:
-			IDGAME = seleccion.get_value(iterador,1)
+		seleccion,self.iteradorJuegoSeleccionado = treeview.get_selection().get_selected()
+		if self.iteradorJuegoSeleccionado != None:
+			self.IDGAMEJuegoSeleccionado = seleccion.get_value(self.iteradorJuegoSeleccionado,1)
 
-			destinoCaratula = os.path.join(config.HOME_WIITHON_CARATULAS , IDGAME+".png")
+			destinoCaratula = os.path.join(config.HOME_WIITHON_CARATULAS , self.IDGAMEJuegoSeleccionado+".png")
 			self.wg_img_caratula1.set_from_file( destinoCaratula )
 
-			destinoDisco = os.path.join(config.HOME_WIITHON_DISCOS , IDGAME+".png")
+			destinoDisco = os.path.join(config.HOME_WIITHON_DISCOS , self.IDGAMEJuegoSeleccionado+".png")
+			self.wg_img_disco1.set_from_file( destinoDisco )
+		else:
+			destinoCaratula = os.path.join(config.WIITHON_FILES_RECURSOS_IMAGENES , "caratula.png")
+			self.wg_img_caratula1.set_from_file( destinoCaratula )
+
+			destinoDisco = os.path.join(config.WIITHON_FILES_RECURSOS_IMAGENES , "disco.png")
 			self.wg_img_disco1.set_from_file( destinoDisco )
 			
-			
+
 	def on_tb_toolbar_clicked(self , id_tb):
 		if(id_tb == self.wg_tb_borrar):
-			seleccion,iterador = self.wg_tv_games.get_selection().get_selected()
-			if iterador != None:
-				DEVICE = self.core.getDeviceSeleccionado()
-				IDGAME = seleccion.get_value(iterador,1)
-				self.core.borrarJuego( DEVICE , IDGAME )
+			if (self.question('¿Quieres borrar el juego con ID = "'+self.IDGAMEJuegoSeleccionado+'"?') == 1):
+				if self.iteradorJuegoSeleccionado != None:		
+					# borrar del HD
+					self.core.borrarJuego( self.core.getDeviceSeleccionado() , self.IDGAMEJuegoSeleccionado )
+				
+					# borrar de la tabla
+					self.tv_games_modelo.remove( self.iteradorJuegoSeleccionado )
+				
+					# seleccionar el primero
+					self.seleccionarPrimeraFila( self.wg_tv_games , self.on_tv_games_cursor_changed)
 		elif(id_tb == self.wg_tb_extraer):
 			seleccion,iterador = self.wg_tv_games.get_selection().get_selected()
 			if iterador != None:
@@ -254,68 +312,120 @@ class WiithonGUI(GladeWrapper):
 			fc_anadir.show()
 
 			if fc_anadir.run() == gtk.RESPONSE_OK:
-				if ( self.hiloAnadir != None and self.hiloAnadir.isAlive() ):
-					# test
-					self.alert("info" , "Hilo ocupado ...")
-				else:
-					progreso = self.wg_progreso1
-					progreso.set_text("Iniciando ...")
-		
-					DEVICE = self.core.getDeviceSeleccionado()
-					FABRICANTE = self.core.getFabricanteSeleccionado()
-							
-					self.hiloAnadir = HiloPoolAnadir( self.core , fc_anadir.get_filenames() , DEVICE , FABRICANTE )
-					self.hiloAnadir.setDaemon(True)
-					self.hiloAnadir.start()
-
-					self.timer = gobject.timeout_add ( 100, self.anadir , progreso , self.hiloAnadir )
+				
+				self.hiloPoolAnadir = HiloPoolAnadir( self.core )
+				self.hiloPoolAnadir.setDaemon(True)
+				self.hiloPoolAnadir.anadir( fc_anadir.get_filenames() )
+				self.hiloPoolAnadir.start()
+				
+				self.hiloAtenderMensajes = HiloAtenderMensajes( self.core , self.hiloPoolAnadir , self.wg_progreso1 , self )
+				self.hiloAtenderMensajes.setDaemon(True)
+				self.hiloAtenderMensajes.start()
 
 			fc_anadir.destroy()
 			
-	def anadir(self , progreso , hilo):
-		if hilo.isAlive():
-			# pruebas
+class HiloAtenderMensajes(Thread):
+
+	def __init__(self , core , hilo , progreso , gui):
+		Thread.__init__(self)
+		self.core = core
+		self.hilo = hilo
+		self.progreso = progreso
+		self.gui = gui
+		self.interrumpido = False
+		self.timer = 0
+		self.hiloCalcularProgreso = None
+		print "init"
+
+	def run(self):
+		cola = self.core.getMensajes()
+		while not self.interrumpido:
+			print "esperando ..."
 			sys.stdout.flush()
-			comando = "cat /tmp/anadir.log | tail -n 1"
-			entrada, salida = os.popen2(comando)
-			salida = salida.read()
-			if(salida == "FIN_ADD"):
-				progreso.set_text("Añadido correctamente")
-				progreso.set_fraction( 1.0 )
-				try:
-					gobject.source_remove(self.timer)
-					self.timer = 0
-				except:
-					pass
-			elif(salida != ""):
-				try:
-					cachos = salida.split(";")
-					porcentaje = float(cachos[0])
+			print "111111"
+			objMensaje = cola.get(  )
+			print "22222222222"
+
+			tipo = objMensaje.getTipo()
+			mensaje = objMensaje.getMensaje()
+			print tipo + " - " + mensaje
+			if( tipo == "INFO" ):
+				gobject.idle_add(self.actualizarLabel , mensaje)
+			elif( tipo == "WARNING" ):
+				gobject.idle_add(self.actualizarLabel , "CUIDADO: " + mensaje)
+			elif( tipo == "ERROR" ):
+				gobject.idle_add(self.actualizarLabel , "ERROR: " + mensaje)
+			elif( tipo == "COMANDO" ):
+				if(mensaje == "EMPIEZA"):
+					gobject.idle_add(self.actualizarLabel , "Empezando ...")
+					gobject.idle_add(self.actualizarFraccion , 0.0 )
+				elif(mensaje == "PROGRESO_INICIA"):
+					hiloCalcularProgreso = HiloCalcularProgreso( self.actualizarLabel , self.actualizarFraccion )
+					hiloCalcularProgreso.start()
+					self.progreso.show()
+				elif(mensaje == "PROGRESO_FIN"):
+					# se ha podido "autodestruir"
+					if self.hiloCalcularProgreso!= None and self.hiloCalcularProgreso.isAlive():
+						hiloCalcularProgreso.interrumpir()
+						hiloCalcularProgreso.join()
+					self.progreso.hide()
+				elif(mensaje == "TERMINA_OK"):
+					gobject.idle_add(self.actualizarFraccion , 1.0 )
+					self.gui.refrescarListaJuegos()
+				elif(mensaje == "TERMINA_ERROR"):
+					gobject.idle_add(self.actualizarFraccion , 1.0 )
+				else:
+					raise AssertionError, "Comando desconocido"
+			cola.task_done()
+			
+	def actualizarLabel( self, etiqueta ):
+		self.progreso.set_text( etiqueta )
 		
-					hora = int(cachos[1])
-					minutos = int(cachos[2])
-					segundos = int(cachos[3])
+	def actualizarFraccion( self , fraccion ):
+		self.progreso.set_fraction( fraccion )
 		
-					if(hora > 0):
-						progreso.set_text("%d%% - quedan %dh%dm%ds" % ( porcentaje , hora , minutos , segundos ))
-					elif(minutos > 0):
-						progreso.set_text("%d%% - quedan %dm%ds" % ( porcentaje , minutos , segundos ))
-					else:
-						progreso.set_text("%d%% - quedan %ds" % ( porcentaje , segundos ))
+	def interrumpir(self):
+		print "Interrumpiendo hilo de atención de mensajes"
+		self.interrumpido = True
 		
-					porcentual = porcentaje / 100
-					progreso.set_fraction( porcentual )
-				except ValueError:
-					progreso.set_text("ERROR")							
-		'''
-		else:
-			progreso.set_text("Tareas finalizadas")
-			progreso.set_fraction(1.0)
+class HiloCalcularProgreso(Thread):
+	def __init__(self , actualizarLabel , actualizarFraccion):
+		Thread.__init__(self)
+		self.actualizarLabel = actualizarLabel
+		self.actualizarFraccion = actualizarFraccion
+		self.interrumpido = False
+		self.porcentaje = 0.0
+
+	def run(self):
+		while not self.interrumpido:
+			ultimaLinea = util.getSTDOUT("tail %s -n 1" % config.HOME_WIITHON_LOGS_PROCESO)
 			try:
-				gobject.source_remove(self.timer)
-				self.timer = 0
-			except:
+				cachos = ultimaLinea.split(";")
+
+				if cachos[0] == "FIN":
+					porcentaje = 100
+					informativo = "hecho en"
+					self.interrumpir()
+				else:				
+					porcentaje = self.porcentaje = float(cachos[0])		
+					informativo = "quedan"
+					
+				hora = int(cachos[1])
+				minutos = int(cachos[2])
+				segundos = int(cachos[3])
+
+				if(hora > 0):
+					gobject.idle_add(self.actualizarLabel , "%d%% - %s %dh%dm%ds" % ( porcentaje , informativo , hora , minutos , segundos ))
+				elif(minutos > 0):
+					gobject.idle_add(self.actualizarLabel , "%d%% - %s %dm%ds" % ( porcentaje , informativo , minutos , segundos ))
+				else:
+					gobject.idle_add(self.actualizarLabel , "%d%% - %s %ds" % ( porcentaje, informativo , segundos ))
+
+				porcentual = porcentaje / 100
+				gobject.idle_add(self.actualizarFraccion , porcentual )
+			except ValueError:
 				pass
-		'''
-		return True
+			
+	def interrumpir(self):
+		self.interrumpido = True
 

@@ -29,6 +29,7 @@ Esta información no volverá a aparecer si acepta el acuerdo.
 	os.mkdir( config.HOME_WIITHON_BDD )
 	os.mkdir( config.HOME_WIITHON_CARATULAS )
 	os.mkdir( config.HOME_WIITHON_DISCOS )
+	os.mkdir( config.HOME_WIITHON_LOGS )
 
 def App():
 	try:
@@ -55,7 +56,6 @@ def App():
 					os.chdir(value)
 			elif option == '--no-gui':
 				glade_gui = False
-
 			else:
 				opciones_formateadas[option] = value
 
@@ -63,24 +63,21 @@ def App():
 
 		if glade_gui:
 			interfaz = WiithonGUI(core)
-			interfaz.wg_principal.show()
-			core.setPregunton(interfaz.question)
 
 			# solo pregunta el acuerdo por GUI
 			if not os.path.exists(config.HOME_WIITHON):
 				informarAcuerdo(interfaz.question)
 
+			gtk.gdk.threads_enter()
 			gtk.main()
+			gtk.gdk.threads_leave()
+
 		else:
 			interfaz = WiithonCLI(core)
 			interfaz.main(opciones_formateadas, arguments)
 
 	except getopt.GetoptError:
-		try:
-			interfaz.alert('error', 'Programa ejecutado con las opciones incorrectas')
-		except:
-			print "Programa ejecutado con las opciones incorrectas"
-
+		raise AssertionError, "Programa ejecutado con las opciones incorrectas."
 	except AssertionError, mensaje:
 		try:
 			interfaz.alert("error", str(mensaje) )

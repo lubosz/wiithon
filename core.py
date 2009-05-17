@@ -5,20 +5,17 @@ import gtk
 import commands
 
 from util import NonRepeatList
-from util import Observable
 import config
 import util
+
+from Queue import Queue
 
 import threading , subprocess
 from threading import Thread
 from pool import Pool
 from pool import HiloPool
 
-class WiithonCORE(Observable):
-
-	# rutas constantes
-	DETECTOR_WBFS = config.WIITHON_FILES + "/wiithon_autodetectar.sh"
-	DETECTOR_WBFS_LECTOR = config.WIITHON_FILES + "/wiithon_autodetectar_lector.sh"
+class WiithonCORE:
 
 	#globales publicas
 
@@ -29,17 +26,20 @@ class WiithonCORE(Observable):
 
 	# indice (fila) de la partición seleccionado
 	particionSeleccionada = 0
+	
+	# Estructura sincrona para comunicacion entre hilos
+	mensajes = None
 
 	#constructor
 	def __init__(self):
-		Observable.__init__(self, config.topics)
+		# cola sincronizada (productor-consumidor)
+		self.mensajes = Queue()
 		
-		# Lo necesita el GUI y CLI para cargar la lista de particiones (es parte del CORE)
-		self.refrescarParticionWBFS()
+	def getMensajes(self):
+		return self.mensajes
 
-	# documenta esto
-	def setPregunton(self, pregunton):
-		self.pregunton = pregunton
+	def nuevoMensaje(self , mensaje):
+		self.mensajes.put(mensaje)
 
 	# Dumpea la ISO de un BACKUP y lo mete a la partición WBFS
 	def instalarJuego(self , DEVICE):
@@ -47,14 +47,7 @@ class WiithonCORE(Observable):
 		salida = ""
 		print "Buscando un Disco de Wii ..."
 		
-		salida = util.getSTDOUT( self.DETECTOR_WBFS_LECTOR )
-		'''
-		subProceso = util.getPopen(self.DETECTOR_WBFS_LECTOR)
-		#Espera que acabe
-		subProceso.wait()
-		for linea in subProceso.stdout:
-			salida = salida + linea
-		'''
+		salida = util.getSTDOUT( config.DETECTOR_WBFS_LECTOR )
 
 		# Le quito el ultimo salto de linea y forma la lista cortando por saltos de linea
 		listaParticiones = NonRepeatList()
@@ -104,34 +97,29 @@ class WiithonCORE(Observable):
 		def ordenarPorNombre(juego1 , juego2):
 			return cmp( juego1[1].lower() , juego2[1].lower() )
 
-		subProceso = util.getPopen(config.WBFS_APP+" -p "+DEVICE+" ls")
-		#Espera que acabe
-		returncode = subProceso.wait()
 
-		if returncode == 0:
-			salida = []
-			for linea in subProceso.stdout:
-				cachos = linea.split(";")
-				if(len(cachos)==3):
-				        #Elimina el salto de linea del ultimo cacho
-					cachos[2] = cachos[2][:-1].split("\n")[0]
-				        #Añade el juego a la lista
-					salida.append( [ cachos[0] , cachos[1] , cachos[2] ] )
-			salida.sort(ordenarPorNombre)
+		'''
+		subProceso = util.getPopen( config.WBFS_APP+" -p "+DEVICE+" ls" )
+		subProceso.wait()
+		'''
+		lineas = util.getSTDOUT_iterador( config.WBFS_APP+" -p "+DEVICE+" ls" )
 
-		else:
-			self.notify('error', 'Debe identificarse como o sudo para acceder a la lista de juegos')
-
+		salida = []
+		for linea in lineas:
+			cachos = linea.strip().split(";")
+			if(len(cachos)==3):
+				salida.append( [ cachos[0] , cachos[1] , cachos[2] ] )
+		salida.sort(ordenarPorNombre)
 		return salida
 		
 	def verificarJuego(self , DEVICE , IDGAME):
-		salida = os.system(config.WBFS_APP+" -p "+DEVICE+" check "+IDGAME)
+		comando = config.WBFS_APP+" -p "+DEVICE+" check "+IDGAME
+		salida = subprocess.call( comando , shell=True , stderr=subprocess.STDOUT )
 		return ( salida == 0 )
 
 	# Dada una lista de juegos, verifica su estado
 	# Hay que separar la lógica de la presentación
 	def verificarTodosLosJuegos(self , DEVICE , listaJuegos):
-		# FIXME: en este método se debe ser root
 		listaCorruptos = []
 		numJuegos = len(listaJuegos)
 		if(numJuegos > 0):
@@ -139,8 +127,7 @@ class WiithonCORE(Observable):
 			print "%6s\t%-40s\t%s" % ("IDGAME","TITULO" , "¿Corrupto?")
 			print "--------------------------------------------------------------------------------"
 			for juego in listaJuegos:
-				salida = os.system(config.WBFS_APP+" -p "+DEVICE+" check "+juego[0])
-				if( salida == 0 ):
+				if( verificarJuego( DEVICE , juego[0] ) ):
 					corrupto = "NO ESTA CORRUPTO"
 				else:
 					corrupto = "¡¡ ESTA CORRUPTO !!"
@@ -202,59 +189,28 @@ class WiithonCORE(Observable):
 	# añade un *ISO* a un *DEVICE*
 	# durante el proceso va actualizando PORCENTUAL
 	# Actualmente no esta bien desarrollada, por problemas con el "read"
-	def anadirISO(self , DEVICE , ISO):
+	def anadirISO(self , DEVICE , ISO , ficheroSalida=None):
 		try:
-			#salida = os.system()
-			#return salida == 0
 			comando = config.WBFS_APP+" -p "+DEVICE+" add \""+ISO+"\""
-			salida = subprocess.call( comando , shell=True , stderr=subprocess.STDOUT , stdout=open("/tmp/anadir.log","w"))
+			salida = subprocess.call( comando , shell=True , stderr=subprocess.STDOUT , stdout=open(config.HOME_WIITHON_LOGS_PROCESO , "w") )
 			return salida == 0
 		except KeyboardInterrupt:
 			return False
 
-		'''
-		comando = config.WBFS_APP+" -p "+DEVICE+" add \""+ISO+"\""
-		entrada, salida = os.popen2(comando)
-		linea = ""
-		salir = False
-		while not salir:
-			letra = salida.read(1)
-			if(letra == '\n'):
-				linea = linea.strip()
-				if(linea != "FIN_ADD"):
-					try:
-						cachos = linea.split(";")
-						porcentaje = float(cachos[0])
-						hora = int(cachos[1])
-						minutos = int(cachos[2])
-						segundos = int(cachos[3])
-						print "LLeva un %.2f%% quedan %d horas, %d minutos, %d segundos" % ( porcentaje , hora , minutos , segundos )
-						self.PORCENTUAL = porcentaje / 100
-					except TypeError:
-						pass
-					linea = ""
-				else:
-					salir = True
-			linea = linea + letra
-		entrada.close()
-		salida.close()
-		return True
-		'''
-
 	# renombra el ISO de un IDGAME que esta en DEVICE
 	def renombrarISO(self , DEVICE , IDGAME , NUEVO_NOMBRE):
-		# FIXME: debe ser root
 		try:
-			salida = os.system(config.WBFS_APP+" -p "+DEVICE+" rename "+IDGAME+" \""+NUEVO_NOMBRE+"\"")
+			comando = config.WBFS_APP+" -p "+DEVICE+" rename "+IDGAME+" \""+NUEVO_NOMBRE+"\""
+			salida = subprocess.call( comando , shell=True , stderr=subprocess.STDOUT )
 			return salida == 0
 		except KeyboardInterrupt:
 			return False
 
 	# borra el juego IDGAME
 	def borrarJuego(self , DEVICE , IDGAME):
-		# FIXME: debe ser root
 		try:
-			salida = os.system(config.WBFS_APP+" -p "+DEVICE+" rm "+IDGAME)
+			comando = config.WBFS_APP+" -p "+DEVICE+" rm "+IDGAME
+			salida = subprocess.call( comando , shell=True , stderr=subprocess.STDOUT )
 			return salida == 0
 		except KeyboardInterrupt:
 			return False
@@ -263,9 +219,9 @@ class WiithonCORE(Observable):
 
 	# extrae el juego IDGAME
 	def extraerJuego(self , DEVICE , IDGAME):
-		# FIXME: debe ser root
 		try:
-			salida = os.system(config.WBFS_APP+" -p "+DEVICE+" extract "+IDGAME)
+			comando = config.WBFS_APP+" -p "+DEVICE+" extract "+IDGAME
+			salida = subprocess.call( comando , shell=True , stderr=subprocess.STDOUT )
 			return salida == 0
 		except KeyboardInterrupt:
 			return False
@@ -293,20 +249,17 @@ class WiithonCORE(Observable):
 		if path[-1] != '/':
 			path = path + '/'
 
-		for i in glob_get_dirs(path):
-			res = rec_glob(path + i, mask)
+		for i in self.glob_get_dirs(path):
+			res = self.rec_glob(path + i, mask)
 			l = l + res
 
 		try:
 			for i in os.listdir(path):
-
 				ii = i
 				i = path + i
 				if os.path.isfile(i):
-						# Lo parcheo para que no diferencie mayuculas
-						#if fnmatch.fnmatch(ii, mask):
-						if fnmatch.fnmatch(ii.lower() , mask.lower()):
-								l.append(i)
+					if fnmatch.fnmatch( ii.lower() , mask.lower() ):
+						l.append(i)
 		except NameError, ne:
 			print "NameError=", ne
 		except:
@@ -326,7 +279,7 @@ class WiithonCORE(Observable):
 			descargada = (salida == 0)
 			if descargada:
 				destino = os.path.join(config.HOME_WIITHON_DISCOS , IDGAME+".png")
-				os.system("mogrify -resize 160x225 " + destino)
+				os.system("mogrify -resize 160x160 " + destino)
 			return descargada
 
 	# Nos dice si existe la caratula del juego "IDGAME"
@@ -372,20 +325,12 @@ class WiithonCORE(Observable):
 
 	# Devuelve la lista de particiones
 	def getListaParticiones(self):
+		self.refrescarParticionWBFS()
 		return self.listaParticiones
 
 	# Procedimiento que refresca la lista de particiones
 	def refrescarParticionWBFS(self):
-		'''
-		subProceso = util.getPopen(self.DETECTOR_WBFS)
-		subProceso.wait()
-
-		#acumulo todo el stdout
-		salida = ""
-		for linea in subProceso.stdout:
-			salida = salida + linea
-		'''
-		salida = util.getSTDOUT( self.DETECTOR_WBFS )
+		salida = util.getSTDOUT( config.DETECTOR_WBFS )
 
 		self.listaParticiones = []
 
@@ -410,7 +355,7 @@ class WiithonCORE(Observable):
 	def descomprimirRARconISODentro(self , nombreRAR ):
 		try:
 			comando = "rar e -o- \""+nombreRAR+"\" \"*.iso\""
-			salida = os.system(comando)
+			salida = subprocess.call( comando , shell=True , stderr=subprocess.STDOUT , stdout=open("/dev/null","w"))
 			return (salida == 0)
 		except KeyboardInterrupt:
 			return False
@@ -462,79 +407,135 @@ class WiithonCORE(Observable):
 
 	def setInterfaz(self , interfaz):
 		self.interfaz = interfaz
+		
+class Mensaje:
+	def __init__(self , tipo , mensaje):
+	        if not (tipo in config.TOPICS):
+	        	raise AssertionError, "Tipo de Mensaje desconocido"
+		self.tipo = tipo
+		self.mensaje = mensaje
+	
+	def getTipo(self):
+		return self.tipo
+		
+	def getMensaje(self):
+		return self.mensaje
 			
 class PoolAnadir(Pool):
 	def __init__(self , numHilos):
 		Pool.__init__(self , numHilos)
 
-	def ejecutar(self , idWorker , fichero , core , DEVICE , FABRICANTE):
-		if( os.path.exists(DEVICE) and os.path.exists(fichero) ):
-			if( util.getExtension(fichero) == "rar" ):
-				#print "Añadir RAR con ISO dentro : " + os.path.basename(fichero) + " a la particion " + DEVICE + " " + FABRICANTE
-				nombreRAR = fichero
-				nombreISO = core.getNombreISOenRAR(nombreRAR)
-				if (nombreISO != ""):
-					if( not os.path.exists(nombreISO) ):
-						# Paso 1 : Descomprimir
-						if ( core.descomprimirRARconISODentro(nombreRAR) ):
-							#print "Descomprimido correctamente"
-							# Paso 2 : Añadir la ISO
-							if ( core.anadirISO(DEVICE , nombreISO ) ):
-								print "OK - ISO "+nombreISO+" descomprimida y añadida correctamente"
-							else:
-								print "ERROR añadiendo la ISO : " + nombreISO + " (comprueba que sea una ISO de WII)"
+	def ejecutar(self , idWorker , fichero , core , pool , DEVICE , FABRICANTE):
+		try:
+			os.remove ( config.HOME_WIITHON_LOGS_PROCESO )
+		except OSError:
+			pass
 
-							if config.borrarISODescomprimida:
-								# Paso 3 : Borrar la iso descomprimida
-								try:
-									print "Se va ha borrar la ISO descomprimida"
-									os.remove(nombreISO)
-									print "La ISO "+nombreISO+" temporal fue borrada"
-								except:
-									print "ERROR al borrar la ISO : " + nombreISO
-							else:
-								print "No se ha borrado la ISO temporal"
-						else:
-							print "ERROR al descomrpimir el RAR : " + nombreRAR
+		print "nuevo mensaje1111111"
+		core.nuevoMensaje( Mensaje("COMANDO","EMPIEZA") )
+		print "nuevo mensaje22222222"
+
+		if( not os.path.exists(DEVICE) or not os.path.exists(fichero) ):
+			error = True
+			core.nuevoMensaje( Mensaje("ERROR","La ISO o la partición no existe") )
+		elif( util.getExtension(fichero) == "rar" ):
+			error = True
+			core.nuevoMensaje( Mensaje("INFO","Buscando ISO dentro del RAR") )
+			nombreRAR = fichero
+			nombreISO = core.getNombreISOenRAR(nombreRAR)
+			if (nombreISO != ""):
+				if( not os.path.exists(nombreISO) ):
+					# Paso 1 : Descomprimir
+					if ( core.descomprimirRARconISODentro(nombreRAR) ):
+						core.nuevoMensaje( Mensaje("INFO","ISO Descomprimida"))
+						pool.nuevoElemento( nombreISO )
 					else:
-						print "ERROR no se puede descomrpimir por que reemplazaría el ISO : " + nombreISO
+						core.nuevoMensaje( Mensaje("ERROR","Al descomrpimir el RAR : " + nombreRAR) )
 				else:
-					print "ERROR el RAR " + nombreRAR + " no tenía ninguna ISO"
-			elif( util.getExtension(fichero) == "iso" ):
-				#print "Añadir ISO : " + os.path.basename(fichero) + " a la particion " + DEVICE + " " + FABRICANTE
-				if ( core.anadirISO(DEVICE , fichero ) ):
-					print "OK - ISO "+fichero+" añadida correctamente"
-				else:
-					print "ERROR añadiendo la ISO : " + fichero + " (comprueba que sea una ISO de WII)"
+					core.nuevoMensaje( Mensaje("ERROR","No se puede descomrpimir por que reemplazaría el ISO : " + nombreISO) )
 			else:
-				print "ERROR "+os.path.basename(fichero)+" no es un ningún juego de Wii"
+				core.nuevoMensaje( Mensaje("ERROR","El RAR " + nombreRAR + " no tenía ninguna ISO") )
+		elif( os.path.isdir( fichero ) ):
+			error = True
+			
+			core.nuevoMensaje( Mensaje("INFO","Buscando en "+os.path.dirname(fichero)+" ficheros RAR ... "))
+			encontrados =  core.rec_glob(fichero, "*.rar")
+			if (len(encontrados) == 0):
+				core.nuevoMensaje( Mensaje("INFO","No se ha encontrado ningún RAR con ISOS dentro"))
+			else:
+				for encontrado in encontrados:
+					pool.nuevoElemento( encontrado )
+
+			core.nuevoMensaje( Mensaje("INFO","Buscando en "+os.path.dirname(fichero)+" Imagenes ISO ... "))
+			encontrados =  core.rec_glob(fichero, "*.iso")
+			if (len(encontrados) == 0):
+				core.nuevoMensaje( Mensaje("INFO","No se ha encontrado ningún ISO"))
+			else:
+				for encontrado in encontrados:
+					pool.nuevoElemento( encontrado )
+
+		elif( util.getExtension(fichero) == "iso" ):
+			core.nuevoMensaje( Mensaje("INFO","Añadir ISO : " + os.path.basename(fichero) + " a la particion " + DEVICE + " " + FABRICANTE) )
+			core.nuevoMensaje( Mensaje("COMANDO","PROGRESO_INICIA") )
+			if ( core.anadirISO(DEVICE , fichero ) ):
+				core.nuevoMensaje( Mensaje("INFO","ISO "+fichero+" añadida correctamente") )
+				error = False
+			else:
+				core.nuevoMensaje( Mensaje("ERROR","Añadiendo la ISO : " + fichero + " (comprueba que sea una ISO de WII)") )
+				error = True
+			core.nuevoMensaje( Mensaje("COMANDO","PROGRESO_FIN") )
 		else:
-			print "ERROR la ISO o la partición no existe"
+			error = True
+			core.nuevoMensaje( Mensaje("ERROR",os.path.basename(fichero)+" no es un ningún juego de Wii") )
+
+		if error:
+			core.nuevoMensaje( Mensaje("COMANDO","TERMINA_ERROR") )
+		else:
+			core.nuevoMensaje( Mensaje("COMANDO","TERMINA_OK") )
+			
+		# Esperar que todos los mensajes sean atendidos
+		core.getMensajes().join()
 
 class HiloPoolAnadir(Thread):
-	def __init__(self , core , listaFicheros , DEVICE , FABRICANTE):
+	def __init__(self , core ):
 		Thread.__init__(self)
 		self.core = core
-		self.listaFicheros = listaFicheros
-		self.DEVICE = DEVICE
-		self.FABRICANTE = FABRICANTE
+		self.DEVICE = core.getDeviceSeleccionado()
+		self.FABRICANTE = core.getFabricanteSeleccionado()
+		self.listaFicheros = None
+		self.pool = None
+
+	def run(self):
+		if (self.pool != None):
+			self.pool.empezar(args=(self.core, self.pool , self.DEVICE,self.FABRICANTE))
 		
+	def interrumpir(self):
+		if (self.pool != None):
+			self.pool.interrumpir()
+		
+	def anadir(self , listaFicheros):
 		# 1 Hilo se encarga de añadir todo
 		self.pool = PoolAnadir(1)
 		for fichero in listaFicheros:
 			self.pool.nuevoElemento( fichero )
 
-	def run(self):
-		self.pool.empezar(args=(self.core,self.DEVICE,self.FABRICANTE))
-
 
 class HiloDescargarTodasLasCaratulaYDiscos(Thread):
-	def __init__( self , core , DEVICE , listaJuegos):
+	def __init__( self , core , listaJuegos):
 		Thread.__init__(self)
 		self.core = core
-		self.DEVICE = DEVICE
+		self.DEVICE = core.getDeviceSeleccionado()
 		self.listaJuegos = listaJuegos
+		self.interrumpido = False
 
 	def run( self ):
-		self.core.descargarTodasLasCaratulaYDiscos( self.DEVICE , self.listaJuegos )		
+		i = 0
+		while not self.interrumpido and i<len(self.listaJuegos):
+			juego = self.listaJuegos[i]
+			self.core.descargarCaratula( juego[0] )
+			self.core.descargarDisco( juego[0] )
+			i = i + 1
 
+	def interrumpir(self):
+		self.interrumpido = True
+		
