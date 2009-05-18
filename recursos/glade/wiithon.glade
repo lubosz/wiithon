@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <!DOCTYPE glade-interface SYSTEM "glade-2.0.dtd">
-<!--Generated with glade3 3.4.5 on Sun May 17 22:06:00 2009 -->
+<!--Generated with glade3 3.4.5 on Mon May 18 05:26:54 2009 -->
 <glade-interface>
   <widget class="GtkWindow" id="principal">
     <property name="visible">True</property>
@@ -14,7 +14,6 @@
               <widget class="GtkToolButton" id="tb_anadir">
                 <property name="visible">True</property>
                 <property name="has_tooltip">True</property>
-                <property name="label" translatable="yes">Añadir</property>
                 <property name="stock_id">gtk-add</property>
                 <signal name="clicked" handler="on_tb_anadir_clicked"/>
               </widget>

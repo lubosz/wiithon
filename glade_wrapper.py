@@ -1,4 +1,5 @@
-#-*-coding: utf-8-*-
+#!/usr/bin/python
+# vim: set fileencoding=utf-8 :
 # http://crysol.org/es/node/911
 
 import gtk

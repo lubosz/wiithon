@@ -32,6 +32,9 @@ install: wbfs uninstall
 	cp config.py $(PREFIX)/share/wiithon
 	cp pool.py $(PREFIX)/share/wiithon
 
+	cp po/en_US/LC_MESSAGES/wiithon.mo /usr/share/locale/en_US/LC_MESSAGES/wiithon.mo
+	cp po/es_ES/LC_MESSAGES/wiithon.mo /usr/share/locale/es_ES/LC_MESSAGES/wiithon.mo
+
 	cp recursos/glade/*.glade $(PREFIX)/share/wiithon/recursos/glade
 	cp recursos/imagenes/*.png $(PREFIX)/share/wiithon/recursos/imagenes
 
@@ -95,6 +98,9 @@ uninstall:
 	-$(RM) $(PREFIX)/share/wiithon/recursos/glade/*.glade
 	-$(RM) $(PREFIX)/share/wiithon/recursos/imagenes/*.png
 	
+	-$(RM) /usr/share/locale/en_US/LC_MESSAGES/wiithon.mo
+	-$(RM) /usr/share/locale/es_ES/LC_MESSAGES/wiithon.mo
+	
 	-rmdir $(PREFIX)/share/wiithon/recursos/glade
 	-rmdir $(PREFIX)/share/wiithon/recursos/imagenes
 	-rmdir $(PREFIX)/share/wiithon/recursos
@@ -138,3 +144,15 @@ log:
 diff:
 	-@bzr diff > DIFF.txt
 
+generarPOT:
+	mkdir -p po/es_ES/LC_MESSAGES/
+	mkdir -p po/en_US/LC_MESSAGES/
+	intltool-extract --type="gettext/glade" recursos/glade/wiithon.glade
+	xgettext --language=Python --keyword=_ --keyword=N_ --from-code=utf-8 -o po/mensajes.pot *.py recursos/glade/wiithon.glade.h
+	
+generarMO:
+	msginit -i po/mensajes.pot -l es_ES --output-file="po/es_ES/LC_MESSAGES/es_ES.po"
+	msginit -i po/mensajes.pot -l en_US --output-file="po/en_US/LC_MESSAGES/en_US.po"
+
+	msgfmt po/es_ES/LC_MESSAGES/es_ES.po -o po/es_ES/LC_MESSAGES/wiithon.mo
+	msgfmt po/en_US/LC_MESSAGES/en_US.po -o po/en_US/LC_MESSAGES/wiithon.mo

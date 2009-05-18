@@ -1,8 +1,10 @@
-#-*-coding: utf-8-*-
+#!/usr/bin/python
+# vim: set fileencoding=utf-8 :
 
 import sys , os , time , fnmatch
 import gtk
 import commands
+import gettext
 
 from util import NonRepeatList
 import config
@@ -56,7 +58,7 @@ class WiithonCORE:
 
 		numListaParticiones = len(listaParticiones)
 		if(numListaParticiones<=0):
-			print "No se ha encontrado ningún disco de la Wii"
+			print gettext.gettext("No se ha encontrado ningún disco de la Wii")
 		elif(numListaParticiones > 1):
 			print "Hay más de un juego de la Wii, deja solo 1 para eliminar la ambigüedad"
 		else:# 1 juego de wii

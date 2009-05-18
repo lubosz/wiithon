@@ -1,4 +1,5 @@
-#-*-coding: utf-8-*-
+#!/usr/bin/python
+# vim: set fileencoding=utf-8 :
 
 import sys , os , util , glob
 import config

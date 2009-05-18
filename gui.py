@@ -1,4 +1,5 @@
-#-*-coding: utf-8-*-
+#!/usr/bin/python
+# vim: set fileencoding=utf-8 :
 
 import gtk , os , time , gobject , util
 
@@ -10,6 +11,26 @@ from threading import Thread
 from core import HiloPoolAnadir
 from core import HiloDescargarTodasLasCaratulaYDiscos
 from core import Mensaje
+
+import locale
+import gettext
+
+import gettext  
+#   
+# # Algunas cosas para gettext (para las traducciones)  
+APP="wiithon"  
+DIR="po"  
+  
+# Esto permite traducir los textos escritos en el .py (no en glade)  
+gettext.textdomain(APP)  
+gettext.bindtextdomain(APP, DIR)  
+  
+# Y las siguientes 2 lineas permiten traducir los textos del Glade  
+gtk.glade.textdomain(APP)  
+gtk.glade.bindtextdomain(APP, DIR)  
+  
+# Y con esto podemos marcar las cadenas a traducir de la forma _("cadena")  
+_ = gettext.gettext 
 
 class WiithonGUI(GladeWrapper):
 
@@ -39,8 +60,9 @@ class WiithonGUI(GladeWrapper):
 	hiloCaratulas = None
 
 	def __init__(self, core):
+		global _
 
-		GladeWrapper.__init__(self, config.WIITHON_FILES + '/recursos/glade/gui.glade' , 'principal')
+		GladeWrapper.__init__(self, config.WIITHON_FILES + '/recursos/glade/wiithon.glade' , 'principal')
 		self.core = core
 		
 		# permite usar hilos con PyGTK http://faq.pygtk.org/index.py?req=show&file=faq20.006.htp
@@ -99,13 +121,14 @@ class WiithonGUI(GladeWrapper):
 		# pongo el foco en los TreeView de juegos
 		self.wg_tv_games.grab_focus()
 
+
 	def cargarParticionesVista(self):
 		tv_partitions = self.wg_tv_partitions
 
 		render = gtk.CellRendererText()
 
-		columna1 = gtk.TreeViewColumn('Dispositivo', render , text=1)
-		columna2 = gtk.TreeViewColumn('Fabricante', render , text=2)
+		columna1 = gtk.TreeViewColumn(_('Dispositivo'), render , text=1)
+		columna2 = gtk.TreeViewColumn(_('Fabricante'), render , text=2)
 
 		tv_partitions.append_column(columna1)
 		tv_partitions.append_column(columna2)
@@ -134,11 +157,11 @@ class WiithonGUI(GladeWrapper):
 
 		render = gtk.CellRendererText()
 
-		columna1 = gtk.TreeViewColumn('ID', render , text=1)
-		columna2 = gtk.TreeViewColumn('Nombre', render , text=2)
-		columna3 = gtk.TreeViewColumn('Tamaño', render , text=3)
-		columna4 = gtk.TreeViewColumn('Tipo de Juego', render , text=4)
-		columna5 = gtk.TreeViewColumn('Año', render , text=5)
+		columna1 = gtk.TreeViewColumn(_('ID'), render , text=1)
+		columna2 = gtk.TreeViewColumn(_('Nombre'), render , text=2)
+		columna3 = gtk.TreeViewColumn(_('Tamaño'), render , text=3)
+		columna4 = gtk.TreeViewColumn(_('Tipo de Juego'), render , text=4)
+		columna5 = gtk.TreeViewColumn(_('Año'), render , text=5)
 
 		tv_games.append_column(columna1)
 		tv_games.append_column(columna2)
@@ -177,7 +200,7 @@ class WiithonGUI(GladeWrapper):
 		gtk.main_quit()
 
 	def alert(self, level, message):
-		alert_glade = gtk.glade.XML(config.WIITHON_FILES + '/recursos/glade/gui.glade', config.GLADE_ALERTA)
+		alert_glade = gtk.glade.XML(config.WIITHON_FILES + '/recursos/glade/wiithon.glade', config.GLADE_ALERTA)
 
 		level_icons = {
 			'question': gtk.STOCK_DIALOG_QUESTION,
@@ -272,7 +295,7 @@ class WiithonGUI(GladeWrapper):
 
 	def on_tb_toolbar_clicked(self , id_tb):
 		if(id_tb == self.wg_tb_borrar):
-			if (self.question('¿Quieres borrar el juego con ID = "'+self.IDGAMEJuegoSeleccionado+'"?') == 1):
+			if (self.question(_('¿Quieres borrar el juego con ID = "%s"?' % self.IDGAMEJuegoSeleccionado)) == 1):
 				if self.iteradorJuegoSeleccionado != None:		
 					# borrar del HD
 					self.core.borrarJuego( self.core.getDeviceSeleccionado() , self.IDGAMEJuegoSeleccionado )
@@ -302,10 +325,10 @@ class WiithonGUI(GladeWrapper):
 				   )
 
 			if(id_tb == self.wg_tb_anadir):
-				fc_anadir = gtk.FileChooserDialog("Elige una ISO o un RAR", None , gtk.FILE_CHOOSER_ACTION_OPEN , botones)
+				fc_anadir = gtk.FileChooserDialog(_("Elige una ISO o un RAR"), None , gtk.FILE_CHOOSER_ACTION_OPEN , botones)
 
 			elif(id_tb == self.wg_tb_anadir_directorio):
-				fc_anadir = gtk.FileChooserDialog("Elige un directorio", None , gtk.FILE_CHOOSER_ACTION_SELECT_FOLDER , botones)
+				fc_anadir = gtk.FileChooserDialog(_("Elige un directorio"), None , gtk.FILE_CHOOSER_ACTION_SELECT_FOLDER , botones)
 
 			fc_anadir.set_local_only(True)
 			fc_anadir.set_select_multiple(True)
@@ -340,11 +363,8 @@ class HiloAtenderMensajes(Thread):
 	def run(self):
 		cola = self.core.getMensajes()
 		while not self.interrumpido:
-			print "esperando ..."
 			sys.stdout.flush()
-			print "111111"
 			objMensaje = cola.get(  )
-			print "22222222222"
 
 			tipo = objMensaje.getTipo()
 			mensaje = objMensaje.getMensaje()
@@ -352,12 +372,12 @@ class HiloAtenderMensajes(Thread):
 			if( tipo == "INFO" ):
 				gobject.idle_add(self.actualizarLabel , mensaje)
 			elif( tipo == "WARNING" ):
-				gobject.idle_add(self.actualizarLabel , "CUIDADO: " + mensaje)
+				gobject.idle_add(self.actualizarLabel ,_( "CUIDADO: %s" % mensaje ))
 			elif( tipo == "ERROR" ):
-				gobject.idle_add(self.actualizarLabel , "ERROR: " + mensaje)
+				gobject.idle_add(self.actualizarLabel , _( "ERROR: %s" % mensaje ))
 			elif( tipo == "COMANDO" ):
 				if(mensaje == "EMPIEZA"):
-					gobject.idle_add(self.actualizarLabel , "Empezando ...")
+					gobject.idle_add(self.actualizarLabel , _("Empezando ...") )
 					gobject.idle_add(self.actualizarFraccion , 0.0 )
 				elif(mensaje == "PROGRESO_INICIA"):
 					hiloCalcularProgreso = HiloCalcularProgreso( self.actualizarLabel , self.actualizarFraccion )
@@ -375,7 +395,7 @@ class HiloAtenderMensajes(Thread):
 				elif(mensaje == "TERMINA_ERROR"):
 					gobject.idle_add(self.actualizarFraccion , 1.0 )
 				else:
-					raise AssertionError, "Comando desconocido"
+					raise AssertionError, _("Comando desconocido")
 			cola.task_done()
 			
 	def actualizarLabel( self, etiqueta ):
@@ -385,7 +405,6 @@ class HiloAtenderMensajes(Thread):
 		self.progreso.set_fraction( fraccion )
 		
 	def interrumpir(self):
-		print "Interrumpiendo hilo de atención de mensajes"
 		self.interrumpido = True
 		
 class HiloCalcularProgreso(Thread):
@@ -404,11 +423,11 @@ class HiloCalcularProgreso(Thread):
 
 				if cachos[0] == "FIN":
 					porcentaje = 100
-					informativo = "hecho en"
+					informativo = _("hecho en")
 					self.interrumpir()
 				else:				
 					porcentaje = self.porcentaje = float(cachos[0])		
-					informativo = "quedan"
+					informativo = _("quedan")
 					
 				hora = int(cachos[1])
 				minutos = int(cachos[2])

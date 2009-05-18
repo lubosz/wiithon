@@ -1,5 +1,5 @@
-#!/usr/bin/env python
-#-*-coding: utf-8-*-
+#!/usr/bin/python
+# vim: set fileencoding=utf-8 :
 
 import time
 from pool import HiloPool

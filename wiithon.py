@@ -1,5 +1,5 @@
 #!/usr/bin/python
-# vim: set fileencoding=utf8 :
+# vim: set fileencoding=utf-8 :
 #
 # :: Mantenedor: Ricardo Marmolejo García <makiolo@gmail.com>
 # :: Jose Luis Segura <josel.segura@gmail.com>

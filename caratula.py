@@ -1,4 +1,5 @@
-#-*-coding: utf-8-*-
+#!/usr/bin/python
+# vim: set fileencoding=utf-8 :
 
 from almacen import tablaCaratula , motor
 from sqlalchemy.orm import mapper
