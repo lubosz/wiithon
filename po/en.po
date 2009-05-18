@@ -1,0 +1,144 @@
+# English translations for PACKAGE package.
+# Copyright (C) 2009 THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# Ricardo Marmolejo García <makiolo@gmail.com>, 2009.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2009-05-18 06:14+0200\n"
+"PO-Revision-Date: 2009-05-18 06:15+0200\n"
+"Last-Translator: Ricardo Marmolejo García <makiolo@gmail.com>\n"
+"Language-Team: English\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#: core.py:61
+msgid "No se ha encontrado ningún disco de la Wii"
+msgstr "wii="
+
+#: gui.py:127
+msgid "Dispositivo"
+msgstr "Device"
+
+#: gui.py:128
+msgid "Fabricante"
+msgstr "Fabricante"
+
+#: gui.py:157 recursos/glade/wiithon.glade.h:9
+msgid "ID"
+msgstr "ID"
+
+#: gui.py:158 recursos/glade/wiithon.glade.h:10
+msgid "Nombre"
+msgstr "Name"
+
+#: gui.py:159
+msgid "Tamaño"
+msgstr "Size"
+
+#: gui.py:160
+msgid "Tipo de Juego"
+msgstr "Game Type"
+
+#: gui.py:161 recursos/glade/wiithon.glade.h:4
+msgid "Año"
+msgstr "Year"
+
+#: gui.py:295
+#, python-format
+msgid "¿Quieres borrar el juego con ID = \"%s\"?"
+msgstr "Do you want delete this game with ID = \"%s\"?"
+
+#: gui.py:325
+msgid "Elige una ISO o un RAR"
+msgstr "Choose ISO or RAR"
+
+#: gui.py:328
+msgid "Elige un directorio"
+msgstr "Choose folder"
+
+#: gui.py:372
+#, python-format
+msgid "CUIDADO: %s"
+msgstr "WARNING: %s"
+
+#: gui.py:374
+#, python-format
+msgid "ERROR: %s"
+msgstr "ERROR: %s"
+
+#: gui.py:377
+msgid "Empezando ..."
+msgstr "Loading ..."
+
+#: gui.py:395
+msgid "Comando desconocido"
+msgstr "Comando unknown"
+
+#: gui.py:423
+msgid "hecho en"
+msgstr "done in"
+
+#: gui.py:427
+msgid "quedan"
+msgstr "remaining"
+
+#: recursos/glade/wiithon.glade.h:1
+msgid "2 Trabajos pendientes"
+msgstr "2 works ..."
+
+#: recursos/glade/wiithon.glade.h:2
+msgid "Aceptar"
+msgstr "Accept"
+
+#: recursos/glade/wiithon.glade.h:3
+msgid "Añadir directorio"
+msgstr "Add folder"
+
+#: recursos/glade/wiithon.glade.h:5
+msgid "Buscar:"
+msgstr "Search:"
+
+#: recursos/glade/wiithon.glade.h:6
+msgid "Cancelar"
+msgstr "Cancel"
+
+#: recursos/glade/wiithon.glade.h:7
+msgid "Chequear"
+msgstr "Check"
+
+#: recursos/glade/wiithon.glade.h:8
+msgid "Extraer"
+msgstr "Extract"
+
+#: recursos/glade/wiithon.glade.h:11
+msgid "Tipo de juego"
+msgstr "Game Type"
+
+#: recursos/glade/wiithon.glade.h:12
+msgid "Todo"
+msgstr "All"
+
+#: recursos/glade/wiithon.glade.h:13
+msgid "gtk-cancel"
+msgstr "gtk-cancel"
+
+#: recursos/glade/wiithon.glade.h:14
+msgid "gtk-ok"
+msgstr "gtk-ok"
+
+#: recursos/glade/wiithon.glade.h:15
+msgid "page 1"
+msgstr "page 1"
+
+#: recursos/glade/wiithon.glade.h:16
+msgid "page 2"
+msgstr "page 2"
+
+#: recursos/glade/wiithon.glade.h:17
+msgid "page 3"
+msgstr "page 3"
