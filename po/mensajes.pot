@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-05-18 05:34+0200\n"
+"POT-Creation-Date: 2009-05-18 06:14+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -20,70 +20,70 @@ msgstr ""
 msgid "No se ha encontrado ningún disco de la Wii"
 msgstr ""
 
-#: gui.py:130
+#: gui.py:127
 msgid "Dispositivo"
 msgstr ""
 
-#: gui.py:131
+#: gui.py:128
 msgid "Fabricante"
 msgstr ""
 
-#: gui.py:160 recursos/glade/wiithon.glade.h:9
+#: gui.py:157 recursos/glade/wiithon.glade.h:9
 msgid "ID"
 msgstr ""
 
-#: gui.py:161 recursos/glade/wiithon.glade.h:10
+#: gui.py:158 recursos/glade/wiithon.glade.h:10
 msgid "Nombre"
 msgstr ""
 
-#: gui.py:162
+#: gui.py:159
 msgid "Tamaño"
 msgstr ""
 
-#: gui.py:163
+#: gui.py:160
 msgid "Tipo de Juego"
 msgstr ""
 
-#: gui.py:164 recursos/glade/wiithon.glade.h:4
+#: gui.py:161 recursos/glade/wiithon.glade.h:4
 msgid "Año"
 msgstr ""
 
-#: gui.py:298
+#: gui.py:295
 #, python-format
 msgid "¿Quieres borrar el juego con ID = \"%s\"?"
 msgstr ""
 
-#: gui.py:328
+#: gui.py:325
 msgid "Elige una ISO o un RAR"
 msgstr ""
 
-#: gui.py:331
+#: gui.py:328
 msgid "Elige un directorio"
 msgstr ""
 
-#: gui.py:375
+#: gui.py:372
 #, python-format
 msgid "CUIDADO: %s"
 msgstr ""
 
-#: gui.py:377
+#: gui.py:374
 #, python-format
 msgid "ERROR: %s"
 msgstr ""
 
-#: gui.py:380
+#: gui.py:377
 msgid "Empezando ..."
 msgstr ""
 
-#: gui.py:398
+#: gui.py:395
 msgid "Comando desconocido"
 msgstr ""
 
-#: gui.py:426
+#: gui.py:423
 msgid "hecho en"
 msgstr ""
 
-#: gui.py:430
+#: gui.py:427
 msgid "quedan"
 msgstr ""
 

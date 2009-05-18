@@ -14,7 +14,40 @@ from cli import WiithonCLI
 from gui import WiithonGUI
 from core import WiithonCORE
 import config
-import gtk
+
+
+# Importamos los módulos necesarios
+try:
+    import pygtk
+    pygtk.require('2.0') # Intenta usar la versión2
+except:
+    # Algunas distribuciones vienen con GTK2, pero no con pyGTK (o pyGTKv2)
+    pass
+
+try:
+    import gtk
+    import gtk.glade
+except:
+    print "You need to install pyGTK or GTKv2 or set your PYTHONPATH correctly"
+    sys.exit(1)
+
+import gettext
+
+
+APP="wiithon"
+
+# Esto permite traducir los textos escritos en el .py (no en glade)
+gettext.textdomain(APP)
+gettext.bindtextdomain(APP)#, DIR)
+
+# Y las siguientes 2 lineas permiten traducir los textos del Glade
+gtk.glade.textdomain(APP)
+gtk.glade.bindtextdomain(APP)#, DIR)
+
+# Y con esto podemos marcar las cadenas a traducir de la forma _("cadena")
+_ = gettext.gettext
+
+
 
 def informarAcuerdo(pregunton):
 	res = pregunton('''El equipo de Wiithon no se hace responsable de la aplicacion ni de la perdida de datos.

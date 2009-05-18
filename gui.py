@@ -12,25 +12,8 @@ from core import HiloPoolAnadir
 from core import HiloDescargarTodasLasCaratulaYDiscos
 from core import Mensaje
 
-import locale
 import gettext
-
-import gettext  
-#   
-# # Algunas cosas para gettext (para las traducciones)  
-APP="wiithon"  
-DIR="po"  
-  
-# Esto permite traducir los textos escritos en el .py (no en glade)  
-gettext.textdomain(APP)  
-gettext.bindtextdomain(APP, DIR)  
-  
-# Y las siguientes 2 lineas permiten traducir los textos del Glade  
-gtk.glade.textdomain(APP)  
-gtk.glade.bindtextdomain(APP, DIR)  
-  
-# Y con esto podemos marcar las cadenas a traducir de la forma _("cadena")  
-_ = gettext.gettext 
+_ = gettext.gettext
 
 class WiithonGUI(GladeWrapper):
 
