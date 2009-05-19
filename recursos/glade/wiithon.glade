@@ -240,26 +240,14 @@
                               </packing>
                             </child>
                             <child>
-                              <object class="GtkEntry" id="entry1">
+                              <object class="GtkHBox" id="hb_entry">
                                 <property name="visible">True</property>
-                                <property name="can_focus">True</property>
-                                <property name="has_frame">False</property>
-                                <property name="overwrite_mode">True</property>
+                                <child>
+                                  <placeholder/>
+                                </child>
                               </object>
                               <packing>
-                                <property name="expand">False</property>
                                 <property name="position">1</property>
-                              </packing>
-                            </child>
-                            <child>
-                              <object class="GtkImage" id="image2">
-                                <property name="width_request">32</property>
-                                <property name="visible">True</property>
-                                <property name="stock">gtk-clear</property>
-                              </object>
-                              <packing>
-                                <property name="expand">False</property>
-                                <property name="position">2</property>
                               </packing>
                             </child>
                             <child>
@@ -273,7 +261,7 @@
                               </object>
                               <packing>
                                 <property name="expand">False</property>
-                                <property name="position">3</property>
+                                <property name="position">2</property>
                               </packing>
                             </child>
                             <child>
@@ -286,7 +274,7 @@
                               </object>
                               <packing>
                                 <property name="expand">False</property>
-                                <property name="position">4</property>
+                                <property name="position">3</property>
                               </packing>
                             </child>
                             <child>
@@ -299,7 +287,7 @@
                               </object>
                               <packing>
                                 <property name="expand">False</property>
-                                <property name="position">5</property>
+                                <property name="position">4</property>
                               </packing>
                             </child>
                             <child>
@@ -307,7 +295,7 @@
                                 <property name="visible">True</property>
                               </object>
                               <packing>
-                                <property name="position">6</property>
+                                <property name="position">5</property>
                               </packing>
                             </child>
                           </object>

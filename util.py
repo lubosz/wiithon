@@ -2,8 +2,9 @@
 # vim: set fileencoding=utf-8 :
 
 import subprocess
+import gtk
 
-# Caracteres que hacen que una expresión no pueda ser expresión regular	
+# Caracteres que hacen que una expresión no pueda ser expresión regular
 BLACK_LIST = "/\"\'$&|[]"
 
 class NonRepeatList(list):
@@ -93,19 +94,19 @@ def tieneCaracteresRaros(cadena):
 def getPopen( comando ):
 	sp = subprocess
 	return sp.Popen(comando.split() , stdout=sp.PIPE ,stderr=sp.STDOUT , close_fds=False , shell=False, universal_newlines= True)
-	
+
 def getSTDOUT_iterador(comando):
 	p = subprocess.Popen(comando , shell=True , stdout=subprocess.PIPE , stderr=subprocess.STDOUT)
 	out = p.stdout.readlines()
 	return out
-		
+
 def getSTDOUT(comando):
 	out = getSTDOUT_iterador(comando)
 	salida = ""
 	for linea in out:
 		salida = salida + linea.strip()
 	return salida
-	
+
 def escribir(f , texto):
 	f.write(texto + "\n")
 	f.flush()
@@ -116,4 +117,39 @@ def getUltimaLinea(fichero):
 	for linea in file.readlines():
 		ultimaLinea = linea
 	return ultimaLinea
+
+
+# demo de gtk.Entry con Sexy (o no, si lo tienes instalado)
+# ENTRY: Use python sexy if available, gtk otherwise
+try:
+    import sexy
+    class Entry(sexy.IconEntry):
+
+        __clipboard = gtk.Clipboard() # This is a singleton
+
+        def __init__(self, clear=False, copy=False):
+            sexy.IconEntry.__init__(self)
+            if clear:
+                self.add_clear_button()
+
+            if copy:
+                icon = gtk.image_new_from_stock(gtk.STOCK_COPY, gtk.ICON_SIZE_MENU)
+                self.connect("icon_released", self.on_copy_clicked)
+
+                self.set_icon(sexy.ICON_ENTRY_SECONDARY, icon)
+                self.set_icon_highlight(sexy.ICON_ENTRY_SECONDARY, True)
+
+        def on_copy_clicked(self, widget, icon_pos, button):
+            if icon_pos != sexy.ICON_ENTRY_SECONDARY or button != 1:
+		return True
+
+            self.__clipboard.set_text(str(self.get_text()))
+
+
+except ImportError:
+    logging.warning("There is no python-sexy available. fallback to standard gtk.")
+    class Entry(gtk.Entry):
+        def __init__(self, clear=False, copy=False):
+            gtk.Entry.__init__(self)
+
 
