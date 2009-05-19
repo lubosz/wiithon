@@ -5,11 +5,18 @@ REVISION=${shell bzr revno}
 
 all: wbfs
 	@echo ==================================================================
+	@echo Escribe "sudo make run" para ejecutar
 	@echo Escribe "sudo make install" para instalar
 	@echo Escribe "sudo make uninstall" para desinstalar
 	@echo ==================================================================
 
-install: wbfs compilarPO uninstall
+run: install
+	sudo wiithon
+	
+runEN: install
+	sudo LANG=en_US wiithon
+
+install: uninstall wbfs generarPO
 
 	@echo "=================================================================="
 	@echo "Antes de instalar, se ha desinstalado"
@@ -18,7 +25,6 @@ install: wbfs compilarPO uninstall
 	mkdir -p $(PREFIX)/share/wiithon
 	mkdir -p $(PREFIX)/share/wiithon/recursos/glade
 	mkdir -p $(PREFIX)/share/wiithon/recursos/imagenes
-	mkdir -p /usr/share/gconf/schemas/
 
 	cp wiithon.py $(PREFIX)/share/wiithon
 	cp wiithon_autodetectar.sh $(PREFIX)/share/wiithon
@@ -56,7 +62,7 @@ install: wbfs compilarPO uninstall
 	ln -s $(PREFIX)/share/wiithon/wiithon.py $(PREFIX)/bin/wiithon
 
 	@echo "=================================================================="
-	@echo "Instalado OK, instala manualmente los acciones de nautilus"
+	@echo "Instalado OK"
 	@echo "=================================================================="
 
 uninstall:
@@ -107,7 +113,7 @@ uninstall:
 	-rmdir $(PREFIX)/share/wiithon
 
 	@echo "=================================================================="
-	@echo "Desinstalado OK, desinstala las acciones de nautilus manualmente"
+	@echo "Desinstalado OK"
 	@echo "=================================================================="
 
 clean: clean_wbfs
@@ -123,14 +129,13 @@ wbfs: /usr/include/openssl/aes.h /usr/include/openssl/md5.h /usr/include/openssl
 	cp wbfs_src/wbfs .
 
 /usr/include/openssl/*.h:
-	@echo "You should install \"libssl-dev\" to be able to compile wbfs"
-	# FIXME: return por decir algo, pero no está bien
+	@echo "Deberías instalar \"libssl-dev\" para poder compilar wbfs"
 	@return
 
 empaquetar: wbfs clean
 	$(RM) wiithon_v*_r*.tar.gz
 	# Averiguar como comprimir todo excepto lo que contiene ".bzrignore"
-	#tar zcvf wiithon_v${VERSION}_r${REVISION}.tar.gz *
+	#tar zcvf wiithon_v${VERSION}_r${REVISION}.tar.gz *.py *.sh
 
 pull:
 	bzr pull
@@ -145,16 +150,23 @@ log:
 diff:
 	-@bzr diff > DIFF.txt
 
-po/en.po: po/mensajes.pot
-	msginit -i po/mensajes.pot -l en_US --output-file="po/en.po"
-po/es.po: po/mensajes.pot
-	msginit -i po/mensajes.pot -l es_ES --output-file="po/es.po"	
-po/mensajes.pot:
+po/en.po: po/plantilla.pot
+	msginit -i po/plantilla.pot -l en_US -o po/en.po --no-translator
+po/es.po: po/plantilla.pot
+	msginit -i po/plantilla.pot -l es_ES -o po/es.po --no-translator
+recursos/glade/wiithon.glade.h:
+	intltool-extract --type="gettext/glade" recursos/glade/wiithon.glade
+po/plantilla.pot: recursos/glade/wiithon.glade.h
+	xgettext --language=Python --keyword=_ --keyword=N_ --from-code=utf-8 --sort-by-file --package-name="wiithon" --package-version="`cat VERSION.txt`" --msgid-bugs-address=makiolo@gmail.com -o po/plantilla.pot *.py recursos/glade/wiithon.glade.h
+generarPO: po/en.po po/es.po
 	mkdir -p po/es/LC_MESSAGES/
 	mkdir -p po/en/LC_MESSAGES/
-	intltool-extract --type="gettext/glade" recursos/glade/wiithon.glade
-	xgettext --language=Python --keyword=_ --keyword=N_ --from-code=utf-8 -o po/mensajes.pot *.py recursos/glade/wiithon.glade.h
-	
-compilarPO: po/en.po po/es.po
 	msgfmt po/es.po -o po/es/LC_MESSAGES/wiithon.mo
 	msgfmt po/en.po -o po/en/LC_MESSAGES/wiithon.mo
+limpiarPO:
+	$(RM) po/es.po
+	$(RM) po/en.po
+	$(RM) po/plantilla.pot
+	$(RM) recursos/glade/wiithon.glade.h
+regenerarPO: limpiarPO generarPO
+

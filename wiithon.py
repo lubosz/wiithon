@@ -15,21 +15,20 @@ from gui import WiithonGUI
 from core import WiithonCORE
 import config
 
-
 # Importamos los módulos necesarios
 try:
-    import pygtk
-    pygtk.require('2.0') # Intenta usar la versión2
+	import pygtk
+	pygtk.require('2.0') # Intenta usar la versión2
 except:
-    # Algunas distribuciones vienen con GTK2, pero no con pyGTK (o pyGTKv2)
-    pass
+	# Algunas distribuciones vienen con GTK2, pero no con pyGTK (o pyGTKv2)
+	pass
 
 try:
-    import gtk
-    import gtk.glade
+	import gtk
+	import gtk.glade
 except:
-    print "You need to install pyGTK or GTKv2 or set your PYTHONPATH correctly"
-    sys.exit(1)
+	print _("Necesitas tener instalado pyGTK o GTKv2 or setear PYTHONPATH correctamente")
+	sys.exit(1)
 
 import gettext
 
@@ -50,13 +49,13 @@ _ = gettext.gettext
 
 
 def informarAcuerdo(pregunton):
-	res = pregunton('''El equipo de Wiithon no se hace responsable de la aplicacion ni de la perdida de datos.
+	res = pregunton(_('''El equipo de Wiithon no se hace responsable de la aplicacion ni de la perdida de datos.
 No obstante, la particion NO va ha ser formateada.
 Esta aplicación añade, borra y lista juegos explicamente mediante la ayuda de %s.
 Esta información no volverá a aparecer si acepta el acuerdo.
-¿Está de acuerdo?''' % ( os.path.basename(config.WBFS_APP) ) )
+¿Está de acuerdo?''' % ( os.path.basename(config.WBFS_APP) ) ) )
 
-	assert res == 1, "No puedes usar esta aplicacion si no estas de acuerdo"
+	assert res == 1, _("No puedes usar esta aplicacion si no estas de acuerdo")
 
 	os.mkdir( config.HOME_WIITHON )
 	os.mkdir( config.HOME_WIITHON_BDD )
@@ -110,7 +109,7 @@ def App():
 			interfaz.main(opciones_formateadas, arguments)
 
 	except getopt.GetoptError:
-		raise AssertionError, "Programa ejecutado con las opciones incorrectas."
+		raise AssertionError, _("Programa ejecutado con las opciones incorrectas.")
 	except AssertionError, mensaje:
 		try:
 			interfaz.alert("error", str(mensaje) )
@@ -118,7 +117,7 @@ def App():
 			print str(mensaje)
 		
 	if PAUSA:
-		raw_input("Pulse cualquier tecla para continuar ...\n")
+		raw_input(_("Pulse cualquier tecla para continuar ...\n"))
 	sys.exit(0)
 
 if __name__ == '__main__':

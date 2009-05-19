@@ -1,11 +1,6 @@
 Cuando instalamos desde DVD, comprobar que ya tenemos ese juego al principio
 Cuando renombramos mostrar el nombre actual
-Cuando renombramos/borramos/extraemos hacer un "more" de la salida
-Admitir carpetas/isos/rar como parametros para meter isos
-	carpetas ---> se buscan rar , isos y carpetas
-	rar --------> se buscan isos en su interior
-	iso --------> se lista directamente
 No permitir caracteres extraños cuando renombramos ( [A-Za-z0-9:_ ()] y poco más )
-Necesito poder redimensionar particiones WBFS
-sudo fdisk -lu | grep -v 'MB' | grep '/dev/sdb1' | awk '{print $3-$2+1}'
-cat /proc/partitions | grep 'sdb1' | awk '{print $3 * 2}'
+
+Hilos:
+http://mundogeek.net/archivos/2008/04/18/threads-en-python/

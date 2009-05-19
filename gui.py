@@ -59,20 +59,18 @@ class WiithonGUI(GladeWrapper):
 		botonbarra2 = self.wg_tb_anadir_directorio
 		botonbarra3 = self.wg_tb_borrar
 		botonbarra4 = self.wg_tb_extraer
-		botonbarra5 = self.wg_tb_chequear
 		botonbarra6 = self.wg_tb_preferencias
 		botonbarra1.connect('clicked' , self.on_tb_toolbar_clicked)
 		botonbarra2.connect('clicked' , self.on_tb_toolbar_clicked)
 		botonbarra3.connect('clicked' , self.on_tb_toolbar_clicked)
 		botonbarra4.connect('clicked' , self.on_tb_toolbar_clicked)
-		botonbarra5.connect('clicked' , self.on_tb_toolbar_clicked)
 		botonbarra6.connect('clicked' , self.on_tb_toolbar_clicked)
 		
 		# de momento no hay preferencias
 		botonbarra6.hide()
 
-		# oculto la barra de progreso		
-		self.wg_progreso1.hide()
+		# oculto la fila de la progreso		
+		self.wg_box_progreso.hide()
 		
 		self.wg_principal.connect('destroy', self.salir)
 		
@@ -365,13 +363,13 @@ class HiloAtenderMensajes(Thread):
 				elif(mensaje == "PROGRESO_INICIA"):
 					hiloCalcularProgreso = HiloCalcularProgreso( self.actualizarLabel , self.actualizarFraccion )
 					hiloCalcularProgreso.start()
-					self.progreso.show()
+					self.wg_box_progreso.show()
 				elif(mensaje == "PROGRESO_FIN"):
 					# se ha podido "autodestruir"
 					if self.hiloCalcularProgreso!= None and self.hiloCalcularProgreso.isAlive():
 						hiloCalcularProgreso.interrumpir()
 						hiloCalcularProgreso.join()
-					self.progreso.hide()
+					self.wg_box_progreso.hide()
 				elif(mensaje == "TERMINA_OK"):
 					gobject.idle_add(self.actualizarFraccion , 1.0 )
 					self.gui.refrescarListaJuegos()
