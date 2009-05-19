@@ -14,7 +14,7 @@ run: install
 	sudo wiithon
 	
 runEN: install
-	sudo LANG=en_US wiithon
+	sudo LANG=en_US.utf8 wiithon
 
 install: uninstall wbfs generarPO
 

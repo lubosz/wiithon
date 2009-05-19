@@ -31,22 +31,14 @@ except:
 	sys.exit(1)
 
 import gettext
+import locale
 
+gettext.bindtextdomain(config.APP,config.LOCALE)
+#locale.setlocale(locale.LC_ALL,"es_ES.utf8")
+gettext.textdomain(config.APP)
+gettext.install(config.APP,localedir=config.LOCALE)
 
-APP="wiithon"
-
-# Esto permite traducir los textos escritos en el .py (no en glade)
-gettext.textdomain(APP)
-gettext.bindtextdomain(APP)#, DIR)
-
-# Y las siguientes 2 lineas permiten traducir los textos del Glade
-gtk.glade.textdomain(APP)
-gtk.glade.bindtextdomain(APP)#, DIR)
-
-# Y con esto podemos marcar las cadenas a traducir de la forma _("cadena")
 _ = gettext.gettext
-
-
 
 def informarAcuerdo(pregunton):
 	res = pregunton(_('''El equipo de Wiithon no se hace responsable de la aplicacion ni de la perdida de datos.
@@ -100,9 +92,9 @@ def App():
 			if not os.path.exists(config.HOME_WIITHON):
 				informarAcuerdo(interfaz.question)
 
-			gtk.gdk.threads_enter()
+			#gtk.gdk.threads_enter()
 			gtk.main()
-			gtk.gdk.threads_leave()
+			#gtk.gdk.threads_leave()
 
 		else:
 			interfaz = WiithonCLI(core)

@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wiithon 0.99\n"
 "Report-Msgid-Bugs-To: makiolo@gmail.com\n"
-"POT-Creation-Date: 2009-05-19 03:37+0200\n"
-"PO-Revision-Date: 2009-05-19 03:44+0200\n"
+"POT-Creation-Date: 2009-05-19 06:49+0200\n"
+"PO-Revision-Date: 2009-05-19 06:54+0200\n"
 "Last-Translator: \n"
 "Language-Team: Spanish <kde-i18n-doc@lists.kde.org>\n"
 "MIME-Version: 1.0\n"
@@ -21,70 +21,70 @@ msgstr ""
 msgid "No se ha encontrado ningún disco de la Wii"
 msgstr "No se ha encontrado ningún disco de la Wii"
 
-#: gui.py:111
+#: gui.py:115
 msgid "Dispositivo"
 msgstr "Device"
 
-#: gui.py:112
+#: gui.py:116
 msgid "Fabricante"
-msgstr "Fabricante"
+msgstr "Manufacture"
 
-#: gui.py:141
+#: gui.py:145
 msgid "ID"
 msgstr "ID"
 
-#: gui.py:142
+#: gui.py:146
 msgid "Nombre"
 msgstr "Name"
 
-#: gui.py:143
+#: gui.py:147
 msgid "Tamaño"
 msgstr "Size"
 
-#: gui.py:144
+#: gui.py:148
 msgid "Tipo de Juego"
-msgstr "Type Game"
+msgstr "Game Type"
 
-#: gui.py:145
+#: gui.py:149
 msgid "Año"
 msgstr "Year"
 
-#: gui.py:279
+#: gui.py:286
 #, python-format
 msgid "¿Quieres borrar el juego con ID = \"%s\"?"
 msgstr "¿Quieres borrar el juego con ID = \"%s\"?"
 
-#: gui.py:309
+#: gui.py:310
 msgid "Elige una ISO o un RAR"
 msgstr "Elige una ISO o un RAR"
 
-#: gui.py:312
+#: gui.py:313
 msgid "Elige un directorio"
 msgstr "Elige un directorio"
 
-#: gui.py:356
+#: gui.py:357
 #, python-format
 msgid "CUIDADO: %s"
-msgstr "DANGER: %s"
+msgstr "CUIDADO: %s"
 
-#: gui.py:358
+#: gui.py:359
 #, python-format
 msgid "ERROR: %s"
 msgstr "ERROR: %s"
 
-#: gui.py:361
+#: gui.py:362
 msgid "Empezando ..."
 msgstr "Empezando ..."
 
-#: gui.py:379
+#: gui.py:380
 msgid "Comando desconocido"
 msgstr "Comando desconocido"
 
-#: gui.py:407
-msgid "hecho en"
-msgstr "hecho en"
+#: gui.py:408
+msgid "Finalizando. Hecho en"
+msgstr "Finalizando. Hecho en"
 
-#: gui.py:411
+#: gui.py:412
 msgid "quedan"
 msgstr "quedan"
 
@@ -93,90 +93,70 @@ msgid "1 / 2"
 msgstr "1 / 2"
 
 #: recursos/glade/wiithon.glade.h:2
-msgid "Aceptar"
-msgstr "Aceptar"
+msgid "A&#xF1;adir directorio"
+msgstr "Add folder"
 
 #: recursos/glade/wiithon.glade.h:3
-msgid "Añadir directorio"
-msgstr "Añadir directorio"
-
-#: recursos/glade/wiithon.glade.h:4
 msgid "Buscar:"
 msgstr "Buscar:"
 
+#: recursos/glade/wiithon.glade.h:4
+msgid "Categor&#xED;a"
+msgstr "Categor&#xED;a"
+
 #: recursos/glade/wiithon.glade.h:5
-msgid "Cancelar"
-msgstr "Cancelar"
-
-#: recursos/glade/wiithon.glade.h:6
-msgid "Categoría"
-msgstr "Categoría"
-
-#: recursos/glade/wiithon.glade.h:7
 msgid "Consola"
 msgstr "Consola"
 
-#: recursos/glade/wiithon.glade.h:8
+#: recursos/glade/wiithon.glade.h:6
 msgid "Descarga de caratulas (0)"
 msgstr "Descarga de caratulas (0)"
 
-#: recursos/glade/wiithon.glade.h:9
+#: recursos/glade/wiithon.glade.h:7
 msgid "Etiqueta"
-msgstr "Tag"
+msgstr "Etiqueta"
+
+#: recursos/glade/wiithon.glade.h:8
+msgid "Extraer"
+msgstr "Extraer"
+
+#: recursos/glade/wiithon.glade.h:9
+msgid "M&#xE1;s Informaci&#xF3;n"
+msgstr "M&#xE1;s Informaci&#xF3;n"
 
 #: recursos/glade/wiithon.glade.h:10
-msgid "Extraer"
-msgstr "Extract"
-
-#: recursos/glade/wiithon.glade.h:11
-msgid "Más Información"
-msgstr "+ Info"
-
-#: recursos/glade/wiithon.glade.h:12
 msgid "Renombrar"
 msgstr "Renombrar"
 
-#: recursos/glade/wiithon.glade.h:13
+#: recursos/glade/wiithon.glade.h:11
 msgid "Todo"
-msgstr "All"
+msgstr "Todo"
 
-#: recursos/glade/wiithon.glade.h:14
+#: recursos/glade/wiithon.glade.h:12
 msgid "Trabajos pendientes (0)"
 msgstr "Trabajos pendientes (0)"
 
-#: recursos/glade/wiithon.glade.h:15
+#: recursos/glade/wiithon.glade.h:13
 msgid "gtk-cancel"
 msgstr "gtk-cancel"
 
-#: recursos/glade/wiithon.glade.h:16
+#: recursos/glade/wiithon.glade.h:14
 msgid "gtk-ok"
 msgstr "gtk-ok"
 
-#: recursos/glade/wiithon.glade.h:17
+#: recursos/glade/wiithon.glade.h:15
 msgid ""
 "lajsk kas jaslkjas llk askljaj adsk\n"
 "aslkj asdklaslk jasldkjald laskdalskdjalsk d\n"
 "dslaj skldjlaskjd aklsjdlaksjdlaskjlasjlaksjlkasj lasdkj \n"
-"ñslakjdasj lkasjdklasjd lkajdlkasjdlkasj \n"
+"&#xF1;slakjdasj lkasjdklasjd lkajdlkasjdlkasj \n"
 "laskj als jlas lsadk laskjdlaksjd lakjd laksjd klaj"
 msgstr ""
 "lajsk kas jaslkjas llk askljaj adsk\n"
 "aslkj asdklaslk jasldkjald laskdalskdjalsk d\n"
 "dslaj skldjlaskjd aklsjdlaksjdlaskjlasjlaksjlkasj lasdkj \n"
-"ñslakjdasj lkasjdklasjd lkajdlkasjdlkasj \n"
+"&#xF1;slakjdasj lkasjdklasjd lkajdlkasjdlkasj \n"
 "laskj als jlas lsadk laskjdlaksjd lakjd laksjd klaj"
-
-#: recursos/glade/wiithon.glade.h:22
-msgid "page 1"
-msgstr "page 1"
-
-#: recursos/glade/wiithon.glade.h:23
-msgid "page 2"
-msgstr "page 2"
-
-#: recursos/glade/wiithon.glade.h:24
-msgid "page 3"
-msgstr "page 3"
 
 #: wiithon.py:30
 msgid ""
@@ -184,7 +164,7 @@ msgid ""
 msgstr ""
 "Necesitas tener instalado pyGTK o GTKv2 or setear PYTHONPATH correctamente"
 
-#: wiithon.py:52
+#: wiithon.py:44
 #, python-format
 msgid ""
 "El equipo de Wiithon no se hace responsable de la aplicacion ni de la "
@@ -203,15 +183,15 @@ msgstr ""
 "Esta información no volverá a aparecer si acepta el acuerdo.\n"
 "¿Está de acuerdo?"
 
-#: wiithon.py:58
+#: wiithon.py:50
 msgid "No puedes usar esta aplicacion si no estas de acuerdo"
 msgstr "No puedes usar esta aplicacion si no estas de acuerdo"
 
-#: wiithon.py:112
+#: wiithon.py:104
 msgid "Programa ejecutado con las opciones incorrectas."
 msgstr "Programa ejecutado con las opciones incorrectas."
 
-#: wiithon.py:120
+#: wiithon.py:112
 msgid "Pulse cualquier tecla para continuar ...\n"
 msgstr "Pulse cualquier tecla para continuar ...\n"
 

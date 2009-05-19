@@ -82,7 +82,11 @@ class WiithonGUI(GladeWrapper):
 
 		listaParticiones = self.core.getListaParticiones()
 		if(len(listaParticiones) == 0):
-			pass
+			destinoCaratula = os.path.join(config.WIITHON_FILES_RECURSOS_IMAGENES , "caratula.png")
+			self.wg_img_caratula1.set_from_file( destinoCaratula )
+
+			destinoDisco = os.path.join(config.WIITHON_FILES_RECURSOS_IMAGENES , "disco.png")
+			self.wg_img_disco1.set_from_file( destinoDisco )
 		else:
 			# carga el modelo de datos del TreeView de particiones
 			self.cargarParticionesModelo(self.tv_partitions_modelo , listaParticiones)
@@ -181,7 +185,10 @@ class WiithonGUI(GladeWrapper):
 		gtk.main_quit()
 
 	def alert(self, level, message):
-		alert_glade = gtk.glade.XML(config.WIITHON_FILES + '/recursos/glade/wiithon.glade', config.GLADE_ALERTA)
+		#alert_glade = gtk.glade.XML(config.WIITHON_FILES + '/recursos/glade/wiithon.glade', config.GLADE_ALERTA)
+		alert_glade = gtk.Builder()
+		alert_glade.add_from_file( config.WIITHON_FILES + '/recursos/glade/wiithon.glade' )
+		alert_glade.get_object('principal').hide()
 
 		level_icons = {
 			'question': gtk.STOCK_DIALOG_QUESTION,
@@ -199,11 +206,11 @@ class WiithonGUI(GladeWrapper):
 			}
 
 		# configure the label text:
-		alert_msg = alert_glade.get_widget('lbl_message')
+		alert_msg = alert_glade.get_object('lbl_message')
 		alert_msg.set_text(message)
 
 		# configure the icon to display
-		img = alert_glade.get_widget('img_alert')
+		img = alert_glade.get_object('img_alert')
 
 		try:
 			img.set_from_stock(level_icons[level], gtk.ICON_SIZE_DIALOG)
@@ -211,8 +218,8 @@ class WiithonGUI(GladeWrapper):
 			img.set_from_stock(level_icons['info'], gtk.ICON_SIZE_DIALOG)
 
 		# configure the buttons
-		btn_ok = alert_glade.get_widget('btn_ok')
-		btn_no = alert_glade.get_widget('btn_no')
+		btn_ok = alert_glade.get_object('btn_ok')
+		btn_no = alert_glade.get_object('btn_no')
 
 		if level_buttons[level][0]:
 			btn_ok.set_label(level_buttons[level][0])
@@ -224,9 +231,9 @@ class WiithonGUI(GladeWrapper):
 		else:
 			btn_no.hide()
 
-		alert_glade.get_widget(config.GLADE_ALERTA).set_title(level)
-		res = alert_glade.get_widget(config.GLADE_ALERTA).run()
-		alert_glade.get_widget(config.GLADE_ALERTA).hide()
+		alert_glade.get_object(config.GLADE_ALERTA).set_title(level)
+		res = alert_glade.get_object(config.GLADE_ALERTA).run()
+		alert_glade.get_object(config.GLADE_ALERTA).hide()
 
 		return res
 
@@ -292,12 +299,6 @@ class WiithonGUI(GladeWrapper):
 				DEVICE = self.core.getDeviceSeleccionado()
 				IDGAME = seleccion.get_value(iterador,1)
 				self.core.extraerJuego( DEVICE , IDGAME )
-		elif(id_tb == self.wg_tb_chequear):
-			seleccion,iterador = self.wg_tv_games.get_selection().get_selected()
-			if iterador != None:
-				DEVICE = self.core.getDeviceSeleccionado()
-				IDGAME = seleccion.get_value(iterador,1)
-				self.core.verificarJuego( DEVICE , IDGAME )
 		else:
 			botones = (gtk.STOCK_CANCEL,
 				   gtk.RESPONSE_CANCEL,
@@ -363,13 +364,13 @@ class HiloAtenderMensajes(Thread):
 				elif(mensaje == "PROGRESO_INICIA"):
 					hiloCalcularProgreso = HiloCalcularProgreso( self.actualizarLabel , self.actualizarFraccion )
 					hiloCalcularProgreso.start()
-					self.wg_box_progreso.show()
+					self.gui.wg_box_progreso.show()
 				elif(mensaje == "PROGRESO_FIN"):
 					# se ha podido "autodestruir"
 					if self.hiloCalcularProgreso!= None and self.hiloCalcularProgreso.isAlive():
 						hiloCalcularProgreso.interrumpir()
 						hiloCalcularProgreso.join()
-					self.wg_box_progreso.hide()
+					self.gui.wg_box_progreso.hide()
 				elif(mensaje == "TERMINA_OK"):
 					gobject.idle_add(self.actualizarFraccion , 1.0 )
 					self.gui.refrescarListaJuegos()
@@ -404,11 +405,13 @@ class HiloCalcularProgreso(Thread):
 
 				if cachos[0] == "FIN":
 					porcentaje = 100
-					informativo = _("hecho en")
+					informativo = _("Finalizando. Hecho en")
 					self.interrumpir()
 				else:				
 					porcentaje = self.porcentaje = float(cachos[0])		
 					informativo = _("quedan")
+					
+				#sys.stdout
 					
 				hora = int(cachos[1])
 				minutos = int(cachos[2])

@@ -3,6 +3,10 @@
 
 import os, sys
 
+APP="wiithon"
+#LOCALE="po"
+LOCALE="/usr/share/locale"
+
 HOME = os.environ['HOME']
 HOME_WIITHON = os.path.join(HOME , '.wiithon')
 HOME_WIITHON_BDD = os.path.join(HOME_WIITHON , 'bdd')

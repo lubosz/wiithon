@@ -433,9 +433,7 @@ class PoolAnadir(Pool):
 		except OSError:
 			pass
 
-		print "nuevo mensaje1111111"
 		core.nuevoMensaje( Mensaje("COMANDO","EMPIEZA") )
-		print "nuevo mensaje22222222"
 
 		if( not os.path.exists(DEVICE) or not os.path.exists(fichero) ):
 			error = True
