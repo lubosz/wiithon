@@ -3,7 +3,7 @@
 
 import gtk , os , time , gobject , util
 
-from glade_wrapper import GladeWrapper
+from builder_wrapper import GtkBuilderWrapper
 import config , sys
 
 from threading import Thread
@@ -12,7 +12,7 @@ from core import HiloPoolAnadir
 from core import HiloDescargarTodasLasCaratulaYDiscos
 from core import Mensaje
 
-class WiithonGUI(GladeWrapper):
+class WiithonGUI(GtkBuilderWrapper):
 
 	######### PUNTEROS ##############
 
@@ -40,40 +40,49 @@ class WiithonGUI(GladeWrapper):
 	hiloCaratulas = None
 
 	def __init__(self, core):
+		def clear_search_cb(widget, position, event):
+			if event.button == 1:
+				widget.set_text('')
+
+			else:
+				print 'nothing'
+
 		global _
 
-		GladeWrapper.__init__(self, config.WIITHON_FILES + '/recursos/glade/wiithon.glade' , 'principal')
+		GtkBuilderWrapper.__init__(self, config.WIITHON_FILES + '/recursos/glade/wiithon.glade' , 'principal')
 		self.core = core
 
 		# permite usar hilos con PyGTK http://faq.pygtk.org/index.py?req=show&file=faq20.006.htp
 		# modo seguro con hilos
 		gobject.threads_init()
 
-		self.wg_principal.set_title('Wiithon')
-		self.wg_principal.show()
+		self.wb_principal.set_title('Wiithon')
+		self.wb_principal.show()
 
-		self.wg_searchEntry = util.Entry(clear=True)
-		self.wg_hb_entry.pack_start(self.wg_searchEntry)
-		self.wg_searchEntry.show()
+		#self.wb_searchEntry = util.Entry(clear=True)
+		#self.wb_hb_entry.pack_start(self.wb_searchEntry)
+		#self.wb_searchEntry.show()
 
-		botonbarra1 = self.wg_tb_anadir
-		botonbarra2 = self.wg_tb_anadir_directorio
-		botonbarra3 = self.wg_tb_borrar
-		botonbarra4 = self.wg_tb_extraer
-		botonbarra6 = self.wg_tb_preferencias
+		botonbarra1 = self.wb_tb_anadir
+		botonbarra2 = self.wb_tb_anadir_directorio
+		botonbarra3 = self.wb_tb_borrar
+		botonbarra4 = self.wb_tb_extraer
+		botonbarra6 = self.wb_tb_preferencias
 		botonbarra1.connect('clicked' , self.on_tb_toolbar_clicked)
 		botonbarra2.connect('clicked' , self.on_tb_toolbar_clicked)
 		botonbarra3.connect('clicked' , self.on_tb_toolbar_clicked)
 		botonbarra4.connect('clicked' , self.on_tb_toolbar_clicked)
 		botonbarra6.connect('clicked' , self.on_tb_toolbar_clicked)
 
+		self.wb_entry1.connect('icon-release', clear_search_cb)
+
 		# de momento no hay preferencias
 		botonbarra6.hide()
 
 		# oculto la fila de la progreso
-		self.wg_box_progreso.hide()
+		self.wb_box_progreso.hide()
 
-		self.wg_principal.connect('destroy', self.salir)
+		self.wb_principal.connect('destroy', self.salir)
 
 		# carga la vista del TreeView de particiones
 		self.tv_partitions_modelo = self.cargarParticionesVista()
@@ -84,10 +93,10 @@ class WiithonGUI(GladeWrapper):
 		listaParticiones = self.core.getListaParticiones()
 		if(len(listaParticiones) == 0):
 			destinoCaratula = os.path.join(config.WIITHON_FILES_RECURSOS_IMAGENES , "caratula.png")
-			self.wg_img_caratula1.set_from_file( destinoCaratula )
+			self.wb_img_caratula1.set_from_file( destinoCaratula )
 
 			destinoDisco = os.path.join(config.WIITHON_FILES_RECURSOS_IMAGENES , "disco.png")
-			self.wg_img_disco1.set_from_file( destinoDisco )
+			self.wb_img_disco1.set_from_file( destinoDisco )
 		else:
 			# carga el modelo de datos del TreeView de particiones
 			self.cargarParticionesModelo(self.tv_partitions_modelo , listaParticiones)
@@ -96,7 +105,7 @@ class WiithonGUI(GladeWrapper):
 			# indirectamente se carga:
 			# lee el modelo de datos de la partición seleccionada
 			# tambien refresca la lista de juegos del CORE
-			self.seleccionarPrimeraFila( self.wg_tv_partitions , self.on_tv_partitions_cursor_changed)
+			self.seleccionarPrimeraFila( self.wb_tv_partitions , self.on_tv_partitions_cursor_changed)
 
 			# descargar caratulas desde un hilo
 			if( len(self.listaJuegos) > 0 ):
@@ -105,11 +114,11 @@ class WiithonGUI(GladeWrapper):
 				self.hiloCaratulas.start()
 
 		# pongo el foco en los TreeView de juegos
-		self.wg_tv_games.grab_focus()
+		self.wb_tv_games.grab_focus()
 
 
 	def cargarParticionesVista(self):
-		tv_partitions = self.wg_tv_partitions
+		tv_partitions = self.wb_tv_partitions
 
 		render = gtk.CellRendererText()
 
@@ -139,7 +148,7 @@ class WiithonGUI(GladeWrapper):
 
 	def cargarJuegosVista(self):
 		# Documentacion útil: http://blog.rastersoft.com/index.php/2007/01/27/trabajando-con-gtktreeview-en-python/
-		tv_games = self.wg_tv_games
+		tv_games = self.wb_tv_games
 
 		render = gtk.CellRendererText()
 
@@ -246,7 +255,7 @@ class WiithonGUI(GladeWrapper):
 		self.DEVICE = self.core.getDeviceSeleccionado()
 		self.listaJuegos = self.core.getListaJuegos( self.DEVICE )
 		self.cargarJuegosModelo( self.tv_games_modelo , self.listaJuegos )
-		self.seleccionarPrimeraFila( self.wg_tv_games , self.on_tv_games_cursor_changed)
+		self.seleccionarPrimeraFila( self.wb_tv_games , self.on_tv_games_cursor_changed)
 
 	def seleccionarPrimeraFila(self , treeview , callback):
 		# selecciono el primero y provoco el evento
@@ -270,20 +279,20 @@ class WiithonGUI(GladeWrapper):
 			self.IDGAMEJuegoSeleccionado = seleccion.get_value(self.iteradorJuegoSeleccionado,1)
 
 			destinoCaratula = os.path.join(config.HOME_WIITHON_CARATULAS , self.IDGAMEJuegoSeleccionado+".png")
-			self.wg_img_caratula1.set_from_file( destinoCaratula )
+			self.wb_img_caratula1.set_from_file( destinoCaratula )
 
 			destinoDisco = os.path.join(config.HOME_WIITHON_DISCOS , self.IDGAMEJuegoSeleccionado+".png")
-			self.wg_img_disco1.set_from_file( destinoDisco )
+			self.wb_img_disco1.set_from_file( destinoDisco )
 		else:
 			destinoCaratula = os.path.join(config.WIITHON_FILES_RECURSOS_IMAGENES , "caratula.png")
-			self.wg_img_caratula1.set_from_file( destinoCaratula )
+			self.wb_img_caratula1.set_from_file( destinoCaratula )
 
 			destinoDisco = os.path.join(config.WIITHON_FILES_RECURSOS_IMAGENES , "disco.png")
-			self.wg_img_disco1.set_from_file( destinoDisco )
+			self.wb_img_disco1.set_from_file( destinoDisco )
 
 
 	def on_tb_toolbar_clicked(self , id_tb):
-		if(id_tb == self.wg_tb_borrar):
+		if(id_tb == self.wb_tb_borrar):
 			if (self.question(_('¿Quieres borrar el juego con ID = "%s"?' % self.IDGAMEJuegoSeleccionado)) == 1):
 				if self.iteradorJuegoSeleccionado != None:
 					# borrar del HD
@@ -293,9 +302,9 @@ class WiithonGUI(GladeWrapper):
 					self.tv_games_modelo.remove( self.iteradorJuegoSeleccionado )
 
 					# seleccionar el primero
-					self.seleccionarPrimeraFila( self.wg_tv_games , self.on_tv_games_cursor_changed)
-		elif(id_tb == self.wg_tb_extraer):
-			seleccion,iterador = self.wg_tv_games.get_selection().get_selected()
+					self.seleccionarPrimeraFila( self.wb_tv_games , self.on_tv_games_cursor_changed)
+		elif(id_tb == self.wb_tb_extraer):
+			seleccion,iterador = self.wb_tv_games.get_selection().get_selected()
 			if iterador != None:
 				DEVICE = self.core.getDeviceSeleccionado()
 				IDGAME = seleccion.get_value(iterador,1)
@@ -307,10 +316,10 @@ class WiithonGUI(GladeWrapper):
 				   gtk.RESPONSE_OK,
 				   )
 
-			if(id_tb == self.wg_tb_anadir):
+			if(id_tb == self.wb_tb_anadir):
 				fc_anadir = gtk.FileChooserDialog(_("Elige una ISO o un RAR"), None , gtk.FILE_CHOOSER_ACTION_OPEN , botones)
 
-			elif(id_tb == self.wg_tb_anadir_directorio):
+			elif(id_tb == self.wb_tb_anadir_directorio):
 				fc_anadir = gtk.FileChooserDialog(_("Elige un directorio"), None , gtk.FILE_CHOOSER_ACTION_SELECT_FOLDER , botones)
 
 			fc_anadir.set_local_only(True)
@@ -324,7 +333,7 @@ class WiithonGUI(GladeWrapper):
 				self.hiloPoolAnadir.anadir( fc_anadir.get_filenames() )
 				self.hiloPoolAnadir.start()
 
-				self.hiloAtenderMensajes = HiloAtenderMensajes( self.core , self.hiloPoolAnadir , self.wg_progreso1 , self )
+				self.hiloAtenderMensajes = HiloAtenderMensajes( self.core , self.hiloPoolAnadir , self.wb_progreso1 , self )
 				self.hiloAtenderMensajes.setDaemon(True)
 				self.hiloAtenderMensajes.start()
 
