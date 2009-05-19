@@ -12,9 +12,6 @@ from core import HiloPoolAnadir
 from core import HiloDescargarTodasLasCaratulaYDiscos
 from core import Mensaje
 
-import gettext
-_ = gettext.gettext
-
 class WiithonGUI(GladeWrapper):
 
 	######### PUNTEROS ##############

@@ -263,12 +263,13 @@
                               </packing>
                             </child>
                             <child>
-                              <object class="GtkToggleButton" id="togglebutton1">
+                              <object class="GtkToggleButton" id="toggle_todo">
                                 <property name="label" translatable="yes">Todo</property>
                                 <property name="visible">True</property>
                                 <property name="can_focus">True</property>
                                 <property name="receives_default">True</property>
                                 <property name="active">True</property>
+                                <signal name="toggled" handler="on_toggle_todo_toggled"/>
                               </object>
                               <packing>
                                 <property name="expand">False</property>
@@ -276,11 +277,12 @@
                               </packing>
                             </child>
                             <child>
-                              <object class="GtkToggleButton" id="togglebutton2">
+                              <object class="GtkToggleButton" id="toggle_categoria">
                                 <property name="label" translatable="yes">Categor&#xED;a</property>
                                 <property name="visible">True</property>
                                 <property name="can_focus">True</property>
                                 <property name="receives_default">True</property>
+                                <signal name="toggled" handler="on_toggle_categoria_toggled"/>
                               </object>
                               <packing>
                                 <property name="expand">False</property>
@@ -288,11 +290,12 @@
                               </packing>
                             </child>
                             <child>
-                              <object class="GtkToggleButton" id="togglebutton3">
+                              <object class="GtkToggleButton" id="toggle_etiqueta">
                                 <property name="label" translatable="yes">Etiqueta</property>
                                 <property name="visible">True</property>
                                 <property name="can_focus">True</property>
                                 <property name="receives_default">True</property>
+                                <signal name="toggled" handler="on_toggle_etiqueta_toggled"/>
                               </object>
                               <packing>
                                 <property name="expand">False</property>

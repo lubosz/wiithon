@@ -4,7 +4,6 @@
 import os, sys
 
 APP="wiithon"
-#LOCALE="po"
 LOCALE="/usr/share/locale"
 
 HOME = os.environ['HOME']

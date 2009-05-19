@@ -34,9 +34,8 @@ import gettext
 import locale
 
 gettext.bindtextdomain(config.APP,config.LOCALE)
-#locale.setlocale(locale.LC_ALL,"es_ES.utf8")
 gettext.textdomain(config.APP)
-gettext.install(config.APP,localedir=config.LOCALE)
+gettext.install(config.APP,config.LOCALE)#, unicode=1)
 
 _ = gettext.gettext
 
@@ -92,10 +91,7 @@ def App():
 			if not os.path.exists(config.HOME_WIITHON):
 				informarAcuerdo(interfaz.question)
 
-			#gtk.gdk.threads_enter()
 			gtk.main()
-			#gtk.gdk.threads_leave()
-
 		else:
 			interfaz = WiithonCLI(core)
 			interfaz.main(opciones_formateadas, arguments)

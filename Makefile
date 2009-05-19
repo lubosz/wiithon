@@ -14,7 +14,9 @@ run: install
 	sudo wiithon
 	
 runEN: install
-	sudo LANG=en_US.utf8 wiithon
+	# http://docs.python.org/library/gettext.html
+	# LANGUAGE, LC_ALL, LC_MESSAGES, and LANG respectively.
+	sudo LC_ALL=en wiithon
 
 install: uninstall wbfs generarPO
 
