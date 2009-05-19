@@ -47,9 +47,7 @@ class WiithonGUI(GtkBuilderWrapper):
 			else:
 				print 'nothing'
 
-		global _
-
-		GtkBuilderWrapper.__init__(self, config.WIITHON_FILES + '/recursos/glade/wiithon.glade' , 'principal')
+		GtkBuilderWrapper.__init__(self, config.WIITHON_FILES + '/recursos/glade/wiithon.xml' , 'principal')
 		self.core = core
 
 		# permite usar hilos con PyGTK http://faq.pygtk.org/index.py?req=show&file=faq20.006.htp
@@ -73,8 +71,11 @@ class WiithonGUI(GtkBuilderWrapper):
 		botonbarra3.connect('clicked' , self.on_tb_toolbar_clicked)
 		botonbarra4.connect('clicked' , self.on_tb_toolbar_clicked)
 		botonbarra6.connect('clicked' , self.on_tb_toolbar_clicked)
-
-		self.wb_entry1.connect('icon-release', clear_search_cb)
+		
+		try:
+			self.wb_entry1.connect('icon-release', clear_search_cb)
+		except TypeError:
+			print "Cuidado: Necesitas una versión GTK >= 2.16 para visualizar algunas opciones."
 
 		# de momento no hay preferencias
 		botonbarra6.hide()
@@ -195,9 +196,8 @@ class WiithonGUI(GtkBuilderWrapper):
 		gtk.main_quit()
 
 	def alert(self, level, message):
-		#alert_glade = gtk.glade.XML(config.WIITHON_FILES + '/recursos/glade/wiithon.glade', config.GLADE_ALERTA)
 		alert_glade = gtk.Builder()
-		alert_glade.add_from_file( config.WIITHON_FILES + '/recursos/glade/wiithon.glade' )
+		alert_glade.add_from_file( config.WIITHON_FILES + '/recursos/glade/wiithon.xml' )
 		alert_glade.get_object('principal').hide()
 
 		level_icons = {

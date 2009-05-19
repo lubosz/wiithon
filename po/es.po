@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wiithon 0.99\n"
 "Report-Msgid-Bugs-To: makiolo@gmail.com\n"
-"POT-Creation-Date: 2009-05-19 06:49+0200\n"
-"PO-Revision-Date: 2009-05-19 06:49+0200\n"
+"POT-Creation-Date: 2009-05-19 17:12+0200\n"
+"PO-Revision-Date: 2009-05-19 17:12+0200\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
 "MIME-Version: 1.0\n"
@@ -20,130 +20,138 @@ msgstr ""
 msgid "No se ha encontrado ningún disco de la Wii"
 msgstr ""
 
-#: gui.py:115
+#: gui.py:126
 msgid "Dispositivo"
 msgstr ""
 
-#: gui.py:116
+#: gui.py:127
 msgid "Fabricante"
 msgstr ""
 
-#: gui.py:145
+#: gui.py:156
 msgid "ID"
 msgstr ""
 
-#: gui.py:146
+#: gui.py:157
 msgid "Nombre"
 msgstr ""
 
-#: gui.py:147
+#: gui.py:158
 msgid "Tamaño"
 msgstr ""
 
-#: gui.py:148
+#: gui.py:159
 msgid "Tipo de Juego"
 msgstr ""
 
-#: gui.py:149
+#: gui.py:160
 msgid "Año"
 msgstr ""
 
-#: gui.py:286
+#: gui.py:296
 #, python-format
 msgid "¿Quieres borrar el juego con ID = \"%s\"?"
 msgstr ""
 
-#: gui.py:310
+#: gui.py:320
 msgid "Elige una ISO o un RAR"
 msgstr ""
 
-#: gui.py:313
+#: gui.py:323
 msgid "Elige un directorio"
 msgstr ""
 
-#: gui.py:357
+#: gui.py:367
 #, python-format
 msgid "CUIDADO: %s"
 msgstr ""
 
-#: gui.py:359
+#: gui.py:369
 #, python-format
 msgid "ERROR: %s"
 msgstr ""
 
-#: gui.py:362
+#: gui.py:372
 msgid "Empezando ..."
 msgstr ""
 
-#: gui.py:380
+#: gui.py:390
 msgid "Comando desconocido"
 msgstr ""
 
-#: gui.py:408
+#: gui.py:418
 msgid "Finalizando. Hecho en"
 msgstr ""
 
-#: gui.py:412
+#: gui.py:422
 msgid "quedan"
 msgstr ""
 
-#: recursos/glade/wiithon.glade.h:1
+#: recursos/glade/wiithon.xml.h:1
 msgid "1 / 2"
 msgstr ""
 
-#: recursos/glade/wiithon.glade.h:2
+#: recursos/glade/wiithon.xml.h:2
+msgid "A&#xF1;adir"
+msgstr ""
+
+#: recursos/glade/wiithon.xml.h:3
 msgid "A&#xF1;adir directorio"
 msgstr ""
 
-#: recursos/glade/wiithon.glade.h:3
+#: recursos/glade/wiithon.xml.h:4
 msgid "Buscar:"
 msgstr ""
 
-#: recursos/glade/wiithon.glade.h:4
+#: recursos/glade/wiithon.xml.h:5
 msgid "Categor&#xED;a"
 msgstr ""
 
-#: recursos/glade/wiithon.glade.h:5
+#: recursos/glade/wiithon.xml.h:6
 msgid "Consola"
 msgstr ""
 
-#: recursos/glade/wiithon.glade.h:6
+#: recursos/glade/wiithon.xml.h:7
 msgid "Descarga de caratulas (0)"
 msgstr ""
 
-#: recursos/glade/wiithon.glade.h:7
+#: recursos/glade/wiithon.xml.h:8
 msgid "Etiqueta"
 msgstr ""
 
-#: recursos/glade/wiithon.glade.h:8
+#: recursos/glade/wiithon.xml.h:9
 msgid "Extraer"
 msgstr ""
 
-#: recursos/glade/wiithon.glade.h:9
+#: recursos/glade/wiithon.xml.h:10
 msgid "M&#xE1;s Informaci&#xF3;n"
 msgstr ""
 
-#: recursos/glade/wiithon.glade.h:10
+#: recursos/glade/wiithon.xml.h:11
+msgid "Preferencias"
+msgstr ""
+
+#: recursos/glade/wiithon.xml.h:12
 msgid "Renombrar"
 msgstr ""
 
-#: recursos/glade/wiithon.glade.h:11
+#: recursos/glade/wiithon.xml.h:13
 msgid "Todo"
 msgstr ""
 
-#: recursos/glade/wiithon.glade.h:12
+#: recursos/glade/wiithon.xml.h:14
 msgid "Trabajos pendientes (0)"
 msgstr ""
 
-#: recursos/glade/wiithon.glade.h:13
+#: recursos/glade/wiithon.xml.h:15
 msgid "gtk-cancel"
 msgstr ""
 
-#: recursos/glade/wiithon.glade.h:14
+#: recursos/glade/wiithon.xml.h:16
 msgid "gtk-ok"
 msgstr ""
 
-#: recursos/glade/wiithon.glade.h:15
+#: recursos/glade/wiithon.xml.h:17
 msgid ""
 "lajsk kas jaslkjas llk askljaj adsk\n"
 "aslkj asdklaslk jasldkjald laskdalskdjalsk d\n"
@@ -157,7 +165,7 @@ msgid ""
 "Necesitas tener instalado pyGTK o GTKv2 or setear PYTHONPATH correctamente"
 msgstr ""
 
-#: wiithon.py:44
+#: wiithon.py:43
 #, python-format
 msgid ""
 "El equipo de Wiithon no se hace responsable de la aplicacion ni de la "
@@ -169,14 +177,14 @@ msgid ""
 "¿Está de acuerdo?"
 msgstr ""
 
-#: wiithon.py:50
+#: wiithon.py:49
 msgid "No puedes usar esta aplicacion si no estas de acuerdo"
 msgstr ""
 
-#: wiithon.py:104
+#: wiithon.py:100
 msgid "Programa ejecutado con las opciones incorrectas."
 msgstr ""
 
-#: wiithon.py:112
+#: wiithon.py:108
 msgid "Pulse cualquier tecla para continuar ...\n"
 msgstr ""

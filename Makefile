@@ -34,7 +34,7 @@ install: uninstall wbfs generarPO
 	cp wbfs $(PREFIX)/share/wiithon
 	cp cli.py $(PREFIX)/share/wiithon
 	cp gui.py $(PREFIX)/share/wiithon
-	cp glade_wrapper.py $(PREFIX)/share/wiithon
+	cp builder_wrapper.py $(PREFIX)/share/wiithon
 	cp util.py $(PREFIX)/share/wiithon
 	cp core.py $(PREFIX)/share/wiithon
 	cp config.py $(PREFIX)/share/wiithon
@@ -43,7 +43,7 @@ install: uninstall wbfs generarPO
 	cp po/en/LC_MESSAGES/wiithon.mo /usr/share/locale/en/LC_MESSAGES/wiithon.mo
 	cp po/es/LC_MESSAGES/wiithon.mo /usr/share/locale/es/LC_MESSAGES/wiithon.mo
 
-	cp recursos/glade/*.glade $(PREFIX)/share/wiithon/recursos/glade
+	cp recursos/glade/*.xml $(PREFIX)/share/wiithon/recursos/glade
 	cp recursos/imagenes/*.png $(PREFIX)/share/wiithon/recursos/imagenes
 
 	chmod 755 $(PREFIX)/share/wiithon/wiithon.py
@@ -52,13 +52,13 @@ install: uninstall wbfs generarPO
 	chmod 755 $(PREFIX)/share/wiithon/wbfs
 	chmod 755 $(PREFIX)/share/wiithon/cli.py
 	chmod 755 $(PREFIX)/share/wiithon/gui.py
-	chmod 755 $(PREFIX)/share/wiithon/glade_wrapper.py
+	chmod 755 $(PREFIX)/share/wiithon/builder_wrapper.py
 	chmod 755 $(PREFIX)/share/wiithon/util.py
 	chmod 755 $(PREFIX)/share/wiithon/core.py
 	chmod 755 $(PREFIX)/share/wiithon/config.py
 	chmod 755 $(PREFIX)/share/wiithon/pool.py
 
-	chmod 644 $(PREFIX)/share/wiithon/recursos/glade/*.glade
+	chmod 644 $(PREFIX)/share/wiithon/recursos/glade/*.xml
 	chmod 644 $(PREFIX)/share/wiithon/recursos/imagenes/*.png
 	
 	ln -s $(PREFIX)/share/wiithon/wiithon.py $(PREFIX)/bin/wiithon
@@ -77,11 +77,15 @@ uninstall:
 	-$(RM) $(PREFIX)/bin/wiithon_autodetectar
 	-$(RM) $(PREFIX)/bin/wiithon_autodetectar_lector
 	-$(RM) $(PREFIX)/bin/wbfs
+	
+	-$(RM) $(PREFIX)/share/wiithon/glade_wrapper.py
+	
+	-$(RM) $(PREFIX)/share/wiithon/recursos/glade/*.glade
 
-	# viejo acuerdo
+	-$(RM) $(PREFIX)/share/wiithon/.acuerdo
 	-$(RM) ~/.wiithon_acuerdo
 
-	# Fue cambiado de nombre en el pasado
+	-$(RM) $(PREFIX)/share/wiithon/wiithon
 	-$(RM) $(PREFIX)/share/wiithon/wiithon_autodetectar
 	-$(RM) $(PREFIX)/share/wiithon/wiithon_autodetectar_lector
 
@@ -91,20 +95,21 @@ uninstall:
 	# Desinstalando la actual versión
 	
 	-$(RM) $(PREFIX)/bin/wiithon
-	-$(RM) $(PREFIX)/share/wiithon/wiithon
 	-$(RM) $(PREFIX)/share/wiithon/wiithon_autodetectar.sh
 	-$(RM) $(PREFIX)/share/wiithon/wiithon_autodetectar_lector.sh
 	-$(RM) $(PREFIX)/share/wiithon/wbfs
 	-$(RM) $(PREFIX)/share/wiithon/wiithon.py	
 	-$(RM) $(PREFIX)/share/wiithon/util.py	
 	-$(RM) $(PREFIX)/share/wiithon/cli.py	
-	-$(RM) $(PREFIX)/share/wiithon/gui.py	
-	-$(RM) $(PREFIX)/share/wiithon/glade_wrapper.py	
+	-$(RM) $(PREFIX)/share/wiithon/gui.py
+	-$(RM) $(PREFIX)/share/wiithon/builder_wrapper.py
 	-$(RM) $(PREFIX)/share/wiithon/core.py	
 	-$(RM) $(PREFIX)/share/wiithon/config.py
 	-$(RM) $(PREFIX)/share/wiithon/pool.py
-	-$(RM) $(PREFIX)/share/wiithon/recursos/glade/*.glade
+	-$(RM) $(PREFIX)/share/wiithon/recursos/glade/*.xml
 	-$(RM) $(PREFIX)/share/wiithon/recursos/imagenes/*.png
+	
+	-$(RM) $(PREFIX)/share/wiithon/*.pyc
 	
 	-$(RM) /usr/share/locale/en/LC_MESSAGES/wiithon.mo
 	-$(RM) /usr/share/locale/es/LC_MESSAGES/wiithon.mo
@@ -156,10 +161,10 @@ po/en.po: po/plantilla.pot
 	msginit -i po/plantilla.pot -l en_US -o po/en.po --no-translator
 po/es.po: po/plantilla.pot
 	msginit -i po/plantilla.pot -l es_ES -o po/es.po --no-translator
-recursos/glade/wiithon.glade.h:
-	intltool-extract --type="gettext/glade" recursos/glade/wiithon.glade
-po/plantilla.pot: recursos/glade/wiithon.glade.h
-	xgettext --language=Python --keyword=_ --keyword=N_ --from-code=utf-8 --sort-by-file --package-name="wiithon" --package-version="`cat VERSION.txt`" --msgid-bugs-address=makiolo@gmail.com -o po/plantilla.pot *.py recursos/glade/wiithon.glade.h
+recursos/glade/wiithon.xml.h:
+	intltool-extract --type="gettext/glade" recursos/glade/wiithon.xml
+po/plantilla.pot: recursos/glade/wiithon.xml.h
+	xgettext --language=Python --keyword=_ --keyword=N_ --from-code=utf-8 --sort-by-file --package-name="wiithon" --package-version="`cat VERSION.txt`" --msgid-bugs-address=makiolo@gmail.com -o po/plantilla.pot *.py recursos/glade/wiithon.xml.h
 generarPO: po/en.po po/es.po
 	mkdir -p po/es/LC_MESSAGES/
 	mkdir -p po/en/LC_MESSAGES/
@@ -169,6 +174,6 @@ limpiarPO:
 	$(RM) po/es.po
 	$(RM) po/en.po
 	$(RM) po/plantilla.pot
-	$(RM) recursos/glade/wiithon.glade.h
+	$(RM) recursos/glade/wiithon.xml.h
 regenerarPO: limpiarPO generarPO
 
