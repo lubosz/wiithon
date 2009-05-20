@@ -33,11 +33,11 @@ except:
 import gettext
 import locale
 
+from gettext import gettext as _
+
 gettext.bindtextdomain(config.APP,config.LOCALE)
 gettext.textdomain(config.APP)
 gettext.install(config.APP,config.LOCALE)#, unicode=1)
-
-_ = gettext.gettext
 
 def informarAcuerdo(pregunton):
 	res = pregunton(_('''El equipo de Wiithon no se hace responsable de la aplicacion ni de la perdida de datos.
@@ -103,7 +103,7 @@ def App():
 			interfaz.alert("error", str(mensaje) )
 		except:
 			print str(mensaje)
-		
+
 	if PAUSA:
 		raw_input(_("Pulse cualquier tecla para continuar ...\n"))
 	sys.exit(0)
