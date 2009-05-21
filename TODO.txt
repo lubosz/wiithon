@@ -1,6 +1,16 @@
-Cuando instalamos desde DVD, comprobar que ya tenemos ese juego al principio
-Cuando renombramos mostrar el nombre actual
-No permitir caracteres extraños cuando renombramos ( [A-Za-z0-9:_ ()] y poco más )
+Categorías y Tags:
+- Hay que rehacerlo, es solo proof of concept
 
-Hilos:
+Renombrando:
+- No permitir caracteres extraños ( [A-Za-z0-9:_ ()] y poco más )
+
+TreeView de juegos:
+- Poder ordenar por cualquier columna
+- Menu contextual (boton derecho) con opciones : Renombrar, Clasificar y Borrar
+
+TreeView de particiones:
+- Menu contextual (boton derecho) con opciones : Renombrar, Clasificar y Borrar
+
+Links útiles:
 http://mundogeek.net/archivos/2008/04/18/threads-en-python/
+

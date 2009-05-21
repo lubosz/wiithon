@@ -1,7 +1,9 @@
 #!/usr/bin/python
 # vim: set fileencoding=utf-8 :
 
-import gtk , os , time , gobject , util
+import gtk , gobject , pango 
+import os , time
+import util
 
 from builder_wrapper import GtkBuilderWrapper
 import config , sys
@@ -44,10 +46,7 @@ class WiithonGUI(GtkBuilderWrapper):
 			if event.button == 1:
 				widget.set_text('')
 
-			else:
-				print 'nothing'
-
-		GtkBuilderWrapper.__init__(self, config.WIITHON_FILES + '/recursos/glade/wiithon.xml' , 'principal')
+		GtkBuilderWrapper.__init__(self, config.WIITHON_FILES + '/recursos/glade/wiithon.xml')
 		self.core = core
 
 		# permite usar hilos con PyGTK http://faq.pygtk.org/index.py?req=show&file=faq20.006.htp
@@ -61,27 +60,19 @@ class WiithonGUI(GtkBuilderWrapper):
 		#self.wb_hb_entry.pack_start(self.wb_searchEntry)
 		#self.wb_searchEntry.show()
 
-		botonbarra1 = self.wb_tb_anadir
-		botonbarra2 = self.wb_tb_anadir_directorio
-		botonbarra3 = self.wb_tb_borrar
-		botonbarra4 = self.wb_tb_extraer
-		botonbarra6 = self.wb_tb_preferencias
-		botonbarra1.connect('clicked' , self.on_tb_toolbar_clicked)
-		botonbarra2.connect('clicked' , self.on_tb_toolbar_clicked)
-		botonbarra3.connect('clicked' , self.on_tb_toolbar_clicked)
-		botonbarra4.connect('clicked' , self.on_tb_toolbar_clicked)
-		botonbarra6.connect('clicked' , self.on_tb_toolbar_clicked)
+		self.wb_tb_anadir.connect('clicked' , self.on_tb_toolbar_clicked)
+		self.wb_tb_anadir_directorio.connect('clicked' , self.on_tb_toolbar_clicked)
 		
 		try:
 			self.wb_entry1.connect('icon-release', clear_search_cb)
 		except TypeError:
 			print "Cuidado: Necesitas una versión GTK >= 2.16 para visualizar algunas opciones."
 
-		# de momento no hay preferencias
-		botonbarra6.hide()
-
 		# oculto la fila de la progreso
 		self.wb_box_progreso.hide()
+		
+		self.aplicar_estilo_azul_grande( self.wb_titulo_categorias )
+		self.aplicar_estilo_azul_grande( self.wb_titulo_etiquetas )
 
 		self.wb_principal.connect('destroy', self.salir)
 
@@ -116,6 +107,25 @@ class WiithonGUI(GtkBuilderWrapper):
 
 		# pongo el foco en los TreeView de juegos
 		self.wb_tv_games.grab_focus()
+		
+	def aplicar_estilo_azul_grande( self , objeto ):
+		
+		#Creo una lista de atributos  
+		atributos = pango.AttrList() 
+
+		#inserto el tamaño (tamaño_en_puntos * 1000)  
+		#el 0,-1 indica que se aplica a todo el texto del label.  
+		atributos.insert(pango.AttrSize(13000,0,-1))
+
+		#inserto el grosor  
+		#200=ultra-light, 300=light, 400=normal, 700=bold, 800=ultra-bold, 900=heavy  
+		atributos.insert(pango.AttrWeight(700,0,-1))  
+
+		#color (de 0 a 65535 (no 255 ...))
+		atributos.insert(pango.AttrForeground(0x0011,0x4444,0xFFFF,0,-1))  
+		
+		# aplicar atributos
+		objeto.set_attributes(atributos)
 
 
 	def cargarParticionesVista(self):
@@ -152,22 +162,26 @@ class WiithonGUI(GtkBuilderWrapper):
 		tv_games = self.wb_tv_games
 
 		render = gtk.CellRendererText()
+		check = gtk.CellRendererToggle()
 
-		columna1 = gtk.TreeViewColumn(_('ID'), render , text=1)
+		columna1 = gtk.TreeViewColumn(_('IDGAME'), render , text=1)
 		columna2 = gtk.TreeViewColumn(_('Nombre'), render , text=2)
 		columna3 = gtk.TreeViewColumn(_('Tamaño'), render , text=3)
-		columna4 = gtk.TreeViewColumn(_('Tipo de Juego'), render , text=4)
-		columna5 = gtk.TreeViewColumn(_('Año'), render , text=5)
+		columna4 = gtk.TreeViewColumn(_('¿Corrupto?'), check , active=True)
 
 		tv_games.append_column(columna1)
 		tv_games.append_column(columna2)
 		tv_games.append_column(columna3)
 		tv_games.append_column(columna4)
-		tv_games.append_column(columna5)
 
 		tv_games.connect('cursor-changed', self.on_tv_games_cursor_changed)
 
-		modelo = gtk.ListStore (gobject.TYPE_INT , gobject.TYPE_STRING, gobject.TYPE_STRING, gobject.TYPE_STRING,gobject.TYPE_STRING,gobject.TYPE_STRING)
+		modelo = gtk.ListStore (	gobject.TYPE_INT ,	# orden (campo oculto)
+						gobject.TYPE_STRING,	# IDGAME
+						gobject.TYPE_STRING,	# Nombre
+						gobject.TYPE_STRING,	# Tamaño
+						gtk.CheckButton 	# ¿Corrupto?
+						)
 		tv_games.set_model(modelo)
 
 		return modelo
@@ -175,18 +189,22 @@ class WiithonGUI(GtkBuilderWrapper):
 	def cargarJuegosModelo(self , modelo , listaJuegos):
 		if listaJuegos:
 			modelo.clear()
-			i = 0
+			i = 0			
 			for juego in listaJuegos:
 				iterador = modelo.insert(i)
+				# El modelo tiene una columna más no representada
 				modelo.set_value(iterador,0, i )
 				modelo.set_value(iterador,1, juego[0])
 				modelo.set_value(iterador,2, juego[1])
 				modelo.set_value(iterador,3, "%.2f GB" % float(juego[2]))
-				modelo.set_value(iterador,4, "??")
-				modelo.set_value(iterador,5, "??")
+
+				check = gtk.CheckButton(juego[1])
+				check.set_active(True)
+				modelo.set_value(iterador,4, check)
 				i = i + 1
 
 	def salir(self , widget, data=None):
+		# Esperar que los hilos cierren
 		if self.hiloCaratulas != None and self.hiloCaratulas.isAlive():
 			self.hiloCaratulas.interrumpir()
 		if self.hiloAtenderMensajes != None and self.hiloAtenderMensajes.isAlive():
@@ -289,6 +307,14 @@ class WiithonGUI(GtkBuilderWrapper):
 
 			destinoDisco = os.path.join(config.WIITHON_FILES_RECURSOS_IMAGENES , "disco.png")
 			self.wb_img_disco1.set_from_file( destinoDisco )
+			
+	'''
+	def on_tv_games_key_press_event(*arg):
+		print arg
+	'''
+	
+	def on_tv_games_key_press_event(self , treeview , evento):
+		print evento.get_state()
 
 
 	def on_tb_toolbar_clicked(self , id_tb):
@@ -374,13 +400,13 @@ class HiloAtenderMensajes(Thread):
 				elif(mensaje == "PROGRESO_INICIA"):
 					hiloCalcularProgreso = HiloCalcularProgreso( self.actualizarLabel , self.actualizarFraccion )
 					hiloCalcularProgreso.start()
-					self.gui.wg_box_progreso.show()
+					gobject.idle_add( self.mostrarHBoxProgreso )
 				elif(mensaje == "PROGRESO_FIN"):
 					# se ha podido "autodestruir"
 					if self.hiloCalcularProgreso!= None and self.hiloCalcularProgreso.isAlive():
 						hiloCalcularProgreso.interrumpir()
 						hiloCalcularProgreso.join()
-					self.gui.wg_box_progreso.hide()
+					gobject.idle_add( self.ocultarHBoxProgreso )
 				elif(mensaje == "TERMINA_OK"):
 					gobject.idle_add(self.actualizarFraccion , 1.0 )
 					self.gui.refrescarListaJuegos()
@@ -395,6 +421,12 @@ class HiloAtenderMensajes(Thread):
 
 	def actualizarFraccion( self , fraccion ):
 		self.progreso.set_fraction( fraccion )
+		
+	def ocultarHBoxProgreso(self):
+		self.gui.wb_box_progreso.hide()
+		
+	def mostrarHBoxProgreso(self):
+		self.gui.wb_box_progreso.hide()
 
 	def interrumpir(self):
 		self.interrumpido = True
