@@ -168,6 +168,24 @@ class WiithonGUI(GtkBuilderWrapper):
 		columna2 = gtk.TreeViewColumn(_('Nombre'), render , text=2)
 		columna3 = gtk.TreeViewColumn(_('Tamaño'), render , text=3)
 		columna4 = gtk.TreeViewColumn(_('¿Corrupto?'), check , active=True)
+		
+		columna1.set_reorderable(True)
+		columna1.set_expand(False)
+		#columna1.set_sort_indicator(True)
+		
+		columna2.set_reorderable(True)
+		columna2.set_expand(True)
+		columna2.set_sort_indicator(True)
+		columna2.set_sort_order(gtk.SORT_DESCENDING)
+		columna2.set_sort_column_id(1)
+		
+		columna3.set_reorderable(True)
+		columna3.set_expand(False)
+		#columna3.set_sort_indicator(True)
+		
+		columna4.set_reorderable(True)
+		columna4.set_expand(False)
+		#columna4.set_sort_indicator(True)
 
 		tv_games.append_column(columna1)
 		tv_games.append_column(columna2)

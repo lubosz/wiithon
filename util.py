@@ -118,6 +118,15 @@ def getUltimaLinea(fichero):
 		ultimaLinea = linea
 	return ultimaLinea
 
+'''
+Un ejemplo de las listas de python
+
+import popen2
+popen = popen2.Popen3("ls /etc/services noexiste", capturestderr=True)
+stdout = popen.fromchild.read()
+stderr = popen.childerr.read()
+retcode = popen.wait() >> 8
+'''
 
 ## demo de gtk.Entry con Sexy (o no, si lo tienes instalado)
 ## ENTRY: Use python sexy if available, gtk otherwise
