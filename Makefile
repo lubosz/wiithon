@@ -39,11 +39,13 @@ install: uninstall wbfs generarPO
 	cp core.py $(PREFIX)/share/wiithon
 	cp config.py $(PREFIX)/share/wiithon
 	cp pool.py $(PREFIX)/share/wiithon
+	cp trabajo.py $(PREFIX)/share/wiithon
+	cp mensaje.py $(PREFIX)/share/wiithon
 
 	cp po/en/LC_MESSAGES/wiithon.mo /usr/share/locale/en/LC_MESSAGES/wiithon.mo
 	cp po/es/LC_MESSAGES/wiithon.mo /usr/share/locale/es/LC_MESSAGES/wiithon.mo
 
-	cp recursos/glade/*.xml $(PREFIX)/share/wiithon/recursos/glade
+	cp recursos/glade/*.ui $(PREFIX)/share/wiithon/recursos/glade
 	cp recursos/imagenes/*.png $(PREFIX)/share/wiithon/recursos/imagenes
 
 	chmod 755 $(PREFIX)/share/wiithon/wiithon.py
@@ -58,7 +60,7 @@ install: uninstall wbfs generarPO
 	chmod 755 $(PREFIX)/share/wiithon/config.py
 	chmod 755 $(PREFIX)/share/wiithon/pool.py
 
-	chmod 644 $(PREFIX)/share/wiithon/recursos/glade/*.xml
+	chmod 644 $(PREFIX)/share/wiithon/recursos/glade/*.ui
 	chmod 644 $(PREFIX)/share/wiithon/recursos/imagenes/*.png
 	
 	ln -s $(PREFIX)/share/wiithon/wiithon.py $(PREFIX)/bin/wiithon
@@ -80,6 +82,7 @@ uninstall:
 	
 	-$(RM) $(PREFIX)/share/wiithon/glade_wrapper.py
 	
+	-$(RM) $(PREFIX)/share/wiithon/recursos/glade/*.xml
 	-$(RM) $(PREFIX)/share/wiithon/recursos/glade/*.glade
 
 	-$(RM) $(PREFIX)/share/wiithon/.acuerdo
@@ -106,7 +109,9 @@ uninstall:
 	-$(RM) $(PREFIX)/share/wiithon/core.py	
 	-$(RM) $(PREFIX)/share/wiithon/config.py
 	-$(RM) $(PREFIX)/share/wiithon/pool.py
-	-$(RM) $(PREFIX)/share/wiithon/recursos/glade/*.xml
+	-$(RM) $(PREFIX)/share/wiithon/trabajo.py
+	-$(RM) $(PREFIX)/share/wiithon/mensaje.py
+	-$(RM) $(PREFIX)/share/wiithon/recursos/glade/*.ui
 	-$(RM) $(PREFIX)/share/wiithon/recursos/imagenes/*.png
 	
 	-$(RM) $(PREFIX)/share/wiithon/*.pyc
@@ -161,10 +166,10 @@ po/en.po: po/plantilla.pot
 	msginit -i po/plantilla.pot -l en_US -o po/en.po --no-translator
 po/es.po: po/plantilla.pot
 	msginit -i po/plantilla.pot -l es_ES -o po/es.po --no-translator
-recursos/glade/wiithon.xml.h:
-	intltool-extract --type="gettext/glade" recursos/glade/wiithon.xml
-po/plantilla.pot: recursos/glade/wiithon.xml.h
-	xgettext --language=Python --keyword=_ --keyword=N_ --from-code=utf-8 --sort-by-file --package-name="wiithon" --package-version="`cat VERSION.txt`" --msgid-bugs-address=makiolo@gmail.com -o po/plantilla.pot *.py recursos/glade/wiithon.xml.h
+recursos/glade/wiithon.ui.h:
+	intltool-extract --type="gettext/glade" recursos/glade/wiithon.ui
+po/plantilla.pot: recursos/glade/wiithon.ui.h
+	xgettext --language=Python --keyword=_ --keyword=N_ --from-code=utf-8 --sort-by-file --package-name="wiithon" --package-version="`cat VERSION.txt`" --msgid-bugs-address=makiolo@gmail.com -o po/plantilla.pot *.py recursos/glade/wiithon.ui.h
 generarPO: po/en.po po/es.po
 	mkdir -p po/es/LC_MESSAGES/
 	mkdir -p po/en/LC_MESSAGES/
@@ -174,6 +179,6 @@ limpiarPO:
 	$(RM) po/es.po
 	$(RM) po/en.po
 	$(RM) po/plantilla.pot
-	$(RM) recursos/glade/wiithon.xml.h
+	$(RM) recursos/glade/wiithon.ui.h
 regenerarPO: limpiarPO generarPO
 

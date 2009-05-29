@@ -10,43 +10,42 @@ import config , sys
 
 from threading import Thread
 
-from core import HiloPoolAnadir
+from trabajo import HiloPoolTrabajo
+
 from core import HiloDescargarTodasLasCaratulaYDiscos
-from core import Mensaje
 
 class WiithonGUI(GtkBuilderWrapper):
 
-	######### PUNTEROS ##############
+	def __init__(self, core):				
+		# Constructor padre
+		
+		GtkBuilderWrapper.__init__(self, config.WIITHON_FILES + '/recursos/glade/wiithon.ui')
+				
+		######### PUNTEROS ##############
 
-	# Referencia copia a la lista de juegos
-	listaJuegos = None
+		# Referencia copia a la lista de juegos
+		self.listaJuegos = None
 
-	# Juego seleccionado
-	iteradorJuegoSeleccionado = None
+		# Juego seleccionado
+		self.seleccionJuegoSeleccionado = None
+		self.iteradorJuegoSeleccionado = None
+		self.IDGAMEJuegoSeleccionado = ""
 
-	# IDGAME Juego seleccionado
-	IDGAMEJuegoSeleccionado = ""
+		self.seleccionParticionSeleccionada = None
+		self.iteradorParticionSeleccionada = None
+		self.DEVICEParticionSeleccionada = ""
 
-	# Copia del DEVICE seleccionado
-	DEVICE = ""
+		########### HILOS ###############
 
-	########### HILOS ###############
+		# Trabajador, se le mandan trabajos
+		self.hiloPoolTrabajo = None
 
-	# Trabajador para Atender Mensajes
-	hiloPoolAnadir = None
+		# Para atender mensajes
+		self.hiloAtenderMensajes = None
 
-	# Para atender mensajes
-	hiloAtenderMensajes = None
+		# Hilo para descarga de caratulas
+		self.hiloCaratulas = None
 
-	# Hilo para descarga de caratulas
-	hiloCaratulas = None
-
-	def __init__(self, core):
-		def clear_search_cb(widget, position, event):
-			if event.button == 1:
-				widget.set_text('')
-
-		GtkBuilderWrapper.__init__(self, config.WIITHON_FILES + '/recursos/glade/wiithon.xml')
 		self.core = core
 
 		# permite usar hilos con PyGTK http://faq.pygtk.org/index.py?req=show&file=faq20.006.htp
@@ -56,23 +55,34 @@ class WiithonGUI(GtkBuilderWrapper):
 		self.wb_principal.set_title('Wiithon')
 		self.wb_principal.show()
 
-		#self.wb_searchEntry = util.Entry(clear=True)
-		#self.wb_hb_entry.pack_start(self.wb_searchEntry)
-		#self.wb_searchEntry.show()
-
 		self.wb_tb_anadir.connect('clicked' , self.on_tb_toolbar_clicked)
 		self.wb_tb_anadir_directorio.connect('clicked' , self.on_tb_toolbar_clicked)
-		
-		try:
-			self.wb_entry1.connect('icon-release', clear_search_cb)
-		except TypeError:
-			print "Cuidado: Necesitas una versión GTK >= 2.16 para visualizar algunas opciones."
+		self.wb_tb_extraer.connect('clicked' , self.on_tb_toolbar_clicked)
+		self.wb_tb_renombrar.connect('clicked' , self.on_tb_toolbar_clicked)
+		self.wb_tb_clasificar1.connect('clicked' , self.on_tb_toolbar_clicked)
+		self.wb_tb_borrar.connect('clicked' , self.on_tb_toolbar_clicked)
+		self.wb_tb_copiar_SD.connect('clicked' , self.on_tb_toolbar_clicked)
+		self.wb_tb_preferencias1.connect('clicked' , self.on_tb_toolbar_clicked)
 
 		# oculto la fila de la progreso
 		self.wb_box_progreso.hide()
 		
-		self.aplicar_estilo_azul_grande( self.wb_titulo_categorias )
-		self.aplicar_estilo_azul_grande( self.wb_titulo_etiquetas )
+		#ocultar buscador (de momento)
+		self.wb_hbox6.hide()
+		self.wb_hbox7.hide()
+		self.wb_tb_clasificar1.hide()
+		self.wb_tb_preferencias1.hide()
+		self.wb_toolbutton2.hide()
+		'''
+		# No necesitamos la señal, para esta versión
+		try:
+			self.wb_entry1.connect('icon-release', self.clear_search_cb)
+		except TypeError:
+			print "Cuidado: Necesitas una versión GTK >= 2.16 para visualizar algunas opciones."
+		'''
+		
+		self.wb_titulo_categorias.set_attributes( self.getEstilo_azulGrande() )
+		self.wb_titulo_etiquetas.set_attributes( self.getEstilo_azulGrande() )
 
 		self.wb_principal.connect('destroy', self.salir)
 
@@ -89,6 +99,8 @@ class WiithonGUI(GtkBuilderWrapper):
 
 			destinoDisco = os.path.join(config.WIITHON_FILES_RECURSOS_IMAGENES , "disco.png")
 			self.wb_img_disco1.set_from_file( destinoDisco )
+			
+			self.alert("warning" , "No se han encontrado particiones WBFS")
 		else:
 			# carga el modelo de datos del TreeView de particiones
 			self.cargarParticionesModelo(self.tv_partitions_modelo , listaParticiones)
@@ -108,7 +120,10 @@ class WiithonGUI(GtkBuilderWrapper):
 		# pongo el foco en los TreeView de juegos
 		self.wb_tv_games.grab_focus()
 		
-	def aplicar_estilo_azul_grande( self , objeto ):
+	def on_principal_realize(*arg):
+		print arg
+		
+	def getEstilo_azulGrande( self ):
 		
 		#Creo una lista de atributos  
 		atributos = pango.AttrList() 
@@ -119,14 +134,18 @@ class WiithonGUI(GtkBuilderWrapper):
 
 		#inserto el grosor  
 		#200=ultra-light, 300=light, 400=normal, 700=bold, 800=ultra-bold, 900=heavy  
-		atributos.insert(pango.AttrWeight(700,0,-1))  
+		atributos.insert(pango.AttrWeight(700,0,-1))
 
 		#color (de 0 a 65535 (no 255 ...))
 		atributos.insert(pango.AttrForeground(0x0011,0x4444,0xFFFF,0,-1))  
 		
-		# aplicar atributos
-		objeto.set_attributes(atributos)
-
+		return atributos
+		
+	'''
+	def clear_search_cb(self, widget, position, event):
+		if event.button == 1:
+			widget.set_text('')
+	'''
 
 	def cargarParticionesVista(self):
 		tv_partitions = self.wb_tv_partitions
@@ -157,35 +176,57 @@ class WiithonGUI(GtkBuilderWrapper):
 				modelo.set_value(iterador,2,particion.split(":")[1])
 				i = i + 1
 
+	def edit_amount( self, renderEditable, i, nuevoNombre ):
+		if self.iteradorJuegoSeleccionado != None:
+			nombreActual = self.seleccionJuegoSeleccionado.get_value(self.iteradorJuegoSeleccionado,2)
+			if(nombreActual != nuevoNombre):
+				if self.core.renombrarISO(self.DEVICEParticionSeleccionada , self.IDGAMEJuegoSeleccionado , nuevoNombre):
+					self.tv_games_modelo.set_value(self.iteradorJuegoSeleccionado,2,nuevoNombre)
+				else:
+					print "Error renombrando"
+			else:
+				print "No has cambiado el nombre"
+
 	def cargarJuegosVista(self):
 		# Documentacion útil: http://blog.rastersoft.com/index.php/2007/01/27/trabajando-con-gtktreeview-en-python/
 		tv_games = self.wb_tv_games
+		
+		# ¿Como aplico propiedades style?
+		#tv_games.set_property("even-row-color" , gtk.gdk.Color(0xFFFF,0x0,0x0) )
+		#tv_games.set_property("odd-row-color" ,   gtk.gdk.Color(0x0 , 0x0 , 0x0) )
 
+		renderEditable = gtk.CellRendererText()
+		renderEditable.set_property("editable", True)
+		renderEditable.set_property("attributes", self.getEstilo_azulGrande() )
+		renderEditable.connect ("edited", self.edit_amount)
 		render = gtk.CellRendererText()
 		check = gtk.CellRendererToggle()
 
 		columna1 = gtk.TreeViewColumn(_('IDGAME'), render , text=1)
-		columna2 = gtk.TreeViewColumn(_('Nombre'), render , text=2)
+		columna2 = gtk.TreeViewColumn(_('Nombre'), renderEditable , text=2)
 		columna3 = gtk.TreeViewColumn(_('Tamaño'), render , text=3)
 		columna4 = gtk.TreeViewColumn(_('¿Corrupto?'), check , active=True)
 		
-		columna1.set_reorderable(True)
 		columna1.set_expand(False)
-		#columna1.set_sort_indicator(True)
+		columna1.set_min_width(80)
+		columna1.set_reorderable(True)
+		columna1.set_sort_order(gtk.SORT_DESCENDING)
+		columna1.set_sort_column_id(1)
 		
-		columna2.set_reorderable(True)
 		columna2.set_expand(True)
+		columna2.set_reorderable(True)
 		columna2.set_sort_indicator(True)
 		columna2.set_sort_order(gtk.SORT_DESCENDING)
-		columna2.set_sort_column_id(1)
+		columna2.set_sort_column_id(2)
 		
-		columna3.set_reorderable(True)
 		columna3.set_expand(False)
-		#columna3.set_sort_indicator(True)
+		columna3.set_min_width(80)
+		columna3.set_reorderable(True)
+		columna3.set_sort_order(gtk.SORT_DESCENDING)
+		columna3.set_sort_column_id(3)
 		
-		columna4.set_reorderable(True)
 		columna4.set_expand(False)
-		#columna4.set_sort_indicator(True)
+		columna4.set_min_width(80)
 
 		tv_games.append_column(columna1)
 		tv_games.append_column(columna2)
@@ -221,20 +262,23 @@ class WiithonGUI(GtkBuilderWrapper):
 				modelo.set_value(iterador,4, check)
 				i = i + 1
 
-	def salir(self , widget, data=None):
+	def salir(self , widget=None, data=None):
 		# Esperar que los hilos cierren
+		'''
 		if self.hiloCaratulas != None and self.hiloCaratulas.isAlive():
 			self.hiloCaratulas.interrumpir()
 		if self.hiloAtenderMensajes != None and self.hiloAtenderMensajes.isAlive():
 			self.hiloAtenderMensajes.interrumpir()
 		if self.hiloPoolAnadir != None and self.hiloPoolAnadir.isAlive():
 			self.hiloPoolAnadir.interrumpir()
+		'''
 		gtk.main_quit()
 
 	def alert(self, level, message):
 		alert_glade = gtk.Builder()
-		alert_glade.add_from_file( config.WIITHON_FILES + '/recursos/glade/wiithon.xml' )
-		alert_glade.get_object('principal').hide()
+		alert_glade.add_from_file( config.WIITHON_FILES + '/recursos/glade/alerta.ui' )
+		alert_glade.set_translation_domain( config.APP )
+		#alert_glade.connect_signals(self)
 
 		level_icons = {
 			'question': gtk.STOCK_DIALOG_QUESTION,
@@ -248,7 +292,6 @@ class WiithonGUI(GtkBuilderWrapper):
 			'info':     (gtk.STOCK_APPLY, None),
 			'warning':  (gtk.STOCK_APPLY, None),
 			'error':    (gtk.STOCK_CLOSE, None),
-
 			}
 
 		# configure the label text:
@@ -288,9 +331,9 @@ class WiithonGUI(GtkBuilderWrapper):
 
 	def refrescarListaJuegos(self):
 		# recargar el modelo de datos la lista de juegos
-		self.DEVICE = self.core.getDeviceSeleccionado()
-		self.listaJuegos = self.core.getListaJuegos( self.DEVICE )
+		self.listaJuegos = self.core.getListaJuegos( self.DEVICEParticionSeleccionada )
 		self.cargarJuegosModelo( self.tv_games_modelo , self.listaJuegos )
+		# Esta petando ... además
 		self.seleccionarPrimeraFila( self.wb_tv_games , self.on_tv_games_cursor_changed)
 
 	def seleccionarPrimeraFila(self , treeview , callback):
@@ -300,88 +343,121 @@ class WiithonGUI(GtkBuilderWrapper):
 			treeview.get_selection().select_iter( iter_primero )
 		callback( treeview )
 
-
 	# Click en particiones --> refresca la lista de juegos
 	def on_tv_partitions_cursor_changed(self , treeview):
-		seleccion,iterador = treeview.get_selection().get_selected()
-		if iterador != None:
-			self.core.setParticionSeleccionada( seleccion.get_value(iterador,0) )
+		# particion seleccionado
+		self.seleccionParticionSeleccionada, self.iteradorParticionSeleccionada  = self.wb_tv_partitions.get_selection().get_selected()
+		if self.iteradorParticionSeleccionada != None:		
+			# establece en el core la nueva partición seleccionada
+			self.core.setParticionSeleccionada( self.seleccionParticionSeleccionada.get_value(self.iteradorParticionSeleccionada,0) )
+			# sincroniza la variable DEVICE con el core
+			self.DEVICEParticionSeleccionada = self.core.getDeviceSeleccionado()
 
+			# refrescamos la lista de juegos
 			self.refrescarListaJuegos()
 
 	def on_tv_games_cursor_changed(self , treeview):
-		seleccion,self.iteradorJuegoSeleccionado = treeview.get_selection().get_selected()
+		self.seleccionJuegoSeleccionado , self.iteradorJuegoSeleccionado = self.wb_tv_games.get_selection().get_selected()
 		if self.iteradorJuegoSeleccionado != None:
-			self.IDGAMEJuegoSeleccionado = seleccion.get_value(self.iteradorJuegoSeleccionado,1)
+			self.IDGAMEJuegoSeleccionado = self.seleccionJuegoSeleccionado.get_value(self.iteradorJuegoSeleccionado,1)
 
 			destinoCaratula = os.path.join(config.HOME_WIITHON_CARATULAS , self.IDGAMEJuegoSeleccionado+".png")
-			self.wb_img_caratula1.set_from_file( destinoCaratula )
-
 			destinoDisco = os.path.join(config.HOME_WIITHON_DISCOS , self.IDGAMEJuegoSeleccionado+".png")
-			self.wb_img_disco1.set_from_file( destinoDisco )
 		else:
 			destinoCaratula = os.path.join(config.WIITHON_FILES_RECURSOS_IMAGENES , "caratula.png")
-			self.wb_img_caratula1.set_from_file( destinoCaratula )
-
 			destinoDisco = os.path.join(config.WIITHON_FILES_RECURSOS_IMAGENES , "disco.png")
-			self.wb_img_disco1.set_from_file( destinoDisco )
 			
-	'''
-	def on_tv_games_key_press_event(*arg):
-		print arg
-	'''
-	
-	def on_tv_games_key_press_event(self , treeview , evento):
-		print evento.get_state()
-
+		self.wb_img_caratula1.set_from_file( destinoCaratula )
+		self.wb_img_disco1.set_from_file( destinoDisco )
 
 	def on_tb_toolbar_clicked(self , id_tb):
 		if(id_tb == self.wb_tb_borrar):
-			if (self.question(_('¿Quieres borrar el juego con ID = "%s"?' % self.IDGAMEJuegoSeleccionado)) == 1):
-				if self.iteradorJuegoSeleccionado != None:
+			if self.iteradorJuegoSeleccionado != None:
+				if (self.question(_('¿Quieres borrar el juego con ID = "%s"?' % self.IDGAMEJuegoSeleccionado)) == 1):
 					# borrar del HD
-					self.core.borrarJuego( self.core.getDeviceSeleccionado() , self.IDGAMEJuegoSeleccionado )
+					self.core.borrarJuego( self.DEVICEParticionSeleccionada , self.IDGAMEJuegoSeleccionado )
 
 					# borrar de la tabla
 					self.tv_games_modelo.remove( self.iteradorJuegoSeleccionado )
 
 					# seleccionar el primero
 					self.seleccionarPrimeraFila( self.wb_tv_games , self.on_tv_games_cursor_changed)
+			else:
+				self.alert("warning" , "No has seleccionado ningún juego")
 		elif(id_tb == self.wb_tb_extraer):
-			seleccion,iterador = self.wb_tv_games.get_selection().get_selected()
-			if iterador != None:
-				DEVICE = self.core.getDeviceSeleccionado()
-				IDGAME = seleccion.get_value(iterador,1)
-				self.core.extraerJuego( DEVICE , IDGAME )
-		else:
-			botones = (gtk.STOCK_CANCEL,
-				   gtk.RESPONSE_CANCEL,
-				   gtk.STOCK_OPEN,
-				   gtk.RESPONSE_OK,
+			if self.iteradorJuegoSeleccionado != None:				
+				if( self.hiloPoolTrabajo == None or not self.hiloPoolTrabajo.isAlive() ):
+					self.hiloPoolTrabajo = HiloPoolTrabajo( self.core )
+					self.hiloPoolTrabajo.setDaemon(True)
+
+				self.hiloPoolTrabajo.extraer( self.IDGAMEJuegoSeleccionado )
+
+				if( self.hiloPoolTrabajo == None or not self.hiloPoolTrabajo.isAlive() ):
+					self.hiloPoolTrabajo.start()
+
+				if( self.hiloAtenderMensajes == None or not self.hiloAtenderMensajes.isAlive() ):
+					self.hiloAtenderMensajes = HiloAtenderMensajes( self.core , self.hiloPoolTrabajo , self.wb_progreso1 , self )
+					self.hiloAtenderMensajes.setDaemon(True)
+					self.hiloAtenderMensajes.start()
+			else:
+				self.alert("warning" , "No has seleccionado ningún juego")
+		elif(id_tb == self.wb_tb_copiar_SD):
+		
+			botones = (
+					gtk.STOCK_CANCEL,
+				   	gtk.RESPONSE_CANCEL,
+				   	gtk.STOCK_OPEN,
+				   	gtk.RESPONSE_OK,
 				   )
+		
+			fc_copiar_SD = gtk.FileChooserDialog(_("Elige un directorio"), None , gtk.FILE_CHOOSER_ACTION_SELECT_FOLDER , botones)
+			fc_copiar_SD.set_local_only(True)
+			fc_copiar_SD.show()
+			
+			if fc_copiar_SD.run() == gtk.RESPONSE_OK:
+				print fc_copiar_SD.get_filenames()
+				
+			fc_copiar_SD.destroy()
 
-			if(id_tb == self.wb_tb_anadir):
-				fc_anadir = gtk.FileChooserDialog(_("Elige una ISO o un RAR"), None , gtk.FILE_CHOOSER_ACTION_OPEN , botones)
+		elif(id_tb == self.wb_tb_anadir or id_tb == self.wb_tb_anadir_directorio):
+			if self.iteradorParticionSeleccionada != None:
 
-			elif(id_tb == self.wb_tb_anadir_directorio):
-				fc_anadir = gtk.FileChooserDialog(_("Elige un directorio"), None , gtk.FILE_CHOOSER_ACTION_SELECT_FOLDER , botones)
+				botones = (gtk.STOCK_CANCEL,
+					   gtk.RESPONSE_CANCEL,
+					   gtk.STOCK_OPEN,
+					   gtk.RESPONSE_OK,
+					   )
 
-			fc_anadir.set_local_only(True)
-			fc_anadir.set_select_multiple(True)
-			fc_anadir.show()
+				if(id_tb == self.wb_tb_anadir):
+					fc_anadir = gtk.FileChooserDialog(_("Elige una ISO o un RAR"), None , gtk.FILE_CHOOSER_ACTION_OPEN , botones)
+					fc_anadir.set_select_multiple(True)
 
-			if fc_anadir.run() == gtk.RESPONSE_OK:
+				elif(id_tb == self.wb_tb_anadir_directorio):
+					fc_anadir = gtk.FileChooserDialog(_("Elige un directorio"), None , gtk.FILE_CHOOSER_ACTION_SELECT_FOLDER , botones)
 
-				self.hiloPoolAnadir = HiloPoolAnadir( self.core )
-				self.hiloPoolAnadir.setDaemon(True)
-				self.hiloPoolAnadir.anadir( fc_anadir.get_filenames() )
-				self.hiloPoolAnadir.start()
+				fc_anadir.set_local_only(True)
 
-				self.hiloAtenderMensajes = HiloAtenderMensajes( self.core , self.hiloPoolAnadir , self.wb_progreso1 , self )
-				self.hiloAtenderMensajes.setDaemon(True)
-				self.hiloAtenderMensajes.start()
+				if fc_anadir.run() == gtk.RESPONSE_OK:
+					if( self.hiloPoolTrabajo == None or not self.hiloPoolTrabajo.isAlive() ):
+						self.hiloPoolTrabajo = HiloPoolTrabajo( self.core )
+						self.hiloPoolTrabajo.setDaemon(True)
 
-			fc_anadir.destroy()
+					self.hiloPoolTrabajo.anadir( fc_anadir.get_filenames() )
+
+					if( self.hiloPoolTrabajo == None or not self.hiloPoolTrabajo.isAlive() ):
+						self.hiloPoolTrabajo.start()
+
+					if( self.hiloAtenderMensajes == None or not self.hiloAtenderMensajes.isAlive() ):
+						self.hiloAtenderMensajes = HiloAtenderMensajes( self.core , self.hiloPoolTrabajo , self.wb_progreso1 , self )
+						self.hiloAtenderMensajes.setDaemon(True)
+						self.hiloAtenderMensajes.start()
+
+
+				fc_anadir.destroy()
+			else:
+				self.alert("warning" , "No has seleccionado ningúna partición")
+		else:
+			self.alert("info" , "Sin implementar aún")
 
 class HiloAtenderMensajes(Thread):
 
@@ -420,14 +496,14 @@ class HiloAtenderMensajes(Thread):
 					hiloCalcularProgreso.start()
 					gobject.idle_add( self.mostrarHBoxProgreso )
 				elif(mensaje == "PROGRESO_FIN"):
-					# se ha podido "autodestruir"
 					if self.hiloCalcularProgreso!= None and self.hiloCalcularProgreso.isAlive():
 						hiloCalcularProgreso.interrumpir()
 						hiloCalcularProgreso.join()
 					gobject.idle_add( self.ocultarHBoxProgreso )
 				elif(mensaje == "TERMINA_OK"):
 					gobject.idle_add(self.actualizarFraccion , 1.0 )
-					self.gui.refrescarListaJuegos()
+					gobject.idle_add(self.refrescarJuegos)
+					
 				elif(mensaje == "TERMINA_ERROR"):
 					gobject.idle_add(self.actualizarFraccion , 1.0 )
 				else:
@@ -444,7 +520,10 @@ class HiloAtenderMensajes(Thread):
 		self.gui.wb_box_progreso.hide()
 		
 	def mostrarHBoxProgreso(self):
-		self.gui.wb_box_progreso.hide()
+		self.gui.wb_box_progreso.show()
+		
+	def refrescarJuegos(self):
+		self.gui.refrescarListaJuegos()
 
 	def interrumpir(self):
 		self.interrumpido = True
@@ -470,8 +549,6 @@ class HiloCalcularProgreso(Thread):
 				else:
 					porcentaje = self.porcentaje = float(cachos[0])
 					informativo = _("quedan")
-
-				#sys.stdout
 
 				hora = int(cachos[1])
 				minutos = int(cachos[2])

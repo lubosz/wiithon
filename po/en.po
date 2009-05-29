@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wiithon 0.99\n"
 "Report-Msgid-Bugs-To: makiolo@gmail.com\n"
-"POT-Creation-Date: 2009-05-19 17:12+0200\n"
-"PO-Revision-Date: 2009-05-19 17:12+0200\n"
+"POT-Creation-Date: 2009-05-29 02:49+0200\n"
+"PO-Revision-Date: 2009-05-29 02:49+0200\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
 "MIME-Version: 1.0\n"
@@ -20,138 +20,170 @@ msgstr ""
 msgid "No se ha encontrado ningún disco de la Wii"
 msgstr "No se ha encontrado ningún disco de la Wii"
 
-#: gui.py:126
+#: gui.py:153
 msgid "Dispositivo"
 msgstr "Dispositivo"
 
-#: gui.py:127
+#: gui.py:154
 msgid "Fabricante"
 msgstr "Fabricante"
 
-#: gui.py:156
-msgid "ID"
-msgstr "ID"
+#: gui.py:203
+msgid "IDGAME"
+msgstr "IDGAME"
 
-#: gui.py:157
+#: gui.py:204 recursos/glade/wiithon.ui.h:16
 msgid "Nombre"
 msgstr "Nombre"
 
-#: gui.py:158
+#: gui.py:205
 msgid "Tamaño"
 msgstr "Tamaño"
 
-#: gui.py:159
-msgid "Tipo de Juego"
-msgstr "Tipo de Juego"
+#: gui.py:206
+msgid "¿Corrupto?"
+msgstr "¿Corrupto?"
 
-#: gui.py:160
-msgid "Año"
-msgstr "Año"
-
-#: gui.py:296
+#: gui.py:370
 #, python-format
 msgid "¿Quieres borrar el juego con ID = \"%s\"?"
 msgstr "¿Quieres borrar el juego con ID = \"%s\"?"
 
-#: gui.py:320
-msgid "Elige una ISO o un RAR"
-msgstr "Elige una ISO o un RAR"
-
-#: gui.py:323
+#: gui.py:395 gui.py:418
 msgid "Elige un directorio"
 msgstr "Elige un directorio"
 
-#: gui.py:367
+#: gui.py:414
+msgid "Elige una ISO o un RAR"
+msgstr "Elige una ISO o un RAR"
+
+#: gui.py:465
 #, python-format
 msgid "CUIDADO: %s"
 msgstr "CUIDADO: %s"
 
-#: gui.py:369
+#: gui.py:467
 #, python-format
 msgid "ERROR: %s"
 msgstr "ERROR: %s"
 
-#: gui.py:372
+#: gui.py:470
 msgid "Empezando ..."
 msgstr "Empezando ..."
 
-#: gui.py:390
+#: gui.py:488
 msgid "Comando desconocido"
 msgstr "Comando desconocido"
 
-#: gui.py:418
+#: gui.py:522
 msgid "Finalizando. Hecho en"
 msgstr "Finalizando. Hecho en"
 
-#: gui.py:422
+#: gui.py:526
 msgid "quedan"
 msgstr "quedan"
 
-#: recursos/glade/wiithon.xml.h:1
+#: recursos/glade/wiithon.ui.h:1
 msgid "1 / 2"
 msgstr "1 / 2"
 
-#: recursos/glade/wiithon.xml.h:2
+#: recursos/glade/wiithon.ui.h:2
 msgid "A&#xF1;adir"
 msgstr "A&#xF1;adir"
 
-#: recursos/glade/wiithon.xml.h:3
+#: recursos/glade/wiithon.ui.h:3
 msgid "A&#xF1;adir directorio"
 msgstr "A&#xF1;adir directorio"
 
-#: recursos/glade/wiithon.xml.h:4
+#: recursos/glade/wiithon.ui.h:4
+msgid "Borrar"
+msgstr "Borrar"
+
+#: recursos/glade/wiithon.ui.h:5
 msgid "Buscar:"
 msgstr "Buscar:"
 
-#: recursos/glade/wiithon.xml.h:5
+#: recursos/glade/wiithon.ui.h:6
+msgid "CONCEPT"
+msgstr "CONCEPT"
+
+#: recursos/glade/wiithon.ui.h:7
 msgid "Categor&#xED;a"
 msgstr "Categor&#xED;a"
 
-#: recursos/glade/wiithon.xml.h:6
+#: recursos/glade/wiithon.ui.h:8
+msgid "Categor&#xED;as"
+msgstr "Categor&#xED;as"
+
+#: recursos/glade/wiithon.ui.h:9
+msgid "Clasificar"
+msgstr "Clasificar"
+
+#: recursos/glade/wiithon.ui.h:10
 msgid "Consola"
 msgstr "Consola"
 
-#: recursos/glade/wiithon.xml.h:7
+#: recursos/glade/wiithon.ui.h:11
 msgid "Descarga de caratulas (0)"
 msgstr "Descarga de caratulas (0)"
 
-#: recursos/glade/wiithon.xml.h:8
+#: recursos/glade/wiithon.ui.h:12
 msgid "Etiqueta"
 msgstr "Etiqueta"
 
-#: recursos/glade/wiithon.xml.h:9
-msgid "Extraer"
-msgstr "Extraer"
+#: recursos/glade/wiithon.ui.h:13
+msgid "Etiquetas"
+msgstr "Etiquetas"
 
-#: recursos/glade/wiithon.xml.h:10
+#: recursos/glade/wiithon.ui.h:14
+msgid "Extraer a ISO"
+msgstr "Extraer a ISO"
+
+#: recursos/glade/wiithon.ui.h:15
 msgid "M&#xE1;s Informaci&#xF3;n"
 msgstr "M&#xE1;s Informaci&#xF3;n"
 
-#: recursos/glade/wiithon.xml.h:11
+#: recursos/glade/wiithon.ui.h:17
+msgid "Nuevo"
+msgstr "Nuevo"
+
+#: recursos/glade/wiithon.ui.h:18
+msgid "OF"
+msgstr "OF"
+
+#: recursos/glade/wiithon.ui.h:19
+msgid "PROOF"
+msgstr "PROOF"
+
+#: recursos/glade/wiithon.ui.h:20
 msgid "Preferencias"
 msgstr "Preferencias"
 
-#: recursos/glade/wiithon.xml.h:12
+#: recursos/glade/wiithon.ui.h:21
 msgid "Renombrar"
 msgstr "Renombrar"
 
-#: recursos/glade/wiithon.xml.h:13
+#: recursos/glade/wiithon.ui.h:22
+msgid "Reportar bug"
+msgstr "Reportar bug"
+
+#: recursos/glade/wiithon.ui.h:23
 msgid "Todo"
 msgstr "Todo"
 
-#: recursos/glade/wiithon.xml.h:14
+#: recursos/glade/wiithon.ui.h:24
 msgid "Trabajos pendientes (0)"
 msgstr "Trabajos pendientes (0)"
 
-#: recursos/glade/wiithon.xml.h:15
-msgid "gtk-cancel"
-msgstr "gtk-cancel"
+#: recursos/glade/wiithon.ui.h:25
+msgid "caratulas a SD"
+msgstr "caratulas a SD"
 
-#: recursos/glade/wiithon.xml.h:16
-msgid "gtk-ok"
-msgstr "gtk-ok"
+#: recursos/glade/wiithon.ui.h:26
+msgid "label"
+msgstr "label"
 
-#: recursos/glade/wiithon.xml.h:17
+#: recursos/glade/wiithon.ui.h:27
 msgid ""
 "lajsk kas jaslkjas llk askljaj adsk\n"
 "aslkj asdklaslk jasldkjald laskdalskdjalsk d\n"
