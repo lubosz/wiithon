@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wiithon 0.99\n"
 "Report-Msgid-Bugs-To: makiolo@gmail.com\n"
-"POT-Creation-Date: 2009-05-29 02:49+0200\n"
-"PO-Revision-Date: 2009-05-29 02:49+0200\n"
+"POT-Creation-Date: 2009-05-29 06:11+0200\n"
+"PO-Revision-Date: 2009-05-29 06:11+0200\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
 "MIME-Version: 1.0\n"
@@ -16,70 +16,70 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: core.py:61
+#: core.py:58
 msgid "No se ha encontrado ningún disco de la Wii"
 msgstr ""
 
-#: gui.py:153
+#: gui.py:155
 msgid "Dispositivo"
 msgstr ""
 
-#: gui.py:154
+#: gui.py:156
 msgid "Fabricante"
 msgstr ""
 
-#: gui.py:203
+#: gui.py:205
 msgid "IDGAME"
 msgstr ""
 
-#: gui.py:204 recursos/glade/wiithon.ui.h:16
+#: gui.py:206 recursos/glade/wiithon.ui.h:16
 msgid "Nombre"
 msgstr ""
 
-#: gui.py:205
+#: gui.py:207
 msgid "Tamaño"
 msgstr ""
 
-#: gui.py:206
+#: gui.py:208
 msgid "¿Corrupto?"
 msgstr ""
 
-#: gui.py:370
+#: gui.py:376
 #, python-format
 msgid "¿Quieres borrar el juego con ID = \"%s\"?"
 msgstr ""
 
-#: gui.py:395 gui.py:418
+#: gui.py:413 gui.py:436
 msgid "Elige un directorio"
 msgstr ""
 
-#: gui.py:414
+#: gui.py:432
 msgid "Elige una ISO o un RAR"
 msgstr ""
 
-#: gui.py:465
+#: gui.py:487
 #, python-format
 msgid "CUIDADO: %s"
 msgstr ""
 
-#: gui.py:467
+#: gui.py:489
 #, python-format
 msgid "ERROR: %s"
 msgstr ""
 
-#: gui.py:470
+#: gui.py:492
 msgid "Empezando ..."
 msgstr ""
 
-#: gui.py:488
+#: gui.py:510
 msgid "Comando desconocido"
 msgstr ""
 
-#: gui.py:522
+#: gui.py:547
 msgid "Finalizando. Hecho en"
 msgstr ""
 
-#: gui.py:526
+#: gui.py:551
 msgid "quedan"
 msgstr ""
 
@@ -190,6 +190,75 @@ msgid ""
 "dslaj skldjlaskjd aklsjdlaksjdlaskjlasjlaksjlkasj lasdkj \n"
 "&#xF1;slakjdasj lkasjdklasjd lkajdlkasjdlkasj \n"
 "laskj als jlas lsadk laskjdlaksjd lakjd laksjd klaj"
+msgstr ""
+
+#: trabajo.py:31
+msgid "La ISO o la partición no existe"
+msgstr ""
+
+#: trabajo.py:34
+msgid "Buscando ISO dentro del RAR"
+msgstr ""
+
+#: trabajo.py:41
+msgid "ISO Descomprimida"
+msgstr ""
+
+#: trabajo.py:44
+#, python-format
+msgid "Al descomrpimir el RAR : %s"
+msgstr ""
+
+#: trabajo.py:46
+#, python-format
+msgid "No se puede descomrpimir por que reemplazaría el ISO : %s"
+msgstr ""
+
+#: trabajo.py:48
+#, python-format
+msgid "El RAR %s no tenía ninguna ISO"
+msgstr ""
+
+#: trabajo.py:52
+#, python-format
+msgid "Buscando en %s ficheros RAR ... "
+msgstr ""
+
+#: trabajo.py:55
+msgid "No se ha encontrado ningún RAR con ISOS dentro"
+msgstr ""
+
+#: trabajo.py:60
+#, python-format
+msgid "Buscando en %s Imagenes ISO ... "
+msgstr ""
+
+#: trabajo.py:63
+msgid "INFO"
+msgstr ""
+
+#: trabajo.py:63
+msgid "No se ha encontrado ningún ISO"
+msgstr ""
+
+#: trabajo.py:69
+#, python-format
+msgid "Añadir ISO : %s a la particion %s %s"
+msgstr ""
+
+#: trabajo.py:72
+#, python-format
+msgid "ISO %s añadida correctamente"
+msgstr ""
+
+#: trabajo.py:75
+#, python-format
+msgid "Añadiendo la ISO : %s (comprueba que sea una ISO de WII)"
+msgstr ""
+
+#: trabajo.py:80
+#, python-format
+msgid "%s no es un ningún juego de Wii"
 msgstr ""
 
 #: wiithon.py:30
