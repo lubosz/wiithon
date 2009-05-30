@@ -172,8 +172,12 @@ class WiithonGUI(GtkBuilderWrapper):
 			for particion in listaParticiones:
 				iterador = modelo.insert(i)
 				modelo.set_value(iterador,0,i)
-				modelo.set_value(iterador,1,particion.split(":")[0])
-				modelo.set_value(iterador,2,particion.split(":")[1])
+				cachos = particion.split(":")
+				modelo.set_value(iterador,1,cachos[0])
+				if ( len(cachos) > 1 ):
+					modelo.set_value(iterador,2,particion.split(":")[1])
+				else:
+					modelo.set_value(iterador,2,"Desconocido")
 				i = i + 1
 
 	def edit_amount( self, renderEditable, i, nuevoNombre ):
