@@ -329,7 +329,7 @@ class WiithonCORE:
 
 	# Procedimiento que refresca la lista de particiones
 	def refrescarParticionWBFS(self):
-		salida = util.getSTDOUT( config.DETECTOR_WBFS )
+		salida = util.getSTDOUT( config.DETECTOR_WBFS , False)
 
 		self.listaParticiones = []
 

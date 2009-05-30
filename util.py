@@ -100,8 +100,16 @@ def getSTDOUT_iterador(comando):
 	out = p.stdout.readlines()
 	return out
 
-def getSTDOUT(comando):
-	out = getSTDOUT_iterador(comando)
+def getSTDOUT_NOERROR_iterador(comando):
+	p = subprocess.Popen(comando , shell=True , stdout=subprocess.PIPE , stderr=open("/dev/null" , "w"))
+	out = p.stdout.readlines()
+	return out
+
+def getSTDOUT(comando , mostrarError = True):
+	if mostrarError:
+		out = getSTDOUT_iterador(comando)
+	else:
+		out = getSTDOUT_NOERROR_iterador(comando)
 	salida = ""
 	for linea in out:
 		salida = salida + linea.strip()

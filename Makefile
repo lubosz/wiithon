@@ -181,4 +181,3 @@ limpiarPO:
 	$(RM) po/plantilla.pot
 	$(RM) recursos/glade/wiithon.ui.h
 regenerarPO: limpiarPO generarPO
-
