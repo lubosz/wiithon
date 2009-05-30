@@ -10,7 +10,7 @@ comprobarTienesUDEV()
 comprobarTienesUDEV
 hayUDEV=$?
 
-for i in $(cat /proc/partitions | grep -v name | sed '/^$/d' | awk '{print "/dev/" $4}' | egrep '(s|h)d([a-z])([0-9]){0,}');
+for i in $(cat /proc/partitions | grep -v name | sed '/^$/d' | awk '{print "/dev/" $4}' | egrep '(sd|hd|loop)([a-z])*([0-9])*');
 do
 	MAGICO=`head --bytes=4 $i 2> /dev/null`;
 	LEGIBLE=`echo $MAGICO | wc -c`;
