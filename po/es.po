@@ -1,4 +1,5 @@
-# Spanish translations for PACKAGE package.
+# Spanish translations for PACKAGE package
+# Traducciones al español para el paquete PACKAGE.
 # Copyright (C) 2009 THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
 # Automatically generated, 2009.
@@ -7,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wiithon 1.0 Alpha\n"
 "Report-Msgid-Bugs-To: makiolo@gmail.com\n"
-"POT-Creation-Date: 2009-05-31 14:40+0200\n"
-"PO-Revision-Date: 2009-05-31 14:40+0200\n"
+"POT-Creation-Date: 2009-05-31 18:57+0200\n"
+"PO-Revision-Date: 2009-05-31 18:57+0200\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
 "MIME-Version: 1.0\n"
@@ -37,7 +38,7 @@ msgid "Nombre"
 msgstr ""
 
 #: gui.py:215
-msgid "Tamaño"
+msgid "Tamanio"
 msgstr ""
 
 #: gui.py:372
@@ -51,6 +52,10 @@ msgstr ""
 
 #: gui.py:402 gui.py:439
 msgid "Elige un directorio"
+msgstr ""
+
+#: gui.py:415
+msgid "No tienes ningún juego"
 msgstr ""
 
 #: gui.py:435
@@ -101,19 +106,19 @@ msgid ""
 msgstr ""
 
 #: recursos/glade/wiithon.ui.h:1
-msgid "1 / 2"
+msgid "+"
 msgstr ""
 
 #: recursos/glade/wiithon.ui.h:2
-msgid "A&#xF1;adir"
+msgid "-"
 msgstr ""
 
 #: recursos/glade/wiithon.ui.h:3
-msgid "A&#xF1;adir directorio"
+msgid "1 / 2"
 msgstr ""
 
 #: recursos/glade/wiithon.ui.h:4
-msgid "Borrar"
+msgid "Aniadir directorio"
 msgstr ""
 
 #: recursos/glade/wiithon.ui.h:5
@@ -160,7 +165,7 @@ msgid "Extraer a ISO"
 msgstr ""
 
 #: recursos/glade/wiithon.ui.h:18
-msgid "M&#xE1;s Informaci&#xF3;n"
+msgid "Mas informacion"
 msgstr ""
 
 #: recursos/glade/wiithon.ui.h:20
@@ -258,7 +263,7 @@ msgstr ""
 
 #: trabajo.py:126
 #, python-format
-msgid "Añadir ISO : %s a la particion %s"
+msgid "Aniadir ISO : %s a la particion %s"
 msgstr ""
 
 #: trabajo.py:129
@@ -277,11 +282,10 @@ msgid "%s no es un ningún juego de Wii"
 msgstr ""
 
 #: wiithon.py:30
-msgid ""
-"Necesitas tener instalado pyGTK o GTKv2 or setear PYTHONPATH correctamente"
+msgid "Necesitas tener instalado pyGTK o GTKv2"
 msgstr ""
 
-#: wiithon.py:43
+#: wiithon.py:48
 #, python-format
 msgid ""
 "El equipo de Wiithon no se hace responsable de la aplicacion ni de la "
@@ -293,14 +297,14 @@ msgid ""
 "¿Está de acuerdo?"
 msgstr ""
 
-#: wiithon.py:49
+#: wiithon.py:54
 msgid "No puedes usar esta aplicacion si no estas de acuerdo"
 msgstr ""
 
-#: wiithon.py:100
+#: wiithon.py:107
 msgid "Programa ejecutado con las opciones incorrectas."
 msgstr ""
 
-#: wiithon.py:108
+#: wiithon.py:115
 msgid "Pulse cualquier tecla para continuar ...\n"
 msgstr ""

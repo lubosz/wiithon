@@ -27,17 +27,22 @@ try:
 	import gtk
 	import gtk.glade
 except:
-	print _("Necesitas tener instalado pyGTK o GTKv2 or setear PYTHONPATH correctamente")
+	print _("Necesitas tener instalado pyGTK o GTKv2")
 	sys.exit(1)
 
-import gettext
-import locale
+def configurarLenguaje():
+	import locale
+	import gettext
 
-from gettext import gettext as _
+	#locale.setlocale(locale.LC_ALL, '')
 
-gettext.bindtextdomain(config.APP,config.LOCALE)
-gettext.textdomain(config.APP)
-gettext.install(config.APP,config.LOCALE)#, unicode=1)
+	from gettext import gettext as _
+
+	for module in (gettext, gtk.glade):
+		module.bindtextdomain(config.APP,config.LOCALE)
+		module.textdomain(config.APP)
+
+	gettext.install(config.APP,config.LOCALE)#, unicode=1)
 
 def informarAcuerdo(pregunton):
 	res = pregunton(_('''El equipo de Wiithon no se hace responsable de la aplicacion ni de la perdida de datos.
@@ -56,6 +61,8 @@ Esta información no volverá a aparecer si acepta el acuerdo.
 
 def App():
 	try:
+		configurarLenguaje()
+
 		options, arguments = getopt.getopt(sys.argv[1:], 'phH', ['trabajo=',
 								 'work=',
 								 'help',
@@ -106,6 +113,7 @@ def App():
 
 	if PAUSA:
 		raw_input(_("Pulse cualquier tecla para continuar ...\n"))
+		
 	sys.exit(0)
 
 if __name__ == '__main__':

@@ -14,11 +14,9 @@ run: install
 	sudo wiithon
 	
 runEN: install
-	# http://docs.python.org/library/gettext.html
-	# LANGUAGE, LC_ALL, LC_MESSAGES, and LANG respectively.
-	sudo LC_ALL=en wiithon
+	sudo LANG=en_US.UTF-8 wiithon
 
-install: uninstall wbfs
+install: uninstall wbfs generarPO
 
 	@echo "=================================================================="
 	@echo "Antes de instalar, se ha desinstalado"
@@ -149,10 +147,12 @@ empaquetar: wbfs clean
 	# Averiguar como comprimir todo excepto lo que contiene ".bzrignore"
 	#tar zcvf wiithon_v${VERSION}_r${REVISION}.tar.gz *.py *.sh
 
+# REPOSITORIO
+
 pull:
 	bzr pull
 
-commit: clean diff
+commit: regenerarPO clean diff
 	bzr commit --file="COMMIT.txt" && echo "" > COMMIT.txt
 	bzr log --short > CHANGELOG.txt
 
@@ -162,35 +162,50 @@ log:
 diff:
 	-@bzr diff > DIFF.txt
 
-# generar PO a partir de plantilla POT
-po/en.po: po/plantilla.pot
-	msginit -i po/plantilla.pot -l en_US -o po/en.po --no-translator
-po/es.po: po/plantilla.pot
-	msginit -i po/plantilla.pot -l es_ES -o po/es.po --no-translator
+# TRADUCCION
+# http://faq.pygtk.org/index.py?req=show&file=faq22.002.htp
+# generar PO VACIO a partir de plantilla POT
+po/en.po: generarPlantilla
+	@echo "*** GETTEXT *** Creando POO: en_US"
+	@LANG=en_US.UTF-8 msginit -i po/plantilla.pot -o po/en.po --no-translator
+
+po/es.po: generarPlantilla
+	@echo "*** GETTEXT *** Creando POO: es_ES"
+	@LANG=es_ES.UTF-8 msginit -i po/plantilla.pot -o po/es.po --no-translator
 	
 # extraer strings del glade
-recursos/glade/wiithon.ui.h:
-	intltool-extract --type="gettext/glade" recursos/glade/wiithon.ui
-recursos/glade/alerta.ui.h:
-	intltool-extract --type="gettext/glade" recursos/glade/alerta.ui
+extraerGlade:
+	@echo "*** GETTEXT *** Extrayendo strings del glade"
+	@intltool-extract --type="gettext/glade" recursos/glade/wiithon.ui
+	@intltool-extract --type="gettext/glade" recursos/glade/alerta.ui
 	
 # Generar plantilla POT
-po/plantilla.pot: recursos/glade/wiithon.ui.h recursos/glade/alerta.ui.h
-	xgettext --language=Python --keyword=_ --keyword=N_ --from-code=utf-8 --sort-by-file --package-name="wiithon" --package-version="`cat VERSION.txt`" --msgid-bugs-address=makiolo@gmail.com -o po/plantilla.pot *.py recursos/glade/*.ui.h
+generarPlantilla: extraerGlade
+	@echo "*** GETTEXT *** Extrayendo strings del código"
+	@xgettext --language=Python --keyword=_ --keyword=N_ --from-code=utf-8 --sort-by-file --package-name="wiithon" --package-version="`cat VERSION.txt`" --msgid-bugs-address=makiolo@gmail.com -o po/plantilla.pot *.py recursos/glade/*.ui.h
 	
+# generar PO, si ya existe, mezcla o sincroniza
+actualizarPO: generarPlantilla
+	@echo "*** GETTEXT *** Actualizando POO"
+	@msgmerge -U po/en.po po/plantilla.pot
+	@msgmerge -U po/es.po po/plantilla.pot
+
 # Generar los MOO (compilados binadores de los PO)
-generarPO: po/en.po po/es.po
-	mkdir -p po/es/LC_MESSAGES/
-	mkdir -p po/en/LC_MESSAGES/
-	msgfmt po/es.po -o po/es/LC_MESSAGES/wiithon.mo
-	msgfmt po/en.po -o po/en/LC_MESSAGES/wiithon.mo
-	
+generarPO: actualizarPO
+	@echo "*** GETTEXT *** Generando MOO"
+	@mkdir -p po/en/LC_MESSAGES/
+	@mkdir -p po/es/LC_MESSAGES/
+	@msgfmt po/es.po -o po/es/LC_MESSAGES/wiithon.mo
+	@msgfmt po/en.po -o po/en/LC_MESSAGES/wiithon.mo
+
 # borrar Todos los PO y POT
 limpiarPO:
-	$(RM) po/es.po
-	$(RM) po/en.po
-	$(RM) po/plantilla.pot
-	$(RM) recursos/glade/wiithon.ui.h
-	$(RM) recursos/glade/alerta.ui.h
+	@echo "*** GETTEXT *** Borrando POO , POT y MOO"
+	@$(RM) po/es.po
+	@$(RM) po/en.po
+	@$(RM) po/plantilla.pot
+	@$(RM) po/es/LC_MESSAGES/wiithon.mo
+	@$(RM) po/en/LC_MESSAGES/wiithon.mo
 
-regenerarPO: limpiarPO generarPO
+# Se le llama antes del commit
+regenerarPO: limpiarPO po/en.po po/es.po generarPO

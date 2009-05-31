@@ -28,7 +28,7 @@
               <object class="GtkToolButton" id="tb_anadir_directorio">
                 <property name="visible">True</property>
                 <property name="has_tooltip">True</property>
-                <property name="label" translatable="yes">A&#xF1;adir directorio</property>
+                <property name="label" translatable="yes">Aniadir directorio</property>
                 <property name="icon_name">folder-new</property>
               </object>
               <packing>
@@ -565,7 +565,7 @@
                                 </child>
                                 <child>
                                   <object class="GtkButton" id="button2">
-                                    <property name="label" translatable="yes">Borrar</property>
+                                    <property name="label" translatable="yes">-</property>
                                     <property name="visible">True</property>
                                     <property name="can_focus">True</property>
                                     <property name="receives_default">True</property>
@@ -577,7 +577,7 @@
                                 </child>
                                 <child>
                                   <object class="GtkButton" id="button1">
-                                    <property name="label" translatable="yes">A&#xF1;adir</property>
+                                    <property name="label" translatable="yes">+</property>
                                     <property name="visible">True</property>
                                     <property name="can_focus">True</property>
                                     <property name="receives_default">True</property>
@@ -805,7 +805,7 @@
                                 </child>
                                 <child>
                                   <object class="GtkButton" id="button4">
-                                    <property name="label" translatable="yes">Borrar</property>
+                                    <property name="label" translatable="yes">-</property>
                                     <property name="visible">True</property>
                                     <property name="can_focus">True</property>
                                     <property name="receives_default">True</property>
@@ -817,7 +817,7 @@
                                 </child>
                                 <child>
                                   <object class="GtkButton" id="button3">
-                                    <property name="label" translatable="yes">A&#xF1;adir</property>
+                                    <property name="label" translatable="yes">+</property>
                                     <property name="visible">True</property>
                                     <property name="can_focus">True</property>
                                     <property name="receives_default">True</property>
@@ -981,7 +981,7 @@
             <child type="label">
               <object class="GtkLabel" id="label6">
                 <property name="visible">True</property>
-                <property name="label" translatable="yes">M&#xE1;s Informaci&#xF3;n</property>
+                <property name="label" translatable="yes">Mas informacion</property>
               </object>
             </child>
           </object>

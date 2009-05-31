@@ -123,7 +123,7 @@ class PoolTrabajo(Pool , Thread):
 					self.nuevoTrabajoAnadir( encontrado )
 
 		elif( util.getExtension(fichero) == "iso" ):
-			core.nuevoMensaje( Mensaje("INFO",_("Añadir ISO : %s a la particion %s") % (os.path.basename(fichero),DEVICE) ) )
+			core.nuevoMensaje( Mensaje("INFO",_("Aniadir ISO : %s a la particion %s") % (os.path.basename(fichero),DEVICE) ) )
 			core.nuevoMensaje( Mensaje("COMANDO","PROGRESO_INICIA") )
 			if ( core.anadirISO(DEVICE , fichero ) ):
 				core.nuevoMensaje( Mensaje("INFO",_("ISO %s añadida correctamente") % (fichero)) )

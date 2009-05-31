@@ -212,7 +212,7 @@ class WiithonGUI(GtkBuilderWrapper):
 
 		self.columna1 = columna1 = gtk.TreeViewColumn(_('IDGAME'), render , text=1)
 		self.columna2 = columna2 = gtk.TreeViewColumn(_('Nombre'), renderEditable , text=2)
-		self.columna3 = columna3 = gtk.TreeViewColumn(_('Tamaño'), render , text=3)
+		self.columna3 = columna3 = gtk.TreeViewColumn(_('Tamanio'), render , text=3)
 		
 		columna1.set_expand(False)
 		columna1.set_min_width(80)
@@ -412,7 +412,7 @@ class WiithonGUI(GtkBuilderWrapper):
 				
 				fc_copiar_SD.destroy()
 			else:
-				self.alert("warning" , "No tienes ningún juego")
+				self.alert("warning" , _("No tienes ningún juego"))
 
 		elif(id_tb == self.wb_tb_renombrar):
 			if self.iteradorJuegoSeleccionado != None:

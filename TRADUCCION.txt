@@ -1,0 +1,24 @@
+Algunas normas que todos los miembros del equipo wiithon debemos seguir:
+
+---------------------------------------------------
+Traducción:
+---------------------------------------------------
+- Todo String destinado a ser traducido (en código fuente o en glade), no puede llevar caracteres NO ASCII (acentos, eñes ...)
+	Esto es así por la forma que tiene de funcionar gettext, cada string genera un idstring, para despues ser generado:
+	Por ejemplo en codigo fuente tengo:
+		columanaTitulo = "TAMANIO" 
+		
+	En el po/es.po (ESPAÑOL) "lo traducimos" ya con caracteres UTF8 (eñes , acentos , etc ...):
+		#: gui.py:215
+		msgid "Tamanio"
+		msgstr "Tamaño"
+		
+	En el po/en.po verdaderamente lo traducimos a inglés:
+		#: gui.py:215
+		msgid "Tamanio"
+		msgstr "Size"
+
+	Para probarlo es sencillamente:
+		sudo make run (para probarlo en español)
+		sudo make runEN (para probarlo en ingles)
+

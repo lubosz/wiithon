@@ -11,3 +11,6 @@ wbfs_src/*.o
 SQLAlchemy-0.5.3
 *.iso
 recursos/imagenes/*.xcf
+po/plantilla-en.po
+po/plantilla-es.po
+po/plantilla-fr.po
