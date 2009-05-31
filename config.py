@@ -4,7 +4,7 @@
 import os, sys
 
 APP="wiithon"
-LOCALE="/usr/share/locale"
+LOCALE="/usr/share/locale/"
 
 HOME = os.environ['HOME']
 HOME_WIITHON = os.path.join(HOME , '.wiithon')
