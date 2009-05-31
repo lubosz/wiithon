@@ -211,3 +211,4 @@ limpiarPO:
 
 # Se le llama antes del commit
 regenerarPO: limpiarPO po/en.po po/es.po generarPO
+

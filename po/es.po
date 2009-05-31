@@ -39,7 +39,7 @@ msgstr ""
 
 #: gui.py:215
 msgid "Tamanio"
-msgstr ""
+msgstr "Tamaño"
 
 #: gui.py:372
 #, python-format

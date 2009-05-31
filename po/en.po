@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wiithon 1.0 Alpha\n"
 "Report-Msgid-Bugs-To: makiolo@gmail.com\n"
-"POT-Creation-Date: 2009-05-31 21:30+0200\n"
+"POT-Creation-Date: 2009-05-31 21:54+0200\n"
 "PO-Revision-Date: 2009-05-31 21:30+0200\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
@@ -18,7 +18,7 @@ msgstr ""
 
 #: core.py:62
 msgid "No se ha encontrado ningún disco de la Wii"
-msgstr "No se ha encontrado ningún disco de la Wii"
+msgstr "No Wii Disc"
 
 #: gui.py:161
 msgid "Dispositivo"
@@ -30,15 +30,15 @@ msgstr "FFFFF"
 
 #: gui.py:213
 msgid "IDGAME"
-msgstr "IDGAME"
+msgstr "ID"
 
 #: gui.py:214 recursos/glade/wiithon.ui.h:19
 msgid "Nombre"
-msgstr "Nombre"
+msgstr "Name"
 
 #: gui.py:215
 msgid "Tamanio"
-msgstr "Tamanio"
+msgstr "Size"
 
 #: gui.py:372
 #, python-format
@@ -146,6 +146,7 @@ msgid "Clasificar"
 msgstr "Clasificar"
 
 #: recursos/glade/wiithon.ui.h:10
+#, fuzzy
 msgid ""
 "Comprobando integridad ...\n"
 "Descargando caratulas ...\n"
@@ -213,7 +214,7 @@ msgstr "Trabajos intensos (0)"
 
 #: recursos/glade/wiithon.ui.h:29
 msgid "caratulas a SD"
-msgstr "caratulas a SD"
+msgstr "Covers to SD"
 
 #: recursos/glade/wiithon.ui.h:30
 msgid "label"
