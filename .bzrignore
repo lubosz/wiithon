@@ -14,3 +14,4 @@ recursos/imagenes/*.xcf
 po/plantilla-en.po
 po/plantilla-es.po
 po/plantilla-fr.po
+po/*/LC_MESSAGES/wiithon.mo

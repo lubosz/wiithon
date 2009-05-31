@@ -167,45 +167,45 @@ diff:
 # generar PO VACIO a partir de plantilla POT
 po/en.po: generarPlantilla
 	@echo "*** GETTEXT *** Creando POO: en_US"
-	@LANG=en_US.UTF-8 msginit -i po/plantilla.pot -o po/en.po --no-translator
+	LANG=en_US.UTF-8 msginit -i po/plantilla.pot -o po/en.po --no-translator
 
 po/es.po: generarPlantilla
 	@echo "*** GETTEXT *** Creando POO: es_ES"
-	@LANG=es_ES.UTF-8 msginit -i po/plantilla.pot -o po/es.po --no-translator
+	LANG=es_ES.UTF-8 msginit -i po/plantilla.pot -o po/es.po --no-translator
 	
 # extraer strings del glade
 extraerGlade:
 	@echo "*** GETTEXT *** Extrayendo strings del glade"
-	@intltool-extract --type="gettext/glade" recursos/glade/wiithon.ui
-	@intltool-extract --type="gettext/glade" recursos/glade/alerta.ui
+	intltool-extract --type="gettext/glade" recursos/glade/wiithon.ui
+	intltool-extract --type="gettext/glade" recursos/glade/alerta.ui
 	
 # Generar plantilla POT
 generarPlantilla: extraerGlade
 	@echo "*** GETTEXT *** Extrayendo strings del código"
-	@xgettext --language=Python --keyword=_ --keyword=N_ --from-code=utf-8 --sort-by-file --package-name="wiithon" --package-version="`cat VERSION.txt`" --msgid-bugs-address=makiolo@gmail.com -o po/plantilla.pot *.py recursos/glade/*.ui.h
+	$(RM) po/plantilla.pot
+	xgettext --language=Python --keyword=_ --keyword=N_ --from-code=utf-8 --sort-by-file --package-name="wiithon" --package-version="`cat VERSION.txt`" --msgid-bugs-address=makiolo@gmail.com -o po/plantilla.pot *.py recursos/glade/*.ui.h
 	
 # generar PO, si ya existe, mezcla o sincroniza
 actualizarPO: generarPlantilla
 	@echo "*** GETTEXT *** Actualizando POO"
-	@msgmerge -U po/en.po po/plantilla.pot
-	@msgmerge -U po/es.po po/plantilla.pot
+	msgmerge -U po/en.po po/plantilla.pot
+	msgmerge -U po/es.po po/plantilla.pot
 
 # Generar los MOO (compilados binadores de los PO)
 generarPO: actualizarPO
 	@echo "*** GETTEXT *** Generando MOO"
-	@mkdir -p po/en/LC_MESSAGES/
-	@mkdir -p po/es/LC_MESSAGES/
-	@msgfmt po/es.po -o po/es/LC_MESSAGES/wiithon.mo
-	@msgfmt po/en.po -o po/en/LC_MESSAGES/wiithon.mo
+	$(RM) po/es/LC_MESSAGES/wiithon.mo
+	$(RM) po/en/LC_MESSAGES/wiithon.mo
+	mkdir -p po/en/LC_MESSAGES/
+	mkdir -p po/es/LC_MESSAGES/
+	msgfmt po/es.po -o po/es/LC_MESSAGES/wiithon.mo
+	msgfmt po/en.po -o po/en/LC_MESSAGES/wiithon.mo
 
 # borrar Todos los PO y POT
 limpiarPO:
 	@echo "*** GETTEXT *** Borrando POO , POT y MOO"
-	@$(RM) po/es.po
-	@$(RM) po/en.po
-	@$(RM) po/plantilla.pot
-	@$(RM) po/es/LC_MESSAGES/wiithon.mo
-	@$(RM) po/en/LC_MESSAGES/wiithon.mo
+	$(RM) po/es.po
+	$(RM) po/en.po
 
 # Se le llama antes del commit
 regenerarPO: limpiarPO po/en.po po/es.po generarPO

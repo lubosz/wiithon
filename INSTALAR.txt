@@ -2,11 +2,11 @@
 + Instalación
 ===================================================================================
 
-1º  Instalar :
-		sudo make uninstall (opcionalmente aunque aconsejable desinstala primero, si tenias una versión anterior)
-		sudo make install (instala)
+21  Dependencias : Instalar estos paquetes de los repositorios de ubuntu :
+		sudo apt-get install imagemagick wget rar libssl-dev intltool python-gtk2 python-glade2 gnome-icon-theme
 
-2º  Dependencias : Instalar estos paquetes de los repositorios de ubuntu : sudo apt-get install nautilus-actions imagemagick wget rar
+2º  Instalar :
+		sudo make install
 
 3º 	Instalar scripts de nautilus : Nos vamos a Sistema -> Preferencias -> Configuración de acciones de Nautilus.
 	En tipo de configuración: ponemos automático.
