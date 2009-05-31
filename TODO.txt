@@ -1,4 +1,4 @@
-esto es una prueba! wee XD
+- Documentar el protocolo entre wiithon y wbfs
 
 Categorías y Tags:
 - Hay que rehacerlo, es solo proof of concept

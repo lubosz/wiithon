@@ -5,129 +5,192 @@ import os
 import config 
 import util
 from pool import Pool
-from pool import HiloPool
 import threading , subprocess
 from threading import Thread
+from threading import Semaphore
 from mensaje import Mensaje
-				
-class PoolTrabajo(Pool):
-	def __init__(self , numHilos):
-		Pool.__init__(self , numHilos)
 
-	def ejecutar(self , idWorker , trabajo , core , pool , DEVICE , FABRICANTE):
+'''
+Herencia Multiple, Es un Pool (implementado en pool.py) y un Thread
+
+Para poner un trabajo llamamos al metodo nuevoTrabajo( x )
+	Su unico parametro es un objeto de tipo Trabajo
+
+'''
+class PoolTrabajo(Pool , Thread):
+	def __init__(self , core , numHilos = 1):
+		Pool.__init__(self , numHilos)
+		Thread.__init__(self)
+		self.core = core
+		self.numHilos = numHilos
+		self.ocupado = False
+		
+	def ejecutar(self , idTrabajador , trabajo , core , DEVICE):	
+		self.ocupado = True
 	
 		if (trabajo.getQueHacer() == "ANADIR"):
 			fichero = trabajo.getAQuien()
-	
-			try:
-				os.remove ( config.HOME_WIITHON_LOGS_PROCESO )
-			except OSError:
-				pass
-
-			core.nuevoMensaje( Mensaje("COMANDO","EMPIEZA") )
-
-			if( not os.path.exists(DEVICE) or not os.path.exists(fichero) ):
-				error = True
-				core.nuevoMensaje( Mensaje("ERROR",_("La ISO o la partición no existe")) )
-			elif( util.getExtension(fichero) == "rar" ):
-				error = True
-				core.nuevoMensaje( Mensaje("INFO",_("Buscando ISO dentro del RAR")) )
-				nombreRAR = fichero
-				nombreISO = core.getNombreISOenRAR(nombreRAR)
-				if (nombreISO != ""):
-					if( not os.path.exists(nombreISO) ):
-						# Paso 1 : Descomprimir
-						if ( core.descomprimirRARconISODentro(nombreRAR) ):
-							core.nuevoMensaje( Mensaje("INFO",_("ISO Descomprimida")))
-							pool.nuevoElemento( nombreISO )
-						else:
-							core.nuevoMensaje( Mensaje("ERROR",_("Al descomrpimir el RAR : %s") % (nombreRAR)) )
-					else:
-						core.nuevoMensaje( Mensaje("ERROR",_("No se puede descomrpimir por que reemplazaría el ISO : %s") % (nombreISO)) )
-				else:
-					core.nuevoMensaje( Mensaje("ERROR",_("El RAR %s no tenía ninguna ISO") % (nombreRAR)) )
-			elif( os.path.isdir( fichero ) ):
-				error = True
-			
-				core.nuevoMensaje( Mensaje("INFO",_("Buscando en %s ficheros RAR ... ") % (os.path.dirname(fichero))))
-				encontrados =  core.rec_glob(fichero, "*.rar")
-				if (len(encontrados) == 0):
-					core.nuevoMensaje( Mensaje("INFO",_("No se ha encontrado ningún RAR con ISOS dentro")))
-				else:
-					for encontrado in encontrados:
-						pool.nuevoElemento( encontrado )
-
-				core.nuevoMensaje( Mensaje("INFO",_("Buscando en %s Imagenes ISO ... ") % (os.path.dirname(fichero))))
-				encontrados =  core.rec_glob(fichero, "*.iso")
-				if (len(encontrados) == 0):
-					core.nuevoMensaje( Mensaje(_("INFO",_("No se ha encontrado ningún ISO"))))
-				else:
-					for encontrado in encontrados:
-						pool.nuevoElemento( encontrado )
-
-			elif( util.getExtension(fichero) == "iso" ):
-				core.nuevoMensaje( Mensaje("INFO",_("Añadir ISO : %s a la particion %s %s") % (os.path.basename(fichero),DEVICE, FABRICANTE) ) )
-				core.nuevoMensaje( Mensaje("COMANDO","PROGRESO_INICIA") )
-				if ( core.anadirISO(DEVICE , fichero ) ):
-					core.nuevoMensaje( Mensaje("INFO",_("ISO %s añadida correctamente") % (fichero)) )
-					error = False
-				else:
-					core.nuevoMensaje( Mensaje("ERROR",_("Añadiendo la ISO : %s (comprueba que sea una ISO de WII)") % (fichero)) )
-					error = True
-				core.nuevoMensaje( Mensaje("COMANDO","PROGRESO_FIN") )
-			else:
-				error = True
-				core.nuevoMensaje( Mensaje("ERROR",_("%s no es un ningún juego de Wii") % (os.path.basename(fichero)) ) )
-
-			if error:
-				core.nuevoMensaje( Mensaje("COMANDO","TERMINA_ERROR") )
-			else:
-				core.nuevoMensaje( Mensaje("COMANDO","TERMINA_OK") )
-			
-			# Esperar que todos los mensajes sean atendidos
-			core.getMensajes().join()
+			self.anadir(core , fichero , DEVICE)
 		elif( trabajo.getQueHacer() == "EXTRAER" ):
 			IDGAME = trabajo.getAQuien()
-			try:
-				os.remove ( config.HOME_WIITHON_LOGS_PROCESO )
-			except OSError:
-				pass
+			self.extraer(core , IDGAME , DEVICE)
+		elif( trabajo.getQueHacer() == "DESCARGA_CARATULA" ):
+			IDGAME = trabajo.getAQuien()
+			self.descargarCaratula(core , IDGAME)
+		elif( trabajo.getQueHacer() == "DESCARGA_DISCO" ):
+			IDGAME = trabajo.getAQuien()
+			self.descargarDisco(core , IDGAME)
 		
-			core.nuevoMensaje( Mensaje("COMANDO","EMPIEZA") )
-			core.nuevoMensaje( Mensaje("COMANDO","PROGRESO_INICIA") )
-			exito = core.extraerJuego(DEVICE , IDGAME )
-			core.nuevoMensaje( Mensaje("COMANDO","PROGRESO_FIN") )
-			if exito:
-				core.nuevoMensaje( Mensaje("COMANDO","TERMINA_OK") )
-			else:
-				core.nuevoMensaje( Mensaje("COMANDO","TERMINA_ERROR") )
+		#if self.ocupado:
+		self.ocupado = False
+		
+	def estaOcupado(self):
+		return self.ocupado
 
-class HiloPoolTrabajo(Thread):
-	def __init__(self , core ):
-		Thread.__init__(self)
-		self.core = core
-		self.DEVICE = core.getDeviceSeleccionado()
-		self.FABRICANTE = core.getFabricanteSeleccionado()
-		self.listaFicheros = None
-		self.pool = PoolTrabajo(1)
-
-	def run(self):
-		if (self.pool != None):
-			self.pool.empezar(args=(self.core, self.pool , self.DEVICE,self.FABRICANTE))
-		
-	def interrumpir(self):
-		if (self.pool != None):
-			self.pool.interrumpir()
-		
-	def anadir(self , listaFicheros):
-		# 1 Hilo se encarga de añadir todo
-		for fichero in listaFicheros:
-			self.pool.nuevoElemento( Trabajo("ANADIR" , fichero) )
+	def descargarCaratula(self , core , IDGAME):
+			core.descargarCaratula( IDGAME )
 			
-	def extraer(self , IDGAME):
-		self.pool.nuevoElemento( Trabajo("EXTRAER" , IDGAME) )
+	def descargarDisco(self , core , IDGAME):
+			core.descargarDisco( IDGAME )
 
+	def anadir(self , core , fichero , DEVICE):
+		try:
+			os.remove ( config.HOME_WIITHON_LOGS_PROCESO )
+		except OSError:
+			pass
 
+		core.nuevoMensaje( Mensaje("COMANDO","EMPIEZA") )
+
+		if( not os.path.exists(DEVICE) or not os.path.exists(fichero) ):
+			error = True
+			core.nuevoMensaje( Mensaje("ERROR",_("La ISO o la partición no existe")) )
+		elif( util.getExtension(fichero) == "rar" ):
+			error = True
+			core.nuevoMensaje( Mensaje("INFO",_("Buscando ISO dentro del RAR")) )
+			nombreRAR = fichero
+			nombreISO = core.getNombreISOenRAR(nombreRAR)
+			if (nombreISO != ""):
+				if( not os.path.exists(nombreISO) ):
+					# Paso 1 : Descomprimir
+					if ( core.descomprimirRARconISODentro(nombreRAR) ):
+						core.nuevoMensaje( Mensaje("INFO",_("ISO Descomprimida")))
+						self.nuevoTrabajoAnadir( nombreISO )
+					else:
+						core.nuevoMensaje( Mensaje("ERROR",_("Al descomrpimir el RAR : %s") % (nombreRAR)) )
+				else:
+					core.nuevoMensaje( Mensaje("ERROR",_("No se puede descomrpimir por que reemplazaría el ISO : %s") % (nombreISO)) )
+			else:
+				core.nuevoMensaje( Mensaje("ERROR",_("El RAR %s no tenía ninguna ISO") % (nombreRAR)) )
+		elif( os.path.isdir( fichero ) ):
+			error = True
+	
+			core.nuevoMensaje( Mensaje("INFO",_("Buscando en %s ficheros RAR ... ") % (os.path.dirname(fichero))))
+			encontrados =  core.rec_glob(fichero, "*.rar")
+			if (len(encontrados) == 0):
+				core.nuevoMensaje( Mensaje("INFO",_("No se ha encontrado ningún RAR con ISOS dentro")))
+			else:
+				for encontrado in encontrados:
+					self.nuevoTrabajoAnadir( encontrado )
+
+			core.nuevoMensaje( Mensaje("INFO",_("Buscando en %s Imagenes ISO ... ") % (os.path.dirname(fichero))))
+			encontrados =  core.rec_glob(fichero, "*.iso")
+			if (len(encontrados) == 0):
+				core.nuevoMensaje( Mensaje(_("INFO",_("No se ha encontrado ningún ISO"))))
+			else:
+				for encontrado in encontrados:
+					self.nuevoTrabajoAnadir( encontrado )
+
+		elif( util.getExtension(fichero) == "iso" ):
+			core.nuevoMensaje( Mensaje("INFO",_("Añadir ISO : %s a la particion %s") % (os.path.basename(fichero),DEVICE) ) )
+			core.nuevoMensaje( Mensaje("COMANDO","PROGRESO_INICIA") )
+			if ( core.anadirISO(DEVICE , fichero ) ):
+				core.nuevoMensaje( Mensaje("INFO",_("ISO %s añadida correctamente") % (fichero)) )
+				error = False
+			else:
+				core.nuevoMensaje( Mensaje("ERROR",_("Añadiendo la ISO : %s (comprueba que sea una ISO de WII)") % (fichero)) )
+				error = True
+			core.nuevoMensaje( Mensaje("COMANDO","PROGRESO_FIN") )
+		else:
+			error = True
+			core.nuevoMensaje( Mensaje("ERROR",_("%s no es un ningún juego de Wii") % (os.path.basename(fichero)) ) )
+
+		if error:
+			core.nuevoMensaje( Mensaje("COMANDO","TERMINA_ERROR") )
+		else:
+			core.nuevoMensaje( Mensaje("COMANDO","TERMINA_OK") )
+	
+		# Esperar que todos los mensajes sean atendidos
+		core.getMensajes().join()
+
+	def extraer(self , core , IDGAME , DEVICE):
+		try:
+			os.remove ( config.HOME_WIITHON_LOGS_PROCESO )
+		except OSError:
+			pass
+
+		core.nuevoMensaje( Mensaje("COMANDO","EMPIEZA") )
+		core.nuevoMensaje( Mensaje("COMANDO","PROGRESO_INICIA") )
+		exito = core.extraerJuego(DEVICE , IDGAME )
+		core.nuevoMensaje( Mensaje("COMANDO","PROGRESO_FIN") )
+		if exito:
+			core.nuevoMensaje( Mensaje("COMANDO","TERMINA_OK") )
+		else:
+			core.nuevoMensaje( Mensaje("COMANDO","TERMINA_ERROR") )
+			
+	def run(self):
+		self.empezar(args=(self.core, self.core.getDeviceSeleccionado()))
+		
+	def nuevoTrabajo( self , trabajo ):
+		self.nuevoElemento( trabajo )
+	
+	'''
+	Encola un o varios trabajos para añadir
+	Primer parametro: una ruta o una lista de rutas
+	'''
+	def nuevoTrabajoAnadir(self , fichero):
+		if type(fichero) == list:
+			for f in fichero:
+				self.nuevoTrabajo( Trabajo("ANADIR" , f) )
+		else:
+			self.nuevoTrabajo( Trabajo("ANADIR" , fichero) )
+
+	'''
+	Encola uno o varios trabajos para extraer
+	Primer parametro: un IDGAME o una lista de IDGAMEs
+	'''
+	def nuevoTrabajoExtraer(self , IDGAME):
+		if type(IDGAME) == list:
+			for i in IDGAME:
+				self.nuevoTrabajo( Trabajo("EXTRAER" , i) )
+		else:
+			self.nuevoTrabajo( Trabajo("EXTRAER" , IDGAME) )
+
+	def nuevoTrabajoDescargaCaratula(self , IDGAME):
+		if type(IDGAME) == list:
+			for i in IDGAME:
+				self.nuevoTrabajo( Trabajo("DESCARGA_CARATULA" , i) )
+		else:
+			self.nuevoTrabajo( Trabajo("DESCARGA_CARATULA" , IDGAME) )
+			
+	def nuevoTrabajoDescargaDisco(self , IDGAME):
+		if type(IDGAME) == list:
+			for i in IDGAME:
+				self.nuevoTrabajo( Trabajo("DESCARGA_DISCO" , i) )
+		else:
+			self.nuevoTrabajo( Trabajo("DESCARGA_DISCO" , IDGAME) )
+
+'''
+Primer parametro = ("ANADIR"|"EXTRAER"|"DESCARGA_CARATULA|DESCARGA_DISCO")
+Segundo parametro = Objeto sobre el que se trabaja, depende del primer parametro
+			Si el primer parametro es:
+				ANADIR: Se espera que el segundo sea 1 ruta o una lista de rutas
+				EXTRAER: Se espera que el segundo sea un IDGAME o una lista de IDGAMEs
+				
+FIXME: hacerlo con enumerados (o el equivalente python)
+POSIBLE SOLUCION:
+	
+	(ANADIR,EXTRAER)=([ "%d" % i for i in range(2) ])
+'''
 class Trabajo:
 	def __init__(self, queHacer , aQuien):
 		self.queHacer = queHacer

@@ -2,7 +2,27 @@
 # vim: set fileencoding=utf-8 :
 
 import time
-from pool import HiloPool
+from pool import Pool
+import subprocess
+import threading
+from threading import Thread
+
+class PoolCustomizada(Pool):
+	def __init__(self , numHilos):
+		Pool.__init__(self , numHilos)
+
+	def ejecutar(self , idWorker , elemento , dato1 , dato2):
+		print "Trabajo realizado sobre Elemento = %s por Hilo = %d" % (elemento,idWorker+1)
+		print "dato1 = %s" % dato1
+		print "dato2 = %s" % dato2
+		time.sleep(1)
+
+class HiloPool(threading.Thread):
+	def run(self):
+		self.pool = PoolCustomizada(15)
+		for i in range(30):
+			self.pool.nuevoElemento("elemento %d" % i)
+		self.pool.empezar(args=("hola","adios"))
 
 hilo = HiloPool()
 hilo.start()

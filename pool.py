@@ -16,12 +16,14 @@ class Pool:
 		self.interrumpido = False
 
 	def intentarEmpezarTrabajo(self , cola , idWorker , *args):
-		while True:
-			print "Trabajos = " + str(cola.qsize())
-			sys.stdout.flush()
-			elemento = cola.get()
-			self.ejecutar(idWorker , elemento , *args)
-			cola.task_done()
+		while not self.interrumpido:
+			if cola.qsize() > 0:
+				elemento = cola.get()
+				self.ejecutar(idWorker , elemento , *args)
+				cola.task_done()
+			else:
+				# comprueba si hay tareas cada cierto tiempo
+				time.sleep(3)
 
 	def nuevoElemento(self, elemento):
 		if not self.esperandoTrabajo:
@@ -49,35 +51,15 @@ class Pool:
 			self.cola.join()
 
 			self.lock = False
-			print "fin pool"
 
 	def esLock(self):
 		return self.lock
 
 	# metodo para sobreescribir
 	def ejecutar(self , idWorker , elemento , *arg):
-		#print "Elemento = %s por Hilo = %d" % (elemento,idWorker+1)
 		print "Debes sobreescribir el método"
 		raise NotImplementedError
 		
 	def interrumpir(self):
 		self.interrumpido = True
-
-class PoolCustomizada(Pool):
-	def __init__(self , numHilos):
-		Pool.__init__(self , numHilos)
-
-	def ejecutar(self , idWorker , elemento , dato1 , dato2):
-		print "Trabajo realizado sobre Elemento = %s por Hilo = %d" % (elemento,idWorker+1)
-		print "dato1 = %s" % dato1
-		print "dato2 = %s" % dato2
-		time.sleep(1)
-
-class HiloPool(threading.Thread):
-	def run(self):
-		self.pool = PoolCustomizada(2)
-		for i in range(30):
-			self.pool.nuevoElemento("elemento %d" % i)
-		self.pool.empezar(args=("hola","adios"))
-
 

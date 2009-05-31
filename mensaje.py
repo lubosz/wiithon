@@ -3,6 +3,9 @@
 
 import config
 
+'''
+FIXME: hacerlo con enumerados (o el equivalente python)
+'''
 class Mensaje:
 	def __init__(self , tipo , mensaje):
 	        if not (tipo in config.TOPICS):

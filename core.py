@@ -280,11 +280,18 @@ class WiithonCORE:
 				destino = os.path.join(config.HOME_WIITHON_DISCOS , IDGAME+".png")
 				os.system("mogrify -resize 160x160 " + destino)
 			return descargada
+			
+	def getRutaCaratula(self , IDGAME):
+		return os.path.join(config.HOME_WIITHON_CARATULAS , IDGAME+".png")
+			
+	def copiarCaratula(self , IDGAME , destino):
+		if( not os.path.exists( os.path.join( os.path.abspath(destino) , IDGAME + ".png") ) ):
+			origen = getRutaCaratula(IDGAME)
+			shutil.copy(origen, destino)
 
 	# Nos dice si existe la caratula del juego "IDGAME"
 	def existeCaratula(self , IDGAME):
-		destino = os.path.join(config.HOME_WIITHON_CARATULAS , IDGAME+".png")
-		return (os.path.exists(destino))
+		return (os.path.exists( getRutaCaratula(IDGAME) ))
 
 	# Descarga una caratula de "IDGAME"
 	def descargarCaratula(self , IDGAME, panoramica = False):
@@ -406,23 +413,4 @@ class WiithonCORE:
 
 	def setInterfaz(self , interfaz):
 		self.interfaz = interfaz
-
-class HiloDescargarTodasLasCaratulaYDiscos(Thread):
-	def __init__( self , core , listaJuegos):
-		Thread.__init__(self)
-		self.core = core
-		self.DEVICE = core.getDeviceSeleccionado()
-		self.listaJuegos = listaJuegos
-		self.interrumpido = False
-
-	def run( self ):
-		i = 0
-		while not self.interrumpido and i<len(self.listaJuegos):
-			juego = self.listaJuegos[i]
-			self.core.descargarCaratula( juego[0] )
-			self.core.descargarDisco( juego[0] )
-			i = i + 1
-
-	def interrumpir(self):
-		self.interrumpido = True
 
