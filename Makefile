@@ -152,7 +152,7 @@ empaquetar: wbfs clean
 pull:
 	bzr pull
 
-commit: regenerarPO clean diff
+commit: generarPO clean diff
 	bzr commit --file="COMMIT.txt" && echo "" > COMMIT.txt
 	bzr log --short > CHANGELOG.txt
 
@@ -164,6 +164,8 @@ diff:
 
 # TRADUCCION
 # http://faq.pygtk.org/index.py?req=show&file=faq22.002.htp
+# http://misdocumentos.net/wiki/linux/locales
+
 # generar PO VACIO a partir de plantilla POT
 po/en.po: generarPlantilla
 	@echo "*** GETTEXT *** Creando POO: en_US"

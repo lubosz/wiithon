@@ -22,11 +22,11 @@ msgstr "No se ha encontrado ningún disco de la Wii"
 
 #: gui.py:161
 msgid "Dispositivo"
-msgstr "Dispositivo"
+msgstr "DEVICEEE"
 
 #: gui.py:162
 msgid "Fabricante"
-msgstr "Fabricante"
+msgstr "FFFFF"
 
 #: gui.py:213
 msgid "IDGAME"

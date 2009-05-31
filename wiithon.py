@@ -33,8 +33,8 @@ except:
 def configurarLenguaje():
 	import locale
 	import gettext
-
-	#locale.setlocale(locale.LC_ALL, '')
+	
+	locale.setlocale(locale.LC_ALL, '')
 
 	from gettext import gettext as _
 
@@ -42,7 +42,7 @@ def configurarLenguaje():
 		module.bindtextdomain(config.APP,config.LOCALE)
 		module.textdomain(config.APP)
 
-	gettext.install(config.APP,config.LOCALE)#, unicode=1)
+	gettext.install(config.APP,config.LOCALE, unicode=1)
 
 def informarAcuerdo(pregunton):
 	res = pregunton(_('''El equipo de Wiithon no se hace responsable de la aplicacion ni de la perdida de datos.
