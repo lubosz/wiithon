@@ -5,6 +5,7 @@ import sys , os , time , fnmatch
 import gtk
 import commands
 import gettext
+import shutil
 
 from util import NonRepeatList
 import config
@@ -28,6 +29,9 @@ class WiithonCORE:
 	
 	# Estructura sincrona para comunicacion entre hilos
 	mensajes = None
+	
+	# Destino por defecto para el destino de las caratulas
+	destinoCopiarCaratula = config.HOME
 
 	#constructor
 	def __init__(self):
@@ -284,14 +288,30 @@ class WiithonCORE:
 	def getRutaCaratula(self , IDGAME):
 		return os.path.join(config.HOME_WIITHON_CARATULAS , IDGAME+".png")
 			
-	def copiarCaratula(self , IDGAME , destino):
-		if( not os.path.exists( os.path.join( os.path.abspath(destino) , IDGAME + ".png") ) ):
-			origen = getRutaCaratula(IDGAME)
+	def getDestinoCopiarCaratula(self):
+		return self.destinoCopiarCaratula
+		
+	def setDestinoCopiarCaratula(self, destino):
+		if type(destino) == list:
+			destino = destino[0]
+		self.destinoCopiarCaratula = destino
+			
+	def copiarCaratula(self , IDGAME ):
+		destino = self.getDestinoCopiarCaratula()
+		destino = os.path.join( os.path.abspath(destino) , "%s.png" % (IDGAME) )
+		if( not os.path.exists( destino ) and self.existeCaratula(IDGAME) ):
+			origen = self.getRutaCaratula(IDGAME)
+			print "Copiando %s ----> %s ... " % (origen , destino),
 			shutil.copy(origen, destino)
+			print "OK"
+			return os.path.exists(destino)
+		else:
+			print "Ya tienes la caratula %s" % (IDGAME)
+			return True
 
 	# Nos dice si existe la caratula del juego "IDGAME"
 	def existeCaratula(self , IDGAME):
-		return (os.path.exists( getRutaCaratula(IDGAME) ))
+		return (os.path.exists( self.getRutaCaratula(IDGAME) ))
 
 	# Descarga una caratula de "IDGAME"
 	def descargarCaratula(self , IDGAME, panoramica = False):

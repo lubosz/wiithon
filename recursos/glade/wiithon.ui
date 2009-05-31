@@ -70,6 +70,8 @@
             <child>
               <object class="GtkToolButton" id="tb_clasificar1">
                 <property name="visible">True</property>
+                <property name="visible_horizontal">False</property>
+                <property name="visible_vertical">False</property>
                 <property name="label" translatable="yes">Clasificar</property>
                 <property name="icon_name">emblem-documents</property>
               </object>
@@ -111,6 +113,8 @@
             <child>
               <object class="GtkSeparatorToolItem" id="toolbutton2">
                 <property name="visible">True</property>
+                <property name="visible_horizontal">False</property>
+                <property name="visible_vertical">False</property>
               </object>
               <packing>
                 <property name="expand">False</property>
@@ -120,6 +124,8 @@
             <child>
               <object class="GtkToolButton" id="tb_preferencias1">
                 <property name="visible">True</property>
+                <property name="visible_horizontal">False</property>
+                <property name="visible_vertical">False</property>
                 <property name="label" translatable="yes">Preferencias</property>
                 <property name="icon_name">emblem-system</property>
               </object>
@@ -936,7 +942,7 @@
                 <child type="tab">
                   <object class="GtkLabel" id="label8">
                     <property name="visible">True</property>
-                    <property name="label" translatable="yes">Trabajos pendientes (0)</property>
+                    <property name="label" translatable="yes">Trabajos intensos (0)</property>
                   </object>
                   <packing>
                     <property name="position">1</property>
@@ -963,7 +969,7 @@
                 <child type="tab">
                   <object class="GtkLabel" id="label9">
                     <property name="visible">True</property>
-                    <property name="label" translatable="yes">Descarga de caratulas (0)</property>
+                    <property name="label" translatable="yes">Trabajos de fondo (0)</property>
                   </object>
                   <packing>
                     <property name="position">2</property>
@@ -989,10 +995,9 @@
     </child>
   </object>
   <object class="GtkTextBuffer" id="textbuffer1">
-    <property name="text" translatable="yes">lajsk kas jaslkjas llk askljaj adsk
-aslkj asdklaslk jasldkjald laskdalskdjalsk d
-dslaj skldjlaskjd aklsjdlaksjdlaskjlasjlaksjlkasj lasdkj 
-&#xF1;slakjdasj lkasjdklasjd lkajdlkasjdlkasj 
-laskj als jlas lsadk laskjdlaksjd lakjd laksjd klaj</property>
+    <property name="text" translatable="yes">Comprobando integridad ...
+Descargando caratulas ...
+Descargando discos ...
+</property>
   </object>
 </interface>

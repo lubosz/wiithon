@@ -23,11 +23,9 @@ class PoolTrabajo(Pool , Thread):
 		Thread.__init__(self)
 		self.core = core
 		self.numHilos = numHilos
-		self.ocupado = False
 		
 	def ejecutar(self , idTrabajador , trabajo , core , DEVICE):	
-		self.ocupado = True
-	
+
 		if (trabajo.getQueHacer() == "ANADIR"):
 			fichero = trabajo.getAQuien()
 			self.anadir(core , fichero , DEVICE)
@@ -40,18 +38,42 @@ class PoolTrabajo(Pool , Thread):
 		elif( trabajo.getQueHacer() == "DESCARGA_DISCO" ):
 			IDGAME = trabajo.getAQuien()
 			self.descargarDisco(core , IDGAME)
+		elif( trabajo.getQueHacer() == "COPIAR_CARATULA" ):
+			IDGAME = trabajo.getAQuien()
+			self.copiarCaratula(core , IDGAME)
+		elif( trabajo.getQueHacer() == "VERIFICAR_JUEGO" ):
+			IDGAME = trabajo.getAQuien()
+			self.verificarJuego(core , DEVICE , IDGAME)
 		
-		#if self.ocupado:
-		self.ocupado = False
 		
 	def estaOcupado(self):
 		return self.ocupado
 
 	def descargarCaratula(self , core , IDGAME):
-			core.descargarCaratula( IDGAME )
+		core.descargarCaratula( IDGAME )
 			
 	def descargarDisco(self , core , IDGAME):
-			core.descargarDisco( IDGAME )
+		core.descargarDisco( IDGAME )
+			
+	def copiarCaratula(self , core , IDGAME):
+		try:
+			os.remove ( config.HOME_WIITHON_LOGS_PROCESO )
+		except OSError:
+			pass
+	
+		core.nuevoMensaje( Mensaje("COMANDO","EMPIEZA") )
+		core.nuevoMensaje( Mensaje("COMANDO","PROGRESO_INICIA") )
+		exito = core.copiarCaratula( IDGAME )
+		core.nuevoMensaje( Mensaje("COMANDO","PROGRESO_FIN") )
+		if exito:
+			core.nuevoMensaje( Mensaje("COMANDO","TERMINA_OK") )
+		else:
+			core.nuevoMensaje( Mensaje("COMANDO","TERMINA_ERROR") )
+		
+
+	def verificarJuego(self , core , DEVICE , IDGAME):
+		if not core.verificarJuego(DEVICE , IDGAME):
+			print "%s es un juego corrupto" % (IDGAME)
 
 	def anadir(self , core , fichero , DEVICE):
 		try:
@@ -179,12 +201,31 @@ class PoolTrabajo(Pool , Thread):
 		else:
 			self.nuevoTrabajo( Trabajo("DESCARGA_DISCO" , IDGAME) )
 
+	def nuevoTrabajoCopiarCaratula(self , IDGAME):
+		if type(IDGAME) == list:
+			for i in IDGAME:
+				self.nuevoTrabajo( Trabajo("COPIAR_CARATULA" , i) )
+		else:
+			self.nuevoTrabajo( Trabajo("COPIAR_CARATULA" , IDGAME) )
+
+	def nuevoTrabajoVerificarJuego(self , IDGAME):
+		if type(IDGAME) == list:
+			for i in IDGAME:
+				self.nuevoTrabajo( Trabajo("VERIFICAR_JUEGO" , i) )
+		else:
+			self.nuevoTrabajo( Trabajo("VERIFICAR_JUEGO" , IDGAME) )
+
 '''
-Primer parametro = ("ANADIR"|"EXTRAER"|"DESCARGA_CARATULA|DESCARGA_DISCO")
+Primer parametro = ("ANADIR"|"EXTRAER"|"DESCARGA_CARATULA"|"DESCARGA_DISCO"|"COPIAR_CARATULA"|"VERIFICAR_JUEGO")
 Segundo parametro = Objeto sobre el que se trabaja, depende del primer parametro
 			Si el primer parametro es:
 				ANADIR: Se espera que el segundo sea 1 ruta o una lista de rutas
+		
 				EXTRAER: Se espera que el segundo sea un IDGAME o una lista de IDGAMEs
+
+********************************************************************************************************				
+Sin implementar: un tercer parametro con el callback de acabar el trabajo
+********************************************************************************************************
 				
 FIXME: hacerlo con enumerados (o el equivalente python)
 POSIBLE SOLUCION:

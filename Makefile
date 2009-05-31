@@ -18,7 +18,7 @@ runEN: install
 	# LANGUAGE, LC_ALL, LC_MESSAGES, and LANG respectively.
 	sudo LC_ALL=en wiithon
 
-install: uninstall wbfs generarPO
+install: uninstall wbfs
 
 	@echo "=================================================================="
 	@echo "Antes de instalar, se ha desinstalado"
@@ -162,22 +162,35 @@ log:
 diff:
 	-@bzr diff > DIFF.txt
 
+# generar PO a partir de plantilla POT
 po/en.po: po/plantilla.pot
 	msginit -i po/plantilla.pot -l en_US -o po/en.po --no-translator
 po/es.po: po/plantilla.pot
 	msginit -i po/plantilla.pot -l es_ES -o po/es.po --no-translator
+	
+# extraer strings del glade
 recursos/glade/wiithon.ui.h:
 	intltool-extract --type="gettext/glade" recursos/glade/wiithon.ui
-po/plantilla.pot: recursos/glade/wiithon.ui.h
-	xgettext --language=Python --keyword=_ --keyword=N_ --from-code=utf-8 --sort-by-file --package-name="wiithon" --package-version="`cat VERSION.txt`" --msgid-bugs-address=makiolo@gmail.com -o po/plantilla.pot *.py recursos/glade/wiithon.ui.h
+recursos/glade/alerta.ui.h:
+	intltool-extract --type="gettext/glade" recursos/glade/alerta.ui
+	
+# Generar plantilla POT
+po/plantilla.pot: recursos/glade/wiithon.ui.h recursos/glade/alerta.ui.h
+	xgettext --language=Python --keyword=_ --keyword=N_ --from-code=utf-8 --sort-by-file --package-name="wiithon" --package-version="`cat VERSION.txt`" --msgid-bugs-address=makiolo@gmail.com -o po/plantilla.pot *.py recursos/glade/*.ui.h
+	
+# Generar los MOO (compilados binadores de los PO)
 generarPO: po/en.po po/es.po
 	mkdir -p po/es/LC_MESSAGES/
 	mkdir -p po/en/LC_MESSAGES/
 	msgfmt po/es.po -o po/es/LC_MESSAGES/wiithon.mo
 	msgfmt po/en.po -o po/en/LC_MESSAGES/wiithon.mo
+	
+# borrar Todos los PO y POT
 limpiarPO:
 	$(RM) po/es.po
 	$(RM) po/en.po
 	$(RM) po/plantilla.pot
 	$(RM) recursos/glade/wiithon.ui.h
+	$(RM) recursos/glade/alerta.ui.h
+
 regenerarPO: limpiarPO generarPO

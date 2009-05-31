@@ -27,6 +27,7 @@ class WiithonGUI(GtkBuilderWrapper):
 		self.listaJuegos = None
 
 		# Juego seleccionado
+		self.pathJuegoSeleccionado = None
 		self.seleccionJuegoSeleccionado = None
 		self.iteradorJuegoSeleccionado = None
 		self.IDGAMEJuegoSeleccionado = ""
@@ -59,10 +60,6 @@ class WiithonGUI(GtkBuilderWrapper):
 		#ocultar buscador (de momento)
 		self.wb_hbox6.hide()
 		self.wb_hbox7.hide()
-		self.wb_tb_clasificar1.hide()
-		self.wb_tb_preferencias1.hide()
-		self.wb_toolbutton2.hide()
-		self.wb_expander1.hide()
 
 		'''
 		# No necesitamos la señal, para esta versión
@@ -109,6 +106,7 @@ class WiithonGUI(GtkBuilderWrapper):
 			listaIDGAMEs = [ "%s" % j[0] for j in self.listaJuegos ]
 			self.poolBash.nuevoTrabajoDescargaCaratula( listaIDGAMEs )
 			self.poolBash.nuevoTrabajoDescargaDisco( listaIDGAMEs )
+			self.poolBash.nuevoTrabajoVerificarJuego( listaIDGAMEs )
 
 			# Trabajador, se le mandan trabajos de barra de progreso		
 			self.poolTrabajo = PoolTrabajo( self.core )
@@ -123,6 +121,14 @@ class WiithonGUI(GtkBuilderWrapper):
 		# pongo el foco en los TreeView de juegos
 		self.wb_tv_games.grab_focus()
 		
+	def getEstilo_azulGrandeFondoRojo(self):
+		atributos = self.getEstilo_azulGrande()
+		
+		atributos.insert(pango.AttrBackground(0xFFFF,0x1111,0x1111,0,-1))	
+		
+		return atributos
+	
+	# http://www.pygtk.org/pygtk2reference/class-pangoattribute.html
 	def getEstilo_azulGrande(self):
 		
 		#Creo una lista de atributos  
@@ -202,12 +208,11 @@ class WiithonGUI(GtkBuilderWrapper):
 		renderEditable.set_property("attributes", self.getEstilo_azulGrande() )
 		renderEditable.connect ("edited", self.edit_amount)
 		render = gtk.CellRendererText()
-		check = gtk.CellRendererToggle()
+		#check = gtk.CellRendererToggle()
 
-		columna1 = gtk.TreeViewColumn(_('IDGAME'), render , text=1)
-		columna2 = gtk.TreeViewColumn(_('Nombre'), renderEditable , text=2)
-		columna3 = gtk.TreeViewColumn(_('Tamaño'), render , text=3)
-		columna4 = gtk.TreeViewColumn(_('¿Corrupto?'), check , active=True)
+		self.columna1 = columna1 = gtk.TreeViewColumn(_('IDGAME'), render , text=1)
+		self.columna2 = columna2 = gtk.TreeViewColumn(_('Nombre'), renderEditable , text=2)
+		self.columna3 = columna3 = gtk.TreeViewColumn(_('Tamaño'), render , text=3)
 		
 		columna1.set_expand(False)
 		columna1.set_min_width(80)
@@ -226,14 +231,10 @@ class WiithonGUI(GtkBuilderWrapper):
 		columna3.set_reorderable(True)
 		columna3.set_sort_order(gtk.SORT_DESCENDING)
 		columna3.set_sort_column_id(3)
-		
-		columna4.set_expand(False)
-		columna4.set_min_width(80)
 
 		tv_games.append_column(columna1)
 		tv_games.append_column(columna2)
 		tv_games.append_column(columna3)
-		tv_games.append_column(columna4)
 
 		tv_games.connect('cursor-changed', self.on_tv_games_cursor_changed)
 
@@ -241,7 +242,6 @@ class WiithonGUI(GtkBuilderWrapper):
 						gobject.TYPE_STRING,	# IDGAME
 						gobject.TYPE_STRING,	# Nombre
 						gobject.TYPE_STRING,	# Tamaño
-						gtk.CheckButton 	# ¿Corrupto?
 						)
 		tv_games.set_model(modelo)
 
@@ -258,10 +258,6 @@ class WiithonGUI(GtkBuilderWrapper):
 				modelo.set_value(iterador,1, juego[0])
 				modelo.set_value(iterador,2, juego[1])
 				modelo.set_value(iterador,3, "%.2f GB" % float(juego[2]))
-
-				check = gtk.CheckButton(juego[1])
-				check.set_active(True)
-				modelo.set_value(iterador,4, check)
 				i = i + 1
 
 	def salir(self , widget=None, data=None):
@@ -358,7 +354,8 @@ class WiithonGUI(GtkBuilderWrapper):
 	def on_tv_games_cursor_changed(self , treeview):
 		self.seleccionJuegoSeleccionado , self.iteradorJuegoSeleccionado = self.wb_tv_games.get_selection().get_selected()
 		if self.iteradorJuegoSeleccionado != None:
-			self.IDGAMEJuegoSeleccionado = self.seleccionJuegoSeleccionado.get_value(self.iteradorJuegoSeleccionado,1)
+			self.pathJuegoSeleccionado = int(self.seleccionJuegoSeleccionado.get_value(self.iteradorJuegoSeleccionado,0))
+			self.IDGAMEJuegoSeleccionado = self.seleccionJuegoSeleccionado.get_value(self.iteradorJuegoSeleccionado,1)		
 
 			destinoCaratula = os.path.join(config.HOME_WIITHON_CARATULAS , self.IDGAMEJuegoSeleccionado+".png")
 			destinoDisco = os.path.join(config.HOME_WIITHON_DISCOS , self.IDGAMEJuegoSeleccionado+".png")
@@ -393,23 +390,38 @@ class WiithonGUI(GtkBuilderWrapper):
 			else:
 				self.alert("warning" , "No has seleccionado ningún juego")
 		elif(id_tb == self.wb_tb_copiar_SD):
-		
-			botones = (
-					gtk.STOCK_CANCEL,
-				   	gtk.RESPONSE_CANCEL,
-				   	gtk.STOCK_OPEN,
-				   	gtk.RESPONSE_OK,
-				   )
-		
-			fc_copiar_SD = gtk.FileChooserDialog(_("Elige un directorio"), None , gtk.FILE_CHOOSER_ACTION_SELECT_FOLDER , botones)
-			fc_copiar_SD.set_local_only(True)
-			fc_copiar_SD.show()
-			
-			if fc_copiar_SD.run() == gtk.RESPONSE_OK:
-				print fc_copiar_SD.get_filenames()
-				
-			fc_copiar_SD.destroy()
 
+			if self.iteradorJuegoSeleccionado != None:		
+				botones = (
+						gtk.STOCK_CANCEL,
+					   	gtk.RESPONSE_CANCEL,
+					   	gtk.STOCK_OPEN,
+					   	gtk.RESPONSE_OK,
+					   )
+		
+				fc_copiar_SD = gtk.FileChooserDialog(_("Elige un directorio"), None , gtk.FILE_CHOOSER_ACTION_SELECT_FOLDER , botones)
+				fc_copiar_SD.set_local_only(True)
+				fc_copiar_SD.show()
+			
+				if fc_copiar_SD.run() == gtk.RESPONSE_OK:
+					
+					self.core.setDestinoCopiarCaratula( fc_copiar_SD.get_filenames() )
+					
+					listaIDGAMEs = [ "%s" % j[0] for j in self.listaJuegos ]
+					self.poolBash.nuevoTrabajoCopiarCaratula( listaIDGAMEs )
+				
+				fc_copiar_SD.destroy()
+			else:
+				self.alert("warning" , "No tienes ningún juego")
+
+		elif(id_tb == self.wb_tb_renombrar):
+			if self.iteradorJuegoSeleccionado != None:
+				# Obtiene el foco
+				self.wb_tv_games.grab_focus()
+				# Editar celda
+				self.wb_tv_games.set_cursor( self.pathJuegoSeleccionado , self.columna2 , True )
+			else:
+				self.alert("warning" , "No has seleccionado ningún juego")
 		elif(id_tb == self.wb_tb_anadir or id_tb == self.wb_tb_anadir_directorio):
 			if self.iteradorParticionSeleccionada != None:
 
@@ -432,6 +444,8 @@ class WiithonGUI(GtkBuilderWrapper):
 					'''
 					Tarea AÑADIR JUEGO
 					'''
+					self.wb_box_progreso.show()
+					self.wb_progreso1.set_text("Espere ...")
 					self.poolTrabajo.nuevoTrabajoAnadir( fc_anadir.get_filenames() )
 
 				fc_anadir.destroy()

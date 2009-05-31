@@ -1,4 +1,7 @@
 - Documentar el protocolo entre wiithon y wbfs
+- Barra de progreso para indicar espacio libres y ocupoados
+- Indicar por que trabajo de cuantos en la barra de progreso
+- Como comunicar el pool de trabajos con la consola del gui
 
 Categorías y Tags:
 - Hay que rehacerlo, es solo proof of concept
