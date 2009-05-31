@@ -1,20 +1,21 @@
 # English translations for PACKAGE package.
 # Copyright (C) 2009 THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
-# Automatically generated, 2009.
 #
+# Automatically generated, 2009.
 msgid ""
 msgstr ""
 "Project-Id-Version: wiithon 1.0 Alpha\n"
 "Report-Msgid-Bugs-To: makiolo@gmail.com\n"
-"POT-Creation-Date: 2009-05-31 22:28+0200\n"
-"PO-Revision-Date: 2009-05-31 21:30+0200\n"
-"Last-Translator: Automatically generated\n"
-"Language-Team: none\n"
+"POT-Creation-Date: 2009-05-31 23:56+0200\n"
+"PO-Revision-Date: 2009-06-01 00:16+0200\n"
+"Last-Translator: \n"
+"Language-Team: Spanish <kde-i18n-doc@lists.kde.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: Lokalize 0.2\n"
 
 #: core.py:62
 msgid "No se ha encontrado ningún disco de la Wii"
@@ -22,11 +23,11 @@ msgstr "No Wii Disc"
 
 #: gui.py:162
 msgid "Dispositivo"
-msgstr "DEVICEEE"
+msgstr "Device"
 
 #: gui.py:163
 msgid "Fabricante"
-msgstr "FFFFF"
+msgstr "Manufacture"
 
 #: gui.py:214
 msgid "IDGAME"
@@ -43,28 +44,28 @@ msgstr "Size"
 #: gui.py:373
 #, python-format
 msgid "¿Quieres borrar el juego con ID = \"%s\"?"
-msgstr "¿Quieres borrar el juego con ID = \"%s\"?"
+msgstr "¿Delete game with ID = \"%s\"?"
 
 #: gui.py:383
 msgid "No has seleccionado ningún juego"
-msgstr "No has seleccionado ningún juego"
+msgstr "Don't have a game selected"
 
 #: gui.py:403 gui.py:440
 msgid "Elige un directorio"
-msgstr "Elige un directorio"
+msgstr "Choose folder"
 
 #: gui.py:416
 msgid "No tienes ningún juego"
-msgstr "No tienes ningún juego"
+msgstr "Don't have any game"
 
 #: gui.py:436
 msgid "Elige una ISO o un RAR"
-msgstr "Elige una ISO o un RAR"
+msgstr "Choose a ISO or RAR"
 
 #: gui.py:484
 #, python-format
 msgid "CUIDADO: %s"
-msgstr "CUIDADO: %s"
+msgstr "WARNING: %s"
 
 #: gui.py:486
 #, python-format
@@ -73,19 +74,19 @@ msgstr "ERROR: %s"
 
 #: gui.py:489
 msgid "Empezando ..."
-msgstr "Empezando ..."
+msgstr "Loading ..."
 
 #: gui.py:507
 msgid "Comando desconocido"
-msgstr "Comando desconocido"
+msgstr "Unknown command"
 
 #: gui.py:549
 msgid "Finalizando. Hecho en"
-msgstr "Finalizando. Hecho en"
+msgstr "Finishing. Done in"
 
 #: gui.py:553
 msgid "quedan"
-msgstr "quedan"
+msgstr "remaining"
 
 #: recursos/glade/alerta.ui.h:1
 msgid "gtk-cancel"
@@ -103,11 +104,6 @@ msgid ""
 "&#xF1;slakjdasj lkasjdklasjd lkajdlkasjdlkasj \n"
 "laskj als jlas lsadk laskjdlaksjd lakjd laksjd klaj"
 msgstr ""
-"lajsk kas jaslkjas llk askljaj adsk\n"
-"aslkj asdklaslk jasldkjald laskdalskdjalsk d\n"
-"dslaj skldjlaskjd aklsjdlaksjdlaskjlasjlaksjlkasj lasdkj \n"
-"&#xF1;slakjdasj lkasjdklasjd lkajdlkasjdlkasj \n"
-"laskj als jlas lsadk laskjdlaksjd lakjd laksjd klaj"
 
 #: recursos/glade/wiithon.ui.h:1
 msgid "+"
@@ -123,11 +119,11 @@ msgstr "1 / 2"
 
 #: recursos/glade/wiithon.ui.h:4
 msgid "Aniadir directorio"
-msgstr "Aniadir directorio"
+msgstr "Add folder"
 
 #: recursos/glade/wiithon.ui.h:5
 msgid "Buscar:"
-msgstr "Buscar:"
+msgstr "Search:"
 
 #: recursos/glade/wiithon.ui.h:6
 msgid "CONCEPT"
@@ -135,50 +131,49 @@ msgstr "CONCEPT"
 
 #: recursos/glade/wiithon.ui.h:7
 msgid "Categor&#xED;a"
-msgstr "Categor&#xED;a"
+msgstr "Category"
 
 #: recursos/glade/wiithon.ui.h:8
 msgid "Categor&#xED;as"
-msgstr "Categor&#xED;as"
+msgstr "Categories"
 
 #: recursos/glade/wiithon.ui.h:9
 msgid "Clasificar"
-msgstr "Clasificar"
+msgstr "Sort"
 
 #: recursos/glade/wiithon.ui.h:10
-#, fuzzy
 msgid ""
 "Comprobando integridad ...\n"
 "Descargando caratulas ...\n"
 "Descargando discos ...\n"
 msgstr ""
-"Comprobando integridad ...\n"
-"Descargando caratulas ...\n"
-"Descargando discos ...\n"
+"Check integrity ...\n"
+"Download covers ...\n"
+"Download discs ...\n"
 
 #: recursos/glade/wiithon.ui.h:14
 msgid "Consola"
-msgstr "Consola"
+msgstr "Console"
 
 #: recursos/glade/wiithon.ui.h:15
 msgid "Etiqueta"
-msgstr "Etiqueta"
+msgstr "Tag"
 
 #: recursos/glade/wiithon.ui.h:16
 msgid "Etiquetas"
-msgstr "Etiquetas"
+msgstr "Tags"
 
 #: recursos/glade/wiithon.ui.h:17
 msgid "Extraer a ISO"
-msgstr "Extraer a ISO"
+msgstr "Extract ISO"
 
 #: recursos/glade/wiithon.ui.h:18
 msgid "Mas informacion"
-msgstr "Mas informacion"
+msgstr "Details"
 
 #: recursos/glade/wiithon.ui.h:20
 msgid "Nuevo"
-msgstr "Nuevo"
+msgstr "New"
 
 #: recursos/glade/wiithon.ui.h:21
 msgid "OF"
@@ -190,31 +185,31 @@ msgstr "PROOF"
 
 #: recursos/glade/wiithon.ui.h:23
 msgid "Preferencias"
-msgstr "Preferencias"
+msgstr "Preferences"
 
 #: recursos/glade/wiithon.ui.h:24
 msgid "Renombrar"
-msgstr "Renombrar"
+msgstr "Rename"
 
 #: recursos/glade/wiithon.ui.h:25
 msgid "Reportar bug"
-msgstr "Reportar bug"
+msgstr "Bug report"
 
 #: recursos/glade/wiithon.ui.h:26
 msgid "Todo"
-msgstr "Todo"
+msgstr "All"
 
 #: recursos/glade/wiithon.ui.h:27
 msgid "Trabajos de fondo (0)"
-msgstr "Trabajos de fondo (0)"
+msgstr "Batch work (0)"
 
 #: recursos/glade/wiithon.ui.h:28
 msgid "Trabajos intensos (0)"
-msgstr "Trabajos intensos (0)"
+msgstr "Intense work (0)"
 
 #: recursos/glade/wiithon.ui.h:29
 msgid "caratulas a SD"
-msgstr "Covers to SD"
+msgstr "Covers -> SD"
 
 #: recursos/glade/wiithon.ui.h:30
 msgid "label"
@@ -222,44 +217,44 @@ msgstr "label"
 
 #: trabajo.py:88
 msgid "La ISO o la partición no existe"
-msgstr "La ISO o la partición no existe"
+msgstr "ISO or the partition don't exists"
 
 #: trabajo.py:91
 msgid "Buscando ISO dentro del RAR"
-msgstr "Buscando ISO dentro del RAR"
+msgstr "Searching ISO into the RAR"
 
 #: trabajo.py:98
 msgid "ISO Descomprimida"
-msgstr "ISO Descomprimida"
+msgstr "ISO Uncompressed"
 
 #: trabajo.py:101
 #, python-format
 msgid "Al descomrpimir el RAR : %s"
-msgstr "Al descomrpimir el RAR : %s"
+msgstr "When uncompress RAR : %s"
 
 #: trabajo.py:103
 #, python-format
 msgid "No se puede descomrpimir por que reemplazaría el ISO : %s"
-msgstr "No se puede descomrpimir por que reemplazaría el ISO : %s"
+msgstr "Don't can uncompress because reemplace the ISO : %s"
 
 #: trabajo.py:105
 #, python-format
 msgid "El RAR %s no tenía ninguna ISO"
-msgstr "El RAR %s no tenía ninguna ISO"
+msgstr "RAR %s don't have ISO"
 
 #: trabajo.py:109
 #, python-format
 msgid "Buscando en %s ficheros RAR ... "
-msgstr "Buscando en %s ficheros RAR ... "
+msgstr "Searching in %s files RAR"
 
 #: trabajo.py:112
 msgid "No se ha encontrado ningún RAR con ISOS dentro"
-msgstr "No se ha encontrado ningún RAR con ISOS dentro"
+msgstr "Not found within any RAR with ISOS"
 
 #: trabajo.py:117
 #, python-format
 msgid "Buscando en %s Imagenes ISO ... "
-msgstr "Buscando en %s Imagenes ISO ... "
+msgstr "Searching %s ISO Image ..."
 
 #: trabajo.py:120
 msgid "INFO"
@@ -267,31 +262,31 @@ msgstr "INFO"
 
 #: trabajo.py:120
 msgid "No se ha encontrado ningún ISO"
-msgstr "No se ha encontrado ningún ISO"
+msgstr "There is not ISO"
 
 #: trabajo.py:126
 #, python-format
 msgid "Aniadir ISO : %s a la particion %s"
-msgstr "Aniadir ISO : %s a la particion %s"
+msgstr "Add ISO : %s in partition %s"
 
 #: trabajo.py:129
 #, python-format
 msgid "ISO %s añadida correctamente"
-msgstr "ISO %s añadida correctamente"
+msgstr "ISO %s added successfully"
 
 #: trabajo.py:132
 #, python-format
 msgid "Añadiendo la ISO : %s (comprueba que sea una ISO de WII)"
-msgstr "Añadiendo la ISO : %s (comprueba que sea una ISO de WII)"
+msgstr "Adding ISO: %s (check that it is an ISO WII)"
 
 #: trabajo.py:137
 #, python-format
 msgid "%s no es un ningún juego de Wii"
-msgstr "%s no es un ningún juego de Wii"
+msgstr "%s is not a Wii game"
 
 #: wiithon.py:30
 msgid "Necesitas tener instalado pyGTK o GTKv2"
-msgstr "Necesitas tener instalado pyGTK o GTKv2"
+msgstr "Need have pyGTK or GTKv2"
 
 #: wiithon.py:48
 #, python-format
@@ -304,22 +299,23 @@ msgid ""
 "Esta información no volverá a aparecer si acepta el acuerdo.\n"
 "¿Está de acuerdo?"
 msgstr ""
-"El equipo de Wiithon no se hace responsable de la aplicacion ni de la "
-"perdida de datos.\n"
-"No obstante, la particion NO va ha ser formateada.\n"
-"Esta aplicación añade, borra y lista juegos explicamente mediante la ayuda "
-"de %s.\n"
-"Esta información no volverá a aparecer si acepta el acuerdo.\n"
-"¿Está de acuerdo?"
+"The team Wiithon is not responsible for the application or the"
+"data loss. \n"
+"However, the partition will not have to be formatted. \n"
+"This application adds, deletes and list games explained through the help"
+"of %s. \n"
+"This information will not appear if you accept the agreement. \n"
+"Do you agree?"
 
 #: wiithon.py:54
 msgid "No puedes usar esta aplicacion si no estas de acuerdo"
-msgstr "No puedes usar esta aplicacion si no estas de acuerdo"
+msgstr "You may not use this application if you do not agree"
 
 #: wiithon.py:107
 msgid "Programa ejecutado con las opciones incorrectas."
-msgstr "Programa ejecutado con las opciones incorrectas."
+msgstr "Program run with the incorrect settings"
 
 #: wiithon.py:115
 msgid "Pulse cualquier tecla para continuar ...\n"
-msgstr "Pulse cualquier tecla para continuar ...\n"
+msgstr "Press any key to continue ... \n"
+

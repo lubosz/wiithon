@@ -2,27 +2,9 @@
 + Instalación
 ===================================================================================
 
-21  Dependencias : Instalar estos paquetes de los repositorios de ubuntu :
+1º  Dependencias : Instalar estos paquetes de los repositorios de:
 		sudo apt-get install imagemagick wget rar libssl-dev intltool python-gtk2 python-glade2 gnome-icon-theme
 
 2º  Instalar :
 		sudo make install
 
-3º 	Instalar scripts de nautilus : Nos vamos a Sistema -> Preferencias -> Configuración de acciones de Nautilus.
-	En tipo de configuración: ponemos automático.
-	Y le damos a Importar / Exportar 8 archivos. (Tenemos que ir de uno en uno).
-	El makefile lo instala y lo desinstala pero tengo problemas para registrarlo así lo mejor es hacerlo a mano, hasta que vea una mejor solución.
-	Importar estos 8 ficheros:
-
-	1. /usr/share/gconf/schemas/wiithon1.schemas
-	2. /usr/share/gconf/schemas/wiithon2.schemas
-	3. /usr/share/gconf/schemas/wiithon3.schemas
-	4. /usr/share/gconf/schemas/wiithon4.schemas
-	5. /usr/share/gconf/schemas/wiithon5.schemas
-	6. /usr/share/gconf/schemas/wiithon6.schemas
-	7. /usr/share/gconf/schemas/wiithon7.schemas
-	8. /usr/share/gconf/schemas/wiithon8.schemas
-
-	Si os fijais cada fichero es una de las 8 opciones del script de nautilus.
-
-4º Seguramente tengais que reiniciar o hacer *killall nautilus*
