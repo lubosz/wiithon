@@ -21,8 +21,8 @@ WIITHON_FILES_RECURSOS_IMAGENES = os.path.join(WIITHON_FILES_RECURSOS , "imagene
 
 GLADE_ALERTA = "alerta"
 
-DETECTOR_WBFS = os.path.join( WIITHON_FILES , "/wiithon_autodetectar.sh" )
-DETECTOR_WBFS_LECTOR = os.path.join( WIITHON_FILES , "/wiithon_autodetectar_lector.sh" )
+DETECTOR_WBFS = os.path.join( WIITHON_FILES , "wiithon_autodetectar.sh" )
+DETECTOR_WBFS_LECTOR = os.path.join( WIITHON_FILES , "wiithon_autodetectar_lector.sh" )
 
 WBFS_APP = os.path.join(WIITHON_FILES , "wbfs")
 

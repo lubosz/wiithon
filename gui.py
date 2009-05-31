@@ -81,6 +81,7 @@ class WiithonGUI(GtkBuilderWrapper):
 		self.tv_games_modelo = self.cargarJuegosVista()
 
 		listaParticiones = self.core.getListaParticiones()
+		
 		if(len(listaParticiones) == 0):
 			destinoCaratula = os.path.join(config.WIITHON_FILES_RECURSOS_IMAGENES , "caratula.png")
 			self.wb_img_caratula1.set_from_file( destinoCaratula )

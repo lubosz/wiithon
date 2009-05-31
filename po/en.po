@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wiithon 1.0 Alpha\n"
 "Report-Msgid-Bugs-To: makiolo@gmail.com\n"
-"POT-Creation-Date: 2009-05-31 21:54+0200\n"
+"POT-Creation-Date: 2009-05-31 22:28+0200\n"
 "PO-Revision-Date: 2009-05-31 21:30+0200\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
@@ -20,70 +20,70 @@ msgstr ""
 msgid "No se ha encontrado ningún disco de la Wii"
 msgstr "No Wii Disc"
 
-#: gui.py:161
+#: gui.py:162
 msgid "Dispositivo"
 msgstr "DEVICEEE"
 
-#: gui.py:162
+#: gui.py:163
 msgid "Fabricante"
 msgstr "FFFFF"
 
-#: gui.py:213
+#: gui.py:214
 msgid "IDGAME"
 msgstr "ID"
 
-#: gui.py:214 recursos/glade/wiithon.ui.h:19
+#: gui.py:215 recursos/glade/wiithon.ui.h:19
 msgid "Nombre"
 msgstr "Name"
 
-#: gui.py:215
+#: gui.py:216
 msgid "Tamanio"
 msgstr "Size"
 
-#: gui.py:372
+#: gui.py:373
 #, python-format
 msgid "¿Quieres borrar el juego con ID = \"%s\"?"
 msgstr "¿Quieres borrar el juego con ID = \"%s\"?"
 
-#: gui.py:382
+#: gui.py:383
 msgid "No has seleccionado ningún juego"
 msgstr "No has seleccionado ningún juego"
 
-#: gui.py:402 gui.py:439
+#: gui.py:403 gui.py:440
 msgid "Elige un directorio"
 msgstr "Elige un directorio"
 
-#: gui.py:415
+#: gui.py:416
 msgid "No tienes ningún juego"
 msgstr "No tienes ningún juego"
 
-#: gui.py:435
+#: gui.py:436
 msgid "Elige una ISO o un RAR"
 msgstr "Elige una ISO o un RAR"
 
-#: gui.py:483
+#: gui.py:484
 #, python-format
 msgid "CUIDADO: %s"
 msgstr "CUIDADO: %s"
 
-#: gui.py:485
+#: gui.py:486
 #, python-format
 msgid "ERROR: %s"
 msgstr "ERROR: %s"
 
-#: gui.py:488
+#: gui.py:489
 msgid "Empezando ..."
 msgstr "Empezando ..."
 
-#: gui.py:506
+#: gui.py:507
 msgid "Comando desconocido"
 msgstr "Comando desconocido"
 
-#: gui.py:548
+#: gui.py:549
 msgid "Finalizando. Hecho en"
 msgstr "Finalizando. Hecho en"
 
-#: gui.py:552
+#: gui.py:553
 msgid "quedan"
 msgstr "quedan"
 
