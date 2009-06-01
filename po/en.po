@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wiithon 1.0 Alpha\n"
 "Report-Msgid-Bugs-To: makiolo@gmail.com\n"
-"POT-Creation-Date: 2009-05-31 23:56+0200\n"
+"POT-Creation-Date: 2009-06-01 02:38+0200\n"
 "PO-Revision-Date: 2009-06-01 00:16+0200\n"
 "Last-Translator: \n"
 "Language-Team: Spanish <kde-i18n-doc@lists.kde.org>\n"
@@ -21,6 +21,10 @@ msgstr ""
 msgid "No se ha encontrado ningún disco de la Wii"
 msgstr "No Wii Disc"
 
+#: gui.py:92
+msgid "No se han encontrado particiones WBFS"
+msgstr "There aren't partitions WBFS"
+
 #: gui.py:162
 msgid "Dispositivo"
 msgstr "Device"
@@ -31,7 +35,7 @@ msgstr "Manufacture"
 
 #: gui.py:214
 msgid "IDGAME"
-msgstr "ID"
+msgstr "IDGAME"
 
 #: gui.py:215 recursos/glade/wiithon.ui.h:19
 msgid "Nombre"
@@ -46,21 +50,29 @@ msgstr "Size"
 msgid "¿Quieres borrar el juego con ID = \"%s\"?"
 msgstr "¿Delete game with ID = \"%s\"?"
 
-#: gui.py:383
-msgid "No has seleccionado ningún juego"
+#: gui.py:383 gui.py:392 gui.py:416 gui.py:425
+msgid "No has seleccionado ningun juego"
 msgstr "Don't have a game selected"
 
 #: gui.py:403 gui.py:440
 msgid "Elige un directorio"
 msgstr "Choose folder"
 
-#: gui.py:416
-msgid "No tienes ningún juego"
-msgstr "Don't have any game"
-
 #: gui.py:436
 msgid "Elige una ISO o un RAR"
 msgstr "Choose a ISO or RAR"
+
+#: gui.py:449
+msgid "Espere ..."
+msgstr "Loading ..."
+
+#: gui.py:454
+msgid "No has seleccionado ninguna particion"
+msgstr "Don't have a partition selected"
+
+#: gui.py:456
+msgid "Sin implementar aún"
+msgstr "Not implemented yet!"
 
 #: gui.py:484
 #, python-format
@@ -80,11 +92,11 @@ msgstr "Loading ..."
 msgid "Comando desconocido"
 msgstr "Unknown command"
 
-#: gui.py:549
+#: gui.py:548
 msgid "Finalizando. Hecho en"
 msgstr "Finishing. Done in"
 
-#: gui.py:553
+#: gui.py:552
 msgid "quedan"
 msgstr "remaining"
 
@@ -299,11 +311,10 @@ msgid ""
 "Esta información no volverá a aparecer si acepta el acuerdo.\n"
 "¿Está de acuerdo?"
 msgstr ""
-"The team Wiithon is not responsible for the application or the"
-"data loss. \n"
+"The team Wiithon is not responsible for the application or thedata loss. \n"
 "However, the partition will not have to be formatted. \n"
-"This application adds, deletes and list games explained through the help"
-"of %s. \n"
+"This application adds, deletes and list games explained through the helpof %"
+"s. \n"
 "This information will not appear if you accept the agreement. \n"
 "Do you agree?"
 
@@ -318,4 +329,3 @@ msgstr "Program run with the incorrect settings"
 #: wiithon.py:115
 msgid "Pulse cualquier tecla para continuar ...\n"
 msgstr "Press any key to continue ... \n"
-

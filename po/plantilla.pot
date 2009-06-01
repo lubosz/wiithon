@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wiithon 1.0 Alpha\n"
 "Report-Msgid-Bugs-To: makiolo@gmail.com\n"
-"POT-Creation-Date: 2009-06-01 00:51+0200\n"
+"POT-Creation-Date: 2009-06-01 02:41+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -18,6 +18,10 @@ msgstr ""
 
 #: core.py:62
 msgid "No se ha encontrado ningún disco de la Wii"
+msgstr ""
+
+#: gui.py:92
+msgid "No se han encontrado particiones WBFS"
 msgstr ""
 
 #: gui.py:162
@@ -45,20 +49,28 @@ msgstr ""
 msgid "¿Quieres borrar el juego con ID = \"%s\"?"
 msgstr ""
 
-#: gui.py:383
-msgid "No has seleccionado ningún juego"
+#: gui.py:383 gui.py:392 gui.py:416 gui.py:425
+msgid "No has seleccionado ningun juego"
 msgstr ""
 
 #: gui.py:403 gui.py:440
 msgid "Elige un directorio"
 msgstr ""
 
-#: gui.py:416
-msgid "No tienes ningún juego"
-msgstr ""
-
 #: gui.py:436
 msgid "Elige una ISO o un RAR"
+msgstr ""
+
+#: gui.py:449
+msgid "Espere ..."
+msgstr ""
+
+#: gui.py:454
+msgid "No has seleccionado ninguna particion"
+msgstr ""
+
+#: gui.py:456
+msgid "Sin implementar aún"
 msgstr ""
 
 #: gui.py:484
@@ -79,11 +91,11 @@ msgstr ""
 msgid "Comando desconocido"
 msgstr ""
 
-#: gui.py:549
+#: gui.py:548
 msgid "Finalizando. Hecho en"
 msgstr ""
 
-#: gui.py:553
+#: gui.py:552
 msgid "quedan"
 msgstr ""
 

@@ -67,10 +67,10 @@ class WiithonGUI(GtkBuilderWrapper):
 			self.wb_entry1.connect('icon-release', self.clear_search_cb)
 		except TypeError:
 			print "Cuidado: Necesitas una versión GTK >= 2.16 para visualizar algunas opciones."
-		'''
 		
 		self.wb_titulo_categorias.set_attributes( self.getEstilo_azulGrande() )
 		self.wb_titulo_etiquetas.set_attributes( self.getEstilo_azulGrande() )
+		'''
 
 		self.wb_principal.connect('destroy', self.salir)
 
@@ -89,7 +89,7 @@ class WiithonGUI(GtkBuilderWrapper):
 			destinoDisco = os.path.join(config.WIITHON_FILES_RECURSOS_IMAGENES , "disco.png")
 			self.wb_img_disco1.set_from_file( destinoDisco )
 			
-			self.alert("warning" , "No se han encontrado particiones WBFS")
+			self.alert("warning" , _("No se han encontrado particiones WBFS"))
 		else:
 			# carga el modelo de datos del TreeView de particiones
 			self.cargarParticionesModelo(self.tv_partitions_modelo , listaParticiones)
@@ -380,7 +380,7 @@ class WiithonGUI(GtkBuilderWrapper):
 					# seleccionar el primero
 					self.seleccionarPrimeraFila( self.wb_tv_games , self.on_tv_games_cursor_changed)
 			else:
-				self.alert("warning" , _("No has seleccionado ningún juego"))
+				self.alert("warning" , _("No has seleccionado ningun juego"))
 		elif(id_tb == self.wb_tb_extraer):
 			if self.iteradorJuegoSeleccionado != None:
 				'''
@@ -389,7 +389,7 @@ class WiithonGUI(GtkBuilderWrapper):
 				self.poolTrabajo.nuevoTrabajoExtraer( self.IDGAMEJuegoSeleccionado )
 
 			else:
-				self.alert("warning" , "No has seleccionado ningún juego")
+				self.alert("warning" , _("No has seleccionado ningun juego"))
 		elif(id_tb == self.wb_tb_copiar_SD):
 
 			if self.iteradorJuegoSeleccionado != None:		
@@ -413,7 +413,7 @@ class WiithonGUI(GtkBuilderWrapper):
 				
 				fc_copiar_SD.destroy()
 			else:
-				self.alert("warning" , _("No tienes ningún juego"))
+				self.alert("warning" , _("No has seleccionado ningun juego"))
 
 		elif(id_tb == self.wb_tb_renombrar):
 			if self.iteradorJuegoSeleccionado != None:
@@ -422,7 +422,7 @@ class WiithonGUI(GtkBuilderWrapper):
 				# Editar celda
 				self.wb_tv_games.set_cursor( self.pathJuegoSeleccionado , self.columna2 , True )
 			else:
-				self.alert("warning" , "No has seleccionado ningún juego")
+				self.alert("warning" , _("No has seleccionado ningun juego"))
 		elif(id_tb == self.wb_tb_anadir or id_tb == self.wb_tb_anadir_directorio):
 			if self.iteradorParticionSeleccionada != None:
 
@@ -446,14 +446,14 @@ class WiithonGUI(GtkBuilderWrapper):
 					Tarea AÑADIR JUEGO
 					'''
 					self.wb_box_progreso.show()
-					self.wb_progreso1.set_text("Espere ...")
+					self.wb_progreso1.set_text(_("Espere ..."))
 					self.poolTrabajo.nuevoTrabajoAnadir( fc_anadir.get_filenames() )
 
 				fc_anadir.destroy()
 			else:
-				self.alert("warning" , "No has seleccionado ningúna partición")
+				self.alert("warning" , _("No has seleccionado ninguna particion"))
 		else:
-			self.alert("info" , "Sin implementar aún")
+			self.alert("info" , _("Sin implementar aún"))
 
 class HiloAtenderMensajes(Thread):
 
@@ -536,7 +536,6 @@ class HiloCalcularProgreso(Thread):
 		self.actualizarFraccion = actualizarFraccion
 		self.interrumpido = False
 		self.porcentaje = 0.0
-		print "Empieza calculo de progreso"
 
 	def run(self):
 		while not self.interrumpido:

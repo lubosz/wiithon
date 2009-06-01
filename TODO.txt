@@ -19,3 +19,4 @@ TreeView de particiones:
 Links útiles:
 http://mundogeek.net/archivos/2008/04/18/threads-en-python/
 
+SUDO_USER contiene el usuario real
