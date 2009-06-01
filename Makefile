@@ -10,13 +10,13 @@ all: wbfs
 	@echo Escribe "sudo make uninstall" para desinstalar
 	@echo ==================================================================
 
-run: install
+run: generarMOO install
 	sudo LANGUAGE=es LANG=es_ES.UTF-8 wiithon
 	
-runEN: install
+runEN: generarMOO install
 	sudo LANGUAGE=en LANG=en_US.UTF-8 wiithon
 
-install: uninstall wbfs generarMOO
+install: uninstall wbfs
 
 	@echo "=================================================================="
 	@echo "Antes de instalar, se ha desinstalado"

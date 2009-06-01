@@ -1,12 +1,25 @@
 [Desktop Entry]
-# $Id: wireshark.desktop 11808 2004-08-22 09:22:15Z jmayer $
-# The format of this file is specified at
 # http://freedesktop.org/Standards/desktop-entry-spec/
-# The entries are in the order they are listed in version 0.9.4
-Type=Application
 Version=1.0
+Terminal=false
+TryExec=su-to-root
+Exec=su-to-root -X -c /usr/local/bin/wiithon
+Icon=wiithon.svg
+Type=Application
+Categories=QT;Application;Office;Database;
+Categories=GNOME;GTK;Office;Database;
+StartupNotify=false
 Name=Wiithon
+Path=
+MimeType=application/x-iso9660-image
+InitialPreference=9
+X-KDE-SubstituteUID=true
 GenericName=WBFS Partition Manager
+GenericName[es]=Gestor de particiones WBFS
+Comment=WBFS Partition Manager
+Comment[es]=Gestor de particiones WBFS
+
+# Para cuando lo traduzcamos
 GenericName[af]=WBFS Partition Manager
 GenericName[az]=WBFS Partition Manager
 GenericName[bg]=WBFS Partition Manager
@@ -18,7 +31,6 @@ GenericName[de]=WBFS Partition Manager
 GenericName[el]=WBFS Partition Manager
 GenericName[en_GB]=WBFS Partition Manager
 GenericName[eo]=WBFS Partition Manager
-GenericName[es]=Gestor de particiones WBFS
 GenericName[et]=WBFS Partition Manager
 GenericName[eu]=WBFS Partition Manager
 GenericName[fa]=WBFS Partition Manager
@@ -63,22 +75,6 @@ GenericName[xh]=WBFS Partition Manager
 GenericName[zh_CN]=WBFS Partition Manager
 GenericName[zh_TW]=WBFS Partition Manager
 GenericName[zu]=WBFS Partition Manager
-Comment=WBFS Partition Manager
-Comment[es]=Gestor de particiones WBFS
 Comment[fr]=WBFS Partition Manager
 Comment[fi]=WBFS Partition Manager
 Comment[sv]=WBFS Partition Manager
-Icon=wiithon.svg
-TryExec=su-to-root
-Exec=su-to-root -X -c  /usr/local/bin/wiithon
-Path=
-Terminal=false
-MimeType=
-Categories=GNOME;GTK;Office;Database;
-# Found in Suse 9.1:
-X-KDE-SubstituteUID=true
-# Deprecated:
-# TerminalOptions=
-# BinaryPattern=
-# MapNotify=true
-# Protocols=
