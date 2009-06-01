@@ -39,6 +39,10 @@ install: uninstall wbfs generarMOO
 	cp pool.py $(PREFIX)/share/wiithon
 	cp trabajo.py $(PREFIX)/share/wiithon
 	cp mensaje.py $(PREFIX)/share/wiithon
+	cp wiithon.desktop /usr/share/applications/
+	#cp recursos/wiithon-kde.desktop /usr/share/applications/kde/
+	
+	cp recursos/icons/wiithon.svg /usr/share/pixmaps
 
 	cp po/en/LC_MESSAGES/wiithon.mo /usr/share/locale/en/LC_MESSAGES/wiithon.mo
 	cp po/es/LC_MESSAGES/wiithon.mo /usr/share/locale/es/LC_MESSAGES/wiithon.mo
@@ -111,6 +115,9 @@ uninstall:
 	-$(RM) $(PREFIX)/share/wiithon/mensaje.py
 	-$(RM) $(PREFIX)/share/wiithon/recursos/glade/*.ui
 	-$(RM) $(PREFIX)/share/wiithon/recursos/imagenes/*.png
+	
+	-$(RM) /usr/share/applications/wiithon.desktop
+	#-$(RM) /usr/share/applications/kde/wiithon-kde.desktop
 	
 	-$(RM) $(PREFIX)/share/wiithon/*.pyc
 	

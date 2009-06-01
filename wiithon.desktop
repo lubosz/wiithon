@@ -1,0 +1,84 @@
+[Desktop Entry]
+# $Id: wireshark.desktop 11808 2004-08-22 09:22:15Z jmayer $
+# The format of this file is specified at
+# http://freedesktop.org/Standards/desktop-entry-spec/
+# The entries are in the order they are listed in version 0.9.4
+Type=Application
+Version=1.0
+Name=Wiithon
+GenericName=WBFS Partition Manager
+GenericName[af]=WBFS Partition Manager
+GenericName[az]=WBFS Partition Manager
+GenericName[bg]=WBFS Partition Manager
+GenericName[bs]=WBFS Partition Manager
+GenericName[ca]=WBFS Partition Manager
+GenericName[cs]=WBFS Partition Manager
+GenericName[da]=WBFS Partition Manager
+GenericName[de]=WBFS Partition Manager
+GenericName[el]=WBFS Partition Manager
+GenericName[en_GB]=WBFS Partition Manager
+GenericName[eo]=WBFS Partition Manager
+GenericName[es]=Gestor de particiones WBFS
+GenericName[et]=WBFS Partition Manager
+GenericName[eu]=WBFS Partition Manager
+GenericName[fa]=WBFS Partition Manager
+GenericName[fi]=WBFS Partition Manager
+GenericName[fr]=WBFS Partition Manager
+GenericName[he]=WBFS Partition Manager
+GenericName[hr]=WBFS Partition Manager
+GenericName[hu]=WBFS Partition Manager
+GenericName[id]=WBFS Partition Manager
+GenericName[is]=WBFS Partition Manager
+GenericName[it]=WBFS Partition Manager
+GenericName[ja]=WBFS Partition Manager
+GenericName[ko]=WBFS Partition Manager
+GenericName[lo]=WBFS Partition Manager
+GenericName[lt]=WBFS Partition Manager
+GenericName[lv]=WBFS Partition Manager
+GenericName[mk]=WBFS Partition Manager
+GenericName[mn]=WBFS Partition Manager
+GenericName[mt]=WBFS Partition Manager
+GenericName[nb]=WBFS Partition Manager
+GenericName[nl]=WBFS Partition Manager
+GenericName[nn]=WBFS Partition Manager
+GenericName[nso]=WBFS Partition Manager
+GenericName[pl]=WBFS Partition Manager
+GenericName[pt]=WBFS Partition Manager
+GenericName[pt_BR]=WBFS Partition Manager
+GenericName[ro]=WBFS Partition Manager
+GenericName[ru]=WBFS Partition Manager
+GenericName[se]=WBFS Partition Manager
+GenericName[sk]=WBFS Partition Manager
+GenericName[sl]=WBFS Partition Manager
+GenericName[sr]=WBFS Partition Manager
+GenericName[ss]=WBFS Partition Manager
+GenericName[sv]=WBFS Partition Manager
+GenericName[ta]=WBFS Partition Manager
+GenericName[th]=WBFS Partition Manager
+GenericName[tr]=WBFS Partition Manager
+GenericName[uk]=WBFS Partition Manager
+GenericName[ven]=WBFS Partition Manager
+GenericName[vi]=WBFS Partition Manager
+GenericName[xh]=WBFS Partition Manager
+GenericName[zh_CN]=WBFS Partition Manager
+GenericName[zh_TW]=WBFS Partition Manager
+GenericName[zu]=WBFS Partition Manager
+Comment=WBFS Partition Manager
+Comment[es]=Gestor de particiones WBFS
+Comment[fr]=WBFS Partition Manager
+Comment[fi]=WBFS Partition Manager
+Comment[sv]=WBFS Partition Manager
+Icon=wiithon.svg
+TryExec=su-to-root
+Exec=su-to-root -X -c  /usr/local/bin/wiithon
+Path=
+Terminal=false
+MimeType=
+Categories=GNOME;GTK;Office;Database;
+# Found in Suse 9.1:
+X-KDE-SubstituteUID=true
+# Deprecated:
+# TerminalOptions=
+# BinaryPattern=
+# MapNotify=true
+# Protocols=
