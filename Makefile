@@ -5,18 +5,22 @@ REVISION=${shell bzr revno}
 
 all: wbfs
 	@echo ==================================================================
-	@echo Escribe "sudo make run" para ejecutar
-	@echo Escribe "sudo make install" para instalar
-	@echo Escribe "sudo make uninstall" para desinstalar
+	@echo Escribe "sudo make run" para ejecutar en español
+	@echo Escribe "sudo make runEN" para ejecutar en ingles
+	@echo Escribe "sudo make install" para instalar wiithon y sus dependencias
+	@echo Escribe "sudo make uninstall" para desinstalar wiithon
 	@echo ==================================================================
 
-run: generarMOO install
-	sudo LANGUAGE=es LANG=es_ES.UTF-8 wiithon
+run: install
+	LANGUAGE=es LANG=es_ES.UTF-8 wiithon
 	
-runEN: generarMOO install
-	sudo LANGUAGE=en LANG=en_US.UTF-8 wiithon
+runEN: install
+	LANGUAGE=en LANG=en_US.UTF-8 wiithon
+	
+dependencias:
+	apt-get install imagemagick wget rar libssl-dev intltool python-gtk2 python-glade2 gnome-icon-theme menu
 
-install: uninstall wbfs
+install: uninstall dependencias wbfs generarMOO
 
 	@echo "=================================================================="
 	@echo "Antes de instalar, se ha desinstalado"
@@ -157,7 +161,7 @@ empaquetar: wbfs clean
 pull:
 	bzr pull
 
-commit: generarMOO clean
+commit: clean
 	bzr commit --file="COMMIT.txt" && echo "" > COMMIT.txt
 	bzr log --short > CHANGELOG.txt
 

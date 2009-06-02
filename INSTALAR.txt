@@ -4,10 +4,10 @@
 
 1º  Dependencias : Instalar estos paquetes de los repositorios de:
 		GNOME:
-			sudo apt-get install imagemagick wget rar libssl-dev
+			sudo apt-get install imagemagick wget rar libssl-dev intltool
 		
 		KDE:
-			sudo apt-get install imagemagick wget rar libssl-dev python-gtk2 python-glade2 gnome-icon-theme menu
+			sudo apt-get install imagemagick wget rar libssl-dev intltool python-gtk2 python-glade2 gnome-icon-theme menu
 			
 2º  Instalar :
 		sudo make install
