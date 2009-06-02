@@ -40,7 +40,6 @@ install: uninstall wbfs
 	cp trabajo.py $(PREFIX)/share/wiithon
 	cp mensaje.py $(PREFIX)/share/wiithon
 	cp wiithon.desktop /usr/share/applications/
-	#cp recursos/wiithon-kde.desktop /usr/share/applications/kde/
 	
 	cp recursos/icons/wiithon.svg /usr/share/pixmaps
 
@@ -117,7 +116,6 @@ uninstall:
 	-$(RM) $(PREFIX)/share/wiithon/recursos/imagenes/*.png
 	
 	-$(RM) /usr/share/applications/wiithon.desktop
-	#-$(RM) /usr/share/applications/kde/wiithon-kde.desktop
 	
 	-$(RM) $(PREFIX)/share/wiithon/*.pyc
 	
