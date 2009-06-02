@@ -41,6 +41,9 @@ class PoolTrabajo(Pool , Thread):
 		elif( trabajo.getQueHacer() == "COPIAR_CARATULA" ):
 			IDGAME = trabajo.getAQuien()
 			self.copiarCaratula(core , IDGAME)
+		elif( trabajo.getQueHacer() == "COPIAR_DISCO" ):
+			IDGAME = trabajo.getAQuien()
+			self.copiarDisco(core , IDGAME)
 		elif( trabajo.getQueHacer() == "VERIFICAR_JUEGO" ):
 			IDGAME = trabajo.getAQuien()
 			self.verificarJuego(core , DEVICE , IDGAME)
@@ -56,20 +59,10 @@ class PoolTrabajo(Pool , Thread):
 		core.descargarDisco( IDGAME )
 			
 	def copiarCaratula(self , core , IDGAME):
-		try:
-			os.remove ( config.HOME_WIITHON_LOGS_PROCESO )
-		except OSError:
-			pass
-	
-		core.nuevoMensaje( Mensaje("COMANDO","EMPIEZA") )
-		core.nuevoMensaje( Mensaje("COMANDO","PROGRESO_INICIA") )
 		exito = core.copiarCaratula( IDGAME )
-		core.nuevoMensaje( Mensaje("COMANDO","PROGRESO_FIN") )
-		if exito:
-			core.nuevoMensaje( Mensaje("COMANDO","TERMINA_OK") )
-		else:
-			core.nuevoMensaje( Mensaje("COMANDO","TERMINA_ERROR") )
-		
+
+	def copiarDisco(self , core , IDGAME):
+		exito = core.copiarDisco( IDGAME )
 
 	def verificarJuego(self , core , DEVICE , IDGAME):
 		if not core.verificarJuego(DEVICE , IDGAME):
@@ -208,6 +201,13 @@ class PoolTrabajo(Pool , Thread):
 		else:
 			self.nuevoTrabajo( Trabajo("COPIAR_CARATULA" , IDGAME) )
 
+	def nuevoTrabajoCopiarDisco(self , IDGAME):
+		if type(IDGAME) == list:
+			for i in IDGAME:
+				self.nuevoTrabajo( Trabajo("COPIAR_DISCO" , i) )
+		else:
+			self.nuevoTrabajo( Trabajo("COPIAR_DISCO" , IDGAME) )
+
 	def nuevoTrabajoVerificarJuego(self , IDGAME):
 		if type(IDGAME) == list:
 			for i in IDGAME:
@@ -216,7 +216,7 @@ class PoolTrabajo(Pool , Thread):
 			self.nuevoTrabajo( Trabajo("VERIFICAR_JUEGO" , IDGAME) )
 
 '''
-Primer parametro = ("ANADIR"|"EXTRAER"|"DESCARGA_CARATULA"|"DESCARGA_DISCO"|"COPIAR_CARATULA"|"VERIFICAR_JUEGO")
+Primer parametro = ("ANADIR"|"EXTRAER"|"DESCARGA_CARATULA"|"DESCARGA_DISCO"|"COPIAR_CARATULA"|"COPIAR_DISCO"|"VERIFICAR_JUEGO")
 Segundo parametro = Objeto sobre el que se trabaja, depende del primer parametro
 			Si el primer parametro es:
 				ANADIR: Se espera que el segundo sea 1 ruta o una lista de rutas

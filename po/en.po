@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wiithon 1.0 Alpha\n"
 "Report-Msgid-Bugs-To: makiolo@gmail.com\n"
-"POT-Creation-Date: 2009-06-02 02:12+0200\n"
+"POT-Creation-Date: 2009-06-02 04:42+0200\n"
 "PO-Revision-Date: 2009-06-01 00:16+0200\n"
 "Last-Translator: \n"
 "Language-Team: Spanish <kde-i18n-doc@lists.kde.org>\n"
@@ -25,78 +25,78 @@ msgstr "No Wii Disc"
 msgid "No se han encontrado particiones WBFS"
 msgstr "There aren't partitions WBFS"
 
-#: gui.py:163
+#: gui.py:164
 msgid "Dispositivo"
 msgstr "Device"
 
-#: gui.py:164
+#: gui.py:165
 msgid "Fabricante"
 msgstr "Manufacture"
 
-#: gui.py:215
+#: gui.py:216
 msgid "IDGAME"
 msgstr "IDGAME"
 
-#: gui.py:216 recursos/glade/wiithon.ui.h:19
+#: gui.py:217 recursos/glade/wiithon.ui.h:19
 msgid "Nombre"
 msgstr "Name"
 
-#: gui.py:217
+#: gui.py:218
 msgid "Tamanio"
 msgstr "Size"
 
-#: gui.py:374
+#: gui.py:375
 #, python-format
 msgid "¿Quieres borrar el juego con ID = \"%s\"?"
 msgstr "¿Delete game with ID = \"%s\"?"
 
-#: gui.py:384 gui.py:393 gui.py:417 gui.py:426
+#: gui.py:385 gui.py:394 gui.py:418 gui.py:427
 msgid "No has seleccionado ningun juego"
 msgstr "Don't have a game selected"
 
-#: gui.py:404 gui.py:441
+#: gui.py:405 gui.py:442
 msgid "Elige un directorio"
 msgstr "Choose folder"
 
-#: gui.py:437
+#: gui.py:438
 msgid "Elige una ISO o un RAR"
 msgstr "Choose a ISO or RAR"
 
-#: gui.py:450
+#: gui.py:451
 msgid "Espere ..."
 msgstr "Loading ..."
 
-#: gui.py:455
+#: gui.py:456
 msgid "No has seleccionado ninguna particion"
 msgstr "Don't have a partition selected"
 
-#: gui.py:457
+#: gui.py:458
 msgid "Sin implementar aún"
 msgstr "Not implemented yet!"
 
-#: gui.py:485
+#: gui.py:486
 #, python-format
 msgid "CUIDADO: %s"
 msgstr "WARNING: %s"
 
-#: gui.py:487
+#: gui.py:488
 #, python-format
 msgid "ERROR: %s"
 msgstr "ERROR: %s"
 
-#: gui.py:490
+#: gui.py:491
 msgid "Empezando ..."
 msgstr "Loading ..."
 
-#: gui.py:508
+#: gui.py:509
 msgid "Comando desconocido"
 msgstr "Unknown command"
 
-#: gui.py:549
+#: gui.py:550
 msgid "Finalizando. Hecho en"
 msgstr "Finishing. Done in"
 
-#: gui.py:553
+#: gui.py:554
 msgid "quedan"
 msgstr "remaining"
 
@@ -221,7 +221,7 @@ msgstr "Intense work (0)"
 
 #: recursos/glade/wiithon.ui.h:29
 msgid "caratulas a SD"
-msgstr "Covers -> SD"
+msgstr "copy to SD"
 
 #: recursos/glade/wiithon.ui.h:30
 msgid "label"

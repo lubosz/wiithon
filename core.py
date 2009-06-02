@@ -32,6 +32,9 @@ class WiithonCORE:
 	
 	# Destino por defecto para el destino de las caratulas
 	destinoCopiarCaratula = config.HOME
+	
+	# Destino por defecto para el destino de los discos
+	destinoCopiarDisco = config.HOME
 
 	#constructor
 	def __init__(self):
@@ -270,8 +273,7 @@ class WiithonCORE:
 		return l
 
 	def existeDisco(self , IDGAME):
-		destino = os.path.join(config.HOME_WIITHON_DISCOS , IDGAME+".png")
-		return (os.path.exists(destino))
+		return (os.path.exists( self.getRutaDisco(IDGAME) ))
 
 	def descargarDisco(self , IDGAME):
 		if (self.existeDisco(IDGAME)):
@@ -282,12 +284,23 @@ class WiithonCORE:
 			descargada = (salida == 0)
 			if descargada:
 				destino = os.path.join(config.HOME_WIITHON_DISCOS , IDGAME+".png")
-				os.system("mogrify -resize 160x160 " + destino)
+				os.system("mogrify -resize 160x160! " + destino)
 			return descargada
+
+	def getRutaDisco(self , IDGAME):
+		return os.path.join(config.HOME_WIITHON_DISCOS , IDGAME+".png")
 			
 	def getRutaCaratula(self , IDGAME):
 		return os.path.join(config.HOME_WIITHON_CARATULAS , IDGAME+".png")
-			
+
+	def getDestinoCopiarDisco(self):
+		return self.destinoCopiarDisco
+		
+	def setDestinoCopiarDisco(self, destino):
+		if type(destino) == list:
+			destino = destino[0]
+		self.destinoCopiarDisco = destino
+
 	def getDestinoCopiarCaratula(self):
 		return self.destinoCopiarCaratula
 		
@@ -299,7 +312,7 @@ class WiithonCORE:
 	def copiarCaratula(self , IDGAME ):
 		destino = self.getDestinoCopiarCaratula()
 		destino = os.path.join( os.path.abspath(destino) , "%s.png" % (IDGAME) )
-		if( not os.path.exists( destino ) and self.existeCaratula(IDGAME) ):
+		if( not os.path.exists( destino ) and self.existeDisco(IDGAME) ):
 			origen = self.getRutaCaratula(IDGAME)
 			print "Copiando %s ----> %s ... " % (origen , destino),
 			shutil.copy(origen, destino)
@@ -307,6 +320,19 @@ class WiithonCORE:
 			return os.path.exists(destino)
 		else:
 			print "Ya tienes la caratula %s" % (IDGAME)
+			return True
+
+	def copiarDisco(self , IDGAME ):
+		destino = self.getDestinoCopiarDisco()
+		destino = os.path.join( os.path.abspath(destino) , "%s.png" % (IDGAME) )
+		if( not os.path.exists( destino ) and self.existeCaratula(IDGAME) ):
+			origen = self.getRutaDisco(IDGAME)
+			print "Copiando %s ----> %s ... " % (origen , destino),
+			shutil.copy(origen, destino)
+			print "OK"
+			return os.path.exists(destino)
+		else:
+			print "Ya tienes el disco %s" % (IDGAME)
 			return True
 
 	# Nos dice si existe la caratula del juego "IDGAME"
@@ -335,7 +361,7 @@ class WiithonCORE:
 				descargada = (salida == 0)
 				if descargada:
 					destino = os.path.join(config.HOME_WIITHON_CARATULAS , IDGAME+".png")
-					os.system("mogrify -resize 160x225 " + destino)
+					os.system("mogrify -resize 160x224! " + destino)
 				i = i + 1
 			return descargada
 

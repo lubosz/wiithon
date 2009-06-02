@@ -105,10 +105,11 @@ class WiithonGUI(GtkBuilderWrapper):
 			self.poolBash = PoolTrabajo( self.core , 6)
 			self.poolBash.setDaemon(True)
 			self.poolBash.start()
-			listaIDGAMEs = [ "%s" % j[0] for j in self.listaJuegos ]
-			self.poolBash.nuevoTrabajoDescargaCaratula( listaIDGAMEs )
-			self.poolBash.nuevoTrabajoDescargaDisco( listaIDGAMEs )
-			self.poolBash.nuevoTrabajoVerificarJuego( listaIDGAMEs )
+			
+			for IDGAME in self.listaJuegos:
+				self.poolBash.nuevoTrabajoDescargaCaratula( IDGAME )
+				self.poolBash.nuevoTrabajoDescargaDisco( IDGAME )
+				self.poolBash.nuevoTrabajoVerificarJuego( IDGAME )
 
 			# Trabajador, se le mandan trabajos de barra de progreso		
 			self.poolTrabajo = PoolTrabajo( self.core )
@@ -401,18 +402,25 @@ class WiithonGUI(GtkBuilderWrapper):
 					   	gtk.RESPONSE_OK,
 					   )
 		
-				fc_copiar_SD = gtk.FileChooserDialog(_("Elige un directorio"), None , gtk.FILE_CHOOSER_ACTION_SELECT_FOLDER , botones)
+				fc_copiar_SD = gtk.FileChooserDialog(_('Elige un directorio para las caratulas'), None , gtk.FILE_CHOOSER_ACTION_SELECT_FOLDER , botones)
 				fc_copiar_SD.set_local_only(True)
 				fc_copiar_SD.show()
+				
+				fc_copiar_discos_SD = gtk.FileChooserDialog(_('Elige un directorio para los discos'), None , gtk.FILE_CHOOSER_ACTION_SELECT_FOLDER , botones)
+				fc_copiar_discos_SD.set_local_only(True)
+				fc_copiar_discos_SD.show()
 			
-				if fc_copiar_SD.run() == gtk.RESPONSE_OK:
+				if 	fc_copiar_SD.run() == gtk.RESPONSE_OK and
+					fc_copiar_discos_SD.run() == gtk.RESPONSE_OK:
 					
 					self.core.setDestinoCopiarCaratula( fc_copiar_SD.get_filenames() )
 					
-					listaIDGAMEs = [ "%s" % j[0] for j in self.listaJuegos ]
-					self.poolBash.nuevoTrabajoCopiarCaratula( listaIDGAMEs )
+					for IDGAME in self.listaJuegos:
+						self.poolBash.nuevoTrabajoCopiarCaratula( IDGAME )
+						self.poolBash.nuevoTrabajoCopiarDisco( IDGAME )
 				
 				fc_copiar_SD.destroy()
+				fc_copiar_discos_SD.destroy()
 			else:
 				self.alert("warning" , _("No has seleccionado ningun juego"))
 

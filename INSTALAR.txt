@@ -2,13 +2,29 @@
 + Instalación
 ===================================================================================
 
+Hay 2 opciones, en función de si vuestra distribución usa apt-get o no:
+
+++++++++++++++++
++  OPCION 1    +
+++++++++++++++++
+
+Si instalais normalmente con apt-get:
+
+1º 	Instalar (antes instalará las dependencias automaticamente): 
+		sudo make install_auto
+		
+++++++++++++++++
++  OPCION 2    +
+++++++++++++++++
+		
+Si NO usais apt-get, tendreis antes que instalar las dependencias con el gestor de paquetes de vuestro sistema:
+
 1º  Dependencias : Instalar estos paquetes de los repositorios de:
 		GNOME:
-			sudo apt-get install imagemagick wget rar libssl-dev intltool
+			imagemagick wget rar libssl-dev intltool menu
 		
 		KDE:
-			sudo apt-get install imagemagick wget rar libssl-dev intltool python-gtk2 python-glade2 gnome-icon-theme menu
+			imagemagick wget rar libssl-dev intltool menu python-gtk2 python-glade2 gnome-icon-theme
 			
 2º  Instalar :
 		sudo make install
-

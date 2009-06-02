@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wiithon 1.0 Alpha\n"
 "Report-Msgid-Bugs-To: makiolo@gmail.com\n"
-"POT-Creation-Date: 2009-06-02 02:12+0200\n"
+"POT-Creation-Date: 2009-06-02 04:42+0200\n"
 "PO-Revision-Date: 2009-06-01 00:20+0200\n"
 "Last-Translator: \n"
 "Language-Team: Spanish <kde-i18n-doc@lists.kde.org>\n"
@@ -26,78 +26,78 @@ msgstr ""
 msgid "No se han encontrado particiones WBFS"
 msgstr ""
 
-#: gui.py:163
+#: gui.py:164
 msgid "Dispositivo"
 msgstr ""
 
-#: gui.py:164
+#: gui.py:165
 msgid "Fabricante"
 msgstr ""
 
-#: gui.py:215
+#: gui.py:216
 msgid "IDGAME"
 msgstr ""
 
-#: gui.py:216 recursos/glade/wiithon.ui.h:19
+#: gui.py:217 recursos/glade/wiithon.ui.h:19
 msgid "Nombre"
 msgstr ""
 
-#: gui.py:217
+#: gui.py:218
 msgid "Tamanio"
 msgstr "Tamaño"
 
-#: gui.py:374
+#: gui.py:375
 #, python-format
 msgid "¿Quieres borrar el juego con ID = \"%s\"?"
 msgstr ""
 
-#: gui.py:384 gui.py:393 gui.py:417 gui.py:426
+#: gui.py:385 gui.py:394 gui.py:418 gui.py:427
 msgid "No has seleccionado ningun juego"
 msgstr ""
 
-#: gui.py:404 gui.py:441
+#: gui.py:405 gui.py:442
 msgid "Elige un directorio"
 msgstr ""
 
-#: gui.py:437
+#: gui.py:438
 msgid "Elige una ISO o un RAR"
 msgstr ""
 
-#: gui.py:450
+#: gui.py:451
 msgid "Espere ..."
 msgstr ""
 
-#: gui.py:455
+#: gui.py:456
 msgid "No has seleccionado ninguna particion"
 msgstr ""
 
-#: gui.py:457
+#: gui.py:458
 msgid "Sin implementar aún"
 msgstr ""
 
-#: gui.py:485
+#: gui.py:486
 #, python-format
 msgid "CUIDADO: %s"
 msgstr ""
 
-#: gui.py:487
+#: gui.py:488
 #, python-format
 msgid "ERROR: %s"
 msgstr ""
 
-#: gui.py:490
+#: gui.py:491
 msgid "Empezando ..."
 msgstr ""
 
-#: gui.py:508
+#: gui.py:509
 msgid "Comando desconocido"
 msgstr ""
 
-#: gui.py:549
+#: gui.py:550
 msgid "Finalizando. Hecho en"
 msgstr ""
 
-#: gui.py:553
+#: gui.py:554
 msgid "quedan"
 msgstr ""
 
@@ -219,7 +219,7 @@ msgstr ""
 
 #: recursos/glade/wiithon.ui.h:29
 msgid "caratulas a SD"
-msgstr "carátula -> SD"
+msgstr "copiar a SD"
 
 #: recursos/glade/wiithon.ui.h:30
 msgid "label"

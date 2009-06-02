@@ -16,11 +16,13 @@ run: install
 	
 runEN: install
 	LANGUAGE=en LANG=en_US.UTF-8 wiithon
-	
+
+install_auto: dependencias install
+
 dependencias:
 	apt-get install imagemagick wget rar libssl-dev intltool python-gtk2 python-glade2 gnome-icon-theme menu
 
-install: uninstall dependencias wbfs generarMOO
+install: uninstall wbfs generarMOO
 
 	@echo "=================================================================="
 	@echo "Antes de instalar, se ha desinstalado"

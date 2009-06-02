@@ -1,3 +1,6 @@
+- La barra del progreso a veces me ha fallado
+- Añadir función copiar discos a SD ?
+
 - Documentar el protocolo entre wiithon y wbfs
 - Barra de progreso para indicar espacio libres y ocupoados
 - Indicar por que trabajo de cuantos en la barra de progreso
