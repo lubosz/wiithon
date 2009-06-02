@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wiithon 1.0 Alpha\n"
 "Report-Msgid-Bugs-To: makiolo@gmail.com\n"
-"POT-Creation-Date: 2009-06-01 02:38+0200\n"
+"POT-Creation-Date: 2009-06-02 02:12+0200\n"
 "PO-Revision-Date: 2009-06-01 00:20+0200\n"
 "Last-Translator: \n"
 "Language-Team: Spanish <kde-i18n-doc@lists.kde.org>\n"
@@ -22,82 +22,82 @@ msgstr ""
 msgid "No se ha encontrado ningún disco de la Wii"
 msgstr ""
 
-#: gui.py:92
+#: gui.py:93
 msgid "No se han encontrado particiones WBFS"
 msgstr ""
 
-#: gui.py:162
+#: gui.py:163
 msgid "Dispositivo"
 msgstr ""
 
-#: gui.py:163
+#: gui.py:164
 msgid "Fabricante"
 msgstr ""
 
-#: gui.py:214
+#: gui.py:215
 msgid "IDGAME"
 msgstr ""
 
-#: gui.py:215 recursos/glade/wiithon.ui.h:19
+#: gui.py:216 recursos/glade/wiithon.ui.h:19
 msgid "Nombre"
 msgstr ""
 
-#: gui.py:216
+#: gui.py:217
 msgid "Tamanio"
 msgstr "Tamaño"
 
-#: gui.py:373
+#: gui.py:374
 #, python-format
 msgid "¿Quieres borrar el juego con ID = \"%s\"?"
 msgstr ""
 
-#: gui.py:383 gui.py:392 gui.py:416 gui.py:425
+#: gui.py:384 gui.py:393 gui.py:417 gui.py:426
 msgid "No has seleccionado ningun juego"
 msgstr ""
 
-#: gui.py:403 gui.py:440
+#: gui.py:404 gui.py:441
 msgid "Elige un directorio"
 msgstr ""
 
-#: gui.py:436
+#: gui.py:437
 msgid "Elige una ISO o un RAR"
 msgstr ""
 
-#: gui.py:449
+#: gui.py:450
 msgid "Espere ..."
 msgstr ""
 
-#: gui.py:454
+#: gui.py:455
 msgid "No has seleccionado ninguna particion"
 msgstr ""
 
-#: gui.py:456
+#: gui.py:457
 msgid "Sin implementar aún"
 msgstr ""
 
-#: gui.py:484
+#: gui.py:485
 #, python-format
 msgid "CUIDADO: %s"
 msgstr ""
 
-#: gui.py:486
+#: gui.py:487
 #, python-format
 msgid "ERROR: %s"
 msgstr ""
 
-#: gui.py:489
+#: gui.py:490
 msgid "Empezando ..."
 msgstr ""
 
-#: gui.py:507
+#: gui.py:508
 msgid "Comando desconocido"
 msgstr ""
 
-#: gui.py:548
+#: gui.py:549
 msgid "Finalizando. Hecho en"
 msgstr ""
 
-#: gui.py:552
+#: gui.py:553
 msgid "quedan"
 msgstr ""
 

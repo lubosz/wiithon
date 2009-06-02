@@ -60,6 +60,7 @@ class WiithonGUI(GtkBuilderWrapper):
 		#ocultar buscador (de momento)
 		self.wb_hbox6.hide()
 		self.wb_hbox7.hide()
+		self.wb_expander1.hide()
 
 		'''
 		# No necesitamos la señal, para esta versión
