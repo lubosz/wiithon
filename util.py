@@ -80,7 +80,10 @@ def getMagicISO(imagenISO):
 	f = open(imagenISO , "r")
 	magic = f.read(6)
 	f.close()
-	return magic
+	if len(magic) == 6:
+		return magic
+	else:
+		return None
 
 def tieneCaracteresRaros(cadena):
 	# Nos dice si *cadena* tiene caracteres raros dados por una lista negra global

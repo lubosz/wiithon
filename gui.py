@@ -54,7 +54,7 @@ class WiithonGUI(GtkBuilderWrapper):
 		self.wb_tb_copiar_SD.connect('clicked' , self.on_tb_toolbar_clicked)
 		self.wb_tb_preferencias1.connect('clicked' , self.on_tb_toolbar_clicked)
 
-		# oculto la fila de la progreso
+		# oculto la fila de progreso
 		self.wb_box_progreso.hide()
 		
 		#ocultar buscador (de momento)
@@ -81,16 +81,22 @@ class WiithonGUI(GtkBuilderWrapper):
 		# carga la vista del TreeView de juegos
 		self.tv_games_modelo = self.cargarJuegosVista()
 
+		if os.geteuid() != 0: 
+			self.alert("error" , _("%s requiere permisos de superusuario (root) para acceder a las particiones WBFS.\n"
+			"Esto dependera de su distribucion de Linux pero intente con : sudo %s" % (config.APP , config.APP) ))
+			raise AssertionError, "Error"
+
 		listaParticiones = self.core.getListaParticiones()
-		
 		if(len(listaParticiones) == 0):
 			destinoCaratula = os.path.join(config.WIITHON_FILES_RECURSOS_IMAGENES , "caratula.png")
 			self.wb_img_caratula1.set_from_file( destinoCaratula )
 
 			destinoDisco = os.path.join(config.WIITHON_FILES_RECURSOS_IMAGENES , "disco.png")
 			self.wb_img_disco1.set_from_file( destinoDisco )
-			
-			self.alert("warning" , _("No se han encontrado particiones WBFS"))
+
+			# puede ver el programa, aunque en un estado inútil
+			self.alert("warning" , _("No se han encontrado particiones WBFS:\n" +
+						"Conecte un disco duro con una particion de juegos de Wii (tipo WBFS) y reinicie %s" % (config.APP)))
 		else:
 			# carga el modelo de datos del TreeView de particiones
 			self.cargarParticionesModelo(self.tv_partitions_modelo , listaParticiones)
@@ -107,9 +113,9 @@ class WiithonGUI(GtkBuilderWrapper):
 			self.poolBash.start()
 			
 			for IDGAME in self.listaJuegos:
-				self.poolBash.nuevoTrabajoDescargaCaratula( IDGAME )
-				self.poolBash.nuevoTrabajoDescargaDisco( IDGAME )
-				self.poolBash.nuevoTrabajoVerificarJuego( IDGAME )
+				self.poolBash.nuevoTrabajoDescargaCaratula( IDGAME[0] )
+				self.poolBash.nuevoTrabajoDescargaDisco( IDGAME[0] )
+				#self.poolBash.nuevoTrabajoVerificarJuego( IDGAME[0] )
 
 			# Trabajador, se le mandan trabajos de barra de progreso		
 			self.poolTrabajo = PoolTrabajo( self.core )
@@ -123,7 +129,11 @@ class WiithonGUI(GtkBuilderWrapper):
 
 		# pongo el foco en los TreeView de juegos
 		self.wb_tv_games.grab_focus()
-		
+
+		# pruebas
+		#os.environ['HOME'] = config.HOME
+		#self.alert("info" , os.environ['HOME'] )
+
 	def getEstilo_azulGrandeFondoRojo(self):
 		atributos = self.getEstilo_azulGrande()
 		
@@ -149,12 +159,6 @@ class WiithonGUI(GtkBuilderWrapper):
 		atributos.insert(pango.AttrForeground(0x0011,0x4444,0xFFFF,0,-1))  
 		
 		return atributos
-		
-	'''
-	def clear_search_cb(self, widget, position, event):
-		if event.button == 1:
-			widget.set_text('')
-	'''
 
 	def cargarParticionesVista(self):
 		tv_partitions = self.wb_tv_partitions
@@ -385,11 +389,26 @@ class WiithonGUI(GtkBuilderWrapper):
 				self.alert("warning" , _("No has seleccionado ningun juego"))
 		elif(id_tb == self.wb_tb_extraer):
 			if self.iteradorJuegoSeleccionado != None:
-				'''
-				Tarea EXTRAER JUEGO
-				'''
-				self.poolTrabajo.nuevoTrabajoExtraer( self.IDGAMEJuegoSeleccionado )
+				botones = (
+						gtk.STOCK_CANCEL,
+					   	gtk.RESPONSE_CANCEL,
+					   	gtk.STOCK_OPEN,
+					   	gtk.RESPONSE_OK,
+					   )
+		
+				fc_extraer = gtk.FileChooserDialog(_('Elige un directorio donde extraer la ISO de %s' % (self.IDGAMEJuegoSeleccionado)), None , gtk.FILE_CHOOSER_ACTION_SELECT_FOLDER , botones)
+				fc_extraer.set_local_only(True)
+				fc_extraer.show()
 
+				if ( fc_extraer.run() == gtk.RESPONSE_OK ):
+					self.core.setDestinoExtraer( fc_extraer.get_filenames() )
+					'''
+					Tarea EXTRAER JUEGO
+					'''
+					self.wb_box_progreso.show()
+					self.wb_progreso1.set_text(_("Extrayendo ..."))
+					self.poolTrabajo.nuevoTrabajoExtraer( self.IDGAMEJuegoSeleccionado )
+				fc_extraer.destroy()
 			else:
 				self.alert("warning" , _("No has seleccionado ningun juego"))
 		elif(id_tb == self.wb_tb_copiar_SD):
@@ -402,25 +421,25 @@ class WiithonGUI(GtkBuilderWrapper):
 					   	gtk.RESPONSE_OK,
 					   )
 		
-				fc_copiar_SD = gtk.FileChooserDialog(_('Elige un directorio para las caratulas'), None , gtk.FILE_CHOOSER_ACTION_SELECT_FOLDER , botones)
+				fc_copiar_SD = gtk.FileChooserDialog(_('Paso 1 de 2: Elige un directorio para las CARATULAS'), None , gtk.FILE_CHOOSER_ACTION_SELECT_FOLDER , botones)
 				fc_copiar_SD.set_local_only(True)
 				fc_copiar_SD.show()
-				
-				fc_copiar_discos_SD = gtk.FileChooserDialog(_('Elige un directorio para los discos'), None , gtk.FILE_CHOOSER_ACTION_SELECT_FOLDER , botones)
-				fc_copiar_discos_SD.set_local_only(True)
-				fc_copiar_discos_SD.show()
 			
-				if 	fc_copiar_SD.run() == gtk.RESPONSE_OK and
-					fc_copiar_discos_SD.run() == gtk.RESPONSE_OK:
+				if ( fc_copiar_SD.run() == gtk.RESPONSE_OK ):
+					fc_copiar_discos_SD = gtk.FileChooserDialog(_('Paso 2 de 2: Elige un directorio para los DISCOS'), None , gtk.FILE_CHOOSER_ACTION_SELECT_FOLDER , botones)
+					fc_copiar_discos_SD.set_local_only(True)
+					fc_copiar_discos_SD.show()
+					if(fc_copiar_discos_SD.run() == gtk.RESPONSE_OK):
+						self.core.setDestinoCopiarCaratula( fc_copiar_SD.get_filenames() )
+						self.core.setDestinoCopiarDisco( fc_copiar_discos_SD.get_filenames() )
 					
-					self.core.setDestinoCopiarCaratula( fc_copiar_SD.get_filenames() )
-					
-					for IDGAME in self.listaJuegos:
-						self.poolBash.nuevoTrabajoCopiarCaratula( IDGAME )
-						self.poolBash.nuevoTrabajoCopiarDisco( IDGAME )
+						for IDGAME in self.listaJuegos:
+							self.poolBash.nuevoTrabajoCopiarCaratula( IDGAME[0] )
+							self.poolBash.nuevoTrabajoCopiarDisco( IDGAME[0] )
+
+					fc_copiar_discos_SD.destroy()
 				
 				fc_copiar_SD.destroy()
-				fc_copiar_discos_SD.destroy()
 			else:
 				self.alert("warning" , _("No has seleccionado ningun juego"))
 
@@ -454,9 +473,17 @@ class WiithonGUI(GtkBuilderWrapper):
 					'''
 					Tarea AÑADIR JUEGO
 					'''
+					ficherosSeleccionados = fc_anadir.get_filenames() 
+					for fichero in ficherosSeleccionados:
+						if (util.getExtension(fichero) == "iso"):
+							IDGAME = util.getMagicISO(fichero)
+							if IDGAME != None:
+								self.poolBash.nuevoTrabajoDescargaCaratula( IDGAME )
+								self.poolBash.nuevoTrabajoDescargaDisco( IDGAME )
+					
 					self.wb_box_progreso.show()
-					self.wb_progreso1.set_text(_("Espere ..."))
-					self.poolTrabajo.nuevoTrabajoAnadir( fc_anadir.get_filenames() )
+					self.wb_progreso1.set_text(_("Anadiendo ..."))
+					self.poolTrabajo.nuevoTrabajoAnadir( ficherosSeleccionados )
 
 				fc_anadir.destroy()
 			else:

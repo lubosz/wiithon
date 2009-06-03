@@ -99,12 +99,12 @@ class WiithonCLI:
 					else:
 						IDGAME = self.core.get_IDJUEGO_de_Lista(DEVICE , listaJuegos)
 					print "Borrar juego con ID : " + IDGAME + " en particion " + DEVICE + " " + FABRICANTE
-					if( self.core.borrarJuego(DEVICE , IDGAME) ):
-						print "juego " + IDGAME + " borrado correctamente"
+					if( IDGAME != None and self.core.borrarJuego(DEVICE , IDGAME) ):
+						print _("Juego %s borrado correctamente" % (IDGAME))
 					else:
-						print "ERROR borrando el juego " + ID_JUEGO
+						print _("ERROR borrando el juego")
 				else:
-					print "No hay Juegos para borrar"
+					print _("No hay Juegos que borrar")
 
 			elif ( parm1 == "caratula" or parm1 == "cover"):
 				if(hayJuegos):
@@ -122,10 +122,15 @@ class WiithonCLI:
 				if(hayJuegos):
 					panoramico = False
 					if(numParametros >= 2): # 3 parametros
-						panoramico = parm2 == "panoramico" or parm2 == "widescreen"
-						if (panoramico):
+						if (parm2 == "panoramico" or parm2 == "widescreen"):
 							print "Se descargaran en formato paronámico"
-					if(self.core.descargarTodasLasCaratulaYDiscos(DEVICE , listaJuegos , panoramico)):
+							tipo = "panoramico"
+						elif (parm2 == "3d"):
+							print "Se descargarán en 3D"
+							tipo = "3d"
+						else:
+							tipo = "normal"
+					if(self.core.descargarTodasLasCaratulaYDiscos(DEVICE , listaJuegos , tipo)):
 						print "OK, todas las caratulas se han descagado"
 					else:
 						print "ERROR, descargando alguna caratula"

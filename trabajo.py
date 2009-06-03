@@ -66,7 +66,9 @@ class PoolTrabajo(Pool , Thread):
 
 	def verificarJuego(self , core , DEVICE , IDGAME):
 		if not core.verificarJuego(DEVICE , IDGAME):
-			print "%s es un juego corrupto" % (IDGAME)
+			print _("%s es un juego corrupto" % (IDGAME))
+		else:
+			print _("%s es un juego correcto, no se ha detectado corrupcion")
 
 	def anadir(self , core , fichero , DEVICE):
 		try:

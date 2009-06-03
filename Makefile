@@ -31,6 +31,8 @@ install: uninstall wbfs generarMOO
 	mkdir -p $(PREFIX)/share/wiithon
 	mkdir -p $(PREFIX)/share/wiithon/recursos/glade
 	mkdir -p $(PREFIX)/share/wiithon/recursos/imagenes
+	
+	echo ${HOME} > $(PREFIX)/share/wiithon/HOME.conf
 
 	cp wiithon.py $(PREFIX)/share/wiithon
 	cp wiithon_autodetectar.sh $(PREFIX)/share/wiithon
@@ -179,9 +181,12 @@ diff:
 
 # generar PO VACIO a partir de plantilla POT
 generarPO: generarPlantilla
-	@echo "*** GETTEXT *** Creando POO: en_US y es_ES"
-	LANG=en_US.UTF-8 msginit -i po/plantilla.pot -o po/en.po --no-translator
+	@echo "*** GETTEXT *** Creando POO: es, en, de, fr y pt"
 	LANG=es_ES.UTF-8 msginit -i po/plantilla.pot -o po/es.po --no-translator
+	LANG=en_US.UTF-8 msginit -i po/plantilla.pot -o po/en.po --no-translator
+	#LANG=de_DE.UTF-8 msginit -i po/plantilla.pot -o po/de.po --no-translator
+	#LANG=fr_FR.UTF-8 msginit -i po/plantilla.pot -o po/fr.po --no-translator
+	#LANG=pt_PT.UTF-8 msginit -i po/plantilla.pot -o po/pt.po --no-translator
 	
 # extraer strings del glade
 extraerGlade:

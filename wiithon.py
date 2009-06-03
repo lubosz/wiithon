@@ -95,6 +95,7 @@ def App():
 			interfaz = WiithonGUI(core)
 
 			# solo pregunta el acuerdo por GUI
+			# FIXME: Esto debería ser un dialogo modal
 			if not os.path.exists(config.HOME_WIITHON):
 				informarAcuerdo(interfaz.question)
 
@@ -106,10 +107,7 @@ def App():
 	except getopt.GetoptError:
 		raise AssertionError, _("Programa ejecutado con las opciones incorrectas.")
 	except AssertionError, mensaje:
-		try:
-			interfaz.alert("error", str(mensaje) )
-		except:
-			print str(mensaje)
+		print str(mensaje)
 
 	if PAUSA:
 		raw_input(_("Pulse cualquier tecla para continuar ...\n"))

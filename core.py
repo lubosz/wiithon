@@ -35,6 +35,9 @@ class WiithonCORE:
 	
 	# Destino por defecto para el destino de los discos
 	destinoCopiarDisco = config.HOME
+	
+	# Destino por defecto para extraer un ISO
+	destinoExtraer = config.HOME
 
 	#constructor
 	def __init__(self):
@@ -103,11 +106,6 @@ class WiithonCORE:
 		def ordenarPorNombre(juego1 , juego2):
 			return cmp( juego1[1].lower() , juego2[1].lower() )
 
-
-		'''
-		subProceso = util.getPopen( config.WBFS_APP+" -p "+DEVICE+" ls" )
-		subProceso.wait()
-		'''
 		lineas = util.getSTDOUT_iterador( config.WBFS_APP+" -p "+DEVICE+" ls" )
 
 		salida = []
@@ -226,8 +224,13 @@ class WiithonCORE:
 	# extrae el juego IDGAME
 	def extraerJuego(self , DEVICE , IDGAME):
 		try:
+			trabajoActual = os.getcwd()
+			# cambiamos de directorio de trabajo
+			os.chdir( self.destinoExtraer )
 			comando = config.WBFS_APP+" -p "+DEVICE+" extract "+IDGAME
 			salida = subprocess.call( comando , shell=True , stderr=subprocess.STDOUT , stdout=open(config.HOME_WIITHON_LOGS_PROCESO , "w") )
+			# volvemos al directorio original
+			os.chdir( trabajoActual )
 			return salida == 0
 		except KeyboardInterrupt:
 			return False
@@ -279,6 +282,7 @@ class WiithonCORE:
 		if (self.existeDisco(IDGAME)):
 			return True
 		else:
+			print _("***************** DESCARGAR DISCO %s ********************" % (IDGAME))
 			origen = 'http://www.theotherzone.com/wii/diskart/160/160/' + IDGAME + '.png'
 			salida = os.system("wget --no-cache --directory-prefix=\""+config.HOME_WIITHON_DISCOS+"\" " + origen)
 			descargada = (salida == 0)
@@ -292,6 +296,14 @@ class WiithonCORE:
 			
 	def getRutaCaratula(self , IDGAME):
 		return os.path.join(config.HOME_WIITHON_CARATULAS , IDGAME+".png")
+
+	def getDestinoExtraer(self):
+		return self.destinoExtraer
+		
+	def setDestinoExtraer(self, destino):
+		if type(destino) == list:
+			destino = destino[0]
+		self.destinoExtraer = destino
 
 	def getDestinoCopiarDisco(self):
 		return self.destinoCopiarDisco
@@ -340,23 +352,25 @@ class WiithonCORE:
 		return (os.path.exists( self.getRutaCaratula(IDGAME) ))
 
 	# Descarga una caratula de "IDGAME"
-	def descargarCaratula(self , IDGAME, panoramica = False):
+	def descargarCaratula(self , IDGAME, tipo = "normal"):
 		if (self.existeCaratula(IDGAME)):
 			return True
 		else:
-			'''
-			diskart/160/160/
-			3d/160/225/
-			widescreen/
-			'''
+			# aqui se puede poner : normal|panoramica|3d
+			tipo = "3d"
+
 			origen = 'http://www.theotherzone.com/wii/'
-			regiones = ['pal' , 'ntsc' , 'ntscj']
-			if(panoramica):
+			regiones = ['pal/' , 'ntsc/' , 'ntscj/']
+			if(tipo == "panoramica"):
 				origen = origen + "widescreen/"
+			elif(tipo == "3d"):
+				origen = origen + "3d/160/225/"
+				regiones = ['']
 			descargada = False
 			i = 0
+			print _("***************** DESCARGAR CARATULA %s ********************" % (IDGAME))
 			while ( not descargada and i<len(regiones)  ):
-				origenGen = origen + regiones[i] + "/" + IDGAME + ".png"
+				origenGen = origen + regiones[i] + IDGAME + ".png"
 				salida = os.system("wget --no-cache --directory-prefix=\""+config.HOME_WIITHON_CARATULAS+"\" " + origenGen)
 				descargada = (salida == 0)
 				if descargada:
@@ -366,10 +380,10 @@ class WiithonCORE:
 			return descargada
 
 	# Descarga todos las caratulas de una lista de juegos
-	def descargarTodasLasCaratulaYDiscos(self , DEVICE , listaJuegos , panoramica = False):
+	def descargarTodasLasCaratulaYDiscos(self , DEVICE , listaJuegos , tipo = "normal"):
 		ok = True
 		for juego in listaJuegos:
-			if ( not self.descargarCaratula( juego[0] , panoramica ) ):
+			if ( not self.descargarCaratula( juego[0] , tipo ) ):
 				ok = False
 			if ( not self.descargarDisco( juego[0] ) ):
 				ok = False
