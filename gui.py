@@ -268,13 +268,13 @@ class WiithonGUI(GtkBuilderWrapper):
 				i = i + 1
 
 	def salir(self , widget=None, data=None):
+		gtk.main_quit()
 		try:
 			self.hiloAtenderMensajes.interrumpir()
 			self.poolTrabajo.interrumpir()
-			self.poolBash.interrumpir()
+			self.poolBash.join()
 		except AttributeError:
 			pass
-		gtk.main_quit()
 
 	def alert(self, level, message):
 		alert_glade = gtk.Builder()
@@ -397,6 +397,7 @@ class WiithonGUI(GtkBuilderWrapper):
 					   )
 		
 				fc_extraer = gtk.FileChooserDialog(_('Elige un directorio donde extraer la ISO de %s' % (self.IDGAMEJuegoSeleccionado)), None , gtk.FILE_CHOOSER_ACTION_SELECT_FOLDER , botones)
+				fc_extraer.set_default_response(gtk.RESPONSE_OK)
 				fc_extraer.set_local_only(True)
 				fc_extraer.show()
 
@@ -422,11 +423,13 @@ class WiithonGUI(GtkBuilderWrapper):
 					   )
 		
 				fc_copiar_SD = gtk.FileChooserDialog(_('Paso 1 de 2: Elige un directorio para las CARATULAS'), None , gtk.FILE_CHOOSER_ACTION_SELECT_FOLDER , botones)
+				fc_copiar_SD.set_default_response(gtk.RESPONSE_OK)
 				fc_copiar_SD.set_local_only(True)
 				fc_copiar_SD.show()
 			
 				if ( fc_copiar_SD.run() == gtk.RESPONSE_OK ):
 					fc_copiar_discos_SD = gtk.FileChooserDialog(_('Paso 2 de 2: Elige un directorio para los DISCOS'), None , gtk.FILE_CHOOSER_ACTION_SELECT_FOLDER , botones)
+					fc_copiar_discos_SD.set_default_response(gtk.RESPONSE_OK)
 					fc_copiar_discos_SD.set_local_only(True)
 					fc_copiar_discos_SD.show()
 					if(fc_copiar_discos_SD.run() == gtk.RESPONSE_OK):
@@ -463,11 +466,18 @@ class WiithonGUI(GtkBuilderWrapper):
 				if(id_tb == self.wb_tb_anadir):
 					fc_anadir = gtk.FileChooserDialog(_("Elige una ISO o un RAR"), None , gtk.FILE_CHOOSER_ACTION_OPEN , botones)
 					fc_anadir.set_select_multiple(True)
+					filter = gtk.FileFilter()
+					filter.set_name(_('ImagenISO, Comprimido RAR'))
+					filter.add_pattern('*.iso')
+					filter.add_pattern('*.rar')
+					fc_anadir.add_filter(filter)
 
 				elif(id_tb == self.wb_tb_anadir_directorio):
 					fc_anadir = gtk.FileChooserDialog(_("Elige un directorio"), None , gtk.FILE_CHOOSER_ACTION_SELECT_FOLDER , botones)
 
+				fc_anadir.set_default_response(gtk.RESPONSE_OK)
 				fc_anadir.set_local_only(True)
+				fc_anadir.set_current_folder( config.HOME )
 
 				if fc_anadir.run() == gtk.RESPONSE_OK:				
 					'''
@@ -480,7 +490,7 @@ class WiithonGUI(GtkBuilderWrapper):
 							if IDGAME != None:
 								self.poolBash.nuevoTrabajoDescargaCaratula( IDGAME )
 								self.poolBash.nuevoTrabajoDescargaDisco( IDGAME )
-					
+		
 					self.wb_box_progreso.show()
 					self.wb_progreso1.set_text(_("Anadiendo ..."))
 					self.poolTrabajo.nuevoTrabajoAnadir( ficherosSeleccionados )
@@ -533,7 +543,8 @@ class HiloAtenderMensajes(Thread):
 						if self.hiloCalcularProgreso!= None and self.hiloCalcularProgreso.isAlive():
 							hiloCalcularProgreso.interrumpir()
 							hiloCalcularProgreso.join()
-						gobject.idle_add( self.ocultarHBoxProgreso )
+						if cola.qsize() == 0:
+							gobject.idle_add( self.ocultarHBoxProgreso )
 					elif(mensaje == "TERMINA_OK"):
 						gobject.idle_add(self.actualizarFraccion , 1.0 )
 						gobject.idle_add(self.refrescarJuegos)
@@ -543,7 +554,7 @@ class HiloAtenderMensajes(Thread):
 						raise AssertionError, _("Comando desconocido")
 				cola.task_done()
 			else:
-				time.sleep(3)
+				time.sleep(1)
 
 	def actualizarLabel( self, etiqueta ):
 		self.progreso.set_text( etiqueta )
@@ -564,6 +575,8 @@ class HiloAtenderMensajes(Thread):
 
 	def interrumpir(self):
 		self.interrumpido = True
+		if self.hiloCalcularProgreso != None:
+			self.hiloCalcularProgreso.interrumpir()
 
 class HiloCalcularProgreso(Thread):
 	def __init__(self , actualizarLabel , actualizarFraccion):

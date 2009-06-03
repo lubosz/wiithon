@@ -175,6 +175,10 @@ log:
 diff:
 	-@bzr diff > DIFF.txt
 
+# No usar, (sino sabes lo que haces)
+actualizar: pull
+	sudo make install_auto
+
 # TRADUCCION
 # http://faq.pygtk.org/index.py?req=show&file=faq22.002.htp
 # http://misdocumentos.net/wiki/linux/locales

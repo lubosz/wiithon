@@ -4,7 +4,6 @@
 # :: Mantenedor: Ricardo Marmolejo García <makiolo@gmail.com>
 # :: Jose Luis Segura <josel.segura@gmail.com>
 # :: Web : http://blogricardo.wordpress.com/2009/04/07/wiithon-wbfs-gui-para-wii/
-# :: Dependencias : apt-get install nautilus-actions imagemagick wget rar sudo python-sqlalchemy
 # :: Ver LICENCIA.txt
 
 import sys, os
@@ -63,7 +62,7 @@ def App():
 	try:
 		configurarLenguaje()
 
-		options, arguments = getopt.getopt(sys.argv[1:], 'phH', ['trabajo=',
+		options, arguments = getopt.getopt(sys.argv[1:], 'pch', ['trabajo=',
 								 'work=',
 								 'help',
 								 'HELP',
@@ -84,7 +83,7 @@ def App():
 			elif option in ['--trabajo', '--work']:
 				if os.path.isdir(value):
 					os.chdir(value)
-			elif option == '--no-gui':
+			elif option in ['--no-gui', '-c','-h']:
 				glade_gui = False
 			else:
 				opciones_formateadas[option] = value

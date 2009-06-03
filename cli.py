@@ -20,21 +20,21 @@ class WiithonCLI:
 		listaParticiones = self.core.getListaParticiones()
 		# Del error SI se dan cuenta el GUI o CLI
 		if(len(listaParticiones) == 0):
-			raise AssertionError, "¿Has conectado el disco duro? No se ha encontrado ninguna partición válida."
+			raise AssertionError, _("Has conectado el disco duro? No se ha encontrado ninguna particion valida.")
 		if(len(listaParticiones) > 1):
 			haElegido = False
-			print "Lista de particiones autodetectadas : "
+			print _("Lista de particiones autodetectadas : ")
 			haElegido = False
 			while( not haElegido ):
 				i = 1
 				for dispositivo in listaParticiones:
-					print str(i) + " - Particion : " + dispositivo
+					print _("%d - Particion: %s" % (i , dispositivo))
 					i = i + 1
 				iSalir = str(i)
-				print iSalir + " - Salir"	
-				iElegido = raw_input("Elige la particion WBFS con la que va ha trabajar : ")
+				print _("%d - Salir") % (iSalir)
+				iElegido = raw_input(_("Elige la particion WBFS con la que va ha trabajar : "))
 				if( iElegido == iSalir ):
-					raise AssertionError, "Saliendo por petición del usuario."
+					raise AssertionError, _("Saliendo por peticion del usuario.")
 					haElegido = True
 				else:
 					try:
@@ -44,12 +44,12 @@ class WiithonCLI:
 							DEVICE = cachos[0]
 							FABRICANTE = cachos[1]
 						except:
-							raise AssertionError, "Error obteniendo el Fabricando del HD"
+							raise AssertionError, _("Error obteniendo el Fabricando del HD")
 						haElegido = True
 					except IndexError:
-						raise AssertionError, "Fuera de rango"
+						raise AssertionError, _("Fuera de rango")
 					except ValueError:
-						raise AssertionError, "Valor incorrecto"
+						raise AssertionError, _("Valor incorrecto")
 
 	# No entiendo muy bien lo de opciones y argumentos, aunque no me lo he podido mirar mucho
 	def main(self, opciones, argumentos):	
@@ -76,15 +76,15 @@ class WiithonCLI:
 			# estamos dentro del if numParametros > 1:
 			if parm1 == "listar" or parm1 == "ls" :
 				if(hayJuegos):
-					print "Listando juegos de : " + DEVICE + " " + FABRICANTE
+					print _("Listando juegos de : %s %s" % (DEVICE , FABRICANTE))
 					self.listarISOs(DEVICE , listaJuegos)
 					self.mostrarEspacioLibre(DEVICE)
 				else:
-					print "No tienes instalado ningún juego en " + DEVICE + " " + FABRICANTE
+					print _("No tienes instalado ningún juego en %s %s" % (DEVICE, FABRICANTE))
 			elif ( parm1 == "instalar" or parm1 == "install"):
 				try:
-					print "Inserte un juego de la Wii en su lector de DVD ..."
-					raw_input("Pulse cualquier tecla para continuar ... ")
+					print _("Inserte un juego de la Wii en su lector de DVD ...")
+					raw_input(_("Pulse cualquier tecla para continuar ... "))
 					self.core.instalarJuego(DEVICE)
 				except KeyboardInterrupt:
 					print
@@ -98,7 +98,7 @@ class WiithonCLI:
 							IDGAME = parametro
 					else:
 						IDGAME = self.core.get_IDJUEGO_de_Lista(DEVICE , listaJuegos)
-					print "Borrar juego con ID : " + IDGAME + " en particion " + DEVICE + " " + FABRICANTE
+					print _("Borrar juego con ID : %s en particion %s %s" % (IDGAME , DEVICE , FABRICANTE))
 					if( IDGAME != None and self.core.borrarJuego(DEVICE , IDGAME) ):
 						print _("Juego %s borrado correctamente" % (IDGAME))
 					else:
@@ -154,23 +154,23 @@ class WiithonCLI:
 					print "No hay Juegos para renombrar"
 			elif ( parm1 == "check" or parm1 == "comprobar" or parm1 == "scandisk"):
 				if(hayJuegos):
-					print "Verificando todos los juegos de la particion " + DEVICE + " " + FABRICANTE
+					print _("Verificando todos los juegos de la particion %s %s" % (DEVICE , FABRICANTE))
 					self.core.verificarTodosLosJuegos(DEVICE , listaJuegos)
 				else:
-					print "No hay Juegos para verificar"
+					print _("No hay Juegos para verificar")
 			elif ( parm1 == "extraer" or parm1 == "x"):
 				if(hayJuegos):
 					if(numParametros >= 2):
-						ID_JUEGO = parm2_sensible
+						IDGAME = parm2_sensible
 					else:
-						ID_JUEGO = self.core.get_IDJUEGO_de_Lista(DEVICE , listaJuegos)
-					print "Extraer ISO de juego con ID : " + ID_JUEGO + " en particion " + DEVICE + " " + FABRICANTE
-					if( self.core.extraerJuego(DEVICE , ID_JUEGO) ):
-						print "Juego " + ID_JUEGO + " extraido OK"
+						IDGAME = self.core.get_IDJUEGO_de_Lista(DEVICE , listaJuegos)
+					print _("Extraer ISO de juego con ID : %s en particion %s %s" % (IDGAME , DEVICE , FABRICANTE))
+					if( self.core.extraerJuego(DEVICE , IDGAME) ):
+						print _("Juego %s extraido OK" % (IDGAME))
 					else:
-						print "ERROR extrayendo la ISO de "+ID_JUEGO
+						print _("ERROR extrayendo la ISO de %s" % (IDGAME))
 				else:
-					print "No hay Juegos para extraer"
+					print _("No hay Juegos para extraer")
 			elif ( parm1 == "ayuda" or parm1 == "h" or parm1 == "help" or parm1 == "-h" or parm1 == "--help" ):
 				self.uso()
 			else:
@@ -205,11 +205,11 @@ class WiithonCLI:
 						self.encolar( [parametro] )
 
 				if (len(self.listaFicheros) == 0):
-					print "No se ha encontrado ninguna imagen ISO"
+					print _("No se ha encontrado ninguna imagen ISO")
 
 			self.procesar( )
 		else:
-			print "No has especificado ningún parametro"
+			print _("No has especificado ningun parametro")
 			self.uso()
 		
 
@@ -228,8 +228,6 @@ class WiithonCLI:
 			#Expandir directorios
 			# ...
 
-			# ordenar lista ? tal vez mejor por orden de la cola
-
 			numFicherosProcesados = 0
 			for fichero in listaFicheros:
 				numFicherosProcesados = numFicherosProcesados + 1
@@ -237,14 +235,14 @@ class WiithonCLI:
 				print "{"
 				if( os.path.exists(DEVICE) and os.path.exists(fichero) ):
 					if( util.getExtension(fichero) == "rar" ):
-						print "Añadir RAR con ISO dentro : " + os.path.basename(fichero) + " a la particion " + DEVICE + " " + FABRICANTE
+						print _("Añadir RAR con ISO dentro : %s a la particion %s %s" % (os.path.basename(fichero), DEVICE, FABRICANTE))
 						nombreRAR = fichero
 						nombreISO = self.core.getNombreISOenRAR(nombreRAR)
 						if (nombreISO != ""):
 							if( not os.path.exists(nombreISO) ):
 								# Paso 1 : Descomprimir
 								if ( self.core.descomprimirRARconISODentro(nombreRAR) ):
-									print "Descomprimido correctamente"
+									print _("Descomprimido correctamente")
 									# Paso 2 : Añadir la ISO
 									if ( self.core.anadirISO(DEVICE , nombreISO ) ):
 											mensaje = "ISO "+nombreISO+" descomprimida y añadida correctamente"
@@ -258,29 +256,29 @@ class WiithonCLI:
 									if config.borrarISODescomprimida:
 										# Paso 3 : Borrar la iso descomprimida
 										try:
-											print "Se va ha borrar la ISO descomprimida"
+											print _("Se va ha borrar la ISO descomprimida")
 											os.remove(nombreISO)
-											print "La ISO "+nombreISO+" temporal fue borrada"
+											print _("La ISO %s temporal fue borrada" % (nombreISO))
 										except:
-											print "ERROR al borrar la ISO : " + nombreISO
+											print _("ERROR al borrar la ISO : %s" % (nombreISO))
 										print "}"
 										print
 									else:
-										print "No se ha borrado la ISO temporal"
+										print _("No se ha borrado la ISO temporal")
 								else:
-									mensaje = "ERROR al descomrpimir el RAR : " + nombreRAR
+									mensaje = _("ERROR al descomrpimir el RAR : %s" % (nombreRAR))
 									print "ERROR"
 									print "}"
 									print
 									erroneos.append(mensaje)
 							else:
-								mensaje = "ERROR no se puede descomrpimir por que reemplazaría el ISO : " + nombreISO
+								mensaje = _("ERROR no se puede descomrpimir por que reemplazaria el ISO : %s" % (nombreISO))
 								print "ERROR"
 								print "}"
 								print
 								erroneos.append(mensaje)
 						else:
-							mensaje = "ERROR el RAR " + nombreRAR + " no tenía ninguna ISO"
+							mensaje = _("ERROR el RAR %s no tenia ninguna ISO" % (nombreRAR))
 							print "ERROR"
 							print "}"
 							print
@@ -300,46 +298,41 @@ class WiithonCLI:
 							print
 							erroneos.append(mensaje)
 					else:
-						mensaje = "ERROR "+fichero+" no es un ningún juego de Wii"
+						mensaje = _("ERROR %s no es un ningun juego de Wii" % (fichero))
 						print "ERROR"
 						print "}"
 						print
 						erroneos.append(mensaje)
 				else:
-					mensaje = "ERROR la ISO o la partición no existe"
+					mensaje = _("ERROR la ISO o la particion no existe")
 					print "ERROR"
 					print "}"
 					print
 					erroneos.append(mensaje)
 
-			print "================= INFORME DE RESULTADOS ========================="
+			print _("================= INFORME DE RESULTADOS =========================")
 			print "{"
 
 			if(len(correctos) == numFicherosProcesados):
 				print "\t{"
-				print "\t================= Todo metido en el HD correctamente ==================="
+				print _("\t================= Todo metido en el HD correctamente ===================")
 				print "\t}"
-				# self.notify("info", "Todo metido en el HD correctamente")
 			else:
 				if(len(correctos) > 0):
-					print "\t================ Juegos correctos ("+str(len(correctos))+"/"+str(numFicherosProcesados)+") =============="
+					print _("\t================ Juegos correctos (%d/%d) ==============" % (len(correctos) , numFicherosProcesados))
 					print "\t{"
 					for mensaje in correctos:
 						print "\t"+mensaje
 					print "\t}"
-					# self.notify("info", "Juegos correctos (%d/%d)" %(len(correctos), numFicherosProcesados))
 
 			if(len(erroneos) > 0):
-				print "\t=================== Juegos erroneos ("+str(len(erroneos))+"/"+str(numFicherosProcesados)+") ================="
+				print _("\t=================== Juegos erroneos (%d/%d) =================" % (len(erroneos) , numFicherosProcesados))
 				print "\t{"
 				for mensaje in erroneos:
 					print "\t"+mensaje
 				print "\t}"
-				# self.notify("info","Juegos erroneos (%d/%d)" % (len(erroneos), numFicherosProcesados))
 
-				print "}"
-		#else:
-			#print "Nada que procesar"
+			print "}"
 
 
 	# dada la lista de juegos, esta se representa
@@ -349,21 +342,21 @@ class WiithonCLI:
 		numJuegos = len(listaJuegos)
 		if(numJuegos > 0):
 			print "--------------------------------------------------------------------------------"
-			print "%6s\t%-55s\t%7s\t%6s" % ("IDGAME","TITULO","TAMAÑO" , "¿Car.?")
+			print "%6s\t%-55s\t%7s\t%6s" % ("IDGAME",_("TITULO"),_("TAMANIO") , _("Cararuta?"))
 			print "--------------------------------------------------------------------------------"
 			i = 1
 			for juego in listaJuegos:
 				ocupado = float(juego[2])
 				if (self.core.existeCaratula(juego[0])):
-					caratula = "SI"
+					caratula = _("SI")
 				else:
-					caratula = "NO"
+					caratula = _("NO")
 				print "%s\t%-55s\t%.2f GB\t%6s" % ( juego[0] , juego[1] , ocupado , caratula)
 				if ( (i % config.NUM_LINEAS_PAUSA) == 0 ):
-					raw_input("Presiona cualquier tecla para mostrar "+str(config.NUM_LINEAS_PAUSA)+" lineas más")
+					raw_input(_("Presiona cualquier tecla para mostrar %d lineas mas" % (config.NUM_LINEAS_PAUSA)))
 				i = i + 1
 			print "--------------------------------------------------------------------------------"
-			print "\t\t\t\t\t\t\t%d juegos de WII" % numJuegos
+			print _("\t\t\t\t\t\t\t%d juegos de WII" % numJuegos)
 		return numJuegos
 
 	# dada un dispositivo, se refresca su espacio Libre
@@ -373,9 +366,9 @@ class WiithonCLI:
 		salida = util.getSTDOUT( config.WBFS_APP+" -p "+DEVICE+" df" )
 		cachos = salida.split(";")
 		if(len(cachos) == 3):
-			print "\t\t\t\t\t\t\tUsado : %.2f GB" % float(cachos[0])
-			print "\t\t\t\t\t\t\tLibre : %.2f GB" % float(cachos[1])
-			print "\t\t\t\t\t\t\tTotal : %.2f GB" % float(cachos[2])
+			print _("\t\t\t\t\t\t\tUsado : %.2f GB" % float(cachos[0]))
+			print _("\t\t\t\t\t\t\tLibre : %.2f GB" % float(cachos[1]))
+			print _("\t\t\t\t\t\t\tTotal : %.2f GB" % float(cachos[2]))
 			return True
 		else:
 			return False
@@ -385,7 +378,7 @@ class WiithonCLI:
 	def uso(self):
 		wiithon = os.path.basename(sys.argv[0])
 
-		print '''Listar juegos. El programa por defecto, sin parametros, hace un listado de los juegos (lanzara el GUI en alguna prox versión):
+		print _('''Listar juegos. El programa por defecto, sin parametros, hace un listado de los juegos (lanzara el GUI en alguna prox versión):
 \t\t%s
 
 Añadir ISO mediante una lista explicita de las ISOS:
@@ -451,7 +444,7 @@ Web : http://blogricardo.wordpress.com/2009/04/07/wiithon-wbfs-gui-para-wii
       wiithon,
       wiithon,
       wiithon
-      )
+      ))
 
 	def encolar(self , juegos):
 		self.listaFicheros.extend( juegos )
