@@ -6,6 +6,8 @@
 - Indicar por que trabajo de cuantos en la barra de progreso
 - Como comunicar el pool de trabajos con la consola del gui
 
+- Implementar arrastrar dentro y fuera del TreeView
+
 Categorías y Tags:
 - Hay que rehacerlo, es solo proof of concept
 

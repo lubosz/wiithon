@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wiithon 1.0 Alpha\n"
 "Report-Msgid-Bugs-To: makiolo@gmail.com\n"
-"POT-Creation-Date: 2009-06-03 12:10+0200\n"
+"POT-Creation-Date: 2009-06-03 13:13+0200\n"
 "PO-Revision-Date: 2009-06-01 00:16+0200\n"
 "Last-Translator: \n"
 "Language-Team: Spanish <kde-i18n-doc@lists.kde.org>\n"
@@ -20,8 +20,7 @@ msgstr ""
 #: cli.py:23
 msgid ""
 "Has conectado el disco duro? No se ha encontrado ninguna particion valida."
-msgstr ""
-"Connected your HD with partition WBFS?"
+msgstr "Connected your HD with partition WBFS?"
 
 #: cli.py:26
 msgid "Lista de particiones autodetectadas : "
@@ -189,8 +188,7 @@ msgstr "================= RESULTS ========================="
 #: cli.py:318
 msgid ""
 "\t================= Todo metido en el HD correctamente ==================="
-msgstr ""
-"\t================= All-in over HD sucesfully ==================="
+msgstr "\t================= All-in over HD sucesfully ==================="
 
 #: cli.py:322
 #, python-format
@@ -331,7 +329,7 @@ msgstr "***************** DOwNLOAD DISC %s ********************"
 msgid "***************** DESCARGAR CARATULA %s ********************"
 msgstr "***************** DOWNLOAD COVER %s ********************"
 
-#: gui.py:85
+#: gui.py:87
 #, python-format
 msgid ""
 "%s requiere permisos de superusuario (root) para acceder a las particiones "
@@ -339,103 +337,103 @@ msgid ""
 "Esto dependera de su distribucion de Linux pero intente con : sudo %s"
 msgstr "Sorry. Need be root"
 
-#: gui.py:98
+#: gui.py:100
 msgid "No se han encontrado particiones WBFS:\n"
 msgstr "There aren't partitions WBFS\n"
 
-#: gui.py:168
+#: gui.py:170
 msgid "Dispositivo"
 msgstr "Device"
 
-#: gui.py:169
+#: gui.py:171
 msgid "Fabricante"
 msgstr "Manufacture"
 
-#: gui.py:220
+#: gui.py:222
 msgid "IDGAME"
 msgstr "IDGAME"
 
-#: gui.py:221 recursos/glade/wiithon.ui.h:19
+#: gui.py:223 recursos/glade/wiithon.ui.h:19
 msgid "Nombre"
 msgstr "Name"
 
-#: gui.py:222
+#: gui.py:224
 msgid "Tamanio"
 msgstr "Size"
 
-#: gui.py:380
+#: gui.py:381
 #, python-format
 msgid "¿Quieres borrar el juego con ID = \"%s\"?"
 msgstr "¿Delete game with ID = \"%s\"?"
 
-#: gui.py:390 gui.py:415 gui.py:448 gui.py:457
+#: gui.py:391 gui.py:416 gui.py:449 gui.py:458
 msgid "No has seleccionado ningun juego"
 msgstr "Don't have a game selected"
 
-#: gui.py:400
+#: gui.py:401
 #, python-format
 msgid "Elige un directorio donde extraer la ISO de %s"
 msgstr "Choose folder for extract ISO %s"
 
-#: gui.py:411
+#: gui.py:412
 msgid "Extrayendo ..."
 msgstr "Extracting ..."
 
-#: gui.py:426
+#: gui.py:427
 msgid "Paso 1 de 2: Elige un directorio para las CARATULAS"
 msgstr "Step 1 of 1: Choose a folder for COVERS"
 
-#: gui.py:432
+#: gui.py:433
 msgid "Paso 2 de 2: Elige un directorio para los DISCOS"
 msgstr "Step 2 of 2: Choose a folder for DISCS"
 
-#: gui.py:468
+#: gui.py:469
 msgid "Elige una ISO o un RAR"
 msgstr "Choose a ISO or RAR"
 
-#: gui.py:471
+#: gui.py:472
 msgid "ImagenISO, Comprimido RAR"
 msgstr ""
 
-#: gui.py:477
+#: gui.py:478
 msgid "Elige un directorio"
 msgstr "Choose folder"
 
-#: gui.py:496
+#: gui.py:497
 msgid "Anadiendo ..."
 msgstr "Add ISO ..."
 
-#: gui.py:501
+#: gui.py:502
 msgid "No has seleccionado ninguna particion"
 msgstr "Don't have a partition selected"
 
-#: gui.py:503
+#: gui.py:504
 msgid "Sin implementar aún"
 msgstr "Not implemented yet!"
 
-#: gui.py:531
+#: gui.py:532
 #, python-format
 msgid "CUIDADO: %s"
 msgstr "WARNING: %s"
 
-#: gui.py:533
+#: gui.py:534
 #, python-format
 msgid "ERROR: %s"
 msgstr "ERROR: %s"
 
-#: gui.py:536
+#: gui.py:537
 msgid "Empezando ..."
 msgstr "Loading ..."
 
-#: gui.py:555
+#: gui.py:556
 msgid "Comando desconocido"
 msgstr "Unknown command"
 
-#: gui.py:598
+#: gui.py:599
 msgid "Finalizando. Hecho en"
 msgstr "Finishing. Done in"
 
-#: gui.py:602
+#: gui.py:603
 msgid "quedan"
 msgstr "remaining"
 
@@ -446,15 +444,6 @@ msgstr "gtk-cancel"
 #: recursos/glade/alerta.ui.h:2
 msgid "gtk-ok"
 msgstr "gtk-ok"
-
-#: recursos/glade/alerta.ui.h:3
-msgid ""
-"lajsk kas jaslkjas llk askljaj adsk\n"
-"aslkj asdklaslk jasldkjald laskdalskdjalsk d\n"
-"dslaj skldjlaskjd aklsjdlaksjdlaskjlasjlaksjlkasj lasdkj \n"
-"&#xF1;slakjdasj lkasjdklasjd lkajdlkasjdlkasj \n"
-"laskj als jlas lsadk laskjdlaksjd lakjd laksjd klaj"
-msgstr ""
 
 #: recursos/glade/wiithon.ui.h:1
 msgid "+"

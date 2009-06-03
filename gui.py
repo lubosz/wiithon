@@ -43,6 +43,8 @@ class WiithonGUI(GtkBuilderWrapper):
 		gobject.threads_init()
 
 		self.wb_principal.set_title('Wiithon')
+		# FIXME: Hacer otro icono pequeño
+		self.wb_principal.set_icon_from_file( "/usr/share/pixmaps/wiithon.svg" )
 		self.wb_principal.show()
 
 		self.wb_tb_anadir.connect('clicked' , self.on_tb_toolbar_clicked)

@@ -4,6 +4,7 @@
   <!-- interface-naming-policy project-wide -->
   <object class="GtkDialog" id="alerta">
     <property name="border_width">5</property>
+    <property name="modal">True</property>
     <property name="window_position">center-on-parent</property>
     <property name="type_hint">dialog</property>
     <property name="opacity">0.80000000000000004</property>
@@ -82,12 +83,5 @@
       <action-widget response="0">btn_no</action-widget>
       <action-widget response="1">btn_ok</action-widget>
     </action-widgets>
-  </object>
-  <object class="GtkTextBuffer" id="textbuffer1">
-    <property name="text" translatable="yes">lajsk kas jaslkjas llk askljaj adsk
-aslkj asdklaslk jasldkjald laskdalskdjalsk d
-dslaj skldjlaskjd aklsjdlaksjdlaskjlasjlaksjlkasj lasdkj 
-&#xF1;slakjdasj lkasjdklasjd lkajdlkasjdlkasj 
-laskj als jlas lsadk laskjdlaksjd lakjd laksjd klaj</property>
   </object>
 </interface>
