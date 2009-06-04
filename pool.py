@@ -17,13 +17,14 @@ class Pool:
 
 	def intentarEmpezarTrabajo(self , cola , idWorker , *args):
 		while not self.interrumpido:
-			if cola.qsize() > 0:
+			# FIXME: bug aqui
+			if (cola.qsize() > 0):
 				elemento = cola.get()
 				self.ejecutar(idWorker , elemento , *args)
 				cola.task_done()
 			else:
 				# comprueba si hay tareas cada cierto tiempo
-				time.sleep(3)
+				time.sleep(0.05)
 
 	def nuevoElemento(self, elemento):
 		if not self.esperandoTrabajo:

@@ -19,12 +19,8 @@ Si instalais normalmente con apt-get:
 		
 Si NO usais apt-get, tendreis antes que instalar las dependencias con el gestor de paquetes de vuestro sistema:
 
-1º  Dependencias : Instalar estos paquetes de los repositorios de:
-		GNOME:
-			imagemagick wget rar libssl-dev intltool menu
-		
-		KDE:
-			imagemagick wget rar libssl-dev intltool menu python-gtk2 python-glade2 gnome-icon-theme
+1º  Dependencias, instalar estos paquetes con los repositorios de vuestro sistema:
+		imagemagick wget rar libssl-dev intltool menu python-sqlalchemy python-gtk2 python-glade2 gnome-icon-theme
 			
 2º  Instalar :
 		sudo make install

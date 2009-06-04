@@ -15,7 +15,6 @@ Herencia Multiple, Es un Pool (implementado en pool.py) y un Thread
 
 Para poner un trabajo llamamos al metodo nuevoTrabajo( x )
 	Su unico parametro es un objeto de tipo Trabajo
-
 '''
 class PoolTrabajo(Pool , Thread):
 	def __init__(self , core , numHilos = 1):
@@ -24,7 +23,7 @@ class PoolTrabajo(Pool , Thread):
 		self.core = core
 		self.numHilos = numHilos
 		
-	def ejecutar(self , idTrabajador , trabajo , core , DEVICE):	
+	def ejecutar(self , numHilo , trabajo , core , DEVICE):	
 
 		if (trabajo.getQueHacer() == "ANADIR"):
 			fichero = trabajo.getAQuien()
@@ -47,10 +46,6 @@ class PoolTrabajo(Pool , Thread):
 		elif( trabajo.getQueHacer() == "VERIFICAR_JUEGO" ):
 			IDGAME = trabajo.getAQuien()
 			self.verificarJuego(core , DEVICE , IDGAME)
-		
-		
-	def estaOcupado(self):
-		return self.ocupado
 
 	def descargarCaratula(self , core , IDGAME):
 		core.descargarCaratula( IDGAME )
@@ -59,10 +54,34 @@ class PoolTrabajo(Pool , Thread):
 		core.descargarDisco( IDGAME )
 			
 	def copiarCaratula(self , core , IDGAME):
+		core.nuevoMensaje( Mensaje("COMANDO","EMPIEZA") )
+
 		exito = core.copiarCaratula( IDGAME )
+		core.nuevoMensaje( Mensaje("COMANDO","PROGRESO_100") )
+		if exito:
+			core.nuevoMensaje( Mensaje("INFO","La caratula de %s se ha copiado correctamente" % (IDGAME)) )
+		else:
+			core.nuevoMensaje( Mensaje("INFO","Hubo un problema al copiar %s" % (IDGAME)) )
+
+		core.nuevoMensaje( Mensaje("COMANDO","TERMINA") )
+
+		# Esperar que todos los mensajes sean atendidos
+		core.getMensajes().join()
 
 	def copiarDisco(self , core , IDGAME):
+		core.nuevoMensaje( Mensaje("COMANDO","EMPIEZA") )
+	
 		exito = core.copiarDisco( IDGAME )
+		core.nuevoMensaje( Mensaje("COMANDO","PROGRESO_100") )
+		if exito:
+			core.nuevoMensaje( Mensaje("INFO","El disco de %s se ha copiado correctamente" % (IDGAME)) )
+		else:
+			core.nuevoMensaje( Mensaje("INFO","Hubo un problema al copiar %s" % (IDGAME)) )
+
+		core.nuevoMensaje( Mensaje("COMANDO","TERMINA") )
+
+		# Esperar que todos los mensajes sean atendidos
+		core.getMensajes().join()
 
 	def verificarJuego(self , core , DEVICE , IDGAME):
 		if not core.verificarJuego(DEVICE , IDGAME):
@@ -71,88 +90,99 @@ class PoolTrabajo(Pool , Thread):
 			print _("%s es un juego correcto, no se ha detectado corrupcion")
 
 	def anadir(self , core , fichero , DEVICE):
-		try:
-			os.remove ( config.HOME_WIITHON_LOGS_PROCESO )
-		except OSError:
-			pass
-
 		core.nuevoMensaje( Mensaje("COMANDO","EMPIEZA") )
 
 		if( not os.path.exists(DEVICE) or not os.path.exists(fichero) ):
-			error = True
-			core.nuevoMensaje( Mensaje("ERROR",_("La ISO o la partición no existe")) )
+			pass
+			#error = True
+			#core.nuevoMensaje( Mensaje("ERROR",_("La ISO o la partición no existe")) )
 		elif( util.getExtension(fichero) == "rar" ):
-			error = True
-			core.nuevoMensaje( Mensaje("INFO",_("Buscando ISO dentro del RAR")) )
+			#error = True
+			#core.nuevoMensaje( Mensaje("INFO",_("Buscando ISO dentro del RAR")) )
 			nombreRAR = fichero
 			nombreISO = core.getNombreISOenRAR(nombreRAR)
 			if (nombreISO != ""):
 				if( not os.path.exists(nombreISO) ):
 					# Paso 1 : Descomprimir
 					if ( core.descomprimirRARconISODentro(nombreRAR) ):
-						core.nuevoMensaje( Mensaje("INFO",_("ISO Descomprimida")))
+						#core.nuevoMensaje( Mensaje("INFO",_("ISO Descomprimida")))
 						self.nuevoTrabajoAnadir( nombreISO )
 					else:
-						core.nuevoMensaje( Mensaje("ERROR",_("Al descomrpimir el RAR : %s") % (nombreRAR)) )
+						#core.nuevoMensaje( Mensaje("ERROR",_("Al descomrpimir el RAR : %s") % (nombreRAR)) )
+						pass
 				else:
-					core.nuevoMensaje( Mensaje("ERROR",_("No se puede descomrpimir por que reemplazaría el ISO : %s") % (nombreISO)) )
+					#core.nuevoMensaje( Mensaje("ERROR",_("No se puede descomrpimir por que reemplazaría el ISO : %s") % (nombreISO)) )
+					pass
 			else:
-				core.nuevoMensaje( Mensaje("ERROR",_("El RAR %s no tenía ninguna ISO") % (nombreRAR)) )
+				#core.nuevoMensaje( Mensaje("ERROR",_("El RAR %s no tenía ninguna ISO") % (nombreRAR)) )
+				pass
 		elif( os.path.isdir( fichero ) ):
-			error = True
+			#error = True
 	
-			core.nuevoMensaje( Mensaje("INFO",_("Buscando en %s ficheros RAR ... ") % (os.path.dirname(fichero))))
+			#core.nuevoMensaje( Mensaje("INFO",_("Buscando en %s ficheros RAR ... ") % (os.path.dirname(fichero))))
 			encontrados =  core.rec_glob(fichero, "*.rar")
 			if (len(encontrados) == 0):
-				core.nuevoMensaje( Mensaje("INFO",_("No se ha encontrado ningún RAR con ISOS dentro")))
+				#core.nuevoMensaje( Mensaje("INFO",_("No se ha encontrado ningún RAR con ISOS dentro")))
+				pass
 			else:
 				for encontrado in encontrados:
 					self.nuevoTrabajoAnadir( encontrado )
 
-			core.nuevoMensaje( Mensaje("INFO",_("Buscando en %s Imagenes ISO ... ") % (os.path.dirname(fichero))))
+			#core.nuevoMensaje( Mensaje("INFO",_("Buscando en %s Imagenes ISO ... ") % (os.path.dirname(fichero))))
 			encontrados =  core.rec_glob(fichero, "*.iso")
 			if (len(encontrados) == 0):
-				core.nuevoMensaje( Mensaje(_("INFO",_("No se ha encontrado ningún ISO"))))
+				#core.nuevoMensaje( Mensaje(_("INFO",_("No se ha encontrado ningun ISO"))))
+				pass
 			else:
 				for encontrado in encontrados:
 					self.nuevoTrabajoAnadir( encontrado )
 
 		elif( util.getExtension(fichero) == "iso" ):
-			core.nuevoMensaje( Mensaje("INFO",_("Aniadir ISO : %s a la particion %s") % (os.path.basename(fichero),DEVICE) ) )
-			core.nuevoMensaje( Mensaje("COMANDO","PROGRESO_INICIA") )
+			#core.nuevoMensaje( Mensaje("INFO",_("Aniadir ISO : %s a la particion %s") % (os.path.basename(fichero),DEVICE) ) )
+			core.nuevoMensaje( Mensaje("COMANDO","PROGRESO_INICIA_CALCULO") )
 			if ( core.anadirISO(DEVICE , fichero ) ):
-				core.nuevoMensaje( Mensaje("INFO",_("ISO %s añadida correctamente") % (fichero)) )
-				error = False
+				pass
+				#core.nuevoMensaje( Mensaje("INFO",_("ISO %s añadida correctamente") % (fichero)) )
+				#error = False
+				core.nuevoMensaje( Mensaje("COMANDO","REFRESCAR_JUEGOS") )
 			else:
-				core.nuevoMensaje( Mensaje("ERROR",_("Añadiendo la ISO : %s (comprueba que sea una ISO de WII)") % (fichero)) )
-				error = True
-			core.nuevoMensaje( Mensaje("COMANDO","PROGRESO_FIN") )
+				pass
+				#core.nuevoMensaje( Mensaje("ERROR",_("Añadiendo la ISO : %s (comprueba que sea una ISO de WII)") % (fichero)) )
+				#error = True
+			core.nuevoMensaje( Mensaje("COMANDO","PROGRESO_FIN_CALCULO") )
 		else:
-			error = True
-			core.nuevoMensaje( Mensaje("ERROR",_("%s no es un ningún juego de Wii") % (os.path.basename(fichero)) ) )
+			pass
+			#error = True
+			#core.nuevoMensaje( Mensaje("ERROR",_("%s no es un ningún juego de Wii") % (os.path.basename(fichero)) ) )
 
-		if error:
-			core.nuevoMensaje( Mensaje("COMANDO","TERMINA_ERROR") )
-		else:
-			core.nuevoMensaje( Mensaje("COMANDO","TERMINA_OK") )
+		# borrar fichero auxiliar
+		try:
+			os.remove ( config.HOME_WIITHON_LOGS_PROCESO )
+		except OSError:
+			pass
+			
+		core.nuevoMensaje( Mensaje("COMANDO","TERMINA") )
 	
 		# Esperar que todos los mensajes sean atendidos
 		core.getMensajes().join()
 
 	def extraer(self , core , IDGAME , DEVICE):
+		core.nuevoMensaje( Mensaje("COMANDO","EMPIEZA") )
+
+		core.nuevoMensaje( Mensaje("COMANDO","PROGRESO_INICIA_CALCULO") )
+		exito = core.extraerJuego(DEVICE , IDGAME )
+		core.nuevoMensaje( Mensaje("COMANDO","PROGRESO_FIN_CALCULO") )
+
+		# borrar fichero auxiliar
 		try:
 			os.remove ( config.HOME_WIITHON_LOGS_PROCESO )
 		except OSError:
 			pass
-
-		core.nuevoMensaje( Mensaje("COMANDO","EMPIEZA") )
-		core.nuevoMensaje( Mensaje("COMANDO","PROGRESO_INICIA") )
-		exito = core.extraerJuego(DEVICE , IDGAME )
-		core.nuevoMensaje( Mensaje("COMANDO","PROGRESO_FIN") )
-		if exito:
-			core.nuevoMensaje( Mensaje("COMANDO","TERMINA_OK") )
-		else:
-			core.nuevoMensaje( Mensaje("COMANDO","TERMINA_ERROR") )
+			
+		core.nuevoMensaje( Mensaje("COMANDO","TERMINA") )
+			
+		# Esperar que todos los mensajes sean atendidos
+		core.getMensajes().join()
 			
 	def run(self):
 		self.empezar(args=(self.core, self.core.getDeviceSeleccionado()))

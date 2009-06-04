@@ -11,6 +11,7 @@ import gtk , gobject , pango
 import os , time
 import config , sys
 from threading import Thread
+from preferencias import session , Preferencia
 
 class WiithonGUI(GtkBuilderWrapper):
 
@@ -20,7 +21,18 @@ class WiithonGUI(GtkBuilderWrapper):
 		GtkBuilderWrapper.__init__(self, config.WIITHON_FILES + '/recursos/glade/wiithon.ui')
 		
 		self.core = core
-				
+		self.preferencia = session.query(Preferencia).first()
+		# Nunca se han creado preferencias
+		if self.preferencia == None:
+			self.preferencia = Preferencia()
+			session.save( self.preferencia )
+			session.commit()
+			print _("Preferencias creadas por primera vez")
+		else:
+			print _("Preferencias cargadas")
+			
+		print self.preferencia
+
 		######### PUNTEROS ##############
 
 		# Referencia copia a la lista de juegos
@@ -270,7 +282,20 @@ class WiithonGUI(GtkBuilderWrapper):
 				i = i + 1
 
 	def salir(self , widget=None, data=None):
+
+		# guardar campo clave de los seleccionados
+		if self.DEVICEParticionSeleccionada != None:
+			self.preferencia.device_seleccionado = self.DEVICEParticionSeleccionada
+		if self.IDGAMEJuegoSeleccionado != None:
+			self.preferencia.idgame_seleccionado = self.IDGAMEJuegoSeleccionado 
+
+		# guardar cambios en las preferencias
+		session.commit()
+		
+		# cerrar gui
 		gtk.main_quit()
+		
+		# cerrar hilos
 		try:
 			self.hiloAtenderMensajes.interrumpir()
 			self.poolTrabajo.interrumpir()
@@ -401,15 +426,19 @@ class WiithonGUI(GtkBuilderWrapper):
 				fc_extraer = gtk.FileChooserDialog(_('Elige un directorio donde extraer la ISO de %s' % (self.IDGAMEJuegoSeleccionado)), None , gtk.FILE_CHOOSER_ACTION_SELECT_FOLDER , botones)
 				fc_extraer.set_default_response(gtk.RESPONSE_OK)
 				fc_extraer.set_local_only(True)
+				fc_extraer.set_current_folder( self.preferencia.ruta_extraer_iso )
 				fc_extraer.show()
 
 				if ( fc_extraer.run() == gtk.RESPONSE_OK ):
+				
+					self.preferencia.ruta_extraer_iso = fc_extraer.get_current_folder()
+				
 					self.core.setDestinoExtraer( fc_extraer.get_filenames() )
 					'''
 					Tarea EXTRAER JUEGO
 					'''
-					self.wb_box_progreso.show()
-					self.wb_progreso1.set_text(_("Extrayendo ..."))
+					#self.wb_box_progreso.show()
+					#self.wb_progreso1.set_text(_("Extrayendo ..."))
 					self.poolTrabajo.nuevoTrabajoExtraer( self.IDGAMEJuegoSeleccionado )
 				fc_extraer.destroy()
 			else:
@@ -427,20 +456,25 @@ class WiithonGUI(GtkBuilderWrapper):
 				fc_copiar_SD = gtk.FileChooserDialog(_('Paso 1 de 2: Elige un directorio para las CARATULAS'), None , gtk.FILE_CHOOSER_ACTION_SELECT_FOLDER , botones)
 				fc_copiar_SD.set_default_response(gtk.RESPONSE_OK)
 				fc_copiar_SD.set_local_only(True)
+				fc_copiar_SD.set_current_folder( self.preferencia.ruta_copiar_caratulas )
 				fc_copiar_SD.show()
 			
 				if ( fc_copiar_SD.run() == gtk.RESPONSE_OK ):
 					fc_copiar_discos_SD = gtk.FileChooserDialog(_('Paso 2 de 2: Elige un directorio para los DISCOS'), None , gtk.FILE_CHOOSER_ACTION_SELECT_FOLDER , botones)
 					fc_copiar_discos_SD.set_default_response(gtk.RESPONSE_OK)
 					fc_copiar_discos_SD.set_local_only(True)
+					fc_copiar_discos_SD.set_current_folder( self.preferencia.ruta_copiar_discos )
 					fc_copiar_discos_SD.show()
 					if(fc_copiar_discos_SD.run() == gtk.RESPONSE_OK):
+						self.preferencia.ruta_copiar_caratulas = fc_copiar_SD.get_current_folder()
+						self.preferencia.ruta_copiar_discos = fc_copiar_discos_SD.get_current_folder()
+					
 						self.core.setDestinoCopiarCaratula( fc_copiar_SD.get_filenames() )
 						self.core.setDestinoCopiarDisco( fc_copiar_discos_SD.get_filenames() )
 					
 						for IDGAME in self.listaJuegos:
-							self.poolBash.nuevoTrabajoCopiarCaratula( IDGAME[0] )
-							self.poolBash.nuevoTrabajoCopiarDisco( IDGAME[0] )
+							self.poolTrabajo.nuevoTrabajoCopiarCaratula( IDGAME[0] )
+							self.poolTrabajo.nuevoTrabajoCopiarDisco( IDGAME[0] )
 
 					fc_copiar_discos_SD.destroy()
 				
@@ -473,18 +507,24 @@ class WiithonGUI(GtkBuilderWrapper):
 					filter.add_pattern('*.iso')
 					filter.add_pattern('*.rar')
 					fc_anadir.add_filter(filter)
+					fc_anadir.set_current_folder( self.preferencia.ruta_anadir )
 
 				elif(id_tb == self.wb_tb_anadir_directorio):
 					fc_anadir = gtk.FileChooserDialog(_("Elige un directorio"), None , gtk.FILE_CHOOSER_ACTION_SELECT_FOLDER , botones)
+					fc_anadir.set_current_folder( self.preferencia.ruta_anadir_directorio )
 
 				fc_anadir.set_default_response(gtk.RESPONSE_OK)
 				fc_anadir.set_local_only(True)
-				fc_anadir.set_current_folder( config.HOME )
 
 				if fc_anadir.run() == gtk.RESPONSE_OK:				
 					'''
 					Tarea AÑADIR JUEGO
 					'''
+					if(id_tb == self.wb_tb_anadir):
+						self.preferencia.ruta_anadir = fc_anadir.get_current_folder()
+					elif(id_tb == self.wb_tb_anadir_directorio):
+						self.preferencia.ruta_anadir_directorio = fc_anadir.get_current_folder()
+					
 					ficherosSeleccionados = fc_anadir.get_filenames() 
 					for fichero in ficherosSeleccionados:
 						if (util.getExtension(fichero) == "iso"):
@@ -493,8 +533,8 @@ class WiithonGUI(GtkBuilderWrapper):
 								self.poolBash.nuevoTrabajoDescargaCaratula( IDGAME )
 								self.poolBash.nuevoTrabajoDescargaDisco( IDGAME )
 		
-					self.wb_box_progreso.show()
-					self.wb_progreso1.set_text(_("Anadiendo ..."))
+					#self.wb_box_progreso.show()
+					#self.wb_progreso1.set_text(_("Anadiendo ..."))
 					self.poolTrabajo.nuevoTrabajoAnadir( ficherosSeleccionados )
 
 				fc_anadir.destroy()
@@ -520,12 +560,14 @@ class HiloAtenderMensajes(Thread):
 		while not self.interrumpido:
 			if cola.qsize() > 0:
 				objMensaje = cola.get()
+				
+				# hay trabajo
+				gobject.idle_add( self.mostrarHBoxProgreso )
 
 				tipo = objMensaje.getTipo()
 				mensaje = objMensaje.getMensaje()
-				
-				print tipo + " - " + mensaje
-				
+
+				# Todo esto hay que rehacerlo, definar BIEN los comandos entre GUI <---> POOL de trabajo
 				if( tipo == "INFO" ):
 					gobject.idle_add(self.actualizarLabel , mensaje)
 				elif( tipo == "WARNING" ):
@@ -534,29 +576,41 @@ class HiloAtenderMensajes(Thread):
 					gobject.idle_add(self.actualizarLabel , _( "ERROR: %s" % mensaje ))
 				elif( tipo == "COMANDO" ):
 					if(mensaje == "EMPIEZA"):
-						gobject.idle_add(self.actualizarLabel , _("Empezando ...") )
-						gobject.idle_add(self.actualizarFraccion , 0.0 )
-					elif(mensaje == "PROGRESO_INICIA"):
+						termino = False
+					elif(mensaje == "TERMINA"):
+						termino = True
+					elif(mensaje == "PROGRESO_INICIA_CALCULO"):
 						hiloCalcularProgreso = HiloCalcularProgreso( self.actualizarLabel , self.actualizarFraccion )
 						hiloCalcularProgreso.setDaemon(True)
 						hiloCalcularProgreso.start()
 						gobject.idle_add( self.mostrarHBoxProgreso )
-					elif(mensaje == "PROGRESO_FIN"):
-						if self.hiloCalcularProgreso!= None and self.hiloCalcularProgreso.isAlive():
-							hiloCalcularProgreso.interrumpir()
-							hiloCalcularProgreso.join()
-						if cola.qsize() == 0:
-							gobject.idle_add( self.ocultarHBoxProgreso )
-					elif(mensaje == "TERMINA_OK"):
+					elif(mensaje == "PROGRESO_FIN_CALCULO"):
+						if( self.hiloCalcularProgreso!= None and self.hiloCalcularProgreso.isAlive() ):
+							self.hiloCalcularProgreso.interrumpir()
+							self.hiloCalcularProgreso.join()
+							self.hiloCalcularProgreso = None
+						gobject.idle_add( self.ocultarHBoxProgreso )
+					elif(mensaje == "PROGRESO_0"):
+						gobject.idle_add(self.actualizarFraccion , 0.0 )
+					elif(mensaje == "PROGRESO_100"):
 						gobject.idle_add(self.actualizarFraccion , 1.0 )
+					elif(mensaje == "REFRESCAR_JUEGOS"):
 						gobject.idle_add(self.refrescarJuegos)
-					elif(mensaje == "TERMINA_ERROR"):
-						gobject.idle_add(self.actualizarFraccion , 1.0 )
 					else:
-						raise AssertionError, _("Comando desconocido")
+						raise AssertionError, _("DEBUG: Comando desconocido")
 				cola.task_done()
+				
+				# atiendo la cola
+				time.sleep(0.10)
+				
+				if((cola.qsize() == 0) and termino):
+					print _("DEBUG: Trabajo terminado")
+					gobject.idle_add( self.ocultarHBoxProgreso )
 			else:
-				time.sleep(1)
+				# FIXME : usar wait o algo así
+				# el trabajador debería esperar (sin espera activa)				
+				# hasta que sea requerido
+				time.sleep(0.2)
 
 	def actualizarLabel( self, etiqueta ):
 		self.progreso.set_text( etiqueta )

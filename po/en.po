@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wiithon 1.0 Alpha\n"
 "Report-Msgid-Bugs-To: makiolo@gmail.com\n"
-"POT-Creation-Date: 2009-06-03 13:13+0200\n"
+"POT-Creation-Date: 2009-06-04 04:41+0200\n"
 "PO-Revision-Date: 2009-06-01 00:16+0200\n"
 "Last-Translator: \n"
 "Language-Team: Spanish <kde-i18n-doc@lists.kde.org>\n"
@@ -324,12 +324,21 @@ msgstr "No Wii Disc"
 msgid "***************** DESCARGAR DISCO %s ********************"
 msgstr "***************** DOwNLOAD DISC %s ********************"
 
-#: core.py:371
+#: core.py:370
 #, python-format
 msgid "***************** DESCARGAR CARATULA %s ********************"
 msgstr "***************** DOWNLOAD COVER %s ********************"
 
-#: gui.py:87
+#: gui.py:30
+msgid "Preferencias creadas por primera vez"
+msgstr ""
+
+#: gui.py:32
+#, fuzzy
+msgid "Preferencias cargadas"
+msgstr "Preferences"
+
+#: gui.py:99
 #, python-format
 msgid ""
 "%s requiere permisos de superusuario (root) para acceder a las particiones "
@@ -337,103 +346,96 @@ msgid ""
 "Esto dependera de su distribucion de Linux pero intente con : sudo %s"
 msgstr "Sorry. Need be root"
 
-#: gui.py:100
+#: gui.py:112
 msgid "No se han encontrado particiones WBFS:\n"
 msgstr "There aren't partitions WBFS\n"
 
-#: gui.py:170
+#: gui.py:182
 msgid "Dispositivo"
 msgstr "Device"
 
-#: gui.py:171
+#: gui.py:183
 msgid "Fabricante"
 msgstr "Manufacture"
 
-#: gui.py:222
+#: gui.py:234
 msgid "IDGAME"
 msgstr "IDGAME"
 
-#: gui.py:223 recursos/glade/wiithon.ui.h:19
+#: gui.py:235 recursos/glade/wiithon.ui.h:19
 msgid "Nombre"
 msgstr "Name"
 
-#: gui.py:224
+#: gui.py:236
 msgid "Tamanio"
 msgstr "Size"
 
-#: gui.py:381
+#: gui.py:406
 #, python-format
 msgid "¿Quieres borrar el juego con ID = \"%s\"?"
 msgstr "¿Delete game with ID = \"%s\"?"
 
-#: gui.py:391 gui.py:416 gui.py:449 gui.py:458
+#: gui.py:416 gui.py:445 gui.py:483 gui.py:492
 msgid "No has seleccionado ningun juego"
 msgstr "Don't have a game selected"
 
-#: gui.py:401
+#: gui.py:426
 #, python-format
 msgid "Elige un directorio donde extraer la ISO de %s"
 msgstr "Choose folder for extract ISO %s"
 
-#: gui.py:412
-msgid "Extrayendo ..."
-msgstr "Extracting ..."
-
-#: gui.py:427
+#: gui.py:456
 msgid "Paso 1 de 2: Elige un directorio para las CARATULAS"
 msgstr "Step 1 of 1: Choose a folder for COVERS"
 
-#: gui.py:433
+#: gui.py:463
 msgid "Paso 2 de 2: Elige un directorio para los DISCOS"
 msgstr "Step 2 of 2: Choose a folder for DISCS"
 
-#: gui.py:469
+#: gui.py:503
 msgid "Elige una ISO o un RAR"
 msgstr "Choose a ISO or RAR"
 
-#: gui.py:472
+#: gui.py:506
 msgid "ImagenISO, Comprimido RAR"
 msgstr ""
 
-#: gui.py:478
+#: gui.py:513
 msgid "Elige un directorio"
 msgstr "Choose folder"
 
-#: gui.py:497
-msgid "Anadiendo ..."
-msgstr "Add ISO ..."
-
-#: gui.py:502
+#: gui.py:542
 msgid "No has seleccionado ninguna particion"
 msgstr "Don't have a partition selected"
 
-#: gui.py:504
+#: gui.py:544
 msgid "Sin implementar aún"
 msgstr "Not implemented yet!"
 
-#: gui.py:532
+#: gui.py:574
 #, python-format
 msgid "CUIDADO: %s"
 msgstr "WARNING: %s"
 
-#: gui.py:534
+#: gui.py:576
 #, python-format
 msgid "ERROR: %s"
 msgstr "ERROR: %s"
 
-#: gui.py:537
-msgid "Empezando ..."
-msgstr "Loading ..."
-
-#: gui.py:556
-msgid "Comando desconocido"
+#: gui.py:600
+#, fuzzy
+msgid "DEBUG: Comando desconocido"
 msgstr "Unknown command"
 
-#: gui.py:599
+#: gui.py:607
+msgid "DEBUG: Trabajo terminado"
+msgstr ""
+
+#: gui.py:653
 msgid "Finalizando. Hecho en"
 msgstr "Finishing. Done in"
 
-#: gui.py:603
+#: gui.py:657
 msgid "quedan"
 msgstr "remaining"
 
@@ -555,84 +557,15 @@ msgstr "copy to SD"
 msgid "label"
 msgstr "label"
 
-#: trabajo.py:69
+#: trabajo.py:88
 #, python-format
 msgid "%s es un juego corrupto"
 msgstr ""
 
-#: trabajo.py:71
+#: trabajo.py:90
 #, python-format
 msgid "%s es un juego correcto, no se ha detectado corrupcion"
 msgstr ""
-
-#: trabajo.py:83
-msgid "La ISO o la partición no existe"
-msgstr "ISO or the partition don't exists"
-
-#: trabajo.py:86
-msgid "Buscando ISO dentro del RAR"
-msgstr "Searching ISO into the RAR"
-
-#: trabajo.py:93
-msgid "ISO Descomprimida"
-msgstr "ISO Uncompressed"
-
-#: trabajo.py:96
-#, python-format
-msgid "Al descomrpimir el RAR : %s"
-msgstr "When uncompress RAR : %s"
-
-#: trabajo.py:98
-#, python-format
-msgid "No se puede descomrpimir por que reemplazaría el ISO : %s"
-msgstr "Don't can uncompress because reemplace the ISO : %s"
-
-#: trabajo.py:100
-#, python-format
-msgid "El RAR %s no tenía ninguna ISO"
-msgstr "RAR %s don't have ISO"
-
-#: trabajo.py:104
-#, python-format
-msgid "Buscando en %s ficheros RAR ... "
-msgstr "Searching in %s files RAR"
-
-#: trabajo.py:107
-msgid "No se ha encontrado ningún RAR con ISOS dentro"
-msgstr "Not found within any RAR with ISOS"
-
-#: trabajo.py:112
-#, python-format
-msgid "Buscando en %s Imagenes ISO ... "
-msgstr "Searching %s ISO Image ..."
-
-#: trabajo.py:115
-msgid "INFO"
-msgstr "INFO"
-
-#: trabajo.py:115
-msgid "No se ha encontrado ningún ISO"
-msgstr "There is not ISO"
-
-#: trabajo.py:121
-#, python-format
-msgid "Aniadir ISO : %s a la particion %s"
-msgstr "Add ISO : %s in partition %s"
-
-#: trabajo.py:124
-#, python-format
-msgid "ISO %s añadida correctamente"
-msgstr "ISO %s added successfully"
-
-#: trabajo.py:127
-#, python-format
-msgid "Añadiendo la ISO : %s (comprueba que sea una ISO de WII)"
-msgstr "Adding ISO: %s (check that it is an ISO WII)"
-
-#: trabajo.py:132
-#, python-format
-msgid "%s no es un ningún juego de Wii"
-msgstr "%s is not a Wii game"
 
 #: wiithon.py:29
 msgid "Necesitas tener instalado pyGTK o GTKv2"
@@ -667,3 +600,57 @@ msgstr "Program run with the incorrect settings"
 #: wiithon.py:112
 msgid "Pulse cualquier tecla para continuar ...\n"
 msgstr "Press any key to continue ... \n"
+
+#~ msgid "Empezando ..."
+#~ msgstr "Loading ..."
+
+#~ msgid "La ISO o la partición no existe"
+#~ msgstr "ISO or the partition don't exists"
+
+#~ msgid "Buscando ISO dentro del RAR"
+#~ msgstr "Searching ISO into the RAR"
+
+#~ msgid "ISO Descomprimida"
+#~ msgstr "ISO Uncompressed"
+
+#~ msgid "Al descomrpimir el RAR : %s"
+#~ msgstr "When uncompress RAR : %s"
+
+#~ msgid "No se puede descomrpimir por que reemplazaría el ISO : %s"
+#~ msgstr "Don't can uncompress because reemplace the ISO : %s"
+
+#~ msgid "El RAR %s no tenía ninguna ISO"
+#~ msgstr "RAR %s don't have ISO"
+
+#~ msgid "Buscando en %s ficheros RAR ... "
+#~ msgstr "Searching in %s files RAR"
+
+#~ msgid "No se ha encontrado ningún RAR con ISOS dentro"
+#~ msgstr "Not found within any RAR with ISOS"
+
+#~ msgid "Buscando en %s Imagenes ISO ... "
+#~ msgstr "Searching %s ISO Image ..."
+
+#~ msgid "INFO"
+#~ msgstr "INFO"
+
+#~ msgid "No se ha encontrado ningún ISO"
+#~ msgstr "There is not ISO"
+
+#~ msgid "Aniadir ISO : %s a la particion %s"
+#~ msgstr "Add ISO : %s in partition %s"
+
+#~ msgid "ISO %s añadida correctamente"
+#~ msgstr "ISO %s added successfully"
+
+#~ msgid "Añadiendo la ISO : %s (comprueba que sea una ISO de WII)"
+#~ msgstr "Adding ISO: %s (check that it is an ISO WII)"
+
+#~ msgid "%s no es un ningún juego de Wii"
+#~ msgstr "%s is not a Wii game"
+
+#~ msgid "Extrayendo ..."
+#~ msgstr "Extracting ..."
+
+#~ msgid "Anadiendo ..."
+#~ msgstr "Add ISO ..."

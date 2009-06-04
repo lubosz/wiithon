@@ -326,9 +326,8 @@ class WiithonCORE:
 		destino = os.path.join( os.path.abspath(destino) , "%s.png" % (IDGAME) )
 		if( not os.path.exists( destino ) and self.existeDisco(IDGAME) ):
 			origen = self.getRutaCaratula(IDGAME)
-			print "Copiando %s ----> %s ... " % (origen , destino),
+			print "Copiando %s ----> %s ... " % (origen , destino)
 			shutil.copy(origen, destino)
-			print "OK"
 			return os.path.exists(destino)
 		else:
 			print "Ya tienes la caratula %s" % (IDGAME)

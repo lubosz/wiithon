@@ -20,7 +20,7 @@ runEN: install
 install_auto: dependencias install
 
 dependencias:
-	apt-get install imagemagick wget rar libssl-dev intltool python-gtk2 python-glade2 gnome-icon-theme menu
+	apt-get install imagemagick wget rar libssl-dev intltool python-gtk2 python-glade2 python-sqlalchemy gnome-icon-theme menu
 
 install: uninstall wbfs generarMOO
 
@@ -47,6 +47,7 @@ install: uninstall wbfs generarMOO
 	cp pool.py $(PREFIX)/share/wiithon
 	cp trabajo.py $(PREFIX)/share/wiithon
 	cp mensaje.py $(PREFIX)/share/wiithon
+	cp preferencias.py $(PREFIX)/share/wiithon
 	cp wiithon.desktop /usr/share/applications/
 	
 	cp recursos/icons/wiithon.svg /usr/share/pixmaps
@@ -93,6 +94,8 @@ uninstall:
 	
 	-$(RM) $(PREFIX)/share/wiithon/recursos/glade/*.xml
 	-$(RM) $(PREFIX)/share/wiithon/recursos/glade/*.glade
+	
+	-$(RM) $(PREFIX)/share/wiithon/HOME.conf
 
 	-$(RM) $(PREFIX)/share/wiithon/.acuerdo
 	-$(RM) ~/.wiithon_acuerdo
@@ -120,6 +123,7 @@ uninstall:
 	-$(RM) $(PREFIX)/share/wiithon/pool.py
 	-$(RM) $(PREFIX)/share/wiithon/trabajo.py
 	-$(RM) $(PREFIX)/share/wiithon/mensaje.py
+	-$(RM) $(PREFIX)/share/wiithon/preferencias.py
 	-$(RM) $(PREFIX)/share/wiithon/recursos/glade/*.ui
 	-$(RM) $(PREFIX)/share/wiithon/recursos/imagenes/*.png
 	
@@ -176,8 +180,8 @@ diff:
 	-@bzr diff > DIFF.txt
 
 # No usar, (sino sabes lo que haces)
-actualizar: pull
-	sudo make install_auto
+actualizar:
+	bzr pull && sudo make install_auto
 
 # TRADUCCION
 # http://faq.pygtk.org/index.py?req=show&file=faq22.002.htp
@@ -185,7 +189,7 @@ actualizar: pull
 
 # generar PO VACIO a partir de plantilla POT
 generarPO: generarPlantilla
-	@echo "*** GETTEXT *** Creando POO: es, en, de, fr y pt"
+	@echo "*** GETTEXT *** Creando POO: es y en"
 	LANG=es_ES.UTF-8 msginit -i po/plantilla.pot -o po/es.po --no-translator
 	LANG=en_US.UTF-8 msginit -i po/plantilla.pot -o po/en.po --no-translator
 	#LANG=de_DE.UTF-8 msginit -i po/plantilla.pot -o po/de.po --no-translator
@@ -228,3 +232,4 @@ limpiarPO:
 
 # OJO: Borra todas las traducciones
 regenerarPO: limpiarPO generarPO generarMOO
+
