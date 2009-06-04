@@ -134,6 +134,26 @@
                 <property name="homogeneous">True</property>
               </packing>
             </child>
+            <child>
+              <object class="GtkSeparatorToolItem" id="toolbutton4">
+                <property name="visible">True</property>
+              </object>
+              <packing>
+                <property name="expand">False</property>
+                <property name="homogeneous">True</property>
+              </packing>
+            </child>
+            <child>
+              <object class="GtkToolButton" id="tb_acerca_de">
+                <property name="visible">True</property>
+                <property name="label" translatable="yes">Acerca de ...</property>
+                <property name="icon_name">face-smile</property>
+              </object>
+              <packing>
+                <property name="expand">False</property>
+                <property name="homogeneous">True</property>
+              </packing>
+            </child>
           </object>
           <packing>
             <property name="expand">False</property>
@@ -263,10 +283,11 @@
                           </packing>
                         </child>
                         <child>
-                          <object class="GtkEntry" id="entry1">
+                          <object class="GtkEntry" id="busqueda1">
                             <property name="visible">True</property>
                             <property name="can_focus">True</property>
                             <property name="overwrite_mode">True</property>
+                            <signal name="changed" handler="on_busqueda1_changed"/>
                           </object>
                           <packing>
                             <property name="expand">False</property>
@@ -274,64 +295,11 @@
                           </packing>
                         </child>
                         <child>
-                          <object class="GtkToggleButton" id="toggle_todo">
-                            <property name="label" translatable="yes">Todo</property>
-                            <property name="visible">True</property>
-                            <property name="can_focus">False</property>
-                            <property name="receives_default">False</property>
-                            <property name="relief">none</property>
-                            <property name="active">True</property>
-                          </object>
-                          <packing>
-                            <property name="expand">False</property>
-                            <property name="position">2</property>
-                          </packing>
-                        </child>
-                        <child>
-                          <object class="GtkToggleButton" id="toggle_etiqueta1">
-                            <property name="label" translatable="yes">Nombre</property>
-                            <property name="visible">True</property>
-                            <property name="can_focus">False</property>
-                            <property name="receives_default">False</property>
-                            <property name="relief">none</property>
-                          </object>
-                          <packing>
-                            <property name="expand">False</property>
-                            <property name="position">3</property>
-                          </packing>
-                        </child>
-                        <child>
-                          <object class="GtkToggleButton" id="toggle_categoria">
-                            <property name="label" translatable="yes">Categor&#xED;a</property>
-                            <property name="visible">True</property>
-                            <property name="can_focus">False</property>
-                            <property name="receives_default">False</property>
-                            <property name="relief">none</property>
-                          </object>
-                          <packing>
-                            <property name="expand">False</property>
-                            <property name="position">4</property>
-                          </packing>
-                        </child>
-                        <child>
-                          <object class="GtkToggleButton" id="toggle_etiqueta">
-                            <property name="label" translatable="yes">Etiqueta</property>
-                            <property name="visible">True</property>
-                            <property name="can_focus">False</property>
-                            <property name="receives_default">False</property>
-                            <property name="relief">none</property>
-                          </object>
-                          <packing>
-                            <property name="expand">False</property>
-                            <property name="position">5</property>
-                          </packing>
-                        </child>
-                        <child>
                           <object class="GtkLabel" id="label10">
                             <property name="visible">True</property>
                           </object>
                           <packing>
-                            <property name="position">6</property>
+                            <property name="position">2</property>
                           </packing>
                         </child>
                         <child>
@@ -354,7 +322,7 @@
                           </object>
                           <packing>
                             <property name="expand">False</property>
-                            <property name="position">7</property>
+                            <property name="position">3</property>
                           </packing>
                         </child>
                       </object>
@@ -861,7 +829,7 @@
                         <property name="visible">True</property>
                         <property name="can_focus">True</property>
                         <property name="reorderable">True</property>
-                        <property name="search_column">2</property>
+                        <property name="enable_search">False</property>
                         <property name="enable_grid_lines">horizontal</property>
                       </object>
                     </child>

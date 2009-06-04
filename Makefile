@@ -48,6 +48,7 @@ install: uninstall wbfs generarMOO
 	cp trabajo.py $(PREFIX)/share/wiithon
 	cp mensaje.py $(PREFIX)/share/wiithon
 	cp preferencias.py $(PREFIX)/share/wiithon
+	cp juego.py $(PREFIX)/share/wiithon
 	cp wiithon.desktop /usr/share/applications/
 	
 	cp recursos/icons/wiithon.svg /usr/share/pixmaps
@@ -124,6 +125,7 @@ uninstall:
 	-$(RM) $(PREFIX)/share/wiithon/trabajo.py
 	-$(RM) $(PREFIX)/share/wiithon/mensaje.py
 	-$(RM) $(PREFIX)/share/wiithon/preferencias.py
+	-$(RM) $(PREFIX)/share/wiithon/juego.py
 	-$(RM) $(PREFIX)/share/wiithon/recursos/glade/*.ui
 	-$(RM) $(PREFIX)/share/wiithon/recursos/imagenes/*.png
 	

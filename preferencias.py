@@ -52,10 +52,3 @@ mapper(Preferencia , tabla)
 Session = sessionmaker(bind=motor , autoflush=True, transactional = True)
 session = Session()
 
-'''
-Documentación: http://www.sqlalchemy.org/docs/05/ormtutorial.html#define-and-create-a-table
-Ojo, mi ubuntu va con SQLAlchemy 0.4 pero el último es 0.5x
-Aquí un wiki con las diferencias:
-http://www.sqlalchemy.org/trac/wiki/05Migration
-'''
-

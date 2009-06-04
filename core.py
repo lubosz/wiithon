@@ -395,13 +395,13 @@ class WiithonCORE:
 
 	# Procedimiento que refresca la lista de particiones
 	def refrescarParticionWBFS(self):
-		salida = util.getSTDOUT( config.DETECTOR_WBFS , False)
-
+		salida = util.getSTDOUT_NOERROR_iterador( config.DETECTOR_WBFS)
+	
 		self.listaParticiones = []
 
-		for part in salida[:-1].split("\n"):
+		for part in salida:
 			if part.find("/dev/") != -1:
-				self.listaParticiones.append(part)
+				self.listaParticiones.append(part.strip())
 
 	# Devuelve el nombre del ISO que hay dentro de un RAR
 	def getNombreISOenRAR(self , nombreRAR):

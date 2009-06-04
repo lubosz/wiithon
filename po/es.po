@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wiithon 1.0 Alpha\n"
 "Report-Msgid-Bugs-To: makiolo@gmail.com\n"
-"POT-Creation-Date: 2009-06-04 04:41+0200\n"
+"POT-Creation-Date: 2009-06-04 21:12+0200\n"
 "PO-Revision-Date: 2009-06-01 00:20+0200\n"
 "Last-Translator: \n"
 "Language-Team: Spanish <kde-i18n-doc@lists.kde.org>\n"
@@ -328,12 +328,12 @@ msgstr ""
 msgid "***************** DESCARGAR CARATULA %s ********************"
 msgstr ""
 
-#: gui.py:30
-msgid "Preferencias creadas por primera vez"
+#: gui.py:34
+msgid "DEBUG: Preferencias creadas por primera vez"
 msgstr ""
 
-#: gui.py:32
-msgid "Preferencias cargadas"
+#: gui.py:36
+msgid "DEBUG: Preferencias cargadas"
 msgstr ""
 
 #: gui.py:99
@@ -344,95 +344,100 @@ msgid ""
 "Esto dependera de su distribucion de Linux pero intente con : sudo %s"
 msgstr ""
 
-#: gui.py:112
-msgid "No se han encontrado particiones WBFS:\n"
-msgstr ""
-
-#: gui.py:182
+#: gui.py:218
 msgid "Dispositivo"
 msgstr ""
 
-#: gui.py:183
+#: gui.py:219
 msgid "Fabricante"
 msgstr ""
 
-#: gui.py:234
+#: gui.py:276
 msgid "IDGAME"
 msgstr ""
 
-#: gui.py:235 recursos/glade/wiithon.ui.h:19
+#: gui.py:277
 msgid "Nombre"
 msgstr ""
 
-#: gui.py:236
+#: gui.py:278
 msgid "Tamanio"
 msgstr "Tamaño"
 
-#: gui.py:406
+#: gui.py:434
+#, python-format
+msgid "%s guardado en la base de datos"
+msgstr ""
+
+#: gui.py:498
 #, python-format
 msgid "¿Quieres borrar el juego con ID = \"%s\"?"
 msgstr ""
 
-#: gui.py:416 gui.py:445 gui.py:483 gui.py:492
+#: gui.py:508 gui.py:537 gui.py:575 gui.py:584
 msgid "No has seleccionado ningun juego"
 msgstr ""
 
-#: gui.py:426
+#: gui.py:518
 #, python-format
 msgid "Elige un directorio donde extraer la ISO de %s"
 msgstr ""
 
-#: gui.py:456
+#: gui.py:548
 msgid "Paso 1 de 2: Elige un directorio para las CARATULAS"
 msgstr ""
 
-#: gui.py:463
+#: gui.py:555
 msgid "Paso 2 de 2: Elige un directorio para los DISCOS"
 msgstr ""
 
-#: gui.py:503
+#: gui.py:595
 msgid "Elige una ISO o un RAR"
 msgstr ""
 
-#: gui.py:506
+#: gui.py:598
 msgid "ImagenISO, Comprimido RAR"
 msgstr ""
 
-#: gui.py:513
+#: gui.py:605
 msgid "Elige un directorio"
 msgstr ""
 
-#: gui.py:542
+#: gui.py:634
 msgid "No has seleccionado ninguna particion"
 msgstr ""
 
-#: gui.py:544
-msgid "Sin implementar aún"
+#: gui.py:636
+msgid "Sin implementar aun"
 msgstr ""
 
-#: gui.py:574
+#: gui.py:638
+msgid "No tienes partición WBFS para realizar esta accion"
+msgstr ""
+
+#: gui.py:668
 #, python-format
 msgid "CUIDADO: %s"
 msgstr ""
 
-#: gui.py:576
+#: gui.py:670
 #, python-format
 msgid "ERROR: %s"
 msgstr ""
 
-#: gui.py:600
+#: gui.py:694
 msgid "DEBUG: Comando desconocido"
 msgstr ""
 
-#: gui.py:607
+#: gui.py:701
 msgid "DEBUG: Trabajo terminado"
 msgstr ""
 
-#: gui.py:653
+#: gui.py:747
 msgid "Finalizando. Hecho en"
 msgstr ""
 
-#: gui.py:657
+#: gui.py:751
 msgid "quedan"
 msgstr ""
 
@@ -457,20 +462,20 @@ msgid "1 / 2"
 msgstr ""
 
 #: recursos/glade/wiithon.ui.h:4
+msgid "Acerca de ..."
+msgstr ""
+
+#: recursos/glade/wiithon.ui.h:5
 msgid "Aniadir directorio"
 msgstr "Añadir directorio"
 
-#: recursos/glade/wiithon.ui.h:5
+#: recursos/glade/wiithon.ui.h:6
 msgid "Buscar:"
 msgstr ""
 
-#: recursos/glade/wiithon.ui.h:6
+#: recursos/glade/wiithon.ui.h:7
 msgid "CONCEPT"
 msgstr ""
-
-#: recursos/glade/wiithon.ui.h:7
-msgid "Categor&#xED;a"
-msgstr "Categoría"
 
 #: recursos/glade/wiithon.ui.h:8
 msgid "Categor&#xED;as"
@@ -492,62 +497,54 @@ msgid "Consola"
 msgstr ""
 
 #: recursos/glade/wiithon.ui.h:15
-msgid "Etiqueta"
-msgstr ""
-
-#: recursos/glade/wiithon.ui.h:16
 msgid "Etiquetas"
 msgstr ""
 
-#: recursos/glade/wiithon.ui.h:17
+#: recursos/glade/wiithon.ui.h:16
 msgid "Extraer a ISO"
 msgstr ""
 
-#: recursos/glade/wiithon.ui.h:18
+#: recursos/glade/wiithon.ui.h:17
 msgid "Mas informacion"
 msgstr "Detalles"
 
-#: recursos/glade/wiithon.ui.h:20
+#: recursos/glade/wiithon.ui.h:18
 msgid "Nuevo"
 msgstr ""
 
-#: recursos/glade/wiithon.ui.h:21
+#: recursos/glade/wiithon.ui.h:19
 msgid "OF"
 msgstr ""
 
-#: recursos/glade/wiithon.ui.h:22
+#: recursos/glade/wiithon.ui.h:20
 msgid "PROOF"
 msgstr ""
 
-#: recursos/glade/wiithon.ui.h:23
+#: recursos/glade/wiithon.ui.h:21
 msgid "Preferencias"
 msgstr ""
 
-#: recursos/glade/wiithon.ui.h:24
+#: recursos/glade/wiithon.ui.h:22
 msgid "Renombrar"
 msgstr ""
 
-#: recursos/glade/wiithon.ui.h:25
+#: recursos/glade/wiithon.ui.h:23
 msgid "Reportar bug"
 msgstr ""
 
-#: recursos/glade/wiithon.ui.h:26
-msgid "Todo"
-msgstr ""
-
-#: recursos/glade/wiithon.ui.h:27
+#: recursos/glade/wiithon.ui.h:24
 msgid "Trabajos de fondo (0)"
 msgstr ""
 
-#: recursos/glade/wiithon.ui.h:28
+#: recursos/glade/wiithon.ui.h:25
 msgid "Trabajos intensos (0)"
 msgstr ""
 
-#: recursos/glade/wiithon.ui.h:29
+#: recursos/glade/wiithon.ui.h:26
 msgid "caratulas a SD"
 msgstr "copiar a SD"
 
-#: recursos/glade/wiithon.ui.h:30
+#: recursos/glade/wiithon.ui.h:27
 msgid "label"
 msgstr ""
 
@@ -588,3 +585,6 @@ msgstr ""
 #: wiithon.py:112
 msgid "Pulse cualquier tecla para continuar ...\n"
 msgstr ""
+
+#~ msgid "Categor&#xED;a"
+#~ msgstr "Categoría"
