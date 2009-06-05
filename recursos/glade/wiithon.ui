@@ -287,6 +287,7 @@
                             <property name="visible">True</property>
                             <property name="can_focus">True</property>
                             <property name="overwrite_mode">True</property>
+                            <property name="secondary_icon_stock">gtk-clear</property>
                             <signal name="changed" handler="on_busqueda1_changed"/>
                           </object>
                           <packing>
@@ -304,7 +305,6 @@
                         </child>
                         <child>
                           <object class="GtkAlignment" id="alignment1">
-                            <property name="visible">True</property>
                             <property name="left_padding">10</property>
                             <property name="right_padding">10</property>
                             <child>
@@ -829,7 +829,7 @@
                         <property name="visible">True</property>
                         <property name="can_focus">True</property>
                         <property name="reorderable">True</property>
-                        <property name="enable_search">False</property>
+                        <property name="search_column">2</property>
                         <property name="enable_grid_lines">horizontal</property>
                       </object>
                     </child>

@@ -14,7 +14,6 @@ Aquí un wiki con las diferencias:
 http://www.sqlalchemy.org/trac/wiki/05Migration
 '''
 
-
 BDD_PERSISTENTE = create_engine('sqlite:///%s' % os.path.join( config.HOME_WIITHON_BDD , 'juegos.db' ))
 metadatos = MetaData()
 
@@ -25,7 +24,7 @@ tabla = Table('juegos',metadatos,
 	Column('idgame',VARCHAR(6)),
 	Column('title', VARCHAR(255)),
 	Column('size', Float),
-	#Column('year',Integer),
+	Column('device',VARCHAR(10)),
 	#Column('quarter',Integer), # 1=principios de año, 2, 3, 4 = finales de año
 	#Column('puntuacion',Integer), # del 0 al 5
 )
@@ -34,10 +33,11 @@ tabla = Table('juegos',metadatos,
 metadatos.create_all(BDD_PERSISTENTE)
 
 class Juego(object):
-	def __init__(self , idgame , title , size):
+	def __init__(self , idgame , title , size, device):
 		self.idgame = idgame
 		self.title = title
 		self.size = float(size)
+		self.device = device
 		
 	def __repr__(self):
 		return "%d -> %s - %s" % (self.id , self.idgame, self.title)

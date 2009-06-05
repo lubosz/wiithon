@@ -459,16 +459,17 @@ class WiithonCORE:
 
 	def getDeviceSeleccionado(self):
 		try:
-			return self.listaParticiones[self.particionSeleccionada].split(":")[0]
+			retorno = self.listaParticiones[self.particionSeleccionada].split(":")[0]
+			return retorno
 		except IndexError:
-			raise AssertionError, "Error obteniendo información del dispositivo"
+			return "%"
 
 	def getFabricanteSeleccionado(self):
 		try:
-			return self.listaParticiones[self.particionSeleccionada].split(":")[1]
+			retorno = self.listaParticiones[self.particionSeleccionada].split(":")[1]
+			return retorno
 		except IndexError:
-			# Repasar que pasa cuando no hay fabricante
-			raise AssertionError, "Error obteniendo información del fabricante"
+			return "?"
 
 	def setInterfaz(self , interfaz):
 		self.interfaz = interfaz

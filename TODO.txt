@@ -1,5 +1,6 @@
-- La barra del progreso a veces me ha fallado
-- Añadir función copiar discos a SD ?
+- Bug añadiendo trabajo cuando hay más de 1 partición
+
+- Cuando refresco la lista (por CORE) ordenar por nombre
 
 - Documentar el protocolo entre wiithon y wbfs
 - Barra de progreso para indicar espacio libres y ocupoados
@@ -15,7 +16,6 @@ Renombrando:
 - No permitir caracteres extraños ( [A-Za-z0-9:_ ()] y poco más )
 
 TreeView de juegos:
-- Poder ordenar por cualquier columna
 - Menu contextual (boton derecho) con opciones : Renombrar, Clasificar y Borrar
 
 TreeView de particiones:
