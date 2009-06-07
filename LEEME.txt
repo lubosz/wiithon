@@ -88,69 +88,87 @@ lunes, 4 de abril de 2009
 + Documentación
 ===================================================================================
 
-Podeis utilizar el GUI de nautilus que es muy comodo y rápido, pero lo verdaderamente potente es el propio programa hecho en python : 
+Interfáz gráfico:
+-------------------------------------------------------------------------------
 
-Os imprimo la salida de : *wiithon ayuda*
+
+
+Línea de comandos
+-------------------------------------------------------------------------------
+La línea de comandos permite hacer todo lo que hace el interfaz gráfico de una forma más fácil o más dificil según lo que queramos hacer.
+Para lanzar wiithon como interfaz gráfico debemos especificar un parámetro, este es "--no-gui" o mejor por ser más corto "-c".
+Además tiene 2 opciones exclusivas de la linea de comandos, y que el interfaz gráfico no dispone. Son las 2 últimas opciones del siguiente listado:
 
 Listar juegos. El programa por defecto, sin parametros, hace un listado de los juegos : 
-		wiithon
+		wiithon -c
 
 Añadir ISO mediante una lista explicita de las ISOS : 
-		wiithon "./wii/mario.iso" "iso2" "iso3" "isoN"
+		wiithon -c "./wii/mario.iso" "iso2" "iso3" "isoN"
 
 Añadir ISO con exp. reg. La expresión solo afecta al directorio actual, actualmente no es recursivo : 
-		wiithon *.iso
+		wiithon -c *.iso
 
 Buscar y Añadir ISO's recursivamente. Busca todos las imagenes isos RECURSIVAMENTE, incluso tambien busca dentro de RAR, a falta de implementar zip), tal vez necesites sudo apt-get install rar.
-		wiithon buscar
+		wiithon -c buscar
 
 Borrar juegos. Especificando el juego mediante un menú.: 
-		wiithon borrar
+		wiithon -c borrar
 
 Borrar juegos. Podemos borrar con el IDGAME.: 
-		wiithon borrar IDJUEGO
+		wiithon -c borrar IDJUEGO
 
 Borrar juegos. Podemos borrar con el IDGAME obtenido a partir de un ISO local. El archivo ISO local NO es borrado : 
-		wiithon borrar "./wii/mario.iso"
+		wiithon -c borrar "./wii/mario.iso"
 
 Renombrar juegos. Especificando el juego mediante un menú.: 
-		wiithon renombrar
+		wiithon -c renombrar
 
 Renombrar juegos, puedes cambiar el nombre de los juegos ya metidos en HD, útil para que nos enteremos cuando estemos con el USB Loader : 
-		wiithon renombrar IDGAME "Mario Kart Wii"
+		wiithon -c renombrar IDGAME "Mario Kart Wii"
 
 Extraer juegos a un archivo ISO. El juego es especificado mediante un menú.
-		wiithon extraer
+		wiithon -c extraer
 
 Extraer juegos a un archivo ISO. OJO! : El archivo ISO de salida pertenecerá a root : 
-		wiithon extraer IDJUEGO
+		wiithon -c extraer IDJUEGO
 
-Descargar todas las caratulas automaticamente a 160x225. Ojo puede que el servidor te banee, si te ocurre intentalo 5 minutos más tarde: 
-		wiithon caratulas
+Descargar todas las caratulas automaticamente a 160x224. Automaticamente detecta las que ya tienes:
+		wiithon -c caratulas
+		
+Las caratulas por defecto son de tipo "normal", hay 2 tipos más: "3d" o "panoramico". Por ejemplo, para descargar todas las caratulas en 3d:
+		wiithon -c caratulas 3d
 
 Descargar la caratulas de un juego especificado por su IDGAME, la imagen es bajada a 160x225. El comando es un singular, es "caratula" ya que "caratulas" descarga todo: 
-		wiithon caratula IDGAME
+		wiithon -c caratula IDGAME
 
 Descargar la caratulas de un juego especificado por menú, la imagen es bajada a 160x225. El comando es un singular, es "caratula" ya que "caratulas" descarga todo: 
-		wiithon caratula
+		wiithon -c caratula
 		
-Comprobar Integridad de los juegos. Muchos de nuestros juegos pueden estar corruptos sin aún saberlo debido a el bug de borrado de las primeras versiones de WBFS
-		wiithon comprobar
+Nuevo:
+wiithon -c disco
+wiithon -c discos
+wiithon -c copiar
 
-Instar juegos desde el DVD, al estilo del usb loader, pero algo más lento porque dumpea a ISO y cuando termina mete la ISO.
-		wiithon instalar
+Las siguientes 2 opciones, no estan implementadas en el interfáz gráfico:
+		
+	Comprobar Integridad de los juegos. Muchos de nuestros juegos pueden estar corruptos sin aún saberlo debido a el bug de borrado de las primeras versiones de WBFS
+			wiithon -c comprobar
 
-El programa tiene mas cosillas como alias en algunos palabras reservadas:
+	Instar juegos desde el DVD, al estilo del usb loader, pero algo más lento porque dumpea a ISO y cuando termina mete la ISO.
+			wiithon -c instalar
+
+El programa tiene mas cosillas como alias en algunos parametros:
 renombrar = rename = r
 comprobar = check = scandisk
 nstalar = install
-borrar = rm
-extraer = x
+borrar = remove = quitar = remove = rm
+extraer = extract = x
 ayuda = -h = --help
-buscar = meter = metertodo = buscartodo
+buscar = meter = metertodo = buscartodo = search
 caratulas = covers
 caratula = cover
 listar = ls
 
 Tambien tiene un parametro oculto sin documentar, el parametro -p:
 Obliga a una pausa al final de la ejecución. Este es usado por los comandos lanzados desde nautilus, si no lo pusiera las ventanas se cerrarian ya que mayoritariamente no requieren intervención del usuario. Se requiere interactividad con el usuario en 2 casos, para aceptar el acuerdo de que no me hago responsable de daños y tal (solo sale la primera vez) y si el programa detecta más de una 1 partición WBFS, nos pregunta con cual trabajar con un menú.
+

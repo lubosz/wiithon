@@ -50,54 +50,6 @@ class WiithonCORE:
 	def nuevoMensaje(self , mensaje):
 		self.mensajes.put(mensaje)
 
-	# Dumpea la ISO de un BACKUP y lo mete a la partición WBFS
-	def instalarJuego(self , DEVICE):
-
-		salida = ""
-		print "Buscando un Disco de Wii ..."
-		
-		salida = util.getSTDOUT( config.DETECTOR_WBFS_LECTOR )
-
-		# Le quito el ultimo salto de linea y forma la lista cortando por saltos de linea
-		listaParticiones = NonRepeatList()
-		if (salida <> ""):
-			listaParticiones = salida[:-1].split("\n")
-
-		numListaParticiones = len(listaParticiones)
-		if(numListaParticiones<=0):
-			print gettext.gettext("No se ha encontrado ningún disco de la Wii")
-		elif(numListaParticiones > 1):
-			print "Hay más de un juego de la Wii, deja solo 1 para eliminar la ambigüedad"
-		else:# 1 juego de wii
-			try:
-				cachos = listaParticiones[0].split(":")
-				LECTOR_DVD = cachos[0]
-				FABRICANTE_DVD = cachos[1]
-				MAGIC_DVD = util.getMagicISO(LECTOR_DVD)
-				SALIDA = os.getcwd()+"/"+MAGIC_DVD+".iso"
-				reemplazada = False
-				if (os.path.exists(SALIDA)):
-					print "Ya hay una ISO en : " + SALIDA
-					respuesta = raw_input("Desea reemplazarla (S/N) : ")
-					if(respuesta.lower() == "s" or respuesta.lower() == "si"):
-						reemplazada = False
-					else:
-						reemplazada = True
-				print FABRICANTE_DVD + " a un ISO temporal de 4.4GB en = " + MAGIC_DVD+".iso ..."
-				if( reemplazada or (os.system("dd if="+LECTOR_DVD+" of="+SALIDA+" bs=1M")==0) ):
-					if ( self.anadirISO(DEVICE , SALIDA)):
-						if( self.descargarCaratula(MAGIC_DVD) ):
-							print "Caratula descargada como "+os.getcwd()+"/"+MAGIC_DVD+".png"
-						else:
-							print "No se ha encontrado caratula para el juego " + MAGIC_DVD
-					else:
-						print "Error al pasar la ISO al disco duro"
-					print "wiithon no borra la ISO temporal, puedes borrarla si no la necesitas"
-				else:
-					print "Error al dumpear la ISO"
-			except KeyboardInterrupt:
-				print "Interrumpido por el usuario"
-
 	# Obtiene un list de juegos en una tabla de 3 columnas:
 	# index 0 -> IDGAME o identificador único del juego
 	# index 1 -> Nombre del juego
@@ -121,74 +73,6 @@ class WiithonCORE:
 		salida = subprocess.call( comando , shell=True , stderr=subprocess.STDOUT )
 		return ( salida == 0 )
 
-	# Dada una lista de juegos, verifica su estado
-	# Hay que separar la lógica de la presentación
-	def verificarTodosLosJuegos(self , DEVICE , listaJuegos):
-		listaCorruptos = []
-		numJuegos = len(listaJuegos)
-		if(numJuegos > 0):
-			print "--------------------------------------------------------------------------------"
-			print "%6s\t%-40s\t%s" % ("IDGAME","TITULO" , "¿Corrupto?")
-			print "--------------------------------------------------------------------------------"
-			for juego in listaJuegos:
-				if( self.verificarJuego( DEVICE , juego[0] ) ):
-					corrupto = "NO ESTA CORRUPTO"
-				else:
-					corrupto = "¡¡ ESTA CORRUPTO !!"
-					listaCorruptos.append(juego)
-				print "%s\t%-40s\t%s" % ( juego[0] , juego[1] , corrupto)
-		numCorruptos = len(listaCorruptos)
-		if (numCorruptos > 0):
-			print "--------------------------------------------------------------------------------"
-			print "Lista de juegos corruptos"
-			print "--------------------------------------------------------------------------------"
-			for juego in listaCorruptos:
-				print "%s\t%-40s" % ( juego[0] , juego[1] )
-			print "--------------------------------------------------------------------------------"
-			print "Hay *"+str(numCorruptos)+"* juegos corruptos se recomienda que los desinstale"
-			print "--------------------------------------------------------------------------------"
-			respuesta = raw_input("¿Quieres desinstalarlos? (S/N) ")
-			if(respuesta.lower() == "s" or respuesta.lower() == "si"):
-				for juego in listaCorruptos:
-					if (borrarJuego(DEVICE , juego[0])):
-						print juego[0] + " borrado correctamente"
-					else:
-						print "ERROR : " + juego[0] + " NO se ha borrado correctamente"
-			else:
-				print "Saliendo. No se ha desinstalado nada"
-
-
-	# Esta forma parte del GUI, es una forma del CLI de seleccionar 1 juego
-	def get_IDJUEGO_de_Lista(self , DEVICE , listaJuegos):
-		numJuegos = len(listaJuegos)
-		if(numJuegos > 0):
-			print "--------------------------------------------------------------------------------"
-			print "%3s\t%6s\t%-40s\t%7s\t%6s" % ("NUM","IDGAME","TITULO","TAMAÑO" , "¿Car.?")
-			print "--------------------------------------------------------------------------------"
-			i = 1
-			for juego in listaJuegos:
-				ocupado = float(juego[2])
-				if (self.existeCaratula(juego[0])):
-					caratula = "SI"
-				else:
-					caratula = "NO"
-				print "%3s\t%s\t%-40s\t%.2f GB\t%6s" % ( i , juego[0] , juego[1] , ocupado , caratula)
-				if ( (i % config.NUM_LINEAS_PAUSA) == 0 ):
-					raw_input("Presiona cualquier tecla para mostrar "+str(config.NUM_LINEAS_PAUSA)+" lineas más")
-				i = i + 1
-			print "--------------------------------------------------------------------------------"
-
-			try:
-				numJuego = int( raw_input("¿Indique el NUM del juego? : ") )
-				# 1 <= numJuego <= numJuegos
-				if ((1 <= numJuego) and (numJuego <= numJuegos)):
-					try:
-						return listaJuegos[numJuego-1][0]
-					except IndexError:
-						print "Numero fuera de rango"
-			except ValueError:
-				print "El numero dado es incorrecto"
-		return "DESCONOCIDO"
 
 	# añade un *ISO* a un *DEVICE*
 	# durante el proceso va actualizando PORCENTUAL
@@ -209,6 +93,18 @@ class WiithonCORE:
 			return salida == 0
 		except KeyboardInterrupt:
 			return False
+			
+	# obtiene una tupla [uso , libre , total]
+	def getEspacioLibre(self , DEVICE):
+		salida = util.getSTDOUT( config.WBFS_APP+" -p "+DEVICE+" df" )
+		cachos = salida.split(";")
+		if(len(cachos) == 3):
+			try:
+				return [ float(cachos[0]) , float(cachos[1]) , float(cachos[2]) ]
+			except:
+				pass
+		# en caso de algun error, devuelve una tupla de 3 de float a 0
+		return [ 0.0 , 0.0 , 0.0 ]
 
 	# borra el juego IDGAME
 	def borrarJuego(self , DEVICE , IDGAME):
@@ -234,46 +130,6 @@ class WiithonCORE:
 			return salida == 0
 		except KeyboardInterrupt:
 			return False
-
-	# Devuelve una lista de directorios del directorio "path"
-	# http://newspiritcompany.infogami.com/recursive_glob_py
-	def glob_get_dirs(self , path):
-		d = []
-		try:
-			for i in os.listdir(path):
-				if os.path.isdir(path+i):
-					d.append(os.path.basename(i))
-
-		except NameError, ne:
-			print "NameError thrown=", ne
-		except:
-			pass
-		return d
-
-	# Devuelve la lista de resultados que cumplen la Exp.Reg.
-	# Recorre a partir de "path" y recursivamente.
-	def rec_glob(self , path , mask):
-		l = []
-
-		if path[-1] != '/':
-			path = path + '/'
-
-		for i in self.glob_get_dirs(path):
-			res = self.rec_glob(path + i, mask)
-			l = l + res
-
-		try:
-			for i in os.listdir(path):
-				ii = i
-				i = path + i
-				if os.path.isfile(i):
-					if fnmatch.fnmatch( ii.lower() , mask.lower() ):
-						l.append(i)
-		except NameError, ne:
-			print "NameError=", ne
-		except:
-			pass
-		return l
 
 	def existeDisco(self , IDGAME):
 		return (os.path.exists( self.getRutaDisco(IDGAME) ))
@@ -351,13 +207,11 @@ class WiithonCORE:
 		return (os.path.exists( self.getRutaCaratula(IDGAME) ))
 
 	# Descarga una caratula de "IDGAME"
+	# el Tipo puede ser : normal|panoramica|3d
 	def descargarCaratula(self , IDGAME, tipo = "normal"):
 		if (self.existeCaratula(IDGAME)):
 			return True
 		else:
-			# aqui se puede poner : normal|panoramica|3d
-			tipo = "3d"
-
 			origen = 'http://www.theotherzone.com/wii/'
 			regiones = ['pal/' , 'ntsc/' , 'ntscj/']
 			if(tipo == "panoramica"):
@@ -419,12 +273,13 @@ class WiithonCORE:
 	# Descomprime todos los ISO de un RAR (FIXME: se espera que solo haya 1)
 	def descomprimirRARconISODentro(self , nombreRAR ):
 		try:
-			comando = "rar e -o- \""+nombreRAR+"\" \"*.iso\""
+			comando = 'rar e -o- "%s" "%s"' % (nombreRAR , "*.iso")
 			salida = subprocess.call( comando , shell=True , stderr=subprocess.STDOUT , stdout=open("/dev/null","w"))
 			return (salida == 0)
 		except KeyboardInterrupt:
 			return False
 
+	# FUNCIÓN de PRUEBAS, no es usado actualmente
 	# Se pasa como parametro ej: /dev/sdb2
 	def redimensionarParticionWBFS(self , particion):
 		# 57 42 46 53 00 0b 85 30

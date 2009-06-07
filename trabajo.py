@@ -25,8 +25,7 @@ class PoolTrabajo(Pool , Thread):
 		
 	def ejecutar(self , numHilo , trabajo , core):
 	
-		# FIXME: parche
-		# el device debe sacarlo del objeto juego
+		# FIXME: el device debe sacarlo del objeto juego
 		DEVICE = self.core.getDeviceSeleccionado()	
 
 		if (trabajo.getQueHacer() == "ANADIR"):
@@ -52,10 +51,9 @@ class PoolTrabajo(Pool , Thread):
 			self.verificarJuego(core , DEVICE , IDGAME)
 
 	def descargarCaratula(self , core , IDGAME):
-		core.descargarCaratula( IDGAME )
+		core.descargarCaratula( IDGAME , "3d")
 			
 	def descargarDisco(self , core , IDGAME):
-
 		core.descargarDisco( IDGAME )
 			
 	def copiarCaratula(self , core , IDGAME):
@@ -68,7 +66,7 @@ class PoolTrabajo(Pool , Thread):
 		if not core.verificarJuego(DEVICE , IDGAME):
 			print _("%s es un juego corrupto" % (IDGAME))
 		else:
-			print _("%s es un juego correcto, no se ha detectado corrupcion")
+			print _("No se ha detectado corrupcion en %s" % (IDGAME))
 
 	def anadir(self , core , fichero , DEVICE):
 	
@@ -91,11 +89,11 @@ class PoolTrabajo(Pool , Thread):
 				else:
 					core.nuevoMensaje( Mensaje("ERROR",_("No se puede descomrpimir por que reemplazaría el ISO : %s") % (nombreISO)) )
 			else:
-				core.nuevoMensaje( Mensaje("ERROR",_("El RAR %s no tenía ninguna ISO") % (nombreRAR)) )
+				core.nuevoMensaje( Mensaje("ERROR",_("El RAR %s no tenia ninguna ISO") % (nombreRAR)) )
 		elif( os.path.isdir( fichero ) ):
 			encontrados =  core.rec_glob(fichero, "*.rar")
 			if (len(encontrados) == 0):
-				core.nuevoMensaje( Mensaje("INFO",_("No se ha encontrado ningún RAR con ISOS dentro")))
+				core.nuevoMensaje( Mensaje("INFO",_("No se ha encontrado ningun RAR con ISOS dentro")))
 			else:
 				for encontrado in encontrados:
 					self.nuevoTrabajoAnadir( encontrado )
@@ -120,7 +118,7 @@ class PoolTrabajo(Pool , Thread):
 			core.nuevoMensaje( Mensaje("COMANDO","PROGRESO_FIN_CALCULO") )
 			core.nuevoMensaje( Mensaje("COMANDO","PROGRESO_100") )
 		else:		
-			core.nuevoMensaje( Mensaje("ERROR",_("%s no es un ningún juego de Wii") % (os.path.basename(fichero)) ) )
+			core.nuevoMensaje( Mensaje("ERROR",_("%s no es un ningun juego de Wii") % (os.path.basename(fichero)) ) )
 
 		# borrar fichero auxiliar
 		try:

@@ -419,6 +419,9 @@ class WiithonGUI(GtkBuilderWrapper):
 	def refrescarListaJuegosFromCore(self):
 		# recargar el modelo de datos la lista de juegos
 		self.listaJuegos = self.core.getListaJuegos( self.DEVICEParticionSeleccionada )
+
+		for juego in session.query(Juego):
+			juego.device = ""
 		
 		# el core nos da una lista de tuplas de 3
 		# lo convertimos a una lista de objetos Juego

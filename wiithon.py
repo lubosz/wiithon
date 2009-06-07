@@ -5,14 +5,16 @@
 # :: Jose Luis Segura <josel.segura@gmail.com>
 # :: Web : http://blogricardo.wordpress.com/2009/04/07/wiithon-wbfs-gui-para-wii/
 # :: Ver LICENCIA.txt
+#
 
-import sys, os
+import sys
+import os
 import getopt
 
+import config
 from cli import WiithonCLI
 from gui import WiithonGUI
 from core import WiithonCORE
-import config
 
 # Importamos los módulos necesarios
 try:

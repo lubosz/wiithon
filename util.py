@@ -139,6 +139,46 @@ stderr = popen.childerr.read()
 retcode = popen.wait() >> 8
 '''
 
+# Devuelve una lista de directorios del directorio "path"
+# http://newspiritcompany.infogami.com/recursive_glob_py
+def glob_get_dirs(path):
+	d = []
+	try:
+		for i in os.listdir(path):
+			if os.path.isdir(path+i):
+				d.append(os.path.basename(i))
+
+	except NameError, ne:
+		print "NameError thrown=", ne
+	except:
+		pass
+	return d
+
+# Devuelve la lista de resultados que cumplen la Exp.Reg.
+# Recorre a partir de "path" y recursivamente.
+def rec_glob(path , mask):
+	l = []
+
+	if path[-1] != '/':
+		path = path + '/'
+
+	for i in glob_get_dirs(path):
+		res = self.rec_glob(path + i, mask)
+		l = l + res
+
+	try:
+		for i in os.listdir(path):
+			ii = i
+			i = path + i
+			if os.path.isfile(i):
+				if fnmatch.fnmatch( ii.lower() , mask.lower() ):
+					l.append(i)
+	except NameError, ne:
+		print "NameError=", ne
+	except:
+		pass
+	return l
+
 ## demo de gtk.Entry con Sexy (o no, si lo tienes instalado)
 ## ENTRY: Use python sexy if available, gtk otherwise
 #try:
