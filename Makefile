@@ -6,39 +6,39 @@ REVISION=${shell bzr revno}
 all: wbfs
 	@echo ==================================================================
 	@echo Escribe "sudo make run" para ejecutar en español
-	@echo Escribe "sudo make runEN" para ejecutar en ingles
+	@echo Escribe "sudo make ru	nEN" para ejecutar en ingles
 	@echo Escribe "sudo make install" para instalar wiithon y sus dependencias
 	@echo Escribe "sudo make uninstall" para desinstalar wiithon
 	@echo ==================================================================
-	
+
 run: install
 	LANGUAGE=es LANG=es_ES.UTF-8 wiithon
-		
+
 runEN: install
 	LANGUAGE=en LANG=en_US.UTF-8 wiithon
-	
+
 install_auto: dependencias install
-	
+
 dependencias:
 	apt-get install imagemagick wget rar libssl-dev intltool python-gtk2 python-glade2 python-sqlalchemy gnome-icon-theme menu
-	
+
 dependencias_para_empaquetar:
 	apt-get install devscripts build-essential dpkg-dev dh-make debhelper fakeroot
-	
+
 crear_proyecto_paquete:
 	${shell ./paquete/crear_paquete.sh ${VERSION}}
 
-install: uninstall wbfs generarMOO	
+install: uninstall wbfs generarMOO
 	@echo "=================================================================="
 	@echo "Antes de instalar, se ha desinstalado"
 	@echo "=================================================================="
-	
+
 	mkdir -p $(PREFIX)/share/wiithon
 	mkdir -p $(PREFIX)/share/wiithon/recursos/glade
 	mkdir -p $(PREFIX)/share/wiithon/recursos/imagenes
-	
+
 	echo ${HOME} > $(PREFIX)/share/wiithon/HOME.conf
-	
+
 	cp wiithon.py $(PREFIX)/share/wiithon
 	cp wiithon_autodetectar.sh $(PREFIX)/share/wiithon
 	cp wiithon_autodetectar_lector.sh $(PREFIX)/share/wiithon
@@ -55,7 +55,7 @@ install: uninstall wbfs generarMOO
 	cp preferencias.py $(PREFIX)/share/wiithon
 	cp juego.py $(PREFIX)/share/wiithon
 	cp wiithon.desktop /usr/share/applications/
-	
+
 	cp recursos/icons/wiithon.svg /usr/share/pixmaps
 
 	cp po/en/LC_MESSAGES/wiithon.mo /usr/share/locale/en/LC_MESSAGES/wiithon.mo
@@ -70,9 +70,9 @@ install: uninstall wbfs generarMOO
 
 	chmod 644 $(PREFIX)/share/wiithon/recursos/glade/*.ui
 	chmod 644 $(PREFIX)/share/wiithon/recursos/imagenes/*.png
-	
+
 	ln -s $(PREFIX)/share/wiithon/wiithon.py $(PREFIX)/bin/wiithon
-	
+
 	@echo "=================================================================="
 	@echo "Instalado OK"
 	@echo "=================================================================="
@@ -83,44 +83,44 @@ uninstall:
 	-$(RM) /usr/bin/wiithon_autodetectar
 	-$(RM) /usr/bin/wiithon_autodetectar_lector
 	-$(RM) /usr/bin/wbfs
-	
+
 	-$(RM) $(PREFIX)/bin/wiithon_autodetectar
 	-$(RM) $(PREFIX)/bin/wiithon_autodetectar_lector
 	-$(RM) $(PREFIX)/bin/wbfs
-	
+
 	-$(RM) $(PREFIX)/share/wiithon/glade_wrapper.py
-	
+
 	-$(RM) $(PREFIX)/share/wiithon/recursos/glade/*.xml
 	-$(RM) $(PREFIX)/share/wiithon/recursos/glade/*.glade
-	
+
 	-$(RM) $(PREFIX)/share/wiithon/HOME.conf
-	
+
 	-$(RM) $(PREFIX)/share/wiithon/.acuerdo
 	-$(RM) ~/.wiithon_acuerdo
-	
+
 	-$(RM) $(PREFIX)/share/wiithon/wiithon
 	-$(RM) $(PREFIX)/share/wiithon/wiithon_autodetectar
 	-$(RM) $(PREFIX)/share/wiithon/wiithon_autodetectar_lector
-	
+
 	gconftool --recursive-unset /apps/nautilus-actions/configurations
 	-$(RM) /usr/share/gconf/schemas/wiithon*.schemas
-	
+
 	# Desinstalando la actual versión
-	
+
 	-$(RM) $(PREFIX)/bin/wiithon
 	-$(RM) $(PREFIX)/share/wiithon/*.py
 	-$(RM) $(PREFIX)/share/wiithon/*.sh
 	-$(RM) $(PREFIX)/share/wiithon/wbfs
 	-$(RM) $(PREFIX)/share/wiithon/recursos/glade/*.ui
 	-$(RM) $(PREFIX)/share/wiithon/recursos/imagenes/*.png
-	
+
 	-$(RM) /usr/share/applications/wiithon.desktop
-	
+
 	-$(RM) $(PREFIX)/share/wiithon/*.pyc
-	
+
 	-$(RM) /usr/share/locale/en/LC_MESSAGES/wiithon.mo
 	-$(RM) /usr/share/locale/es/LC_MESSAGES/wiithon.mo
-	
+
 	-rmdir $(PREFIX)/share/wiithon/recursos/glade
 	-rmdir $(PREFIX)/share/wiithon/recursos/imagenes
 	-rmdir $(PREFIX)/share/wiithon/recursos
@@ -129,7 +129,7 @@ uninstall:
 	@echo "=================================================================="
 	@echo "Desinstalado OK"
 	@echo "=================================================================="
-	
+
 purgar: uninstall
 	-$(RM) -R ~/.wiithon/
 
@@ -185,13 +185,13 @@ generarPO: generarPlantilla
 	#LANG=de_DE.UTF-8 msginit -i po/plantilla.pot -o po/de.po --no-translator
 	#LANG=fr_FR.UTF-8 msginit -i po/plantilla.pot -o po/fr.po --no-translator
 	#LANG=pt_PT.UTF-8 msginit -i po/plantilla.pot -o po/pt.po --no-translator
-	
+
 # extraer strings del glade
 extraerGlade:
 	@echo "*** GETTEXT *** Extrayendo strings del glade"
 	intltool-extract --type="gettext/glade" recursos/glade/wiithon.ui
 	intltool-extract --type="gettext/glade" recursos/glade/alerta.ui
-	
+
 # generar PO, si ya existe, mezcla o sincroniza
 actualizarPO: generarPlantilla
 	@echo "*** GETTEXT *** Actualizando POO"
@@ -203,7 +203,7 @@ generarPlantilla: extraerGlade
 	@echo "*** GETTEXT *** Extrayendo strings del código"
 	$(RM) po/plantilla.pot
 	xgettext --language=Python --keyword=_ --keyword=N_ --from-code=utf-8 --sort-by-file --package-name="wiithon" --package-version="`cat VERSION.txt`" --msgid-bugs-address=makiolo@gmail.com -o po/plantilla.pot *.py recursos/glade/*.ui.h
-	
+
 # Generar los MOO (compilados binadores de los PO)
 generarMOO: actualizarPO
 	@echo "*** GETTEXT *** Generando MOO"
@@ -213,13 +213,13 @@ generarMOO: actualizarPO
 	mkdir -p po/es/LC_MESSAGES/
 	msgfmt po/es.po -o po/es/LC_MESSAGES/wiithon.mo
 	msgfmt po/en.po -o po/en/LC_MESSAGES/wiithon.mo
-	
+
 # borrar los PO
 limpiarPO:
 	@echo "*** GETTEXT *** Borrando POO , POT y MOO"
 	$(RM) po/es.po
 	$(RM) po/en.po
-	
+
 # OJO: Borra todas las traducciones
 regenerarPO: limpiarPO generarPO generarMOO
-	
+

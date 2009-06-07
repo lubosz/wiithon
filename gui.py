@@ -1,4 +1,5 @@
 #!/usr/bin/python
+# -*- coding: utf-8 -*-
 # vim: set fileencoding=utf-8 :
 
 # local
@@ -7,7 +8,7 @@ from builder_wrapper import GtkBuilderWrapper
 from trabajo import PoolTrabajo
 
 # externo
-import gtk , gobject , pango 
+import gtk , gobject , pango
 import os , time
 import config , sys
 from threading import Thread
@@ -16,11 +17,11 @@ from juego import Juego
 
 class WiithonGUI(GtkBuilderWrapper):
 
-	def __init__(self, core):				
+	def __init__(self, core):
 		# Constructor padre
-		
+
 		GtkBuilderWrapper.__init__(self, config.WIITHON_FILES + '/recursos/glade/wiithon.ui')
-		
+
 		self.core = core
 		self.buscar = ""
 		self.modo = "desconocido" # desconocido | ver | manager
@@ -72,7 +73,7 @@ class WiithonGUI(GtkBuilderWrapper):
 
 		# oculto la fila de progreso
 		self.wb_box_progreso.hide()
-		
+
 		#ocultar buscador (de momento)
 		self.wb_hbox7.hide()
 		self.wb_expander1.hide()
@@ -83,7 +84,7 @@ class WiithonGUI(GtkBuilderWrapper):
 			self.wb_entry1.connect('icon-release', self.clear_search_cb)
 		except TypeError:
 			print "Cuidado: Necesitas una versión GTK >= 2.16 para visualizar algunas opciones."
-		
+
 
 		self.wb_titulo_categorias.set_attributes( self.getEstilo_azulGrande() )
 		self.wb_titulo_etiquetas.set_attributes( self.getEstilo_azulGrande() )
@@ -94,23 +95,23 @@ class WiithonGUI(GtkBuilderWrapper):
 		# carga la vista del TreeView de particiones
 		self.tv_partitions_modelo = self.cargarParticionesVista()
 
-		if os.geteuid() != 0: 
+		if os.geteuid() != 0:
 			self.alert("error" , _("%s requiere permisos de superusuario (root) para acceder a las particiones WBFS.\n"
 			"Esto dependera de su distribucion de Linux pero intente con : sudo %s" % (config.APP , config.APP) ))
 			raise AssertionError, "Error"
 
 		listaParticiones = self.core.getListaParticiones()
-		
+
 		if(len(listaParticiones) == 0):
 			# establecemos el modo de wiithon
 			self.modo = "ver"
 
 			# carga la vista del TreeView de juegos
 			self.tv_games_modelo = self.cargarJuegosVista( )
-			
+
 			# Lista los juegos de TODAS las particiones
 			self.DEVICEParticionSeleccionada = "%"
-			
+
 			# cargar datos desde la base de datos
 			self.refrescarListaJuegosFromBDD()
 
@@ -124,7 +125,7 @@ class WiithonGUI(GtkBuilderWrapper):
 
 			# carga la vista del TreeView de juegos
 			self.tv_games_modelo = self.cargarJuegosVista( )
-		
+
 			# carga el modelo de datos del TreeView de particiones
 			self.cargarParticionesModelo(self.tv_partitions_modelo , listaParticiones)
 
@@ -143,7 +144,7 @@ class WiithonGUI(GtkBuilderWrapper):
 			self.hiloAtenderMensajes = HiloAtenderMensajes( self.core , self.poolTrabajo , self.wb_progreso1 , self )
 			self.hiloAtenderMensajes.setDaemon(True)
 			self.hiloAtenderMensajes.start()
-			
+
 		# descargar caratulas desde un hilo, inicialmente mira caratulas en los juegos existentes (trabajos LIGEROS)
 		self.poolBash = PoolTrabajo( self.core , 6)
 		self.poolBash.setDaemon(True)
@@ -151,60 +152,60 @@ class WiithonGUI(GtkBuilderWrapper):
 		for juego in self.listaJuegos:
 			self.poolBash.nuevoTrabajoDescargaCaratula( juego.idgame )
 			self.poolBash.nuevoTrabajoDescargaDisco( juego.idgame )
-			
+
 		# si no hay juegos pongo las caratulas por defecto
 		if( len(self.listaJuegos) == 0 ):
 			destinoCaratula = os.path.join(config.WIITHON_FILES_RECURSOS_IMAGENES , "caratula.png")
 			self.wb_img_caratula1.set_from_file( destinoCaratula )
 			destinoDisco = os.path.join(config.WIITHON_FILES_RECURSOS_IMAGENES , "disco.png")
 			self.wb_img_disco1.set_from_file( destinoDisco )
-			
+
 		if(len(listaParticiones) > 0):
 			# Seleccciono particion favorita
 			pass
-			
+
 		if(len(self.listaJuegos) > 0):
 			# Selecciono el juego favorito
 			pass
 
 		# pongo el foco en el buscador
 		self.wb_busqueda1.grab_focus()
-	
+
 	# http://www.pygtk.org/pygtk2reference/class-pangoattribute.html
 	def getEstilo_azulGrande(self):
-		
-		#Creo una lista de atributos  
-		atributos = pango.AttrList() 
 
-		#inserto el tamaño (tamaño_en_puntos * 1000)  
-		#el 0,-1 indica que se aplica a todo el texto del label.  
+		#Creo una lista de atributos
+		atributos = pango.AttrList()
+
+		#inserto el tamaño (tamaño_en_puntos * 1000)
+		#el 0,-1 indica que se aplica a todo el texto del label.
 		atributos.insert(pango.AttrSize(13000,0,-1))
 
-		#inserto el grosor  
-		#200=ultra-light, 300=light, 400=normal, 700=bold, 800=ultra-bold, 900=heavy  
+		#inserto el grosor
+		#200=ultra-light, 300=light, 400=normal, 700=bold, 800=ultra-bold, 900=heavy
 		atributos.insert(pango.AttrWeight(700,0,-1))
 
 		#color (de 0 a 65535 (no 255 ...))
-		atributos.insert(pango.AttrForeground(0x0011,0x4444,0xFFFF,0,-1))  
-		
+		atributos.insert(pango.AttrForeground(0x0011,0x4444,0xFFFF,0,-1))
+
 		return atributos
-		
-	def getEstilo_grisGrande(self):
-		
-		#Creo una lista de atributos  
-		atributos = pango.AttrList() 
 
-		#inserto el tamaño (tamaño_en_puntos * 1000)  
-		#el 0,-1 indica que se aplica a todo el texto del label.  
+	def getEstilo_grisGrande(self):
+
+		#Creo una lista de atributos
+		atributos = pango.AttrList()
+
+		#inserto el tamaño (tamaño_en_puntos * 1000)
+		#el 0,-1 indica que se aplica a todo el texto del label.
 		atributos.insert(pango.AttrSize(13000,0,-1))
 
-		#inserto el grosor  
-		#200=ultra-light, 300=light, 400=normal, 700=bold, 800=ultra-bold, 900=heavy  
+		#inserto el grosor
+		#200=ultra-light, 300=light, 400=normal, 700=bold, 800=ultra-bold, 900=heavy
 		atributos.insert(pango.AttrWeight(700,0,-1))
 
 		#color (de 0 a 65535 (no 255 ...))
-		atributos.insert(pango.AttrForeground(0xCCCC,0xCCCC,0xCCCC,0,-1))  
-		
+		atributos.insert(pango.AttrForeground(0xCCCC,0xCCCC,0xCCCC,0,-1))
+
 		return atributos
 
 	def cargarParticionesVista(self):
@@ -251,7 +252,7 @@ class WiithonGUI(GtkBuilderWrapper):
 					juego = session.query(Juego).filter('idgame=="%s"' % (self.IDGAMEJuegoSeleccionado)).first()
 					if juego != None:
 						juego.title = nuevoNombre
-				
+
 						# Refrescamos del modelo la columna modificada
 						self.tv_games_modelo.set_value(self.iteradorJuegoSeleccionado,2,nuevoNombre)
 				else:
@@ -260,7 +261,7 @@ class WiithonGUI(GtkBuilderWrapper):
 	def cargarJuegosVista(self):
 		# Documentacion útil: http://blog.rastersoft.com/index.php/2007/01/27/trabajando-con-gtktreeview-en-python/
 		tv_games = self.wb_tv_games
-		
+
 		# ¿Como aplico propiedades style?
 		#tv_games.set_property("even-row-color" , gtk.gdk.Color(0xFFFF,0x0,0x0) )
 		#tv_games.set_property("odd-row-color" ,   gtk.gdk.Color(0x0 , 0x0 , 0x0) )
@@ -277,19 +278,19 @@ class WiithonGUI(GtkBuilderWrapper):
 		self.columna1 = columna1 = gtk.TreeViewColumn(_('IDGAME'), render , text=1)
 		self.columna2 = columna2 = gtk.TreeViewColumn(_('Nombre'), renderEditable , text=2)
 		self.columna3 = columna3 = gtk.TreeViewColumn(_('Tamanio'), render , text=3)
-		
+
 		columna1.set_expand(False)
 		columna1.set_min_width(80)
 		columna1.set_reorderable(True)
 		columna1.set_sort_order(gtk.SORT_DESCENDING)
 		columna1.set_sort_column_id(1)
-		
+
 		columna2.set_expand(True)
 		columna2.set_reorderable(True)
 		columna2.set_sort_indicator(True)
 		columna2.set_sort_order(gtk.SORT_DESCENDING)
 		columna2.set_sort_column_id(2)
-		
+
 		columna3.set_expand(False)
 		columna3.set_min_width(80)
 		columna3.set_reorderable(True)
@@ -312,10 +313,10 @@ class WiithonGUI(GtkBuilderWrapper):
 		return modelo
 
 	def cargarJuegosModelo(self , modelo , listaJuegos):
-	
+
 		#if listaJuegos:
 		modelo.clear()
-		i = 0			
+		i = 0
 		for juego in listaJuegos:
 			iterador = modelo.insert(i)
 			# El modelo tiene una columna más no representada
@@ -324,7 +325,7 @@ class WiithonGUI(GtkBuilderWrapper):
 			modelo.set_value(iterador,2, 			juego.title)
 			modelo.set_value(iterador,3, "%.2f GB" %	juego.size)
 			i = i + 1
-				
+
 	def on_tb_acerca_de_clicked(*arg):
 		print "click en acerca de ..."
 		print arg
@@ -335,14 +336,14 @@ class WiithonGUI(GtkBuilderWrapper):
 		if self.DEVICEParticionSeleccionada != None:
 			self.preferencia.device_seleccionado = self.DEVICEParticionSeleccionada
 		if self.IDGAMEJuegoSeleccionado != None:
-			self.preferencia.idgame_seleccionado = self.IDGAMEJuegoSeleccionado 
+			self.preferencia.idgame_seleccionado = self.IDGAMEJuegoSeleccionado
 
 		# guardar cambios en las preferencias
 		session.commit()
-		
+
 		# cerrar gui
 		gtk.main_quit()
-		
+
 		# cerrar hilos
 		try:
 			self.hiloAtenderMensajes.interrumpir()
@@ -408,12 +409,12 @@ class WiithonGUI(GtkBuilderWrapper):
 	def on_busqueda1_changed(self , widget):
 		self.buscar = widget.get_text()
 		self.refrescarListaJuegos()
-		
+
 	def refrescarListaJuegosFromBDD(self):
 		self.listaJuegos = []
 		for juego in session.query(Juego):
 			self.listaJuegos.append( juego )
-	
+
 		self.refrescarListaJuegos()
 
 	def refrescarListaJuegosFromCore(self):
@@ -422,7 +423,7 @@ class WiithonGUI(GtkBuilderWrapper):
 
 		for juego in session.query(Juego):
 			juego.device = ""
-		
+
 		# el core nos da una lista de tuplas de 3
 		# lo convertimos a una lista de objetos Juego
 		i = 0
@@ -441,7 +442,7 @@ class WiithonGUI(GtkBuilderWrapper):
 				juego.device = self.DEVICEParticionSeleccionada
 
 			self.listaJuegos[ i ] = juego
-			
+
 			i += 1
 
 		self.refrescarListaJuegos()
@@ -469,10 +470,10 @@ class WiithonGUI(GtkBuilderWrapper):
 	def on_tv_partitions_cursor_changed(self , treeview):
 		# particion seleccionado
 		self.seleccionParticionSeleccionada, self.iteradorParticionSeleccionada  = self.wb_tv_partitions.get_selection().get_selected()
-		if self.iteradorParticionSeleccionada != None:		
+		if self.iteradorParticionSeleccionada != None:
 			# establece en el core la nueva partición seleccionada
 			self.core.setParticionSeleccionada( self.seleccionParticionSeleccionada.get_value(self.iteradorParticionSeleccionada,0) )
-						
+
 			# sincroniza la variable DEVICE con el core
 			self.DEVICEParticionSeleccionada = self.core.getDeviceSeleccionado()
 
@@ -484,14 +485,14 @@ class WiithonGUI(GtkBuilderWrapper):
 		self.seleccionJuegoSeleccionado , self.iteradorJuegoSeleccionado = self.wb_tv_games.get_selection().get_selected()
 		if self.iteradorJuegoSeleccionado != None:
 			self.pathJuegoSeleccionado = int(self.seleccionJuegoSeleccionado.get_value(self.iteradorJuegoSeleccionado,0))
-			self.IDGAMEJuegoSeleccionado = self.seleccionJuegoSeleccionado.get_value(self.iteradorJuegoSeleccionado,1)		
+			self.IDGAMEJuegoSeleccionado = self.seleccionJuegoSeleccionado.get_value(self.iteradorJuegoSeleccionado,1)
 
 			destinoCaratula = os.path.join(config.HOME_WIITHON_CARATULAS , self.IDGAMEJuegoSeleccionado+".png")
 			destinoDisco = os.path.join(config.HOME_WIITHON_DISCOS , self.IDGAMEJuegoSeleccionado+".png")
 		else:
 			destinoCaratula = os.path.join(config.WIITHON_FILES_RECURSOS_IMAGENES , "caratula.png")
 			destinoDisco = os.path.join(config.WIITHON_FILES_RECURSOS_IMAGENES , "disco.png")
-			
+
 		self.wb_img_caratula1.set_from_file( destinoCaratula )
 		self.wb_img_disco1.set_from_file( destinoDisco )
 
@@ -519,7 +520,7 @@ class WiithonGUI(GtkBuilderWrapper):
 					   	gtk.STOCK_OPEN,
 					   	gtk.RESPONSE_OK,
 					   )
-	
+
 				fc_extraer = gtk.FileChooserDialog(_('Elige un directorio donde extraer la ISO de %s' % (self.IDGAMEJuegoSeleccionado)), None , gtk.FILE_CHOOSER_ACTION_SELECT_FOLDER , botones)
 				fc_extraer.set_default_response(gtk.RESPONSE_OK)
 				fc_extraer.set_local_only(True)
@@ -527,9 +528,9 @@ class WiithonGUI(GtkBuilderWrapper):
 				fc_extraer.show()
 
 				if ( fc_extraer.run() == gtk.RESPONSE_OK ):
-			
+
 					self.preferencia.ruta_extraer_iso = fc_extraer.get_current_folder()
-			
+
 					self.core.setDestinoExtraer( fc_extraer.get_filenames() )
 					'''
 					Tarea EXTRAER JUEGO
@@ -574,7 +575,7 @@ class WiithonGUI(GtkBuilderWrapper):
 				fc_anadir.set_default_response(gtk.RESPONSE_OK)
 				fc_anadir.set_local_only(True)
 
-				if fc_anadir.run() == gtk.RESPONSE_OK:				
+				if fc_anadir.run() == gtk.RESPONSE_OK:
 					'''
 					Tarea AÑADIR JUEGO
 					'''
@@ -582,15 +583,15 @@ class WiithonGUI(GtkBuilderWrapper):
 						self.preferencia.ruta_anadir = fc_anadir.get_current_folder()
 					elif(id_tb == self.wb_tb_anadir_directorio):
 						self.preferencia.ruta_anadir_directorio = fc_anadir.get_current_folder()
-				
-					ficherosSeleccionados = fc_anadir.get_filenames() 
+
+					ficherosSeleccionados = fc_anadir.get_filenames()
 					for fichero in ficherosSeleccionados:
 						if (util.getExtension(fichero) == "iso"):
 							IDGAME = util.getMagicISO(fichero)
 							if IDGAME != None:
 								self.poolBash.nuevoTrabajoDescargaCaratula( IDGAME )
 								self.poolBash.nuevoTrabajoDescargaDisco( IDGAME )
-	
+
 					#self.wb_box_progreso.show()
 					#self.wb_progreso1.set_text(_("Anadiendo ..."))
 					self.poolTrabajo.nuevoTrabajoAnadir( ficherosSeleccionados )
@@ -613,7 +614,7 @@ class WiithonGUI(GtkBuilderWrapper):
 				fc_copiar_SD.set_local_only(True)
 				fc_copiar_SD.set_current_folder( self.preferencia.ruta_copiar_caratulas )
 				fc_copiar_SD.show()
-	
+
 				if ( fc_copiar_SD.run() == gtk.RESPONSE_OK ):
 					fc_copiar_discos_SD = gtk.FileChooserDialog(_('Paso 2 de 2: Elige un directorio para los DISCOS'), None , gtk.FILE_CHOOSER_ACTION_SELECT_FOLDER , botones)
 					fc_copiar_discos_SD.set_default_response(gtk.RESPONSE_OK)
@@ -623,16 +624,16 @@ class WiithonGUI(GtkBuilderWrapper):
 					if(fc_copiar_discos_SD.run() == gtk.RESPONSE_OK):
 						self.preferencia.ruta_copiar_caratulas = fc_copiar_SD.get_current_folder()
 						self.preferencia.ruta_copiar_discos = fc_copiar_discos_SD.get_current_folder()
-			
+
 						self.core.setDestinoCopiarCaratula( fc_copiar_SD.get_filenames() )
 						self.core.setDestinoCopiarDisco( fc_copiar_discos_SD.get_filenames() )
-			
+
 						for juego in self.listaJuegos:
 							self.poolBash.nuevoTrabajoCopiarCaratula( juego.idgame )
 							self.poolBash.nuevoTrabajoCopiarDisco( juego.idgame )
 
 					fc_copiar_discos_SD.destroy()
-		
+
 				fc_copiar_SD.destroy()
 			else:
 				self.alert("warning" , _("No tienes ningun juego"))
@@ -654,7 +655,7 @@ class HiloAtenderMensajes(Thread):
 		while not self.interrumpido:
 			if cola.qsize() > 0:
 				objMensaje = cola.get()
-				
+
 				# hay trabajo
 				gobject.idle_add( self.mostrarHBoxProgreso )
 
@@ -691,15 +692,15 @@ class HiloAtenderMensajes(Thread):
 					else:
 						raise AssertionError, _("DEBUG: Comando desconocido")
 				cola.task_done()
-				
+
 				# atiendo la cola
 				time.sleep(0.10)
-				
+
 				if((cola.qsize() == 0) and termino):
 					gobject.timeout_add( 5000, self.ocultarHBoxProgreso )
 			else:
 				# FIXME : usar wait o algo así
-				# el trabajador debería esperar (sin espera activa)				
+				# el trabajador debería esperar (sin espera activa)
 				# hasta que sea requerido
 				time.sleep(0.2)
 
@@ -708,15 +709,15 @@ class HiloAtenderMensajes(Thread):
 
 	def actualizarFraccion( self , fraccion ):
 		self.progreso.set_fraction( fraccion )
-		
+
 	def ocultarHBoxProgreso(self):
 		self.gui.wb_box_progreso.hide()
 		# Para que no se repita
 		return False
-		
+
 	def mostrarHBoxProgreso(self):
 		self.gui.wb_box_progreso.show()
-		
+
 	# el callback de AÑADIR un juego es refrescar
 	# FIXME: quitar gui como parametro, pasar mejor un callback para cada vez que acaba un trabajo
 	def refrescarJuegosFromCore(self):

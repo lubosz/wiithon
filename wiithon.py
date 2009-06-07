@@ -1,11 +1,11 @@
 #!/usr/bin/python
+# -*- coding: utf-8 -*-
 # vim: set fileencoding=utf-8 :
 #
 # :: Mantenedor: Ricardo Marmolejo García <makiolo@gmail.com>
 # :: Jose Luis Segura <josel.segura@gmail.com>
 # :: Web : http://blogricardo.wordpress.com/2009/04/07/wiithon-wbfs-gui-para-wii/
 # :: Ver LICENCIA.txt
-#
 
 import sys
 import os
@@ -27,14 +27,15 @@ except:
 try:
 	import gtk
 	import gtk.glade
-except:
+
+except ImportError:
 	print _("Necesitas tener instalado pyGTK o GTKv2")
 	sys.exit(1)
 
 def configurarLenguaje():
 	import locale
 	import gettext
-	
+
 	locale.setlocale(locale.LC_ALL, '')
 
 	from gettext import gettext as _
@@ -112,7 +113,7 @@ def App():
 
 	if PAUSA:
 		raw_input(_("Pulse cualquier tecla para continuar ...\n"))
-		
+
 	sys.exit(0)
 
 if __name__ == '__main__':
