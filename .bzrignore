@@ -8,11 +8,8 @@ wbfs_src/wbfs
 wbfs_src/*.o
 *~
 *.pyc
-SQLAlchemy-0.5.3
 recursos/*.iso
 recursos/imagenes/*.xcf
-po/plantilla-en.po
-po/plantilla-es.po
-po/plantilla-fr.po
 po/*/LC_MESSAGES/wiithon.mo
 po/plantilla.pot
+

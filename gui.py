@@ -74,8 +74,7 @@ class WiithonGUI(GtkBuilderWrapper):
 		# oculto la fila de progreso
 		self.wb_box_progreso.hide()
 
-		#ocultar buscador (de momento)
-		self.wb_hbox7.hide()
+		#ocultar de momento
 		self.wb_expander1.hide()
 
 		# No necesitamos la señal, para esta versión
@@ -94,6 +93,9 @@ class WiithonGUI(GtkBuilderWrapper):
 
 		# carga la vista del TreeView de particiones
 		self.tv_partitions_modelo = self.cargarParticionesVista()
+		
+		destinoIcono = os.path.join(config.WIITHON_FILES_RECURSOS_IMAGENES , "idle-icon.png")		
+		self.wb_estadoBatch.set_from_file( destinoIcono )
 
 		if os.geteuid() != 0:
 			self.alert("error" , _("%s requiere permisos de superusuario (root) para acceder a las particiones WBFS.\n"
@@ -101,7 +103,6 @@ class WiithonGUI(GtkBuilderWrapper):
 			raise AssertionError, "Error"
 
 		listaParticiones = self.core.getListaParticiones()
-
 		if(len(listaParticiones) == 0):
 			# establecemos el modo de wiithon
 			self.modo = "ver"
@@ -114,6 +115,10 @@ class WiithonGUI(GtkBuilderWrapper):
 
 			# cargar datos desde la base de datos
 			self.refrescarListaJuegosFromBDD()
+			
+			#ocultar algunas coasa
+			self.wb_vboxProgresoEspacio.hide()
+			self.wb_labelEspacio.hide()
 
 			if( len(self.listaJuegos)>0 ):
 				self.alert("warning" , _("No se han encontrado particiones WBFS:\nConecte un disco duro con una particion de juegos de Wii (tipo WBFS)\nEn este modo, SOLO puede visualizar toda su base de datos de juegos acumulada por %s en sesiones anteriores." % (config.APP)))
@@ -136,7 +141,7 @@ class WiithonGUI(GtkBuilderWrapper):
 			self.seleccionarPrimeraFila( self.wb_tv_partitions , self.on_tv_partitions_cursor_changed)
 
 			# Trabajador, se le mandan trabajos de barra de progreso (trabajos INTENSOS)
-			self.poolTrabajo = PoolTrabajo( self.core )
+			self.poolTrabajo = PoolTrabajo( self.core , 1)
 			self.poolTrabajo.setDaemon(True)
 			self.poolTrabajo.start()
 
@@ -161,11 +166,11 @@ class WiithonGUI(GtkBuilderWrapper):
 			self.wb_img_disco1.set_from_file( destinoDisco )
 
 		if(len(listaParticiones) > 0):
-			# Seleccciono particion favorita
+			# Seleccciono particion de las preferencias
 			pass
 
 		if(len(self.listaJuegos) > 0):
-			# Selecciono el juego favorito
+			# Selecciono el juego de las preferencias
 			pass
 
 		# pongo el foco en el buscador
@@ -249,7 +254,7 @@ class WiithonGUI(GtkBuilderWrapper):
 			if(nombreActual != nuevoNombre):
 				if self.core.renombrarISO(self.DEVICEParticionSeleccionada , self.IDGAMEJuegoSeleccionado , nuevoNombre):
 					# modificamos el juego modificado de la BDD
-					juego = session.query(Juego).filter('idgame=="%s"' % (self.IDGAMEJuegoSeleccionado)).first()
+					juego = session.query(Juego).filter('idgame=="%s" and device=="%s"' % (self.IDGAMEJuegoSeleccionado , self.DEVICEParticionSeleccionada)).first()
 					if juego != None:
 						juego.title = nuevoNombre
 
@@ -417,10 +422,12 @@ class WiithonGUI(GtkBuilderWrapper):
 
 		self.refrescarListaJuegos()
 
+	# refresco desde el disco duro (lento)
 	def refrescarListaJuegosFromCore(self):
 		# recargar el modelo de datos la lista de juegos
 		self.listaJuegos = self.core.getListaJuegos( self.DEVICEParticionSeleccionada )
 
+		# Eliminamos los devices de toda la bdd
 		for juego in session.query(Juego):
 			juego.device = ""
 
@@ -447,6 +454,7 @@ class WiithonGUI(GtkBuilderWrapper):
 
 		self.refrescarListaJuegos()
 
+	# refresco desde memoria (rápido)
 	def refrescarListaJuegos(self):
 		subListaJuegos = []
 		for juego in session.query(Juego).filter('device like "%s" and (title like "%%%s%%" or idgame like "%s%%")' % (self.DEVICEParticionSeleccionada , self.buscar , self.buscar)):
@@ -476,6 +484,15 @@ class WiithonGUI(GtkBuilderWrapper):
 
 			# sincroniza la variable DEVICE con el core
 			self.DEVICEParticionSeleccionada = self.core.getDeviceSeleccionado()
+			
+			info = self.core.getEspacioLibre( self.DEVICEParticionSeleccionada )
+			usado = info[0]
+			libre = info[1]
+			total = info[2]
+			self.wb_labelEspacio.set_text("%.2f GB / %.2f GB" % (usado , total))
+			porcentaje = usado * 100.0 / total
+			self.wb_progresoEspacio.set_text("%.2f%%" % (porcentaje))
+			self.wb_progresoEspacio.set_fraction( porcentaje / 100.0 )
 
 			# refrescamos la lista de juegos, leyendo del core
 			self.refrescarListaJuegosFromCore()

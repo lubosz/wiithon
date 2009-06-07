@@ -21,13 +21,7 @@ install_auto: dependencias install
 
 dependencias:
 	apt-get install imagemagick wget rar libssl-dev intltool python-gtk2 python-glade2 python-sqlalchemy gnome-icon-theme menu
-
-dependencias_para_empaquetar:
-	apt-get install devscripts build-essential dpkg-dev dh-make debhelper fakeroot
-
-crear_proyecto_paquete:
-	${shell ./paquete/crear_paquete.sh ${VERSION}}
-
+	
 install: uninstall wbfs generarMOO
 	@echo "=================================================================="
 	@echo "Antes de instalar, se ha desinstalado"
@@ -63,6 +57,7 @@ install: uninstall wbfs generarMOO
 
 	cp recursos/glade/*.ui $(PREFIX)/share/wiithon/recursos/glade
 	cp recursos/imagenes/*.png $(PREFIX)/share/wiithon/recursos/imagenes
+	cp recursos/imagenes/cargando/*.png $(PREFIX)/share/wiithon/recursos/imagenes
 
 	chmod 755 $(PREFIX)/share/wiithon/*.py
 	chmod 755 $(PREFIX)/share/wiithon/*.sh
@@ -102,7 +97,7 @@ uninstall:
 	-$(RM) $(PREFIX)/share/wiithon/wiithon_autodetectar
 	-$(RM) $(PREFIX)/share/wiithon/wiithon_autodetectar_lector
 
-	gconftool --recursive-unset /apps/nautilus-actions/configurations
+	-gconftool --recursive-unset /apps/nautilus-actions/configurations
 	-$(RM) /usr/share/gconf/schemas/wiithon*.schemas
 
 	# Desinstalando la actual versión
@@ -129,8 +124,8 @@ uninstall:
 	@echo "=================================================================="
 	@echo "Desinstalado OK"
 	@echo "=================================================================="
-
-purgar: uninstall
+	
+purge: uninstall
 	-$(RM) -R ~/.wiithon/
 
 clean: clean_wbfs

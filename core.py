@@ -75,8 +75,6 @@ class WiithonCORE:
 
 
 	# añade un *ISO* a un *DEVICE*
-	# durante el proceso va actualizando PORCENTUAL
-	# Actualmente no esta bien desarrollada, por problemas con el "read"
 	def anadirISO(self , DEVICE , ISO , ficheroSalida=None):
 		try:
 			comando = config.WBFS_APP+" -p "+DEVICE+" add \""+ISO+"\""
@@ -94,7 +92,7 @@ class WiithonCORE:
 		except KeyboardInterrupt:
 			return False
 			
-	# obtiene una tupla [uso , libre , total]
+	# getEspacioLibre obtiene una tupla [uso , libre , total]
 	def getEspacioLibre(self , DEVICE):
 		salida = util.getSTDOUT( config.WBFS_APP+" -p "+DEVICE+" df" )
 		cachos = salida.split(";")
