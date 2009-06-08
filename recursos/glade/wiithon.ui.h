@@ -1,5 +1,4 @@
 char *s = N_("1 / 2");
-char *s = N_("13.49 GB / 15.56 GB");
 char *s = N_("Acerca de ...");
 char *s = N_("Aniadir directorio");
 char *s = N_("Buscar:");

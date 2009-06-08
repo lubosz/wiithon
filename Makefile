@@ -48,6 +48,7 @@ install: uninstall wbfs generarMOO
 	cp mensaje.py $(PREFIX)/share/wiithon
 	cp preferencias.py $(PREFIX)/share/wiithon
 	cp juego.py $(PREFIX)/share/wiithon
+	cp animar.py $(PREFIX)/share/wiithon
 	cp wiithon.desktop /usr/share/applications/
 
 	cp recursos/icons/wiithon.svg /usr/share/pixmaps
@@ -186,6 +187,7 @@ extraerGlade:
 	@echo "*** GETTEXT *** Extrayendo strings del glade"
 	intltool-extract --type="gettext/glade" recursos/glade/wiithon.ui
 	intltool-extract --type="gettext/glade" recursos/glade/alerta.ui
+	intltool-extract --type="gettext/glade" recursos/glade/acercade.ui
 
 # generar PO, si ya existe, mezcla o sincroniza
 actualizarPO: generarPlantilla

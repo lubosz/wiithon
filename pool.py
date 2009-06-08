@@ -12,29 +12,23 @@ class Pool:
 		self.cola = Queue()
 		self.numHilos = numHilos
 		self.lock = False
-		self.esperandoTrabajo = True
 		self.interrumpido = False
+		self.numTrabajos = 0
 
 	def intentarEmpezarTrabajo(self , cola , idWorker , *args):
 		while not self.interrumpido:
-			try:
-				if (cola.qsize() > 0):
-					elemento = cola.get()
-					self.ejecutar(idWorker , elemento , *args)
-					cola.task_done()
-				else:
-					# comprueba si hay tareas cada cierto tiempo
-					time.sleep(0.5)
-			except:
-				# posiblemente la cola esta siendo escrito o leida
-				# FIXME: mutex ...
+			if (self.numTrabajos > 0):
+				elemento = cola.get()
+				self.ejecutar(idWorker , elemento , *args)
+				cola.task_done()
+				self.numTrabajos -= 1
+			else:
+				# comprueba si hay tareas cada cierto tiempo
 				time.sleep(0.5)
-				
 
 	def nuevoElemento(self, elemento):
-		if not self.esperandoTrabajo:
-			self.esperandoTrabajo = False
 		self.cola.put(elemento)
+		self.numTrabajos += 1
 
 	def empezar(self , args=None):
 		if not self.lock:

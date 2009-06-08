@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wiithon 1.0 Alpha\n"
 "Report-Msgid-Bugs-To: makiolo@gmail.com\n"
-"POT-Creation-Date: 2009-06-07 20:10+0200\n"
+"POT-Creation-Date: 2009-06-08 02:22+0200\n"
 "PO-Revision-Date: 2009-06-01 00:16+0200\n"
 "Last-Translator: \n"
 "Language-Team: Spanish <kde-i18n-doc@lists.kde.org>\n"
@@ -457,15 +457,15 @@ msgstr "***************** DOwNLOAD DISC %s ********************"
 msgid "***************** DESCARGAR CARATULA %s ********************"
 msgstr "***************** DOWNLOAD COVER %s ********************"
 
-#: gui.py:34
+#: gui.py:36
 msgid "DEBUG: Preferencias creadas por primera vez"
 msgstr ""
 
-#: gui.py:36
+#: gui.py:38
 msgid "DEBUG: Preferencias cargadas"
 msgstr "DEBUG: Preferences loaded"
 
-#: gui.py:100
+#: gui.py:102
 #, python-format
 msgid ""
 "%s requiere permisos de superusuario (root) para acceder a las particiones "
@@ -473,7 +473,7 @@ msgid ""
 "Esto dependera de su distribucion de Linux pero intente con : sudo %s"
 msgstr "Sorry. Need be root"
 
-#: gui.py:123
+#: gui.py:128
 #, python-format
 msgid ""
 "No se han encontrado particiones WBFS:\n"
@@ -482,7 +482,7 @@ msgid ""
 "acumulada por %s en sesiones anteriores."
 msgstr ""
 
-#: gui.py:125
+#: gui.py:130
 #, python-format
 msgid ""
 "No se han encontrado particiones WBFS:\n"
@@ -490,93 +490,132 @@ msgid ""
 "reinicie %s\n"
 msgstr ""
 
-#: gui.py:220
+#: gui.py:229
 msgid "Dispositivo"
 msgstr "Device"
 
-#: gui.py:221
+#: gui.py:230
 msgid "Fabricante"
 msgstr "Manufacture"
 
-#: gui.py:282
+#: gui.py:278
+msgid "Error renombrando"
+msgstr ""
+
+#: gui.py:280
+#, python-format
+msgid "Se han detectado caracteres no validos: %s"
+msgstr ""
+
+#: gui.py:299
 msgid "IDGAME"
 msgstr "IDGAME"
 
-#: gui.py:283
+#: gui.py:300
 msgid "Nombre"
 msgstr "Name"
 
-#: gui.py:284
+#: gui.py:301
 msgid "Tamanio"
 msgstr "Size"
 
-#: gui.py:517
+#: gui.py:507
+#, python-format
+msgid "Hay %d tarea pendiente"
+msgstr ""
+
+#: gui.py:510
+#, python-format
+msgid "Hay %d tareas pendientes"
+msgstr ""
+
+#: gui.py:549
 msgid "Tienes que seleccionar una particion WBFS para realizar esta accion"
 msgstr "Need select some partition WBFS"
 
-#: gui.py:520
+#: gui.py:558
 #, python-format
 msgid "¿Quieres borrar el juego con ID = \"%s\"?"
 msgstr "¿Delete game with ID = \"%s\"?"
 
-#: gui.py:530 gui.py:559 gui.py:567
+#: gui.py:571 gui.py:600 gui.py:608
 msgid "No has seleccionado ningun juego"
 msgstr "Don't have a game selected"
 
-#: gui.py:540
+#: gui.py:581
 #, python-format
 msgid "Elige un directorio donde extraer la ISO de %s"
 msgstr "Choose folder for extract ISO %s"
 
-#: gui.py:578
+#: gui.py:619
 msgid "Elige una ISO o un RAR"
 msgstr "Choose a ISO or RAR"
 
-#: gui.py:581
+#: gui.py:622
 msgid "ImagenISO, Comprimido RAR"
 msgstr ""
 
-#: gui.py:588
+#: gui.py:629
 msgid "Elige un directorio"
 msgstr "Choose folder"
 
-#: gui.py:617
+#: gui.py:657
 msgid "No has seleccionado ninguna particion"
 msgstr "Don't have a partition selected"
 
-#: gui.py:628
+#: gui.py:668
 msgid "Paso 1 de 2: Elige un directorio para las CARATULAS"
 msgstr "Step 1 of 1: Choose a folder for COVERS"
 
-#: gui.py:635
+#: gui.py:675
 msgid "Paso 2 de 2: Elige un directorio para los DISCOS"
 msgstr "Step 2 of 2: Choose a folder for DISCS"
 
-#: gui.py:655
+#: gui.py:695
 msgid "No tienes ningun juego"
 msgstr "Don't have some game"
 
-#: gui.py:685
+#: gui.py:728
 #, python-format
 msgid "CUIDADO: %s"
 msgstr "WARNING: %s"
 
-#: gui.py:687
+#: gui.py:730
 #, python-format
 msgid "ERROR: %s"
 msgstr "ERROR: %s"
 
-#: gui.py:709
+#: gui.py:752
 msgid "DEBUG: Comando desconocido"
 msgstr "DEBUG: Unknown command"
 
-#: gui.py:763
+#: gui.py:810
 msgid "Finalizando. Hecho en"
 msgstr "Finishing. Done in"
 
-#: gui.py:767
+#: gui.py:814
 msgid "quedan"
 msgstr "remaining"
+
+#: recursos/glade/acercade.ui.h:1
+msgid "GNU GENERAL PUBLIC LICENSE Version 3"
+msgstr ""
+
+#: recursos/glade/acercade.ui.h:2
+msgid "TEXTO_LICENCIA"
+msgstr ""
+
+#: recursos/glade/acercade.ui.h:3
+msgid "TEXTO_TRADUCTORES"
+msgstr ""
+
+#: recursos/glade/acercade.ui.h:4
+msgid "Un gestor de particiones WBFS f&#xE1;cil de usar"
+msgstr ""
+
+#: recursos/glade/acercade.ui.h:5
+msgid "https://launchpad.net/wiithon"
+msgstr ""
 
 #: recursos/glade/alerta.ui.h:1
 msgid "gtk-cancel"
@@ -591,26 +630,22 @@ msgid "1 / 2"
 msgstr "1 / 2"
 
 #: recursos/glade/wiithon.ui.h:2
-msgid "13.49 GB / 15.56 GB"
-msgstr ""
-
-#: recursos/glade/wiithon.ui.h:3
 msgid "Acerca de ..."
 msgstr "About ..."
 
-#: recursos/glade/wiithon.ui.h:4
+#: recursos/glade/wiithon.ui.h:3
 msgid "Aniadir directorio"
 msgstr "Add folder"
 
-#: recursos/glade/wiithon.ui.h:5
+#: recursos/glade/wiithon.ui.h:4
 msgid "Buscar:"
 msgstr "Search:"
 
-#: recursos/glade/wiithon.ui.h:6
+#: recursos/glade/wiithon.ui.h:5
 msgid "Clasificar"
 msgstr "Sort"
 
-#: recursos/glade/wiithon.ui.h:7
+#: recursos/glade/wiithon.ui.h:6
 msgid ""
 "Comprobando integridad ...\n"
 "Descargando caratulas ...\n"
@@ -620,48 +655,48 @@ msgstr ""
 "Download covers ...\n"
 "Download discs ...\n"
 
-#: recursos/glade/wiithon.ui.h:11
+#: recursos/glade/wiithon.ui.h:10
 msgid "Consola"
 msgstr "Console"
 
-#: recursos/glade/wiithon.ui.h:12
+#: recursos/glade/wiithon.ui.h:11
 msgid "Extraer a ISO"
 msgstr "Extract ISO"
 
-#: recursos/glade/wiithon.ui.h:13
+#: recursos/glade/wiithon.ui.h:12
 msgid "Mas informacion"
 msgstr "Details"
 
-#: recursos/glade/wiithon.ui.h:14
+#: recursos/glade/wiithon.ui.h:13
 msgid "Nuevo"
 msgstr "New"
 
-#: recursos/glade/wiithon.ui.h:15
+#: recursos/glade/wiithon.ui.h:14
 msgid "Preferencias"
 msgstr "Preferences"
 
-#: recursos/glade/wiithon.ui.h:16
+#: recursos/glade/wiithon.ui.h:15
 msgid "Renombrar"
 msgstr "Rename"
 
-#: recursos/glade/wiithon.ui.h:17
+#: recursos/glade/wiithon.ui.h:16
 msgid "Trabajos de fondo (0)"
 msgstr "Batch work (0)"
 
-#: recursos/glade/wiithon.ui.h:18
+#: recursos/glade/wiithon.ui.h:17
 msgid "Trabajos intensos (0)"
 msgstr "Intense work (0)"
 
-#: recursos/glade/wiithon.ui.h:19
+#: recursos/glade/wiithon.ui.h:18
 msgid "caratulas a SD"
 msgstr "copy to SD"
 
-#: trabajo.py:67
+#: trabajo.py:70
 #, python-format
 msgid "%s es un juego corrupto"
 msgstr "%s dont't is a corrupt game"
 
-#: trabajo.py:69
+#: trabajo.py:72
 #, python-format
 msgid "No se ha detectado corrupcion en %s"
 msgstr "Don't detected corruption in game %s"
@@ -670,28 +705,24 @@ msgstr "Don't detected corruption in game %s"
 msgid "La ISO o la partición no existe"
 msgstr "ISO or the partition don't exists"
 
-#: trabajo.py:88
+#: trabajo.py:87
 #, python-format
 msgid "Al descomrpimir el RAR : %s"
 msgstr "When uncompress RAR : %s"
 
-#: trabajo.py:90
+#: trabajo.py:89
 #, python-format
 msgid "No se puede descomrpimir por que reemplazaría el ISO : %s"
 msgstr "Don't can uncompress because reemplace the ISO : %s"
 
-#: trabajo.py:92
+#: trabajo.py:91
 #, python-format
 msgid "El RAR %s no tenia ninguna ISO"
 msgstr "RAR %s don't have ISO"
 
-#: trabajo.py:96
+#: trabajo.py:97
 msgid "No se ha encontrado ningun RAR con ISOS dentro"
 msgstr "Not found within any RAR with ISOS"
-
-#: trabajo.py:104
-msgid "INFO"
-msgstr "INFO"
 
 #: trabajo.py:104
 msgid "No se ha encontrado ningun ISO"
@@ -722,11 +753,11 @@ msgstr "ISO %s added successfully"
 msgid "Extrayendo la ISO : %s"
 msgstr "Extract ISO"
 
-#: wiithon.py:31
+#: wiithon.py:32
 msgid "Necesitas tener instalado pyGTK o GTKv2"
 msgstr "Need have pyGTK or GTKv2"
 
-#: wiithon.py:49
+#: wiithon.py:50
 #, python-format
 msgid ""
 "El equipo de Wiithon no se hace responsable de la aplicacion ni de la "
@@ -744,17 +775,20 @@ msgstr ""
 "This information will not appear if you accept the agreement. \n"
 "Do you agree?"
 
-#: wiithon.py:55
+#: wiithon.py:56
 msgid "No puedes usar esta aplicacion si no estas de acuerdo"
 msgstr "You may not use this application if you do not agree"
 
-#: wiithon.py:109
+#: wiithon.py:110
 msgid "Programa ejecutado con las opciones incorrectas."
 msgstr "Program run with the incorrect settings"
 
-#: wiithon.py:114
+#: wiithon.py:115
 msgid "Pulse cualquier tecla para continuar ...\n"
 msgstr "Press any key to continue ... \n"
+
+#~ msgid "INFO"
+#~ msgstr "INFO"
 
 #~ msgid "+"
 #~ msgstr "+"

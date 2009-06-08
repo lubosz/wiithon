@@ -23,6 +23,9 @@ class PoolTrabajo(Pool , Thread):
 		self.core = core
 		self.numHilos = numHilos
 		
+	def nuevoTrabajo( self , trabajo ):
+		self.nuevoElemento( trabajo )
+		
 	def ejecutar(self , numHilo , trabajo , core):
 	
 		# FIXME: el device debe sacarlo del objeto juego
@@ -69,9 +72,6 @@ class PoolTrabajo(Pool , Thread):
 			print _("No se ha detectado corrupcion en %s" % (IDGAME))
 
 	def anadir(self , core , fichero , DEVICE):
-	
-		print "Añadir %s en el device %s" % (fichero , DEVICE)
-	
 		core.nuevoMensaje( Mensaje("COMANDO","EMPIEZA") )
 
 		if( not os.path.exists(DEVICE) or not os.path.exists(fichero) ):
@@ -81,7 +81,6 @@ class PoolTrabajo(Pool , Thread):
 			nombreISO = core.getNombreISOenRAR(nombreRAR)
 			if (nombreISO != ""):
 				if( not os.path.exists(nombreISO) ):
-					# Paso 1 : Descomprimir
 					if ( core.descomprimirRARconISODentro(nombreRAR) ):
 						self.nuevoTrabajoAnadir( nombreISO )
 					else:
@@ -91,17 +90,18 @@ class PoolTrabajo(Pool , Thread):
 			else:
 				core.nuevoMensaje( Mensaje("ERROR",_("El RAR %s no tenia ninguna ISO") % (nombreRAR)) )
 		elif( os.path.isdir( fichero ) ):
-			encontrados =  core.rec_glob(fichero, "*.rar")
+			print fichero
+		
+			encontrados =  util.rec_glob(fichero, "*.rar")
 			if (len(encontrados) == 0):
 				core.nuevoMensaje( Mensaje("INFO",_("No se ha encontrado ningun RAR con ISOS dentro")))
 			else:
 				for encontrado in encontrados:
 					self.nuevoTrabajoAnadir( encontrado )
 
-			#core.nuevoMensaje( Mensaje("INFO",_("Buscando en %s Imagenes ISO ... ") % (os.path.dirname(fichero))))
-			encontrados =  core.rec_glob(fichero, "*.iso")
+			encontrados =  util.rec_glob(fichero, "*.iso")
 			if (len(encontrados) == 0):
-				core.nuevoMensaje( Mensaje(_("INFO",_("No se ha encontrado ningun ISO"))))
+				core.nuevoMensaje( Mensaje("INFO",_("No se ha encontrado ningun ISO")))
 			else:
 				for encontrado in encontrados:
 					self.nuevoTrabajoAnadir( encontrado )
@@ -156,9 +156,6 @@ class PoolTrabajo(Pool , Thread):
 			
 	def run(self):
 		self.empezar( args=(self.core,) )
-		
-	def nuevoTrabajo( self , trabajo ):
-		self.nuevoElemento( trabajo )
 	
 	'''
 	Encola un o varios trabajos para añadir

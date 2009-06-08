@@ -1,7 +1,7 @@
 #!/usr/bin/python
 # vim: set fileencoding=utf-8 :
 
-import sys , os , time , fnmatch
+import sys , os , time
 import gtk
 import commands
 import gettext

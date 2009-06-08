@@ -1,11 +1,15 @@
 #!/usr/bin/python
 # vim: set fileencoding=utf-8 :
 
+import os
+import fnmatch
+import fnmatch
 import subprocess
 import gtk
 
 # Caracteres que hacen que una expresión no pueda ser expresión regular
 BLACK_LIST = "/\"\'$&|[]"
+BLACK_LIST2 = "\";`$\\\'"
 
 class NonRepeatList(list):
     def __init__(self, *args):
@@ -85,11 +89,11 @@ def getMagicISO(imagenISO):
 	else:
 		return None
 
-def tieneCaracteresRaros(cadena):
-	# Nos dice si *cadena* tiene caracteres raros dados por una lista negra global
+def tieneCaracteresRaros(cadena , listaNegra = BLACK_LIST):
+	# Nos dice si *cadena* tiene caracteres raros dados por una lista negra
 	for i in range(len(cadena)):
-		for j in range(len(BLACK_LIST)):
-			if (cadena[i]==BLACK_LIST[j]):
+		for j in range(len(listaNegra)):
+			if (cadena[i]==listaNegra[j]):
 				return True
 	return False
 
@@ -163,7 +167,7 @@ def rec_glob(path , mask):
 		path = path + '/'
 
 	for i in glob_get_dirs(path):
-		res = self.rec_glob(path + i, mask)
+		res = rec_glob(path + i, mask)
 		l = l + res
 
 	try:

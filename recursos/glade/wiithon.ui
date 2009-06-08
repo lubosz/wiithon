@@ -296,7 +296,7 @@
                           <object class="GtkLabel" id="labelEspacio">
                             <property name="visible">True</property>
                             <property name="xalign">0.94999998807907104</property>
-                            <property name="label" translatable="yes">13.49 GB / 15.56 GB</property>
+                            <property name="label">13.49 GB / 15.56 GB</property>
                             <property name="justify">right</property>
                             <property name="selectable">True</property>
                             <property name="single_line_mode">True</property>
@@ -373,6 +373,7 @@
                         <property name="visible">True</property>
                         <property name="can_focus">True</property>
                         <property name="reorderable">True</property>
+                        <property name="enable_search">False</property>
                         <property name="search_column">2</property>
                         <property name="enable_grid_lines">horizontal</property>
                       </object>
