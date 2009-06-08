@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wiithon 1.0 Alpha\n"
 "Report-Msgid-Bugs-To: makiolo@gmail.com\n"
-"POT-Creation-Date: 2009-06-08 02:22+0200\n"
+"POT-Creation-Date: 2009-06-08 12:41+0200\n"
 "PO-Revision-Date: 2009-06-01 00:20+0200\n"
 "Last-Translator: \n"
 "Language-Team: Spanish <kde-i18n-doc@lists.kde.org>\n"
@@ -536,75 +536,75 @@ msgstr ""
 msgid "Tienes que seleccionar una particion WBFS para realizar esta accion"
 msgstr ""
 
-#: gui.py:558
+#: gui.py:557
 #, python-format
 msgid "¿Quieres borrar el juego con ID = \"%s\"?"
 msgstr ""
 
-#: gui.py:571 gui.py:600 gui.py:608
+#: gui.py:570 gui.py:599 gui.py:607
 msgid "No has seleccionado ningun juego"
 msgstr ""
 
-#: gui.py:581
+#: gui.py:580
 #, python-format
 msgid "Elige un directorio donde extraer la ISO de %s"
 msgstr ""
 
-#: gui.py:619
+#: gui.py:618
 msgid "Elige una ISO o un RAR"
 msgstr ""
 
-#: gui.py:622
+#: gui.py:621
 msgid "ImagenISO, Comprimido RAR"
 msgstr ""
 
-#: gui.py:629
+#: gui.py:628
 msgid "Elige un directorio"
 msgstr ""
 
-#: gui.py:657
+#: gui.py:656
 msgid "No has seleccionado ninguna particion"
 msgstr ""
 
-#: gui.py:668
+#: gui.py:667
 msgid "Paso 1 de 2: Elige un directorio para las CARATULAS"
 msgstr ""
 
-#: gui.py:675
+#: gui.py:674
 msgid "Paso 2 de 2: Elige un directorio para los DISCOS"
 msgstr ""
 
-#: gui.py:695
+#: gui.py:694
 msgid "No tienes ningun juego"
 msgstr ""
 
-#: gui.py:728
+#: gui.py:727
 #, python-format
 msgid "CUIDADO: %s"
 msgstr ""
 
-#: gui.py:730
+#: gui.py:729
 #, python-format
 msgid "ERROR: %s"
 msgstr ""
 
-#: gui.py:752
+#: gui.py:751
 msgid "DEBUG: Comando desconocido"
 msgstr ""
 
-#: gui.py:810
+#: gui.py:809
 msgid "Finalizando. Hecho en"
 msgstr ""
 
-#: gui.py:814
+#: gui.py:813
 msgid "quedan"
 msgstr ""
 
-#: recursos/glade/acercade.ui.h:1
+#: recursos/glade/acercade.ui.h:1 recursos/glade/wiithon.ui.h:12
 msgid "GNU GENERAL PUBLIC LICENSE Version 3"
 msgstr ""
 
-#: recursos/glade/acercade.ui.h:2
+#: recursos/glade/acercade.ui.h:2 recursos/glade/wiithon.ui.h:17
 msgid "TEXTO_LICENCIA"
 msgstr ""
 "Rhythmbox es software libre; puede redistribuirlo y /o modificarlobajo los "
@@ -618,15 +618,15 @@ msgstr ""
 "Software Foundation, Inc.,51 Franklin St, Fifth Floor, Boston, MA 02110-"
 "1301  USA"
 
-#: recursos/glade/acercade.ui.h:3
+#: recursos/glade/acercade.ui.h:3 recursos/glade/wiithon.ui.h:18
 msgid "TEXTO_TRADUCTORES"
 msgstr ""
 
-#: recursos/glade/acercade.ui.h:4
+#: recursos/glade/acercade.ui.h:4 recursos/glade/wiithon.ui.h:21
 msgid "Un gestor de particiones WBFS f&#xE1;cil de usar"
 msgstr ""
 
-#: recursos/glade/acercade.ui.h:5
+#: recursos/glade/acercade.ui.h:5 recursos/glade/wiithon.ui.h:23
 msgid "https://launchpad.net/wiithon"
 msgstr ""
 
@@ -673,31 +673,31 @@ msgstr ""
 msgid "Extraer a ISO"
 msgstr ""
 
-#: recursos/glade/wiithon.ui.h:12
+#: recursos/glade/wiithon.ui.h:13
 msgid "Mas informacion"
 msgstr "Detalles"
 
-#: recursos/glade/wiithon.ui.h:13
+#: recursos/glade/wiithon.ui.h:14
 msgid "Nuevo"
 msgstr ""
 
-#: recursos/glade/wiithon.ui.h:14
+#: recursos/glade/wiithon.ui.h:15
 msgid "Preferencias"
 msgstr ""
 
-#: recursos/glade/wiithon.ui.h:15
+#: recursos/glade/wiithon.ui.h:16
 msgid "Renombrar"
 msgstr ""
 
-#: recursos/glade/wiithon.ui.h:16
+#: recursos/glade/wiithon.ui.h:19
 msgid "Trabajos de fondo (0)"
 msgstr ""
 
-#: recursos/glade/wiithon.ui.h:17
+#: recursos/glade/wiithon.ui.h:20
 msgid "Trabajos intensos (0)"
 msgstr ""
 
-#: recursos/glade/wiithon.ui.h:18
+#: recursos/glade/wiithon.ui.h:22
 msgid "caratulas a SD"
 msgstr "copiar a SD"
 
