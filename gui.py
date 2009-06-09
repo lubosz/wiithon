@@ -78,22 +78,11 @@ class WiithonGUI(GtkBuilderWrapper):
         #ocultar de momento
         self.wb_expander1.hide()
 
-        # No necesitamos la señal, para esta versión
-        '''
-        try:
-            self.wb_entry1.connect('icon-release', self.clear_search_cb)
-        except TypeError:
-            print "Cuidado: Necesitas una versión GTK >= 2.16 para visualizar algunas opciones."
-
-
-        self.wb_titulo_categorias.set_attributes( self.getEstilo_azulGrande() )
-        self.wb_titulo_etiquetas.set_attributes( self.getEstilo_azulGrande() )
-        '''
-
         self.wb_busqueda = util.Entry(clear=True)
         self.wb_busqueda.show()
         self.wb_box_busqueda.pack_start(self.wb_busqueda)
 
+        self.wb_busqueda.connect('changed' , self.on_busqueda_changed)
         self.wb_principal.connect('destroy', self.salir)
 
         # carga la vista del TreeView de particiones
