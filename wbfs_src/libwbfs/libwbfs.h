@@ -11,16 +11,15 @@
 typedef u32 be32_t;
 typedef u16 be16_t;
 
-#define TRUE 0
-#define FALSE 1
- 
+
+
 typedef struct wbfs_head
 {
         be32_t magic;
-        // parameters copied in the partition for easy dumping, and bug reports ----> WBFS
-        be32_t n_hd_sec;	       // total number of hd_sec in this partition -----> 1378608 ---> 1378795
-        u8  hd_sec_sz_s;       // sector size in this partition --------------------> 9 ---> 2900
-        u8  wbfs_sec_sz_s;     // size of a wbfs sec -------------------------------> 21 ---> ebea
+        // parameters copied in the partition for easy dumping, and bug reports
+        be32_t n_hd_sec;	       // total number of hd_sec in this partition
+        u8  hd_sec_sz_s;       // sector size in this partition
+        u8  wbfs_sec_sz_s;     // size of a wbfs sec
         u8  padding3[2];
         u8  disc_table[0];	// size depends on hd sector size
 }__attribute((packed)) wbfs_head_t ;
@@ -73,14 +72,14 @@ typedef struct wbfs_s
         u32 n_hd_sec;	 // the number of hd sector in the wbfs partition
 
         /* standard wii sector (0x8000 bytes) */
-        u32 wii_sec_sz; 
+        u32 wii_sec_sz;
         u8  wii_sec_sz_s;
         u32 n_wii_sec;
         u32 n_wii_sec_per_disc;
-        
+
         /* The size of a wbfs sector */
         u32 wbfs_sec_sz;
-        u32 wbfs_sec_sz_s; 
+        u32 wbfs_sec_sz_s;
         u16 n_wbfs_sec;   // this must fit in 16 bit!
         u16 n_wbfs_sec_per_disc;   // size of the lookup table
 
@@ -96,9 +95,9 @@ typedef struct wbfs_s
         u16 disc_info_sz;
 
         u8  *tmp_buffer;  // pre-allocated buffer for unaligned read
-        
+
         u32 n_disc_open;
-       
+
 }wbfs_t;
 
 typedef struct wbfs_disc_s
@@ -111,7 +110,7 @@ typedef struct wbfs_disc_s
 
 #define WBFS_MAGIC (('W'<<24)|('B'<<16)|('F'<<8)|('S'))
 
-/*! @brief open a MSDOS partitionned harddrive. This tries to find a wbfs partition into the harddrive 
+/*! @brief open a MSDOS partitionned harddrive. This tries to find a wbfs partition into the harddrive
    @param read_hdsector,write_hdsector: accessors to a harddrive
    @hd_sector_size: size of the hd sector. Can be set to zero if the partition in already initialized
    @num_hd_sector:  number of sectors in this disc. Can be set to zero if the partition in already initialized
@@ -150,6 +149,7 @@ wbfs_disc_t *wbfs_open_disc(wbfs_t* p, u8 *diskid);
 /*! @brief close a already open disc inside a wbfs partition */
 void wbfs_close_disc(wbfs_disc_t*d);
 
+u32 wbfs_sector_used(wbfs_t *p,wbfs_disc_info_t *di);
 
 /*! @brief accessor to the wii disc
   @param d: a pointer to already open disc
@@ -167,7 +167,7 @@ u32 wbfs_count_discs(wbfs_t*p);
   @param header: pointer to 0x100 bytes to write the header
   @size: optional pointer to a 32bit word that will get the size in 32bit words of the DVD taken on the partition.
 */
-u32 wbfs_get_disc_info(wbfs_t*p, u32 i,u8 *header,int header_size,u32 *size); 
+u32 wbfs_get_disc_info(wbfs_t*p, u32 i,u8 *header,int header_size,u32 *size);
 
 /*! get the number of used block of the partition.
   to be multiplied by p->wbfs_sec_sz (use 64bit multiplication) to have the number in bytes
@@ -190,7 +190,7 @@ u32 wbfs_add_disc(wbfs_t*p,read_wiidisc_callback_t read_src_wii_disc, void *call
 /*! remove a wiidvd inside a partition */
 u32 wbfs_rm_disc(wbfs_t*p, u8* discid);
 
-/*! rename a wiidvd inside a partition */
+/*! rename a game */
 u32 wbfs_ren_disc(wbfs_t*p, u8* discid, u8* newname);
 
 /*! trim the file-system to its minimum size
@@ -203,19 +203,26 @@ Even if the filesize is 4.7GB, the disc usage will be less.
  */
 u32 wbfs_extract_disc(wbfs_disc_t*d, rw_sector_callback_t write_dst_wii_sector,void *callback_data,progress_callback_t spinner);
 
-/*! extract a file from the wii disc filesystem. 
+/*! extract a file from the wii disc filesystem.
   E.G. Allows to extract the opening.bnr to install a game as a system menu channel
  */
 u32 wbfs_extract_file(wbfs_disc_t*d, char *path);
+
+// remove some sanity checks
+void wbfs_set_force_mode(int force);
+
+float wbfs_estimate_disc(
+		wbfs_t *p, read_wiidisc_callback_t read_src_wii_disc,
+		void *callback_data,
+		partition_selector_t sel);
+
+//////////////////////////////////////////////////////////////////////////////////////////
 
 wbfs_disc_t *wbfs_open_index_disc(wbfs_t* p, u32 i);
 
 int wbfs_integrity_check(wbfs_t* p , u8* discid);
 
 unsigned int wbfs_copy_disc(wbfs_disc_t*d_src, wbfs_t*p_dst, progress_callback_t spinner);
-
-// remove some sanity checks
-void wbfs_set_force_mode(int force);
 
 #ifdef __cplusplus
    }

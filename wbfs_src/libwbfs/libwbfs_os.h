@@ -8,6 +8,9 @@
 #include "tools.h"
 #include <stdio.h>
 
+#define TRUE 0
+#define FALSE 1
+
 #define wbfs_fatal(x) fatal(x)
 #define wbfs_error(x) fatal(x)
 

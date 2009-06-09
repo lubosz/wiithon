@@ -1,4 +1,5 @@
-PROGS = negentig scrub wbfs 
+#PROGS = negentig scrub wbfs
+PROGS = wbfs  
 COMMON = tools.o bn.o ec.o disc_usage_table.o libwbfs.o libwbfs_linux.o wiidisc.o rijndael.o
 DEFINES = -DLARGE_FILES -D_FILE_OFFSET_BITS=64
 LIBS = -L. -lcrypto
