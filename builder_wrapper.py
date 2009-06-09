@@ -1,4 +1,5 @@
 #!/usr/bin/python
+# -*- coding: utf-8 -*-
 # vim: set fileencoding=utf-8 :
 # http://crysol.org/es/node/911
 
@@ -9,10 +10,10 @@ class GtkBuilderWrapper:
         # glade esta siendo abandonado en lugar de gtk.Builder
         # svn co http://svn.gnome.org/svn/glade3/trunk glade3
         # Mini tutorial http://www.danigm.net/node/71
-	self.__builder = gtk.Builder()
-	self.__builder.add_from_file( builder_file )
-	self.__builder.set_translation_domain( config.APP )
-	self.__builder.connect_signals(self)
+        self.__builder = gtk.Builder()
+        self.__builder.add_from_file( builder_file )
+        self.__builder.set_translation_domain( config.APP )
+        self.__builder.connect_signals(self)
 
     def get_widget(self, name):
         return self.__builder.get_object(name)

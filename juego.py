@@ -1,4 +1,5 @@
 #!/usr/bin/python
+# -*- coding: utf-8 -*-
 # vim: set fileencoding=utf-8 :
 
 import os
@@ -18,29 +19,29 @@ BDD_PERSISTENTE = create_engine('sqlite:///%s' % os.path.join( config.HOME_WIITH
 metadatos = MetaData()
 
 tabla = Table('juegos',metadatos,
-	# claves primarias y foraneas
-	Column('id',Integer,primary_key=True),
-	# campos
-	Column('idgame',VARCHAR(6)),
-	Column('title', VARCHAR(255)),
-	Column('size', Float),
-	Column('device',VARCHAR(10)),
-	#Column('quarter',Integer), # 1=principios de año, 2, 3, 4 = finales de año
-	#Column('puntuacion',Integer), # del 0 al 5
+    # claves primarias y foraneas
+    Column('id',Integer,primary_key=True),
+    # campos
+    Column('idgame',VARCHAR(6)),
+    Column('title', VARCHAR(255)),
+    Column('size', Float),
+    Column('device',VARCHAR(10)),
+    #Column('quarter',Integer), # 1=principios de año, 2, 3, 4 = finales de año
+    #Column('puntuacion',Integer), # del 0 al 5
 )
 
 # solo crea las tablas cuando no existen
 metadatos.create_all(BDD_PERSISTENTE)
 
 class Juego(object):
-	def __init__(self , idgame , title , size, device):
-		self.idgame = idgame
-		self.title = title
-		self.size = float(size)
-		self.device = device
-		
-	def __repr__(self):
-		return "%d -> %s - %s" % (self.id , self.idgame, self.title)
+    def __init__(self , idgame , title , size, device):
+        self.idgame = idgame
+        self.title = title
+        self.size = float(size)
+        self.device = device
+
+    def __repr__(self):
+        return "%d -> %s - %s" % (self.id , self.idgame, self.title)
 
 mapper(Juego , tabla)
 Session = sessionmaker(bind=BDD_PERSISTENTE , autoflush=True, transactional = True)

@@ -1,4 +1,5 @@
 #!/usr/bin/python
+# -*- coding: utf-8 -*-
 # vim: set fileencoding=utf-8 :
 
 import os
@@ -71,67 +72,67 @@ class SubscriptionError(Exception):
 '''
 
 def getExtension(fichero):
-	#fichero = eliminarComillas(fichero)
-	posPunto = fichero.rfind(".")
-	return fichero[posPunto+1:len(fichero)].lower()
+    #fichero = eliminarComillas(fichero)
+    posPunto = fichero.rfind(".")
+    return fichero[posPunto+1:len(fichero)].lower()
 
 def getNombreFichero(fichero):
-	#fichero = eliminarComillas(fichero)
-	posPunto = fichero.rfind(".")
-	return fichero[0:posPunto]
+    #fichero = eliminarComillas(fichero)
+    posPunto = fichero.rfind(".")
+    return fichero[0:posPunto]
 
 def getMagicISO(imagenISO):
-	f = open(imagenISO , "r")
-	magic = f.read(6)
-	f.close()
-	if len(magic) == 6:
-		return magic
-	else:
-		return None
+    f = open(imagenISO , "r")
+    magic = f.read(6)
+    f.close()
+    if len(magic) == 6:
+        return magic
+    else:
+        return None
 
 def tieneCaracteresRaros(cadena , listaNegra = BLACK_LIST):
-	# Nos dice si *cadena* tiene caracteres raros dados por una lista negra
-	for i in range(len(cadena)):
-		for j in range(len(listaNegra)):
-			if (cadena[i]==listaNegra[j]):
-				return True
-	return False
+    # Nos dice si *cadena* tiene caracteres raros dados por una lista negra
+    for i in range(len(cadena)):
+        for j in range(len(listaNegra)):
+            if (cadena[i]==listaNegra[j]):
+                return True
+    return False
 
 # esta función la voy a evitar y acabaré por eliminarla
 def getPopen( comando ):
-	sp = subprocess
-	return sp.Popen(comando.split() , stdout=sp.PIPE ,stderr=sp.STDOUT , close_fds=False , shell=False, universal_newlines= True)
+    sp = subprocess
+    return sp.Popen(comando.split() , stdout=sp.PIPE ,stderr=sp.STDOUT , close_fds=False , shell=False, universal_newlines= True)
 
 def getSTDOUT_iterador(comando):
-	p = subprocess.Popen(comando , shell=True , stdout=subprocess.PIPE , stderr=subprocess.STDOUT)
-	out = p.stdout.readlines()
-	return out
+    p = subprocess.Popen(comando , shell=True , stdout=subprocess.PIPE , stderr=subprocess.STDOUT)
+    out = p.stdout.readlines()
+    return out
 
 def getSTDOUT_NOERROR_iterador(comando):
-	p = subprocess.Popen(comando , shell=True , stdout=subprocess.PIPE , stderr=open("/dev/null" , "w"))
-	out = p.stdout.readlines()
-	return out
+    p = subprocess.Popen(comando , shell=True , stdout=subprocess.PIPE , stderr=open("/dev/null" , "w"))
+    out = p.stdout.readlines()
+    return out
 
 def getSTDOUT(comando , mostrarError = True):
-	if mostrarError:
-		out = getSTDOUT_iterador(comando)
-	else:
-		out = getSTDOUT_NOERROR_iterador(comando)
-	salida = ""
-	for linea in out:
-		salida = salida + linea.strip()
-	return salida
+    if mostrarError:
+        out = getSTDOUT_iterador(comando)
+    else:
+        out = getSTDOUT_NOERROR_iterador(comando)
+    salida = ""
+    for linea in out:
+        salida = salida + linea.strip()
+    return salida
 
 def escribir(f , texto):
-	f.write(texto + "\n")
-	f.flush()
+    f.write(texto + "\n")
+    f.flush()
 
 def getUltimaLinea(fichero):
-	f = open( fichero , "r")
-	ultimaLinea = ""
-	for linea in file.readlines():
-		ultimaLinea = linea
-	return ultimaLinea
+    f = open( fichero , "r")
+    ultimaLinea = ""
+    for linea in file.readlines():
+        ultimaLinea = linea
+    return ultimaLinea
 
 '''
 Un ejemplo de las listas de python
@@ -146,42 +147,42 @@ retcode = popen.wait() >> 8
 # Devuelve una lista de directorios del directorio "path"
 # http://newspiritcompany.infogami.com/recursive_glob_py
 def glob_get_dirs(path):
-	d = []
-	try:
-		for i in os.listdir(path):
-			if os.path.isdir(path+i):
-				d.append(os.path.basename(i))
+    d = []
+    try:
+        for i in os.listdir(path):
+            if os.path.isdir(path+i):
+                d.append(os.path.basename(i))
 
-	except NameError, ne:
-		print "NameError thrown=", ne
-	except:
-		pass
-	return d
+    except NameError, ne:
+        print "NameError thrown=", ne
+    except:
+        pass
+    return d
 
 # Devuelve la lista de resultados que cumplen la Exp.Reg.
 # Recorre a partir de "path" y recursivamente.
 def rec_glob(path , mask):
-	l = []
+    l = []
 
-	if path[-1] != '/':
-		path = path + '/'
+    if path[-1] != '/':
+        path = path + '/'
 
-	for i in glob_get_dirs(path):
-		res = rec_glob(path + i, mask)
-		l = l + res
+    for i in glob_get_dirs(path):
+        res = rec_glob(path + i, mask)
+        l = l + res
 
-	try:
-		for i in os.listdir(path):
-			ii = i
-			i = path + i
-			if os.path.isfile(i):
-				if fnmatch.fnmatch( ii.lower() , mask.lower() ):
-					l.append(i)
-	except NameError, ne:
-		print "NameError=", ne
-	except:
-		pass
-	return l
+    try:
+        for i in os.listdir(path):
+            ii = i
+            i = path + i
+            if os.path.isfile(i):
+                if fnmatch.fnmatch( ii.lower() , mask.lower() ):
+                    l.append(i)
+    except NameError, ne:
+        print "NameError=", ne
+    except:
+        pass
+    return l
 
 ## demo de gtk.Entry con Sexy (o no, si lo tienes instalado)
 ## ENTRY: Use python sexy if available, gtk otherwise
@@ -205,7 +206,7 @@ def rec_glob(path , mask):
 #
 #        def on_copy_clicked(self, widget, icon_pos, button):
 #            if icon_pos != sexy.ICON_ENTRY_SECONDARY or button != 1:
-#		return True
+#        return True
 #
 #            self.__clipboard.set_text(str(self.get_text()))
 #

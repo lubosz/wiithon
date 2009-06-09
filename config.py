@@ -1,15 +1,16 @@
 #!/usr/bin/python
+# -*- coding: utf-8 -*-
 # vim: set fileencoding=utf-8 :
 
 import os, sys
 
 def getHOME():
-	global WIITHON_FILES
-	ruta = os.path.join(WIITHON_FILES , "HOME.conf")
-	f = open(ruta , "r")
-	HOME = f.read().strip()
-	f.close()
-	return HOME
+    global WIITHON_FILES
+    ruta = os.path.join(WIITHON_FILES , "HOME.conf")
+    f = open(ruta , "r")
+    HOME = f.read().strip()
+    f.close()
+    return HOME
 
 APP="wiithon"
 LOCALE="/usr/share/locale/"
