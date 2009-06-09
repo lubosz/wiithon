@@ -228,8 +228,8 @@ class WiithonGUI(GtkBuilderWrapper):
         tv_partitions.connect('cursor-changed', self.on_tv_partitions_cursor_changed)
 
         modelo = gtk.ListStore (    gobject.TYPE_INT ,    # autonumerico (oculto)
-                        gobject.TYPE_STRING,    # device
-                        gobject.TYPE_STRING)    # fabricante
+                                    gobject.TYPE_STRING,    # device
+                                    gobject.TYPE_STRING)    # fabricante
         tv_partitions.set_model(modelo)
 
         return modelo
@@ -248,11 +248,6 @@ class WiithonGUI(GtkBuilderWrapper):
                 else:
                     modelo.set_value(iterador,2,"")
                 i = i + 1
-
-    def on_tv_games_button_press_event(*arg):
-        print "*********************************************************"
-        print arg
-        print "*********************************************************"
 
     def edit_amount( self, renderEditable, i, nuevoNombre ):
         if self.iteradorJuegoSeleccionado != None:
@@ -321,30 +316,27 @@ class WiithonGUI(GtkBuilderWrapper):
         tv_games.connect('cursor-changed', self.on_tv_games_cursor_changed)
 
         modelo = gtk.ListStore (    gobject.TYPE_INT ,    # orden (campo oculto)
-                        gobject.TYPE_STRING,    # IDGAME
-                        gobject.TYPE_STRING,    # Nombre
-                        gobject.TYPE_STRING,    # Tamaño
-                        )
+                                    gobject.TYPE_STRING,    # IDGAME
+                                    gobject.TYPE_STRING,    # Nombre
+                                    gobject.TYPE_STRING,    # Tamaño
+                                )
         tv_games.set_model(modelo)
 
         return modelo
 
     def cargarJuegosModelo(self , modelo , listaJuegos):
-
-        #if listaJuegos:
         modelo.clear()
         i = 0
         for juego in listaJuegos:
             iterador = modelo.insert(i)
             # El modelo tiene una columna más no representada
             modelo.set_value(iterador,0, i )
-            modelo.set_value(iterador,1,             juego.idgame)
-            modelo.set_value(iterador,2,             juego.title)
+            modelo.set_value(iterador,1,                juego.idgame)
+            modelo.set_value(iterador,2,                juego.title)
             modelo.set_value(iterador,3, "%.2f GB" %    juego.size)
             i = i + 1
 
     def salir(self , widget=None, data=None):
-
         # guardar campo clave de los seleccionados
         if self.DEVICEParticionSeleccionada != None:
             self.preferencia.device_seleccionado = self.DEVICEParticionSeleccionada
@@ -421,6 +413,8 @@ class WiithonGUI(GtkBuilderWrapper):
     def question(self, pregunta):
         return self.alert('question', pregunta)
 
+    # callback de la señal "changed" del buscador
+    # Refresca de la base de datos y filtra según lo escrito.
     def on_busqueda_changed(self , widget):
         self.buscar = widget.get_text()
         self.refrescarListaJuegos()
@@ -547,9 +541,8 @@ class WiithonGUI(GtkBuilderWrapper):
         if(self.modo == "ver" and id_tb != self.wb_tb_copiar_SD and id_tb != self.wb_tb_acerca_de):
             self.alert("warning" , _("Tienes que seleccionar una particion WBFS para realizar esta accion"))
         elif(id_tb == self.wb_tb_acerca_de):
-            self.wb_aboutdialog1.run()
-            self.wb_aboutdialog1.hide()
-
+            self.wb_aboutdialog.run()
+            self.wb_aboutdialog.hide()
         elif(id_tb == self.wb_tb_borrar):
             if self.iteradorJuegoSeleccionado != None:
                 if ( self.question(_('¿Quieres borrar el juego con ID = "%s"?' % self.IDGAMEJuegoSeleccionado)) == 1 ):

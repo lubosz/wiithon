@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wiithon 1.0 Alpha\n"
 "Report-Msgid-Bugs-To: makiolo@gmail.com\n"
-"POT-Creation-Date: 2009-06-09 19:48+0200\n"
+"POT-Creation-Date: 2009-06-09 19:55+0200\n"
 "PO-Revision-Date: 2009-06-01 00:20+0200\n"
 "Last-Translator: \n"
 "Language-Team: Spanish <kde-i18n-doc@lists.kde.org>\n"
@@ -501,102 +501,102 @@ msgstr ""
 msgid "Fabricante"
 msgstr ""
 
-#: gui.py:274
+#: gui.py:269
 msgid "Error renombrando"
 msgstr ""
 
-#: gui.py:276
+#: gui.py:271
 #, python-format
 msgid "Se han detectado caracteres no validos: %s"
 msgstr ""
 
-#: gui.py:295
+#: gui.py:290
 msgid "IDGAME"
 msgstr ""
 
-#: gui.py:296
+#: gui.py:291
 msgid "Nombre"
 msgstr ""
 
-#: gui.py:297
+#: gui.py:292
 msgid "Tamanio"
 msgstr "Tamaño"
 
-#: gui.py:506
+#: gui.py:500
 #, python-format
 msgid "Hay %d tarea pendiente"
 msgstr ""
 
-#: gui.py:509
+#: gui.py:503
 #, python-format
 msgid "Hay %d tareas pendientes"
 msgstr ""
 
-#: gui.py:548
+#: gui.py:542
 msgid "Tienes que seleccionar una particion WBFS para realizar esta accion"
 msgstr ""
 
-#: gui.py:555
+#: gui.py:548
 #, python-format
 msgid "¿Quieres borrar el juego con ID = \"%s\"?"
 msgstr ""
 
-#: gui.py:568 gui.py:597 gui.py:605
+#: gui.py:561 gui.py:590 gui.py:598
 msgid "No has seleccionado ningun juego"
 msgstr ""
 
-#: gui.py:578
+#: gui.py:571
 #, python-format
 msgid "Elige un directorio donde extraer la ISO de %s"
 msgstr ""
 
-#: gui.py:616
+#: gui.py:609
 msgid "Elige una ISO o un RAR"
 msgstr ""
 
-#: gui.py:619
+#: gui.py:612
 msgid "ImagenISO, Comprimido RAR"
 msgstr ""
 
-#: gui.py:626
+#: gui.py:619
 msgid "Elige un directorio"
 msgstr ""
 
-#: gui.py:654
+#: gui.py:647
 msgid "No has seleccionado ninguna particion"
 msgstr ""
 
-#: gui.py:665
+#: gui.py:658
 msgid "Paso 1 de 2: Elige un directorio para las CARATULAS"
 msgstr ""
 
-#: gui.py:672
+#: gui.py:665
 msgid "Paso 2 de 2: Elige un directorio para los DISCOS"
 msgstr ""
 
-#: gui.py:692
+#: gui.py:685
 msgid "No tienes ningun juego"
 msgstr ""
 
-#: gui.py:725
+#: gui.py:718
 #, python-format
 msgid "CUIDADO: %s"
 msgstr ""
 
-#: gui.py:727
+#: gui.py:720
 #, python-format
 msgid "ERROR: %s"
 msgstr ""
 
-#: gui.py:749
+#: gui.py:742
 msgid "DEBUG: Comando desconocido"
 msgstr ""
 
-#: gui.py:807
+#: gui.py:800
 msgid "Finalizando. Hecho en"
 msgstr ""
 
-#: gui.py:811
+#: gui.py:804
 msgid "quedan"
 msgstr ""
 
