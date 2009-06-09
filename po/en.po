@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wiithon 1.0 Alpha\n"
 "Report-Msgid-Bugs-To: makiolo@gmail.com\n"
-"POT-Creation-Date: 2009-06-09 13:05+0200\n"
+"POT-Creation-Date: 2009-06-09 13:38+0200\n"
 "PO-Revision-Date: 2009-06-01 00:16+0200\n"
 "Last-Translator: \n"
 "Language-Team: Spanish <kde-i18n-doc@lists.kde.org>\n"
@@ -465,7 +465,7 @@ msgstr ""
 msgid "DEBUG: Preferencias cargadas"
 msgstr "DEBUG: Preferences loaded"
 
-#: gui.py:102
+#: gui.py:106
 #, python-format
 msgid ""
 "%s requiere permisos de superusuario (root) para acceder a las particiones "
@@ -473,7 +473,7 @@ msgid ""
 "Esto dependera de su distribucion de Linux pero intente con : sudo %s"
 msgstr "Sorry. Need be root"
 
-#: gui.py:128
+#: gui.py:132
 #, python-format
 msgid ""
 "No se han encontrado particiones WBFS:\n"
@@ -482,7 +482,7 @@ msgid ""
 "acumulada por %s en sesiones anteriores."
 msgstr ""
 
-#: gui.py:130
+#: gui.py:134
 #, python-format
 msgid ""
 "No se han encontrado particiones WBFS:\n"
@@ -490,132 +490,112 @@ msgid ""
 "reinicie %s\n"
 msgstr ""
 
-#: gui.py:229
+#: gui.py:233
 msgid "Dispositivo"
 msgstr "Device"
 
-#: gui.py:230
+#: gui.py:234
 msgid "Fabricante"
 msgstr "Manufacture"
 
-#: gui.py:281
+#: gui.py:285
 msgid "Error renombrando"
 msgstr ""
 
-#: gui.py:283
+#: gui.py:287
 #, python-format
 msgid "Se han detectado caracteres no validos: %s"
 msgstr ""
 
-#: gui.py:302
+#: gui.py:306
 msgid "IDGAME"
 msgstr "IDGAME"
 
-#: gui.py:303
+#: gui.py:307
 msgid "Nombre"
 msgstr "Name"
 
-#: gui.py:304
+#: gui.py:308
 msgid "Tamanio"
 msgstr "Size"
 
-#: gui.py:513
+#: gui.py:517
 #, python-format
 msgid "Hay %d tarea pendiente"
 msgstr ""
 
-#: gui.py:516
+#: gui.py:520
 #, python-format
 msgid "Hay %d tareas pendientes"
 msgstr ""
 
-#: gui.py:555
+#: gui.py:559
 msgid "Tienes que seleccionar una particion WBFS para realizar esta accion"
 msgstr "Need select some partition WBFS"
 
-#: gui.py:562
+#: gui.py:566
 #, python-format
 msgid "¿Quieres borrar el juego con ID = \"%s\"?"
 msgstr "¿Delete game with ID = \"%s\"?"
 
-#: gui.py:575 gui.py:604 gui.py:612
+#: gui.py:579 gui.py:608 gui.py:616
 msgid "No has seleccionado ningun juego"
 msgstr "Don't have a game selected"
 
-#: gui.py:585
+#: gui.py:589
 #, python-format
 msgid "Elige un directorio donde extraer la ISO de %s"
 msgstr "Choose folder for extract ISO %s"
 
-#: gui.py:623
+#: gui.py:627
 msgid "Elige una ISO o un RAR"
 msgstr "Choose a ISO or RAR"
 
-#: gui.py:626
+#: gui.py:630
 msgid "ImagenISO, Comprimido RAR"
 msgstr ""
 
-#: gui.py:633
+#: gui.py:637
 msgid "Elige un directorio"
 msgstr "Choose folder"
 
-#: gui.py:661
+#: gui.py:665
 msgid "No has seleccionado ninguna particion"
 msgstr "Don't have a partition selected"
 
-#: gui.py:672
+#: gui.py:676
 msgid "Paso 1 de 2: Elige un directorio para las CARATULAS"
 msgstr "Step 1 of 1: Choose a folder for COVERS"
 
-#: gui.py:679
+#: gui.py:683
 msgid "Paso 2 de 2: Elige un directorio para los DISCOS"
 msgstr "Step 2 of 2: Choose a folder for DISCS"
 
-#: gui.py:699
+#: gui.py:703
 msgid "No tienes ningun juego"
 msgstr "Don't have some game"
 
-#: gui.py:732
+#: gui.py:736
 #, python-format
 msgid "CUIDADO: %s"
 msgstr "WARNING: %s"
 
-#: gui.py:734
+#: gui.py:738
 #, python-format
 msgid "ERROR: %s"
 msgstr "ERROR: %s"
 
-#: gui.py:756
+#: gui.py:760
 msgid "DEBUG: Comando desconocido"
 msgstr "DEBUG: Unknown command"
 
-#: gui.py:814
+#: gui.py:818
 msgid "Finalizando. Hecho en"
 msgstr "Finishing. Done in"
 
-#: gui.py:818
+#: gui.py:822
 msgid "quedan"
 msgstr "remaining"
-
-#: recursos/glade/acercade.ui.h:1 recursos/glade/wiithon.ui.h:12
-msgid "GNU GENERAL PUBLIC LICENSE Version 3"
-msgstr ""
-
-#: recursos/glade/acercade.ui.h:2 recursos/glade/wiithon.ui.h:17
-msgid "TEXTO_LICENCIA"
-msgstr ""
-
-#: recursos/glade/acercade.ui.h:3 recursos/glade/wiithon.ui.h:18
-msgid "TEXTO_TRADUCTORES"
-msgstr ""
-
-#: recursos/glade/acercade.ui.h:4 recursos/glade/wiithon.ui.h:21
-msgid "Un gestor de particiones WBFS f&#xE1;cil de usar"
-msgstr ""
-
-#: recursos/glade/acercade.ui.h:5 recursos/glade/wiithon.ui.h:23
-msgid "https://launchpad.net/wiithon"
-msgstr ""
 
 #: recursos/glade/alerta.ui.h:1
 msgid "gtk-cancel"
@@ -663,6 +643,10 @@ msgstr "Console"
 msgid "Extraer a ISO"
 msgstr "Extract ISO"
 
+#: recursos/glade/wiithon.ui.h:12
+msgid "GNU GENERAL PUBLIC LICENSE Version 3"
+msgstr ""
+
 #: recursos/glade/wiithon.ui.h:13
 msgid "Mas informacion"
 msgstr "Details"
@@ -679,6 +663,14 @@ msgstr "Preferences"
 msgid "Renombrar"
 msgstr "Rename"
 
+#: recursos/glade/wiithon.ui.h:17
+msgid "TEXTO_LICENCIA"
+msgstr ""
+
+#: recursos/glade/wiithon.ui.h:18
+msgid "TEXTO_TRADUCTORES"
+msgstr ""
+
 #: recursos/glade/wiithon.ui.h:19
 msgid "Trabajos de fondo (0)"
 msgstr "Batch work (0)"
@@ -687,9 +679,17 @@ msgstr "Batch work (0)"
 msgid "Trabajos intensos (0)"
 msgstr "Intense work (0)"
 
+#: recursos/glade/wiithon.ui.h:21
+msgid "Un gestor de particiones WBFS f&#xE1;cil de usar"
+msgstr ""
+
 #: recursos/glade/wiithon.ui.h:22
 msgid "caratulas a SD"
 msgstr "copy to SD"
+
+#: recursos/glade/wiithon.ui.h:23
+msgid "https://launchpad.net/wiithon"
+msgstr ""
 
 #: trabajo.py:71
 #, python-format

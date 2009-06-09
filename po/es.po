@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wiithon 1.0 Alpha\n"
 "Report-Msgid-Bugs-To: makiolo@gmail.com\n"
-"POT-Creation-Date: 2009-06-09 13:05+0200\n"
+"POT-Creation-Date: 2009-06-09 13:38+0200\n"
 "PO-Revision-Date: 2009-06-01 00:20+0200\n"
 "Last-Translator: \n"
 "Language-Team: Spanish <kde-i18n-doc@lists.kde.org>\n"
@@ -468,7 +468,7 @@ msgstr ""
 msgid "DEBUG: Preferencias cargadas"
 msgstr ""
 
-#: gui.py:102
+#: gui.py:106
 #, python-format
 msgid ""
 "%s requiere permisos de superusuario (root) para acceder a las particiones "
@@ -476,7 +476,7 @@ msgid ""
 "Esto dependera de su distribucion de Linux pero intente con : sudo %s"
 msgstr ""
 
-#: gui.py:128
+#: gui.py:132
 #, python-format
 msgid ""
 "No se han encontrado particiones WBFS:\n"
@@ -485,7 +485,7 @@ msgid ""
 "acumulada por %s en sesiones anteriores."
 msgstr ""
 
-#: gui.py:130
+#: gui.py:134
 #, python-format
 msgid ""
 "No se han encontrado particiones WBFS:\n"
@@ -493,141 +493,111 @@ msgid ""
 "reinicie %s\n"
 msgstr ""
 
-#: gui.py:229
+#: gui.py:233
 msgid "Dispositivo"
 msgstr ""
 
-#: gui.py:230
+#: gui.py:234
 msgid "Fabricante"
 msgstr ""
 
-#: gui.py:281
+#: gui.py:285
 msgid "Error renombrando"
 msgstr ""
 
-#: gui.py:283
+#: gui.py:287
 #, python-format
 msgid "Se han detectado caracteres no validos: %s"
 msgstr ""
 
-#: gui.py:302
+#: gui.py:306
 msgid "IDGAME"
 msgstr ""
 
-#: gui.py:303
+#: gui.py:307
 msgid "Nombre"
 msgstr ""
 
-#: gui.py:304
+#: gui.py:308
 msgid "Tamanio"
 msgstr "Tamaño"
 
-#: gui.py:513
+#: gui.py:517
 #, python-format
 msgid "Hay %d tarea pendiente"
 msgstr ""
 
-#: gui.py:516
+#: gui.py:520
 #, python-format
 msgid "Hay %d tareas pendientes"
 msgstr ""
 
-#: gui.py:555
+#: gui.py:559
 msgid "Tienes que seleccionar una particion WBFS para realizar esta accion"
 msgstr ""
 
-#: gui.py:562
+#: gui.py:566
 #, python-format
 msgid "¿Quieres borrar el juego con ID = \"%s\"?"
 msgstr ""
 
-#: gui.py:575 gui.py:604 gui.py:612
+#: gui.py:579 gui.py:608 gui.py:616
 msgid "No has seleccionado ningun juego"
 msgstr ""
 
-#: gui.py:585
+#: gui.py:589
 #, python-format
 msgid "Elige un directorio donde extraer la ISO de %s"
 msgstr ""
 
-#: gui.py:623
+#: gui.py:627
 msgid "Elige una ISO o un RAR"
 msgstr ""
 
-#: gui.py:626
+#: gui.py:630
 msgid "ImagenISO, Comprimido RAR"
 msgstr ""
 
-#: gui.py:633
+#: gui.py:637
 msgid "Elige un directorio"
 msgstr ""
 
-#: gui.py:661
+#: gui.py:665
 msgid "No has seleccionado ninguna particion"
 msgstr ""
 
-#: gui.py:672
+#: gui.py:676
 msgid "Paso 1 de 2: Elige un directorio para las CARATULAS"
 msgstr ""
 
-#: gui.py:679
+#: gui.py:683
 msgid "Paso 2 de 2: Elige un directorio para los DISCOS"
 msgstr ""
 
-#: gui.py:699
+#: gui.py:703
 msgid "No tienes ningun juego"
 msgstr ""
 
-#: gui.py:732
+#: gui.py:736
 #, python-format
 msgid "CUIDADO: %s"
 msgstr ""
 
-#: gui.py:734
+#: gui.py:738
 #, python-format
 msgid "ERROR: %s"
 msgstr ""
 
-#: gui.py:756
+#: gui.py:760
 msgid "DEBUG: Comando desconocido"
 msgstr ""
 
-#: gui.py:814
+#: gui.py:818
 msgid "Finalizando. Hecho en"
 msgstr ""
 
-#: gui.py:818
+#: gui.py:822
 msgid "quedan"
-msgstr ""
-
-#: recursos/glade/acercade.ui.h:1 recursos/glade/wiithon.ui.h:12
-msgid "GNU GENERAL PUBLIC LICENSE Version 3"
-msgstr ""
-
-#: recursos/glade/acercade.ui.h:2 recursos/glade/wiithon.ui.h:17
-msgid "TEXTO_LICENCIA"
-msgstr ""
-"Rhythmbox es software libre; puede redistribuirlo y /o modificarlobajo los "
-"términos de la Licencia Pública General tal como la publicala Free Software "
-"Foundation; ya sea en la versión 2 de la Licencia, o(a su elección) "
-"cualquier versión posterior.Rhythmbox se distribuye con la esperanza de que "
-"le sea útil,pero SIN NINGUNA GARANTÍA; sin incluso la garantía implícita "
-"deMERCANTIBILIDAD o IDONEIDAD PARA UN PROPÓSITO PARTICULAR. Veala Licencia "
-"Pública General de GNU para más detalles.Debería haber recibido una copia de "
-"la Licencia Pública General GNUjunto con Rhythmbox; si no, escriba a la Free "
-"Software Foundation, Inc.,51 Franklin St, Fifth Floor, Boston, MA 02110-"
-"1301  USA"
-
-#: recursos/glade/acercade.ui.h:3 recursos/glade/wiithon.ui.h:18
-msgid "TEXTO_TRADUCTORES"
-msgstr ""
-
-#: recursos/glade/acercade.ui.h:4 recursos/glade/wiithon.ui.h:21
-msgid "Un gestor de particiones WBFS f&#xE1;cil de usar"
-msgstr ""
-
-#: recursos/glade/acercade.ui.h:5 recursos/glade/wiithon.ui.h:23
-msgid "https://launchpad.net/wiithon"
 msgstr ""
 
 #: recursos/glade/alerta.ui.h:1
@@ -673,6 +643,10 @@ msgstr ""
 msgid "Extraer a ISO"
 msgstr ""
 
+#: recursos/glade/wiithon.ui.h:12
+msgid "GNU GENERAL PUBLIC LICENSE Version 3"
+msgstr ""
+
 #: recursos/glade/wiithon.ui.h:13
 msgid "Mas informacion"
 msgstr "Detalles"
@@ -689,6 +663,24 @@ msgstr ""
 msgid "Renombrar"
 msgstr ""
 
+#: recursos/glade/wiithon.ui.h:17
+msgid "TEXTO_LICENCIA"
+msgstr ""
+"Rhythmbox es software libre; puede redistribuirlo y /o modificarlobajo los "
+"términos de la Licencia Pública General tal como la publicala Free Software "
+"Foundation; ya sea en la versión 2 de la Licencia, o(a su elección) "
+"cualquier versión posterior.Rhythmbox se distribuye con la esperanza de que "
+"le sea útil,pero SIN NINGUNA GARANTÍA; sin incluso la garantía implícita "
+"deMERCANTIBILIDAD o IDONEIDAD PARA UN PROPÓSITO PARTICULAR. Veala Licencia "
+"Pública General de GNU para más detalles.Debería haber recibido una copia de "
+"la Licencia Pública General GNUjunto con Rhythmbox; si no, escriba a la Free "
+"Software Foundation, Inc.,51 Franklin St, Fifth Floor, Boston, MA 02110-"
+"1301  USA"
+
+#: recursos/glade/wiithon.ui.h:18
+msgid "TEXTO_TRADUCTORES"
+msgstr ""
+
 #: recursos/glade/wiithon.ui.h:19
 msgid "Trabajos de fondo (0)"
 msgstr ""
@@ -697,9 +689,17 @@ msgstr ""
 msgid "Trabajos intensos (0)"
 msgstr ""
 
+#: recursos/glade/wiithon.ui.h:21
+msgid "Un gestor de particiones WBFS f&#xE1;cil de usar"
+msgstr ""
+
 #: recursos/glade/wiithon.ui.h:22
 msgid "caratulas a SD"
 msgstr "copiar a SD"
+
+#: recursos/glade/wiithon.ui.h:23
+msgid "https://launchpad.net/wiithon"
+msgstr ""
 
 #: trabajo.py:71
 #, python-format

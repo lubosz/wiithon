@@ -90,6 +90,10 @@ class WiithonGUI(GtkBuilderWrapper):
         self.wb_titulo_etiquetas.set_attributes( self.getEstilo_azulGrande() )
         '''
 
+        self.wb_busqueda = util.Entry(clear=True)
+        self.wb_busqueda.show()
+        self.wb_box_busqueda.pack_start(self.wb_busqueda)
+
         self.wb_principal.connect('destroy', self.salir)
 
         # carga la vista del TreeView de particiones
@@ -182,7 +186,7 @@ class WiithonGUI(GtkBuilderWrapper):
             pass
 
         # pongo el foco en el buscador
-        self.wb_busqueda1.grab_focus()
+        self.wb_busqueda.grab_focus()
 
     # http://www.pygtk.org/pygtk2reference/class-pangoattribute.html
     def getEstilo_azulGrande(self):
@@ -428,7 +432,7 @@ class WiithonGUI(GtkBuilderWrapper):
     def question(self, pregunta):
         return self.alert('question', pregunta)
 
-    def on_busqueda1_changed(self , widget):
+    def on_busqueda_changed(self , widget):
         self.buscar = widget.get_text()
         self.refrescarListaJuegos()
 

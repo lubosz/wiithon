@@ -272,11 +272,11 @@
                           </packing>
                         </child>
                         <child>
-                          <object class="GtkEntry" id="busqueda1">
+                          <object class="GtkHBox" id="box_busqueda">
                             <property name="visible">True</property>
-                            <property name="can_focus">True</property>
-                            <property name="overwrite_mode">True</property>
-                            <signal name="changed" handler="on_busqueda1_changed"/>
+                            <child>
+                              <placeholder/>
+                            </child>
                           </object>
                           <packing>
                             <property name="expand">False</property>
