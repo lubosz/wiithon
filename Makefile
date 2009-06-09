@@ -21,7 +21,7 @@ install_auto: dependencias install
 
 dependencias:
 	apt-get install imagemagick wget rar libssl-dev intltool python-gtk2 python-glade2 python-sqlalchemy gnome-icon-theme menu
-	
+
 install: uninstall wbfs generarMOO
 	@echo "=================================================================="
 	@echo "Antes de instalar, se ha desinstalado"
@@ -125,7 +125,7 @@ uninstall:
 	@echo "=================================================================="
 	@echo "Desinstalado OK"
 	@echo "=================================================================="
-	
+
 purge: uninstall
 	-$(RM) -R ~/.wiithon/
 
@@ -187,7 +187,6 @@ extraerGlade:
 	@echo "*** GETTEXT *** Extrayendo strings del glade"
 	intltool-extract --type="gettext/glade" recursos/glade/wiithon.ui
 	intltool-extract --type="gettext/glade" recursos/glade/alerta.ui
-	intltool-extract --type="gettext/glade" recursos/glade/acercade.ui
 
 # generar PO, si ya existe, mezcla o sincroniza
 actualizarPO: generarPlantilla
