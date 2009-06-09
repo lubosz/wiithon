@@ -55,6 +55,30 @@ int write_wii_sector_file(void*_fp,u32 lba,u32 count,void*iobuf)
 }
 
 
+f32 WBFS_GameSize(wbfs_t *p , u8 *discid)
+{
+	wbfs_disc_t *disc = NULL;
+
+	u32 sectors;
+
+	/* No device open */
+	if (!p)
+		return -1;
+
+	/* Open disc */
+	disc = wbfs_open_disc(p, discid);
+	if (!disc)
+		return -2;
+
+	/* Get game size in sectors */
+	sectors = wbfs_sector_used(p, disc->header);
+
+	/* Close disc */
+	wbfs_close_disc(disc);
+
+	return (p->wbfs_sec_sz / GB_SIZE) * sectors;
+}
+
 int wbfs_applet_ls(wbfs_t *p)
 {
         int count = wbfs_count_discs(p);
@@ -64,11 +88,15 @@ int wbfs_applet_ls(wbfs_t *p)
                 int i;
                 u32 size;
                 u8 *b = wbfs_ioalloc(0x100);
+				char gameid[6];
                 for (i=0;i<count;i++)
                 {
                         if(!wbfs_get_disc_info(p,i,b,0x100,&size))
                         {
-                        	fprintf(stderr, "%c%c%c%c%c%c;%s;%f\n",b[0], b[1], b[2], b[3], b[4], b[5], b + 0x20,size*4ULL/(GB));
+							sprintf(gameid, "%c%c%c%c%c%c", b[0], b[1], b[2], b[3], b[4], b[5] );
+							f32 size = WBFS_GameSize( p , (u8*)gameid);
+							if( size < 0) size = 0.0f;
+							fprintf(stderr, "%s;%s;%f\n", gameid , b + 0x20, 0.0f );
 						}
                 }
                 wbfs_iofree(b);
@@ -76,36 +104,49 @@ int wbfs_applet_ls(wbfs_t *p)
         return 0;
 }
 
-/*
-	wbfs_disc_t *disc = NULL;
+s32 WBFS_DiskSpace(wbfs_t *p , f32 *used, f32 *free)
+{
+	f32 ssize;
+	u32 cnt;
 
-	u32 sectors;
-
-	if (!hdd)
+	/* No device open */
+	if (!p)
 		return -1;
 
-	disc = wbfs_open_disc(hdd, discid);
-	if (!disc)
-		return -2;
+	/* Count used blocks */
+	cnt = wbfs_count_usedblocks(p);
 
-	sectors = wbfs_sector_used(hdd, disc->header);
+	/* Sector size in GB */
+	ssize = p->wbfs_sec_sz / GB_SIZE;
 
-	wbfs_close_disc(disc);
+	/* Copy values */
+	*free = ssize * cnt;
+	*used = ssize * (p->n_wbfs_sec - cnt);
 
-
-	*size = (hdd->wbfs_sec_sz / GB_SIZE) * sectors;
-
-	return 0;
- */
+	return OK;
+}
 
 int wbfs_applet_df(wbfs_t *p)
 {
-        u32 count = wbfs_count_usedblocks(p);
-		fprintf(stderr , "%f;%f;%f" , 	(float)(p->n_wbfs_sec-count)*p->wbfs_sec_sz/GB ,	// usado
-										(float)(count)*p->wbfs_sec_sz/GB ,					// libre
-										(float)p->n_wbfs_sec*p->wbfs_sec_sz/GB				// total
+		f32 usado;
+		f32 libre;
+        s32 res = WBFS_DiskSpace(p , &usado , &libre);
+        if(res == OK)
+        {
+        	f32 total = usado + libre;
+			fprintf(stderr , "%f;%f;%f" , 		usado ,	// usado
+												libre ,	// libre
+												total	// total
 									);
-        return p!=0;
+			return TRUE;
+		}
+        else
+		{
+       		return FALSE;
+		}
+        
+        
+        
 }
 
 int wbfs_applet_mkhbc(wbfs_t *p)
@@ -152,16 +193,14 @@ int wbfs_applet_init(wbfs_t *p)
         
 }
 
-int wbfs_applet_check(wbfs_t *p , char * argv)
+int wbfs_applet_check(wbfs_t *p , char * idgame)
 {
-	if( wbfs_integrity_check(p , (u8*)argv) == TRUE)
+	if( wbfs_integrity_check(p , (u8*)idgame) == TRUE)
 	{
-		//fprintf(stderr,"Integridad de %s es OK\n",argv);
 		exit(TRUE);
 	}
 	else
 	{
-		//fprintf(stderr,"ERROR!! : Integridad de %s esta corrupto.\n",argv);	
 		exit(FALSE);
 	}
 	

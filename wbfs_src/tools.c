@@ -431,6 +431,7 @@ void dump_tmd(u8 *tmd)
 }
 void spinner(u64 x, u64 max)
 {
+	/*
 	static time_t start_time;
 	static u32 expected_total;
 	u32 d;
@@ -467,5 +468,52 @@ void spinner(u64 x, u64 max)
 	percent = 100.0 * x / max;
 
 	fprintf(stdout , "%5.2f;%d;%02d;%02d\n", percent, h, m, s);
+	fflush(stdout);
+	*/
+	
+	////////////// VERSION 2 /////////////////////////////
+	
+	static time_t start;
+	static u32 expected;
+
+	f32 percent, size;
+	u32 d, h, m, s;
+
+	/* First time */
+	if (!x) {
+		start    = time(0);
+		expected = 300;
+	}
+
+	/* Elapsed time */
+	d = time(0) - start;
+
+	if (x != max) {
+		/* Expected time */
+		if (d)
+			expected = (expected * 3 + d * max / x) / 4;
+
+		/* Remaining time */
+		d = (expected > d) ? (expected - d) : 0;
+	}
+
+	/* Calculate time values */
+	h =  d / 3600;
+	m = (d / 60) % 60;
+	s =  d % 60;
+
+	/* Calculate percentage/size */
+	percent = (x * 100.0) / max;
+	//size    = (hdd->wii_sec_sz / GB_SIZE) * max;
+
+	/* Show progress */
+	if (x != max) {
+		//printf("    %.2f%% of %.2fGB (%c) ETA: %d:%02d:%02d\r", percent, size, "/|\\-"[(x / 10) % 4], h, m, s);
+		//fflush(stdout);
+		fprintf(stdout , "%.2f;%d;%02d;%02d\n", percent, h, m, s);
+	} else
+		//printf("    %.2fGB copied in %d:%02d:%02d\n", size, h, m, s);
+		fprintf(stdout, "FIN;%d;%02d;%02d\n", h, m, s);
+	
 	fflush(stdout);
 }

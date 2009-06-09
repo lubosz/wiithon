@@ -13,6 +13,9 @@ Si instalais normalmente con apt-get:
 1º 	Instalar (antes instalará las dependencias automaticamente):
 		sudo make install_auto
 
+2º Ejecutar:
+        El programa se encontrará en Aplicaciones -> Oficina (En KDE y GNOME)
+
 ++++++++++++++++
 +  OPCION 2    +
 ++++++++++++++++
@@ -28,3 +31,6 @@ Si NO usais apt-get, tendreis antes que instalar las dependencias con el gestor 
 
 3º  Instalar :
 		sudo make install
+
+4º Ejecutar:
+        El programa se encontrará en Aplicaciones -> Oficina (En KDE y GNOME)

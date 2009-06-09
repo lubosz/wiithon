@@ -91,8 +91,6 @@ class PoolTrabajo(Pool , Thread):
             else:
                 core.nuevoMensaje( Mensaje("ERROR",_("El RAR %s no tenia ninguna ISO") % (nombreRAR)) )
         elif( os.path.isdir( fichero ) ):
-            print fichero
-
             encontrados =  util.rec_glob(fichero, "*.rar")
             if (len(encontrados) == 0):
                 core.nuevoMensaje( Mensaje("INFO",_("No se ha encontrado ningun RAR con ISOS dentro")))

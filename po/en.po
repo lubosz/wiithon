@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wiithon 1.0 Alpha\n"
 "Report-Msgid-Bugs-To: makiolo@gmail.com\n"
-"POT-Creation-Date: 2009-06-09 19:55+0200\n"
+"POT-Creation-Date: 2009-06-09 21:10+0200\n"
 "PO-Revision-Date: 2009-06-01 00:16+0200\n"
 "Last-Translator: \n"
 "Language-Team: Spanish <kde-i18n-doc@lists.kde.org>\n"
@@ -720,35 +720,35 @@ msgstr "Don't can uncompress because reemplace the ISO : %s"
 msgid "El RAR %s no tenia ninguna ISO"
 msgstr "RAR %s don't have ISO"
 
-#: trabajo.py:98
+#: trabajo.py:96
 msgid "No se ha encontrado ningun RAR con ISOS dentro"
 msgstr "Not found within any RAR with ISOS"
 
-#: trabajo.py:105
+#: trabajo.py:103
 msgid "No se ha encontrado ningun ISO"
 msgstr "There is not ISO"
 
-#: trabajo.py:114
+#: trabajo.py:112
 #, python-format
 msgid "ISO %s anadida correctamente"
 msgstr "ISO %s added successfully"
 
-#: trabajo.py:117
+#: trabajo.py:115
 #, python-format
 msgid "Anadiendo la ISO : %s (comprueba que sea una ISO de WII)"
 msgstr "Adding ISO: %s (check that it is an ISO WII)"
 
-#: trabajo.py:122
+#: trabajo.py:120
 #, python-format
 msgid "%s no es un ningun juego de Wii"
 msgstr "%s is not a Wii game"
 
-#: trabajo.py:141
+#: trabajo.py:139
 #, python-format
 msgid "ISO de %s extraida correctamente"
 msgstr "ISO %s added successfully"
 
-#: trabajo.py:143
+#: trabajo.py:141
 #, python-format
 msgid "Extrayendo la ISO : %s"
 msgstr "Extract ISO"

@@ -557,7 +557,6 @@ u32 wbfs_extract_disc(wbfs_disc_t*d, rw_sector_callback_t write_dst_wii_sector,v
                 u32 iwlba = wbfs_ntohs(d->header->wlba_table[i]);
                 if (iwlba)
                 {
-
                         if(spinner)
                                 spinner(i,p->n_wbfs_sec_per_disc);
                         p->read_hdsector(p->callback_data, p->part_lba + iwlba*src_wbs_nlb, src_wbs_nlb, copy_buffer);

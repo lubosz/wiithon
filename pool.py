@@ -2,7 +2,8 @@
 # -*- coding: utf-8 -*-
 # vim: set fileencoding=utf-8 :
 
-import time , sys
+import time
+import sys
 import subprocess
 import threading
 from threading import Thread
@@ -45,7 +46,7 @@ class Pool:
                         lista_args.append( arg )
 
                 worker = Thread(target=self.intentarEmpezarTrabajo, args=lista_args )
-                worker.setDaemon(True)
+                #worker.setDaemon(True)
                 worker.start()
 
             # aqui se bloquea hasta que termine
