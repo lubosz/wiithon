@@ -10,17 +10,21 @@ Hay 2 opciones, en función de si vuestra distribución usa apt-get o no:
 
 Si instalais normalmente con apt-get:
 
-1º 	Instalar (antes instalará las dependencias automaticamente): 
+1º 	Instalar (antes instalará las dependencias automaticamente):
 		sudo make install_auto
-		
+
 ++++++++++++++++
 +  OPCION 2    +
 ++++++++++++++++
-		
+
 Si NO usais apt-get, tendreis antes que instalar las dependencias con el gestor de paquetes de vuestro sistema:
 
 1º  Dependencias, instalar estos paquetes con los repositorios de vuestro sistema:
-		imagemagick wget rar libssl-dev intltool menu python-sqlalchemy python-gtk2 python-glade2 gnome-icon-theme
-			
-2º  Instalar :
+		imagemagick wget rar libssl-dev intltool menu
+		python-sqlalchemy python-gtk2 python-glade2 gnome-icon-theme
+
+2º  Dependencias opcionales:
+		python-sexy
+
+3º  Instalar :
 		sudo make install
