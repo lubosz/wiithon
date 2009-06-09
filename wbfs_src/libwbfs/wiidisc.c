@@ -1,6 +1,5 @@
 // Copyright 2009 Kwiirk based on negentig.c:
 // Copyright 2007,2008  Segher Boessenkool  <segher@kernel.crashing.org>
-// Modified by makiolo <makiolo@gmail.com>
 // Licensed under the terms of the GNU GPL, version 2
 // http://www.gnu.org/licenses/old-licenses/gpl-2.0.txt
 
@@ -36,7 +35,7 @@ static void disc_read(wiidisc_t *d,u32 offset, u8 *data, u32 len)
                         return ;
                 ret = d->read(d->fp,offset,len,data);
                 if(ret)
-                        wbfs_fatal("Error leyendo disco de WII");
+                        wbfs_fatal("error reading disc");
         }
         if(d->sector_usage_table)
         {
@@ -241,7 +240,7 @@ static void do_disc(wiidisc_t*d)
 	disc_read(d,0, b, 0x100);
         magic=_be32(b+24);
         if(magic!=0x5D1C9EA3){
-                wbfs_error("No es un disco de WII");
+                wbfs_error("not a wii disc");
                 return ;
         }
 	disc_read(d,0x40000>>2, b, 0x100);
@@ -317,7 +316,7 @@ void wd_fix_partition_table(wiidisc_t *d, partition_selector_t selector, u8* par
                 return;
 	n_partitions = _be32(b);
         if(_be32(b + 4)-(0x40000>>2) >0x50)
-                wbfs_fatal("No se puede modificar la tabla de particiones. Notifica este bug.");
+                wbfs_fatal("cannot modify this partition table. Please report the bug.");
         
         b += (_be32(b + 4)-(0x40000>>2))*4;
         j=0;

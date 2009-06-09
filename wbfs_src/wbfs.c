@@ -61,10 +61,6 @@ int wbfs_applet_ls(wbfs_t *p)
         if(count==0)
                 fprintf(stderr,"Sistemas de ficheros seleccionado vacio\n");
         else{
-        		//fprintf(stderr, "--------------------------------------------------------------------------------\n");
-        		//fprintf(stderr, "IDGAME\t\t                 TITULO                 \t\tTAMAÑO\n");
-        		//fprintf(stderr, "--------------------------------------------------------------------------------\n");
-        	
                 int i;
                 u32 size;
                 u8 *b = wbfs_ioalloc(0x100);
@@ -75,25 +71,39 @@ int wbfs_applet_ls(wbfs_t *p)
                         	fprintf(stderr, "%c%c%c%c%c%c;%s;%f\n",b[0], b[1], b[2], b[3], b[4], b[5], b + 0x20,size*4ULL/(GB));
 						}
                 }
-                //fprintf(stderr, "--------------------------------------------------------------------------------\n");
-                //fprintf(stderr , "\t\t\t\t\t\t\tTienes %d juegos de Wii\n" , count);
                 wbfs_iofree(b);
         }   
         return 0;
 }
 
+/*
+	wbfs_disc_t *disc = NULL;
+
+	u32 sectors;
+
+	if (!hdd)
+		return -1;
+
+	disc = wbfs_open_disc(hdd, discid);
+	if (!disc)
+		return -2;
+
+	sectors = wbfs_sector_used(hdd, disc->header);
+
+	wbfs_close_disc(disc);
+
+
+	*size = (hdd->wbfs_sec_sz / GB_SIZE) * sectors;
+
+	return 0;
+ */
+
 int wbfs_applet_df(wbfs_t *p)
 {
         u32 count = wbfs_count_usedblocks(p);
-        /*
-		fprintf(stderr , "\t\t\t\t\t\t\t\tUsado: %.2f GB\n" , (float)(p->n_wbfs_sec-count)*p->wbfs_sec_sz/GB );
-		fprintf(stderr , "\t\t\t\t\t\t\t\tLibre: %.2f GB\n" , (float)(count)*p->wbfs_sec_sz/GB );
-		fprintf(stderr , "\t\t\t\t\t\t\t\t----------------\n" );
-		fprintf(stderr , "\t\t\t\t\t\t\t\tTotal: %.2f GB\n" , (float)p->n_wbfs_sec*p->wbfs_sec_sz/GB );
-        */
-		fprintf(stderr , "%f;%f;%f" , 	(float)(p->n_wbfs_sec-count)*p->wbfs_sec_sz/GB ,
-										(float)(count)*p->wbfs_sec_sz/GB ,
-										(float)p->n_wbfs_sec*p->wbfs_sec_sz/GB
+		fprintf(stderr , "%f;%f;%f" , 	(float)(p->n_wbfs_sec-count)*p->wbfs_sec_sz/GB ,	// usado
+										(float)(count)*p->wbfs_sec_sz/GB ,					// libre
+										(float)p->n_wbfs_sec*p->wbfs_sec_sz/GB				// total
 									);
         return p!=0;
 }
@@ -239,6 +249,7 @@ int wbfs_applet_extract(wbfs_t *p,char*argv)
 }
 int wbfs_applet_create(char*argv)
 {
+		/*
         char buf[1024];
         strncpy(buf,argv,1019);
         strcpy(buf+strlen(buf),".wbfs");
@@ -258,7 +269,9 @@ int wbfs_applet_create(char*argv)
                         wbfs_close(p);
                 }
         }
-        return 0;
+        */
+        wbfs_fatal("sin implementar");
+        return 1;
 }
 
 void wbfs_applet_rename(wbfs_t *p , int argc , char * idgame , char * nuevoNombre)

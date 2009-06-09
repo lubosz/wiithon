@@ -266,6 +266,9 @@ class WiithonGUI(GtkBuilderWrapper):
 			nombreActual = self.seleccionJuegoSeleccionado.get_value(self.iteradorJuegoSeleccionado,2)
 			if(nombreActual != nuevoNombre):
 				if not util.tieneCaracteresRaros(nuevoNombre , util.BLACK_LIST2):
+				
+					nuevoNombre = nuevoNombre.decode("iso-8859-1")				
+			
 					if self.core.renombrarISO(self.DEVICEParticionSeleccionada , self.IDGAMEJuegoSeleccionado , nuevoNombre):
 						# modificamos el juego modificado de la BDD
 						juego = session.query(Juego).filter('idgame=="%s" and device=="%s"' % (self.IDGAMEJuegoSeleccionado , self.DEVICEParticionSeleccionada)).first()
@@ -494,7 +497,10 @@ class WiithonGUI(GtkBuilderWrapper):
 		libre = info[1]
 		total = info[2]
 		self.wb_labelEspacio.set_text("%.2f GB / %.2f GB" % (usado , total))
-		porcentaje = usado * 100.0 / total
+		try:
+			porcentaje = usado * 100.0 / total
+		except ZeroDivisionError:
+			porcentaje = 0.0
 		self.wb_progresoEspacio.set_text("%.2f%%" % (porcentaje))
 		self.wb_progresoEspacio.set_fraction( porcentaje / 100.0 )
 

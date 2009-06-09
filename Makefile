@@ -6,7 +6,7 @@ REVISION=${shell bzr revno}
 all: wbfs
 	@echo ==================================================================
 	@echo Escribe "sudo make run" para ejecutar en español
-	@echo Escribe "sudo make ru	nEN" para ejecutar en ingles
+	@echo Escribe "sudo make runEN" para ejecutar en ingles
 	@echo Escribe "sudo make install" para instalar wiithon y sus dependencias
 	@echo Escribe "sudo make uninstall" para desinstalar wiithon
 	@echo ==================================================================
