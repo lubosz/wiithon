@@ -88,7 +88,7 @@ int wbfs_applet_ls(wbfs_t *p)
                 int i;
                 u32 size;
                 u8 *b = wbfs_ioalloc(0x100);
-				char gameid[6];
+				char gameid[7]; // 6+1
                 for (i=0;i<count;i++)
                 {
                         if(!wbfs_get_disc_info(p,i,b,0x100,&size))
@@ -134,10 +134,7 @@ int wbfs_applet_df(wbfs_t *p)
         if(res == OK)
         {
         	f32 total = usado + libre;
-			fprintf(stderr , "%f;%f;%f" , 		usado ,	// usado
-												libre ,	// libre
-												total	// total
-									);
+			fprintf(stdout , "%f;%f;%f\n" , usado ,	libre ,	total);
 			return TRUE;
 		}
         else
