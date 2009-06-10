@@ -111,7 +111,7 @@ class WiithonGUI(GtkBuilderWrapper):
 
         if os.geteuid() != 0:
             self.alert("error" , _("REQUIERE_ROOT") % (config.APP , config.APP) )
-            raise AssertionError, "Error"
+            raise AssertionError, _("Error en permisos")
 
         listaParticiones = self.core.getListaParticiones()
         if(len(listaParticiones) == 0):

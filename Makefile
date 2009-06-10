@@ -2,13 +2,17 @@ PREFIX=/usr/local
 
 VERSION=${shell cat VERSION.txt}
 REVISION=${shell bzr revno}
+HOME_EFECTIVO=${shell cat /usr/local/share/wiithon/HOME.conf}
 
 all: wbfs
 	@echo ==================================================================
-	@echo Escribe "sudo make run" para ejecutar en español
-	@echo Escribe "sudo make runEN" para ejecutar en ingles
-	@echo Escribe "sudo make install" para instalar wiithon y sus dependencias
-	@echo Escribe "sudo make uninstall" para desinstalar wiithon
+	@echo "Escribe \"sudo make install_auto\" para instalar Wiithon y sus dependencias (con apt-get)"
+	@echo "Escribe \"sudo make install\" para instalar wiithon"
+	@echo "Escribe \"sudo make uninstall\" para desinstalar wiithon"
+	@echo "Escribe \"sudo make purge\" para desinstalar wiithon completamente"
+	@echo "Escribe \"sudo make dependencias\" para instalar las dependencias con apt-get"
+	@echo "Escribe \"sudo make run\" para ejecutar en español"
+	@echo "Escribe \"sudo make runEN\" para ejecutar en ingles"
 	@echo ==================================================================
 
 run: install
@@ -72,6 +76,12 @@ install: uninstall wbfs generarMOO
 	@echo "=================================================================="
 	@echo "Instalado OK"
 	@echo "=================================================================="
+	@echo "¿Como ejecutarlo? :"
+	@echo "\t1. Por consola:"
+	@echo "\t\t\t- sudo wiithon"
+	@echo "\t1. Por Interfaz gráfico:"
+	@echo "\t\t\t- Vaya a su menú de Aplicaciones, y encontrará Wiithon en la sección 'Oficina' (funciona en KDE y GNOME)"
+	@echo "=================================================================="
 
 uninstall:
 	# Limpiando antiguas instalaciones
@@ -88,8 +98,6 @@ uninstall:
 
 	-$(RM) $(PREFIX)/share/wiithon/recursos/glade/*.xml
 	-$(RM) $(PREFIX)/share/wiithon/recursos/glade/*.glade
-
-	-$(RM) $(PREFIX)/share/wiithon/HOME.conf
 
 	-$(RM) $(PREFIX)/share/wiithon/.acuerdo
 	-$(RM) ~/.wiithon_acuerdo
@@ -120,14 +128,19 @@ uninstall:
 	-rmdir $(PREFIX)/share/wiithon/recursos/glade
 	-rmdir $(PREFIX)/share/wiithon/recursos/imagenes
 	-rmdir $(PREFIX)/share/wiithon/recursos
-	-rmdir $(PREFIX)/share/wiithon
 
 	@echo "=================================================================="
 	@echo "Desinstalado OK"
 	@echo "=================================================================="
 
 purge: uninstall
-	-$(RM) -R ~/.wiithon/
+	-$(RM) -R ${HOME_EFECTIVO}/.wiithon/
+	-$(RM) $(PREFIX)/share/wiithon/HOME.conf
+	-rmdir $(PREFIX)/share/wiithon
+
+	@echo "=================================================================="
+	@echo "Desinstalado OK y limpiado cualquier configuración"
+	@echo "=================================================================="
 
 clean: clean_wbfs
 	$(RM) *.pyc
@@ -144,11 +157,6 @@ wbfs: /usr/include/openssl/aes.h /usr/include/openssl/md5.h /usr/include/openssl
 /usr/include/openssl/*.h:
 	@echo "Deberías instalar \"libssl-dev\" para poder compilar wbfs"
 	@return
-
-empaquetar: wbfs clean
-	$(RM) wiithon_v*_r*.tar.gz
-	# Averiguar como comprimir todo excepto lo que contiene ".bzrignore"
-	#tar zcvf wiithon_v${VERSION}_r${REVISION}.tar.gz *.py *.sh
 
 # REPOSITORIO
 
@@ -178,9 +186,6 @@ generarPO: generarPlantilla
 	@echo "*** GETTEXT *** Creando POO: es y en"
 	LANG=es_ES.UTF-8 msginit -i po/plantilla.pot -o po/es.po --no-translator
 	LANG=en_US.UTF-8 msginit -i po/plantilla.pot -o po/en.po --no-translator
-	#LANG=de_DE.UTF-8 msginit -i po/plantilla.pot -o po/de.po --no-translator
-	#LANG=fr_FR.UTF-8 msginit -i po/plantilla.pot -o po/fr.po --no-translator
-	#LANG=pt_PT.UTF-8 msginit -i po/plantilla.pot -o po/pt.po --no-translator
 
 # extraer strings del glade
 extraerGlade:
@@ -199,7 +204,7 @@ generarPlantilla: extraerGlade
 	@echo "*** GETTEXT *** Extrayendo strings del código"
 	xgettext --language=Python --omit-header --keyword=_ --keyword=N_ --from-code=utf-8 --sort-by-file --package-name="wiithon" --package-version="`cat VERSION.txt`" --msgid-bugs-address=makiolo@gmail.com -o po/plantilla.pot *.py recursos/glade/*.ui.h
 
-# Generar los MOO (compilados binadores de los PO)
+# Generar los MOO (compilados binarios de los PO)
 generarMOO: actualizarPO
 	@echo "*** GETTEXT *** Generando MOO"
 	mkdir -p po/en/LC_MESSAGES/
@@ -209,7 +214,7 @@ generarMOO: actualizarPO
 
 # borrar los PO
 limpiarPO:
-	@echo "*** GETTEXT *** Borrando POO , POT y MOO"
+	@echo "*** GETTEXT *** Borrando POO"
 	$(RM) po/es.po
 	$(RM) po/en.po
 

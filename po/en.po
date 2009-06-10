@@ -1,425 +1,433 @@
-#: cli.py:24
+#: cli.py:22 gui.py:113
+msgid "REQUIERE_ROOT"
+msgstr ""
+
+#: cli.py:23 gui.py:114
+msgid "Error en permisos"
+msgstr ""
+
+#: cli.py:29
 msgid ""
 "Has conectado el disco duro? No se ha encontrado ninguna particion valida."
 msgstr "Connected your HD with partition WBFS?"
 
-#: cli.py:27
+#: cli.py:32
 msgid "Lista de particiones autodetectadas : "
 msgstr ""
 
-#: cli.py:32
+#: cli.py:37
 msgid "Particion"
 msgstr ""
 
-#: cli.py:35
+#: cli.py:40
 #, python-format
 msgid "%d - Salir"
 msgstr "%d - Exit"
 
-#: cli.py:36
+#: cli.py:41
 msgid "Elige la particion WBFS con la que va ha trabajar : "
 msgstr ""
 
-#: cli.py:38
+#: cli.py:43
 msgid "Saliendo por peticion del usuario."
 msgstr ""
 
-#: cli.py:48
+#: cli.py:53
 msgid "Error obteniendo el Fabricando del HD"
 msgstr ""
 
-#: cli.py:51
+#: cli.py:56
 msgid "Fuera de rango"
 msgstr "Out of range"
 
-#: cli.py:53
+#: cli.py:58
 msgid "Valor incorrecto"
 msgstr "Value error"
 
-#: cli.py:80
+#: cli.py:85
 #, python-format
 msgid "Listando juegos de : %s"
 msgstr "Listing games of : %s"
 
-#: cli.py:84
+#: cli.py:89
 #, python-format
 msgid "No tienes instalado ningun juego en %s"
 msgstr ""
 
-#: cli.py:87
+#: cli.py:92
 msgid "Inserte un juego de la Wii en su lector de DVD ..."
 msgstr ""
 
-#: cli.py:88
+#: cli.py:93
 msgid "Pulse cualquier tecla para continuar ... "
 msgstr "Press any key to continue ..."
 
-#: cli.py:102
+#: cli.py:107
 msgid "Borrar juego con IDGAME"
 msgstr ""
 
-#: cli.py:102 cli.py:166
+#: cli.py:107 cli.py:171
 msgid "en particion"
 msgstr ""
 
-#: cli.py:104
+#: cli.py:109
 #, python-format
 msgid "Juego %s borrado correctamente"
 msgstr "ISO %s delete successfully"
 
-#: cli.py:106
+#: cli.py:111
 msgid "ERROR borrando el juego"
 msgstr "ERROR deleting game"
 
-#: cli.py:108
+#: cli.py:113
 msgid "No hay Juegos que borrar"
 msgstr "They aren't games that delete"
 
-#: cli.py:117
+#: cli.py:122
 #, python-format
 msgid "OK, descargado %s.png"
 msgstr ""
 
-#: cli.py:119
+#: cli.py:124
 #, python-format
 msgid "ERROR, descargando %s.png"
 msgstr ""
 
-#: cli.py:121
+#: cli.py:126
 msgid "No hay Juegos para descargar una caratula"
 msgstr ""
 
-#: cli.py:127
+#: cli.py:132
 msgid "Se descargaran en formato paronamico"
 msgstr ""
 
-#: cli.py:130
+#: cli.py:135
 msgid "Se descargaran en 3D"
 msgstr ""
 
-#: cli.py:133
+#: cli.py:138
 msgid "OK, todas las caratulas se han descargado"
 msgstr ""
 
-#: cli.py:135
+#: cli.py:140
 msgid "ERROR, descargando alguna caratula"
 msgstr ""
 
-#: cli.py:136
+#: cli.py:141
 msgid "Vuelvelo a intentar o mira en : http://www.theotherzone.com/wii/"
 msgstr ""
 
-#: cli.py:138
+#: cli.py:143
 msgid "No hay Juegos para descargar caratulas"
 msgstr ""
 
-#: cli.py:146
+#: cli.py:151
 msgid "Escriba el nuevo nombre : "
 msgstr ""
 
-#: cli.py:147
+#: cli.py:152
 msgid "Renombrar juego IDGAME"
 msgstr ""
 
-#: cli.py:147
+#: cli.py:152
 msgid "como"
 msgstr ""
 
-#: cli.py:149
+#: cli.py:154
 #, python-format
 msgid "ISO renombrada correctamente a %s"
 msgstr "Game renamed successfully to %s"
 
-#: cli.py:151
+#: cli.py:156
 msgid "ERROR al renombrar"
 msgstr "ERROR in rename"
 
-#: cli.py:153
+#: cli.py:158
 msgid "No hay Juegos para renombrar"
 msgstr "They aren't games for rename"
 
-#: cli.py:156
+#: cli.py:161
 #, python-format
 msgid "Verificando todos los juegos de la particion %s"
 msgstr "Checking all games at the partition %s"
 
-#: cli.py:159
+#: cli.py:164
 msgid "No hay Juegos para verificar"
 msgstr "They aren't games that check"
 
-#: cli.py:166
+#: cli.py:171
 msgid "Extraer ISO de juego con IDGAME"
 msgstr ""
 
-#: cli.py:168
+#: cli.py:173
 #, python-format
 msgid "Juego %s extraido OK"
 msgstr ""
 
-#: cli.py:170
+#: cli.py:175
 #, python-format
 msgid "ERROR extrayendo la ISO de %s"
 msgstr ""
 
-#: cli.py:172
+#: cli.py:177
 msgid "No hay Juegos para extraer"
 msgstr "They aren't games that extract"
 
-#: cli.py:182
+#: cli.py:187
 #, python-format
 msgid "Buscando en %s ficheros RAR ... "
 msgstr "Searching %s files RAR ..."
 
-#: cli.py:185
+#: cli.py:190
 #, python-format
 msgid "Buscando en %s Imagenes ISO ... "
 msgstr "Searching %s ISO Image ..."
 
-#: cli.py:205
+#: cli.py:210
 msgid "No se ha encontrado ninguna imagen ISO"
 msgstr "There is not image ISO"
 
-#: cli.py:232
+#: cli.py:237
 msgid "Aniadir RAR con ISO dentro"
 msgstr ""
 
-#: cli.py:232 cli.py:281
+#: cli.py:237 cli.py:286
 msgid "a la particion"
 msgstr ""
 
-#: cli.py:239
+#: cli.py:244
 msgid "Descomprimido correctamente"
 msgstr ""
 
-#: cli.py:242
+#: cli.py:247
 #, python-format
 msgid "ISO %s descomprimida y anadida correctamente"
 msgstr ""
 
-#: cli.py:246
+#: cli.py:251
 #, python-format
 msgid "ERROR anadiendo la ISO : %s (comprueba que sea una ISO de WII)"
 msgstr ""
 
-#: cli.py:253
+#: cli.py:258
 msgid "Se va ha borrar la ISO descomprimida"
 msgstr ""
 
-#: cli.py:255
+#: cli.py:260
 #, python-format
 msgid "La ISO %s temporal fue borrada"
 msgstr ""
 
-#: cli.py:257
+#: cli.py:262
 #, python-format
 msgid "ERROR al borrar la ISO : %s"
 msgstr ""
 
-#: cli.py:261
+#: cli.py:266
 msgid "No se ha borrado la ISO temporal"
 msgstr "Don't delete temporal ISO"
 
-#: cli.py:263
+#: cli.py:268
 #, python-format
 msgid "ERROR al descomrpimir el RAR : %s"
 msgstr "ERROR When uncompress RAR : %s"
 
-#: cli.py:269
+#: cli.py:274
 #, python-format
 msgid "ERROR no se puede descomrpimir por que reemplazaria el ISO : %s"
 msgstr "Don't can uncompress because reemplace the ISO : %s"
 
-#: cli.py:275
+#: cli.py:280
 #, python-format
 msgid "ERROR el RAR %s no tenia ninguna ISO"
 msgstr "RAR %s don't have ISO"
 
-#: cli.py:281
+#: cli.py:286
 msgid "Aniadir ISO"
 msgstr ""
 
-#: cli.py:283
+#: cli.py:288
 #, python-format
 msgid "ISO %s aniadida correctamente"
 msgstr "ISO %s added successfully"
 
-#: cli.py:289
+#: cli.py:294
 #, python-format
 msgid "ERROR aniadiendo la ISO : %s (comprueba que sea una ISO de WII)"
 msgstr ""
 
-#: cli.py:295
+#: cli.py:300
 #, python-format
 msgid "ERROR %s no es un ningun juego de Wii"
 msgstr "%s is not a Wii game"
 
-#: cli.py:301
+#: cli.py:306
 msgid "ERROR la ISO o la particion no existe"
 msgstr "ISO or the partition don't exists"
 
-#: cli.py:307
+#: cli.py:312
 msgid "INFORME DE RESULTADOS"
 msgstr ""
 
-#: cli.py:316
+#: cli.py:321
 msgid "Juegos correctos"
 msgstr ""
 
-#: cli.py:323
+#: cli.py:328
 msgid "Juegos erroneos"
 msgstr ""
 
-#: cli.py:336
+#: cli.py:341
 msgid "Buscando un Disco de Wii ..."
 msgstr "Searching Wii disc ..."
 
-#: cli.py:347
+#: cli.py:352
 msgid "No se ha encontrado ningun disco de la Wii"
 msgstr "No Wii Disc"
 
-#: cli.py:349
+#: cli.py:354
 msgid "Hay mas de un juego de la Wii, deja solo 1 para eliminar la ambiguedad"
 msgstr ""
 
-#: cli.py:359
+#: cli.py:364
 #, python-format
 msgid "Ya hay una ISO en : %s"
 msgstr ""
 
-#: cli.py:360
+#: cli.py:365
 msgid "Desea reemplazarla (S/N) : "
 msgstr ""
 
-#: cli.py:365
+#: cli.py:370
 msgid "a un ISO temporal de 4.4GB en"
 msgstr ""
 
-#: cli.py:369
+#: cli.py:374
 msgid "Caratula descargada como"
 msgstr ""
 
-#: cli.py:371
+#: cli.py:376
 #, python-format
 msgid "No se ha encontrado caratula para el juego %s"
 msgstr "There is not image ISO"
 
-#: cli.py:373
+#: cli.py:378
 msgid "Error al pasar la ISO al disco duro"
 msgstr ""
 
-#: cli.py:374
+#: cli.py:379
 msgid "wiithon no borra la ISO temporal, puedes borrarla si no la necesitas"
 msgstr ""
 
-#: cli.py:376
+#: cli.py:381
 msgid "Error al dumpear la ISO"
 msgstr "Error when dump ISO"
 
-#: cli.py:378
+#: cli.py:383
 msgid "Interrumpido por el usuario"
 msgstr "Interrupt by user"
 
-#: cli.py:386
+#: cli.py:391
 msgid "Caratula?"
 msgstr "Cover?"
 
-#: cli.py:386 cli.py:420
+#: cli.py:391 cli.py:425
 msgid "TAMANIO"
 msgstr "SIZE"
 
-#: cli.py:386 cli.py:420 cli.py:447
+#: cli.py:391 cli.py:425 cli.py:452
 msgid "TITULO"
 msgstr "TITLE"
 
-#: cli.py:392 cli.py:426
+#: cli.py:397 cli.py:431
 msgid "SI"
 msgstr "YES"
 
-#: cli.py:394 cli.py:428
+#: cli.py:399 cli.py:433
 msgid "NO"
 msgstr "NO"
 
-#: cli.py:397 cli.py:431
+#: cli.py:402 cli.py:436
 #, python-format
 msgid "Presiona cualquier tecla para mostrar %d lineas mas"
 msgstr "Press any key for show %d more lines"
 
-#: cli.py:402
+#: cli.py:407
 msgid "Indique el NUM del juego : "
 msgstr "Number of game ? : "
 
-#: cli.py:408
+#: cli.py:413
 msgid "Numero fuera de rango"
 msgstr "Out of range"
 
-#: cli.py:410
+#: cli.py:415
 msgid "El numero dado es incorrecto"
 msgstr "Number incorrect"
 
-#: cli.py:420
+#: cli.py:425
 msgid "Cararuta?"
 msgstr "Cover?"
 
-#: cli.py:434
+#: cli.py:439
 msgid "juegos de WII"
 msgstr "games of WII"
 
-#: cli.py:447
+#: cli.py:452
 msgid "Corrupto?"
 msgstr "Corrupt?"
 
-#: cli.py:451
+#: cli.py:456
 msgid "NO ESTA CORRUPTO"
 msgstr "DON'T IS CORRUPT"
 
-#: cli.py:453
+#: cli.py:458
 msgid "ESTA CORRUPTO"
 msgstr " CORRUPT !!"
 
-#: cli.py:459
+#: cli.py:464
 msgid "Lista de juegos corruptos"
 msgstr "List of corrupt games"
 
-#: cli.py:464
+#: cli.py:469
 #, python-format
 msgid "Hay %d juegos corruptos, se recomienda que los desinstale"
 msgstr "They are %d corrupted games, you must uninstall it"
 
-#: cli.py:466
+#: cli.py:471
 msgid "Quieres desinstalarlos? (S/N) "
 msgstr "Do you want uninstall? (Y/N)"
 
-#: cli.py:467
+#: cli.py:472
 msgid "s"
 msgstr "y"
 
-#: cli.py:467
+#: cli.py:472
 msgid "si"
 msgstr "yes"
 
-#: cli.py:470
+#: cli.py:475
 #, python-format
 msgid "%s borrado correctamente"
 msgstr "ISO %s delete successfully"
 
-#: cli.py:472
+#: cli.py:477
 #, python-format
 msgid "ERROR : %s NO se ha borrado correctamente"
 msgstr "ERROR : ISO %s DON'T delete"
 
-#: cli.py:474
+#: cli.py:479
 msgid "Saliendo. No se ha desinstalado nada"
 msgstr ""
 
-#: cli.py:479
+#: cli.py:484
 msgid "Usado"
 msgstr "Used"
 
-#: cli.py:480
+#: cli.py:485
 msgid "Libre"
 msgstr "Free"
 
-#: cli.py:481
+#: cli.py:486
 msgid "Total"
 msgstr "Total"
 
@@ -440,10 +448,6 @@ msgstr ""
 #: gui.py:40
 msgid "Preferencias cargadas"
 msgstr "Preferences loaded"
-
-#: gui.py:113
-msgid "REQUIERE_ROOT"
-msgstr ""
 
 #: gui.py:138
 #, python-format
@@ -751,4 +755,3 @@ msgstr "Program run with the incorrect settings"
 #: wiithon.py:96
 msgid "Pulse cualquier tecla para continuar ...\n"
 msgstr "Press any key to continue ... \n"
-
