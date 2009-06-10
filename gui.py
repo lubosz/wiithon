@@ -21,21 +21,41 @@ class WiithonGUI(GtkBuilderWrapper):
     def __init__(self, core):
         # Constructor padre
 
-        GtkBuilderWrapper.__init__(self, config.WIITHON_FILES + '/recursos/glade/wiithon.ui')
+        GtkBuilderWrapper.__init__(self, os.path.join(config.WIITHON_FILES_RECURSOS_GLADE  , 'wiithon.ui'))
 
         self.core = core
         self.buscar = ""
         self.modo = "desconocido" # desconocido | ver | manager
 
-        self.preferencia = session.query(Preferencia).first()
+        try:
+            self.preferencia = session.query(Preferencia).first()
+        except:
+            print "base de datos ocupada"
+            sys.exit(1)
         # Nunca se han creado preferencias
         if self.preferencia == None:
             self.preferencia = Preferencia()
             session.save( self.preferencia )
             session.commit()
-            print _("DEBUG: Preferencias creadas por primera vez")
+            print _("Preferencias creadas por primera vez")
         else:
-            print _("DEBUG: Preferencias cargadas")
+            print _("Preferencias cargadas")
+
+        # verificar que las rutas existen
+        if(not os.path.exists(self.preferencia.ruta_anadir)):
+        	self.preferencia.ruta_anadir = os.getcwd()
+
+        if(not os.path.exists(self.preferencia.ruta_anadir_directorio)):
+        	self.preferencia.ruta_anadir_directorio = os.getcwd()
+
+        if(not os.path.exists(self.preferencia.ruta_extraer_iso)):
+        	self.preferencia.ruta_extraer_iso = os.getcwd()
+
+        if(not os.path.exists(self.preferencia.ruta_copiar_caratulas)):
+        	self.preferencia.ruta_copiar_caratulas = os.getcwd()
+
+        if(not os.path.exists(self.preferencia.ruta_copiar_discos)):
+        	self.preferencia.ruta_copiar_discos = os.getcwd()
 
         ######### PUNTEROS ##############
 
@@ -60,7 +80,7 @@ class WiithonGUI(GtkBuilderWrapper):
 
         self.wb_principal.set_title('Wiithon')
         # FIXME: Hacer otro icono pequeño
-        self.wb_principal.set_icon_from_file( "/usr/share/pixmaps/wiithon.svg" )
+        # self.wb_principal.set_icon_from_file( "/usr/share/pixmaps/wiithon.svg" )
         self.wb_principal.show()
 
         self.wb_tb_anadir.connect('clicked' , self.on_tb_toolbar_clicked)
@@ -93,7 +113,7 @@ class WiithonGUI(GtkBuilderWrapper):
 
         if os.geteuid() != 0:
             self.alert("error" , _("%s requiere permisos de superusuario (root) para acceder a las particiones WBFS.\n"
-            "Esto dependera de su distribucion de Linux pero intente con : sudo %s" % (config.APP , config.APP) ))
+                "Esto dependera de su distribucion de Linux pero intente con : sudo %s" % (config.APP , config.APP) ))
             raise AssertionError, "Error"
 
         listaParticiones = self.core.getListaParticiones()
@@ -177,6 +197,18 @@ class WiithonGUI(GtkBuilderWrapper):
         # pongo el foco en el buscador
         self.wb_busqueda.grab_focus()
 
+    def main(self , opciones , argumentos):
+
+        for arg in argumentos:
+            arg = os.path.abspath(arg)
+            if os.path.exists(arg):
+                if util.getExtension(arg)=="iso":
+                    self.poolTrabajo.nuevoTrabajoAnadir( arg )
+                else:
+                    self.alert("warning" , _("Formato desconocido"))
+
+        gtk.main()
+
     # http://www.pygtk.org/pygtk2reference/class-pangoattribute.html
     def getEstilo_azulGrande(self):
 
@@ -228,8 +260,8 @@ class WiithonGUI(GtkBuilderWrapper):
         tv_partitions.connect('cursor-changed', self.on_tv_partitions_cursor_changed)
 
         modelo = gtk.ListStore (    gobject.TYPE_INT ,    # autonumerico (oculto)
-                                    gobject.TYPE_STRING,    # device
-                                    gobject.TYPE_STRING)    # fabricante
+                gobject.TYPE_STRING,    # device
+                gobject.TYPE_STRING)    # fabricante
         tv_partitions.set_model(modelo)
 
         return modelo
@@ -316,10 +348,10 @@ class WiithonGUI(GtkBuilderWrapper):
         tv_games.connect('cursor-changed', self.on_tv_games_cursor_changed)
 
         modelo = gtk.ListStore (    gobject.TYPE_INT ,    # orden (campo oculto)
-                                    gobject.TYPE_STRING,    # IDGAME
-                                    gobject.TYPE_STRING,    # Nombre
-                                    gobject.TYPE_STRING,    # Tamaño
-                                )
+                gobject.TYPE_STRING,    # IDGAME
+                gobject.TYPE_STRING,    # Nombre
+                gobject.TYPE_STRING,    # Tamaño
+                )
         tv_games.set_model(modelo)
 
         return modelo
@@ -361,22 +393,22 @@ class WiithonGUI(GtkBuilderWrapper):
 
     def alert(self, level, message):
         alert_glade = gtk.Builder()
-        alert_glade.add_from_file( config.WIITHON_FILES + '/recursos/glade/alerta.ui' )
+        alert_glade.add_from_file( os.path.join(config.WIITHON_FILES_RECURSOS_GLADE  , 'alerta.ui') )
         alert_glade.set_translation_domain( config.APP )
 
         level_icons = {
-            'question': gtk.STOCK_DIALOG_QUESTION,
-            'info':     gtk.STOCK_DIALOG_INFO,
-            'warning':  gtk.STOCK_DIALOG_WARNING,
-            'error':    gtk.STOCK_DIALOG_ERROR,
-            }
+                'question': gtk.STOCK_DIALOG_QUESTION,
+                'info':     gtk.STOCK_DIALOG_INFO,
+                'warning':  gtk.STOCK_DIALOG_WARNING,
+                'error':    gtk.STOCK_DIALOG_ERROR,
+                }
 
         level_buttons = {
-            'question': (gtk.STOCK_YES, gtk.STOCK_NO),
-            'info':     (gtk.STOCK_APPLY, None),
-            'warning':  (gtk.STOCK_APPLY, None),
-            'error':    (gtk.STOCK_CLOSE, None),
-            }
+                'question': (gtk.STOCK_YES, gtk.STOCK_NO),
+                'info':     (gtk.STOCK_APPLY, None),
+                'warning':  (gtk.STOCK_APPLY, None),
+                'error':    (gtk.STOCK_CLOSE, None),
+                }
 
         # configure the label text:
         alert_msg = alert_glade.get_object('lbl_message')
@@ -423,7 +455,6 @@ class WiithonGUI(GtkBuilderWrapper):
         self.listaJuegos = []
         for juego in session.query(Juego):
             self.listaJuegos.append( juego )
-
         self.refrescarListaJuegos()
 
     # refresco desde el disco duro (lento)
@@ -450,6 +481,8 @@ class WiithonGUI(GtkBuilderWrapper):
             else:
                 #actualizo el device al que pertenece
                 juego.title = tuplaJuego[1]
+                # El tamaño no cambia
+                #juego.size = float(tuplaJuego[2])
                 juego.device = self.DEVICEParticionSeleccionada
 
             self.listaJuegos[ i ] = juego
@@ -563,10 +596,10 @@ class WiithonGUI(GtkBuilderWrapper):
             if self.iteradorJuegoSeleccionado != None:
                 botones = (
                         gtk.STOCK_CANCEL,
-                           gtk.RESPONSE_CANCEL,
-                           gtk.STOCK_OPEN,
-                           gtk.RESPONSE_OK,
-                       )
+                        gtk.RESPONSE_CANCEL,
+                        gtk.STOCK_OPEN,
+                        gtk.RESPONSE_OK,
+                        )
 
                 fc_extraer = gtk.FileChooserDialog(_('Elige un directorio donde extraer la ISO de %s' % (self.IDGAMEJuegoSeleccionado)), None , gtk.FILE_CHOOSER_ACTION_SELECT_FOLDER , botones)
                 fc_extraer.set_default_response(gtk.RESPONSE_OK)
@@ -600,10 +633,10 @@ class WiithonGUI(GtkBuilderWrapper):
             if self.iteradorParticionSeleccionada != None:
 
                 botones = (gtk.STOCK_CANCEL,
-                       gtk.RESPONSE_CANCEL,
-                       gtk.STOCK_OPEN,
-                       gtk.RESPONSE_OK,
-                       )
+                        gtk.RESPONSE_CANCEL,
+                        gtk.STOCK_OPEN,
+                        gtk.RESPONSE_OK,
+                        )
 
                 if(id_tb == self.wb_tb_anadir):
                     fc_anadir = gtk.FileChooserDialog(_("Elige una ISO o un RAR"), None , gtk.FILE_CHOOSER_ACTION_OPEN , botones)
@@ -650,10 +683,10 @@ class WiithonGUI(GtkBuilderWrapper):
             if self.iteradorJuegoSeleccionado != None:
                 botones = (
                         gtk.STOCK_CANCEL,
-                           gtk.RESPONSE_CANCEL,
-                           gtk.STOCK_OPEN,
-                           gtk.RESPONSE_OK,
-                       )
+                        gtk.RESPONSE_CANCEL,
+                        gtk.STOCK_OPEN,
+                        gtk.RESPONSE_OK,
+                        )
 
                 fc_copiar_SD = gtk.FileChooserDialog(_('Paso 1 de 2: Elige un directorio para las CARATULAS'), None , gtk.FILE_CHOOSER_ACTION_SELECT_FOLDER , botones)
                 fc_copiar_SD.set_default_response(gtk.RESPONSE_OK)

@@ -422,11 +422,11 @@ class WiithonCLI:
             i = 1
             for juego in listaJuegos:
                 ocupado = float(juego[2])
-                if (self.core.existeCaratula(juego[0])):
+                if (self.core.existeCaratula(juego[0]) and self.core.existeDisco(juego[0])):
                     caratula = _("SI")
                 else:
                     caratula = _("NO")
-                print "%s\t%-55s\t%.2f GB\t%6s" % ( juego[0] , juego[1] , ocupado , caratula)
+                print "%s\t%-55s\t%.2f GB\t%6s" % (juego[0] , juego[1] , ocupado , caratula)
                 if ( (i % config.NUM_LINEAS_PAUSA) == 0 ):
                     raw_input(_("Presiona cualquier tecla para mostrar %d lineas mas" % (config.NUM_LINEAS_PAUSA)))
                 i = i + 1

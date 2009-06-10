@@ -12,6 +12,8 @@ import os
 import getopt
 
 import config
+import util
+
 from cli import WiithonCLI
 from gui import WiithonGUI
 from core import WiithonCORE
@@ -45,21 +47,6 @@ def configurarLenguaje():
         module.textdomain(config.APP)
 
     gettext.install(config.APP,config.LOCALE, unicode=1)
-
-def informarAcuerdo(pregunton):
-    res = pregunton(_('''El equipo de Wiithon no se hace responsable de la aplicacion ni de la perdida de datos.
-No obstante, la particion NO va ha ser formateada.
-Esta aplicación añade, borra y lista juegos explicamente mediante la ayuda de %s.
-Esta información no volverá a aparecer si acepta el acuerdo.
-¿Está de acuerdo?''' % ( os.path.basename(config.WBFS_APP) ) ) )
-
-    assert res == 1, _("No puedes usar esta aplicacion si no estas de acuerdo")
-
-    os.mkdir( config.HOME_WIITHON )
-    os.mkdir( config.HOME_WIITHON_BDD )
-    os.mkdir( config.HOME_WIITHON_CARATULAS )
-    os.mkdir( config.HOME_WIITHON_DISCOS )
-    os.mkdir( config.HOME_WIITHON_LOGS )
 
 def App():
     try:
@@ -95,16 +82,10 @@ def App():
 
         if glade_gui:
             interfaz = WiithonGUI(core)
-
-            # solo pregunta el acuerdo por GUI
-            # FIXME: Esto debería ser un dialogo modal
-            if not os.path.exists(config.HOME_WIITHON):
-                informarAcuerdo(interfaz.question)
-
-            gtk.main()
         else:
             interfaz = WiithonCLI(core)
-            interfaz.main(opciones_formateadas, arguments)
+
+        interfaz.main(opciones_formateadas, arguments)
 
     except getopt.GetoptError:
         raise AssertionError, _("Programa ejecutado con las opciones incorrectas.")

@@ -88,15 +88,15 @@ int wbfs_applet_ls(wbfs_t *p)
                 int i;
                 u32 size;
                 u8 *b = wbfs_ioalloc(0x100);
-				char gameid[7]; // 6+1
+				char gameid[6];
                 for (i=0;i<count;i++)
                 {
                         if(!wbfs_get_disc_info(p,i,b,0x100,&size))
                         {
-							sprintf(gameid, "%c%c%c%c%c%c", b[0], b[1], b[2], b[3], b[4], b[5] );
+							sprintf( gameid, "%c%c%c%c%c%c", b[0], b[1], b[2], b[3], b[4], b[5] );
 							f32 size = WBFS_GameSize( p , (u8*)gameid);
 							if( size < 0) size = 0.0f;
-							fprintf(stderr, "%s;%s;%f\n", gameid , b + 0x20, 0.0f );
+							fprintf(stderr, "%s;%s;%f\n", gameid , b + 0x20, size );
 						}
                 }
                 wbfs_iofree(b);

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wiithon 1.0 Alpha\n"
 "Report-Msgid-Bugs-To: makiolo@gmail.com\n"
-"POT-Creation-Date: 2009-06-09 21:10+0200\n"
+"POT-Creation-Date: 2009-06-10 02:31+0200\n"
 "PO-Revision-Date: 2009-06-01 00:20+0200\n"
 "Last-Translator: \n"
 "Language-Team: Spanish <kde-i18n-doc@lists.kde.org>\n"
@@ -460,15 +460,15 @@ msgstr ""
 msgid "***************** DESCARGAR CARATULA %s ********************"
 msgstr ""
 
-#: gui.py:36
-msgid "DEBUG: Preferencias creadas por primera vez"
+#: gui.py:40
+msgid "Preferencias creadas por primera vez"
 msgstr ""
 
-#: gui.py:38
-msgid "DEBUG: Preferencias cargadas"
+#: gui.py:42
+msgid "Preferencias cargadas"
 msgstr ""
 
-#: gui.py:95
+#: gui.py:115
 #, python-format
 msgid ""
 "%s requiere permisos de superusuario (root) para acceder a las particiones "
@@ -476,7 +476,7 @@ msgid ""
 "Esto dependera de su distribucion de Linux pero intente con : sudo %s"
 msgstr ""
 
-#: gui.py:121
+#: gui.py:141
 #, python-format
 msgid ""
 "No se han encontrado particiones WBFS:\n"
@@ -485,7 +485,7 @@ msgid ""
 "acumulada por %s en sesiones anteriores."
 msgstr ""
 
-#: gui.py:123
+#: gui.py:143
 #, python-format
 msgid ""
 "No se han encontrado particiones WBFS:\n"
@@ -493,110 +493,114 @@ msgid ""
 "reinicie %s\n"
 msgstr ""
 
-#: gui.py:222
+#: gui.py:208
+msgid "Formato desconocido"
+msgstr ""
+
+#: gui.py:254
 msgid "Dispositivo"
 msgstr ""
 
-#: gui.py:223
+#: gui.py:255
 msgid "Fabricante"
 msgstr ""
 
-#: gui.py:269
+#: gui.py:301
 msgid "Error renombrando"
 msgstr ""
 
-#: gui.py:271
+#: gui.py:303
 #, python-format
 msgid "Se han detectado caracteres no validos: %s"
 msgstr ""
 
-#: gui.py:290
+#: gui.py:322
 msgid "IDGAME"
 msgstr ""
 
-#: gui.py:291
+#: gui.py:323
 msgid "Nombre"
 msgstr ""
 
-#: gui.py:292
+#: gui.py:324
 msgid "Tamanio"
 msgstr "Tamaño"
 
-#: gui.py:500
+#: gui.py:533
 #, python-format
 msgid "Hay %d tarea pendiente"
 msgstr ""
 
-#: gui.py:503
+#: gui.py:536
 #, python-format
 msgid "Hay %d tareas pendientes"
 msgstr ""
 
-#: gui.py:542
+#: gui.py:575
 msgid "Tienes que seleccionar una particion WBFS para realizar esta accion"
 msgstr ""
 
-#: gui.py:548
+#: gui.py:581
 #, python-format
 msgid "¿Quieres borrar el juego con ID = \"%s\"?"
 msgstr ""
 
-#: gui.py:561 gui.py:590 gui.py:598
+#: gui.py:594 gui.py:623 gui.py:631
 msgid "No has seleccionado ningun juego"
 msgstr ""
 
-#: gui.py:571
+#: gui.py:604
 #, python-format
 msgid "Elige un directorio donde extraer la ISO de %s"
 msgstr ""
 
-#: gui.py:609
+#: gui.py:642
 msgid "Elige una ISO o un RAR"
 msgstr ""
 
-#: gui.py:612
+#: gui.py:645
 msgid "ImagenISO, Comprimido RAR"
 msgstr ""
 
-#: gui.py:619
+#: gui.py:652
 msgid "Elige un directorio"
 msgstr ""
 
-#: gui.py:647
+#: gui.py:680
 msgid "No has seleccionado ninguna particion"
 msgstr ""
 
-#: gui.py:658
+#: gui.py:691
 msgid "Paso 1 de 2: Elige un directorio para las CARATULAS"
 msgstr ""
 
-#: gui.py:665
+#: gui.py:698
 msgid "Paso 2 de 2: Elige un directorio para los DISCOS"
 msgstr ""
 
-#: gui.py:685
+#: gui.py:718
 msgid "No tienes ningun juego"
 msgstr ""
 
-#: gui.py:718
+#: gui.py:751
 #, python-format
 msgid "CUIDADO: %s"
 msgstr ""
 
-#: gui.py:720
+#: gui.py:753
 #, python-format
 msgid "ERROR: %s"
 msgstr ""
 
-#: gui.py:742
+#: gui.py:775
 msgid "DEBUG: Comando desconocido"
 msgstr ""
 
-#: gui.py:800
+#: gui.py:833
 msgid "Finalizando. Hecho en"
 msgstr ""
 
-#: gui.py:804
+#: gui.py:837
 msgid "quedan"
 msgstr ""
 
@@ -763,33 +767,27 @@ msgstr ""
 msgid "Extrayendo la ISO : %s"
 msgstr ""
 
-#: wiithon.py:32
+#: wiithon.py:34
 msgid "Necesitas tener instalado pyGTK o GTKv2"
 msgstr ""
 
-#: wiithon.py:50
-#, python-format
-msgid ""
-"El equipo de Wiithon no se hace responsable de la aplicacion ni de la "
-"perdida de datos.\n"
-"No obstante, la particion NO va ha ser formateada.\n"
-"Esta aplicación añade, borra y lista juegos explicamente mediante la ayuda "
-"de %s.\n"
-"Esta información no volverá a aparecer si acepta el acuerdo.\n"
-"¿Está de acuerdo?"
-msgstr ""
-
-#: wiithon.py:56
-msgid "No puedes usar esta aplicacion si no estas de acuerdo"
-msgstr ""
-
-#: wiithon.py:110
+#: wiithon.py:91
 msgid "Programa ejecutado con las opciones incorrectas."
 msgstr ""
 
-#: wiithon.py:115
+#: wiithon.py:96
 msgid "Pulse cualquier tecla para continuar ...\n"
 msgstr ""
+
+#~ msgid "PROPUESTA_ACUERDO"
+#~ msgstr ""
+#~ "El equipo de Wiithon no se hace responsable de la aplicacion ni de la "
+#~ "perdida de datos.\n"
+#~ "No obstante, la particion NO va ha ser formateada.\n"
+#~ "Esta aplicación añade, borra y lista juegos explicamente mediante la "
+#~ "ayuda de %s.\n"
+#~ "Esta información no volverá a aparecer si acepta el acuerdo.\n"
+#~ "¿Está de acuerdo?"
 
 #~ msgid "Categor&#xED;as"
 #~ msgstr "Categorías"

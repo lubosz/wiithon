@@ -135,6 +135,10 @@ def getUltimaLinea(fichero):
         ultimaLinea = linea
     return ultimaLinea
 
+def try_mkdir(carpeta):
+    if not os.path.exists(carpeta):
+        os.mkdir(carpeta)
+
 '''
 Un ejemplo de las listas de python
 
