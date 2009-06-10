@@ -1,0 +1,176 @@
+=================> TRADUCIR A INGLES <======================
+
+===================================================================================
++ Instalación
+===================================================================================
+
+Ver archivo INSTALAR.txt
+
+===================================================================================
++ Caracteristicas:
+===================================================================================
+
+Versión 0.98
+domingo, 19 de abril de 2009
+--------------------------------------------------------------------------------------------------------
+NOVEDADES
+----------------------------------
+- Instar juegos desde el DVD, al estilo del usb loader, pero algo más lento porque dumpea a ISO y cuando termina mete la ISO.
+- Comprobar Integridad de los juegos. Muchos de nuestros juegos pueden estar corruptos sin aún saberlo debido a el bug de borrado de las primeras versiones de WBFS
+- Por tanto surgen 2 nuevos comandos:
+	wiithon instalar
+	wiithon comprobar
+
+BUGS CORREGIDOS
+----------------------------------
+- Ahora busca particiones WBFS en todo tipo de particiones, antes solo en discos USB.
+- Corregido un problema detectando la partición en algunas distribuciones de GNU/Linux. En discos de 1 partición no asignan numero tipo /dev/sdaX llamandola /dev/sda, por tanto no cumplen el patrón y no eran detectados.
+- Añadida la comprobación de Hermes (modificada por mi) para verificar qué juegos instalados se han visto afectados por el bug de borrado en libwbfs. Gracias kraff por el aviso
+- Ahora muestra el nombre de la partición y el fabricante cuando no tengas juegos.
+
+CAMBIOS INTERNOS
+----------------------------------
+- He hecho unos primeros cambios en el Makefile segun consejos de Lk2
+- He rediseñado el código del check de Hermes (goto para los errores , flags sin enumerados y "for" donde hay k poner "while")
+
+
+Versión 0.97
+viernes, 17 de abril de 2009
+--------------------------------------------------------------------------------------------------------
+BUGS CORREGIDOS
+-----------------------------------------------
+  - Ahora wiithon detecta bien las particiones WBFS para linux que no disponen de "udevinfo"
+  - Corregido un problema en el que asignaba mal el directorio de trabajo, cuando se usaba por nautilus, y las caratulas eran descargadas en /home/usuario
+  - Arreglado un fallo de representación, ahora estan mejor tabulados los resultados
+  - Arreglado el mostrar el fabricante del disco duro. Además sale siempre al lado del nombre de la partición (si tienes udevinfo)
+  - Arreglado un problema con caracteres raros en expresiones regulares
+  - Ahora wbfs ha dejado de ser un enlace simbólico, esto permite que wiithon pueda ser instalado desde cualquier tipo de partición. (no necesariamente ext2/3)
+  - Hecho limpeza de binarios de wbfs innecesarios para wiithon
+  - Mejor presentados al usuario los casos en el que sin tener ningún juego, se intenta realizar alguna de las siguientes acciones: "listar , renombrar , extraer , borrar o descargar"
+  - La busqueda revursiva ahora no diferencia mayusculas de minusculas, antes no encontraba imagenes con extensiones como ".isO"
+
+Versión 0.96
+miércoles, 15 de abril de 2009
+--------------------------------------------------------------------------------------------------------
+NUEVA FUNCIONALIDAD
+- Descarga de caratulas automaticamente con una resolución optima para USB Loader 1.4 (160x225)
+- Cuando detecta más de una partición WBFS ahora aparece al lado el nombre del disco duro
+- A partir de esta versión si un parametro no se le pasa el engorroso IDGAME, se pregunta el ID del juego mediante una lista (autonumeración hecha por wiithon)
+- En Nautilus ahora hay 5 acciones, 5 de ellas siempre disponibles (listar,renombrar,extraer,borrar,descargar caratulas) y 1 (añadir ISO) solo cuando estamos sobre una imagen ISO.
+- Al final he quitado que renombre al nombre del ISO cuando añades un ISO, el juego se metera con el nombre que propone el ISO y después se puede renombrar muy fácil desde el script de nautilus
+
+BUGS CORREGIDOS
+- Corregido el bug de wbfs del borrado. Gracias Pedja
+- Ahora instala en KDE sin problemas
+- Mejorada autodetección de particiones. Detectaba como una partición el error del sudo si introducías mal la contraseña.
+- Corregido en algunos puntos donde ponía WDFS en lugar de WBFS
+- Existía un problema al añadir una ISO si en la ruta hay alguno de esto 2 caracteres : "[" o "]"
+
+CAMBIOS INTERNOS
+- Muchas variables globales convertidas en locales
+- Modificado el WBFS para que muestro los resultados en CSV y crear un interfaz entre withon y la librería WBFS modificada
+
+Versión Inicial 0.95
+lunes, 4 de abril de 2009
+--------------------------------------------------------------------------------------------------------
+- Detección automatica de particion WBFS (facil y simple).
+- Es para GNU/Linux.
+- He traducido y modificado el WBFS original.
+- Esta orientado a la minima intervención del usuario, facilita la automatización de tareas
+- Más fácil que cualquier GUI de windows a día de hoy 6/4/2009 (no conozco todos, ni he probado todos)
+- Script de Nautilus: Permite selecciones multiples y trabajo en paralelo.
+- AÑADE UN ISO EN 2 CLICKS : 1. derecho sobre el iso 2. izquierdo sobre "Añadir ISO a Wii"
+- Gracias a lo anterior PODEMOS PASAR VARIAS ISOS A LA VEZ
+- Listar y borrar juegos
+- Añadir y extraer ISOs
+- Posibilidad de RENOMBRAR los juegos que están en la partición WBFS. No obstante aunque se puede renombrar, cuando añades un iso no se pone el nombre que propone el ISO (Sports Revolution o Party Revolution para Wii sports y Wii play …) sino que pone el nombre de la propia imagen iso sin extensión.
+- Una última cosa para aclarar lo de los nombres. Si metemos el Trivial Pursuit.iso en el USB loader aparecerá logicamente Trivial Pursuit. Si renombramos la ISO y le damos a Añadir/Renombrar como el juego ya esta en el disco simplemente se renombrará. Es decir cambiar de nombre los juegos es tan fácil como cambiar de nombre la ISO con el nautilus y darle a Añadir / Renombrar.
+
+===================================================================================
++ Documentación
+===================================================================================
+
+Interfáz gráfico:
+-------------------------------------------------------------------------------
+
+
+
+Línea de comandos
+-------------------------------------------------------------------------------
+La línea de comandos permite hacer todo lo que hace el interfaz gráfico de una forma más fácil o más dificil según lo que queramos hacer.
+Para lanzar wiithon como interfaz gráfico debemos especificar un parámetro, este es "--no-gui" o mejor por ser más corto "-c".
+Además tiene 2 opciones exclusivas de la linea de comandos, y que el interfaz gráfico no dispone. Son las 2 últimas opciones del siguiente listado:
+
+Listar juegos. El programa por defecto, sin parametros, hace un listado de los juegos : 
+		wiithon -c
+
+Añadir ISO mediante una lista explicita de las ISOS : 
+		wiithon -c "./wii/mario.iso" "iso2" "iso3" "isoN"
+
+Añadir ISO con exp. reg. La expresión solo afecta al directorio actual, actualmente no es recursivo : 
+		wiithon -c *.iso
+
+Buscar y Añadir ISO's recursivamente. Busca todos las imagenes isos RECURSIVAMENTE, incluso tambien busca dentro de RAR, a falta de implementar zip), tal vez necesites sudo apt-get install rar.
+		wiithon -c buscar
+
+Borrar juegos. Especificando el juego mediante un menú.: 
+		wiithon -c borrar
+
+Borrar juegos. Podemos borrar con el IDGAME.: 
+		wiithon -c borrar IDJUEGO
+
+Borrar juegos. Podemos borrar con el IDGAME obtenido a partir de un ISO local. El archivo ISO local NO es borrado : 
+		wiithon -c borrar "./wii/mario.iso"
+
+Renombrar juegos. Especificando el juego mediante un menú.: 
+		wiithon -c renombrar
+
+Renombrar juegos, puedes cambiar el nombre de los juegos ya metidos en HD, útil para que nos enteremos cuando estemos con el USB Loader : 
+		wiithon -c renombrar IDGAME "Mario Kart Wii"
+
+Extraer juegos a un archivo ISO. El juego es especificado mediante un menú.
+		wiithon -c extraer
+
+Extraer juegos a un archivo ISO. OJO! : El archivo ISO de salida pertenecerá a root : 
+		wiithon -c extraer IDJUEGO
+
+Descargar todas las caratulas automaticamente a 160x224. Automaticamente detecta las que ya tienes:
+		wiithon -c caratulas
+		
+Las caratulas por defecto son de tipo "normal", hay 2 tipos más: "3d" o "panoramico". Por ejemplo, para descargar todas las caratulas en 3d:
+		wiithon -c caratulas 3d
+
+Descargar la caratulas de un juego especificado por su IDGAME, la imagen es bajada a 160x225. El comando es un singular, es "caratula" ya que "caratulas" descarga todo: 
+		wiithon -c caratula IDGAME
+
+Descargar la caratulas de un juego especificado por menú, la imagen es bajada a 160x225. El comando es un singular, es "caratula" ya que "caratulas" descarga todo: 
+		wiithon -c caratula
+		
+Nuevo:
+wiithon -c disco
+wiithon -c discos
+wiithon -c copiar
+
+Las siguientes 2 opciones, no estan implementadas en el interfáz gráfico:
+		
+	Comprobar Integridad de los juegos. Muchos de nuestros juegos pueden estar corruptos sin aún saberlo debido a el bug de borrado de las primeras versiones de WBFS
+			wiithon -c comprobar
+
+	Instar juegos desde el DVD, al estilo del usb loader, pero algo más lento porque dumpea a ISO y cuando termina mete la ISO.
+			wiithon -c instalar
+
+El programa tiene mas cosillas como alias en algunos parametros:
+renombrar = rename = r
+comprobar = check = scandisk
+nstalar = install
+borrar = remove = quitar = remove = rm
+extraer = extract = x
+ayuda = -h = --help
+buscar = meter = metertodo = buscartodo = search
+caratulas = covers
+caratula = cover
+listar = ls
+
+Tambien tiene un parametro oculto sin documentar, el parametro -p:
+Obliga a una pausa al final de la ejecución. Este es usado por los comandos lanzados desde nautilus, si no lo pusiera las ventanas se cerrarian ya que mayoritariamente no requieren intervención del usuario. Se requiere interactividad con el usuario en 2 casos, para aceptar el acuerdo de que no me hago responsable de daños y tal (solo sale la primera vez) y si el programa detecta más de una 1 partición WBFS, nos pregunta con cual trabajar con un menú.
+

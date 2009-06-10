@@ -1,0 +1,58 @@
+===================================================================================
++ Instalación
+===================================================================================
+
+Hay 2 opciones, en función de si vuestra distribución usa apt-get o no:
+
+++++++++++++++++++++++++++++
++  OPCION 1 (automática)   +
+++++++++++++++++++++++++++++
+
+Requiere: apt-get
+
+1º 	Instalar (antes instalará antes todas las dependencias automaticamente):
+		sudo make install_auto
+		
+	Después de esto ya hemos terminado, tenemos wiithon en "Aplicaciones -> Oficina" o por consola con "sudo wiithon", 
+	si lo que queremos es evitar que nos pida contraseña, debemos continuar con el siguiente paso opcional:
+		
+2º Permisos :
+		sudo make permisos
+		
+	Esto añadirá nuestro usuario al grupo "disk", por tanto para que tenga efecto es posible que tengais que reiniciar GNOME / KDE.
+	Despúes de eso, wiithon será una aplicación ejecutada en el espacio de usuario. Con root no se juega!
+
+++++++++++++++++++++++++++
++  OPCION 2 (estandar)   +
+++++++++++++++++++++++++++
+
+1º  Dependencias, instalar estos paquetes con los repositorios de vuestro sistema:
+		imagemagick wget rar libssl-dev intltool menu python-sexy
+		python-sqlalchemy python-gtk2 python-glade2 gnome-icon-theme
+
+2º Instalar :
+		sudo make install
+		
+	Después de esto ya hemos terminado, tenemos wiithon en "Aplicaciones -> Oficina" o por consola con "sudo wiithon", 
+	si lo que queremos es evitar que nos pida contraseña, debemos continuar con el siguiente paso opcional:
+		
+3º Permisos :
+		sudo make permisos
+		
+	Esto añadirá nuestro usuario al grupo "disk", por tanto para que tenga efecto es posible que tengais que reiniciar GNOME / KDE.
+	Despúes de eso, wiithon será una aplicación ejecutada en el espacio de usuario. Con root no se juega!
+
+===================================================================================
++ Ejecución
+===================================================================================
+
+Para Ejecutar:
+        El programa se encontrará en Aplicaciones -> Oficina (En KDE y GNOME).
+        ¿Como ejecutarlo? :
+
+		1. Por Interfaz gráfico:
+			- Vaya a su menú de Aplicaciones, y encontrará Wiithon en la sección 'Oficina' (funciona en KDE y GNOME)
+
+		2. Por consola:
+			- sudo wiithon
+

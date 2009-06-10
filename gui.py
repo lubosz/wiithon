@@ -311,6 +311,8 @@ class WiithonGUI(GtkBuilderWrapper):
             renderEditable.set_property("attributes", self.getEstilo_grisGrande() )
         render = gtk.CellRendererText()
 
+        # prox versión meter background ----> foreground ... etc
+        # http://www.pygtk.org/docs/pygtk/class-gtkcellrenderertext.html
         self.columna1 = columna1 = gtk.TreeViewColumn(_('IDGAME'), render , text=1)
         self.columna2 = columna2 = gtk.TreeViewColumn(_('Nombre'), renderEditable , text=2)
         self.columna3 = columna3 = gtk.TreeViewColumn(_('Tamanio'), render , text=3)

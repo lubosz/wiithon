@@ -1,3 +1,24 @@
+==============================================================================
+++++++++++++++++ HITOS, OBJETIVOS, BUGS y TAREAS PENDIENTES ++++++++++++++++++
+==============================================================================
+
+- Cuando refresco la lista (por CORE) ordenar por nombre
+
+- Documentar el protocolo entre wiithon y wbfs
+
+- Implementar arrastrar dentro y fuera del TreeView
+
+ - Categorías y Tags en el buscador
+
+TreeView de juegos:
+- Menu contextual (boton derecho) con opciones : Renombrar, Clasificar y Borrar
+
+TreeView de particiones:
+- Menu contextual (boton derecho) con opciones : Renombrar, Clasificar y Borrar
+
+Links útiles:
+http://mundogeek.net/archivos/2008/04/18/threads-en-python/
+
 Algunas normas que todos los miembros del equipo wiithon debemos seguir:
 
 ---------------------------------------------------

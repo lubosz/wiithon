@@ -1,6 +1,4 @@
-COMMIT.txt
-DIFF.txt
-CHANGELOG.txt
+COMMIT
 wbfs
 wbfs_src/wbfs
 wbfs_src/*.o

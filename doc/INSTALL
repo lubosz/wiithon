@@ -1,3 +1,5 @@
+=================> TRADUCIR A INGLES <======================
+
 ===================================================================================
 + Instalación
 ===================================================================================
@@ -8,7 +10,7 @@ Hay 2 opciones, en función de si vuestra distribución usa apt-get o no:
 +  OPCION 1 (automática)   +
 ++++++++++++++++++++++++++++
 
-Si instalais normalmente con apt-get:
+Requiere: apt-get
 
 1º 	Instalar (antes instalará antes todas las dependencias automaticamente):
 		sudo make install_auto
@@ -20,12 +22,11 @@ Si instalais normalmente con apt-get:
 		sudo make permisos
 		
 	Esto añadirá nuestro usuario al grupo "disk", por tanto para que tenga efecto es posible que tengais que reiniciar GNOME / KDE.
+	Despúes de eso, wiithon será una aplicación ejecutada en el espacio de usuario. Con root no se juega!
 
 ++++++++++++++++++++++++++
 +  OPCION 2 (estandar)   +
 ++++++++++++++++++++++++++
-
-Si NO usais apt-get, tendreis antes que instalar las dependencias con el gestor de paquetes de vuestro sistema:
 
 1º  Dependencias, instalar estos paquetes con los repositorios de vuestro sistema:
 		imagemagick wget rar libssl-dev intltool menu python-sexy
@@ -41,9 +42,10 @@ Si NO usais apt-get, tendreis antes que instalar las dependencias con el gestor 
 		sudo make permisos
 		
 	Esto añadirá nuestro usuario al grupo "disk", por tanto para que tenga efecto es posible que tengais que reiniciar GNOME / KDE.
+	Despúes de eso, wiithon será una aplicación ejecutada en el espacio de usuario. Con root no se juega!
 
 ===================================================================================
-+ Instalación
++ Ejecución
 ===================================================================================
 
 Para Ejecutar:

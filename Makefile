@@ -1,6 +1,6 @@
 PREFIX=/usr/local
 
-VERSION=${shell cat VERSION.txt}
+VERSION=${shell cat doc/VERSION}
 REVISION=${shell bzr revno}
 HOME_EFECTIVO=${shell cat /usr/local/share/wiithon/HOME.conf}
 USUARIO=${shell basename $(HOME_EFECTIVO)}
@@ -191,14 +191,13 @@ pull:
 	bzr pull
 
 commit: clean
-	bzr commit --file="COMMIT.txt" && echo "" > COMMIT.txt
-	bzr log --short > CHANGELOG.txt
+	bzr commit --file="COMMIT" && echo "" > COMMIT
 
 log:
 	bzr log --forward --short
 
 diff:
-	-@bzr diff > DIFF.txt
+	-@bzr diff
 
 # No usar, (sino sabes lo que haces)
 actualizar:
@@ -229,7 +228,7 @@ actualizarPO: generarPlantilla
 # Generar plantilla POT
 generarPlantilla: extraerGlade
 	@echo "*** GETTEXT *** Extrayendo strings del código"
-	xgettext --language=Python --omit-header --keyword=_ --keyword=N_ --from-code=utf-8 --sort-by-file --package-name="wiithon" --package-version="`cat VERSION.txt`" --msgid-bugs-address=makiolo@gmail.com -o po/plantilla.pot *.py recursos/glade/*.ui.h
+	xgettext --language=Python --omit-header --keyword=_ --keyword=N_ --from-code=utf-8 --sort-by-file --package-name="wiithon" --package-version="`cat doc/VERSION`" --msgid-bugs-address=makiolo@gmail.com -o po/plantilla.pot *.py recursos/glade/*.ui.h
 
 # Generar los MOO (compilados binarios de los PO)
 generarMOO: actualizarPO
