@@ -30,7 +30,7 @@ runEN: install
 install_auto: dependencias install
 
 dependencias:
-	apt-get install imagemagick wget rar libssl-dev intltool python-gtk2 python-glade2 python-sqlalchemy gnome-icon-theme menu
+	apt-get install imagemagick wget rar libssl-dev intltool python-gtk2 python-glade2 python-sexy python-sqlalchemy gnome-icon-theme menu
 
 permisos:
 	gpasswd -a $(USUARIO) disk
@@ -40,6 +40,7 @@ permisos:
 	mkdir -p $(HOME_WIITHON_DISCOS)
 	mkdir -p $(HOME_WIITHON_LOGS)
 	chown $(USUARIO) $(HOME_WIITHON) -R
+	
 	-$(RM) /usr/share/applications/wiithon_root.desktop
 	cp wiithon_usuario.desktop /usr/share/applications/
 	@echo "=================================================================="

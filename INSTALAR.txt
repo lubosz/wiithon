@@ -28,19 +28,16 @@ Si instalais normalmente con apt-get:
 Si NO usais apt-get, tendreis antes que instalar las dependencias con el gestor de paquetes de vuestro sistema:
 
 1º  Dependencias, instalar estos paquetes con los repositorios de vuestro sistema:
-		imagemagick wget rar libssl-dev intltool menu
+		imagemagick wget rar libssl-dev intltool menu python-sexy
 		python-sqlalchemy python-gtk2 python-glade2 gnome-icon-theme
 
-2º  Dependencias opcionales:
-		python-sexy
-
-3º Instalar :
+2º Instalar :
 		sudo make install
 		
 	Después de esto ya hemos terminado, tenemos wiithon en "Aplicaciones -> Oficina" o por consola con "sudo wiithon", 
 	si lo que queremos es evitar que nos pida contraseña, debemos continuar con el siguiente paso opcional:
 		
-4º Permisos :
+3º Permisos :
 		sudo make permisos
 		
 	Esto añadirá nuestro usuario al grupo "disk", por tanto para que tenga efecto es posible que tengais que reiniciar GNOME / KDE.

@@ -217,7 +217,7 @@ try:
 
 
 except ImportError:
-    logging.warning("There is no python-sexy available. fallback to standard gtk.")
+    #logging.warning("There is no python-sexy available. fallback to standard gtk.")
     class Entry(gtk.Entry):
         def __init__(self, clear=False, copy=False):
             gtk.Entry.__init__(self)
