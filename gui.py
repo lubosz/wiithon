@@ -25,19 +25,12 @@ class WiithonGUI(GtkBuilderWrapper):
         self.buscar = ""
         self.modo = "desconocido" # desconocido | ver | manager
 
-        try:
-            self.preferencia = session.query(Preferencia).first()
-        except:
-            print "base de datos ocupada"
-            sys.exit(1)
+        self.preferencia = session.query(Preferencia).first()
         # Nunca se han creado preferencias
         if self.preferencia == None:
             self.preferencia = Preferencia()
             session.save( self.preferencia )
             session.commit()
-            print _("Preferencias creadas por primera vez")
-        else:
-            print _("Preferencias cargadas")
 
         # verificar que las rutas existen
         if(not os.path.exists(self.preferencia.ruta_anadir)):
@@ -109,9 +102,11 @@ class WiithonGUI(GtkBuilderWrapper):
         destinoIcono = os.path.join(config.WIITHON_FILES_RECURSOS_IMAGENES , "idle-icon.png")
         self.wb_estadoBatch.set_from_file( destinoIcono )
 
+        '''
         if os.geteuid() != 0:
             self.alert("error" , _("REQUIERE_ROOT") % (config.APP , config.APP) )
             raise AssertionError, _("Error en permisos")
+        '''
 
         listaParticiones = self.core.getListaParticiones()
         if(len(listaParticiones) == 0):

@@ -2,14 +2,15 @@
 # http://freedesktop.org/Standards/desktop-entry-spec/
 Version=1.0
 Terminal=false
-TryExec=su-to-root
-Exec=su-to-root -X -c /usr/local/bin/wiithon
+TryExec=wiithon
+Exec=/usr/local/bin/wiithon
 Icon=/usr/share/pixmaps/wiithon.svg
 Type=Application
 Categories=QT;Application;Office;Database;
 Categories=GNOME;GTK;Office;Database;
 StartupNotify=false
 Name=Wiithon
+Name[es]=Wiithon
 Path=
 MimeType=application/x-iso9660-image;
 InitialPreference=9

@@ -18,9 +18,11 @@ class WiithonCLI:
     def __init__(self , core):
         self.core = core
         
+        '''
         if os.geteuid() != 0:
             print _("REQUIERE_ROOT") % (config.APP , config.APP)
             raise AssertionError, _("Error en permisos")
+        '''
         
         # varias particiones
         listaParticiones = self.core.getListaParticiones()
