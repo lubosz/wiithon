@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wiithon 1.0 Alpha\n"
 "Report-Msgid-Bugs-To: makiolo@gmail.com\n"
-"POT-Creation-Date: 2009-06-10 02:31+0200\n"
+"POT-Creation-Date: 2009-06-10 02:57+0200\n"
 "PO-Revision-Date: 2009-06-01 00:20+0200\n"
 "Last-Translator: \n"
 "Language-Team: Spanish <kde-i18n-doc@lists.kde.org>\n"
@@ -460,15 +460,15 @@ msgstr ""
 msgid "***************** DESCARGAR CARATULA %s ********************"
 msgstr ""
 
-#: gui.py:40
+#: gui.py:38
 msgid "Preferencias creadas por primera vez"
 msgstr ""
 
-#: gui.py:42
+#: gui.py:40
 msgid "Preferencias cargadas"
 msgstr ""
 
-#: gui.py:115
+#: gui.py:113
 #, python-format
 msgid ""
 "%s requiere permisos de superusuario (root) para acceder a las particiones "
@@ -476,7 +476,7 @@ msgid ""
 "Esto dependera de su distribucion de Linux pero intente con : sudo %s"
 msgstr ""
 
-#: gui.py:141
+#: gui.py:139
 #, python-format
 msgid ""
 "No se han encontrado particiones WBFS:\n"
@@ -485,7 +485,7 @@ msgid ""
 "acumulada por %s en sesiones anteriores."
 msgstr ""
 
-#: gui.py:143
+#: gui.py:141
 #, python-format
 msgid ""
 "No se han encontrado particiones WBFS:\n"
@@ -493,114 +493,114 @@ msgid ""
 "reinicie %s\n"
 msgstr ""
 
-#: gui.py:208
+#: gui.py:206
 msgid "Formato desconocido"
 msgstr ""
 
-#: gui.py:254
+#: gui.py:252
 msgid "Dispositivo"
 msgstr ""
 
-#: gui.py:255
+#: gui.py:253
 msgid "Fabricante"
 msgstr ""
 
-#: gui.py:301
+#: gui.py:299
 msgid "Error renombrando"
 msgstr ""
 
-#: gui.py:303
+#: gui.py:301
 #, python-format
 msgid "Se han detectado caracteres no validos: %s"
 msgstr ""
 
-#: gui.py:322
+#: gui.py:320
 msgid "IDGAME"
 msgstr ""
 
-#: gui.py:323
+#: gui.py:321
 msgid "Nombre"
 msgstr ""
 
-#: gui.py:324
+#: gui.py:322
 msgid "Tamanio"
 msgstr "Tamaño"
 
-#: gui.py:533
+#: gui.py:531
 #, python-format
 msgid "Hay %d tarea pendiente"
 msgstr ""
 
-#: gui.py:536
+#: gui.py:534
 #, python-format
 msgid "Hay %d tareas pendientes"
 msgstr ""
 
-#: gui.py:575
+#: gui.py:573
 msgid "Tienes que seleccionar una particion WBFS para realizar esta accion"
 msgstr ""
 
-#: gui.py:581
+#: gui.py:579
 #, python-format
 msgid "¿Quieres borrar el juego con ID = \"%s\"?"
 msgstr ""
 
-#: gui.py:594 gui.py:623 gui.py:631
+#: gui.py:592 gui.py:621 gui.py:629
 msgid "No has seleccionado ningun juego"
 msgstr ""
 
-#: gui.py:604
+#: gui.py:602
 #, python-format
 msgid "Elige un directorio donde extraer la ISO de %s"
 msgstr ""
 
-#: gui.py:642
+#: gui.py:640
 msgid "Elige una ISO o un RAR"
 msgstr ""
 
-#: gui.py:645
+#: gui.py:643
 msgid "ImagenISO, Comprimido RAR"
 msgstr ""
 
-#: gui.py:652
+#: gui.py:650
 msgid "Elige un directorio"
 msgstr ""
 
-#: gui.py:680
+#: gui.py:678
 msgid "No has seleccionado ninguna particion"
 msgstr ""
 
-#: gui.py:691
+#: gui.py:689
 msgid "Paso 1 de 2: Elige un directorio para las CARATULAS"
 msgstr ""
 
-#: gui.py:698
+#: gui.py:696
 msgid "Paso 2 de 2: Elige un directorio para los DISCOS"
 msgstr ""
 
-#: gui.py:718
+#: gui.py:716
 msgid "No tienes ningun juego"
 msgstr ""
 
-#: gui.py:751
+#: gui.py:749
 #, python-format
 msgid "CUIDADO: %s"
 msgstr ""
 
-#: gui.py:753
+#: gui.py:751
 #, python-format
 msgid "ERROR: %s"
 msgstr ""
 
-#: gui.py:775
+#: gui.py:773
 msgid "DEBUG: Comando desconocido"
 msgstr ""
 
-#: gui.py:833
+#: gui.py:831
 msgid "Finalizando. Hecho en"
 msgstr ""
 
-#: gui.py:837
+#: gui.py:835
 msgid "quedan"
 msgstr ""
 

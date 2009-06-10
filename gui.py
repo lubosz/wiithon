@@ -19,8 +19,6 @@ from animar import Animador
 class WiithonGUI(GtkBuilderWrapper):
 
     def __init__(self, core):
-        # Constructor padre
-
         GtkBuilderWrapper.__init__(self, os.path.join(config.WIITHON_FILES_RECURSOS_GLADE  , 'wiithon.ui'))
 
         self.core = core
@@ -287,7 +285,7 @@ class WiithonGUI(GtkBuilderWrapper):
             if(nombreActual != nuevoNombre):
                 if not util.tieneCaracteresRaros(nuevoNombre , util.BLACK_LIST2):
 
-                    nuevoNombre = nuevoNombre.decode("iso-8859-1")
+                    #nuevoNombre = nuevoNombre.decode("iso-8859-1")
 
                     if self.core.renombrarISO(self.DEVICEParticionSeleccionada , self.IDGAMEJuegoSeleccionado , nuevoNombre):
                         # modificamos el juego modificado de la BDD
@@ -347,10 +345,10 @@ class WiithonGUI(GtkBuilderWrapper):
 
         tv_games.connect('cursor-changed', self.on_tv_games_cursor_changed)
 
-        modelo = gtk.ListStore (    gobject.TYPE_INT ,    # orden (campo oculto)
-                gobject.TYPE_STRING,    # IDGAME
-                gobject.TYPE_STRING,    # Nombre
-                gobject.TYPE_STRING,    # Tamaño
+        modelo = gtk.ListStore (    gobject.TYPE_INT ,      # orden (campo oculto)
+                gobject.TYPE_STRING,                        # IDGAME
+                gobject.TYPE_STRING,                        # Nombre
+                gobject.TYPE_STRING,                        # Tamaño
                 )
         tv_games.set_model(modelo)
 
