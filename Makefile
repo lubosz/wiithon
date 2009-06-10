@@ -197,14 +197,11 @@ actualizarPO: generarPlantilla
 # Generar plantilla POT
 generarPlantilla: extraerGlade
 	@echo "*** GETTEXT *** Extrayendo strings del código"
-	$(RM) po/plantilla.pot
-	xgettext --language=Python --keyword=_ --keyword=N_ --from-code=utf-8 --sort-by-file --package-name="wiithon" --package-version="`cat VERSION.txt`" --msgid-bugs-address=makiolo@gmail.com -o po/plantilla.pot *.py recursos/glade/*.ui.h
+	xgettext --language=Python --omit-header --keyword=_ --keyword=N_ --from-code=utf-8 --sort-by-file --package-name="wiithon" --package-version="`cat VERSION.txt`" --msgid-bugs-address=makiolo@gmail.com -o po/plantilla.pot *.py recursos/glade/*.ui.h
 
 # Generar los MOO (compilados binadores de los PO)
 generarMOO: actualizarPO
 	@echo "*** GETTEXT *** Generando MOO"
-	$(RM) po/es/LC_MESSAGES/wiithon.mo
-	$(RM) po/en/LC_MESSAGES/wiithon.mo
 	mkdir -p po/en/LC_MESSAGES/
 	mkdir -p po/es/LC_MESSAGES/
 	msgfmt po/es.po -o po/es/LC_MESSAGES/wiithon.mo

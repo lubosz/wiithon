@@ -76,7 +76,7 @@ class PoolTrabajo(Pool , Thread):
         core.nuevoMensaje( Mensaje("COMANDO","EMPIEZA") )
 
         if( not os.path.exists(DEVICE) or not os.path.exists(fichero) ):
-            core.nuevoMensaje( Mensaje("ERROR",_("La ISO o la partición no existe")) )
+            core.nuevoMensaje( Mensaje("ERROR",_("La ISO o la particion no existe")) )
         elif( util.getExtension(fichero) == "rar" ):
             nombreRAR = fichero
             nombreISO = core.getNombreISOenRAR(nombreRAR)
@@ -87,7 +87,7 @@ class PoolTrabajo(Pool , Thread):
                     else:
                         core.nuevoMensaje( Mensaje("ERROR",_("Al descomrpimir el RAR : %s") % (nombreRAR)) )
                 else:
-                    core.nuevoMensaje( Mensaje("ERROR",_("No se puede descomrpimir por que reemplazaría el ISO : %s") % (nombreISO)) )
+                    core.nuevoMensaje( Mensaje("ERROR",_("No se puede descomrpimir por que reemplazaria el ISO : %s") % (nombreISO)) )
             else:
                 core.nuevoMensaje( Mensaje("ERROR",_("El RAR %s no tenia ninguna ISO") % (nombreRAR)) )
         elif( os.path.isdir( fichero ) ):

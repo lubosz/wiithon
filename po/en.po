@@ -1,22 +1,3 @@
-# English translations for PACKAGE package.
-# Copyright (C) 2009 THE PACKAGE'S COPYRIGHT HOLDER
-# This file is distributed under the same license as the PACKAGE package.
-#
-# Automatically generated, 2009.
-msgid ""
-msgstr ""
-"Project-Id-Version: wiithon 1.0 Alpha\n"
-"Report-Msgid-Bugs-To: makiolo@gmail.com\n"
-"POT-Creation-Date: 2009-06-10 02:57+0200\n"
-"PO-Revision-Date: 2009-06-01 00:16+0200\n"
-"Last-Translator: \n"
-"Language-Team: Spanish <kde-i18n-doc@lists.kde.org>\n"
-"MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=UTF-8\n"
-"Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Lokalize 0.2\n"
-
 #: cli.py:24
 msgid ""
 "Has conectado el disco duro? No se ha encontrado ninguna particion valida."
@@ -27,9 +8,8 @@ msgid "Lista de particiones autodetectadas : "
 msgstr ""
 
 #: cli.py:32
-#, python-format
-msgid "%d - Particion: %s"
-msgstr "%d - Partition: %s"
+msgid "Particion"
+msgstr ""
 
 #: cli.py:35
 #, python-format
@@ -63,7 +43,7 @@ msgstr "Listing games of : %s"
 
 #: cli.py:84
 #, python-format
-msgid "No tienes instalado ningún juego en %s %s"
+msgid "No tienes instalado ningun juego en %s"
 msgstr ""
 
 #: cli.py:87
@@ -75,8 +55,11 @@ msgid "Pulse cualquier tecla para continuar ... "
 msgstr "Press any key to continue ..."
 
 #: cli.py:102
-#, python-format
-msgid "Borrar juego con ID : %s en particion %s %s"
+msgid "Borrar juego con IDGAME"
+msgstr ""
+
+#: cli.py:102 cli.py:166
+msgid "en particion"
 msgstr ""
 
 #: cli.py:104
@@ -135,8 +118,11 @@ msgid "Escriba el nuevo nombre : "
 msgstr ""
 
 #: cli.py:147
-#, python-format
-msgid "Renombrar juego ID : %s como %s"
+msgid "Renombrar juego IDGAME"
+msgstr ""
+
+#: cli.py:147
+msgid "como"
 msgstr ""
 
 #: cli.py:149
@@ -162,8 +148,7 @@ msgid "No hay Juegos para verificar"
 msgstr "They aren't games that check"
 
 #: cli.py:166
-#, python-format
-msgid "Extraer ISO de juego con ID : %s en particion %s %s"
+msgid "Extraer ISO de juego con IDGAME"
 msgstr ""
 
 #: cli.py:168
@@ -195,8 +180,11 @@ msgid "No se ha encontrado ninguna imagen ISO"
 msgstr "There is not image ISO"
 
 #: cli.py:232
-#, python-format
-msgid "Aniadir RAR con ISO dentro : %s a la particion %s %s"
+msgid "Aniadir RAR con ISO dentro"
+msgstr ""
+
+#: cli.py:232 cli.py:281
+msgid "a la particion"
 msgstr ""
 
 #: cli.py:239
@@ -205,12 +193,12 @@ msgstr ""
 
 #: cli.py:242
 #, python-format
-msgid "ISO %s descomprimida y añadida correctamente"
-msgstr "ISO %s uncomprssed && added successfully"
+msgid "ISO %s descomprimida y anadida correctamente"
+msgstr ""
 
 #: cli.py:246
 #, python-format
-msgid "ERROR añadiendo la ISO : %s (comprueba que sea una ISO de WII)"
+msgid "ERROR anadiendo la ISO : %s (comprueba que sea una ISO de WII)"
 msgstr ""
 
 #: cli.py:253
@@ -247,9 +235,8 @@ msgid "ERROR el RAR %s no tenia ninguna ISO"
 msgstr "RAR %s don't have ISO"
 
 #: cli.py:281
-#, python-format
-msgid "Aniadir ISO : %s a la particion %s %s"
-msgstr "Add ISO : %s in partition %s %s"
+msgid "Aniadir ISO"
+msgstr ""
 
 #: cli.py:283
 #, python-format
@@ -271,24 +258,16 @@ msgid "ERROR la ISO o la particion no existe"
 msgstr "ISO or the partition don't exists"
 
 #: cli.py:307
-msgid "================= INFORME DE RESULTADOS ========================="
-msgstr "================= RESULTS ========================="
-
-#: cli.py:312
-#, python-format
-msgid ""
-"%s================= Todo metido en el HD correctamente ==================="
-msgstr "%s================= All-in HD sucesfully ==================="
+msgid "INFORME DE RESULTADOS"
+msgstr ""
 
 #: cli.py:316
-#, python-format
-msgid "%s================ Juegos correctos (%d/%d) =============="
-msgstr "%s================ Good Games (%d/%d) =============="
+msgid "Juegos correctos"
+msgstr ""
 
 #: cli.py:323
-#, python-format
-msgid "%s=================== Juegos erroneos (%d/%d) ================="
-msgstr "%s=================== Bad Games (%d/%d) ================="
+msgid "Juegos erroneos"
+msgstr ""
 
 #: cli.py:336
 msgid "Buscando un Disco de Wii ..."
@@ -312,13 +291,11 @@ msgid "Desea reemplazarla (S/N) : "
 msgstr ""
 
 #: cli.py:365
-#, python-format
-msgid "%s a un ISO temporal de 4.4GB en = %s.iso ..."
+msgid "a un ISO temporal de 4.4GB en"
 msgstr ""
 
 #: cli.py:369
-#, python-format
-msgid "Caratula descargada como %s/%s.png"
+msgid "Caratula descargada como"
 msgstr ""
 
 #: cli.py:371
@@ -384,9 +361,8 @@ msgid "Cararuta?"
 msgstr "Cover?"
 
 #: cli.py:434
-#, python-format
-msgid "%s%d juegos de WII"
-msgstr "%s%d games of WII"
+msgid "juegos de WII"
+msgstr "games of WII"
 
 #: cli.py:447
 msgid "Corrupto?"
@@ -398,7 +374,7 @@ msgstr "DON'T IS CORRUPT"
 
 #: cli.py:453
 msgid "ESTA CORRUPTO"
-msgstr "¡¡ CORRUPT !!"
+msgstr " CORRUPT !!"
 
 #: cli.py:459
 msgid "Lista de juegos corruptos"
@@ -462,19 +438,14 @@ msgid "Preferencias creadas por primera vez"
 msgstr ""
 
 #: gui.py:40
-#, fuzzy
 msgid "Preferencias cargadas"
-msgstr "DEBUG: Preferences loaded"
+msgstr "Preferences loaded"
 
 #: gui.py:113
-#, python-format
-msgid ""
-"%s requiere permisos de superusuario (root) para acceder a las particiones "
-"WBFS.\n"
-"Esto dependera de su distribucion de Linux pero intente con : sudo %s"
-msgstr "Sorry. Need be root"
+msgid "REQUIERE_ROOT"
+msgstr ""
 
-#: gui.py:139
+#: gui.py:138
 #, python-format
 msgid ""
 "No se han encontrado particiones WBFS:\n"
@@ -483,7 +454,7 @@ msgid ""
 "acumulada por %s en sesiones anteriores."
 msgstr ""
 
-#: gui.py:141
+#: gui.py:140
 #, python-format
 msgid ""
 "No se han encontrado particiones WBFS:\n"
@@ -491,115 +462,114 @@ msgid ""
 "reinicie %s\n"
 msgstr ""
 
-#: gui.py:206
-#, fuzzy
+#: gui.py:205
 msgid "Formato desconocido"
-msgstr "DEBUG: Unknown command"
+msgstr "format Unknown"
 
-#: gui.py:252
+#: gui.py:251
 msgid "Dispositivo"
 msgstr "Device"
 
-#: gui.py:253
+#: gui.py:252
 msgid "Fabricante"
 msgstr "Manufacture"
 
-#: gui.py:299
+#: gui.py:298
 msgid "Error renombrando"
 msgstr ""
 
-#: gui.py:301
+#: gui.py:300
 #, python-format
 msgid "Se han detectado caracteres no validos: %s"
-msgstr ""
+msgstr "Characters not valid: %s"
 
-#: gui.py:320
+#: gui.py:319
 msgid "IDGAME"
 msgstr "IDGAME"
 
-#: gui.py:321
+#: gui.py:320
 msgid "Nombre"
 msgstr "Name"
 
-#: gui.py:322
+#: gui.py:321
 msgid "Tamanio"
 msgstr "Size"
 
-#: gui.py:531
+#: gui.py:530
 #, python-format
 msgid "Hay %d tarea pendiente"
 msgstr ""
 
-#: gui.py:534
+#: gui.py:533
 #, python-format
 msgid "Hay %d tareas pendientes"
 msgstr ""
 
-#: gui.py:573
+#: gui.py:572
 msgid "Tienes que seleccionar una particion WBFS para realizar esta accion"
 msgstr "Need select some partition WBFS"
 
-#: gui.py:579
+#: gui.py:578
 #, python-format
-msgid "¿Quieres borrar el juego con ID = \"%s\"?"
-msgstr "¿Delete game with ID = \"%s\"?"
+msgid "Quieres borrar el juego con ID = %s?"
+msgstr ""
 
-#: gui.py:592 gui.py:621 gui.py:629
+#: gui.py:591 gui.py:620 gui.py:628
 msgid "No has seleccionado ningun juego"
 msgstr "Don't have a game selected"
 
-#: gui.py:602
+#: gui.py:601
 #, python-format
 msgid "Elige un directorio donde extraer la ISO de %s"
 msgstr "Choose folder for extract ISO %s"
 
-#: gui.py:640
+#: gui.py:639
 msgid "Elige una ISO o un RAR"
 msgstr "Choose a ISO or RAR"
 
-#: gui.py:643
+#: gui.py:642
 msgid "ImagenISO, Comprimido RAR"
 msgstr ""
 
-#: gui.py:650
+#: gui.py:649
 msgid "Elige un directorio"
 msgstr "Choose folder"
 
-#: gui.py:678
+#: gui.py:677
 msgid "No has seleccionado ninguna particion"
 msgstr "Don't have a partition selected"
 
-#: gui.py:689
+#: gui.py:688
 msgid "Paso 1 de 2: Elige un directorio para las CARATULAS"
 msgstr "Step 1 of 1: Choose a folder for COVERS"
 
-#: gui.py:696
+#: gui.py:695
 msgid "Paso 2 de 2: Elige un directorio para los DISCOS"
 msgstr "Step 2 of 2: Choose a folder for DISCS"
 
-#: gui.py:716
+#: gui.py:715
 msgid "No tienes ningun juego"
 msgstr "Don't have some game"
 
-#: gui.py:749
+#: gui.py:748
 #, python-format
 msgid "CUIDADO: %s"
 msgstr "WARNING: %s"
 
-#: gui.py:751
+#: gui.py:750
 #, python-format
 msgid "ERROR: %s"
 msgstr "ERROR: %s"
 
-#: gui.py:773
+#: gui.py:772
 msgid "DEBUG: Comando desconocido"
 msgstr "DEBUG: Unknown command"
 
-#: gui.py:831
+#: gui.py:830
 msgid "Finalizando. Hecho en"
 msgstr "Finishing. Done in"
 
-#: gui.py:835
+#: gui.py:834
 msgid "quedan"
 msgstr "remaining"
 
@@ -672,6 +642,17 @@ msgstr "Rename"
 #: recursos/glade/wiithon.ui.h:17
 msgid "TEXTO_LICENCIA"
 msgstr ""
+"Wiithon is free software; you can redistribute it and/or modify\n"
+"it under the terms of the GNU General Public License as published by\n"
+"the Free Software Foundation; either version 2 of the License, or\n"
+"(at your option) any later version.\n"
+"Wiithon is distributed in the hope that it will be useful,\n"
+"but WITHOUT ANY WARRANTY; without even the implied warranty of\n"
+"MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the\n"
+"GNU General Public License for more details.\n"
+"You should have received a copy of the GNU General Public License\n"
+"along with Wiithon; if not, write to the Free Software Foundation, Inc.,\n"
+"51 Franklin St, Fifth Floor, Boston, MA 02110-1301  USA"
 
 #: recursos/glade/wiithon.ui.h:18
 msgid "TEXTO_TRADUCTORES"
@@ -687,7 +668,7 @@ msgstr "Intense work (0)"
 
 #: recursos/glade/wiithon.ui.h:21
 msgid "Un gestor de particiones WBFS f&#xE1;cil de usar"
-msgstr ""
+msgstr "WBFS Partition Manager of easy to use"
 
 #: recursos/glade/wiithon.ui.h:22
 msgid "caratulas a SD"
@@ -708,7 +689,7 @@ msgid "No se ha detectado corrupcion en %s"
 msgstr "Don't detected corruption in game %s"
 
 #: trabajo.py:79
-msgid "La ISO o la partición no existe"
+msgid "La ISO o la particion no existe"
 msgstr "ISO or the partition don't exists"
 
 #: trabajo.py:88
@@ -718,7 +699,7 @@ msgstr "When uncompress RAR : %s"
 
 #: trabajo.py:90
 #, python-format
-msgid "No se puede descomrpimir por que reemplazaría el ISO : %s"
+msgid "No se puede descomrpimir por que reemplazaria el ISO : %s"
 msgstr "Don't can uncompress because reemplace the ISO : %s"
 
 #: trabajo.py:92
@@ -771,62 +752,3 @@ msgstr "Program run with the incorrect settings"
 msgid "Pulse cualquier tecla para continuar ...\n"
 msgstr "Press any key to continue ... \n"
 
-#~ msgid "PROPUESTA_ACUERDO"
-#~ msgstr ""
-#~ "The Wiithon Team (traducir ...) no se hace responsable de la aplicacion "
-#~ "ni de la perdida de datos.\n"
-#~ "No obstante, la particion NO va ha ser formateada.\n"
-#~ "Esta aplicación añade, borra y lista juegos explicamente mediante la "
-#~ "ayuda de %s.\n"
-#~ "Esta información no volverá a aparecer si acepta el acuerdo.\n"
-#~ "¿Está de acuerdo?"
-
-#~ msgid "No puedes usar esta aplicacion si no estas de acuerdo"
-#~ msgstr "You may not use this application if you do not agree"
-
-#~ msgid ""
-#~ "El equipo de Wiithon no se hace responsable de la aplicacion ni de la "
-#~ "perdida de datos.\n"
-#~ "No obstante, la particion NO va ha ser formateada.\n"
-#~ "Esta aplicación añade, borra y lista juegos explicamente mediante la "
-#~ "ayuda de %s.\n"
-#~ "Esta información no volverá a aparecer si acepta el acuerdo.\n"
-#~ "¿Está de acuerdo?"
-#~ msgstr ""
-#~ "The team Wiithon is not responsible for the application or thedata "
-#~ "loss. \n"
-#~ "However, the partition will not have to be formatted. \n"
-#~ "This application adds, deletes and list games explained through the "
-#~ "helpof %s. \n"
-#~ "This information will not appear if you accept the agreement. \n"
-#~ "Do you agree?"
-
-#~ msgid "INFO"
-#~ msgstr "INFO"
-
-#~ msgid "+"
-#~ msgstr "+"
-
-#~ msgid "-"
-#~ msgstr "-"
-
-#~ msgid "CONCEPT"
-#~ msgstr "CONCEPT"
-
-#~ msgid "Categor&#xED;as"
-#~ msgstr "Categories"
-
-#~ msgid "Etiquetas"
-#~ msgstr "Tags"
-
-#~ msgid "OF"
-#~ msgstr "OF"
-
-#~ msgid "PROOF"
-#~ msgstr "PROOF"
-
-#~ msgid "label"
-#~ msgstr "label"
-
-#~ msgid "Reportar bug"
-#~ msgstr "Bug report"

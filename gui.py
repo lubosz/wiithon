@@ -110,8 +110,7 @@ class WiithonGUI(GtkBuilderWrapper):
         self.wb_estadoBatch.set_from_file( destinoIcono )
 
         if os.geteuid() != 0:
-            self.alert("error" , _("%s requiere permisos de superusuario (root) para acceder a las particiones WBFS.\n"
-                "Esto dependera de su distribucion de Linux pero intente con : sudo %s" % (config.APP , config.APP) ))
+            self.alert("error" , _("REQUIERE_ROOT") % (config.APP , config.APP) )
             raise AssertionError, "Error"
 
         listaParticiones = self.core.getListaParticiones()
@@ -576,7 +575,7 @@ class WiithonGUI(GtkBuilderWrapper):
             self.wb_aboutdialog.hide()
         elif(id_tb == self.wb_tb_borrar):
             if self.iteradorJuegoSeleccionado != None:
-                if ( self.question(_('¿Quieres borrar el juego con ID = "%s"?' % self.IDGAMEJuegoSeleccionado)) == 1 ):
+                if ( self.question(_('Quieres borrar el juego con ID = %s?' % self.IDGAMEJuegoSeleccionado)) == 1 ):
                     # borrar del HD
                     self.core.borrarJuego( self.DEVICEParticionSeleccionada , self.IDGAMEJuegoSeleccionado )
 
