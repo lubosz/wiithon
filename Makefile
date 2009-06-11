@@ -13,13 +13,17 @@ HOME_WIITHON_LOGS=$(HOME_WIITHON)/logs
 all: wbfs
 	@echo ==================================================================
 	@echo "Escribe \"sudo make install_auto\" para instalar Wiithon y sus dependencias (con apt-get)"
-	@echo "Escribe \"sudo make install\" para instalar wiithon en espacio de root"
-	@echo "Escribe \"sudo make install permisos\" para instalar wiithon en espacio de usuario"
+	@echo ""
 	@echo "Escribe \"sudo make uninstall\" para desinstalar wiithon"
-	@echo "Escribe \"sudo make purge\" para desinstalar wiithon completamente"
 	@echo "Escribe \"sudo make dependencias\" para instalar las dependencias con apt-get"
-	@echo "Escribe \"sudo make run\" para ejecutar en español"
-	@echo "Escribe \"sudo make runEN\" para ejecutar en ingles"
+	@echo "Escribe \"sudo make install\" para instalar wiithon en espacio de root"
+	@echo ""
+	@echo "Escribe \"sudo make permisos\" para evitar que wiithon funcione como root"
+	@echo ""
+	@echo "Escribe \"sudo make purge\" para desinstalar wiithon completamente"
+	@echo ""
+	@echo "Escribe \"sudo make run\" para instalar & autoejecutar en español"
+	@echo "Escribe \"sudo make runEN\" para instalar & autoejecutar en ingles"
 	@echo ==================================================================
 
 run: install
@@ -28,14 +32,17 @@ run: install
 runEN: install
 	LANGUAGE=en LANG=en_US.UTF-8 wiithon
 
-install_auto: dependencias install
+install_auto: uninstall dependencias install
 
 dependencias:
 	apt-get install imagemagick wget rar libssl-dev intltool python-gtk2 python-glade2 python-sexy python-sqlalchemy gnome-icon-theme menu
+	@echo "=================================================================="
+	@echo "Instaladas dependencias"
+	@echo "=================================================================="
 
 permisos:
 	adduser $(USUARIO) disk
-	@mkdir -p $(HOME_WIITHON)
+	mkdir -p $(HOME_WIITHON)
 	@mkdir -p $(HOME_WIITHON_BDD)
 	@mkdir -p $(HOME_WIITHON_CARATULAS)
 	@mkdir -p $(HOME_WIITHON_DISCOS)
@@ -48,11 +55,7 @@ permisos:
 	@echo "Poniendo wiithon como usuario en el menu"
 	@cp wiithon_usuario.desktop /usr/share/applications/
 
-install: uninstall wbfs po/es/LC_MESSAGES/wiithon.mo po/en/LC_MESSAGES/wiithon.mo
-	@echo "=================================================================="
-	@echo "Antes de instalar, se ha desinstalado"
-	@echo "=================================================================="
-
+install: wbfs po/es/LC_MESSAGES/wiithon.mo po/en/LC_MESSAGES/wiithon.mo
 	mkdir -p $(PREFIX)/share/wiithon
 	mkdir -p $(PREFIX)/share/wiithon/recursos/glade
 	mkdir -p $(PREFIX)/share/wiithon/recursos/imagenes
@@ -94,7 +97,7 @@ install: uninstall wbfs po/es/LC_MESSAGES/wiithon.mo po/en/LC_MESSAGES/wiithon.m
 	chmod 644 $(PREFIX)/share/wiithon/recursos/glade/*.ui
 	chmod 644 $(PREFIX)/share/wiithon/recursos/imagenes/*.png
 
-	ln -s $(PREFIX)/share/wiithon/wiithon.py $(PREFIX)/bin/wiithon
+	-@ln -s $(PREFIX)/share/wiithon/wiithon.py $(PREFIX)/bin/wiithon
 
 	@echo "=================================================================="
 	@echo "Instalado OK"
@@ -106,7 +109,7 @@ install: uninstall wbfs po/es/LC_MESSAGES/wiithon.mo po/en/LC_MESSAGES/wiithon.m
 	@echo "        - sudo wiithon"
 	@echo "=================================================================="
 
-uninstall:
+uninstall: 
 	# Limpiando antiguas instalaciones
 	-$(RM) /usr/bin/wiithon
 	-$(RM) /usr/bin/wiithon_autodetectar
@@ -153,7 +156,7 @@ uninstall:
 	-rmdir $(PREFIX)/share/wiithon/recursos/glade
 	-rmdir $(PREFIX)/share/wiithon/recursos/imagenes
 	-rmdir $(PREFIX)/share/wiithon/recursos
-
+	
 	@echo "=================================================================="
 	@echo "Desinstalado OK"
 	@echo "=================================================================="
@@ -162,7 +165,6 @@ purge: uninstall
 	-$(RM) -R $(HOME_WIITHON)
 	-$(RM) $(PREFIX)/share/wiithon/HOME.conf
 	-rmdir $(PREFIX)/share/wiithon
-
 	@echo "=================================================================="
 	@echo "Desinstalado OK y limpiado cualquier configuración"
 	@echo "=================================================================="
@@ -213,12 +215,6 @@ po/plantilla.pot: recursos/glade/*.ui.h *.py
 recursos/glade/%.ui.h: recursos/glade/%.ui
 	intltool-extract --type="gettext/glade" $<
 
-# generar PO VACIO a partir de plantilla POT
-initPO: po/plantilla.pot
-	@echo "*** GETTEXT *** Creando POO: es y en"
-	LANG=es_ES.UTF-8 msginit -i po/plantilla.pot -o po/es.po --no-translator
-	LANG=en_US.UTF-8 msginit -i po/plantilla.pot -o po/en.po --no-translator
-
 # generar PO, si ya existe, mezcla o sincroniza
 po/%.po: po/plantilla.pot
 	msgmerge -U $@ $(filter %.pot, $^)
@@ -227,4 +223,10 @@ po/%.po: po/plantilla.pot
 po/%/LC_MESSAGES/wiithon.mo: po/%.po
 	mkdir -p $(basename $<)/LC_MESSAGES
 	msgfmt $< -o $@
+
+# generar PO VACIO a partir de plantilla POT
+#initPO: po/plantilla.pot
+#	@echo "*** GETTEXT *** Creando POO: es y en"
+#	LANG=es_ES.UTF-8 msginit -i po/plantilla.pot -o po/es.po --no-translator
+#	LANG=en_US.UTF-8 msginit -i po/plantilla.pot -o po/en.po --no-translator
 
