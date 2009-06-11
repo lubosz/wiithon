@@ -42,13 +42,13 @@ permisos:
 	@mkdir -p $(HOME_WIITHON_LOGS)
 	@echo "Corrigiendo permisos de $(HOME_WIITHON)"
 	@chown $(USUARIO) $(HOME_WIITHON) -R
-	
+
 	@echo "Quitando wiithon como root del menu"
 	-@$(RM) /usr/share/applications/wiithon_root.desktop
 	@echo "Poniendo wiithon como usuario en el menu"
 	@cp wiithon_usuario.desktop /usr/share/applications/
 
-install: uninstall wbfs generarMOO
+install: uninstall wbfs po/es/LC_MESSAGES/wiithon.mo po/en/LC_MESSAGES/wiithon.mo
 	@echo "=================================================================="
 	@echo "Antes de instalar, se ha desinstalado"
 	@echo "=================================================================="
@@ -75,7 +75,7 @@ install: uninstall wbfs generarMOO
 	cp preferencias.py $(PREFIX)/share/wiithon
 	cp juego.py $(PREFIX)/share/wiithon
 	cp animar.py $(PREFIX)/share/wiithon
-	
+
 	cp wiithon_root.desktop /usr/share/applications/
 
 	cp recursos/icons/wiithon.svg /usr/share/pixmaps
@@ -100,10 +100,10 @@ install: uninstall wbfs generarMOO
 	@echo "Instalado OK"
 	@echo "=================================================================="
 	@echo "¿Como ejecutarlo? :"
-	@echo "\t1. Por Interfaz gráfico:"
-	@echo "\t\t\t- Vaya a su menú de Aplicaciones, y encontrará Wiithon en la sección 'Oficina' (funciona en KDE y GNOME)"
-	@echo "\t2. Por consola:"
-	@echo "\t\t\t- sudo wiithon"
+	@echo "    1. Por Interfaz gráfico:"
+	@echo "        - Vaya a su menú de Aplicaciones, y encontrará Wiithon en la sección 'Oficina' (funciona en KDE y GNOME)"
+	@echo "    2. Por consola:"
+	@echo "        - sudo wiithon"
 	@echo "=================================================================="
 
 uninstall:
@@ -112,29 +112,29 @@ uninstall:
 	-$(RM) /usr/bin/wiithon_autodetectar
 	-$(RM) /usr/bin/wiithon_autodetectar_lector
 	-$(RM) /usr/bin/wbfs
-	
+
 	-$(RM) $(PREFIX)/bin/wiithon_autodetectar
 	-$(RM) $(PREFIX)/bin/wiithon_autodetectar_lector
 	-$(RM) $(PREFIX)/bin/wbfs
-	
+
 	-$(RM) $(PREFIX)/share/wiithon/glade_wrapper.py
-	
+
 	-$(RM) $(PREFIX)/share/wiithon/recursos/glade/*.xml
 	-$(RM) $(PREFIX)/share/wiithon/recursos/glade/*.glade
-	
+
 	-$(RM) $(PREFIX)/share/wiithon/.acuerdo
 	-$(RM) ~/.wiithon_acuerdo
-	
+
 	-$(RM) $(PREFIX)/share/wiithon/wiithon
 	-$(RM) $(PREFIX)/share/wiithon/wiithon_autodetectar
 	-$(RM) $(PREFIX)/share/wiithon/wiithon_autodetectar_lector
-	
+
 	-gconftool --recursive-unset /apps/nautilus-actions/configurations
 	-$(RM) /usr/share/gconf/schemas/wiithon*.schemas
 	-$(RM) /usr/share/applications/wiithon.desktop
 
 	# Desinstalando la actual versión
-		
+
 	-$(RM) $(PREFIX)/bin/wiithon
 	-$(RM) $(PREFIX)/share/wiithon/*.py
 	-$(RM) $(PREFIX)/share/wiithon/*.sh
@@ -146,7 +146,7 @@ uninstall:
 
 	-$(RM) /usr/share/locale/en/LC_MESSAGES/wiithon.mo
 	-$(RM) /usr/share/locale/es/LC_MESSAGES/wiithon.mo
-	
+
 	-$(RM) /usr/share/applications/wiithon_usuario.desktop
 	-$(RM) /usr/share/applications/wiithon_root.desktop
 
@@ -205,36 +205,30 @@ actualizar:
 # http://faq.pygtk.org/index.py?req=show&file=faq22.002.htp
 # http://misdocumentos.net/wiki/linux/locales
 
+# Generar plantilla POT
+po/plantilla.pot: recursos/glade/wiithon.ui.h recursos/glade/alerta.ui.h *.py
+	@echo "*** GETTEXT *** Extrayendo strings del código"
+	xgettext --language=Python --omit-header --keyword=_ --keyword=N_ --from-code=utf-8 --sort-by-file --package-name="wiithon" --package-version="`cat doc/VERSION`" --msgid-bugs-address=makiolo@gmail.com -o po/plantilla.pot *.py $^
+
+# extraer strings del glade
+recursos/glade/%.ui.h: recursos/glade/%.ui
+	intltool-extract --type="gettext/glade" $<
+
+
 # generar PO VACIO a partir de plantilla POT
-generarPO: generarPlantilla
+initPO: po/plantilla.pot
 	@echo "*** GETTEXT *** Creando POO: es y en"
 	LANG=es_ES.UTF-8 msginit -i po/plantilla.pot -o po/es.po --no-translator
 	LANG=en_US.UTF-8 msginit -i po/plantilla.pot -o po/en.po --no-translator
 
-# extraer strings del glade
-extraerGlade:
-	@echo "*** GETTEXT *** Extrayendo strings del glade"
-	intltool-extract --type="gettext/glade" recursos/glade/wiithon.ui
-	intltool-extract --type="gettext/glade" recursos/glade/alerta.ui
-
 # generar PO, si ya existe, mezcla o sincroniza
-actualizarPO: generarPlantilla
-	@echo "*** GETTEXT *** Actualizando POO"
-	msgmerge -U po/en.po po/plantilla.pot
-	msgmerge -U po/es.po po/plantilla.pot
+po/%.po: initPO po/plantilla.pot
+	msgmerge -U $@ $(filter %.pot, $^)
 
-# Generar plantilla POT
-generarPlantilla: extraerGlade
-	@echo "*** GETTEXT *** Extrayendo strings del código"
-	xgettext --language=Python --omit-header --keyword=_ --keyword=N_ --from-code=utf-8 --sort-by-file --package-name="wiithon" --package-version="`cat doc/VERSION`" --msgid-bugs-address=makiolo@gmail.com -o po/plantilla.pot *.py recursos/glade/*.ui.h
-
-# Generar los MOO (compilados binarios de los PO)
-generarMOO: actualizarPO
-	@echo "*** GETTEXT *** Generando MOO"
-	mkdir -p po/en/LC_MESSAGES/
-	mkdir -p po/es/LC_MESSAGES/
-	msgfmt po/es.po -o po/es/LC_MESSAGES/wiithon.mo
-	msgfmt po/en.po -o po/en/LC_MESSAGES/wiithon.mo
+# generar MO
+po/%/LC_MESSAGES/wiithon.mo: po/%.po
+	mkdir -p $(basename $<)/LC_MESSAGES
+	msgfmt $< -o $@
 
 # borrar los PO
 limpiarPO:
@@ -245,3 +239,5 @@ limpiarPO:
 # OJO: Borra todas las traducciones
 regenerarPO: limpiarPO generarPO generarMOO
 
+%.mo:
+	make -C po $@
