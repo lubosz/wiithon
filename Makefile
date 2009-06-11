@@ -184,7 +184,6 @@ wbfs: /usr/include/openssl/aes.h /usr/include/openssl/md5.h /usr/include/openssl
 	@return
 
 # REPOSITORIO
-
 pull:
 	bzr pull
 
@@ -206,9 +205,9 @@ actualizar:
 # http://misdocumentos.net/wiki/linux/locales
 
 # Generar plantilla POT
-po/plantilla.pot: recursos/glade/wiithon.ui.h recursos/glade/alerta.ui.h *.py
+po/plantilla.pot: recursos/glade/*.ui.h *.py
 	@echo "*** GETTEXT *** Extrayendo strings del código"
-	xgettext --language=Python --omit-header --keyword=_ --keyword=N_ --from-code=utf-8 --sort-by-file --package-name="wiithon" --package-version="`cat doc/VERSION`" --msgid-bugs-address=makiolo@gmail.com -o po/plantilla.pot *.py $^
+	xgettext --language=Python --omit-header --keyword=_ --keyword=N_ --from-code=utf-8 --sort-by-file --package-name="wiithon" --package-version="`cat doc/VERSION`" --msgid-bugs-address=makiolo@gmail.com -o po/plantilla.pot $^
 
 # extraer strings del glade
 recursos/glade/%.ui.h: recursos/glade/%.ui
@@ -229,11 +228,3 @@ po/%/LC_MESSAGES/wiithon.mo: po/%.po
 	mkdir -p $(basename $<)/LC_MESSAGES
 	msgfmt $< -o $@
 
-# borrar los PO
-limpiarPO:
-	@echo "*** GETTEXT *** Borrando POO"
-	$(RM) po/es.po
-	$(RM) po/en.po
-
-# OJO: Borra todas las traducciones
-regenerarPO: limpiarPO generarPO generarMOO

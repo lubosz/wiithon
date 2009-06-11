@@ -4,7 +4,6 @@ wbfs_src/wbfs
 wbfs_src/*.o
 *~
 *.pyc
-recursos/*.iso
 recursos/imagenes/*.xcf
 po/*/LC_MESSAGES/wiithon.mo
 po/plantilla.pot

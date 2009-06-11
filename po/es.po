@@ -460,62 +460,66 @@ msgstr "Tienes que seleccionar una partición WBFS para realizar esta acción"
 msgid "Quieres borrar el juego con ID = %s?"
 msgstr "¿Quieres borrar el juego con ID = %s?"
 
-#: gui.py:588 gui.py:617 gui.py:625
+#: gui.py:588
+msgid "Error borrando"
+msgstr ""
+
+#: gui.py:590 gui.py:619 gui.py:627
 msgid "No has seleccionado ningun juego"
 msgstr "No has seleccionado ningún juego"
 
-#: gui.py:598
+#: gui.py:600
 #, python-format
 msgid "Elige un directorio donde extraer la ISO de %s"
 msgstr ""
 
-#: gui.py:636
+#: gui.py:638
 msgid "Elige una ISO o un RAR"
 msgstr ""
 
-#: gui.py:639
+#: gui.py:641
 msgid "ImagenISO, Comprimido RAR"
 msgstr "Imagen ISO, Comprimido RAR"
 
-#: gui.py:646
+#: gui.py:648
 msgid "Elige un directorio"
 msgstr ""
 
-#: gui.py:674
+#: gui.py:676
 msgid "No has seleccionado ninguna particion"
 msgstr "No has seleccionado ninguna partición"
 
-#: gui.py:685
+#: gui.py:687
 msgid "Paso 1 de 2: Elige un directorio para las CARATULAS"
 msgstr "Paso 1 de 2: Elige un directorio donde copiar las CARATULAS"
 
-#: gui.py:692
+#: gui.py:694
 msgid "Paso 2 de 2: Elige un directorio para los DISCOS"
 msgstr "Paso 2 de 2: Elige un directorio donde copiar los DISCOS"
 
-#: gui.py:712
+#: gui.py:714
 msgid "No tienes ningun juego"
 msgstr "No tienes ningún juego"
 
-#: gui.py:745
+#: gui.py:747
 #, python-format
 msgid "CUIDADO: %s"
 msgstr ""
 
-#: gui.py:747
+#: gui.py:749
 #, python-format
 msgid "ERROR: %s"
 msgstr ""
 
-#: gui.py:769
+#: gui.py:771
 msgid "DEBUG: Comando desconocido"
 msgstr ""
 
-#: gui.py:827
+#: gui.py:829
 msgid "Finalizando. Hecho en"
 msgstr ""
 
-#: gui.py:831
+#: gui.py:833
 msgid "quedan"
 msgstr ""
 
@@ -600,6 +604,8 @@ msgstr ""
 #: recursos/glade/wiithon.ui.h:18
 msgid "TEXTO_TRADUCTORES"
 msgstr ""
+"Sergio Padrino <sergio.padrino@gmail.com>"
+"Ricardo Marmolejo García <makiolo@gmail.com>"
 
 #: recursos/glade/wiithon.ui.h:19
 msgid "Trabajos de fondo (0)"
@@ -694,21 +700,3 @@ msgstr ""
 #: wiithon.py:96
 msgid "Pulse cualquier tecla para continuar ...\n"
 msgstr ""
-
-#~ msgid "Verificando todos los juegos de la particion %s"
-#~ msgstr "Verificando todos los juegos de la partición %s"
-
-#~ msgid "Corrupto?"
-#~ msgstr "¿Corrupto?"
-
-#~ msgid "NO ESTA CORRUPTO"
-#~ msgstr "NO ESTÁ CORRUPTO"
-
-#~ msgid "ESTA CORRUPTO"
-#~ msgstr "ESTÁ CORRUPTO"
-
-#~ msgid "REQUIERE_ROOT"
-#~ msgstr ""
-#~ "%s requiere permisos de superusuario (root) para acceder a las "
-#~ "particiones WBFS.\n"
-#~ "Esto dependera de su distribucion de Linux pero intente con : sudo %s"

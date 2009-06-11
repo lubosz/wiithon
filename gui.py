@@ -574,16 +574,18 @@ class WiithonGUI(GtkBuilderWrapper):
             if self.iteradorJuegoSeleccionado != None:
                 if ( self.question(_('Quieres borrar el juego con ID = %s?') % self.IDGAMEJuegoSeleccionado) == 1 ):
                     # borrar del HD
-                    self.core.borrarJuego( self.DEVICEParticionSeleccionada , self.IDGAMEJuegoSeleccionado )
+                    if self.core.borrarJuego( self.DEVICEParticionSeleccionada , self.IDGAMEJuegoSeleccionado ):
 
-                    # borrar de la tabla
-                    self.tv_games_modelo.remove( self.iteradorJuegoSeleccionado )
+                        # borrar de la tabla
+                        self.tv_games_modelo.remove( self.iteradorJuegoSeleccionado )
 
-                    # seleccionar el primero
-                    self.seleccionarPrimeraFila( self.wb_tv_games , self.on_tv_games_cursor_changed )
+                        # seleccionar el primero
+                        self.seleccionarPrimeraFila( self.wb_tv_games , self.on_tv_games_cursor_changed )
 
-                    # debería haber liberado espacio
-                    self.refrescarEspacio()
+                        # debería haber liberado espacio
+                        self.refrescarEspacio()
+                    else:
+                        self.alert("warning" , _("Error borrando"))
             else:
                 self.alert("warning" , _("No has seleccionado ningun juego"))
         elif(id_tb == self.wb_tb_extraer):
@@ -773,7 +775,7 @@ class HiloAtenderMensajes(Thread):
                 time.sleep(0.10)
 
                 if((self.hilo.numTrabajos == 0) and termino):
-                    gobject.timeout_add( 5000, self.ocultarHBoxProgreso )
+                    gobject.timeout_add( 3000, self.ocultarHBoxProgreso )
             else:
                 # FIXME : usar wait o algo así
                 # el trabajador debería esperar (sin espera activa)
