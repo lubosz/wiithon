@@ -69,12 +69,6 @@ class WiithonCORE:
         salida.sort(ordenarPorNombre)
         return salida
 
-    def verificarJuego(self , DEVICE , IDGAME):
-        comando = config.WBFS_APP+" -p "+DEVICE+" check "+IDGAME
-        salida = subprocess.call( comando , shell=True , stderr=subprocess.STDOUT )
-        return ( salida == 0 )
-
-
     # añade un *ISO* a un *DEVICE*
     def anadirISO(self , DEVICE , ISO , ficheroSalida=None):
         try:

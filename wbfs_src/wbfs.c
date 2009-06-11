@@ -16,8 +16,6 @@
 wbfs_t *wbfs_try_open(char *disc,char *partition, int reset);
 wbfs_t *wbfs_try_open_partition(char *fn,int reset);
 
-#define GB (1024*1024*1024.)
-
 int read_wii_file(void*_fp,u32 offset,u32 count,void*iobuf)
 {
         FILE*fp =_fp;
@@ -140,47 +138,13 @@ int wbfs_applet_df(wbfs_t *p)
         else
 		{
        		return FALSE;
-		}
-        
-        
-        
+		}       
 }
 
 int wbfs_applet_mkhbc(wbfs_t *p)
 {
-        int count = wbfs_count_discs(p);
-        char filename[7];
-        FILE *xml;
-        if(count==0)
-                fprintf(stderr,"Sistemas de ficheros WBFS vacio.\n");
-        else{
-                int i;
-                u32 size;
-                u8 *b = wbfs_ioalloc(0x100);
-                for (i=0;i<count;i++)
-                {
-                        wbfs_get_disc_info(p,i,b,0x100,&size);
-                        snprintf(filename,7,"%c%c%c%c%c%c",b[0], b[1], b[2], b[3], b[4], b[5]);
-                        mkdir(filename, 0777);
-                        printf("%s\n",filename);
-                        if (chdir(filename))
-                                wbfs_fatal("chdir");
-                        system("cp ../boot.dol .");
-                        system("cp ../icon.png .");
-                        xml = fopen("meta.xml","w");
-                        fprintf(xml,"<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?>\n");
-                        fprintf(xml,"<app>\n\t<name>%s</name>\n", b+0x20);
-                        fprintf(xml,"<short_description>%.2fGB on USB HD </short_description>\n",size*4ULL/(GB));
-                        fprintf(xml,"<long_description>This launches the yal wbfs game loader by Kwiirk for discid %s</long_description>\n",filename);
-                        fprintf(xml,"</app>");
-                        fclose(xml);
-                        if (chdir(".."))
-                                wbfs_fatal("chdir");
-                }
-                wbfs_iofree(b);
-
-        }   
-        return p!=0;
+	wbfs_fatal("sin implementar");
+	return 1;
 }
 int wbfs_applet_init(wbfs_t *p)
 {
@@ -188,19 +152,6 @@ int wbfs_applet_init(wbfs_t *p)
         // job already done by the reset flag of the wbfs_open_partition
         return p!=0;
         
-}
-
-int wbfs_applet_check(wbfs_t *p , char * idgame)
-{
-	if( wbfs_integrity_check(p , (u8*)idgame) == TRUE)
-	{
-		exit(TRUE);
-	}
-	else
-	{
-		exit(FALSE);
-	}
-	
 }
 
 static void _spinner(int x,int y){ spinner(x,y);}
@@ -211,7 +162,7 @@ int wbfs_applet_add(wbfs_t *p,char*argv)
         wbfs_disc_t *d;
         if(!f)
         {
-			fprintf(stderr,"No se puede abrir la ISO, tal vez no exista. Pruebe a indicar la ruta completa entre comillas");
+			fprintf(stdout,"ISO_NO_EXISTE");
 			return FALSE;
 		}
         else
@@ -221,9 +172,9 @@ int wbfs_applet_add(wbfs_t *p,char*argv)
 			if(d)
 			{
 				discinfo[6]=0;
-				fprintf(stderr,"%s ya está en el disco ...\n",discinfo);
+				fprintf(stdout,"YA_ESTA_EN_DISCO\n");
 				wbfs_close_disc(d);
-				return TRUE;
+				return FALSE;
 			}
 			else
 			{
@@ -344,8 +295,6 @@ struct wbfs_applets{
         APPLET(add),
         APPLET(rm),
         APPLET(extract),
-        //APPLET_NOARG(check),
-        APPLET(check),
 };
 static int num_applets = sizeof(wbfs_applets)/sizeof(wbfs_applets[0]);
 void usage(char **argv)

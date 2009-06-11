@@ -572,7 +572,7 @@ class WiithonGUI(GtkBuilderWrapper):
             self.wb_aboutdialog.hide()
         elif(id_tb == self.wb_tb_borrar):
             if self.iteradorJuegoSeleccionado != None:
-                if ( self.question(_('Quieres borrar el juego con ID = %s?' % self.IDGAMEJuegoSeleccionado)) == 1 ):
+                if ( self.question(_('Quieres borrar el juego con ID = %s?') % self.IDGAMEJuegoSeleccionado) == 1 ):
                     # borrar del HD
                     self.core.borrarJuego( self.DEVICEParticionSeleccionada , self.IDGAMEJuegoSeleccionado )
 
@@ -595,7 +595,7 @@ class WiithonGUI(GtkBuilderWrapper):
                         gtk.RESPONSE_OK,
                         )
 
-                fc_extraer = gtk.FileChooserDialog(_('Elige un directorio donde extraer la ISO de %s' % (self.IDGAMEJuegoSeleccionado)), None , gtk.FILE_CHOOSER_ACTION_SELECT_FOLDER , botones)
+                fc_extraer = gtk.FileChooserDialog(_('Elige un directorio donde extraer la ISO de %s') % (self.IDGAMEJuegoSeleccionado), None , gtk.FILE_CHOOSER_ACTION_SELECT_FOLDER , botones)
                 fc_extraer.set_default_response(gtk.RESPONSE_OK)
                 fc_extraer.set_local_only(True)
                 fc_extraer.set_current_folder( self.preferencia.ruta_extraer_iso )

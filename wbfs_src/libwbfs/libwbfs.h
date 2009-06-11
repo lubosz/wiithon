@@ -11,8 +11,6 @@
 typedef u32 be32_t;
 typedef u16 be16_t;
 
-
-
 typedef struct wbfs_head
 {
         be32_t magic;
@@ -217,10 +215,6 @@ float wbfs_estimate_disc(
 		partition_selector_t sel);
 
 //////////////////////////////////////////////////////////////////////////////////////////
-
-wbfs_disc_t *wbfs_open_index_disc(wbfs_t* p, u32 i);
-
-int wbfs_integrity_check(wbfs_t* p , u8* discid);
 
 unsigned int wbfs_copy_disc(wbfs_disc_t*d_src, wbfs_t*p_dst, progress_callback_t spinner);
 

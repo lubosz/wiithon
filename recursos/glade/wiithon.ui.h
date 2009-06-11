@@ -18,6 +18,6 @@ char *s = N_("TEXTO_LICENCIA");
 char *s = N_("TEXTO_TRADUCTORES");
 char *s = N_("Trabajos de fondo (0)");
 char *s = N_("Trabajos intensos (0)");
-char *s = N_("Un gestor de particiones WBFS f&#xE1;cil de usar");
+char *s = N_("Un gestor de particiones WBFS facil de usar");
 char *s = N_("caratulas a SD");
 char *s = N_("https://launchpad.net/wiithon");

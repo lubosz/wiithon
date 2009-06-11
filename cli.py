@@ -158,12 +158,6 @@ class WiithonCLI:
                     print _("ERROR al renombrar")
             else:
                 print _("No hay Juegos para renombrar")
-        elif ( parm1 == "check" or parm1 == "comprobar" or parm1 == "scandisk"):
-            if(hayJuegos):
-                print _("Verificando todos los juegos de la particion %s") % (DEVICE + " " + FABRICANTE)
-                self.verificarTodosLosJuegos(DEVICE , listaJuegos)
-            else:
-                print _("No hay Juegos para verificar")
         elif ( parm1 == "extraer" or parm1 == "extract" or parm1 == "x"):
             if(hayJuegos):
                 if(numParametros >= 2):
@@ -259,9 +253,9 @@ class WiithonCLI:
                                         try:
                                             print _("Se va ha borrar la ISO descomprimida")
                                             os.remove(nombreISO)
-                                            print _("La ISO %s temporal fue borrada" % (nombreISO))
+                                            print _("La ISO %s temporal fue borrada") % (nombreISO)
                                         except:
-                                            print _("ERROR al borrar la ISO : %s" % (nombreISO))
+                                            print _("ERROR al borrar la ISO : %s") % (nombreISO)
                                         print "}"
                                         print
                                     else:
@@ -273,13 +267,13 @@ class WiithonCLI:
                                     print
                                     erroneos.append(mensaje)
                             else:
-                                mensaje = _("ERROR no se puede descomrpimir por que reemplazaria el ISO : %s" % (nombreISO))
+                                mensaje = _("ERROR no se puede descomrpimir por que reemplazaria el ISO : %s") % (nombreISO)
                                 print "ERROR"
                                 print "}"
                                 print
                                 erroneos.append(mensaje)
                         else:
-                            mensaje = _("ERROR el RAR %s no tenia ninguna ISO" % (nombreRAR))
+                            mensaje = _("ERROR el RAR %s no tenia ninguna ISO") % (nombreRAR)
                             print "ERROR"
                             print "}"
                             print
@@ -287,19 +281,19 @@ class WiithonCLI:
                     elif( util.getExtension(fichero) == "iso" ):
                         print "%s : %s %s %s %s" % (_("Aniadir ISO") , os.path.basename(fichero) , _("a la particion") , DEVICE , FABRICANTE)
                         if ( self.core.anadirISO(DEVICE , fichero ) ):
-                            mensaje = _("ISO %s aniadida correctamente" % fichero)
+                            mensaje = _("ISO %s aniadida correctamente") % fichero
                             print "OK"
                             print "}"
                             print
                             correctos.append(mensaje)
                         else:
-                            mensaje = _("ERROR aniadiendo la ISO : %s (comprueba que sea una ISO de WII)" % fichero)
+                            mensaje = _("ERROR aniadiendo la ISO : %s (comprueba que sea una ISO de WII)") % fichero
                             print "ERROR"
                             print "}"
                             print
                             erroneos.append(mensaje)
                     else:
-                        mensaje = _("ERROR %s no es un ningun juego de Wii" % (fichero))
+                        mensaje = _("ERROR %s no es un ningun juego de Wii") % (fichero)
                         print "ERROR"
                         print "}"
                         print
@@ -316,7 +310,7 @@ class WiithonCLI:
 
             if(len(correctos) == numFicherosProcesados):
                 print "\t{"
-                print "%s================= %s ===================" % ("\t" , "Todo metido en el HD correctamente")
+                print "%s================= %s ===================" % ("\t" , _("Todo metido en el HD correctamente"))
                 print "\t}"
             else:
                 if(len(correctos) > 0):
@@ -375,7 +369,7 @@ class WiithonCLI:
                         if( self.core.descargarCaratula(MAGIC_DVD) ):
                             print "%s %s/%s.png" % (_("Caratula descargada como") , os.getcwd() , MAGIC_DVD)
                         else:
-                            print _("No se ha encontrado caratula para el juego %s" % MAGIC_DVD)
+                            print _("No se ha encontrado caratula para el juego %s") % MAGIC_DVD
                     else:
                         print _("Error al pasar la ISO al disco duro")
                     print _("wiithon no borra la ISO temporal, puedes borrarla si no la necesitas")
@@ -401,7 +395,7 @@ class WiithonCLI:
                     caratula = _("NO")
                 print "%3s\t%s\t%-40s\t%.2f GB\t%6s" % ( i , juego[0] , juego[1] , ocupado , caratula)
                 if ( (i % config.NUM_LINEAS_PAUSA) == 0 ):
-                    raw_input(_("Presiona cualquier tecla para mostrar %d lineas mas" % (config.NUM_LINEAS_PAUSA)))
+                    raw_input(_("Presiona cualquier tecla para mostrar %d lineas mas") % (config.NUM_LINEAS_PAUSA))
                 i = i + 1
             print "--------------------------------------------------------------------------------"
 
@@ -435,51 +429,13 @@ class WiithonCLI:
                     caratula = _("NO")
                 print "%s\t%-55s\t%.2f GB\t%6s" % (juego[0] , juego[1] , ocupado , caratula)
                 if ( (i % config.NUM_LINEAS_PAUSA) == 0 ):
-                    raw_input(_("Presiona cualquier tecla para mostrar %d lineas mas" % (config.NUM_LINEAS_PAUSA)))
+                    raw_input(_("Presiona cualquier tecla para mostrar %d lineas mas") % (config.NUM_LINEAS_PAUSA))
                 i = i + 1
             print "--------------------------------------------------------------------------------"
             print "%s%d %s" % ( "\t\t\t\t\t\t\t" ,numJuegos , _("juegos de WII") )
             return numJuegos
         else:
             return 0
-
-
-    # Dada una lista de juegos, verifica su estado
-    # Hay que separar la lógica de la presentación
-    def verificarTodosLosJuegos(self , DEVICE , listaJuegos):
-        listaCorruptos = []
-        numJuegos = len(listaJuegos)
-        if(numJuegos > 0):
-            print "--------------------------------------------------------------------------------"
-            print "%6s\t%-40s\t%s" % ("IDGAME",_("TITULO") , _("Corrupto?"))
-            print "--------------------------------------------------------------------------------"
-            for juego in listaJuegos:
-                if( self.core.verificarJuego( DEVICE , juego[0] ) ):
-                    corrupto = _("NO ESTA CORRUPTO")
-                else:
-                    corrupto = _("ESTA CORRUPTO")
-                    listaCorruptos.append(juego)
-                print "%s\t%-40s\t%s" % ( juego[0] , juego[1] , corrupto)
-        numCorruptos = len(listaCorruptos)
-        if (numCorruptos > 0):
-            print "--------------------------------------------------------------------------------"
-            print _("Lista de juegos corruptos")
-            print "--------------------------------------------------------------------------------"
-            for juego in listaCorruptos:
-                print "%s\t%-40s" % ( juego[0] , juego[1] )
-            print "--------------------------------------------------------------------------------"
-            print _("Hay %d juegos corruptos, se recomienda que los desinstale" % (numCorruptos))
-            print "--------------------------------------------------------------------------------"
-            respuesta = raw_input(_("Quieres desinstalarlos? (S/N) "))
-            if(respuesta.lower() == _("s") or respuesta.lower() == _("si")):
-                for juego in listaCorruptos:
-                    if (borrarJuego(DEVICE , juego[0])):
-                        print _("%s borrado correctamente" % (juego[0]))
-                    else:
-                        print _("ERROR : %s NO se ha borrado correctamente" % (juego[0]))
-            else:
-                print _("Saliendo. No se ha desinstalado nada")
-
 
     def mostrarEspacioLibre(self , DEVICE):
         info = self.core.getEspacioLibre(DEVICE)
@@ -532,12 +488,8 @@ Descargar la caratulas de un juego especificado por su IDGAME, la imagen es baja
 Descargar la caratulas de un juego especificado por menú, la imagen es bajada a 160x225. El comando es un singular, es "caratula" ya que "caratulas" descarga todo:
 \t\t%s caratula"
 
-Comprobar Integridad de los juegos. Muchos de nuestros juegos pueden estar corruptos sin aún saberlo debido a el bug de borrado de las primeras versiones de WBFS
-\t\t%s comprobar
-
 Instar juegos desde el DVD, al estilo del usb loader, pero algo más lento porque dumpea a ISO y cuando termina mete la ISO:
 \t\t%s instalar
-
 
 Web : http://blogricardo.wordpress.com/2009/04/07/wiithon-wbfs-gui-para-wii
 ''' % (
@@ -548,7 +500,6 @@ Web : http://blogricardo.wordpress.com/2009/04/07/wiithon-wbfs-gui-para-wii
     wiithon,
     wiithon,
     wiithon, sys.argv[0],
-    wiithon,
     wiithon,
     wiithon,
     wiithon,

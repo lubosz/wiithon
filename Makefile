@@ -13,7 +13,8 @@ HOME_WIITHON_LOGS=$(HOME_WIITHON)/logs
 all: wbfs
 	@echo ==================================================================
 	@echo "Escribe \"sudo make install_auto\" para instalar Wiithon y sus dependencias (con apt-get)"
-	@echo "Escribe \"sudo make install\" para instalar wiithon"
+	@echo "Escribe \"sudo make install\" para instalar wiithon en espacio de root"
+	@echo "Escribe \"sudo make install permisos\" para instalar wiithon en espacio de usuario"
 	@echo "Escribe \"sudo make uninstall\" para desinstalar wiithon"
 	@echo "Escribe \"sudo make purge\" para desinstalar wiithon completamente"
 	@echo "Escribe \"sudo make dependencias\" para instalar las dependencias con apt-get"
@@ -34,19 +35,18 @@ dependencias:
 
 permisos:
 	gpasswd -a $(USUARIO) disk
-	mkdir -p $(HOME_WIITHON)
-	mkdir -p $(HOME_WIITHON_BDD)
-	mkdir -p $(HOME_WIITHON_CARATULAS)
-	mkdir -p $(HOME_WIITHON_DISCOS)
-	mkdir -p $(HOME_WIITHON_LOGS)
-	chown $(USUARIO) $(HOME_WIITHON) -R
+	@mkdir -p $(HOME_WIITHON)
+	@mkdir -p $(HOME_WIITHON_BDD)
+	@mkdir -p $(HOME_WIITHON_CARATULAS)
+	@mkdir -p $(HOME_WIITHON_DISCOS)
+	@mkdir -p $(HOME_WIITHON_LOGS)
+	@echo "Corrigiendo permisos de $(HOME_WIITHON)"
+	@chown $(USUARIO) $(HOME_WIITHON) -R
 	
-	-$(RM) /usr/share/applications/wiithon_root.desktop
-	cp wiithon_usuario.desktop /usr/share/applications/
-	@echo "=================================================================="
-	@echo "Se han modificado los permisos para que $(USUARIO) pueda r/w en particiones WBFS"
-	@echo "Puede que tenga que reiniciar GNOME / KDE para que surga efecto"
-	@echo "=================================================================="
+	@echo "Quitando wiithon como root del menu"
+	-@$(RM) /usr/share/applications/wiithon_root.desktop
+	@echo "Poniendo wiithon como usuario en el menu"
+	@cp wiithon_usuario.desktop /usr/share/applications/
 
 install: uninstall wbfs generarMOO
 	@echo "=================================================================="
@@ -77,7 +77,6 @@ install: uninstall wbfs generarMOO
 	cp animar.py $(PREFIX)/share/wiithon
 	
 	cp wiithon_root.desktop /usr/share/applications/
-	cp wiithon_usuario.desktop /usr/share/applications/
 
 	cp recursos/icons/wiithon.svg /usr/share/pixmaps
 
@@ -106,7 +105,6 @@ install: uninstall wbfs generarMOO
 	@echo "\t2. Por consola:"
 	@echo "\t\t\t- sudo wiithon"
 	@echo "=================================================================="
-	@echo "Recuerde: Puede escribir \"sudo make permisos\" para evitar el uso de root"
 
 uninstall:
 	# Limpiando antiguas instalaciones
