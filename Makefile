@@ -34,7 +34,7 @@ dependencias:
 	apt-get install imagemagick wget rar libssl-dev intltool python-gtk2 python-glade2 python-sexy python-sqlalchemy gnome-icon-theme menu
 
 permisos:
-	gpasswd -a $(USUARIO) disk
+	adduser $(USUARIO) disk
 	@mkdir -p $(HOME_WIITHON)
 	@mkdir -p $(HOME_WIITHON_BDD)
 	@mkdir -p $(HOME_WIITHON_CARATULAS)
