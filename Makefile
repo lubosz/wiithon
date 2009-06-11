@@ -214,7 +214,6 @@ po/plantilla.pot: recursos/glade/wiithon.ui.h recursos/glade/alerta.ui.h *.py
 recursos/glade/%.ui.h: recursos/glade/%.ui
 	intltool-extract --type="gettext/glade" $<
 
-
 # generar PO VACIO a partir de plantilla POT
 initPO: po/plantilla.pot
 	@echo "*** GETTEXT *** Creando POO: es y en"
@@ -222,7 +221,7 @@ initPO: po/plantilla.pot
 	LANG=en_US.UTF-8 msginit -i po/plantilla.pot -o po/en.po --no-translator
 
 # generar PO, si ya existe, mezcla o sincroniza
-po/%.po: initPO po/plantilla.pot
+po/%.po: po/plantilla.pot
 	msgmerge -U $@ $(filter %.pot, $^)
 
 # generar MO
@@ -238,6 +237,3 @@ limpiarPO:
 
 # OJO: Borra todas las traducciones
 regenerarPO: limpiarPO generarPO generarMOO
-
-%.mo:
-	make -C po $@
