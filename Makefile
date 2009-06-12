@@ -2,7 +2,7 @@ PREFIX=/usr/local
 
 VERSION=${shell cat doc/VERSION}
 REVISION=${shell bzr revno}
-HOME_EFECTIVO=${shell cat /usr/local/share/wiithon/HOME.conf}
+HOME_EFECTIVO=${shell cat $(PREFIX)/share/wiithon/HOME.conf}
 USUARIO=${shell basename $(HOME_EFECTIVO)}
 HOME_WIITHON=$(HOME_EFECTIVO)/.wiithon
 HOME_WIITHON_BDD=$(HOME_WIITHON)/bdd
@@ -209,7 +209,7 @@ actualizar:
 # Generar plantilla POT
 po/plantilla.pot: recursos/glade/*.ui.h *.py
 	@echo "*** GETTEXT *** Extrayendo strings del código"
-	xgettext --language=Python --omit-header --keyword=_ --keyword=N_ --from-code=utf-8 --sort-by-file --package-name="wiithon" --package-version="`cat doc/VERSION`" --msgid-bugs-address=makiolo@gmail.com -o po/plantilla.pot $^
+	xgettext --language=Python --omit-header --keyword=_ --keyword=N_ --from-code=utf-8 --sort-by-file --package-name="wiithon" --package-version="$(VERSION)" --msgid-bugs-address=makiolo@gmail.com -o po/plantilla.pot $^
 
 # extraer strings del glade
 recursos/glade/%.ui.h: recursos/glade/%.ui
@@ -226,7 +226,7 @@ po/%/LC_MESSAGES/wiithon.mo: po/%.po
 
 # generar PO VACIO a partir de plantilla POT
 #initPO: po/plantilla.pot
-#	@echo "*** GETTEXT *** Creando POO: es y en"
+#	@echo "*** GETTEXT *** Creando PO: es y en"
 #	LANG=es_ES.UTF-8 msginit -i po/plantilla.pot -o po/es.po --no-translator
 #	LANG=en_US.UTF-8 msginit -i po/plantilla.pot -o po/en.po --no-translator
 

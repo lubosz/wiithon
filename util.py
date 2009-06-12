@@ -4,7 +4,7 @@
 
 import os
 import fnmatch
-import fnmatch
+import gtk
 import subprocess
 
 # Caracteres que hacen que una expresión no pueda ser expresión regular
