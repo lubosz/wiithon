@@ -3,12 +3,12 @@
 # vim: set fileencoding=utf-8 :
 
 import os
+import threading , subprocess
+from threading import Thread, Semaphore
+
 import config
 import util
 from pool import Pool
-import threading , subprocess
-from threading import Thread
-from threading import Semaphore
 from mensaje import Mensaje
 
 '''

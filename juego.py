@@ -4,9 +4,10 @@
 
 import os
 import config
-from sqlalchemy.orm import mapper , relation , sessionmaker
-from sqlalchemy import create_engine
-from sqlalchemy import Table, Column, Integer , Float , Text, VARCHAR, MetaData, ForeignKey
+
+from sqlalchemy.orm import mapper, relation, sessionmaker
+from sqlalchemy import create_engine, Table, Column, Integer, Float, \
+    Text, VARCHAR, MetaData, ForeignKey
 
 '''
 Documentación: http://www.sqlalchemy.org/docs/05/ormtutorial.html#define-and-create-a-table

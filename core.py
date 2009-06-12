@@ -2,19 +2,21 @@
 # -*- coding: utf-8 -*-
 # vim: set fileencoding=utf-8 :
 
-import sys , os , time
-import gtk
+import sys
+import os
+import time
 import commands
-import gettext
-import shutil
-
-from util import NonRepeatList
-import config
-import util
-
 from Queue import Queue
 from threading import Thread
 import subprocess
+
+import gtk
+import gettext
+import shutil
+
+import util
+from util import NonRepeatList
+import config
 
 class WiithonCORE:
 

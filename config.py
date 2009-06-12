@@ -2,7 +2,10 @@
 # -*- coding: utf-8 -*-
 # vim: set fileencoding=utf-8 :
 
-import os, sys , util
+import os
+import sys
+
+import util
 
 WIITHON_PATH = os.path.dirname(sys.argv[0])
 WIITHON_FILES = os.path.dirname(__file__)

@@ -3,10 +3,12 @@
 # vim: set fileencoding=utf-8 :
 
 import os
+
+from sqlalchemy.orm import mapper, relation, sessionmaker
+from sqlalchemy import create_engine, Table, Column, Integer, Text, \
+    VARCHAR, MetaData, ForeignKey
+
 import config
-from sqlalchemy.orm import mapper , relation , sessionmaker
-from sqlalchemy import create_engine
-from sqlalchemy import Table, Column, Integer, Text, VARCHAR, MetaData, ForeignKey
 
 motor = create_engine('sqlite:///%s' % os.path.join( config.HOME_WIITHON_BDD , 'juegos.db' ))
 metadatos = MetaData()

@@ -2,12 +2,12 @@
 # vim: set fileencoding=utf-8 :
 
 import os.path
-import config
 import time
+from threading import Thread
+
 import gobject
 
-#import threading , subprocess
-from threading import Thread
+import config
 
 class Animador(Thread):
 

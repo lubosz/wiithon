@@ -7,8 +7,6 @@ import fnmatch
 import fnmatch
 import subprocess
 
-import gtk
-
 # Caracteres que hacen que una expresión no pueda ser expresión regular
 BLACK_LIST = "/\"\'$&|[]"
 BLACK_LIST2 = "\";`$\\\'"
@@ -218,6 +216,7 @@ try:
 
 except ImportError:
     #logging.warning("There is no python-sexy available. fallback to standard gtk.")
+    import gtk
     class Entry(gtk.Entry):
         def __init__(self, clear=False, copy=False):
             gtk.Entry.__init__(self)

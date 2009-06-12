@@ -3,7 +3,9 @@
 # vim: set fileencoding=utf-8 :
 # http://crysol.org/es/node/911
 
-import gtk , config
+import gtk
+
+import config
 
 class GtkBuilderWrapper:
     def __init__(self, builder_file):

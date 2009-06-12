@@ -2,9 +2,13 @@
 # -*- coding: utf-8 -*-
 # vim: set fileencoding=utf-8 :
 
-import sys , os , util , glob
-import config
+import sys
+import os
+import glob
+
+import util
 from util import NonRepeatList
+import config
 
 class WiithonCLI:
 
@@ -17,13 +21,13 @@ class WiithonCLI:
 
     def __init__(self , core):
         self.core = core
-        
+
         '''
         if os.geteuid() != 0:
             print _("REQUIERE_ROOT") % (config.APP , config.APP)
             raise AssertionError, _("Error en permisos")
         '''
-        
+
         # varias particiones
         listaParticiones = self.core.getListaParticiones()
         # Del error SI se dan cuenta el GUI o CLI

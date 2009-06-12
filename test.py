@@ -2,14 +2,16 @@
 # -*- coding: utf-8 -*-
 # vim: set fileencoding=utf-8 :
 
+import os
 import time
-from pool import Pool
 import subprocess
 import threading
 from threading import Thread
 
-import os , config
-from juego import session , Juego
+from pool import Pool
+
+import config
+from juego import session, Juego
 
 print "cargando "+os.path.join( config.HOME_WIITHON_BDD , 'juegos.db' )
 

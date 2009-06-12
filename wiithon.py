@@ -13,7 +13,6 @@ import getopt
 
 import config
 import util
-
 from cli import WiithonCLI
 from gui import WiithonGUI
 from core import WiithonCORE

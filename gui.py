@@ -2,17 +2,20 @@
 # -*- coding: utf-8 -*-
 # vim: set fileencoding=utf-8 :
 
-# local
+import os
+import time
+import sys
+from threading import Thread
+
+import gtk
+import gobject
+import pango
+
+import config
 import util
 from builder_wrapper import GtkBuilderWrapper
 from trabajo import PoolTrabajo
-
-# externo
-import gtk , gobject , pango
-import os , time
-import config , sys
-from threading import Thread
-from preferencias import session , Preferencia
+from preferencias import session, Preferencia
 from juego import Juego
 from animar import Animador
 
