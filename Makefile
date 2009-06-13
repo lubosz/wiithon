@@ -10,7 +10,7 @@ HOME_WIITHON_CARATULAS=$(HOME_WIITHON)/caratulas
 HOME_WIITHON_DISCOS=$(HOME_WIITHON)/discos
 HOME_WIITHON_LOGS=$(HOME_WIITHON)/logs
 
-all: wbfs
+all:
 	@echo ==================================================================
 	@echo "Escribe \"sudo make install_auto\" para instalar Wiithon y sus dependencias (con apt-get)"
 	@echo ""
@@ -35,7 +35,7 @@ runEN: install
 install_auto: uninstall dependencias install
 
 dependencias:
-	apt-get install imagemagick wget rar libssl-dev intltool python-gtk2 python-glade2 python-sexy python-sqlalchemy gnome-icon-theme menu
+	apt-get install imagemagick wget rar intltool python-gtk2 python-glade2 python-sexy python-sqlalchemy gnome-icon-theme menu
 	@echo "=================================================================="
 	@echo "Instaladas dependencias"
 	@echo "=================================================================="
@@ -62,10 +62,12 @@ install: wbfs po/es/LC_MESSAGES/wiithon.mo po/en/LC_MESSAGES/wiithon.mo
 
 	echo $(HOME) > $(PREFIX)/share/wiithon/HOME.conf
 
+	cp wbfs_src/wiithon_wrapper $(PREFIX)/share/wiithon
 	cp wiithon.py $(PREFIX)/share/wiithon
+	
 	cp wiithon_autodetectar.sh $(PREFIX)/share/wiithon
 	cp wiithon_autodetectar_lector.sh $(PREFIX)/share/wiithon
-	cp wbfs $(PREFIX)/share/wiithon
+	
 	cp cli.py $(PREFIX)/share/wiithon
 	cp gui.py $(PREFIX)/share/wiithon
 	cp builder_wrapper.py $(PREFIX)/share/wiithon
@@ -92,12 +94,13 @@ install: wbfs po/es/LC_MESSAGES/wiithon.mo po/en/LC_MESSAGES/wiithon.mo
 
 	chmod 755 $(PREFIX)/share/wiithon/*.py
 	chmod 755 $(PREFIX)/share/wiithon/*.sh
-	chmod 755 $(PREFIX)/share/wiithon/wbfs
+	chmod 755 $(PREFIX)/share/wiithon/wiithon_wrapper
 
 	chmod 644 $(PREFIX)/share/wiithon/recursos/glade/*.ui
 	chmod 644 $(PREFIX)/share/wiithon/recursos/imagenes/*.png
 
 	-@ln -s $(PREFIX)/share/wiithon/wiithon.py $(PREFIX)/bin/wiithon
+	-@ln -s $(PREFIX)/share/wiithon/wiithon_wrapper $(PREFIX)/bin/wiithon_wrapper
 
 	@echo "=================================================================="
 	@echo "Instalado OK"
@@ -119,6 +122,7 @@ uninstall:
 	-$(RM) $(PREFIX)/bin/wiithon_autodetectar
 	-$(RM) $(PREFIX)/bin/wiithon_autodetectar_lector
 	-$(RM) $(PREFIX)/bin/wbfs
+	-$(RM) $(PREFIX)/share/wiithon/wbfs
 
 	-$(RM) $(PREFIX)/share/wiithon/glade_wrapper.py
 
@@ -139,9 +143,11 @@ uninstall:
 	# Desinstalando la actual versión
 
 	-$(RM) $(PREFIX)/bin/wiithon
+	-$(RM) $(PREFIX)/bin/wiithon_wrapper
+	
 	-$(RM) $(PREFIX)/share/wiithon/*.py
 	-$(RM) $(PREFIX)/share/wiithon/*.sh
-	-$(RM) $(PREFIX)/share/wiithon/wbfs
+	-$(RM) $(PREFIX)/share/wiithon/wiithon_wrapper
 	-$(RM) $(PREFIX)/share/wiithon/recursos/glade/*.ui
 	-$(RM) $(PREFIX)/share/wiithon/recursos/imagenes/*.png
 
@@ -175,15 +181,9 @@ clean: clean_wbfs
 
 clean_wbfs:
 	$(MAKE) -C wbfs_src clean
-	-$(RM) wbfs
 
-wbfs: /usr/include/openssl/aes.h /usr/include/openssl/md5.h /usr/include/openssl/sha.h
+wbfs:
 	$(MAKE) -C wbfs_src
-	cp wbfs_src/wbfs .
-
-/usr/include/openssl/*.h:
-	@echo "Deberías instalar \"libssl-dev\" para poder compilar wbfs"
-	@return
 
 # REPOSITORIO
 pull:

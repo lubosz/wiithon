@@ -44,7 +44,7 @@ GLADE_ALERTA = "alerta"
 DETECTOR_WBFS = os.path.join( WIITHON_FILES , "wiithon_autodetectar.sh" )
 DETECTOR_WBFS_LECTOR = os.path.join( WIITHON_FILES , "wiithon_autodetectar_lector.sh" )
 
-WBFS_APP = os.path.join(WIITHON_FILES , "wbfs")
+WBFS_APP = os.path.join(WIITHON_FILES , "wiithon_wrapper")
 
 TOPICS = ['ERROR', 'INFO', 'WARNING' , 'COMANDO']
 

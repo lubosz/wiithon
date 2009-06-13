@@ -504,7 +504,7 @@ u32 wbfs_rm_disc(wbfs_t*p, u8* discid)
         int discn = 0;
         int disc_info_sz_lba = p->disc_info_sz>>p->hd_sec_sz_s;
         if(!d)
-                return 1;
+                return FALSE;
         load_freeblocks(p);
         discn = d->i;
         for( i=0; i< p->n_wbfs_sec_per_disc; i++)
@@ -518,24 +518,41 @@ u32 wbfs_rm_disc(wbfs_t*p, u8* discid)
         p->head->disc_table[discn] = 0;
         wbfs_close_disc(d);
         wbfs_sync(p);
-        return 0;
+        return TRUE;
 }
 
-u32 wbfs_ren_disc(wbfs_t*p, u8* discid, u8* newname)
+u32 wbfs_ren_disc(wbfs_t *p, u8 *discid, char *newname)
 {
 	wbfs_disc_t *d = wbfs_open_disc(p,discid);
 	int disc_info_sz_lba = p->disc_info_sz>>p->hd_sec_sz_s;
 
 	if(!d)
-		return 1;
+		return FALSE;
 
-	memset(d->header->disc_header_copy+0x20, 0, 0x40);
-	strncpy((char *) d->header->disc_header_copy+0x20, (char *) newname, 0x39);
+	memset(d->header->disc_header_copy+0x20, 0, 0x80);
+	strncpy((char *) d->header->disc_header_copy+0x20, (char*)newname, 0x80);
 
 	p->write_hdsector(p->callback_data,p->part_lba+1+d->i*disc_info_sz_lba,disc_info_sz_lba,d->header);
 	wbfs_close_disc(d);
-	return 0;
+	return TRUE;
 }
+
+u32 wbfs_ren_idgame(wbfs_t *p, u8 *discid, u8 *nuevoid)
+{
+	wbfs_disc_t *d = wbfs_open_disc(p,discid);
+	int disc_info_sz_lba = p->disc_info_sz>>p->hd_sec_sz_s;
+
+	if(!d)
+		return FALSE;
+
+	memcpy(d->header->disc_header_copy, nuevoid, 6);
+	strncpy((char *) d->header->disc_header_copy, (char*) nuevoid, 6);
+
+	p->write_hdsector(p->callback_data,p->part_lba+1+d->i*disc_info_sz_lba,disc_info_sz_lba,d->header);
+	wbfs_close_disc(d);
+	return TRUE;
+}
+
 
 // trim the file-system to its minimum size
 u32 wbfs_trim(wbfs_t*p);
@@ -615,7 +632,7 @@ float wbfs_estimate_disc
 			tot++;
 		}
 	}
-	//memcpy(header, b,0x100);
+	//memcpy(header, b, 0x100);
 
 error:
 	if (d)
@@ -697,5 +714,13 @@ error:
 
 	return 0;
 }
+
+void fatal(const char *s, ...)
+{
+	perror(s);
+	exit(1);
+}
+
+
 
 

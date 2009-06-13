@@ -19,14 +19,14 @@ static int wbfs_fread_sector(void *_fp,u32 lba,u32 count,void*buf)
 		if (fseeko(fp, off, SEEK_SET))
         {
             fprintf(stderr,"\n\n%lld %d %p\n",off,count,_fp);
-			wbfs_error("Error al posicionarse en la particion del disco");
-            return 1;
+			//wbfs_error("Error al posicionarse en la particion del disco");
+            return FALSE;
         }
         if (fread(buf, count*512ULL, 1, fp) != 1){
-                wbfs_error("Error leyendo disco");
-                return 1;
+                //wbfs_error("Error leyendo disco");
+                return FALSE;
         }
-        return 0;
+        return OK;
   
 }
 static int wbfs_fwrite_sector(void *_fp,u32 lba,u32 count,void*buf)
@@ -37,13 +37,13 @@ static int wbfs_fwrite_sector(void *_fp,u32 lba,u32 count,void*buf)
 	if (fseeko(fp, off, SEEK_SET))
         {
 			wbfs_error("Error al posicionarse en la particion del disco");
-            return 1;
+            return FALSE;
         }
         if (fwrite(buf, count*512ULL, 1, fp) != 1){
                 wbfs_error("Error escribiendo disco");
-                return 1;
+                return FALSE;
         }
-        return 0;
+        return OK;
   
 }
 static int get_capacity(char *file,u32 *sector_size,u32 *n_sector)
@@ -105,27 +105,30 @@ wbfs_t *wbfs_try_open(char *disc,char *partition, int reset)
         else if(!p && !reset){
                 char buffer[32];
                 int i;
-                for (i='c';i<'z';i++)
+                int n;
+                for (i='b';i<'z';i++)
                 {
-                        snprintf(buffer,32,"/dev/sd%c",i);
+                    for (n=1;n<5;n++)
+                    {
+                        snprintf(buffer,32,"/dev/sd%c%d",i ,n);
                         p = wbfs_try_open_hd(buffer,0);
                         if(p)
                         {
-                                fprintf(stderr,"using %s\n",buffer);
+                                fprintf(stderr,"Autodetectada %s ...\n",buffer);
                                 return p;
                         }
-                        snprintf(buffer,32,"/dev/hd%c",i);
+                        snprintf(buffer,32,"/dev/hd%c%d",i , n);
                         p = wbfs_try_open_hd(buffer,0);
                         if(p)
                         {
-                                fprintf(stderr,"using %s\n",buffer);
+                                fprintf(stderr,"Autodetectada %s ...\n",buffer);
                                 return p;
-                        }                        
+                        }                     
+                    }
                 }
                 wbfs_error("No se ha encontrado ninguna particion WBFS (verifica los permisos))");
         }
         return p;
-        
 }
 
 #endif

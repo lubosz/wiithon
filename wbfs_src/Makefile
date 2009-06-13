@@ -1,12 +1,12 @@
-#PROGS = negentig scrub wbfs
-PROGS = wbfs  
-COMMON = tools.o bn.o ec.o disc_usage_table.o libwbfs.o libwbfs_linux.o wiidisc.o rijndael.o
+PROGS = wiithon_wrapper
+#COMMON = tools.o bn.o ec.o disc_usage_table.o libwbfs.o libwbfs_linux.o wiidisc.o rijndael.o
+COMMON = libwbfs.o libwbfs_linux.o wiidisc.o rijndael.o
 DEFINES = -DLARGE_FILES -D_FILE_OFFSET_BITS=64
-LIBS = -L. -lcrypto
-
+LIBS = -L. 
+#-lcrypto
 CC = gcc
 #CFLAGS = -Wall -W -Os -Ilibwbfs -I.
-CFLAGS = -Wall -m32 -W  -ggdb -Ilibwbfs -I.
+CFLAGS = -Wall -m32 -W  -g -ggdb -Ilibwbfs -I.
 LDFLAGS = -m32 -static
 
 VPATH+=libwbfs
@@ -17,8 +17,9 @@ all: $(PROGS)
 $(PROGS): %: %.o $(COMMON) Makefile
 	$(CC) $(CFLAGS) $(LDFLAGS) $< $(COMMON) $(LIBS) -o $@
 
-$(OBJS): %.o: %.c tools.h Makefile
+$(OBJS): %.o: %.c Makefile
 	$(CC) $(CFLAGS) $(DEFINES) -c $< -o $@ 
 
 clean:
 	-rm -f $(OBJS) $(PROGS)
+

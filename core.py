@@ -81,9 +81,17 @@ class WiithonCORE:
             return False
 
     # renombra el ISO de un IDGAME que esta en DEVICE
-    def renombrarISO(self , DEVICE , IDGAME , NUEVO_NOMBRE):
+    def renombrarNOMBRE(self , DEVICE , IDGAME , NUEVO_NOMBRE):
         try:
             comando = config.WBFS_APP+" -p "+DEVICE+" rename "+IDGAME+" \""+NUEVO_NOMBRE+"\""
+            salida = subprocess.call( comando , shell=True , stderr=subprocess.STDOUT )
+            return salida == 0
+        except KeyboardInterrupt:
+            return False
+            
+    def renombrarIDGAME(self , DEVICE , IDGAME , NUEVO_IDGAME):
+        try:
+            comando = config.WBFS_APP+" -p "+DEVICE+" rename_idgame "+IDGAME+" \""+NUEVO_IDGAME+"\""
             salida = subprocess.call( comando , shell=True , stderr=subprocess.STDOUT )
             return salida == 0
         except KeyboardInterrupt:

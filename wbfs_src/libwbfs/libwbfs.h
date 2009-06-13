@@ -189,7 +189,10 @@ u32 wbfs_add_disc(wbfs_t*p,read_wiidisc_callback_t read_src_wii_disc, void *call
 u32 wbfs_rm_disc(wbfs_t*p, u8* discid);
 
 /*! rename a game */
-u32 wbfs_ren_disc(wbfs_t*p, u8* discid, u8* newname);
+u32 wbfs_ren_disc(wbfs_t*p, u8 *discid, char *newname);
+
+//by makiolo
+u32 wbfs_ren_idgame(wbfs_t*p, u8 *discid, u8 *nuevoid);
 
 /*! trim the file-system to its minimum size
   This allows to use wbfs as a wiidisc container
@@ -217,6 +220,8 @@ float wbfs_estimate_disc(
 //////////////////////////////////////////////////////////////////////////////////////////
 
 unsigned int wbfs_copy_disc(wbfs_disc_t*d_src, wbfs_t*p_dst, progress_callback_t spinner);
+
+void fatal(const char *s, ...);
 
 #ifdef __cplusplus
    }

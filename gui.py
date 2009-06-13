@@ -276,15 +276,30 @@ class WiithonGUI(GtkBuilderWrapper):
                     modelo.set_value(iterador,2,"")
                 i = i + 1
 
-    def edit_amount( self, renderEditable, i, nuevoNombre ):
+    def editar_idgame( self, renderEditable, i, nuevoIDGAME):
+        if self.iteradorJuegoSeleccionado != None:
+            actualIDGAME = self.seleccionJuegoSeleccionado.get_value(self.iteradorJuegoSeleccionado,1)
+            if(actualIDGAME != nuevoIDGAME):
+                if len(nuevoIDGAME) == 6:
+                    if self.core.renombrarIDGAME(self.DEVICEParticionSeleccionada , self.IDGAMEJuegoSeleccionado , nuevoIDGAME):
+                        # modificamos el juego modificado de la BDD
+                        juego = session.query(Juego).filter('idgame=="%s" and device=="%s"' % (self.IDGAMEJuegoSeleccionado , self.DEVICEParticionSeleccionada)).first()
+                        if juego != None:
+                            juego.idgame = nuevoIDGAME
+
+                            # Refrescamos del modelo la columna modificada
+                            self.tv_games_modelo.set_value(self.iteradorJuegoSeleccionado,1,nuevoIDGAME)
+                    else:
+                        self.alert('error' , _("Error renombrando"))
+                else:
+                    self.alert('error' , _("Error: La longitud del IDGAME, debe ser 6."))
+
+    def editar_celda( self, renderEditable, i, nuevoNombre):
         if self.iteradorJuegoSeleccionado != None:
             nombreActual = self.seleccionJuegoSeleccionado.get_value(self.iteradorJuegoSeleccionado,2)
             if(nombreActual != nuevoNombre):
                 if not util.tieneCaracteresRaros(nuevoNombre , util.BLACK_LIST2):
-
-                    #nuevoNombre = nuevoNombre.decode("iso-8859-1")
-
-                    if self.core.renombrarISO(self.DEVICEParticionSeleccionada , self.IDGAMEJuegoSeleccionado , nuevoNombre):
+                    if self.core.renombrarNOMBRE(self.DEVICEParticionSeleccionada , self.IDGAMEJuegoSeleccionado , nuevoNombre):
                         # modificamos el juego modificado de la BDD
                         juego = session.query(Juego).filter('idgame=="%s" and device=="%s"' % (self.IDGAMEJuegoSeleccionado , self.DEVICEParticionSeleccionada)).first()
                         if juego != None:
@@ -300,23 +315,32 @@ class WiithonGUI(GtkBuilderWrapper):
     def cargarJuegosVista(self):
         # Documentacion útil: http://blog.rastersoft.com/index.php/2007/01/27/trabajando-con-gtktreeview-en-python/
         tv_games = self.wb_tv_games
+        
+        # FIXME: ¿Porque no funciona?, especifico el entry de busqueda
+        tv_games.set_search_entry( self.wb_busqueda )
+        # activar busqueda desde el Treeview
+        #tv_games.set_enable_search(True)
 
         # ¿Como aplico propiedades style?
         #tv_games.set_property("even-row-color" , gtk.gdk.Color(0xFFFF,0x0,0x0) )
         #tv_games.set_property("odd-row-color" ,   gtk.gdk.Color(0x0 , 0x0 , 0x0) )
 
+        renderEditableIDGAME = gtk.CellRendererText()
         renderEditable = gtk.CellRendererText()
         if self.modo == "manager":
+            renderEditableIDGAME.set_property("editable", True)
+            renderEditableIDGAME.connect ("edited", self.editar_idgame)
+            
             renderEditable.set_property("editable", True)
             renderEditable.set_property("attributes", self.getEstilo_azulGrande() )
-            renderEditable.connect ("edited", self.edit_amount)
+            renderEditable.connect ("edited", self.editar_celda)
         else: # realmente en modo "ver", no es editable
             renderEditable.set_property("attributes", self.getEstilo_grisGrande() )
         render = gtk.CellRendererText()
 
         # prox versión meter background ----> foreground ... etc
         # http://www.pygtk.org/docs/pygtk/class-gtkcellrenderertext.html
-        self.columna1 = columna1 = gtk.TreeViewColumn(_('IDGAME'), render , text=1)
+        self.columna1 = columna1 = gtk.TreeViewColumn(_('IDGAME'), renderEditableIDGAME , text=1)
         self.columna2 = columna2 = gtk.TreeViewColumn(_('Nombre'), renderEditable , text=2)
         self.columna3 = columna3 = gtk.TreeViewColumn(_('Tamanio'), render , text=3)
 
@@ -487,6 +511,11 @@ class WiithonGUI(GtkBuilderWrapper):
             i += 1
 
         self.refrescarListaJuegos()
+        
+    # FIXME: Devuelve si el usuario esta editando el tv_games
+    # sirve para evitar cambiar la selección mientras esta editando
+    def get_usuario_esta_editando(self):
+        return False
 
     # refresco desde memoria (rápido)
     def refrescarListaJuegos(self):
@@ -497,16 +526,17 @@ class WiithonGUI(GtkBuilderWrapper):
         # cargar la lista sobre el Treeview
         self.cargarJuegosModelo( self.tv_games_modelo , subListaJuegos )
 
-        # seleccionamos el primero
-        # FIXME: hay que seleccionar el que marca las preferencias
-        self.seleccionarPrimeraFila( self.wb_tv_games , self.on_tv_games_cursor_changed)
+        if not self.get_usuario_esta_editando():
+            # seleccionamos el primero
+            # FIXME: hay que seleccionar el que marca las preferencias
+            self.seleccionarPrimeraFila( self.wb_tv_games , self.on_tv_games_cursor_changed)
 
     def seleccionarPrimeraFila(self , treeview , callback):
         # selecciono el primero y provoco el evento
         iter_primero = treeview.get_model().get_iter_first()
         if iter_primero != None:
             treeview.get_selection().select_iter( iter_primero )
-        callback( treeview)
+        callback( treeview )
 
     def refrescarEspacio(self):
         info = self.core.getEspacioLibre( self.DEVICEParticionSeleccionada )
@@ -518,7 +548,7 @@ class WiithonGUI(GtkBuilderWrapper):
             porcentaje = usado * 100.0 / total
         except ZeroDivisionError:
             porcentaje = 0.0
-        self.wb_progresoEspacio.set_text("%.2f%%" % (porcentaje))
+        self.wb_progresoEspacio.set_text("%d juegos" % (len(self.listaJuegos)))
         self.wb_progresoEspacio.set_fraction( porcentaje / 100.0 )
 
     def refrescarTareasPendientes(self):
@@ -546,10 +576,11 @@ class WiithonGUI(GtkBuilderWrapper):
             # sincroniza la variable DEVICE con el core
             self.DEVICEParticionSeleccionada = self.core.getDeviceSeleccionado()
 
-            self.refrescarEspacio()
-
             # refrescamos la lista de juegos, leyendo del core
             self.refrescarListaJuegosFromCore()
+            
+            # refrescar espacio
+            self.refrescarEspacio()
 
     # Click en juegos --> refresco la imagen de la caratula y disco
     def on_tv_games_cursor_changed(self , treeview):
@@ -586,6 +617,7 @@ class WiithonGUI(GtkBuilderWrapper):
                         self.seleccionarPrimeraFila( self.wb_tv_games , self.on_tv_games_cursor_changed )
 
                         # debería haber liberado espacio
+                        # FIXME: pequeño bug
                         self.refrescarEspacio()
                     else:
                         self.alert("warning" , _("Error borrando"))
@@ -641,7 +673,7 @@ class WiithonGUI(GtkBuilderWrapper):
                     fc_anadir = gtk.FileChooserDialog(_("Elige una ISO o un RAR"), None , gtk.FILE_CHOOSER_ACTION_OPEN , botones)
                     fc_anadir.set_select_multiple(True)
                     filter = gtk.FileFilter()
-                    filter.set_name(_('ImagenISO, Comprimido RAR'))
+                    filter.set_name(_('Imagen ISO, Comprimido RAR'))
                     filter.add_pattern('*.iso')
                     filter.add_pattern('*.rar')
                     fc_anadir.add_filter(filter)
@@ -664,12 +696,18 @@ class WiithonGUI(GtkBuilderWrapper):
                         self.preferencia.ruta_anadir_directorio = fc_anadir.get_current_folder()
 
                     ficherosSeleccionados = fc_anadir.get_filenames()
+
+                    #Ordenamos los ficheros seleccionados
+                    ficherosSeleccionados.sort()
+                    
+                    '''
                     for fichero in ficherosSeleccionados:
                         if (util.getExtension(fichero) == "iso"):
                             IDGAME = util.getMagicISO(fichero)
                             if IDGAME != None:
                                 self.poolBash.nuevoTrabajoDescargaCaratula( IDGAME )
                                 self.poolBash.nuevoTrabajoDescargaDisco( IDGAME )
+                    '''
 
                     self.poolTrabajo.nuevoTrabajoAnadir( ficherosSeleccionados )
                     self.refrescarTareasPendientes()

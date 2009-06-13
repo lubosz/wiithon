@@ -387,12 +387,12 @@ msgstr "Free"
 msgid "Total"
 msgstr "Total"
 
-#: core.py:136
+#: core.py:144
 #, python-format
 msgid "***************** DESCARGAR DISCO %s ********************"
 msgstr "***************** DOWNLOAD DISC %s ********************"
 
-#: core.py:219
+#: core.py:227
 #, python-format
 msgid "***************** DESCARGAR CARATULA %s ********************"
 msgstr "***************** DOWNLOAD COVER %s ********************"
@@ -433,106 +433,111 @@ msgstr "Device"
 msgid "Fabricante"
 msgstr "Manufacture"
 
-#: gui.py:296
+#: gui.py:293 gui.py:311
 msgid "Error renombrando"
 msgstr "Error renaming"
 
-#: gui.py:298
+#: gui.py:295
+msgid "Error: La longitud del IDGAME, debe ser 6."
+msgstr ""
+
+#: gui.py:313
 #, python-format
 msgid "Se han detectado caracteres no validos: %s"
 msgstr "Characters not valid: %s"
 
-#: gui.py:319
+#: gui.py:343
 msgid "IDGAME"
 msgstr "IDGAME"
 
-#: gui.py:320
+#: gui.py:344
 msgid "Nombre"
 msgstr "Name"
 
-#: gui.py:321
+#: gui.py:345
 msgid "Tamanio"
 msgstr "Size"
 
-#: gui.py:530
+#: gui.py:560
 #, python-format
 msgid "Hay %d tarea pendiente"
 msgstr "There is %d pending task"
 
-#: gui.py:533
+#: gui.py:563
 #, python-format
 msgid "Hay %d tareas pendientes"
 msgstr "There are %d pending tasks"
 
-#: gui.py:572
+#: gui.py:603
 msgid "Tienes que seleccionar una particion WBFS para realizar esta accion"
 msgstr "Need select some partition WBFS"
 
-#: gui.py:578
+#: gui.py:609
 #, python-format
 msgid "Quieres borrar el juego con ID = %s?"
 msgstr "Do you want to remove the game with ID = %s?"
 
-#: gui.py:591
+#: gui.py:623
 msgid "Error borrando"
 msgstr "Delete error"
 
-#: gui.py:593 gui.py:622 gui.py:630
+#: gui.py:625 gui.py:654 gui.py:662
 msgid "No has seleccionado ningun juego"
 msgstr "Don't have a game selected"
 
-#: gui.py:603
+#: gui.py:635
 #, python-format
 msgid "Elige un directorio donde extraer la ISO de %s"
 msgstr "Choose folder for extract ISO %s"
 
-#: gui.py:641
+#: gui.py:673
 msgid "Elige una ISO o un RAR"
 msgstr "Choose a ISO or RAR"
 
-#: gui.py:644
-msgid "ImagenISO, Comprimido RAR"
+#: gui.py:676
+#, fuzzy
+msgid "Imagen ISO, Comprimido RAR"
 msgstr "ISO image, RAR compressed"
 
-#: gui.py:651
+#: gui.py:683
 msgid "Elige un directorio"
 msgstr "Choose folder"
 
-#: gui.py:679
+#: gui.py:717
 msgid "No has seleccionado ninguna particion"
 msgstr "Don't have a partition selected"
 
-#: gui.py:690
+#: gui.py:728
 msgid "Paso 1 de 2: Elige un directorio para las CARATULAS"
 msgstr "Step 1 of 1: Choose a folder for COVERS"
 
-#: gui.py:697
+#: gui.py:735
 msgid "Paso 2 de 2: Elige un directorio para los DISCOS"
 msgstr "Step 2 of 2: Choose a folder for DISCS"
 
-#: gui.py:717
+#: gui.py:755
 msgid "No tienes ningun juego"
 msgstr "Don't have some game"
 
-#: gui.py:750
+#: gui.py:788
 #, python-format
 msgid "CUIDADO: %s"
 msgstr "WARNING: %s"
 
-#: gui.py:752
+#: gui.py:790
 #, python-format
 msgid "ERROR: %s"
 msgstr "ERROR: %s"
 
-#: gui.py:774
+#: gui.py:812
 msgid "DEBUG: Comando desconocido"
 msgstr "DEBUG: Unknown command"
 
-#: gui.py:832
+#: gui.py:870
 msgid "Finalizando. Hecho en"
 msgstr "Finishing. Done in"
 
-#: gui.py:836
+#: gui.py:874
 msgid "quedan"
 msgstr "remaining"
 

@@ -1,6 +1,5 @@
 COMMIT
-wbfs
-wbfs_src/wbfs
+wbfs_src/wiithon_wrapper
 wbfs_src/*.o
 *~
 *.pyc
@@ -9,4 +8,5 @@ po/*/LC_MESSAGES/wiithon.mo
 po/plantilla.pot
 editar.sh
 recursos/threadpool.py
+*.iso
 
