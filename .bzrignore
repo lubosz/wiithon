@@ -1,6 +1,6 @@
 COMMIT
-wbfs_src/wiithon_wrapper
-wbfs_src/*.o
+wiithon_wrapper/wiithon_wrapper
+wiithon_wrapper/*.o
 *~
 *.pyc
 recursos/imagenes/*.xcf

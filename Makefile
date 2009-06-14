@@ -62,7 +62,7 @@ install: wbfs po/es/LC_MESSAGES/wiithon.mo po/en/LC_MESSAGES/wiithon.mo
 
 	echo $(HOME) > $(PREFIX)/share/wiithon/HOME.conf
 
-	cp wbfs_src/wiithon_wrapper $(PREFIX)/share/wiithon
+	cp wiithon_wrapper/wiithon_wrapper $(PREFIX)/share/wiithon
 	cp wiithon.py $(PREFIX)/share/wiithon
 	
 	cp wiithon_autodetectar.sh $(PREFIX)/share/wiithon
@@ -180,10 +180,10 @@ clean: clean_wbfs
 	$(RM) *~
 
 clean_wbfs:
-	$(MAKE) -C wbfs_src clean
+	$(MAKE) -C wiithon_wrapper clean
 
 wbfs:
-	$(MAKE) -C wbfs_src
+	$(MAKE) -C wiithon_wrapper
 
 # REPOSITORIO
 pull:

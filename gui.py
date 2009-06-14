@@ -85,6 +85,7 @@ class WiithonGUI(GtkBuilderWrapper):
         self.wb_tb_borrar.connect('clicked' , self.on_tb_toolbar_clicked)
         self.wb_tb_copiar_SD.connect('clicked' , self.on_tb_toolbar_clicked)
         self.wb_tb_acerca_de.connect('clicked' , self.on_tb_toolbar_clicked)
+        self.wb_tb_copiar_1_1.connect('clicked' , self.on_tb_toolbar_clicked)
 
         # oculto la fila de progreso
         self.wb_box_progreso.hide()
@@ -111,8 +112,9 @@ class WiithonGUI(GtkBuilderWrapper):
             raise AssertionError, _("Error en permisos")
         '''
 
-        listaParticiones = self.core.getListaParticiones()
-        if(len(listaParticiones) == 0):
+        self.listaParticiones = self.core.getListaParticiones()
+        self.numParticiones = len(self.listaParticiones)
+        if(self.numParticiones == 0):
             # establecemos el modo de wiithon
             self.modo = "ver"
 
@@ -144,7 +146,7 @@ class WiithonGUI(GtkBuilderWrapper):
             self.tv_games_modelo = self.cargarJuegosVista( )
 
             # carga el modelo de datos del TreeView de particiones
-            self.cargarParticionesModelo(self.tv_partitions_modelo , listaParticiones)
+            self.cargarParticionesModelo(self.tv_partitions_modelo , self.listaParticiones)
 
             # selecciono la primera partición
             # indirectamente se carga:
@@ -181,7 +183,7 @@ class WiithonGUI(GtkBuilderWrapper):
             destinoDisco = os.path.join(config.WIITHON_FILES_RECURSOS_IMAGENES , "disco.png")
             self.wb_img_disco1.set_from_file( destinoDisco )
 
-        if(len(listaParticiones) > 0):
+        if(self.numParticiones > 0):
             # Seleccciono particion de las preferencias
             pass
 
@@ -604,6 +606,12 @@ class WiithonGUI(GtkBuilderWrapper):
         elif(id_tb == self.wb_tb_acerca_de):
             self.wb_aboutdialog.run()
             self.wb_aboutdialog.hide()
+        elif(id_tb == self.wb_tb_copiar_1_1):
+            if self.numParticiones > 1:
+                self.wb_dialogo_copia_1on1.run()
+                self.wb_dialogo_copia_1on1.hide()
+            else:
+                self.alert("warning" , _("No hay un numero suficiente de particiones validas, para realizar esta accion."))
         elif(id_tb == self.wb_tb_borrar):
             if self.iteradorJuegoSeleccionado != None:
                 if ( self.question(_('Quieres borrar el juego con ID = %s?') % self.IDGAMEJuegoSeleccionado) == 1 ):

@@ -651,6 +651,8 @@ error:
 
 unsigned int wbfs_copy_disc(wbfs_disc_t*d_src, wbfs_t*p_dst, progress_callback_t spinner)
 {
+    int retorno = FALSE;
+    
 	wbfs_t *p_src = d_src->p;
 	unsigned char* copy_buffer = 0;
 	int i;
@@ -660,17 +662,25 @@ unsigned int wbfs_copy_disc(wbfs_disc_t*d_src, wbfs_t*p_dst, progress_callback_t
 	if( src_wbs_nlb != dst_wbs_nlb)
 	{
 		ERROR("Difference between source and dest");
+		retorno = FALSE;
 	}
 
 	copy_buffer = (unsigned char*)wbfs_ioalloc(p_src->wbfs_sec_sz);
 	if(!copy_buffer)
+	{
 		ERROR("alloc memory");
+		retorno = FALSE;
+    }
 
+    // Encontrar slot en el destino
 	for(i=0;i<p_dst->max_disc;i++)// find a free slot.
 		if(p_dst->head->disc_table[i]==0)
 			break;
 	if(i==p_dst->max_disc)
+	{
 		ERROR("no space left on device (table full)");
+		retorno = FALSE;
+    }
 	p_dst->head->disc_table[i] = 1;
 	int discn = i;
 	load_freeblocks(p_dst);
@@ -686,7 +696,10 @@ unsigned int wbfs_copy_disc(wbfs_disc_t*d_src, wbfs_t*p_dst, progress_callback_t
 		{
 			bl = alloc_block(p_dst);
 			if (bl==0xffff)
+			{
 				ERROR("no space left on device (disc full)");
+				retorno = FALSE;
+            }
 
 			p_src->read_hdsector( p_src->callback_data, p_src->part_lba + iwlba*src_wbs_nlb, src_wbs_nlb, copy_buffer);
 			p_dst->write_hdsector(p_dst->callback_data, p_dst->part_lba +    bl*dst_wbs_nlb, dst_wbs_nlb, copy_buffer);
@@ -705,6 +718,9 @@ unsigned int wbfs_copy_disc(wbfs_disc_t*d_src, wbfs_t*p_dst, progress_callback_t
 	int disc_info_sz_lba = p_dst->disc_info_sz>>p_dst->hd_sec_sz_s;
 	p_dst->write_hdsector(p_dst->callback_data,p_dst->part_lba+1+discn*disc_info_sz_lba,disc_info_sz_lba,info);
 	wbfs_sync(p_dst);
+	
+	retorno = TRUE;
+	
 error:
 	if(info)
 		wbfs_iofree(info);
@@ -712,13 +728,13 @@ error:
 		wbfs_iofree(copy_buffer);
 	// init with all free blocks
 
-	return 0;
+	return retorno;
 }
 
 void fatal(const char *s, ...)
 {
 	perror(s);
-	exit(1);
+	exit(FALSE);
 }
 
 

@@ -114,19 +114,20 @@ wbfs_t *wbfs_try_open(char *disc,char *partition, int reset)
                         p = wbfs_try_open_hd(buffer,0);
                         if(p)
                         {
-                                fprintf(stderr,"Autodetectada %s ...\n",buffer);
+                                fprintf(stderr,"Se ha autodetectado : %s como partición WBFS ...\n",buffer);
                                 return p;
                         }
                         snprintf(buffer,32,"/dev/hd%c%d",i , n);
                         p = wbfs_try_open_hd(buffer,0);
                         if(p)
                         {
-                                fprintf(stderr,"Autodetectada %s ...\n",buffer);
+                                fprintf(stderr,"Se ha autodetectado : %s como partición WBFS ...\n",buffer);
                                 return p;
                         }                     
                     }
                 }
-                wbfs_error("No se ha encontrado ninguna particion WBFS (verifica los permisos))");
+                fprintf(stderr,"No se han autodetectado particiones WBFS.\n");
+                wbfs_error("");
         }
         return p;
 }

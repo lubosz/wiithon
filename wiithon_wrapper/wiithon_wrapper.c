@@ -9,6 +9,7 @@
 #include <getopt.h>
 #include <sys/stat.h>
 #include <unistd.h>
+#include <time.h>
 
 #include "libwbfs.h"
 
@@ -25,7 +26,6 @@ wbfs_t *wbfs_try_open_partition(char *fn,int reset);
 //
 // error handling
 //
-
 void spinner(u64 x, u64 max)
 {
 	static time_t start;
@@ -62,15 +62,14 @@ void spinner(u64 x, u64 max)
 
 	/* Show progress */
 	if (x != max)
-		fprintf(stdout , "%.2f;%d;%02d;%02d\n", percent, h, m, s);
+		fprintf(stdout , "%f;%d;%d;%d\n", percent, h, m, s);
 	else
-		fprintf(stdout, "FIN;%d;%02d;%02d\n", h, m, s);
+		fprintf(stdout, "FIN;%d;%d;%d\n", h, m, s);
 	
 	fflush(stdout);
 }
 
-
-int read_wii_file(void*_fp,u32 offset,u32 count,void*iobuf)
+int read_wii_file(void*_fp,u32 offset,u32 count,void *iobuf)
 {
         FILE*fp =_fp;
         u64 off = offset;
@@ -194,9 +193,7 @@ int wiithon_wrapper_df(wbfs_t *p)
 		}       
 }
 
-//metodo dummy que llama al de utils
-static void _spinner(int x,int y) {spinner(x,y);}
-
+static void _spinner(int x,int y){ spinner(x,y);}
 int wiithon_wrapper_add(wbfs_t *p,char*argv)
 {
         FILE *f = fopen(argv,"r");
@@ -267,6 +264,23 @@ int wiithon_wrapper_extract(wbfs_t *p, u8 *idgame)
         return ret;
 }
 
+int wiithon_wrapper_clonar(wbfs_t *p , u8 *discid, char *destino)
+{
+    int retorno = FALSE;
+    wbfs_disc_t *d_src = wbfs_open_disc(p,discid);
+    if(d_src)
+    {
+        wbfs_t *p_dst = wbfs_try_open_partition(destino , 0);
+        if(p_dst)
+        {
+            retorno = wbfs_copy_disc(d_src , p_dst , _spinner);
+            wbfs_close(p_dst);
+        }
+        wbfs_close_disc(d_src);
+    }
+    return retorno;
+}
+
 int wiithon_wrapper_rename(wbfs_t *p , u8 *idgame , char *nuevoNombre)
 {
     return wbfs_ren_disc(p, idgame, nuevoNombre);
@@ -285,6 +299,7 @@ int uso(char *argv[])
     printf("\t%s -p /dev/sdxY add fichero.iso\n" , argv[0]);
     printf("\t%s -p /dev/sdxY rm IDGAME\n" , argv[0]);
     printf("\t%s -p /dev/sdxY extract IDGAME\n" , argv[0]);
+    printf("\t%s -p /dev/sdxY clonar IDGAME /dev/destinoXY\n" , argv[0]);
     printf("\t%s -p /dev/sdxY rename IDGAME NuevoNombre\n" , argv[0]);
     printf("\t%s -p /dev/sdxY rename_idgame IDGAME NUEVO_IDGAME\n", argv[0]);
     return FALSE;
@@ -297,7 +312,6 @@ int main(int argc, char *argv[])
     int numParametros;
     int noFormatear;
     char *partition = NULL;
-    char *disc = NULL;
 
     while ((opt = getopt(argc, argv, "p:d:hf:f")) != -1)
     {
@@ -308,28 +322,29 @@ int main(int argc, char *argv[])
                     break;
                 case 'h':
                 default:
-                    retorno = uso(argv);
-                    exit(retorno);
+                    uso(argv);
+                    exit(0);
             }
     }
     
     // Le resto 1 de la propia aplicación
     // Le resto los 2 parametros del device (-p /dev/sda1)
-    if(partition != NULL)
-        numParametros = argc - 1 - 2;
-    else
-        numParametros = argc - 1;
+    numParametros = argc - 1 - 2;
     
     noFormatear = ((numParametros == 1) && (strcmp(argv[optind], "formatear") == 0)) ? FALSE : TRUE;
 
-    wbfs_t *p = wbfs_try_open(disc , partition, noFormatear );
+    wbfs_t *p = wbfs_try_open_partition(partition, noFormatear );
     if(p)
     {
         if ( noFormatear == FALSE )
         {
             printf("Se ha formateado %s\n" , partition);
         }
-        else if ((numParametros == 0) || ((numParametros == 1) && (strcmp(argv[optind], "ls") == 0)))
+        else if(numParametros == 0)
+        {
+            retorno = uso(argv);
+        }
+        else if ((numParametros == 1) && (strcmp(argv[optind], "ls") == 0))
         {
             retorno = wiithon_wrapper_ls(p);
         }        
@@ -349,6 +364,10 @@ int main(int argc, char *argv[])
         {
             retorno = wiithon_wrapper_extract(p, (u8*)argv[4]);
         }
+        else if ((numParametros == 3) && (strcmp(argv[optind], "clonar") == 0))
+        {
+            retorno = wiithon_wrapper_clonar(p,  (u8*)argv[4] , argv[5]);
+        }
         else if ((numParametros == 3) && (strcmp(argv[optind], "rename") == 0))
         {
             retorno = wiithon_wrapper_rename(p , (u8*)argv[4] , argv[5]);
@@ -362,13 +381,16 @@ int main(int argc, char *argv[])
             printf("Error en los parametros (hay %d):\n",numParametros);
             retorno = uso(argv);
         }
-        if(p != NULL)
-            wbfs_close(p);
+        wbfs_close(p);
     }
     else
     {
-        printf("La partición no es WBFS\n");
-        retorno = uso(argv);
+        printf("Wrapper hecho para wiithon por Ricardo Marmolejo García <makiolo@gmail.com>");
+        printf("No se ha facilitado ninguna partición WBFS.\n");
+        p = wbfs_try_open(0,0,0); //Autodetecta partición WBFS mediante libwbfs
+        wbfs_close(p);
+        printf("Para más ayuda:\n\t%s -h\n" , argv[0]);
+        printf("No obstante, este wrapper esta pensado para ser usado desde wiithon, y por tanto no se realizan unas serie de comprobaciones, debido a que se asume que los datos han sido verificados previamente por wiithon.\n");
     }
     exit(retorno);
 }

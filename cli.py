@@ -361,19 +361,19 @@ class WiithonCLI:
                 SALIDA = os.getcwd()+"/"+MAGIC_DVD+".iso"
                 reemplazada = False
                 if (os.path.exists(SALIDA)):
-                    print _("Ya hay una ISO en : %s" % (SALIDA))
+                    print _("Ya hay una ISO en : %s") % (SALIDA)
                     respuesta = raw_input(_("Desea reemplazarla (S/N) : "))
                     if(respuesta.lower() == "s" or respuesta.lower() == "si"):
                         reemplazada = False
                     else:
                         reemplazada = True
                 print "%s %s = %s.iso ..." % (FABRICANTE_DVD , _("a un ISO temporal de 4.4GB en") , MAGIC_DVD)
-                if( reemplazada or (os.system("dd if="+LECTOR_DVD+" of="+SALIDA+" bs=1M")==0) ):
+                if( reemplazada or (os.system("dd if="+LECTOR_DVD+" of="+SALIDA+" bs=1M conv=noerror")==0) ):
                     if ( self.core.anadirISO(DEVICE , SALIDA)):
                         if( self.core.descargarCaratula(MAGIC_DVD) ):
                             print "%s %s/%s.png" % (_("Caratula descargada como") , os.getcwd() , MAGIC_DVD)
                         else:
-                            print _("No se ha encontrado caratula para el juego %s") % MAGIC_DVD
+                            print _("No se ha encontrado caratula para el juego %s") % (MAGIC_DVD)
                     else:
                         print _("Error al pasar la ISO al disco duro")
                     print _("wiithon no borra la ISO temporal, puedes borrarla si no la necesitas")
