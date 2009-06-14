@@ -11,6 +11,9 @@ import util
 from pool import Pool
 from mensaje import Mensaje
 
+# pseudo-enumerado
+(ANADIR,EXTRAER,CLONAR,DESCARGA_CARATULA,DESCARGA_DISCO,COPIAR_CARATULA,COPIAR_DISCO)=([ "%d" % i for i in range(7) ])
+
 '''
 Herencia Multiple, Es un Pool (implementado en pool.py) y un Thread
 
@@ -32,27 +35,29 @@ class PoolTrabajo(Pool , Thread):
         # FIXME: el device debe sacarlo del objeto juego
         DEVICE = self.core.getDeviceSeleccionado()
 
-        if (trabajo.getQueHacer() == "ANADIR"):
+        if (trabajo.getQueHacer() == ANADIR):
             fichero = trabajo.getAQuien()
             self.anadir(core , fichero , DEVICE)
-        elif( trabajo.getQueHacer() == "EXTRAER" ):
+        elif( trabajo.getQueHacer() == EXTRAER):
             IDGAME = trabajo.getAQuien()
             self.extraer(core , IDGAME , DEVICE)
-        elif( trabajo.getQueHacer() == "DESCARGA_CARATULA" ):
+        elif( trabajo.getQueHacer() == CLONAR ):
+            # FIXME , device debe ser un atributo del trabajo
+            DEVICE_destino = self.core.getDeviceSeleccionado_1on1()
+            juego = trabajo.getAQuien()
+            self.clonar(core , juego , DEVICE_destino)
+        elif( trabajo.getQueHacer() == DESCARGA_CARATULA ):
             IDGAME = trabajo.getAQuien()
             self.descargarCaratula(core , IDGAME)
-        elif( trabajo.getQueHacer() == "DESCARGA_DISCO" ):
+        elif( trabajo.getQueHacer() == DESCARGA_DISCO ):
             IDGAME = trabajo.getAQuien()
             self.descargarDisco(core , IDGAME)
-        elif( trabajo.getQueHacer() == "COPIAR_CARATULA" ):
+        elif( trabajo.getQueHacer() == COPIAR_CARATULA ):
             IDGAME = trabajo.getAQuien()
             self.copiarCaratula(core , IDGAME)
-        elif( trabajo.getQueHacer() == "COPIAR_DISCO" ):
+        elif( trabajo.getQueHacer() == COPIAR_DISCO ):
             IDGAME = trabajo.getAQuien()
             self.copiarDisco(core , IDGAME)
-        elif( trabajo.getQueHacer() == "VERIFICAR_JUEGO" ):
-            IDGAME = trabajo.getAQuien()
-            self.verificarJuego(core , DEVICE , IDGAME)
 
     def descargarCaratula(self , core , IDGAME):
         core.descargarCaratula( IDGAME , "3d")
@@ -66,11 +71,28 @@ class PoolTrabajo(Pool , Thread):
     def copiarDisco(self , core , IDGAME):
         core.copiarDisco( IDGAME )
 
-    def verificarJuego(self , core , DEVICE , IDGAME):
-        if not core.verificarJuego(DEVICE , IDGAME):
-            print _("%s es un juego corrupto" % (IDGAME))
+    def clonar(self, core , juego , DEVICE_destino):
+        core.nuevoMensaje( Mensaje("COMANDO","EMPIEZA") )
+        core.nuevoMensaje( Mensaje("COMANDO","PROGRESO_0") )
+        core.nuevoMensaje( Mensaje("COMANDO","PROGRESO_INICIA_CALCULO") )
+        if ( core.clonarJuego(juego , DEVICE_destino) ):
+            core.nuevoMensaje( Mensaje("INFO",_("Juego %s ha sido copiado en %s correctamente") % (juego.title , DEVICE_destino)) )
         else:
-            print _("No se ha detectado corrupcion en %s" % (IDGAME))
+            core.nuevoMensaje( Mensaje("ERROR",_("Copiando el juego %s en %s") % (juego.title , DEVICE_destino)) )
+        core.nuevoMensaje( Mensaje("COMANDO","PROGRESO_FIN_CALCULO") )
+        core.nuevoMensaje( Mensaje("COMANDO","PROGRESO_100") )
+
+        # borrar fichero auxiliar
+        try:
+            os.remove ( config.HOME_WIITHON_LOGS_PROCESO )
+        except OSError:
+            pass
+
+        core.nuevoMensaje( Mensaje("COMANDO","TERMINA") )
+
+        # Esperar que todos los mensajes sean atendidos
+        core.getMensajes().join()
+        
 
     def anadir(self , core , fichero , DEVICE):
         core.nuevoMensaje( Mensaje("COMANDO","EMPIEZA") )
@@ -132,7 +154,6 @@ class PoolTrabajo(Pool , Thread):
 
     def extraer(self , core , IDGAME , DEVICE):
         core.nuevoMensaje( Mensaje("COMANDO","EMPIEZA") )
-
         core.nuevoMensaje( Mensaje("COMANDO","PROGRESO_0") )
         core.nuevoMensaje( Mensaje("COMANDO","PROGRESO_INICIA_CALCULO") )
         if ( core.extraerJuego(DEVICE , IDGAME ) ):
@@ -156,70 +177,58 @@ class PoolTrabajo(Pool , Thread):
     def run(self):
         self.empezar( args=(self.core,) )
 
-    '''
-    Encola un o varios trabajos para añadir
-    Primer parametro: una ruta o una lista de rutas
-    '''
     def nuevoTrabajoAnadir(self , fichero):
         if type(fichero) == list:
             for f in fichero:
-                self.nuevoTrabajo( Trabajo("ANADIR" , f) )
+                self.nuevoTrabajo( Trabajo(ANADIR , f) )
         else:
-            self.nuevoTrabajo( Trabajo("ANADIR" , fichero) )
+            self.nuevoTrabajo( Trabajo(ANADIR , fichero) )
 
-    '''
-    Encola uno o varios trabajos para extraer
-    Primer parametro: un IDGAME o una lista de IDGAMEs
-    '''
     def nuevoTrabajoExtraer(self , IDGAME):
         if type(IDGAME) == list:
             for i in IDGAME:
-                self.nuevoTrabajo( Trabajo("EXTRAER" , i) )
+                self.nuevoTrabajo( Trabajo(EXTRAER , i) )
         else:
-            self.nuevoTrabajo( Trabajo("EXTRAER" , IDGAME) )
+            self.nuevoTrabajo( Trabajo(EXTRAER , IDGAME) )
+
+    def nuevoTrabajoClonar(self , juegos):
+        if type(juegos) == list:
+            for juego in juegos:
+                self.nuevoTrabajo( Trabajo(CLONAR , juego) )
+        else:
+            self.nuevoTrabajo( Trabajo(CLONAR , juegos) )
 
     def nuevoTrabajoDescargaCaratula(self , IDGAME):
         if type(IDGAME) == list:
             for i in IDGAME:
-                self.nuevoTrabajo( Trabajo("DESCARGA_CARATULA" , i) )
+                self.nuevoTrabajo( Trabajo(DESCARGA_CARATULA , i) )
         else:
-            self.nuevoTrabajo( Trabajo("DESCARGA_CARATULA" , IDGAME) )
+            self.nuevoTrabajo( Trabajo(DESCARGA_CARATULA , IDGAME) )
 
     def nuevoTrabajoDescargaDisco(self , IDGAME):
         if type(IDGAME) == list:
             for i in IDGAME:
-                self.nuevoTrabajo( Trabajo("DESCARGA_DISCO" , i) )
+                self.nuevoTrabajo( Trabajo(DESCARGA_DISCO , i) )
         else:
-            self.nuevoTrabajo( Trabajo("DESCARGA_DISCO" , IDGAME) )
+            self.nuevoTrabajo( Trabajo(DESCARGA_DISCO , IDGAME) )
 
     def nuevoTrabajoCopiarCaratula(self , IDGAME):
         if type(IDGAME) == list:
             for i in IDGAME:
-                self.nuevoTrabajo( Trabajo("COPIAR_CARATULA" , i) )
+                self.nuevoTrabajo( Trabajo(COPIAR_CARATULA , i) )
         else:
-            self.nuevoTrabajo( Trabajo("COPIAR_CARATULA" , IDGAME) )
+            self.nuevoTrabajo( Trabajo(COPIAR_CARATULA , IDGAME) )
 
     def nuevoTrabajoCopiarDisco(self , IDGAME):
         if type(IDGAME) == list:
             for i in IDGAME:
-                self.nuevoTrabajo( Trabajo("COPIAR_DISCO" , i) )
+                self.nuevoTrabajo( Trabajo(COPIAR_DISCO , i) )
         else:
-            self.nuevoTrabajo( Trabajo("COPIAR_DISCO" , IDGAME) )
-
-    def nuevoTrabajoVerificarJuego(self , IDGAME):
-        if type(IDGAME) == list:
-            for i in IDGAME:
-                self.nuevoTrabajo( Trabajo("VERIFICAR_JUEGO" , i) )
-        else:
-            self.nuevoTrabajo( Trabajo("VERIFICAR_JUEGO" , IDGAME) )
+            self.nuevoTrabajo( Trabajo(COPIAR_DISCO , IDGAME) )
 
 '''
-Primer parametro = ("ANADIR"|"EXTRAER"|"DESCARGA_CARATULA"|"DESCARGA_DISCO"|"COPIAR_CARATULA"|"COPIAR_DISCO"|"VERIFICAR_JUEGO")
+Primer parametro = Tipo de trabajo, dado por un pseudo-enumerado
 Segundo parametro = Objeto sobre el que se trabaja, depende del primer parametro
-            Si el primer parametro es:
-                ANADIR: Se espera que el segundo sea 1 ruta o una lista de rutas
-
-                EXTRAER: Se espera que el segundo sea un IDGAME o una lista de IDGAMEs
 
 ********************************************************************************************************
 Sin implementar: un tercer parametro con el callback de acabar el trabajo
@@ -230,6 +239,7 @@ POSIBLE SOLUCION:
 
     (ANADIR,EXTRAER)=([ "%d" % i for i in range(2) ])
 '''
+
 class Trabajo:
     def __init__(self, queHacer , aQuien):
         self.queHacer = queHacer

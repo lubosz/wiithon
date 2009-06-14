@@ -29,6 +29,9 @@ class WiithonCORE:
 
     # indice (fila) de la partición seleccionado
     particionSeleccionada = 0
+    
+    # indice (fila) de la partición seleccionado para 1on1
+    particionSeleccionada_1on1 = 1
 
     # Estructura sincrona para comunicacion entre hilos
     mensajes = None
@@ -205,6 +208,14 @@ class WiithonCORE:
             print "Ya tienes el disco %s" % (IDGAME)
             return True
 
+    def clonarJuego(self, juego , DEVICE_destino ):
+        try:
+            comando = "%s -p %s clonar %s %s" % (config.WBFS_APP , juego.device , juego.idgame , DEVICE_destino)
+            salida = subprocess.call( comando , shell=True , stderr=subprocess.STDOUT , stdout=open(config.HOME_WIITHON_LOGS_PROCESO , "w") )
+            return salida == 0
+        except KeyboardInterrupt:
+            return False
+
     # Nos dice si existe la caratula del juego "IDGAME"
     def existeCaratula(self , IDGAME):
         return (os.path.exists( self.getRutaCaratula(IDGAME) ))
@@ -315,9 +326,20 @@ class WiithonCORE:
     def setParticionSeleccionada(self , particionSeleccionada):
         self.particionSeleccionada = particionSeleccionada
 
+    def setParticionSeleccionada_1on1(self , particionSeleccionada):
+        self.particionSeleccionada_1on1 = particionSeleccionada
+
+    #FIXME: rediseñar todo esto ...
     def getDeviceSeleccionado(self):
         try:
             retorno = self.listaParticiones[self.particionSeleccionada].split(":")[0]
+            return retorno
+        except IndexError:
+            return "%"
+
+    def getDeviceSeleccionado_1on1(self):
+        try:
+            retorno = self.listaParticiones[self.particionSeleccionada_1on1].split(":")[0]
             return retorno
         except IndexError:
             return "%"
