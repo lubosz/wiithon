@@ -99,8 +99,8 @@ install: wbfs po/es/LC_MESSAGES/wiithon.mo po/en/LC_MESSAGES/wiithon.mo
 	chmod 644 $(PREFIX)/share/wiithon/recursos/glade/*.ui
 	chmod 644 $(PREFIX)/share/wiithon/recursos/imagenes/*.png
 
-	-@ln -s $(PREFIX)/share/wiithon/wiithon.py $(PREFIX)/bin/wiithon
-	-@ln -s $(PREFIX)/share/wiithon/wiithon_wrapper $(PREFIX)/bin/wiithon_wrapper
+	-ln -sf $(PREFIX)/share/wiithon/wiithon.py $(PREFIX)/bin/wiithon
+	-ln -sf $(PREFIX)/share/wiithon/wiithon_wrapper $(PREFIX)/bin/wiithon_wrapper
 
 	@echo "=================================================================="
 	@echo "Instalado OK"
@@ -176,8 +176,8 @@ purge: uninstall
 	@echo "=================================================================="
 
 clean: clean_wbfs
-	$(RM) *.pyc
-	$(RM) *~
+	@$(RM) *.pyc
+	@$(RM) *~
 
 clean_wbfs:
 	$(MAKE) -C wiithon_wrapper clean
@@ -190,7 +190,7 @@ pull:
 	bzr pull
 
 commit: clean
-	bzr commit --file="COMMIT" && echo "" > COMMIT
+	@if [ `grep -n fuzzy po/*.po | wc -l` -eq 0 ]; then bzr commit --file="COMMIT" && echo "" > COMMIT; else echo "Hay fuzzy en los archivos po, resuelvelo, y repite esta operación"; fi;
 
 log:
 	bzr log --forward --short
