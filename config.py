@@ -2,6 +2,11 @@
 # -*- coding: utf-8 -*-
 # vim: set fileencoding=utf-8 :
 
+'''On that file are the configurable parameters of the program.
+Some variable names are generated from some os functions
+'''
+
+
 import os
 import sys
 
@@ -11,14 +16,16 @@ WIITHON_PATH = os.path.dirname(sys.argv[0])
 WIITHON_FILES = os.path.dirname(__file__)
 WIITHON_FILES_RECURSOS = os.path.join(WIITHON_FILES , "recursos")
 WIITHON_FILES_RECURSOS_GLADE = os.path.join(WIITHON_FILES_RECURSOS , "glade")
-WIITHON_FILES_RECURSOS_IMAGENES = os.path.join(WIITHON_FILES_RECURSOS , "imagenes")
+WIITHON_FILES_RECURSOS_IMAGENES = \
+    os.path.join(WIITHON_FILES_RECURSOS , "imagenes")
 
 def getHOME():
-    global WIITHON_FILES
+    'Method to calculate the HOME dirname of the user'
+    global HOME
     ruta = os.path.join(WIITHON_FILES , "HOME.conf")
-    f = open(ruta , "r")
-    HOME = f.read().strip()
-    f.close()
+    filedesc = open(ruta , "r")
+    HOME = filedesc.read().strip()
+    filedesc.close()
     return HOME
 
 HOME = getHOME()
@@ -36,13 +43,14 @@ util.try_mkdir( HOME_WIITHON_CARATULAS )
 util.try_mkdir( HOME_WIITHON_DISCOS )
 util.try_mkdir( HOME_WIITHON_LOGS )
 
-APP="wiithon"
-LOCALE="/usr/share/locale/"
+APP = "wiithon"
+LOCALE = "/usr/share/locale/"
 
 GLADE_ALERTA = "alerta"
 
 DETECTOR_WBFS = os.path.join( WIITHON_FILES , "wiithon_autodetectar.sh" )
-DETECTOR_WBFS_LECTOR = os.path.join( WIITHON_FILES , "wiithon_autodetectar_lector.sh" )
+DETECTOR_WBFS_LECTOR = \
+    os.path.join( WIITHON_FILES , "wiithon_autodetectar_lector.sh" )
 
 WBFS_APP = os.path.join(WIITHON_FILES , "wiithon_wrapper")
 
@@ -51,7 +59,8 @@ TOPICS = ['ERROR', 'INFO', 'WARNING' , 'COMANDO']
 # Cuando se descomprime un RAR, definimos si despues se borra la ISO
 borrarISODescomprimida = False
 
-# Lineas de pantallazo en consola (esta variable hay que trasladarlo a WiithonCLI)
+# Lineas de pantallazo en consola (esta variable hay que trasladarlo
+# a WiithonCLI)
 NUM_LINEAS_PAUSA = 21
 
 # Definido en libwbfs, longitud maxima de un titulo
