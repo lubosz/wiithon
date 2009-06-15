@@ -575,25 +575,25 @@ msgstr "Paso 2 de 2: Elige un directorio donde copiar los DISCOS"
 msgid "No tienes ningun juego"
 msgstr "No tienes ningún juego"
 
-#: gui.py:959
+#: gui.py:965
 #, python-format
 msgid "CUIDADO: %s"
 msgstr ""
 
-#: gui.py:961
+#: gui.py:967
 #, python-format
 msgid "ERROR: %s"
 msgstr ""
 
-#: gui.py:983
+#: gui.py:989
 msgid "DEBUG: Comando desconocido"
 msgstr ""
 
-#: gui.py:1049
+#: gui.py:1055
 msgid "Finalizando. Hecho en"
 msgstr ""
 
-#: gui.py:1053
+#: gui.py:1059
 msgid "quedan"
 msgstr ""
 
@@ -740,54 +740,54 @@ msgstr ""
 msgid "Copiando el juego %s en %s"
 msgstr ""
 
-#: trabajo.py:101
+#: trabajo.py:100
 msgid "La ISO o la particion no existe"
 msgstr "La ISO o la partición no existe"
 
-#: trabajo.py:110
+#: trabajo.py:109
 #, python-format
 msgid "Al descomrpimir el RAR : %s"
 msgstr ""
 
-#: trabajo.py:112
+#: trabajo.py:111
 #, python-format
 msgid "No se puede descomrpimir por que reemplazaria el ISO : %s"
 msgstr ""
 
-#: trabajo.py:114
+#: trabajo.py:113
 #, python-format
 msgid "El RAR %s no tenia ninguna ISO"
 msgstr "El RAR %s no tenía ninguna ISO"
 
-#: trabajo.py:118
+#: trabajo.py:117
 msgid "No se ha encontrado ningun RAR con ISOS dentro"
 msgstr ""
 
-#: trabajo.py:125
+#: trabajo.py:124
 msgid "No se ha encontrado ningun ISO"
 msgstr ""
 
-#: trabajo.py:134
+#: trabajo.py:133
 #, python-format
 msgid "ISO %s anadida correctamente"
 msgstr "ISO %s Añadida correctamente"
 
-#: trabajo.py:137
+#: trabajo.py:136
 #, python-format
 msgid "Anadiendo la ISO : %s (comprueba que sea una ISO de WII)"
 msgstr "Añadiendo la ISO : %s (comprueba que sea una ISO de WII)"
 
-#: trabajo.py:142
+#: trabajo.py:141
 #, python-format
 msgid "%s no es un ningun juego de Wii"
-msgstr "%s no es un ninúun juego de Wii"
+msgstr "%s no es un ningún juego de Wii"
 
-#: trabajo.py:160
+#: trabajo.py:159
 #, python-format
 msgid "ISO de %s extraida correctamente"
 msgstr ""
 
-#: trabajo.py:162
+#: trabajo.py:161
 #, python-format
 msgid "Extrayendo la ISO : %s"
 msgstr ""

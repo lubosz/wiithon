@@ -96,7 +96,6 @@ class PoolTrabajo(Pool , Thread):
 
     def anadir(self , core , fichero , DEVICE):
         core.nuevoMensaje( Mensaje("COMANDO","EMPIEZA") )
-
         if( not os.path.exists(DEVICE) or not os.path.exists(fichero) ):
             core.nuevoMensaje( Mensaje("ERROR",_("La ISO o la particion no existe")) )
         elif( util.getExtension(fichero) == "rar" ):

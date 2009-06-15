@@ -921,10 +921,14 @@ class WiithonGUI(GtkBuilderWrapper):
 
     def drag_data_received_cb(self, widget, drag_context, x, y, selection_data, info, timestamp):
         'Callback invoked when the DnD data is received'
-        # force to list
-        file_list = list(selection_data.get_uris())
+        
+        tuplaArrastrados = selection_data.get_uris()
+        listaArrastrados = []
+        for fichero in tuplaArrastrados:
+            listaArrastrados.append(fichero.replace("file://" , ""))
         if self.poolTrabajo:
-            self.poolTrabajo.nuevoTrabajoAnadir(selection_data.get_uris())
+            self.poolTrabajo.nuevoTrabajoAnadir(listaArrastrados)
+            self.refrescarTareasPendientes()
 
 
 class HiloAtenderMensajes(Thread):

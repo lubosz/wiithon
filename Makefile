@@ -176,8 +176,8 @@ purge: uninstall
 	@echo "=================================================================="
 
 clean: clean_wbfs
-	@$(RM) *.pyc
-	@$(RM) *~
+	$(RM) *.pyc
+	$(RM) *~
 
 clean_wbfs:
 	$(MAKE) -C wiithon_wrapper clean
