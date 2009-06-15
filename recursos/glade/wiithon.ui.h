@@ -1,4 +1,3 @@
-char *s = N_("* Nota, la copia no empezara inmediatamente, aparecera un dialogo para confirmar la copia directa.");
 char *s = N_("0 Tareas pendientes");
 char *s = N_("Acerca de ...");
 char *s = N_("Aniadir directorio");
@@ -17,6 +16,8 @@ char *s = N_("Extraer a ISO");
 char *s = N_("GNU GENERAL PUBLIC LICENSE Version 3");
 char *s = N_("Mas informacion");
 char *s = N_("No cierre wiithon mientras esta animacion indique actividad");
+/* comentarios para los traductores */
+char *s = N_("Nota, la copia no sobreescribire nada, solo copia juegos que no tenga el destino");
 char *s = N_("Nuevo");
 char *s = N_("Preferencias");
 char *s = N_("Renombrar");

@@ -207,6 +207,11 @@ class WiithonCORE:
         else:
             print "Ya tienes el disco %s" % (IDGAME)
             return True
+            
+    # borrar disco
+    def borrarDisco( self , juego ):
+        if self.existeDisco( juego.idgame ):
+            os.remove( self.getRutaDisco( juego.idgame ) )
 
     def clonarJuego(self, juego , DEVICE_destino ):
         try:
@@ -245,6 +250,11 @@ class WiithonCORE:
                     os.system("mogrify -resize 160x224! " + destino)
                 i = i + 1
             return descargada
+                            
+    # borrar caratula
+    def borrarCaratula( self, juego ):
+        if self.existeCaratula( juego.idgame ):
+            os.remove( self.getRutaCaratula( juego.idgame ) )
 
     # Descarga todos las caratulas de una lista de juegos
     def descargarTodasLasCaratulaYDiscos(self , DEVICE , listaJuegos , tipo = "normal"):

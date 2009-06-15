@@ -5,6 +5,7 @@
 import os
 import time
 import sys
+import re
 from threading import Thread
 
 import gtk
@@ -21,14 +22,17 @@ from animar import Animador
 
 class WiithonGUI(GtkBuilderWrapper):
 
-    ui_desc = '''<ui>
-<popup action="GamePopup">
-  <menuitem action="Renombrar"/>
-  <menuitem action="Extraer"/>
-  <separator/>
-  <menuitem action="Borrar"/>
-</popup>
-</ui>'''
+    ui_desc = '''
+<ui>
+    <popup action="GamePopup">
+      <menuitem action="Renombrar"/>
+      <menuitem action="Extraer"/>
+      <menuitem action="Copiar"/>
+      <separator/>
+      <menuitem action="Borrar"/>
+    </popup>
+</ui>
+'''
 
     def __init__(self, core):
         GtkBuilderWrapper.__init__(self, os.path.join(config.WIITHON_FILES_RECURSOS_GLADE  , 'wiithon.ui'))
@@ -44,9 +48,7 @@ class WiithonGUI(GtkBuilderWrapper):
             session.save( self.preferencia )
             session.commit()
             
-        ####### Menu contextual
-        
-        # TEST CODE
+        # Menu contextual
         # Crear instancia de UIManager
         self.uimgr = gtk.UIManager()
         
@@ -57,13 +59,11 @@ class WiithonGUI(GtkBuilderWrapper):
         # Crear un ActionGroup
         actiongroup = gtk.ActionGroup('LeftButtonGroup')
 
-        def cb(*args):
-            print args
-
         actiongroup.add_actions([
-                ('Renombrar', None, _('Renombrar'), None, '', cb),
-                ('Extraer', None, _('Extraer'), None, '', cb),
-                ('Borrar', gtk.STOCK_DELETE, None, None, '', cb),
+                ('Renombrar', None, _('Renombrar'), None, '', self.menu_contextual_renombrar),
+                ('Extraer', None, _('Extraer'), None, '',  self.menu_contextual_extraer),
+                ('Copiar', None, _('Copiar a otra particion'), None, '', self.menu_contextual_copiar),
+                ('Borrar', gtk.STOCK_DELETE, None, None, '', self.menu_contextual_borrar),
                 ])
         
         # 4
@@ -72,10 +72,8 @@ class WiithonGUI(GtkBuilderWrapper):
         # 5
         self.uimgr.add_ui_from_string(self.ui_desc)
         self.wb_tv_games.connect('button-press-event', self.on_tv_games_click_event)
-
-        # /TEST_CODE
         
-        #######
+        # /Menu contextual
 
         # verificar que las rutas existen
         if(not os.path.exists(self.preferencia.ruta_anadir)):
@@ -288,6 +286,18 @@ class WiithonGUI(GtkBuilderWrapper):
         atributos.insert(pango.AttrForeground(0xCCCC,0xCCCC,0xCCCC,0,-1))
 
         return atributos
+                
+    def menu_contextual_renombrar(self , action):
+        self.on_tb_toolbar_clicked( self.wb_tb_renombrar )
+        
+    def menu_contextual_extraer(self , action):
+        self.on_tb_toolbar_clicked( self.wb_tb_extraer )
+        
+    def menu_contextual_copiar(self , action):
+        self.on_tb_toolbar_clicked( self.wb_tb_copiar_1_1 )
+        
+    def menu_contextual_borrar(self , action):
+        self.on_tb_toolbar_clicked( self.wb_tb_borrar )
 
     def cargarParticionesVista(self , treeview , callback_cursor_changed):
         render = gtk.CellRendererText()
@@ -329,39 +339,48 @@ class WiithonGUI(GtkBuilderWrapper):
 
     def editar_idgame( self, renderEditable, i, nuevoIDGAME):
         if self.iteradorJuegoSeleccionado != None:
-            actualIDGAME = self.seleccionJuegoSeleccionado.get_value(self.iteradorJuegoSeleccionado,1)
-            if(actualIDGAME != nuevoIDGAME):
-                if len(nuevoIDGAME) == 6:
-                    if self.core.renombrarIDGAME(self.DEVICEParticionSeleccionada , self.IDGAMEJuegoSeleccionado , nuevoIDGAME):
-                        # modificamos el juego modificado de la BDD
-                        juego = session.query(Juego).filter('idgame=="%s" and device=="%s"' % (self.IDGAMEJuegoSeleccionado , self.DEVICEParticionSeleccionada)).first()
-                        if juego != None:
-                            juego.idgame = nuevoIDGAME
+            nuevoIDGAME = nuevoIDGAME.upper()
+            if(self.IDGAMEJuegoSeleccionado != nuevoIDGAME):
+                exp_reg = "[A-Z0-9]{6}"
+                if re.match(exp_reg,nuevoIDGAME):
+                    juego = session.query(Juego).filter('idgame=="%s" and device=="%s"' % (nuevoIDGAME , self.DEVICEParticionSeleccionada)).first()
+                    if juego == None:
+                        if ( self.question(_('Advertencia de seguridad de renombrar desde IDGAME = %s a %s') % (self.IDGAMEJuegoSeleccionado , nuevoIDGAME)) == 1 ):
+                            if self.core.renombrarIDGAME(self.DEVICEParticionSeleccionada , self.IDGAMEJuegoSeleccionado , nuevoIDGAME):
+                                # modificamos el juego modificado de la BDD
+                                juego = session.query(Juego).filter('idgame=="%s" and device=="%s"' % (self.IDGAMEJuegoSeleccionado , self.DEVICEParticionSeleccionada)).first()
+                                if juego != None:
+                                    juego.idgame = nuevoIDGAME
 
-                            # Refrescamos del modelo la columna modificada
-                            self.tv_games_modelo.set_value(self.iteradorJuegoSeleccionado,1,nuevoIDGAME)
+                                    # Refrescamos del modelo la columna modificada
+                                    self.tv_games_modelo.set_value(self.iteradorJuegoSeleccionado,1,nuevoIDGAME)
+                            else:
+                                self.alert('error' , _("Error renombrando"))
                     else:
-                        self.alert('error' , _("Error renombrando"))
+                        self.alert('error' , _("Ya hay un juego con ese IDGAME"))
                 else:
-                    self.alert('error' , _("Error: La longitud del IDGAME, debe ser 6."))
+                    self.alert('error' , _("Error: La longitud del IDGAME debe ser 6, y solo puede contener letras y numeros"))
 
-    def editar_celda( self, renderEditable, i, nuevoNombre):
+    def editar_nombre( self, renderEditable, i, nuevoNombre):
         if self.iteradorJuegoSeleccionado != None:
             nombreActual = self.seleccionJuegoSeleccionado.get_value(self.iteradorJuegoSeleccionado,2)
             if(nombreActual != nuevoNombre):
-                if not util.tieneCaracteresRaros(nuevoNombre , util.BLACK_LIST2):
-                    if self.core.renombrarNOMBRE(self.DEVICEParticionSeleccionada , self.IDGAMEJuegoSeleccionado , nuevoNombre):
-                        # modificamos el juego modificado de la BDD
-                        juego = session.query(Juego).filter('idgame=="%s" and device=="%s"' % (self.IDGAMEJuegoSeleccionado , self.DEVICEParticionSeleccionada)).first()
-                        if juego != None:
-                            juego.title = nuevoNombre
+                if len(nuevoNombre) < config.TITULO_LONGITUD_MAX:
+                    if not util.tieneCaracteresRaros(nuevoNombre , util.BLACK_LIST2):
+                        if self.core.renombrarNOMBRE(self.DEVICEParticionSeleccionada , self.IDGAMEJuegoSeleccionado , nuevoNombre):
+                            # modificamos el juego modificado de la BDD
+                            juego = session.query(Juego).filter('idgame=="%s" and device=="%s"' % (self.IDGAMEJuegoSeleccionado , self.DEVICEParticionSeleccionada)).first()
+                            if juego != None:
+                                juego.title = nuevoNombre
 
-                            # Refrescamos del modelo la columna modificada
-                            self.tv_games_modelo.set_value(self.iteradorJuegoSeleccionado,2,nuevoNombre)
+                                # Refrescamos del modelo la columna modificada
+                                self.tv_games_modelo.set_value(self.iteradorJuegoSeleccionado,2,nuevoNombre)
+                        else:
+                            self.alert('error' , _("Error renombrando"))
                     else:
-                        self.alert('error' , _("Error renombrando"))
+                        self.alert('error' , _("Se han detectado caracteres no validos: %s") % (util.BLACK_LIST2))
                 else:
-                    self.alert('error' , _("Se han detectado caracteres no validos: %s") % (util.BLACK_LIST2))
+                    self.alert('error' , _("Nuevo nombre es demasiado largo, intente con un texto menor de %d caracteres") % (config.TITULO_LONGITUD_MAX))
 
     def cargarJuegosVista(self):
         # Documentacion útil: http://blog.rastersoft.com/index.php/2007/01/27/trabajando-con-gtktreeview-en-python/
@@ -384,7 +403,7 @@ class WiithonGUI(GtkBuilderWrapper):
             
             renderEditable.set_property("editable", True)
             renderEditable.set_property("attributes", self.getEstilo_azulGrande() )
-            renderEditable.connect ("edited", self.editar_celda)
+            renderEditable.connect ("edited", self.editar_nombre)
         else: # realmente en modo "ver", no es editable
             renderEditable.set_property("attributes", self.getEstilo_grisGrande() )
         render = gtk.CellRendererText()
@@ -551,10 +570,10 @@ class WiithonGUI(GtkBuilderWrapper):
                 juego = Juego(tuplaJuego[0] , tuplaJuego[1] , tuplaJuego[2] , self.DEVICEParticionSeleccionada)
                 session.save( juego )
             else:
-                #actualizo el device al que pertenece
+                # el nombre puede ser otro aunque tenga el mismo IDGAME (cambiado desde otra gestor por ejemplo)
                 juego.title = tuplaJuego[1]
-                # El tamaño no cambia
-                #juego.size = float(tuplaJuego[2])
+
+                # previamente se limpiaron los devices
                 juego.device = self.DEVICEParticionSeleccionada
 
             self.listaJuegos[ i ] = juego
@@ -674,7 +693,7 @@ class WiithonGUI(GtkBuilderWrapper):
             popup.popup(None, None, None, event.button, event.time)
 
     def on_tb_toolbar_clicked(self , id_tb):
-        if(self.modo == "ver" and id_tb != self.wb_tb_copiar_SD and id_tb != self.wb_tb_acerca_de):
+        if(self.modo == "ver" and id_tb != self.wb_tb_copiar_SD and id_tb != self.wb_tb_acerca_de and id_tb != self.wb_tb_borrar):
             self.alert("warning" , _("Tienes que seleccionar una particion WBFS para realizar esta accion"))
         elif(id_tb == self.wb_tb_acerca_de):
             self.wb_aboutdialog.run()
@@ -693,27 +712,48 @@ class WiithonGUI(GtkBuilderWrapper):
                         self.alert("warning" , _("No has seleccionado ningun juego"))
                 elif(res == 2):
                     print _("Copiar todos los juegos a la particion %s") % (self.DEVICEParticionSeleccionada_1on1)
+                    self.alert('error' , "Sin implementar aún")
                 else:
                     pass
             else:
                 self.alert("warning" , _("No hay un numero suficiente de particiones validas, para realizar esta accion."))
         elif(id_tb == self.wb_tb_borrar):
             if self.iteradorJuegoSeleccionado != None:
-                if ( self.question(_('Quieres borrar el juego con ID = %s?') % self.IDGAMEJuegoSeleccionado) == 1 ):
-                    # borrar del HD
-                    if self.core.borrarJuego( self.DEVICEParticionSeleccionada , self.IDGAMEJuegoSeleccionado ):
+                if self.modo == "ver":
+                    if ( self.question(_('Advertencia de borrar %s en modo ver') % self.IDGAMEJuegoSeleccionado) == 1 ):
+                        juego = session.query(Juego).filter('idgame=="%s"' % (self.IDGAMEJuegoSeleccionado)).first()
+                        if juego != None:
+                            # borrar disco
+                            self.core.borrarDisco( juego )
+                            
+                            # borrar caratula
+                            self.core.borrarCaratula( juego )
+                            
+                            # borrar de la bdd
+                            session.delete( juego )
+                            
+                            # borrar de la tabla
+                            self.tv_games_modelo.remove( self.iteradorJuegoSeleccionado )
 
-                        # borrar de la tabla
-                        self.tv_games_modelo.remove( self.iteradorJuegoSeleccionado )
+                            # seleccionar el primero
+                            self.seleccionarPrimeraFila( self.wb_tv_games , self.on_tv_games_cursor_changed )
+                            
+                else:
+                    if ( self.question(_('Quieres borrar el juego con ID = %s?') % self.IDGAMEJuegoSeleccionado) == 1 ):
+                        # borrar del HD
+                        if self.core.borrarJuego( self.DEVICEParticionSeleccionada , self.IDGAMEJuegoSeleccionado ):
 
-                        # seleccionar el primero
-                        self.seleccionarPrimeraFila( self.wb_tv_games , self.on_tv_games_cursor_changed )
+                            # borrar de la tabla
+                            self.tv_games_modelo.remove( self.iteradorJuegoSeleccionado )
 
-                        # debería haber liberado espacio
-                        # FIXME: pequeño bug
-                        self.refrescarEspacio()
-                    else:
-                        self.alert("warning" , _("Error borrando"))
+                            # seleccionar el primero
+                            self.seleccionarPrimeraFila( self.wb_tv_games , self.on_tv_games_cursor_changed )
+
+                            # debería haber liberado espacio
+                            # FIXME: pequeño bug
+                            self.refrescarEspacio()
+                        else:
+                            self.alert("warning" , _("Error borrando"))
             else:
                 self.alert("warning" , _("No has seleccionado ningun juego"))
         elif(id_tb == self.wb_tb_extraer):

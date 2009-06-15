@@ -54,3 +54,5 @@ borrarISODescomprimida = False
 # Lineas de pantallazo en consola (esta variable hay que trasladarlo a WiithonCLI)
 NUM_LINEAS_PAUSA = 21
 
+# Definido en libwbfs, longitud maxima de un titulo
+TITULO_LONGITUD_MAX = 0x80
