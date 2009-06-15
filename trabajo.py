@@ -92,7 +92,7 @@ class PoolTrabajo(Pool , Thread):
 
         # Esperar que todos los mensajes sean atendidos
         core.getMensajes().join()
-        
+
 
     def anadir(self , core , fichero , DEVICE):
         core.nuevoMensaje( Mensaje("COMANDO","EMPIEZA") )
@@ -178,9 +178,10 @@ class PoolTrabajo(Pool , Thread):
         self.empezar( args=(self.core,) )
 
     def nuevoTrabajoAnadir(self , fichero):
-        if type(fichero) == list:
+        if isinstance(fichero, list):
             for f in fichero:
                 self.nuevoTrabajo( Trabajo(ANADIR , f) )
+
         else:
             self.nuevoTrabajo( Trabajo(ANADIR , fichero) )
 

@@ -409,7 +409,7 @@ msgstr "Extract"
 msgid "Copiar a otra particion"
 msgstr "Copy to other partition"
 
-#: gui.py:190
+#: gui.py:200
 #, python-format
 msgid ""
 "No se han encontrado particiones WBFS:\n"
@@ -422,7 +422,7 @@ msgstr ""
 "In this mode, you can ONLY view your entire games database accumulated by %s "
 "in previous sessions."
 
-#: gui.py:192
+#: gui.py:202
 #, python-format
 msgid ""
 "No se han encontrado particiones WBFS:\n"
@@ -433,19 +433,19 @@ msgstr ""
 "Connect a hard drive containing a partition with Wii games (WBFS) and "
 "restart %s\n"
 
-#: gui.py:253
+#: gui.py:263
 msgid "Formato desconocido"
 msgstr "Format Unknown"
 
-#: gui.py:309
+#: gui.py:319
 msgid "Dispositivo"
 msgstr "Device"
 
-#: gui.py:310
+#: gui.py:320
 msgid "Fabricante"
 msgstr "Manufacture"
 
-#: gui.py:352
+#: gui.py:362
 #, python-format
 msgid "Advertencia de seguridad de renombrar desde IDGAME = %s a %s"
 msgstr ""
@@ -465,78 +465,78 @@ msgstr ""
 "Guitar Hero y customs de este.\n"
 "¿Está seguro de renombrar el actual IDGAME %s como %s?"
 
-#: gui.py:362 gui.py:383
+#: gui.py:372 gui.py:393
 msgid "Error renombrando"
 msgstr "Error renaming"
 
-#: gui.py:364
+#: gui.py:374
 msgid "Ya hay un juego con ese IDGAME"
 msgstr ""
 
-#: gui.py:366
+#: gui.py:376
 msgid ""
 "Error: La longitud del IDGAME debe ser 6, y solo puede contener letras y "
 "numeros"
 msgstr ""
 
-#: gui.py:385
+#: gui.py:395
 #, python-format
 msgid "Se han detectado caracteres no validos: %s"
 msgstr "Characters not valid: %s"
 
-#: gui.py:387
+#: gui.py:397
 #, python-format
 msgid ""
 "Nuevo nombre es demasiado largo, intente con un texto menor de %d caracteres"
 msgstr ""
 
-#: gui.py:417
+#: gui.py:427
 msgid "IDGAME"
 msgstr "IDGAME"
 
-#: gui.py:418
+#: gui.py:428
 msgid "Nombre"
 msgstr "Name"
 
-#: gui.py:419
+#: gui.py:429
 msgid "Tamanio"
 msgstr "Size"
 
-#: gui.py:634
+#: gui.py:644
 #, python-format
 msgid "Hay %d tarea"
 msgstr "There is %d task"
 
-#: gui.py:637
+#: gui.py:647
 #, python-format
 msgid "Hay %d tareas"
 msgstr "There are %d tasks"
 
-#: gui.py:701
+#: gui.py:711
 msgid "Tienes que seleccionar una particion WBFS para realizar esta accion"
 msgstr "Need select some partition WBFS"
 
-#: gui.py:716
+#: gui.py:726
 #, python-format
 msgid "Copiar el juego %s a la particion %s"
 msgstr ""
 
-#: gui.py:721 gui.py:770 gui.py:805 gui.py:815
+#: gui.py:731 gui.py:780 gui.py:815 gui.py:825
 msgid "No has seleccionado ningun juego"
 msgstr "Don't have a game selected"
 
-#: gui.py:724
+#: gui.py:734
 #, python-format
 msgid "Copiar todos los juegos a la particion %s"
 msgstr ""
 
-#: gui.py:728
+#: gui.py:738
 msgid ""
 "No hay un numero suficiente de particiones validas, para realizar esta "
 "accion."
 msgstr ""
 
-#: gui.py:733
+#: gui.py:743
 #, python-format
 msgid "Advertencia de borrar %s en modo ver"
 msgstr ""
@@ -546,67 +546,67 @@ msgstr ""
 "- Esto supone borrar (además de borrar el registro) la carátula y el disco\n"
 "¿Esta seguro de borrar %s?"
 
-#: gui.py:752
+#: gui.py:762
 #, python-format
 msgid "Quieres borrar el juego con ID = %s?"
 msgstr "Do you want to remove the game with ID = %s?"
 
-#: gui.py:767
+#: gui.py:777
 msgid "Error borrando"
 msgstr "Delete error"
 
-#: gui.py:782
+#: gui.py:792
 #, python-format
 msgid "Elige un directorio donde extraer la ISO de %s"
 msgstr "Choose folder for extract ISO %s"
 
-#: gui.py:827
+#: gui.py:837
 msgid "Elige una ISO o un RAR"
 msgstr "Choose a ISO or RAR"
 
-#: gui.py:830
+#: gui.py:840
 msgid "Imagen ISO, Comprimido RAR"
 msgstr "ISO image, RAR compressed"
 
-#: gui.py:837
+#: gui.py:847
 msgid "Elige un directorio"
 msgstr "Choose folder"
 
-#: gui.py:863
+#: gui.py:873
 msgid "No has seleccionado ninguna particion"
 msgstr "Don't have a partition selected"
 
-#: gui.py:874
+#: gui.py:884
 msgid "Paso 1 de 2: Elige un directorio para las CARATULAS"
 msgstr "Step 1 of 1: Choose a folder for COVERS"
 
-#: gui.py:881
+#: gui.py:891
 msgid "Paso 2 de 2: Elige un directorio para los DISCOS"
 msgstr "Step 2 of 2: Choose a folder for DISCS"
 
-#: gui.py:902
+#: gui.py:912
 msgid "No tienes ningun juego"
 msgstr "Don't have some game"
 
-#: gui.py:935
+#: gui.py:959
 #, python-format
 msgid "CUIDADO: %s"
 msgstr "WARNING: %s"
 
-#: gui.py:937
+#: gui.py:961
 #, python-format
 msgid "ERROR: %s"
 msgstr "ERROR: %s"
 
-#: gui.py:959
+#: gui.py:983
 msgid "DEBUG: Comando desconocido"
 msgstr "DEBUG: Unknown command"
 
-#: gui.py:1025
+#: gui.py:1049
 msgid "Finalizando. Hecho en"
 msgstr "Finishing. Done in"
 
-#: gui.py:1029
+#: gui.py:1053
 msgid "quedan"
 msgstr "remaining"
 

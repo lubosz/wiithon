@@ -77,6 +77,16 @@ class WiithonGUI(GtkBuilderWrapper):
         self.uimgr.add_ui_from_string(self.ui_desc)
         self.wb_tv_games.connect('button-press-event', self.on_tv_games_click_event)
 
+        # TEST
+        self.wb_principal.drag_dest_set(0, [], 0)
+                                        #[('text/uri-list', gtk.TARGET_OTHER_APP, 25)],
+                                        #gtk.gdk.ACTION_DEFAULT)
+
+        self.wb_principal.connect("drag_motion", self.drop_motion)
+        self.wb_principal.connect("drag_drop", self.drag_drop)
+        self.wb_principal.connect("drag_data_received", self.drag_data_received_cb)
+        # /TEST
+
         # verificar que las rutas existen
         if(not os.path.exists(self.preferencia.ruta_anadir)):
         	self.preferencia.ruta_anadir = os.getcwd()
@@ -291,19 +301,19 @@ class WiithonGUI(GtkBuilderWrapper):
 
         return atributos
 
-    def menu_contextual_renombrar(self , action):
+    def menu_contextual_renombrar(self, action):
         self.on_tb_toolbar_clicked( self.wb_tb_renombrar )
 
-    def menu_contextual_extraer(self , action):
+    def menu_contextual_extraer(self, action):
         self.on_tb_toolbar_clicked( self.wb_tb_extraer )
 
-    def menu_contextual_copiar(self , action):
+    def menu_contextual_copiar(self, action):
         self.on_tb_toolbar_clicked( self.wb_tb_copiar_1_1 )
 
-    def menu_contextual_borrar(self , action):
+    def menu_contextual_borrar(self, action):
         self.on_tb_toolbar_clicked( self.wb_tb_borrar )
 
-    def cargarParticionesVista(self , treeview , callback_cursor_changed):
+    def cargarParticionesVista(self, treeview, callback_cursor_changed):
         render = gtk.CellRendererText()
 
         columna1 = gtk.TreeViewColumn(_('Dispositivo'), render , text=1)
@@ -900,6 +910,22 @@ class WiithonGUI(GtkBuilderWrapper):
 
             else:
                 self.alert("warning" , _("No tienes ningun juego"))
+
+    def drag_drop(self, widget, drag_context, x, y, timestamp):
+        widget.drag_get_data(drag_context, "text/uri-list")
+        drag_context.finish(True, False, timestamp)
+
+    def drop_motion(self, widget, drag_context, x, y, timestamp):
+        drag_context.drag_status(gtk.gdk.ACTION_COPY, timestamp)
+        return True
+
+    def drag_data_received_cb(self, widget, drag_context, x, y, selection_data, info, timestamp):
+        'Callback invoked when the DnD data is received'
+        # force to list
+        file_list = list(selection_data.get_uris())
+        if self.poolTrabajo:
+            self.poolTrabajo.nuevoTrabajoAnadir(selection_data.get_uris())
+
 
 class HiloAtenderMensajes(Thread):
 
