@@ -14,7 +14,7 @@ static void _decrypt_title_key(u8 *tik, u8 *title_key)
 	u8 common_key[16]={
                 0xeb, 0xe4, 0x2a, 0x22, 0x5e, 0x85, 0x93, 0xe4, 0x48, 0xd9, 0xc5, 0x45,
                 0x73, 0x81, 0xaa, 0xf7
-        };;
+        };
 	u8 iv[16];
 
 	wbfs_memset(iv, 0, sizeof iv);
@@ -36,7 +36,7 @@ static void disc_read(wiidisc_t *d,u32 offset, u8 *data, u32 len)
                         return ;
                 ret = d->read(d->fp,offset,len,data);
                 if(ret)
-                        wbfs_fatal("error reading disc");
+                        wbfs_fatal("error reading disc (disc_read)");
         }
         if(d->sector_usage_table)
         {
@@ -197,6 +197,7 @@ static void do_partition(wiidisc_t*d)
 	tmd = wbfs_ioalloc(tmd_size);
 	if (tmd == 0)
 		wbfs_fatal("malloc tmd");
+	
 	partition_raw_read(d,tmd_offset, tmd, tmd_size);
 
 	cert = wbfs_ioalloc(cert_size);
@@ -230,6 +231,7 @@ static int test_parition_skip(u32 partition_type,partition_selector_t part_sel)
                 return (partition_type!=part_sel);
         }
 } 
+
 static void do_disc(wiidisc_t*d)
 {
 	u8 *b = wbfs_ioalloc(0x100);

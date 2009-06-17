@@ -742,7 +742,7 @@ class WiithonGUI(GtkBuilderWrapper):
 
                 elif(res == 2):
                     print _("Copiar todos los juegos a la particion %s") % (self.DEVICEParticionSeleccionada_1on1)
-                    self.alert('error' , "Sin implementar aun")
+                    self.poolTrabajo.nuevoTrabajoClonar( self.listaJuegos, self.DEVICEParticionSeleccionada_1on1)
 
             else:
                 self.alert("warning" , _("No hay un numero suficiente de particiones validas, para realizar esta accion."))
@@ -957,23 +957,23 @@ class WiithonGUI(GtkBuilderWrapper):
     def drag_data_received_cb(self, widget, drag_context, x, y, selection_data, info, timestamp):
         'Callback invoked when the DnD data is received'
         tuplaArrastrados = selection_data.get_uris()
-        listaArrastrados = []
-        for fichero in tuplaArrastrados:
-            listaArrastrados.append(fichero.replace("file://" , ""))
-        listaArrastrados.sort()
-        if self.poolTrabajo:
-            self.poolTrabajo.nuevoTrabajoAnadir(listaArrastrados, self.DEVICEParticionSeleccionada)
+        if len(tuplaArrastrados) > 0:
+            listaArrastrados = []
+            for fichero in tuplaArrastrados:
+                fichero = fichero.replace("file://" , "")
+                if os.path.exists(fichero) and (util.getExtension(fichero)=="iso" or util.getExtension(fichero)=="rar"):
+                    listaArrastrados.append(fichero)
+            listaArrastrados.sort()
+            if self.poolTrabajo:
+                self.poolTrabajo.nuevoTrabajoAnadir(listaArrastrados, self.DEVICEParticionSeleccionada)
 
     def callback_empieza_progreso(self, trabajo):
         self.hiloCalcularProgreso = HiloCalcularProgreso( trabajo, self.actualizarLabel , self.actualizarFraccion )
         self.hiloCalcularProgreso.start()
         gobject.idle_add(self.actualizarFraccion , 0.0 )
-        print "empezar progreso"
 
     def callback_termina_progreso(self, trabajo):
-        self.hiloCalcularProgreso.progreso = 100
         gobject.idle_add(self.actualizarFraccion , 1.0 )
-        print "termina progreso"
 
     def callback_empieza_trabajo_anadir(self, trabajo):
         print "callback_empieza_trabajo_anadir"

@@ -314,17 +314,27 @@ int wiithon_wrapper_extract(wbfs_t *p, u8 *idgame)
 int wiithon_wrapper_clonar(wbfs_t *p , u8 *discid, char *destino)
 {
     int retorno = FALSE;
-    wbfs_disc_t *d_src = wbfs_open_disc(p,discid);
-    if(d_src)
+
+    wbfs_t *p_dst = wbfs_try_open(NULL, destino , 0);
+    if(p_dst)
     {
-        wbfs_t *p_dst = wbfs_try_open_partition(destino , 0);
-        if(p_dst)
+        wbfs_disc_t *d_src = wbfs_open_disc(p_dst,discid);
+        if(d_src)
         {
-            retorno = wbfs_copy_disc(d_src , p_dst , _spinner);
-            wbfs_close(p_dst);
+            fprintf(stderr, "%s ya esta en disco...\n", discid);
+            wbfs_close_disc(d_src);
         }
-        wbfs_close_disc(d_src);
+        else
+        {
+            d_src = wbfs_open_disc(p,discid);
+            if(d_src)
+            {
+                retorno = wbfs_copy_disc(d_src , p_dst , _spinner);
+                wbfs_close_disc(d_src);
+            }
+        }
     }
+    wbfs_close(p_dst);
     return retorno;
 }
 
@@ -380,7 +390,7 @@ int main(int argc, char *argv[])
     
     noFormatear = ((numParametros == 1) && (strcmp(argv[optind], "formatear") == 0)) ? FALSE : TRUE;
 
-    wbfs_t *p = wbfs_try_open_partition(partition, noFormatear );
+    wbfs_t *p = wbfs_try_open(NULL, partition, noFormatear );
     if(p)
     {
         if ( noFormatear == FALSE )

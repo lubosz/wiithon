@@ -134,6 +134,7 @@ wbfs_t*wbfs_open_partition(rw_sector_callback_t read_hdsector,
 
         p->tmp_buffer = wbfs_ioalloc(p->hd_sec_sz);
         p->n_disc_open = 0;
+		wbfs_sync(p);
         return p;
 error:
         wbfs_free(p);
@@ -661,6 +662,7 @@ unsigned int wbfs_copy_disc(wbfs_disc_t*d_src, wbfs_t*p_dst, progress_callback_t
 
 	if( src_wbs_nlb != dst_wbs_nlb)
 	{
+	    printf("src_wbs_nlb = %d - dst_wbs_nlb = %d\n" , src_wbs_nlb , dst_wbs_nlb);
 		ERROR("Difference between source and dest");
 		retorno = FALSE;
 	}

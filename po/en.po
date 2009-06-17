@@ -402,7 +402,7 @@ msgstr ""
 msgid "Ya tienes la caratula %s"
 msgstr ""
 
-#: core.py:184
+#: core.py:185
 #, python-format
 msgid "***************** DESCARGAR CARATULA %s ********************"
 msgstr "***************** DOWNLOAD COVER %s ********************"
@@ -757,37 +757,37 @@ msgstr "copy to SD"
 msgid "https://launchpad.net/wiithon"
 msgstr "https://launchpad.net/wiithon"
 
-#: trabajo.py:329
+#: trabajo.py:325
 #, python-format
 msgid "Anadir %s a la particion %s"
 msgstr ""
 
-#: trabajo.py:331
+#: trabajo.py:327
 #, python-format
 msgid "Extraer %s a la ruta %s"
 msgstr ""
 
-#: trabajo.py:333
+#: trabajo.py:329
 #, python-format
 msgid "Copiando el juego %s a la particion %s"
 msgstr ""
 
-#: trabajo.py:335
+#: trabajo.py:331
 #, python-format
 msgid "Descargando caratula de %s"
 msgstr ""
 
-#: trabajo.py:337
+#: trabajo.py:333
 #, python-format
 msgid "Descargando disco de %s"
 msgstr ""
 
-#: trabajo.py:339
+#: trabajo.py:335
 #, python-format
 msgid "Copiando la caratula %s a la ruta %s"
 msgstr ""
 
-#: trabajo.py:341
+#: trabajo.py:337
 #, python-format
 msgid "Copiando el disco %s a la ruta %s"
 msgstr ""

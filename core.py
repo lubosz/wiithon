@@ -157,6 +157,7 @@ class WiithonCORE:
     def clonarJuego(self, juego , DEVICE ):
         try:
             comando = "%s -p %s clonar %s %s" % (config.WBFS_APP , juego.device , juego.idgame , DEVICE)
+            print comando
             salida = subprocess.call( comando , shell=True , stderr=subprocess.STDOUT , stdout=open(config.HOME_WIITHON_LOGS_PROCESO , "w") )
             return salida == 0
         except KeyboardInterrupt:

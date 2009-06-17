@@ -56,8 +56,6 @@ class PoolTrabajo(Pool , Thread):
 
     def ejecutar(self , numHilo , trabajo , core):
         
-        print "<%s>" % trabajo
-        
         if self.callback_empieza_trabajo:
             self.callback_empieza_trabajo(trabajo)
 
@@ -90,14 +88,14 @@ class PoolTrabajo(Pool , Thread):
                 self.callback_termina_trabajo_extraer(trabajo)
 
         elif( trabajo.tipo == CLONAR ):
-            print "aaaa"
+
             if self.callback_empieza_trabajo_copiar:
                 self.callback_empieza_trabajo_copiar(trabajo)
-            print "bbbbbbb"
+
             juego = trabajo.origen
             DEVICE = trabajo.destino
             trabajo.exito = self.clonar(core ,trabajo, juego , DEVICE)
-            print "cccccc"
+
             if self.callback_termina_trabajo_copiar:
                 self.callback_termina_trabajo_copiar(trabajo, juego, DEVICE)
             
@@ -121,8 +119,6 @@ class PoolTrabajo(Pool , Thread):
         # termina un trabajo genérico
         if self.callback_termina_trabajo:
             self.callback_termina_trabajo(trabajo)
-
-        print "</>"
 
     def anadir(self , core ,trabajo , fichero , DEVICE):
         exito = False
