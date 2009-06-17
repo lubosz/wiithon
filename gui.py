@@ -137,6 +137,7 @@ class WiithonGUI(GtkBuilderWrapper):
         # self.wb_principal.set_icon_from_file( "/usr/share/pixmaps/wiithon.svg" )
         self.wb_principal.show()
 
+        # conexion señales de la toolbar
         self.wb_tb_anadir.connect('clicked' , self.on_tb_toolbar_clicked)
         self.wb_tb_anadir_directorio.connect('clicked' , self.on_tb_toolbar_clicked)
         self.wb_tb_extraer.connect('clicked' , self.on_tb_toolbar_clicked)
@@ -224,12 +225,6 @@ class WiithonGUI(GtkBuilderWrapper):
             # tambien refresca la lista de juegos del CORE
             self.seleccionarPrimeraFila( self.wb_tv_partitions , self.on_tv_partitions_cursor_changed)
 
-            '''
-            if(self.numParticiones > 0):
-                self.seleccionarFilaConValor(self.wb_tv_partitions, self.numParticiones , 1 , self.preferencia.device_seleccionado)
-            self.on_tv_partitions_cursor_changed(self.wb_tv_partitions)
-            '''
-
             # Trabajador, se le mandan trabajos de barra de progreso (trabajos INTENSOS)
             self.poolTrabajo = PoolTrabajo( self.core , 1,
                                         self.callback_empieza_trabajo ,
@@ -250,9 +245,6 @@ class WiithonGUI(GtkBuilderWrapper):
         self.animar = Animador( self.wb_estadoBatch , self.poolBash , self.poolTrabajo)
         self.animar.setDaemon(True)
         self.animar.start()
-
-        # carga el Juego preferente
-        # self.seleccionarFilaConValor(self.wb_tv_games, len(self.listaJuegos) , 1 , self.preferencia.idgame_seleccionado)
 
         # si no hay juegos pongo las caratulas por defecto
         if len(self.listaJuegos) == 0:
@@ -409,9 +401,9 @@ class WiithonGUI(GtkBuilderWrapper):
         tv_games = self.wb_tv_games
 
         # FIXME: ¿Porque no funciona?, especifico el entry de busqueda
-        tv_games.set_search_entry( self.wb_busqueda )
+        #tv_games.set_search_entry( self.wb_busqueda )
         # activar busqueda desde el Treeview
-        #tv_games.set_enable_search(True)
+        tv_games.set_enable_search(True)
 
         # ¿Como aplico propiedades style?
         #tv_games.set_property("even-row-color" , gtk.gdk.Color(0xFFFF,0x0,0x0) )
@@ -491,7 +483,6 @@ class WiithonGUI(GtkBuilderWrapper):
 
         # cerrar hilos
         try:
-            self.hiloAtenderMensajes.interrumpir()
             self.poolTrabajo.interrumpir()
             self.animar.interrumpir()
             self.animar.join()
@@ -621,7 +612,7 @@ class WiithonGUI(GtkBuilderWrapper):
             # FIXME: hay que seleccionar el que marca las preferencias
             self.seleccionarPrimeraFila( self.wb_tv_games , self.on_tv_games_cursor_changed)
 
-    def seleccionarFilaConValor(self , treeview, numFilas , columna, valor):
+    def seleccionarFilaConValor(self , treeview, numFilas , columna, valor, callback):
         i = 0
         encontrado = False
         while (i<numFilas) and (not encontrado):
@@ -632,12 +623,15 @@ class WiithonGUI(GtkBuilderWrapper):
                 i += 1
         if encontrado:
             treeview.get_selection().select_path(i)
+        # provoca el evento de cambio en el treeview
+        callback( treeview )
 
     def seleccionarPrimeraFila(self , treeview , callback):
         # selecciono el primero y provoco el evento
         iter_primero = treeview.get_model().get_iter_first()
         if iter_primero != None:
             treeview.get_selection().select_iter( iter_primero )
+        # provoca el evento de cambio en el treeview
         callback( treeview )
 
     def refrescarEspacio(self):
@@ -942,13 +936,13 @@ class WiithonGUI(GtkBuilderWrapper):
         self.wb_progreso1.set_fraction( fraccion )
 
     def refrescarJuegosYSeleccionarElNuevo(self, idgame):
-        self.refrescarListaJuegosFromCore()
-        self.refrescarEspacio()
-        self.seleccionarFilaConValor(self.wb_tv_games, len(self.listaJuegos) , 1 , idgame)
+        #self.refrescarListaJuegosFromCore()
+        #self.refrescarEspacio()
+        self.seleccionarFilaConValor(self.wb_tv_games, len(self.listaJuegos) , 1 , idgame, self.on_tv_games_cursor_changed)
 
     def refrescarParticionesYSeleccionarJuegoClonado(self, IDGAME, DEVICE):
-        self.seleccionarFilaConValor(self.wb_tv_partitions, self.numParticiones , 1 , DEVICE)
-        self.seleccionarFilaConValor(self.wb_tv_games, len(self.listaJuegos) , 1 , IDGAME)
+        self.seleccionarFilaConValor(self.wb_tv_partitions, self.numParticiones , 1 , DEVICE, self.on_tv_partitions_cursor_changed)
+        self.seleccionarFilaConValor(self.wb_tv_games, len(self.listaJuegos) , 1 , IDGAME, self.on_tv_games_cursor_changed)
 
 ############# CALLBACKS
 
