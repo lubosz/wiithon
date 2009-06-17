@@ -26,6 +26,9 @@ wbfs_t *wbfs_try_open_partition(char *fn,int reset);
 //
 // error handling
 //
+
+
+/*
 void spinner(u64 x, u64 max)
 {
 	static time_t start;
@@ -34,33 +37,30 @@ void spinner(u64 x, u64 max)
 	f32 percent;
 	u32 d, h, m, s;
 
-	/* First time */
+	// First time
 	if (!x) {
 		start    = time(0);
 		expected = 300;
 	}
 
-	/* Elapsed time */
+	// Elapsed time
 	d = time(0) - start;
 
 	if (x != max) {
-		/* Expected time */
+		// Expected time
 		if (d)
 			expected = (expected * 3 + d * max / x) / 4;
 
-		/* Remaining time */
+		// Remaining time
 		d = (expected > d) ? (expected - d) : 0;
 	}
 
-	/* Calculate time values */
 	h =  d / 3600;
 	m = (d / 60) % 60;
 	s =  d % 60;
 
-	/* Calculate percentage/size */
 	percent = (x * 100.0) / max;
 
-	/* Show progress */
 	if (x != max)
 		fprintf(stdout , "%f;%d;%d;%d\n", percent, h, m, s);
 	else
@@ -68,6 +68,53 @@ void spinner(u64 x, u64 max)
 	
 	fflush(stdout);
 }
+*/
+
+void spinner(u64 x, u64 max)
+{
+	static time_t start_time;
+	static u32 expected_total;
+	u32 d;
+	double percent;
+	u32 h, m, s;
+
+	if (x == 0) {
+		start_time = time(0);
+		expected_total = 300;
+	}
+
+	if (x == max) {
+        d = time(0) - start_time;
+        h = d / 3600;
+        m = (d / 60) % 60;
+        s = d % 60;
+		//fprintf(stdout, "FIN;%d;%d;%d\n", h, m, s);
+		//fflush(stdout);
+		fprintf(stderr, "FIN;%d;%02d;%02d\n", h, m, s);
+		return;
+	}
+
+	d = time(0) - start_time;
+
+	if (d != 0)
+		expected_total = (3 * expected_total + d * max / x) / 4;
+
+	if (expected_total > d)
+		d = expected_total - d;
+	else
+		d = 0;
+
+	h = d / 3600;
+	m = (d / 60) % 60;
+	s = d % 60;
+	percent = 100.0 * x / max;
+
+	//fprintf(stdout , "%f;%d;%d;%d\n", percent, h, m, s);
+	//fflush(stdout);
+    fprintf(stdout , "%5.2f;%d;%02d;%02d\n", percent, h, m, s);
+    fflush(stdout);
+}
+
 
 int read_wii_file(void*_fp,u32 offset,u32 count,void *iobuf)
 {

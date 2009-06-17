@@ -36,15 +36,6 @@ class WiithonCORE:
     # Estructura sincrona para comunicacion entre hilos
     mensajes = None
 
-    # Destino por defecto para el destino de las caratulas
-    destinoCopiarCaratula = config.HOME
-
-    # Destino por defecto para el destino de los discos
-    destinoCopiarDisco = config.HOME
-
-    # Destino por defecto para extraer un ISO
-    destinoExtraer = config.HOME
-
     #constructor
     def __init__(self):
         # cola sincronizada (productor-consumidor)
@@ -73,15 +64,6 @@ class WiithonCORE:
                 salida.append( [ cachos[0] , cachos[1] , cachos[2] ] )
         salida.sort(ordenarPorNombre)
         return salida
-
-    # añade un *ISO* a un *DEVICE*
-    def anadirISO(self , DEVICE , ISO , ficheroSalida=None):
-        try:
-            comando = config.WBFS_APP+" -p "+DEVICE+" add \""+ISO+"\""
-            salida = subprocess.call( comando , shell=True , stderr=subprocess.STDOUT , stdout=open(config.HOME_WIITHON_LOGS_PROCESO , "w") )
-            return salida == 0
-        except KeyboardInterrupt:
-            return False
 
     # renombra el ISO de un IDGAME que esta en DEVICE
     def renombrarNOMBRE(self , DEVICE , IDGAME , NUEVO_NOMBRE):
@@ -123,20 +105,6 @@ class WiithonCORE:
         except TypeError:
             return False
 
-    # extrae el juego IDGAME
-    def extraerJuego(self , DEVICE , IDGAME):
-        try:
-            trabajoActual = os.getcwd()
-            # cambiamos de directorio de trabajo
-            os.chdir( self.destinoExtraer )
-            comando = config.WBFS_APP+" -p "+DEVICE+" extract "+IDGAME
-            salida = subprocess.call( comando , shell=True , stderr=subprocess.STDOUT , stdout=open(config.HOME_WIITHON_LOGS_PROCESO , "w") )
-            # volvemos al directorio original
-            os.chdir( trabajoActual )
-            return salida == 0
-        except KeyboardInterrupt:
-            return False
-
     def existeDisco(self , IDGAME):
         return (os.path.exists( self.getRutaDisco(IDGAME) ))
 
@@ -159,63 +127,36 @@ class WiithonCORE:
     def getRutaCaratula(self , IDGAME):
         return os.path.join(config.HOME_WIITHON_CARATULAS , IDGAME+".png")
 
-    def getDestinoExtraer(self):
-        return self.destinoExtraer
-
-    def setDestinoExtraer(self, destino):
-        if type(destino) == list:
-            destino = destino[0]
-        self.destinoExtraer = destino
-
-    def getDestinoCopiarDisco(self):
-        return self.destinoCopiarDisco
-
-    def setDestinoCopiarDisco(self, destino):
-        if type(destino) == list:
-            destino = destino[0]
-        self.destinoCopiarDisco = destino
-
-    def getDestinoCopiarCaratula(self):
-        return self.destinoCopiarCaratula
-
-    def setDestinoCopiarCaratula(self, destino):
-        if type(destino) == list:
-            destino = destino[0]
-        self.destinoCopiarCaratula = destino
-
-    def copiarCaratula(self , IDGAME ):
-        destino = self.getDestinoCopiarCaratula()
-        destino = os.path.join( os.path.abspath(destino) , "%s.png" % (IDGAME) )
-        if( not os.path.exists( destino ) and self.existeDisco(IDGAME) ):
-            origen = self.getRutaCaratula(IDGAME)
-            print "Copiando %s ----> %s ... " % (origen , destino)
+    def copiarCaratula(self , juego , destino):
+        destino = os.path.join( os.path.abspath(destino) , "%s.png" % (juego.idgame) )
+        if( not os.path.exists( destino ) and self.existeDisco(juego.idgame) ):
+            origen = self.getRutaCaratula(juego.idgame)
+            print _("Copiando %s ----> %s ... ") % (origen , destino)
             shutil.copy(origen, destino)
             return os.path.exists(destino)
         else:
-            print "Ya tienes la caratula %s" % (IDGAME)
+            print _("Ya tienes la caratula %s") % (juego.idgame)
             return True
 
-    def copiarDisco(self , IDGAME ):
-        destino = self.getDestinoCopiarDisco()
-        destino = os.path.join( os.path.abspath(destino) , "%s.png" % (IDGAME) )
-        if( not os.path.exists( destino ) and self.existeCaratula(IDGAME) ):
-            origen = self.getRutaDisco(IDGAME)
-            print "Copiando %s ----> %s ... " % (origen , destino),
+    def copiarDisco(self , juego , destino):
+        destino = os.path.join( os.path.abspath(destino) , "%s.png" % (juego.idgame) )
+        if( not os.path.exists( destino ) and self.existeCaratula(juego.idgame) ):
+            origen = self.getRutaDisco(juego.idgame)
+            print _("Copiando %s ----> %s ... ") % (origen , destino)
             shutil.copy(origen, destino)
-            print "OK"
             return os.path.exists(destino)
         else:
-            print "Ya tienes el disco %s" % (IDGAME)
+            print _("Ya tienes la caratula %s") % (juego.idgame)
             return True
-            
+
     # borrar disco
     def borrarDisco( self , juego ):
         if self.existeDisco( juego.idgame ):
             os.remove( self.getRutaDisco( juego.idgame ) )
 
-    def clonarJuego(self, juego , DEVICE_destino ):
+    def clonarJuego(self, juego , DEVICE ):
         try:
-            comando = "%s -p %s clonar %s %s" % (config.WBFS_APP , juego.device , juego.idgame , DEVICE_destino)
+            comando = "%s -p %s clonar %s %s" % (config.WBFS_APP , juego.device , juego.idgame , DEVICE)
             salida = subprocess.call( comando , shell=True , stderr=subprocess.STDOUT , stdout=open(config.HOME_WIITHON_LOGS_PROCESO , "w") )
             return salida == 0
         except KeyboardInterrupt:
@@ -363,4 +304,29 @@ class WiithonCORE:
 
     def setInterfaz(self , interfaz):
         self.interfaz = interfaz
+
+
+    # añade un *ISO* a un *DEVICE*
+    def anadirISO(self , DEVICE , ISO):
+        try:
+            comando = config.WBFS_APP+" -p "+DEVICE+" add \""+ISO+"\""
+            salida = subprocess.call( comando , shell=True , stderr=subprocess.STDOUT , stdout=open(config.HOME_WIITHON_LOGS_PROCESO , "w") )
+            return salida == 0
+        except KeyboardInterrupt:
+            return False
+
+    # extrae el juego a un destino
+    def extraerJuego(self ,juego , destino):
+        try:
+            # backup del actual pwd
+            trabajoActual = os.getcwd()
+            # cambiamos de directorio de trabajo
+            os.chdir( destino )
+            comando = "%s -p %s extract %s" % (config.WBFS_APP, juego.device , juego.idgame)
+            salida = subprocess.call( comando , shell=True , stderr=subprocess.STDOUT , stdout=open(config.HOME_WIITHON_LOGS_PROCESO , "w") )
+            # volvemos al directorio original
+            os.chdir( trabajoActual )
+            return salida == 0
+        except KeyboardInterrupt:
+            return False
 

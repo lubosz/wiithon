@@ -387,12 +387,22 @@ msgstr "Free"
 msgid "Total"
 msgstr "Total"
 
-#: core.py:147
+#: core.py:115
 #, python-format
 msgid "***************** DESCARGAR DISCO %s ********************"
 msgstr "***************** DOWNLOAD DISC %s ********************"
 
-#: core.py:243
+#: core.py:134 core.py:145
+#, python-format
+msgid "Copiando %s ----> %s ... "
+msgstr ""
+
+#: core.py:138 core.py:149
+#, python-format
+msgid "Ya tienes la caratula %s"
+msgstr ""
+
+#: core.py:184
 #, python-format
 msgid "***************** DESCARGAR CARATULA %s ********************"
 msgstr "***************** DOWNLOAD COVER %s ********************"
@@ -409,7 +419,7 @@ msgstr "Extract"
 msgid "Copiar a otra particion"
 msgstr "Copy to other partition"
 
-#: gui.py:200
+#: gui.py:204
 #, python-format
 msgid ""
 "No se han encontrado particiones WBFS:\n"
@@ -422,7 +432,7 @@ msgstr ""
 "In this mode, you can ONLY view your entire games database accumulated by %s "
 "in previous sessions."
 
-#: gui.py:202
+#: gui.py:206
 #, python-format
 msgid ""
 "No se han encontrado particiones WBFS:\n"
@@ -433,19 +443,19 @@ msgstr ""
 "Connect a hard drive containing a partition with Wii games (WBFS) and "
 "restart %s\n"
 
-#: gui.py:263
+#: gui.py:275
 msgid "Formato desconocido"
 msgstr "Format Unknown"
 
-#: gui.py:319
+#: gui.py:331
 msgid "Dispositivo"
 msgstr "Device"
 
-#: gui.py:320
+#: gui.py:332
 msgid "Fabricante"
 msgstr "Manufacture"
 
-#: gui.py:362
+#: gui.py:374
 #, python-format
 msgid "Advertencia de seguridad de renombrar desde IDGAME = %s a %s"
 msgstr ""
@@ -465,78 +475,78 @@ msgstr ""
 "Guitar Hero y customs de este.\n"
 "¿Está seguro de renombrar el actual IDGAME %s como %s?"
 
-#: gui.py:372 gui.py:393
+#: gui.py:383 gui.py:402
 msgid "Error renombrando"
 msgstr "Error renaming"
 
-#: gui.py:374
+#: gui.py:385
 msgid "Ya hay un juego con ese IDGAME"
 msgstr ""
 
-#: gui.py:376
+#: gui.py:387
 msgid ""
 "Error: La longitud del IDGAME debe ser 6, y solo puede contener letras y "
 "numeros"
 msgstr ""
 
-#: gui.py:395
+#: gui.py:404
 #, python-format
 msgid "Se han detectado caracteres no validos: %s"
 msgstr "Characters not valid: %s"
 
-#: gui.py:397
+#: gui.py:406
 #, python-format
 msgid ""
 "Nuevo nombre es demasiado largo, intente con un texto menor de %d caracteres"
 msgstr ""
 
-#: gui.py:427
+#: gui.py:436
 msgid "IDGAME"
 msgstr "IDGAME"
 
-#: gui.py:428
+#: gui.py:437
 msgid "Nombre"
 msgstr "Name"
 
-#: gui.py:429
+#: gui.py:438
 msgid "Tamanio"
 msgstr "Size"
 
-#: gui.py:644
+#: gui.py:672
 #, python-format
 msgid "Hay %d tarea"
 msgstr "There is %d task"
 
-#: gui.py:647
+#: gui.py:674
 #, python-format
 msgid "Hay %d tareas"
 msgstr "There are %d tasks"
 
-#: gui.py:711
+#: gui.py:738
 msgid "Tienes que seleccionar una particion WBFS para realizar esta accion"
 msgstr "Need select some partition WBFS"
 
-#: gui.py:726
+#: gui.py:751
 #, python-format
 msgid "Copiar el juego %s a la particion %s"
 msgstr ""
 
-#: gui.py:731 gui.py:780 gui.py:815 gui.py:825
+#: gui.py:755 gui.py:810 gui.py:842 gui.py:852
 msgid "No has seleccionado ningun juego"
 msgstr "Don't have a game selected"
 
-#: gui.py:734
+#: gui.py:758
 #, python-format
 msgid "Copiar todos los juegos a la particion %s"
 msgstr ""
 
-#: gui.py:738
+#: gui.py:762
 msgid ""
 "No hay un numero suficiente de particiones validas, para realizar esta "
 "accion."
 msgstr ""
 
-#: gui.py:743
+#: gui.py:767
 #, python-format
 msgid "Advertencia de borrar %s en modo ver"
 msgstr ""
@@ -546,69 +556,73 @@ msgstr ""
 "- Esto supone borrar (además de borrar el registro) la carátula y el disco\n"
 "¿Esta seguro de borrar %s?"
 
-#: gui.py:762
+#: gui.py:785
 #, python-format
-msgid "Quieres borrar el juego con ID = %s?"
-msgstr "Do you want to remove the game with ID = %s?"
+msgid "Quieres borrar el juego con %s (%s)?"
+msgstr "Do you want to remove the game %s (%s)?"
 
-#: gui.py:777
+#: gui.py:807
 msgid "Error borrando"
 msgstr "Delete error"
 
-#: gui.py:792
+#: gui.py:822
 #, python-format
 msgid "Elige un directorio donde extraer la ISO de %s"
 msgstr "Choose folder for extract ISO %s"
 
-#: gui.py:837
+#: gui.py:864
 msgid "Elige una ISO o un RAR"
 msgstr "Choose a ISO or RAR"
 
-#: gui.py:840
+#: gui.py:867
 msgid "Imagen ISO, Comprimido RAR"
 msgstr "ISO image, RAR compressed"
 
-#: gui.py:847
+#: gui.py:874
 msgid "Elige un directorio"
 msgstr "Choose folder"
 
-#: gui.py:873
+#: gui.py:899
 msgid "No has seleccionado ninguna particion"
 msgstr "Don't have a partition selected"
 
-#: gui.py:884
+#: gui.py:910
 msgid "Paso 1 de 2: Elige un directorio para las CARATULAS"
 msgstr "Step 1 of 1: Choose a folder for COVERS"
 
-#: gui.py:891
+#: gui.py:917
 msgid "Paso 2 de 2: Elige un directorio para los DISCOS"
 msgstr "Step 2 of 2: Choose a folder for DISCS"
 
-#: gui.py:912
+#: gui.py:935
 msgid "No tienes ningun juego"
 msgstr "Don't have some game"
 
-#: gui.py:965
+#: gui.py:1007
 #, python-format
-msgid "CUIDADO: %s"
-msgstr "WARNING: %s"
+msgid "Empieza %s"
+msgstr ""
 
-#: gui.py:967
+#: gui.py:1010
 #, python-format
-msgid "ERROR: %s"
-msgstr "ERROR: %s"
-
-#: gui.py:989
-msgid "DEBUG: Comando desconocido"
-msgstr "DEBUG: Unknown command"
-
-#: gui.py:1055
-msgid "Finalizando. Hecho en"
-msgstr "Finishing. Done in"
+msgid "Termina: %s"
+msgstr ""
 
 #: gui.py:1059
+msgid "Finalizado."
+msgstr "Finishing."
+
+#: gui.py:1061
+msgid "ERROR!"
+msgstr ""
+
+#: gui.py:1066
 msgid "quedan"
 msgstr "remaining"
+
+#: gui.py:1083
+msgid "Empezando ..."
+msgstr ""
 
 #: recursos/glade/alerta.ui.h:1 recursos/glade/wiithon.ui.h:30
 msgid "gtk-cancel"
@@ -743,67 +757,40 @@ msgstr "copy to SD"
 msgid "https://launchpad.net/wiithon"
 msgstr "https://launchpad.net/wiithon"
 
-#: trabajo.py:79
+#: trabajo.py:329
 #, python-format
-msgid "Juego %s ha sido copiado en %s correctamente"
+msgid "Anadir %s a la particion %s"
 msgstr ""
 
-#: trabajo.py:81
+#: trabajo.py:331
 #, python-format
-msgid "Copiando el juego %s en %s"
-msgstr "Listing games of : %s"
+msgid "Extraer %s a la ruta %s"
+msgstr ""
 
-#: trabajo.py:100
-msgid "La ISO o la particion no existe"
-msgstr "ISO or the partition don't exists"
-
-#: trabajo.py:109
+#: trabajo.py:333
 #, python-format
-msgid "Al descomrpimir el RAR : %s"
-msgstr "When uncompress RAR : %s"
+msgid "Copiando el juego %s a la particion %s"
+msgstr ""
 
-#: trabajo.py:111
+#: trabajo.py:335
 #, python-format
-msgid "No se puede descomrpimir por que reemplazaria el ISO : %s"
-msgstr "Don't can uncompress because reemplace the ISO : %s"
+msgid "Descargando caratula de %s"
+msgstr ""
 
-#: trabajo.py:113
+#: trabajo.py:337
 #, python-format
-msgid "El RAR %s no tenia ninguna ISO"
-msgstr "RAR %s don't have ISO"
+msgid "Descargando disco de %s"
+msgstr ""
 
-#: trabajo.py:117
-msgid "No se ha encontrado ningun RAR con ISOS dentro"
-msgstr "Not found within any RAR with ISOS"
-
-#: trabajo.py:124
-msgid "No se ha encontrado ningun ISO"
-msgstr "There is not ISO"
-
-#: trabajo.py:133
+#: trabajo.py:339
 #, python-format
-msgid "ISO %s anadida correctamente"
-msgstr "ISO %s added successfully"
+msgid "Copiando la caratula %s a la ruta %s"
+msgstr ""
 
-#: trabajo.py:136
+#: trabajo.py:341
 #, python-format
-msgid "Anadiendo la ISO : %s (comprueba que sea una ISO de WII)"
-msgstr "Adding ISO: %s (check that it is an ISO WII)"
-
-#: trabajo.py:141
-#, python-format
-msgid "%s no es un ningun juego de Wii"
-msgstr "%s is not a Wii game"
-
-#: trabajo.py:159
-#, python-format
-msgid "ISO de %s extraida correctamente"
-msgstr "ISO %s added successfully"
-
-#: trabajo.py:161
-#, python-format
-msgid "Extrayendo la ISO : %s"
-msgstr "Extract ISO: %s"
+msgid "Copiando el disco %s a la ruta %s"
+msgstr ""
 
 #: wiithon.py:33
 msgid "Necesitas tener instalado pyGTK o GTKv2"
@@ -816,3 +803,5 @@ msgstr "Program run with the incorrect settings"
 #: wiithon.py:95
 msgid "Pulse cualquier tecla para continuar ...\n"
 msgstr "Press any key to continue ... \n"
+
+
