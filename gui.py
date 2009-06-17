@@ -104,9 +104,9 @@ class WiithonGUI(GtkBuilderWrapper):
         	self.preferencia.ruta_copiar_discos = os.getcwd()
 
         # Referencia copia a la lista de juegos
-        self.listaJuegos = None
+        self.listaJuegos = []
 
-        # 
+        #
         self.pathJuegoSeleccionado = None
         # gtk.ListStore
         self.seleccionJuegoSeleccionado = None
@@ -223,7 +223,7 @@ class WiithonGUI(GtkBuilderWrapper):
             # lee el modelo de datos de la partición seleccionada
             # tambien refresca la lista de juegos del CORE
             #self.seleccionarPrimeraFila( self.wb_tv_partitions , self.on_tv_partitions_cursor_changed)
-            
+
             if(self.numParticiones > 0):
                 self.seleccionarFilaConValor(self.wb_tv_partitions, self.numParticiones , 1 , self.preferencia.device_seleccionado)
             self.on_tv_partitions_cursor_changed(self.wb_tv_partitions)
@@ -248,12 +248,12 @@ class WiithonGUI(GtkBuilderWrapper):
         self.animar = Animador( self.wb_estadoBatch , self.poolBash , self.poolTrabajo)
         self.animar.setDaemon(True)
         self.animar.start()
-        
+
         # carga el Juego preferente
         # self.seleccionarFilaConValor(self.wb_tv_games, len(self.listaJuegos) , 1 , self.preferencia.idgame_seleccionado)
 
         # si no hay juegos pongo las caratulas por defecto
-        if( len(self.listaJuegos) == 0 ):
+        if len(self.listaJuegos) == 0:
             destinoCaratula = os.path.join(config.WIITHON_FILES_RECURSOS_IMAGENES , "caratula.png")
             self.wb_img_caratula1.set_from_file( destinoCaratula )
             destinoDisco = os.path.join(config.WIITHON_FILES_RECURSOS_IMAGENES , "disco.png")
@@ -261,7 +261,7 @@ class WiithonGUI(GtkBuilderWrapper):
 
         # pongo el foco en el buscador
         self.wb_busqueda.grab_focus()
-        
+
         self.wb_tv_games.get_model()
 
     def main(self , opciones , argumentos):
@@ -628,7 +628,7 @@ class WiithonGUI(GtkBuilderWrapper):
             # seleccionamos el primero
             # FIXME: hay que seleccionar el que marca las preferencias
             self.seleccionarPrimeraFila( self.wb_tv_games , self.on_tv_games_cursor_changed)
-        
+
     def seleccionarFilaConValor(self , treeview, numFilas , columna, valor):
         i = 0
         encontrado = False
@@ -673,7 +673,7 @@ class WiithonGUI(GtkBuilderWrapper):
             else:
                 etiqueta = _("Hay %d tareas") % (numTareas)
             self.wb_estadoTrabajo.set_label(etiqueta)
-            self.wb_estadoTrabajo.show()            
+            self.wb_estadoTrabajo.show()
 
     # Click en particiones --> refresca la lista de juegos
     def on_tv_partitions_cursor_changed(self , treeview):
@@ -887,7 +887,7 @@ class WiithonGUI(GtkBuilderWrapper):
                         self.preferencia.ruta_anadir_directorio = fc_anadir.get_current_folder()
 
                     ficherosSeleccionados = fc_anadir.get_filenames()
-                    
+
                     # ordenar la ruta de archivos
                     ficherosSeleccionados.sort()
 
@@ -939,21 +939,21 @@ class WiithonGUI(GtkBuilderWrapper):
     def ocultarHBoxProgreso(self):
         self.wb_box_progreso.hide()
         return False
-        
+
     def mostrarHBoxProgreso(self):
         self.wb_box_progreso.show()
-        
+
     def actualizarLabel( self, etiqueta ):
         self.wb_progreso1.set_text( etiqueta )
 
     def actualizarFraccion( self , fraccion ):
         self.wb_progreso1.set_fraction( fraccion )
-        
+
     def refrescarJuegosYSeleccionarElNuevo(self, idgame):
         self.refrescarListaJuegosFromCore()
         self.refrescarEspacio()
         self.seleccionarFilaConValor(self.wb_tv_games, len(self.listaJuegos) , 1 , idgame)
-        
+
     def refrescarParticionesYSeleccionarJuegoClonado(self, IDGAME, DEVICE):
         self.seleccionarFilaConValor(self.wb_tv_partitions, self.numParticiones , 1 , DEVICE)
         self.seleccionarFilaConValor(self.wb_tv_games, len(self.listaJuegos) , 1 , IDGAME)
@@ -977,47 +977,47 @@ class WiithonGUI(GtkBuilderWrapper):
         listaArrastrados.sort()
         if self.poolTrabajo:
             self.poolTrabajo.nuevoTrabajoAnadir(listaArrastrados, self.DEVICEParticionSeleccionada)
-    
+
     def callback_empieza_progreso(self, trabajo):
         self.hiloCalcularProgreso = HiloCalcularProgreso( trabajo, self.actualizarLabel , self.actualizarFraccion )
         self.hiloCalcularProgreso.start()
         gobject.idle_add(self.actualizarFraccion , 0.0 )
         print "empezar progreso"
-    
+
     def callback_termina_progreso(self, trabajo):
         self.hiloCalcularProgreso.progreso = 100
         gobject.idle_add(self.actualizarFraccion , 1.0 )
         print "termina progreso"
-        
+
     def callback_empieza_trabajo_anadir(self, trabajo):
         print "callback_empieza_trabajo_anadir"
-    
+
     def callback_termina_trabajo_anadir(self, trabajo , idgame):
         print "callback_termina_trabajo_anadir"
         if trabajo.exito:
             gobject.idle_add( self.refrescarJuegosYSeleccionarElNuevo , idgame)
-    
+
     def callback_nuevo_trabajo(self, trabajo):
         print "callback_nuevo_trabajo"
         gobject.idle_add( self.refrescarTareasPendientes )
         gobject.idle_add( self.mostrarHBoxProgreso )
-            
+
     def callback_empieza_trabajo(self, trabajo):
         print "callback_empieza_trabajo"
         print _("Empieza %s") % trabajo
-    
+
     def callback_termina_trabajo(self, trabajo):
         print _("Termina: %s") % trabajo
         # No hay trabajo cuando el contador este a 1, que es el propio trabajo que da la señal
         if(self.poolTrabajo.numTrabajos <= 1):
             gobject.timeout_add( 5000, self.ocultarHBoxProgreso )
-            
+
     def callback_empieza_trabajo_extraer(self, trabajo):
         pass
-        
+
     def callback_termina_trabajo_extraer(self, trabajo):
         pass
-        
+
     def callback_empieza_trabajo_copiar(self, trabajo):
         pass
 
@@ -1045,7 +1045,7 @@ class HiloCalcularProgreso(Thread):
                 # a) a que el fichero exista
                 # b) desde otro hilo nos den orden de interrupción
                 if os.path.exists(config.HOME_WIITHON_LOGS_PROCESO):
-                          
+
                     try:
                         for linea in file(config.HOME_WIITHON_LOGS_PROCESO):
                             ultimaLinea = linea
@@ -1078,7 +1078,7 @@ class HiloCalcularProgreso(Thread):
 
                         porcentual = self.porcentaje / 100.0
                         gobject.idle_add(self.actualizarFraccion , porcentual )
-                    
+
                     except UnboundLocalError:
                         gobject.idle_add(self.actualizarLabel , _("Empezando ..."))
 
