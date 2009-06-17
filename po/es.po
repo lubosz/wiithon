@@ -462,7 +462,7 @@ msgstr ""
 "Guitar Hero y customs de este.\n"
 "¿Está seguro de renombrar el actual IDGAME %s como %s?"
 
-#: gui.py:383 gui.py:402
+#: gui.py:383 gui.py:401
 msgid "Error renombrando"
 msgstr ""
 
@@ -476,64 +476,64 @@ msgid ""
 "numeros"
 msgstr ""
 
-#: gui.py:404
+#: gui.py:403
 #, python-format
 msgid "Se han detectado caracteres no validos: %s"
 msgstr "Se han detectado carácteres no válidos: %s"
 
-#: gui.py:406
+#: gui.py:405
 #, python-format
 msgid ""
 "Nuevo nombre es demasiado largo, intente con un texto menor de %d caracteres"
 msgstr ""
 
-#: gui.py:436
+#: gui.py:435
 msgid "IDGAME"
 msgstr ""
 
-#: gui.py:437
+#: gui.py:436
 msgid "Nombre"
 msgstr ""
 
-#: gui.py:438
+#: gui.py:437
 msgid "Tamanio"
 msgstr "Tamaño"
 
-#: gui.py:672
+#: gui.py:664
 #, python-format
 msgid "Hay %d tarea"
 msgstr ""
 
-#: gui.py:674
+#: gui.py:666
 #, python-format
 msgid "Hay %d tareas"
 msgstr ""
 
-#: gui.py:738
+#: gui.py:730
 msgid "Tienes que seleccionar una particion WBFS para realizar esta accion"
 msgstr "Tienes que seleccionar una partición WBFS para realizar esta acción"
 
-#: gui.py:751
+#: gui.py:743
 #, python-format
 msgid "Copiar el juego %s a la particion %s"
 msgstr ""
 
-#: gui.py:755 gui.py:810 gui.py:842 gui.py:852
+#: gui.py:747 gui.py:802 gui.py:834 gui.py:844
 msgid "No has seleccionado ningun juego"
 msgstr "No has seleccionado ningún juego"
 
-#: gui.py:758
+#: gui.py:750
 #, python-format
 msgid "Copiar todos los juegos a la particion %s"
 msgstr ""
 
-#: gui.py:762
+#: gui.py:754
 msgid ""
 "No hay un numero suficiente de particiones validas, para realizar esta "
 "accion."
 msgstr "Tienes que seleccionar una partición WBFS para realizar esta acción"
 
-#: gui.py:767
+#: gui.py:759
 #, python-format
 msgid "Advertencia de borrar %s en modo ver"
 msgstr ""
@@ -543,71 +543,71 @@ msgstr ""
 "- Esto supone borrar (además de borrar el registro) la carátula y el disco\n"
 "¿Esta seguro de borrar %s?"
 
-#: gui.py:785
+#: gui.py:777
 #, python-format
 msgid "Quieres borrar el juego con %s (%s)?"
 msgstr "¿Quieres borrar el juego %s (%s)?"
 
-#: gui.py:807
+#: gui.py:799
 msgid "Error borrando"
 msgstr ""
 
-#: gui.py:822
+#: gui.py:814
 #, python-format
 msgid "Elige un directorio donde extraer la ISO de %s"
 msgstr ""
 
-#: gui.py:864
+#: gui.py:856
 msgid "Elige una ISO o un RAR"
 msgstr ""
 
-#: gui.py:867
+#: gui.py:859
 msgid "Imagen ISO, Comprimido RAR"
 msgstr "Imagen ISO, Comprimido RAR"
 
-#: gui.py:874
+#: gui.py:866
 msgid "Elige un directorio"
 msgstr ""
 
-#: gui.py:899
+#: gui.py:891
 msgid "No has seleccionado ninguna particion"
 msgstr "No has seleccionado ninguna partición"
 
-#: gui.py:910
+#: gui.py:902
 msgid "Paso 1 de 2: Elige un directorio para las CARATULAS"
 msgstr "Paso 1 de 2: Elige un directorio donde copiar las CARATULAS"
 
-#: gui.py:917
+#: gui.py:909
 msgid "Paso 2 de 2: Elige un directorio para los DISCOS"
 msgstr "Paso 2 de 2: Elige un directorio donde copiar los DISCOS"
 
-#: gui.py:935
+#: gui.py:927
 msgid "No tienes ningun juego"
 msgstr "No tienes ningún juego"
 
-#: gui.py:1007
+#: gui.py:999
 #, python-format
 msgid "Empieza %s"
 msgstr ""
 
-#: gui.py:1010
+#: gui.py:1002
 #, python-format
 msgid "Termina: %s"
 msgstr ""
 
-#: gui.py:1059
+#: gui.py:1051
 msgid "Finalizado."
 msgstr ""
 
-#: gui.py:1061
+#: gui.py:1053
 msgid "ERROR!"
 msgstr ""
 
-#: gui.py:1066
+#: gui.py:1058
 msgid "quedan"
 msgstr ""
 
-#: gui.py:1083
+#: gui.py:1075
 msgid "Empezando ..."
 msgstr ""
 

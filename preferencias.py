@@ -22,8 +22,6 @@ tabla = Table('preferencias',metadatos,
     Column('ruta_extraer_iso', VARCHAR(255)),
     Column('ruta_copiar_caratulas', VARCHAR(255)),
     Column('ruta_copiar_discos', VARCHAR(255)),
-    Column('device_seleccionado', VARCHAR(12)),
-    Column('idgame_seleccionado', VARCHAR(6)),
 )
 
 # solo crea las tablas cuando no existen

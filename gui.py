@@ -104,7 +104,7 @@ class WiithonGUI(GtkBuilderWrapper):
         	self.preferencia.ruta_copiar_discos = os.getcwd()
 
         # Referencia copia a la lista de juegos
-        self.listaJuegos = []
+        self.listaJuegos = None
 
         #
         self.pathJuegoSeleccionado = None
@@ -222,11 +222,13 @@ class WiithonGUI(GtkBuilderWrapper):
             # indirectamente se carga:
             # lee el modelo de datos de la partición seleccionada
             # tambien refresca la lista de juegos del CORE
-            #self.seleccionarPrimeraFila( self.wb_tv_partitions , self.on_tv_partitions_cursor_changed)
+            self.seleccionarPrimeraFila( self.wb_tv_partitions , self.on_tv_partitions_cursor_changed)
 
+            '''
             if(self.numParticiones > 0):
                 self.seleccionarFilaConValor(self.wb_tv_partitions, self.numParticiones , 1 , self.preferencia.device_seleccionado)
             self.on_tv_partitions_cursor_changed(self.wb_tv_partitions)
+            '''
 
             # Trabajador, se le mandan trabajos de barra de progreso (trabajos INTENSOS)
             self.poolTrabajo = PoolTrabajo( self.core , 1,
@@ -255,14 +257,12 @@ class WiithonGUI(GtkBuilderWrapper):
         # si no hay juegos pongo las caratulas por defecto
         if len(self.listaJuegos) == 0:
             destinoCaratula = os.path.join(config.WIITHON_FILES_RECURSOS_IMAGENES , "caratula.png")
-            self.wb_img_caratula1.set_from_file( destinoCaratula )
             destinoDisco = os.path.join(config.WIITHON_FILES_RECURSOS_IMAGENES , "disco.png")
+            self.wb_img_caratula1.set_from_file( destinoCaratula )
             self.wb_img_disco1.set_from_file( destinoDisco )
 
         # pongo el foco en el buscador
         self.wb_busqueda.grab_focus()
-
-        self.wb_tv_games.get_model()
 
     def main(self , opciones , argumentos):
 
@@ -395,7 +395,6 @@ class WiithonGUI(GtkBuilderWrapper):
                         if self.core.renombrarNOMBRE(self.DEVICEParticionSeleccionada , self.IDGAMEJuegoSeleccionado , nuevoNombre):
                             if self.juego != None:
                                 self.juego.title = nuevoNombre
-
                                 # Refrescamos del modelo la columna modificada
                                 self.tv_games_modelo.set_value(self.iteradorJuegoSeleccionado,2,nuevoNombre)
                         else:
@@ -483,13 +482,6 @@ class WiithonGUI(GtkBuilderWrapper):
             i = i + 1
 
     def salir(self , widget=None, data=None):
-        # guardar campo clave de los seleccionados
-        if self.DEVICEParticionSeleccionada != None:
-            self.preferencia.device_seleccionado = self.DEVICEParticionSeleccionada
-            print "guardado %s" % self.DEVICEParticionSeleccionada
-        if self.IDGAMEJuegoSeleccionado != None:
-            self.preferencia.idgame_seleccionado = self.IDGAMEJuegoSeleccionado
-            print "guardado %s" % self.IDGAMEJuegoSeleccionado
 
         # guardar cambios en las preferencias
         session.commit()
@@ -594,7 +586,6 @@ class WiithonGUI(GtkBuilderWrapper):
                 # es un juego nuevo, se guarda en la bdd
                 juego = Juego(tuplaJuego[0] , tuplaJuego[1] , tuplaJuego[2] , self.DEVICEParticionSeleccionada)
                 session.save( juego )
-                session.commit()
             else:
                 # el nombre puede ser otro aunque tenga el mismo IDGAME (cambiado desde otra gestor por ejemplo)
                 juego.title = tuplaJuego[1]
@@ -606,6 +597,7 @@ class WiithonGUI(GtkBuilderWrapper):
 
             i += 1
 
+        session.commit()
         self.refrescarListaJuegos()
 
     # FIXME: Devuelve si el usuario esta editando el tv_games
