@@ -17,13 +17,15 @@ class Animador(Thread):
         self.estadoBatch = estadoBatch
         self.pool = pool
         self.pool2 = pool2
+        self.ocupado = False
         self.interrumpido = False
 
     def run(self):
         i = 0
         while not self.interrumpido:
             try:
-                if (self.pool.numTrabajos > 0) or ( self.pool2 != None and self.pool2.numTrabajos > 0 ):
+                self.ocupado = (self.pool.numTrabajos > 0) or ( self.pool2 != None and self.pool2.numTrabajos > 0 )
+                if self.ocupado:
                     destinoIcono = os.path.join(config.WIITHON_FILES_RECURSOS_IMAGENES , "busy-icon%d.png" % (i))
                     i += 1
                     if i > 14:

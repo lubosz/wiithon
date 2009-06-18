@@ -39,6 +39,7 @@ class PoolTrabajo(Pool , Thread):
         Thread.__init__(self)
         self.core = core
         self.numHilos = numHilos
+        self.listaTrabajos = []
         self.callback_empieza_trabajo = callback_empieza_trabajo
         self.callback_termina_trabajo = callback_termina_trabajo
         self.callback_nuevo_trabajo = callback_nuevo_trabajo
@@ -73,7 +74,7 @@ class PoolTrabajo(Pool , Thread):
                 idgame = None
 
             if self.callback_termina_trabajo_anadir:
-                self.callback_termina_trabajo_anadir(trabajo, idgame)
+                self.callback_termina_trabajo_anadir(trabajo, idgame, DEVICE)
 
         elif( trabajo.tipo == EXTRAER):
 
@@ -270,11 +271,17 @@ class PoolTrabajo(Pool , Thread):
                 trabajo = Trabajo(tipo , origen, destino)
                 self.nuevoElemento(trabajo)
                 trabajos.append(trabajo)
+                
+            self.listaTrabajos.extend(trabajos)
+            
             if self.callback_nuevo_trabajo:
                 self.callback_nuevo_trabajo(trabajos)
         else:
             trabajo = Trabajo(tipo , origenes, destino)
             self.nuevoElemento(trabajo)
+
+            self.listaTrabajos.append(trabajo)
+            
             if self.callback_nuevo_trabajo:
                 self.callback_nuevo_trabajo(trabajo)
 

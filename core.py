@@ -34,18 +34,21 @@ class WiithonCORE:
     particionSeleccionada_1on1 = 1
 
     # Estructura sincrona para comunicacion entre hilos
-    mensajes = None
+    #mensajes = None
 
     #constructor
     def __init__(self):
+        pass
         # cola sincronizada (productor-consumidor)
-        self.mensajes = Queue()
+        #self.mensajes = Queue()
 
+    '''
     def getMensajes(self):
         return self.mensajes
 
     def nuevoMensaje(self , mensaje):
         self.mensajes.put(mensaje)
+    '''
 
     # Obtiene un list de juegos en una tabla de 3 columnas:
     # index 0 -> IDGAME o identificador único del juego
@@ -157,7 +160,6 @@ class WiithonCORE:
     def clonarJuego(self, juego , DEVICE ):
         try:
             comando = "%s -p %s clonar %s %s" % (config.WBFS_APP , juego.device , juego.idgame , DEVICE)
-            print comando
             salida = subprocess.call( comando , shell=True , stderr=subprocess.STDOUT , stdout=open(config.HOME_WIITHON_LOGS_PROCESO , "w") )
             return salida == 0
         except KeyboardInterrupt:
@@ -210,11 +212,6 @@ class WiithonCORE:
 
     # Devuelve la lista de particiones
     def getListaParticiones(self):
-        self.refrescarParticionWBFS()
-        return self.listaParticiones
-
-    # Procedimiento que refresca la lista de particiones
-    def refrescarParticionWBFS(self):
         salida = util.getSTDOUT_NOERROR_iterador( config.DETECTOR_WBFS)
 
         self.listaParticiones = []
@@ -222,6 +219,7 @@ class WiithonCORE:
         for part in salida:
             if part.find("/dev/") != -1:
                 self.listaParticiones.append(part.strip())
+        return self.listaParticiones
 
     # Devuelve el nombre del ISO que hay dentro de un RAR
     def getNombreISOenRAR(self , nombreRAR):
@@ -239,8 +237,11 @@ class WiithonCORE:
     # Descomprime todos los ISO de un RAR (FIXME: se espera que solo haya 1)
     def descomprimirRARconISODentro(self , nombreRAR ):
         try:
+            #directorioActual = os.getcwd()
+            #os.chdir('/tmp')
             comando = 'rar e -o- "%s" "%s"' % (nombreRAR , "*.iso")
             salida = subprocess.call( comando , shell=True , stderr=subprocess.STDOUT , stdout=open("/dev/null","w"))
+            #os.chdir(directorioActual)
             return (salida == 0)
         except KeyboardInterrupt:
             return False

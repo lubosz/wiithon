@@ -43,7 +43,7 @@ class WiithonCLI:
                     print "%d - %s: %s" % (i , _("Particion") , dispositivo)
                     i = i + 1
                 iSalir = str(i)
-                print _("%d - Salir") % (iSalir)
+                print _("%s - Salir") % (iSalir)
                 iElegido = raw_input(_("Elige la particion WBFS con la que va ha trabajar : "))
                 if( iElegido == iSalir ):
                     raise AssertionError, _("Saliendo por peticion del usuario.")
@@ -197,6 +197,7 @@ class WiithonCLI:
                             util.getExtension(parametro) == "rar"
                         )
                     ):
+                    parametro = os.path.abspath( parametro )
                     self.encolar( parametro )
 
                 # si tiene caracteres raros -> no es expresión regular
