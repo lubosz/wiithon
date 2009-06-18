@@ -1,3 +1,5 @@
+// modified by Ricardo Marmolejo García <makiolo@gmail.com>
+
 #ifndef LIBWBFS_OS_H
 #define LIBWBFS_OS_H
 

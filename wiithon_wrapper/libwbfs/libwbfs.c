@@ -1,4 +1,5 @@
 // Copyright 2009 Kwiirk
+// modified by Ricardo Marmolejo García <makiolo@gmail.com>
 // Licensed under the terms of the GNU GPL, version 2
 // http://www.gnu.org/licenses/old-licenses/gpl-2.0.txt
 
@@ -134,7 +135,7 @@ wbfs_t*wbfs_open_partition(rw_sector_callback_t read_hdsector,
 
         p->tmp_buffer = wbfs_ioalloc(p->hd_sec_sz);
         p->n_disc_open = 0;
-		wbfs_sync(p);
+		//wbfs_sync(p);
         return p;
 error:
         wbfs_free(p);
@@ -462,20 +463,19 @@ u32 wbfs_add_disc(wbfs_t*p,read_wiidisc_callback_t read_src_wii_disc,
                                 //fix the partition table
                                 if(offset == (0x40000>>2))
                                              wd_fix_partition_table(d, sel, copy_buffer);
-                                p->write_hdsector(p->callback_data,p->part_lba+bl*(p->wbfs_sec_sz/p->hd_sec_sz)+j*(p->wii_sec_sz/p->hd_sec_sz),
-                                             p->wii_sec_sz/p->hd_sec_sz,copy_buffer);
+                                p->write_hdsector(p->callback_data,p->part_lba+bl*(p->wbfs_sec_sz/p->hd_sec_sz)+j*(p->wii_sec_sz/p->hd_sec_sz), p->wii_sec_sz/p->hd_sec_sz,copy_buffer);
                                 cur++;
                         }
                         if(spinner) {
-                        if(last_time == 0)
-                        time(&last_time);
+                            if(last_time == 0)
+                                time(&last_time);
 
-                        time(&time_now);
-                        /* Update that crap only every 0.5 secs */
-                        if (difftime(time_now,last_time) > 0.5) {
-                        spinner(cur,tot);
-                        last_time = 0;
-                        }
+                            time(&time_now);
+                            /* Update that crap only every 0.5 secs */
+                            if (difftime(time_now,last_time) > 0.1) {
+                                spinner(cur,tot);
+                                last_time = 0;
+                            }
                         }
                 }
                 info->wlba_table[i] = wbfs_htons(bl);
@@ -527,15 +527,17 @@ u32 wbfs_ren_disc(wbfs_t *p, u8 *discid, char *newname)
 	wbfs_disc_t *d = wbfs_open_disc(p,discid);
 	int disc_info_sz_lba = p->disc_info_sz>>p->hd_sec_sz_s;
 
-	if(!d)
-		return FALSE;
+	if(d)
+	{
+        memset(d->header->disc_header_copy+0x20, 0, 0x80);
+        strncpy((char *) d->header->disc_header_copy+0x20, (char*)newname, 0x80);
 
-	memset(d->header->disc_header_copy+0x20, 0, 0x80);
-	strncpy((char *) d->header->disc_header_copy+0x20, (char*)newname, 0x80);
-
-	p->write_hdsector(p->callback_data,p->part_lba+1+d->i*disc_info_sz_lba,disc_info_sz_lba,d->header);
-	wbfs_close_disc(d);
-	return TRUE;
+        p->write_hdsector(p->callback_data,p->part_lba+1+d->i*disc_info_sz_lba,disc_info_sz_lba,d->header);
+        wbfs_close_disc(d);
+        return TRUE;
+    }
+    else
+        return FALSE;
 }
 
 u32 wbfs_ren_idgame(wbfs_t *p, u8 *discid, u8 *nuevoid)
@@ -543,15 +545,17 @@ u32 wbfs_ren_idgame(wbfs_t *p, u8 *discid, u8 *nuevoid)
 	wbfs_disc_t *d = wbfs_open_disc(p,discid);
 	int disc_info_sz_lba = p->disc_info_sz>>p->hd_sec_sz_s;
 
-	if(!d)
-		return FALSE;
+	if(d)
+	{
+        memcpy(d->header->disc_header_copy+0x0, nuevoid, 0x6);
+        strncpy((char *) d->header->disc_header_copy+0x0, (char*) nuevoid, 0x6);
 
-	memcpy(d->header->disc_header_copy, nuevoid, 6);
-	strncpy((char *) d->header->disc_header_copy, (char*) nuevoid, 6);
-
-	p->write_hdsector(p->callback_data,p->part_lba+1+d->i*disc_info_sz_lba,disc_info_sz_lba,d->header);
-	wbfs_close_disc(d);
-	return TRUE;
+        p->write_hdsector(p->callback_data,p->part_lba+1+d->i*disc_info_sz_lba,disc_info_sz_lba,d->header);
+        wbfs_close_disc(d);
+        return TRUE;
+    }
+    else
+        return FALSE;
 }
 
 
@@ -660,12 +664,23 @@ unsigned int wbfs_copy_disc(wbfs_disc_t*d_src, wbfs_t*p_dst, progress_callback_t
 	int src_wbs_nlb=p_src->wbfs_sec_sz/p_src->hd_sec_sz;
 	int dst_wbs_nlb=p_dst->wbfs_sec_sz/p_dst->hd_sec_sz;
 
+    /*
+    printf("p_src->wbfs_sec_sz = %d\n" , p_src->wbfs_sec_sz);
+    printf("p_src->hd_sec_sz = %d\n" , p_src->hd_sec_sz);
+    printf("p_dst->wbfs_sec_sz = %d\n" , p_dst->wbfs_sec_sz);
+    printf("p_dst->hd_sec_sz = %d\n" , p_dst->hd_sec_sz);
+    printf("src_wbs_nlb = %d\n" , src_wbs_nlb);
+    printf("dst_wbs_nlb = %d\n" , dst_wbs_nlb);
+    */
+
+    /*
+    // modified by makiolo
 	if( src_wbs_nlb != dst_wbs_nlb)
 	{
-	    printf("src_wbs_nlb = %d - dst_wbs_nlb = %d\n" , src_wbs_nlb , dst_wbs_nlb);
 		ERROR("Difference between source and dest");
 		retorno = FALSE;
 	}
+	*/
 
 	copy_buffer = (unsigned char*)wbfs_ioalloc(p_src->wbfs_sec_sz);
 	if(!copy_buffer)
@@ -738,7 +753,3 @@ void fatal(const char *s, ...)
 	perror(s);
 	exit(FALSE);
 }
-
-
-
-

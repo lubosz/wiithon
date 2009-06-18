@@ -326,6 +326,7 @@ class Trabajo:
         self.destino = destino
         self.terminado = False
         self.exito = False
+        self.error = _("Error al finalizar la siguiente tarea:\n\n%s") % (self.__repr__())
  
     def __repr__(self):
         if self.tipo == ANADIR:

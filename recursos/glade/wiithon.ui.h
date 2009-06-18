@@ -1,4 +1,4 @@
-char *s = N_("0 Tareas pendientes");
+char *s = N_("0 Tareas");
 char *s = N_("Acerca de ...");
 char *s = N_("Aniadir directorio");
 char *s = N_("Buscar:");

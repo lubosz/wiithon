@@ -30,6 +30,9 @@ class Pool:
                     time.sleep(0.5)
             except:
                 pass
+                
+    def estaOcupado(self):
+        return self.numTrabajos > 0
 
     def nuevoElemento(self, elemento):
         self.cola.put(elemento)

@@ -7,6 +7,8 @@
    to compliance with any conditions that the originators of the 
    algorithm place on its exploitation.  
 
+// modified by Ricardo Marmolejo García <makiolo@gmail.com>
+
 */
 
 #include <stdio.h>

@@ -1,3 +1,5 @@
+// modified by Ricardo Marmolejo García <makiolo@gmail.com>
+
 #ifndef WIIDISC_H
 #define WIIDISC_H
 #include <stdio.h>

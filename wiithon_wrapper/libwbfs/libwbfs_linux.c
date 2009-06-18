@@ -1,4 +1,4 @@
-// Modified by makiolo <makiolo@gmail.com>
+// modified by Ricardo Marmolejo García <makiolo@gmail.com>
 
 #ifdef __linux__
 #include <stdio.h>

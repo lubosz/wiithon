@@ -1,6 +1,6 @@
-// Copyright 2009 Kwiirk
-// Modified by makiolo <makiolo@gmail.com>
-// Modified for add Hermes wbfs_integrity_check
+// Basado en wl wbfs.c de Kwiirk
+// Ricardo Marmolejo García <makiolo@gmail.com>
+
 // Licensed under the terms of the GNU GPL, version 2
 // http://www.gnu.org/licenses/old-licenses/gpl-2.0.txt
 
@@ -22,53 +22,6 @@ wbfs_t *wbfs_try_open_partition(char *fn,int reset);
 // int write_wii_sector_file(void*_fp,u32 lba,u32 count,void*iobuf)
 // f32 WBFS_GameSize(wbfs_t *p , u8 *discid)
 // s32 WBFS_DiskSpace(wbfs_t *p , f32 *used, f32 *free)
-
-//
-// error handling
-//
-
-
-/*
-void spinner(u64 x, u64 max)
-{
-	static time_t start;
-	static u32 expected;
-
-	f32 percent;
-	u32 d, h, m, s;
-
-	// First time
-	if (!x) {
-		start    = time(0);
-		expected = 300;
-	}
-
-	// Elapsed time
-	d = time(0) - start;
-
-	if (x != max) {
-		// Expected time
-		if (d)
-			expected = (expected * 3 + d * max / x) / 4;
-
-		// Remaining time
-		d = (expected > d) ? (expected - d) : 0;
-	}
-
-	h =  d / 3600;
-	m = (d / 60) % 60;
-	s =  d % 60;
-
-	percent = (x * 100.0) / max;
-
-	if (x != max)
-		fprintf(stdout , "%f;%d;%d;%d\n", percent, h, m, s);
-	else
-		fprintf(stdout, "FIN;%d;%d;%d\n", h, m, s);
-	
-	fflush(stdout);
-}
-*/
 
 void spinner(u64 x, u64 max)
 {

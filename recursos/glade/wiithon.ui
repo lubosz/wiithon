@@ -194,11 +194,10 @@
           <object class="GtkHBox" id="box_progreso">
             <property name="visible">True</property>
             <child>
-              <object class="GtkButton" id="estadoTrabajo">
-                <property name="label" translatable="yes">0 Tareas pendientes</property>
+              <object class="GtkLabel" id="estadoTrabajo">
                 <property name="visible">True</property>
-                <property name="can_focus">True</property>
-                <property name="receives_default">True</property>
+                <property name="xpad">8</property>
+                <property name="label" translatable="yes">0 Tareas</property>
               </object>
               <packing>
                 <property name="expand">False</property>
@@ -229,10 +228,17 @@
                 <property name="width_request">160</property>
                 <property name="visible">True</property>
                 <child>
-                  <object class="GtkTreeView" id="tv_partitions">
-                    <property name="height_request">50</property>
+                  <object class="GtkScrolledWindow" id="scrolledwindow5">
                     <property name="visible">True</property>
                     <property name="can_focus">True</property>
+                    <property name="hscrollbar_policy">automatic</property>
+                    <property name="vscrollbar_policy">automatic</property>
+                    <child>
+                      <object class="GtkTreeView" id="tv_partitions">
+                        <property name="visible">True</property>
+                        <property name="can_focus">True</property>
+                      </object>
+                    </child>
                   </object>
                   <packing>
                     <property name="position">0</property>
