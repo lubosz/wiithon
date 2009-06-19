@@ -2,24 +2,21 @@
 ++++++++++++++++ HITOS, OBJETIVOS, BUGS y TAREAS PENDIENTES ++++++++++++++++++
 ==============================================================================
 
-- Copiar todo el disco - pendiente
+Corto plazo
+-----------------
 
-- Cuando refresco la lista (por CORE) ordenar por nombre
+Copiar todo el disco
 
-- Documentar el protocolo entre wiithon y wbfs
+Largo plazo
+-----------------
 
-- Implementar arrastrar dentro y fuera del TreeView
+Documentar el protocolo entre wiithon y wiithon_wrapper
 
- - Categorías y Tags en el buscador
+Categorías y Tags en el buscador
 
-TreeView de juegos:
-- Menu contextual (boton derecho) con opciones : Renombrar, Clasificar y Borrar
-
-TreeView de particiones:
-- Menu contextual (boton derecho) con opciones : Renombrar, Clasificar y Borrar
-
-Links útiles:
-http://mundogeek.net/archivos/2008/04/18/threads-en-python/
+==============================================================================
+++++++++++++++++++++++++++++++ NORMAS ++++++++++++++++++++++++++++++++++++++++
+==============================================================================
 
 Algunas normas que todos los miembros del equipo wiithon debemos seguir:
 

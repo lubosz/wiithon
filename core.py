@@ -33,22 +33,9 @@ class WiithonCORE:
     # indice (fila) de la partición seleccionado para 1on1
     particionSeleccionada_1on1 = 1
 
-    # Estructura sincrona para comunicacion entre hilos
-    #mensajes = None
-
     #constructor
     def __init__(self):
         pass
-        # cola sincronizada (productor-consumidor)
-        #self.mensajes = Queue()
-
-    '''
-    def getMensajes(self):
-        return self.mensajes
-
-    def nuevoMensaje(self , mensaje):
-        self.mensajes.put(mensaje)
-    '''
 
     # Obtiene un list de juegos en una tabla de 3 columnas:
     # index 0 -> IDGAME o identificador único del juego
@@ -62,7 +49,7 @@ class WiithonCORE:
 
         salida = []
         for linea in lineas:
-            cachos = linea.strip().split(";")
+            cachos = linea.strip().split(config.SEPARADOR)
             if(len(cachos)==3):
                 salida.append( [ cachos[0] , cachos[1] , cachos[2] ] )
         salida.sort(ordenarPorNombre)
@@ -88,7 +75,7 @@ class WiithonCORE:
     # getEspacioLibre obtiene una tupla [uso , libre , total]
     def getEspacioLibre(self , DEVICE):
         salida = util.getSTDOUT( config.WBFS_APP+" -p "+DEVICE+" df" )
-        cachos = salida.split(";")
+        cachos = salida.split(config.SEPARADOR)
         if(len(cachos) == 3):
             try:
                 return [ float(cachos[0]) , float(cachos[1]) , float(cachos[2]) ]
@@ -117,7 +104,7 @@ class WiithonCORE:
         else:
             print _("***************** DESCARGAR DISCO %s ********************" % (IDGAME))
             origen = 'http://www.theotherzone.com/wii/diskart/160/160/' + IDGAME + '.png'
-            salida = os.system("wget --no-cache --directory-prefix=\""+config.HOME_WIITHON_DISCOS+"\" " + origen)
+            salida = os.system("wget --user-agent=wiithon --timeout=8 --no-cache --directory-prefix=\""+config.HOME_WIITHON_DISCOS+"\" " + origen)
             descargada = (salida == 0)
             if descargada:
                 destino = os.path.join(config.HOME_WIITHON_DISCOS , IDGAME+".png")
@@ -187,7 +174,7 @@ class WiithonCORE:
             print _("***************** DESCARGAR CARATULA %s ********************" % (IDGAME))
             while ( not descargada and i<len(regiones)  ):
                 origenGen = origen + regiones[i] + IDGAME + ".png"
-                salida = os.system("wget --no-cache --directory-prefix=\""+config.HOME_WIITHON_CARATULAS+"\" " + origenGen)
+                salida = os.system("wget --user-agent=wiithon --timeout=8 --no-cache --directory-prefix=\""+config.HOME_WIITHON_CARATULAS+"\" " + origenGen)
                 descargada = (salida == 0)
                 if descargada:
                     destino = os.path.join(config.HOME_WIITHON_CARATULAS , IDGAME+".png")
@@ -316,6 +303,14 @@ class WiithonCORE:
             return salida == 0
         except KeyboardInterrupt:
             return False
+
+    def existeExtraido(self, juego, destino):
+        fichero = "%s.iso" % juego.title
+        fichero = fichero.replace(" ","_")
+        fichero = fichero.replace("/","_")
+        fichero = fichero.replace(":","_")
+        destino = os.path.join(destino , fichero)
+        return os.path.exists(destino)
 
     # extrae el juego a un destino
     def extraerJuego(self ,juego , destino):

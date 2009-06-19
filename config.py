@@ -65,3 +65,9 @@ NUM_LINEAS_PAUSA = 21
 
 # Definido en libwbfs, longitud maxima de un titulo
 TITULO_LONGITUD_MAX = 0x80
+
+# Separador para la interactividad con wiithon_wrapper
+SEPARADOR = ";@;"
+
+# Maximos juegos que aparecerán en la lista de copia de disco duro completa
+MAX_LISTA_COPIA_1on1 = 15

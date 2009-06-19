@@ -41,9 +41,7 @@ void spinner(u64 x, u64 max)
         h = d / 3600;
         m = (d / 60) % 60;
         s = d % 60;
-		//fprintf(stdout, "FIN;%d;%d;%d\n", h, m, s);
-		//fflush(stdout);
-		fprintf(stderr, "FIN;%d;%02d;%02d\n", h, m, s);
+		fprintf(stderr, "FIN;@;%d;@;%02d;@;%02d\n", h, m, s);
 		return;
 	}
 
@@ -62,9 +60,7 @@ void spinner(u64 x, u64 max)
 	s = d % 60;
 	percent = 100.0 * x / max;
 
-	//fprintf(stdout , "%f;%d;%d;%d\n", percent, h, m, s);
-	//fflush(stdout);
-    fprintf(stdout , "%5.2f;%d;%02d;%02d\n", percent, h, m, s);
+    fprintf(stdout , "%5.2f;@;%d;@;%02d;@;%02d\n", percent, h, m, s);
     fflush(stdout);
 }
 
@@ -168,7 +164,7 @@ int wiithon_wrapper_ls(wbfs_t *p)
                     sprintf( gameid, "%c%c%c%c%c%c", b[0], b[1], b[2], b[3], b[4], b[5] );
                     f32 size = WBFS_GameSize( p , (u8*)gameid);
                     if( size < 0) size = 0.0f;
-                    fprintf(stdout, "%s;%s;%f\n", gameid , b + 0x20, size );
+                    fprintf(stdout, "%s;@;%s;@;%f\n", gameid , b + 0x20, size );
                 }
         }
         wbfs_iofree(b);
@@ -184,7 +180,7 @@ int wiithon_wrapper_df(wbfs_t *p)
         if(res == OK)
         {
         	f32 total = usado + libre;
-			fprintf(stdout , "%f;%f;%f\n" , usado ,	libre ,	total);
+			fprintf(stdout , "%f;@;%f;@;%f\n" , usado ,	libre ,	total);
 			return TRUE;
 		}
         else

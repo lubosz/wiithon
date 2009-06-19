@@ -6,6 +6,7 @@ import os
 import fnmatch
 import gtk
 import subprocess
+import copy
 
 # Caracteres que hacen que una expresión no pueda ser expresión regular
 BLACK_LIST = "/\"\'$&|[]"
@@ -136,6 +137,9 @@ def getUltimaLinea(fichero):
 def try_mkdir(carpeta):
     if not os.path.exists(carpeta):
         os.mkdir(carpeta)
+
+def clonarOBJ(x):
+    return copy.deepcopy(x)
 
 '''
 Un ejemplo de las listas de python

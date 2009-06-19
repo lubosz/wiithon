@@ -41,7 +41,9 @@ class WiithonGUI(GtkBuilderWrapper):
 
         self.core = core
         self.buscar = ""
-        self.modo = "manager" # ver | manager
+        self.modo = "ver" # ver | manager
+        self.editando = False
+        self.refresco_pendiente = False
         
         # Cellrenderers que se modifican según cambia el modo
         self.renderEditableIDGAME = None
@@ -178,7 +180,10 @@ class WiithonGUI(GtkBuilderWrapper):
         '''
 
         # trabajos LIGEROS
-        self.poolBash = PoolTrabajo( self.core , 6)
+        self.poolBash = PoolTrabajo( self.core , 6,
+                                    callback_termina_trabajo_descargar_caratula = self.callback_termina_trabajo_descargar_caratula,
+                                    callback_termina_trabajo_descargar_disco = self.callback_termina_trabajo_descargar_disco
+                                    )
         self.poolBash.setDaemon(True)
         self.poolBash.start()
         
@@ -212,6 +217,25 @@ class WiithonGUI(GtkBuilderWrapper):
 
         # pongo el foco en el buscador
         self.wb_busqueda.grab_focus()
+        
+        # pruebas
+        self.wb_estadoTrabajo.set_property("attributes", self.getEstilo_azulGrande() )
+        self.wb_tv_games.connect('start-interactive-search',self.empezar_busqueda)
+        
+    def empezar_busqueda(*arg):
+        print arg
+        
+    def empieza_editar(self, renderer, editable, path):
+        self.editando = True
+        
+    def cancela_editar(self, renderer):
+        self.termina_editar()
+        
+    def termina_editar(self):
+        self.editando = False
+        if self.refresco_pendiente:
+            self.refrescarParticionesYSeleccionarJuego(self.IDGAMEJuegoSeleccionado , self.DEVICEParticionSeleccionada)
+            self.refresco_pendiente = False
         
     def refrescarParticionesWBFS(self):
         
@@ -256,10 +280,9 @@ class WiithonGUI(GtkBuilderWrapper):
                 
                 # poner la columna titulo activada
                 self.renderEditableIDGAME.set_property("editable", True)
-                self.renderEditableIDGAME.connect ("edited", self.editar_idgame)
                 self.renderEditableNombre.set_property("editable", True)
                 self.renderEditableNombre.set_property("attributes", self.getEstilo_azulGrande() )
-                self.renderEditableNombre.connect ("edited", self.editar_nombre)
+                #self.editando
 
                 # carga el modelo de datos del TreeView de particiones
                 self.cargarParticionesModelo(self.tv_partitions_modelo , self.listaParticiones)
@@ -277,7 +300,6 @@ class WiithonGUI(GtkBuilderWrapper):
             self.alert("warning" , _("No puedes refrescar las particiones mientras hay tareas sin finalizar"))
 
     def main(self , opciones , argumentos):
-
         for arg in argumentos:
             arg = os.path.abspath(arg)
             if os.path.exists(arg):
@@ -375,6 +397,7 @@ class WiithonGUI(GtkBuilderWrapper):
             i = i + 1
 
     def editar_idgame( self, renderEditable, i, nuevoIDGAME):
+        self.termina_editar()
         if self.iteradorJuegoSeleccionado != None:
             nuevoIDGAME = nuevoIDGAME.upper()
             if(self.IDGAMEJuegoSeleccionado != nuevoIDGAME):
@@ -398,6 +421,7 @@ class WiithonGUI(GtkBuilderWrapper):
                     self.alert('error' , _("Error: La longitud del IDGAME debe ser 6, y solo puede contener letras y numeros"))
 
     def editar_nombre( self, renderEditable, i, nuevoNombre):
+        self.termina_editar()
         if self.iteradorJuegoSeleccionado != None:
             nombreActual = self.seleccionJuegoSeleccionado.get_value(self.iteradorJuegoSeleccionado,2)
             if(nombreActual != nuevoNombre):
@@ -419,10 +443,8 @@ class WiithonGUI(GtkBuilderWrapper):
         # Documentacion útil: http://blog.rastersoft.com/index.php/2007/01/27/trabajando-con-gtktreeview-en-python/
         tv_games = self.wb_tv_games
 
-        # FIXME: ¿Porque no funciona?, especifico el entry de busqueda
-        #tv_games.set_search_entry( self.wb_busqueda )
-        # activar busqueda desde el Treeview
-        tv_games.set_enable_search(True)
+        # FIXME
+        #tv_games.set_enable_search(True)
 
         # ¿Como aplico propiedades style?
         #tv_games.set_property("even-row-color" , gtk.gdk.Color(0xFFFF,0x0,0x0) )
@@ -430,6 +452,10 @@ class WiithonGUI(GtkBuilderWrapper):
 
         self.renderEditableIDGAME = gtk.CellRendererText()
         self.renderEditableNombre = gtk.CellRendererText()
+        self.renderEditableIDGAME.connect ("edited", self.editar_idgame)
+        self.renderEditableNombre.connect ("edited", self.editar_nombre)
+        self.renderEditableNombre.connect ("editing-started", self.empieza_editar)
+        self.renderEditableNombre.connect ("editing-canceled", self.cancela_editar)
         render = gtk.CellRendererText()
 
         # prox versión meter background ----> foreground ... etc
@@ -494,9 +520,11 @@ class WiithonGUI(GtkBuilderWrapper):
         # cerrar hilos
         try:
             self.poolTrabajo.interrumpir()
+            self.poolBash.interrumpir()
             self.animar.interrumpir()
-            self.animar.join()
+            self.poolTrabajo.join()
             self.poolBash.join()
+            self.animar.join()
         except AttributeError:
             pass
 
@@ -601,10 +629,8 @@ class WiithonGUI(GtkBuilderWrapper):
         session.commit()
         self.refrescarListaJuegos()
 
-    # FIXME: Devuelve si el usuario esta editando el tv_games
-    # sirve para evitar cambiar la selección mientras esta editando
     def get_usuario_esta_editando(self):
-        return self.poolTrabajo.estaOcupado()
+        return self.editando or self.poolTrabajo.estaOcupado()
 
     # refresco desde memoria (rápido)
     def refrescarListaJuegos(self):
@@ -620,6 +646,7 @@ class WiithonGUI(GtkBuilderWrapper):
         # seleccionar primera fila del treeview de juegos
         self.seleccionarPrimeraFila( self.wb_tv_games)
 
+    # Llama el callback onchange de los 3 treeview conocidos
     def callback_treeview(self, treeview):
         if treeview == self.wb_tv_games:
             self.on_tv_games_cursor_changed( self.wb_tv_games )
@@ -643,6 +670,9 @@ class WiithonGUI(GtkBuilderWrapper):
 
             if callback:
                 self.callback_treeview(treeview)
+        else:
+            if self.editando:
+                self.refresco_pendiente = True
 
     def seleccionarPrimeraFila(self , treeview, callback = True):
         if not self.get_usuario_esta_editando():
@@ -653,6 +683,9 @@ class WiithonGUI(GtkBuilderWrapper):
 
             if callback:
                 self.callback_treeview(treeview)
+        else:
+            if self.editando:
+                self.refresco_pendiente = True
 
     def refrescarEspacio(self):
         info = self.core.getEspacioLibre( self.DEVICEParticionSeleccionada )
@@ -664,7 +697,7 @@ class WiithonGUI(GtkBuilderWrapper):
             porcentaje = usado * 100.0 / total
         except ZeroDivisionError:
             porcentaje = 0.0
-        self.wb_progresoEspacio.set_text("%d juegos" % (len(self.listaJuegos)))
+        self.wb_progresoEspacio.set_text(_("%d juegos") % (len(self.listaJuegos)))
         self.wb_progresoEspacio.set_fraction( porcentaje / 100.0 )
 
     def refrescarTareasPendientes(self):
@@ -677,13 +710,13 @@ class WiithonGUI(GtkBuilderWrapper):
             etiqueta = _("Hay %d tareas") % (numTareas)
             self.wb_estadoTrabajo.set_label(etiqueta)
             self.wb_estadoTrabajo.show()
-        
+
         # mostrar espacio barra progreso    
         self.wb_box_progreso.show()
 
     # Click en particiones --> refresca la lista de juegos
     def on_tv_partitions_cursor_changed(self , treeview):
-        # particion seleccionado
+        # particion seleccionado        
         self.seleccionParticionSeleccionada, self.iteradorParticionSeleccionada  = treeview.get_selection().get_selected()
         if self.iteradorParticionSeleccionada != None:
             # establece en el core la nueva partición seleccionada
@@ -702,8 +735,11 @@ class WiithonGUI(GtkBuilderWrapper):
             self.refrescarListaJuegosFromCore()
 
             # descargar caratulas de todos los juegos de la NUEVA lista de juegos
-            self.poolBash.nuevoTrabajoDescargaCaratula( self.listaJuegos )
-            self.poolBash.nuevoTrabajoDescargaDisco( self.listaJuegos )
+            for juego in self.listaJuegos:
+                if not self.core.existeCaratula(juego.idgame):
+                    self.poolBash.nuevoTrabajoDescargaCaratula( juego )
+                if not self.core.existeDisco(juego.idgame):
+                    self.poolBash.nuevoTrabajoDescargaDisco( juego )
 
             # refrescar espacio
             self.refrescarEspacio()
@@ -724,6 +760,22 @@ class WiithonGUI(GtkBuilderWrapper):
             # autoredimensionar columnas
             treeview.columns_autosize()
 
+    def ponerCaratula(self, IDGAME):
+        destinoCaratula = os.path.join(config.HOME_WIITHON_CARATULAS , IDGAME+".png")
+
+        if not os.path.exists(destinoCaratula):
+            destinoCaratula = os.path.join(config.WIITHON_FILES_RECURSOS_IMAGENES , "caratula.png")
+        
+        self.wb_img_caratula1.set_from_file( destinoCaratula )
+
+    def ponerDisco(self, IDGAME):
+        destinoDisco = os.path.join(config.HOME_WIITHON_DISCOS , IDGAME+".png")
+        
+        if not os.path.exists(destinoDisco):
+            destinoDisco = os.path.join(config.WIITHON_FILES_RECURSOS_IMAGENES , "disco.png")
+            
+        self.wb_img_disco1.set_from_file( destinoDisco )
+
     # Click en juegos --> refresco la imagen de la caratula y disco
     # self.wb_tv_games
     def on_tv_games_cursor_changed(self , treeview):
@@ -731,16 +783,9 @@ class WiithonGUI(GtkBuilderWrapper):
         if self.iteradorJuegoSeleccionado != None:
             self.pathJuegoSeleccionado = int(self.seleccionJuegoSeleccionado.get_value(self.iteradorJuegoSeleccionado,0))
             self.IDGAMEJuegoSeleccionado = self.seleccionJuegoSeleccionado.get_value(self.iteradorJuegoSeleccionado,1)
-            self.juego = session.query(Juego).filter('idgame=="%s" and device=="%s"' % (self.IDGAMEJuegoSeleccionado , self.DEVICEParticionSeleccionada)).first()
-
-            destinoCaratula = os.path.join(config.HOME_WIITHON_CARATULAS , self.IDGAMEJuegoSeleccionado+".png")
-            destinoDisco = os.path.join(config.HOME_WIITHON_DISCOS , self.IDGAMEJuegoSeleccionado+".png")
-        else:
-            destinoCaratula = os.path.join(config.WIITHON_FILES_RECURSOS_IMAGENES , "caratula.png")
-            destinoDisco = os.path.join(config.WIITHON_FILES_RECURSOS_IMAGENES , "disco.png")
-
-        self.wb_img_caratula1.set_from_file( destinoCaratula )
-        self.wb_img_disco1.set_from_file( destinoDisco )
+            self.juego = session.query(Juego).filter('idgame=="%s" and device like "%s"' % (self.IDGAMEJuegoSeleccionado , self.DEVICEParticionSeleccionada)).first()
+            self.ponerCaratula(self.IDGAMEJuegoSeleccionado)
+            self.ponerDisco(self.IDGAMEJuegoSeleccionado)
 
         # autoredimensionar columnas
         treeview.columns_autosize()
@@ -762,23 +807,65 @@ class WiithonGUI(GtkBuilderWrapper):
             self.refrescarParticionesWBFS()
 
         elif(id_tb == self.wb_tb_copiar_1_1):
-            if self.numParticiones > 1:
+            if self.numParticiones > 1:                
                 res = self.wb_dialogo_copia_1on1.run()
                 self.wb_dialogo_copia_1on1.hide()
+                
+                if(res != 0):
+                    device_destino = self.DEVICEParticionSeleccionada_1on1
+                    juegosParaClonar = []
+                    juegosExistentesEnDestino = []
 
-                if(res == 1):
-                    if self.juego != None:
-                        print _("Copiar el juego %s a la particion %s") % (self.juego.title , self.DEVICEParticionSeleccionada_1on1)
-                        self.poolTrabajo.nuevoTrabajoClonar( self.juego, self.DEVICEParticionSeleccionada_1on1)
+                    if(res == 1):
+                        if self.iteradorJuegoSeleccionado != None:
+                            juegosParaClonar.append( util.clonarOBJ(self.juego) )
+                            
+                            pregunta = "Desea copiar el juego %s (%s) a la particion %s?" % (self.juego.title, self.juego.idgame, device_destino)
 
+                        else:
+                            self.alert("warning" , _("No has seleccionado ningun juego"))
+
+                    elif(res == 2):
+                        for juego in self.listaJuegos:
+                            juegosParaClonar.append( util.clonarOBJ(juego) )
+                    
+                        self.seleccionarFilaConValor(self.wb_tv_partitions, self.numParticiones , 1 , self.DEVICEParticionSeleccionada_1on1)
+
+                        for juego in self.listaJuegos:
+                            encontrado = False
+                            i = 0
+                            while (not encontrado) and (i<len(juegosParaClonar)):
+                                encontrado = (juego.idgame == juegosParaClonar[i].idgame)
+                                if not encontrado:
+                                    i += 1
+                            if encontrado:
+                                juegosExistentesEnDestino.append(juegosParaClonar[i])
+                                juegosParaClonar.remove(juegosParaClonar[i])
+                                
+                        pregunta  = "%s %s:\n\n" % (_("Se van a copiar los siguientes juegos a"), device_destino)
+                        
+                        i = 0
+                        for juego in juegosParaClonar:
+                            pregunta += "%s\n" % (juego)
+                            i += 1
+                            if i >= config.MAX_LISTA_COPIA_1on1:
+                                pregunta += "[...] (%d %s)\n" % (len(juegosParaClonar)-config.MAX_LISTA_COPIA_1on1, _("juegos mas"))
+                                break
+                        pregunta += "\n\n%s %s:\n\n" % (_("A continuacion se listan los juego que NO van a ser copiados por ya estar en la particion de destino"),device_destino)
+                        i = 0
+                        for juego in juegosExistentesEnDestino:
+                            pregunta += "%s\n" % (juego)
+                            i += 1
+                            if i >= config.MAX_LISTA_COPIA_1on1:
+                                pregunta += "[...] (%d %s)\n" % (len(juegosExistentesEnDestino)-config.MAX_LISTA_COPIA_1on1, _("juegos mas"))
+                                break
+                        pregunta += "\n%s" % _("Empezar a copiar?")
+                        
+                    if len(juegosParaClonar) > 0:
+                        if((self.question(pregunta) == 1)):
+                            self.poolTrabajo.nuevoTrabajoClonar( juegosParaClonar, device_destino )
                     else:
-                        self.alert("warning" , _("No has seleccionado ningun juego"))
-
-                elif(res == 2):
-                    print _("Copiar todos los juegos a la particion %s") % (self.DEVICEParticionSeleccionada_1on1)
-                    print self.listaJuegos
-                    self.poolTrabajo.nuevoTrabajoClonar( self.listaJuegos, self.DEVICEParticionSeleccionada_1on1)
-
+                        self.alert('info',_("No hay nada que copiar en %s") % (device_destino))
             else:
                 self.alert("warning" , _("No hay un numero suficiente de particiones validas, para realizar esta accion."))
 
@@ -797,10 +884,10 @@ class WiithonGUI(GtkBuilderWrapper):
                             session.delete( self.juego )
 
                             # borrar de la tabla
-                            # self.tv_games_modelo.remove( self.iteradorJuegoSeleccionado )
+                            self.tv_games_modelo.remove( self.iteradorJuegoSeleccionado )
 
                             # seleccionar el primero
-                            self.seleccionarFilaConValor(self.wb_tv_partitions, self.numParticiones , 1 , self.DEVICEParticionSeleccionada)
+                            self.seleccionarPrimeraFila(self.wb_tv_games)
 
                 else:
                     if ( self.question(_('Quieres borrar el juego con %s (%s)?') % (self.juego.title , self.juego.idgame)) == 1 ):
@@ -810,6 +897,7 @@ class WiithonGUI(GtkBuilderWrapper):
                             # borrar de la tabla
                             self.tv_games_modelo.remove( self.iteradorJuegoSeleccionado )
                             
+                            #seleccionar la particion actual
                             self.seleccionarFilaConValor(self.wb_tv_partitions, self.numParticiones , 1 , self.DEVICEParticionSeleccionada)
 
                         else:
@@ -839,11 +927,19 @@ class WiithonGUI(GtkBuilderWrapper):
 
                 if ( fc_extraer.run() == gtk.RESPONSE_OK ):
 
-                    # nueva ruta favorita
-                    self.preferencia.ruta_extraer_iso = fc_extraer.get_current_folder()
+                    reemplazar = False
+                    if self.core.existeExtraido(self.juego , fc_extraer.get_filename()):                        
+                        if ( self.question(_('Desea reemplazar la iso del juego %s (%s)?') % (self.juego.title , self.juego.idgame)) == 1 ):
+                            reemplazar = True
+                    else:
+                        reemplazar = True
+                        
+                    if reemplazar:
+                        # nueva ruta favorita
+                        self.preferencia.ruta_extraer_iso = fc_extraer.get_current_folder()
 
-                    # extraer *juego* en la ruta seleccionada
-                    self.poolTrabajo.nuevoTrabajoExtraer( self.juego , fc_extraer.get_filename() )
+                        # extraer *juego* en la ruta seleccionada
+                        self.poolTrabajo.nuevoTrabajoExtraer( self.juego , fc_extraer.get_filename() )
 
                 fc_extraer.destroy()
 
@@ -870,12 +966,12 @@ class WiithonGUI(GtkBuilderWrapper):
                         )
 
                 if(id_tb == self.wb_tb_anadir):
-                    fc_anadir = gtk.FileChooserDialog(_("Elige una ISO o un RAR"), None , gtk.FILE_CHOOSER_ACTION_OPEN , botones)
+                    fc_anadir = gtk.FileChooserDialog(_("Elige una imagen ISO valida para Wii"), None , gtk.FILE_CHOOSER_ACTION_OPEN , botones)
                     fc_anadir.set_select_multiple(True)
                     filter = gtk.FileFilter()
-                    filter.set_name(_('Imagen ISO, Comprimido RAR'))
+                    filter.set_name(_('Imagen ISO para Wii'))
                     filter.add_pattern('*.iso')
-                    filter.add_pattern('*.rar')
+                    #filter.add_pattern('*.rar')
                     fc_anadir.add_filter(filter)
                     fc_anadir.set_current_folder( self.preferencia.ruta_anadir )
 
@@ -895,12 +991,24 @@ class WiithonGUI(GtkBuilderWrapper):
                     elif(id_tb == self.wb_tb_anadir_directorio):
                         self.preferencia.ruta_anadir_directorio = fc_anadir.get_current_folder()
 
-                    ficherosSeleccionados = fc_anadir.get_filenames()
+                    ficherosSeleccionados = []
+                    for fichero in fc_anadir.get_filenames():
+                        if( os.path.isdir( fichero ) ):
+                            ficherosSeleccionados.append(fichero)
+                        elif( util.getExtension(fichero) == "iso" ):
+                            idgame = util.getMagicISO(fichero)
+                            if idgame != None:
+                                self.juegoNuevo = session.query(Juego).filter('idgame=="%s" and device=="%s"' % (idgame , self.DEVICEParticionSeleccionada)).first()
+                                if self.juegoNuevo == None:
+                                    ficherosSeleccionados.append(fichero)
+                                else:
+                                    self.alert('warning',_("El juego ya esta metido, como %s (%s)") % (self.juegoNuevo.title,self.juegoNuevo.idgame))
 
-                    # ordenar la ruta de archivos
-                    ficherosSeleccionados.sort()
-
-                    self.poolTrabajo.nuevoTrabajoAnadir( ficherosSeleccionados , self.DEVICEParticionSeleccionada)
+                    if len(ficherosSeleccionados) > 0:
+                        # ordenar la ruta de archivos
+                        ficherosSeleccionados.sort()
+                        #Meter los juegos
+                        self.poolTrabajo.nuevoTrabajoAnadir( ficherosSeleccionados , self.DEVICEParticionSeleccionada)
 
                 fc_anadir.destroy()
 
@@ -975,15 +1083,15 @@ class WiithonGUI(GtkBuilderWrapper):
     def drag_data_received_cb(self, widget, drag_context, x, y, selection_data, info, timestamp):
         'Callback invoked when the DnD data is received'
         tuplaArrastrados = selection_data.get_uris()
-        if len(tuplaArrastrados) > 0:
-            listaArrastrados = []
-            for fichero in tuplaArrastrados:
-                fichero = fichero.replace("file://" , "")
-                if os.path.exists(fichero) and (util.getExtension(fichero)=="iso" or util.getExtension(fichero)=="rar"):
-                    listaArrastrados.append(fichero)
-            listaArrastrados.sort()
-            if self.poolTrabajo:
-                self.poolTrabajo.nuevoTrabajoAnadir(listaArrastrados, self.DEVICEParticionSeleccionada)
+        listaArrastrados = []
+        for fichero in tuplaArrastrados:
+            fichero = fichero.replace("file://" , "")
+            #if os.path.exists(fichero) and (util.getExtension(fichero)=="iso" or util.getExtension(fichero)=="rar"):
+            if os.path.exists(fichero) and (util.getExtension(fichero)=="iso"):
+                listaArrastrados.append(fichero)
+        listaArrastrados.sort()
+        if self.poolTrabajo and len(listaArrastrados)>0:
+            self.poolTrabajo.nuevoTrabajoAnadir(listaArrastrados, self.DEVICEParticionSeleccionada)
 
     def callback_empieza_progreso(self, trabajo):
         self.hiloCalcularProgreso = HiloCalcularProgreso( trabajo, self.actualizarLabel , self.actualizarFraccion )
@@ -994,22 +1102,25 @@ class WiithonGUI(GtkBuilderWrapper):
         gobject.idle_add(self.actualizarFraccion , 1.0 )
 
     def callback_empieza_trabajo_anadir(self, trabajo):
-        print "callback_empieza_trabajo_anadir"
+        pass
 
-    def callback_termina_trabajo_anadir(self, trabajo , idgame):
+    def callback_termina_trabajo_anadir(self, trabajo , idgame, device):
         if trabajo.exito:
-            gobject.idle_add( self.refrescarParticionesYSeleccionarJuego , idgame , DEVICE)
+            gobject.idle_add( self.refrescarParticionesYSeleccionarJuego , idgame , device)
+            
+    # Al terminar hay que seleccionar la partición destino y el juego copiado
+    def callback_termina_trabajo_copiar(self, trabajo, juego, device):
+        if trabajo.exito:
+            gobject.idle_add( self.refrescarParticionesYSeleccionarJuego , juego.idgame , device)
 
     def callback_nuevo_trabajo(self, trabajo):
         gobject.idle_add( self.refrescarTareasPendientes )
 
     def callback_empieza_trabajo(self, trabajo):
-        gobject.idle_add( self.refrescarTareasPendientes )
         print _("Empieza %s") % trabajo
+        gobject.idle_add( self.refrescarTareasPendientes )
 
     def callback_termina_trabajo(self, trabajo):
-        print _("Termina: %s") % trabajo
-        
         # No hay trabajo cuando el contador este a 1, que es el propio trabajo que da la señal
         if(self.poolTrabajo.numTrabajos <= 1):
             gobject.timeout_add( 5000, self.ocultarHBoxProgreso )
@@ -1017,6 +1128,8 @@ class WiithonGUI(GtkBuilderWrapper):
         # al final, por ser bloqueante
         if not trabajo.exito:
             gobject.idle_add(self.mostrarError , trabajo.error )
+            
+        print _("Termina: %s") % trabajo
 
     def callback_empieza_trabajo_extraer(self, trabajo):
         pass
@@ -1026,10 +1139,16 @@ class WiithonGUI(GtkBuilderWrapper):
 
     def callback_empieza_trabajo_copiar(self, trabajo):
         pass
-
-    # Al terminar hay que seleccionar la partición destino y el juego copiado
-    def callback_termina_trabajo_copiar(self, trabajo, juego, DEVICE):
-        gobject.idle_add( self.refrescarParticionesYSeleccionarJuego , juego.idgame , DEVICE)
+        
+    def callback_termina_trabajo_descargar_caratula(self, trabajo, juego):
+        if trabajo.exito:
+            if juego.idgame == self.IDGAMEJuegoSeleccionado:
+                gobject.idle_add( self.ponerCaratula , juego.idgame )
+        
+    def callback_termina_trabajo_descargar_disco(self, trabajo, juego):
+        if trabajo.exito:
+            if juego.idgame == self.IDGAMEJuegoSeleccionado:
+                gobject.idle_add( self.ponerDisco , juego.idgame )
 
 class HiloCalcularProgreso(Thread):
     def __init__(self , trabajo, actualizarLabel , actualizarFraccion):
@@ -1056,7 +1175,7 @@ class HiloCalcularProgreso(Thread):
                         for linea in file(config.HOME_WIITHON_LOGS_PROCESO):
                             ultimaLinea = linea
 
-                        cachos = ultimaLinea.split(";")
+                        cachos = ultimaLinea.split(config.SEPARADOR)
 
                         # FIN es un convenio que viene de la funcion "spinner" en libwbfs.c
                         if self.trabajo.terminado:

@@ -31,9 +31,6 @@ tabla = Table('juegos', metadatos,
     Column('title', VARCHAR(255)),
     Column('size', Float),
     Column('device', VARCHAR(10)),
-    #Column('quarter',Integer),
-    # 1=principios de año, 2, 3, 4 = finales de año
-    #Column('puntuacion',Integer), # del 0 al 5
 )
 
 # solo crea las tablas cuando no existen
@@ -48,7 +45,7 @@ class Juego(object):
         self.device = device
 
     def __repr__(self):
-        return "%d -> %s - %s" % (self.id, self.idgame, self.title)
+        return "%s (%s)  %s" % (self.title, self.idgame, self.device)
 
 mapper(Juego , tabla)
 Session = sessionmaker(bind=BDD_PERSISTENTE,

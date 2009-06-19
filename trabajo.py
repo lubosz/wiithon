@@ -33,7 +33,9 @@ class PoolTrabajo(Pool , Thread):
                                         callback_empieza_trabajo_extraer = None,
                                         callback_termina_trabajo_extraer = None,
                                         callback_empieza_trabajo_copiar = None,
-                                        callback_termina_trabajo_copiar = None
+                                        callback_termina_trabajo_copiar = None,
+                                        callback_termina_trabajo_descargar_caratula = None,
+                                        callback_termina_trabajo_descargar_disco = None
                                         ):
         Pool.__init__(self , numHilos)
         Thread.__init__(self)
@@ -51,6 +53,8 @@ class PoolTrabajo(Pool , Thread):
         self.callback_termina_trabajo_extraer = callback_termina_trabajo_extraer
         self.callback_empieza_trabajo_copiar = callback_empieza_trabajo_copiar
         self.callback_termina_trabajo_copiar = callback_termina_trabajo_copiar
+        self.callback_termina_trabajo_descargar_caratula = callback_termina_trabajo_descargar_caratula
+        self.callback_termina_trabajo_descargar_disco = callback_termina_trabajo_descargar_disco
 
     def run(self):
         self.empezar( args=(self.core,) )
@@ -102,10 +106,18 @@ class PoolTrabajo(Pool , Thread):
             
         elif( trabajo.tipo == DESCARGA_CARATULA ):
             juego = trabajo.origen
-            self.descargarCaratula(core , juego)
+            trabajo.exito = self.descargarCaratula(core , juego)
+            
+            if self.callback_termina_trabajo_descargar_caratula:
+                self.callback_termina_trabajo_descargar_caratula(trabajo, juego)
+            
         elif( trabajo.tipo == DESCARGA_DISCO ):
             juego = trabajo.origen
             trabajo.exito = self.descargarDisco(core , juego)
+            
+            if self.callback_termina_trabajo_descargar_disco:
+                self.callback_termina_trabajo_descargar_disco(trabajo, juego)
+            
         elif( trabajo.tipo == COPIAR_CARATULA ):
             juego = trabajo.origen
             destino = trabajo.destino
@@ -125,8 +137,9 @@ class PoolTrabajo(Pool , Thread):
         exito = False
 
         if( not os.path.exists(DEVICE) or not os.path.exists(fichero) ):
-            pass
-            #core.nuevoMensaje( Mensaje("ERROR",_("La ISO o la particion no existe")) )
+            trabajo.error = _("La ISO o la particion ya no no existen")
+            # de momento lo quito para esta version
+            '''
         elif( util.getExtension(fichero) == "rar" ):
             nombreRAR = fichero
             nombreISO = core.getNombreISOenRAR(nombreRAR)
@@ -136,15 +149,14 @@ class PoolTrabajo(Pool , Thread):
                         exito = True
                         self.nuevoTrabajoAnadir( nombreISO , DEVICE)
                     else:
-                        pass
-                        #core.nuevoMensaje( Mensaje("ERROR",_("Al descomrpimir el RAR : %s") % (nombreRAR)) )
+                        trabajo.error = _("Error al descomrpimir el RAR : %s") % (nombreRAR)
                 else:
-                    pass
-                    #core.nuevoMensaje( Mensaje("ERROR",_("No se puede descomrpimir por que reemplazaria el ISO : %s") % (nombreISO)) )
+                    trabajo.error = _("Error: No se puede descomrpimir por que reemplazaria el ISO : %s") % (nombreISO)
             else:
-                pass
-                #core.nuevoMensaje( Mensaje("ERROR",_("El RAR %s no tenia ninguna ISO") % (nombreRAR)) )
+                trabajo.error = _("Error: El RAR %s no tenia ninguna ISO") % (nombreRAR)
+            '''
         elif( os.path.isdir( fichero ) ):
+            '''
             encontrados =  util.rec_glob(fichero, "*.rar")
             if (len(encontrados) == 0):
                 pass
@@ -152,104 +164,53 @@ class PoolTrabajo(Pool , Thread):
             else:
                 for encontrado in encontrados:
                     self.nuevoTrabajoAnadir( encontrado , DEVICE)
-
+            '''
             encontrados =  util.rec_glob(fichero, "*.iso")
             if (len(encontrados) == 0):
-                pass
-                #core.nuevoMensaje( Mensaje("INFO",_("No se ha encontrado ningun ISO")))
+                trabajo.error = _("No se ha encontrado ningun ISO")
             else:
                 for encontrado in encontrados:
                     self.nuevoTrabajoAnadir( encontrado , DEVICE)
-                    
-            exito = True
+                exito = True
 
         elif( util.getExtension(fichero) == "iso" ):
             
             if self.callback_empieza_progreso:
                 self.callback_empieza_progreso(trabajo)
             
-            #core.nuevoMensaje( Mensaje("COMANDO","PROGRESO_0") )
-            #core.nuevoMensaje( Mensaje("COMANDO","PROGRESO_INICIA_CALCULO") )
-            if ( core.anadirISO(DEVICE , fichero ) ):
-                exito = True
-                #core.nuevoMensaje( Mensaje("INFO",_("ISO %s anadida correctamente") % (fichero)) )
-                #core.nuevoMensaje( Mensaje("COMANDO","REFRESCAR_JUEGOS") )
-            else:
-                pass
-                #core.nuevoMensaje( Mensaje("ERROR",_("Anadiendo la ISO : %s (comprueba que sea una ISO de WII)") % (fichero)) )
+            exito = core.anadirISO(DEVICE , fichero )
 
             if self.callback_termina_progreso:
                 self.callback_termina_progreso(trabajo)
 
-            #core.nuevoMensaje( Mensaje("COMANDO","PROGRESO_FIN_CALCULO") )
-            #core.nuevoMensaje( Mensaje("COMANDO","PROGRESO_100") )
         else:
-            #core.nuevoMensaje( Mensaje("ERROR",_("%s no es un ningun juego de Wii") % (os.path.basename(fichero)) ) )
-            pass
+            trabajo.error = _("%s no es un ningun juego de Wii") % (os.path.basename(fichero))
 
-        #core.nuevoMensaje( Mensaje("COMANDO","TERMINA") )
-
-        # Esperar que todos los mensajes sean atendidos
-        #core.getMensajes().join()
         return exito
 
     def extraer(self , core , trabajo , juego , destino):
         exito = False
-
-        #core.nuevoMensaje( Mensaje("COMANDO","EMPIEZA") )
-        #core.nuevoMensaje( Mensaje("COMANDO","PROGRESO_0") )
-        #core.nuevoMensaje( Mensaje("COMANDO","PROGRESO_INICIA_CALCULO") )
         
         if self.callback_empieza_progreso:
             self.callback_empieza_progreso(trabajo)
         
-        if ( core.extraerJuego(juego, destino) ):
-            exito = True
-            #core.nuevoMensaje( Mensaje("INFO",_("ISO de %s extraida correctamente") % (IDGAME)) )
-        else:
-            pass
+        exito = core.extraerJuego(juego, destino)
         
         if self.callback_termina_progreso:
             self.callback_termina_progreso(trabajo)
-            
-            #core.nuevoMensaje( Mensaje("ERROR",_("Extrayendo la ISO : %s") % (IDGAME)) )
-        #core.nuevoMensaje( Mensaje("COMANDO","PROGRESO_FIN_CALCULO") )
-        #core.nuevoMensaje( Mensaje("COMANDO","PROGRESO_100") )
-        #core.nuevoMensaje( Mensaje("COMANDO","TERMINA") )
-
-        # Esperar que todos los mensajes sean atendidos
-        #core.getMensajes().join()
         
         return exito
 
 
-    def clonar(self, core , trabajo , juego , DEVICE):
-        exito = False
-        
-        #core.nuevoMensaje( Mensaje("COMANDO","EMPIEZA") )
-        #core.nuevoMensaje( Mensaje("COMANDO","PROGRESO_0") )
-        #core.nuevoMensaje( Mensaje("COMANDO","PROGRESO_INICIA_CALCULO") )
-        
+    def clonar(self, core , trabajo , juego , DEVICE):        
         if self.callback_empieza_progreso:
             self.callback_empieza_progreso(trabajo)
         
-        if ( core.clonarJuego(juego , DEVICE) ):
-            exito = True
-            #core.nuevoMensaje( Mensaje("INFO",_("Juego %s ha sido copiado en %s correctamente") % (juego.title , DEVICE_destino)) )
-        else:
-            pass
-            #core.nuevoMensaje( Mensaje("ERROR",_("Copiando el juego %s en %s") % (juego.title , DEVICE_destino)) )
+        exito = core.clonarJuego(juego , DEVICE)
             
         if self.callback_termina_progreso:
             self.callback_termina_progreso(trabajo)
-            
-        #core.nuevoMensaje( Mensaje("COMANDO","PROGRESO_FIN_CALCULO") )
-        #core.nuevoMensaje( Mensaje("COMANDO","PROGRESO_100") )
-        #core.nuevoMensaje( Mensaje("COMANDO","TERMINA") )
 
-        # Esperar que todos los mensajes sean atendidos
-        #core.getMensajes().join()
-        
         return exito
 
     def descargarCaratula(self , core , juego):
@@ -334,7 +295,7 @@ class Trabajo:
         elif self.tipo == EXTRAER and isinstance(self.origen, Juego):
             return _("Extraer %s a la ruta %s") % (self.origen.title, self.destino)
         elif self.tipo == CLONAR and isinstance(self.origen, Juego):
-            return _("Copiando el juego %s a la particion %s") % (self.origen.title, self.destino)
+            return _("Copiando el juego %s desde %s a la particion %s") % (self.origen.title, self.origen.device , self.destino)
         elif self.tipo == DESCARGA_CARATULA and isinstance(self.origen, Juego):
             return _("Descargando caratula de %s") % (self.origen.title)
         elif self.tipo == DESCARGA_DISCO and isinstance(self.origen, Juego):

@@ -35,8 +35,8 @@ class Pool:
         return self.numTrabajos > 0
 
     def nuevoElemento(self, elemento):
-        self.cola.put(elemento)
         self.numTrabajos += 1
+        self.cola.put(elemento)
 
     def empezar(self , args=None):
         if not self.lock:
