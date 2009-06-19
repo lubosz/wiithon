@@ -22,8 +22,9 @@ char *s = N_("Preferencias");
 char *s = N_("Refrescar WBFS");
 char *s = N_("Renombrar");
 char *s = N_("Selecciona la particion de destino:");
+char *s = N_("Sergio Padrino <sergio.padrino@gmail.com>\n"
+             "Ricardo Marmolejo Garc&#xED;a <makiolo@gmail.com>");
 char *s = N_("TEXTO_LICENCIA");
-char *s = N_("TEXTO_TRADUCTORES");
 char *s = N_("Trabajos de fondo (0)");
 char *s = N_("Trabajos intensos (0)");
 char *s = N_("Un gestor de particiones WBFS facil de usar");

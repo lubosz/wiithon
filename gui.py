@@ -214,13 +214,12 @@ class WiithonGUI(GtkBuilderWrapper):
             
         # reffresco inicial en busca de particiones wbfs
         self.refrescarParticionesWBFS()
-
-        # pongo el foco en el buscador
-        self.wb_busqueda.grab_focus()
         
-        # pruebas
         self.wb_estadoTrabajo.set_property("attributes", self.getEstilo_azulGrande() )
         self.wb_tv_games.connect('start-interactive-search',self.empezar_busqueda)
+        
+        # pongo el foco en el buscador
+        self.wb_busqueda.grab_focus()
         
     def empezar_busqueda(*arg):
         print arg
@@ -270,9 +269,9 @@ class WiithonGUI(GtkBuilderWrapper):
                 self.wb_labelEspacio.hide()
 
                 if( len(self.listaJuegos)>0 ):
-                    self.alert("warning" , _("No se han encontrado particiones WBFS:\nConecte un disco duro con una particion de juegos de Wii (tipo WBFS)\nEn este modo, SOLO puede visualizar toda su base de datos de juegos acumulada por %s en sesiones anteriores." % (config.APP)))
+                    self.alert("warning" , _("No hay particiones WBFS, solo puede ver sus juegos acumuladas en %s") % (config.APP))
                 else:
-                    self.alert("warning" , _("No se han encontrado particiones WBFS:\nConecte un disco duro con una particion de juegos de Wii (tipo WBFS) y reinicie %s\n" % (config.APP)))
+                    self.alert("warning" , _("No hay particiones WBFS, conecte y refresque"))
 
             else:
                 # establecemos el modo de wiithon, hay particiones que gestionar
@@ -300,13 +299,14 @@ class WiithonGUI(GtkBuilderWrapper):
             self.alert("warning" , _("No puedes refrescar las particiones mientras hay tareas sin finalizar"))
 
     def main(self , opciones , argumentos):
-        for arg in argumentos:
-            arg = os.path.abspath(arg)
-            if os.path.exists(arg):
-                if util.getExtension(arg)=="iso":
-                    self.poolTrabajo.nuevoTrabajoAnadir( arg , self.DEVICEParticionSeleccionada)
-                else:
-                    self.alert("warning" , _("Formato desconocido"))
+        if self.iteradorParticionSeleccionada != None:
+            for arg in argumentos:
+                arg = os.path.abspath(arg)
+                if os.path.exists(arg):
+                    if util.getExtension(arg)=="iso":
+                        self.poolTrabajo.nuevoTrabajoAnadir( arg , self.DEVICEParticionSeleccionada)
+                    else:
+                        self.alert("warning" , _("Formato desconocido"))
 
         gtk.main()
 
@@ -445,10 +445,6 @@ class WiithonGUI(GtkBuilderWrapper):
 
         # FIXME
         #tv_games.set_enable_search(True)
-
-        # ¿Como aplico propiedades style?
-        #tv_games.set_property("even-row-color" , gtk.gdk.Color(0xFFFF,0x0,0x0) )
-        #tv_games.set_property("odd-row-color" ,   gtk.gdk.Color(0x0 , 0x0 , 0x0) )
 
         self.renderEditableIDGAME = gtk.CellRendererText()
         self.renderEditableNombre = gtk.CellRendererText()
@@ -809,9 +805,12 @@ class WiithonGUI(GtkBuilderWrapper):
         elif(id_tb == self.wb_tb_copiar_1_1):
             if self.numParticiones > 1:                
                 res = self.wb_dialogo_copia_1on1.run()
+                
                 self.wb_dialogo_copia_1on1.hide()
                 
-                if(res != 0):
+                # salir por Cancelar ---> 0
+                # salir por Escape ---> -4
+                if(res > 0):
                     device_destino = self.DEVICEParticionSeleccionada_1on1
                     juegosParaClonar = []
                     juegosExistentesEnDestino = []
@@ -820,7 +819,7 @@ class WiithonGUI(GtkBuilderWrapper):
                         if self.iteradorJuegoSeleccionado != None:
                             juegosParaClonar.append( util.clonarOBJ(self.juego) )
                             
-                            pregunta = "Desea copiar el juego %s (%s) a la particion %s?" % (self.juego.title, self.juego.idgame, device_destino)
+                            pregunta = _("Desea copiar el juego %s (%s) a la particion %s?") % (self.juego.title, self.juego.idgame, device_destino)
 
                         else:
                             self.alert("warning" , _("No has seleccionado ningun juego"))
