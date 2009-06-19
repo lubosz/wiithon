@@ -149,27 +149,28 @@ s32 WBFS_DiskSpace(wbfs_t *p , f32 *used, f32 *free)
 
 // Controladores de cada parametro
 
-int wiithon_wrapper_ls(wbfs_t *p)
-{
-    int count = wbfs_count_discs(p);
-    if(count > 0)
-    {
-        int i;
-        u8 *b = wbfs_ioalloc(0x100);
-        char gameid[6];
-        for (i=0;i<count;i++)
-        {
-                if(!wbfs_get_disc_info(p,i,b,0x100,NULL))
-                {
-                    sprintf( gameid, "%c%c%c%c%c%c", b[0], b[1], b[2], b[3], b[4], b[5] );
-                    f32 size = WBFS_GameSize( p , (u8*)gameid);
-                    if( size < 0) size = 0.0f;
-                    fprintf(stdout, "%s;@;%s;@;%f\n", gameid , b + 0x20, size );
-                }
-        }
-        wbfs_iofree(b);
-    }   
-    return OK;
+int
+wiithon_wrapper_ls(wbfs_t *p) {
+  int count = wbfs_count_discs(p);
+
+  if(count > 0) {
+	int i;
+	u8 *b = wbfs_ioalloc(0x100);
+	char gameid[7];
+
+	for (i=0; i<count; i++) {
+	  if(!wbfs_get_disc_info(p, i, b, 0x100, NULL)) {
+		sprintf( gameid, "%c%c%c%c%c%c", b[0], b[1], b[2], b[3], b[4], b[5] );
+		f32 size = WBFS_GameSize( p , (u8*)gameid);
+		if( size < 0) size = 0.0f;
+		fprintf(stdout, "%s;@;%s;@;%f\n", gameid , b + 0x20, size );
+	  }
+	}
+
+	wbfs_iofree(b);
+  }
+
+  return OK;
 }
 
 int wiithon_wrapper_df(wbfs_t *p)
@@ -186,7 +187,7 @@ int wiithon_wrapper_df(wbfs_t *p)
         else
 		{
        		return FALSE;
-		}       
+		}
 }
 
 static void _spinner(int x,int y){ spinner(x,y);}
@@ -219,7 +220,7 @@ int wiithon_wrapper_add(wbfs_t *p,char*argv)
 }
 int wiithon_wrapper_rm(wbfs_t *p, u8 *idgame)
 {
-    return wbfs_rm_disc(p, idgame);	
+    return wbfs_rm_disc(p, idgame);
 }
 int wiithon_wrapper_extract(wbfs_t *p, u8 *idgame)
 {
@@ -253,7 +254,7 @@ int wiithon_wrapper_extract(wbfs_t *p, u8 *idgame)
                         fclose(f);
                 }
                 wbfs_close_disc(d);
-                
+
         }
         else
                 fprintf(stderr,"%s no es un IDGAME de la lista ...\n",idgame);
@@ -332,11 +333,11 @@ int main(int argc, char *argv[])
                     exit(0);
             }
     }
-    
+
     // Le resto 1 de la propia aplicación
     // Le resto los 2 parametros del device (-p /dev/sda1)
     numParametros = argc - 1 - 2;
-    
+
     noFormatear = ((numParametros == 1) && (strcmp(argv[optind], "formatear") == 0)) ? FALSE : TRUE;
 
     wbfs_t *p = wbfs_try_open(NULL, partition, noFormatear );
@@ -353,7 +354,7 @@ int main(int argc, char *argv[])
         else if ((numParametros == 1) && (strcmp(argv[optind], "ls") == 0))
         {
             retorno = wiithon_wrapper_ls(p);
-        }        
+        }
         else if ((numParametros == 1) && (strcmp(argv[optind], "df") == 0))
         {
             retorno = wiithon_wrapper_df(p);

@@ -301,7 +301,7 @@ u32 wbfs_sector_used(wbfs_t *p,wbfs_disc_info_t *di)
 }
 u32 wbfs_get_disc_info(wbfs_t*p, u32 index,u8 *header,int header_size,u32 *size)//size in 32 bit
 {
-        u32 i,count=0;
+        u32 i, count=0;
         int disc_info_sz_lba = p->disc_info_sz>>p->hd_sec_sz_s;
         for(i=0;i<p->max_disc;i++)
                 if (p->head->disc_table[i]){
@@ -657,7 +657,7 @@ error:
 unsigned int wbfs_copy_disc(wbfs_disc_t*d_src, wbfs_t*p_dst, progress_callback_t spinner)
 {
     int retorno = FALSE;
-    
+
 	wbfs_t *p_src = d_src->p;
 	unsigned char* copy_buffer = 0;
 	int i;
@@ -727,7 +727,7 @@ unsigned int wbfs_copy_disc(wbfs_disc_t*d_src, wbfs_t*p_dst, progress_callback_t
 		if(spinner)
 			spinner(i,p_src->n_wbfs_sec_per_disc);
 	}
-	
+
 	if(spinner)
 		spinner(p_src->n_wbfs_sec_per_disc,p_src->n_wbfs_sec_per_disc);
 
@@ -735,9 +735,9 @@ unsigned int wbfs_copy_disc(wbfs_disc_t*d_src, wbfs_t*p_dst, progress_callback_t
 	int disc_info_sz_lba = p_dst->disc_info_sz>>p_dst->hd_sec_sz_s;
 	p_dst->write_hdsector(p_dst->callback_data,p_dst->part_lba+1+discn*disc_info_sz_lba,disc_info_sz_lba,info);
 	wbfs_sync(p_dst);
-	
+
 	retorno = TRUE;
-	
+
 error:
 	if(info)
 		wbfs_iofree(info);
