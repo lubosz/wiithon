@@ -71,14 +71,18 @@ class PoolTrabajo(Pool , Thread):
             
             fichero = trabajo.origen
             DEVICE = trabajo.destino
-            trabajo.exito = self.anadir(core ,trabajo , fichero , DEVICE)
-            if trabajo.exito:
-                idgame = util.getMagicISO(fichero)
+            
+            if os.path.isdir( fichero ):
+                idgame = "FOLDER"
             else:
-                idgame = None
+                idgame = util.getMagicISO(fichero)
 
-            if self.callback_termina_trabajo_anadir:
-                self.callback_termina_trabajo_anadir(trabajo, idgame, DEVICE)
+            if idgame != None:
+                trabajo.exito = self.anadir(core ,trabajo , fichero , DEVICE)
+
+            if idgame != "FOLDER":
+                if self.callback_termina_trabajo_anadir:
+                    self.callback_termina_trabajo_anadir(trabajo, idgame, DEVICE)
 
         elif( trabajo.tipo == EXTRAER):
 
@@ -178,7 +182,7 @@ class PoolTrabajo(Pool , Thread):
             if self.callback_empieza_progreso:
                 self.callback_empieza_progreso(trabajo)
             
-            exito = core.anadirISO(DEVICE , fichero )
+            exito = core.anadirISO(DEVICE , fichero)
 
             if self.callback_termina_progreso:
                 self.callback_termina_progreso(trabajo)
@@ -201,14 +205,11 @@ class PoolTrabajo(Pool , Thread):
         
         return exito
 
-
-    def clonar(self, core , trabajo , juego , DEVICE):        
+    def clonar(self, core , trabajo , juego , DEVICE):
         if self.callback_empieza_progreso:
             self.callback_empieza_progreso(trabajo)
         
         exito = core.clonarJuego(juego , DEVICE)
-        if not exito:
-            trabajo.error = _("MOSTRAR_ERROR_AL_COPIAR")
             
         if self.callback_termina_progreso:
             self.callback_termina_progreso(trabajo)

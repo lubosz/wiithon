@@ -625,7 +625,8 @@ class WiithonGUI(GtkBuilderWrapper):
         self.refrescarListaJuegos()
 
     def get_usuario_esta_editando(self):
-        return self.editando or self.poolTrabajo.estaOcupado()
+        #return self.editando or self.poolTrabajo.estaOcupado()
+        return self.editando
 
     # refresco desde memoria (rápido)
     def refrescarListaJuegos(self):
