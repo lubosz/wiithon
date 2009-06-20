@@ -385,7 +385,6 @@ int main(int argc, char *argv[])
         }
         else
         {
-            printf("Error en los parametros (hay %d):\n",numParametros);
             retorno = uso(argv);
         }
         wbfs_close(p);

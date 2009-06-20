@@ -71,3 +71,6 @@ SEPARADOR = ";@;"
 
 # Maximos juegos que aparecerán en la lista de copia de disco duro completa
 MAX_LISTA_COPIA_1on1 = 15
+
+# Ruta del icono
+ICONO = "/usr/share/pixmaps/wiithon.png"

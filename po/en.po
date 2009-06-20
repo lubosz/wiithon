@@ -397,10 +397,15 @@ msgstr "***************** DOWNLOAD DISC %s ********************"
 msgid "Copiando %s ----> %s ... "
 msgstr "Copy %s ----> %s ... "
 
-#: core.py:128 core.py:139
+#: core.py:128
 #, python-format
 msgid "Ya tienes la caratula %s"
 msgstr "You have the cover %s"
+
+#: core.py:139
+#, python-format
+msgid "Ya tienes el disco-caratula %s"
+msgstr "You have the cover-disc %s"
 
 #: core.py:174
 #, python-format
@@ -419,7 +424,7 @@ msgstr "Extract"
 msgid "Copiar a otra particion"
 msgstr "Copy to other partition"
 
-#: gui.py:272
+#: gui.py:271
 #, python-format
 msgid "No hay particiones WBFS, solo puede ver sus juegos acumuladas en %s"
 msgstr ""
@@ -431,29 +436,29 @@ msgstr ""
 "- When you delete a game in this mode, delete the record and covers and "
 "discs downloaded"
 
-#: gui.py:274
+#: gui.py:273
 msgid "No hay particiones WBFS, conecte y refresque"
 msgstr ""
 "There are no partitions WBFS\n"
 "- Connect a WBFS and press Refresh."
 
-#: gui.py:299
+#: gui.py:298
 msgid "No puedes refrescar las particiones mientras hay tareas sin finalizar"
 msgstr ""
 
-#: gui.py:309
+#: gui.py:308
 msgid "Formato desconocido"
 msgstr "Format Unknown"
 
-#: gui.py:365
+#: gui.py:364
 msgid "Dispositivo"
 msgstr "Device"
 
-#: gui.py:366
+#: gui.py:365
 msgid "Fabricante"
 msgstr "Manufacture"
 
-#: gui.py:408
+#: gui.py:407
 #, python-format
 msgid "Advertencia de seguridad de renombrar desde IDGAME = %s a %s"
 msgstr ""
@@ -470,76 +475,76 @@ msgstr ""
 "Guitar Hero and customs of it.\n"
 "Do you want rename the current IDGAME %s as %s?"
 
-#: gui.py:417 gui.py:436
+#: gui.py:416 gui.py:435
 msgid "Error renombrando"
 msgstr "Error renaming"
 
-#: gui.py:419
+#: gui.py:418
 msgid "Ya hay un juego con ese IDGAME"
 msgstr "There is already a game with this IDGAME"
 
-#: gui.py:421
+#: gui.py:420
 msgid ""
 "Error: La longitud del IDGAME debe ser 6, y solo puede contener letras y "
 "numeros"
 msgstr ""
 "Error: IDGAME length must be 6, and can only contain letters and numbers"
 
-#: gui.py:438
+#: gui.py:437
 #, python-format
 msgid "Se han detectado caracteres no validos: %s"
 msgstr "Characters not valid: %s"
 
-#: gui.py:440
+#: gui.py:439
 #, python-format
 msgid ""
 "Nuevo nombre es demasiado largo, intente con un texto menor de %d caracteres"
 msgstr "New name is too long, try a text smaller than %d characters"
 
-#: gui.py:459
+#: gui.py:458
 msgid "IDGAME"
 msgstr "IDGAME"
 
-#: gui.py:460
+#: gui.py:459
 msgid "Nombre"
 msgstr "Name"
 
-#: gui.py:461
+#: gui.py:460
 msgid "Tamanio"
 msgstr "Size"
 
-#: gui.py:696
+#: gui.py:695
 #, python-format
 msgid "%d juegos"
 msgstr "%d games"
 
-#: gui.py:706
+#: gui.py:705
 #, python-format
 msgid "Hay %d tareas"
 msgstr "There are %d tasks"
 
-#: gui.py:796
+#: gui.py:795
 msgid "Tienes que seleccionar una particion WBFS para realizar esta accion"
 msgstr "Need select some partition WBFS"
 
-#: gui.py:822
+#: gui.py:821
 #, python-format
 msgid "Desea copiar el juego %s (%s) a la particion %s?"
 msgstr "Do you want copy game %s (%s) to the partition %s?"
 
-#: gui.py:825 gui.py:906 gui.py:946 gui.py:956
+#: gui.py:824 gui.py:905 gui.py:946 gui.py:956
 msgid "No has seleccionado ningun juego"
 msgstr "Don't have a game selected"
 
-#: gui.py:844
+#: gui.py:843
 msgid "Se van a copiar los siguientes juegos a"
 msgstr "Will be copied to the following games"
 
-#: gui.py:851 gui.py:859
+#: gui.py:850 gui.py:858
 msgid "juegos mas"
 msgstr "more games"
 
-#: gui.py:853
+#: gui.py:852
 msgid ""
 "A continuacion se listan los juego que NO van a ser copiados por ya estar en "
 "la particion de destino"
@@ -547,22 +552,22 @@ msgstr ""
 "The following are games will NOT be copied because exists in destiny "
 "partition"
 
-#: gui.py:861
+#: gui.py:860
 msgid "Empezar a copiar?"
 msgstr "Want to start the copy?"
 
-#: gui.py:867
+#: gui.py:866
 #, python-format
 msgid "No hay nada que copiar en %s"
 msgstr "Nothing that copy to %s"
 
-#: gui.py:869
+#: gui.py:868
 msgid ""
 "No hay un numero suficiente de particiones validas, para realizar esta "
 "accion."
 msgstr "You must select a WBFS partition for use this action"
 
-#: gui.py:874
+#: gui.py:873
 #, python-format
 msgid "Advertencia de borrar %s (%s) en modo ver"
 msgstr ""
@@ -572,21 +577,21 @@ msgstr ""
 "downloaded\n"
 "Are you sure to delete %s (%s)?"
 
-#: gui.py:892
+#: gui.py:891
 #, python-format
 msgid "Quieres borrar el juego con %s (%s)?"
 msgstr "Do you want to remove the game %s (%s)?"
 
-#: gui.py:903
+#: gui.py:902
 msgid "Error borrando"
 msgstr "Delete error"
 
-#: gui.py:918
+#: gui.py:917
 #, python-format
 msgid "Elige un directorio donde extraer la ISO de %s"
 msgstr "Choose folder for extract ISO %s"
 
-#: gui.py:931
+#: gui.py:929
 #, python-format
 msgid "Desea reemplazar la iso del juego %s (%s)?"
 msgstr "Do you want to replace the game %s (%s)?"

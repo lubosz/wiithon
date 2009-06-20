@@ -83,6 +83,7 @@ install: wbfs po/es/LC_MESSAGES/wiithon.mo po/en/LC_MESSAGES/wiithon.mo
 
 	cp wiithon_root.desktop /usr/share/applications/
 
+	cp recursos/icons/wiithon.png /usr/share/pixmaps
 	cp recursos/icons/wiithon.svg /usr/share/pixmaps
 
 	cp po/en/LC_MESSAGES/wiithon.mo /usr/share/locale/en/LC_MESSAGES/wiithon.mo
@@ -158,6 +159,9 @@ uninstall:
 
 	-$(RM) /usr/share/applications/wiithon_usuario.desktop
 	-$(RM) /usr/share/applications/wiithon_root.desktop
+	
+	-$(RM) /usr/share/pixmaps/wiithon.png
+	-$(RM) /usr/share/pixmaps/wiithon.svg
 
 	-rmdir $(PREFIX)/share/wiithon/recursos/glade
 	-rmdir $(PREFIX)/share/wiithon/recursos/imagenes

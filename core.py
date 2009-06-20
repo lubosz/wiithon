@@ -136,7 +136,7 @@ class WiithonCORE:
             shutil.copy(origen, destino)
             return os.path.exists(destino)
         else:
-            print _("Ya tienes la caratula %s") % (juego.idgame)
+            print _("Ya tienes el disco-caratula %s") % (juego.idgame)
             return True
 
     # borrar disco

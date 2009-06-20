@@ -139,8 +139,7 @@ class WiithonGUI(GtkBuilderWrapper):
         gobject.threads_init()
 
         self.wb_principal.set_title('Wiithon')
-        # FIXME: Hacer otro icono pequeño
-        # self.wb_principal.set_icon_from_file( "/usr/share/pixmaps/wiithon.svg" )
+        self.wb_principal.set_icon_from_file(config.ICONO)
         self.wb_principal.show()
 
         # conexion señales de la toolbar
@@ -922,7 +921,6 @@ class WiithonGUI(GtkBuilderWrapper):
                 fc_extraer.set_default_response(gtk.RESPONSE_OK)
                 fc_extraer.set_local_only(True)
                 fc_extraer.set_current_folder( self.preferencia.ruta_extraer_iso )
-                fc_extraer.show()
 
                 if ( fc_extraer.run() == gtk.RESPONSE_OK ):
 
@@ -939,6 +937,8 @@ class WiithonGUI(GtkBuilderWrapper):
 
                         # extraer *juego* en la ruta seleccionada
                         self.poolTrabajo.nuevoTrabajoExtraer( self.juego , fc_extraer.get_filename() )
+                else:
+                    print "cancelado"
 
                 fc_extraer.destroy()
 

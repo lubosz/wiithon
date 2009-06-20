@@ -391,9 +391,14 @@ msgstr ""
 msgid "Copiando %s ----> %s ... "
 msgstr ""
 
-#: core.py:128 core.py:139
+#: core.py:128
 #, python-format
 msgid "Ya tienes la caratula %s"
+msgstr ""
+
+#: core.py:139
+#, python-format
+msgid "Ya tienes el disco-caratula %s"
 msgstr ""
 
 #: core.py:174
@@ -413,7 +418,7 @@ msgstr ""
 msgid "Copiar a otra particion"
 msgstr "Copiar a otra partición"
 
-#: gui.py:272
+#: gui.py:271
 #, python-format
 msgid "No hay particiones WBFS, solo puede ver sus juegos acumuladas en %s"
 msgstr ""
@@ -426,29 +431,29 @@ msgstr ""
 "- Cuando borre un juego en este modo, borrara el registro y las caratula y "
 "disco descargadas."
 
-#: gui.py:274
+#: gui.py:273
 msgid "No hay particiones WBFS, conecte y refresque"
 msgstr ""
 "No hay particiones WBFS\n"
 "- Conecte una y pulse Refrescar WBFS."
 
-#: gui.py:299
+#: gui.py:298
 msgid "No puedes refrescar las particiones mientras hay tareas sin finalizar"
 msgstr ""
 
-#: gui.py:309
+#: gui.py:308
 msgid "Formato desconocido"
 msgstr ""
 
-#: gui.py:365
+#: gui.py:364
 msgid "Dispositivo"
 msgstr ""
 
-#: gui.py:366
+#: gui.py:365
 msgid "Fabricante"
 msgstr ""
 
-#: gui.py:408
+#: gui.py:407
 #, python-format
 msgid "Advertencia de seguridad de renombrar desde IDGAME = %s a %s"
 msgstr ""
@@ -468,75 +473,75 @@ msgstr ""
 "Guitar Hero y customs de este.\n"
 "¿Está seguro de renombrar el actual IDGAME %s como %s?"
 
-#: gui.py:417 gui.py:436
+#: gui.py:416 gui.py:435
 msgid "Error renombrando"
 msgstr ""
 
-#: gui.py:419
+#: gui.py:418
 msgid "Ya hay un juego con ese IDGAME"
 msgstr ""
 
-#: gui.py:421
+#: gui.py:420
 msgid ""
 "Error: La longitud del IDGAME debe ser 6, y solo puede contener letras y "
 "numeros"
 msgstr ""
 
-#: gui.py:438
+#: gui.py:437
 #, python-format
 msgid "Se han detectado caracteres no validos: %s"
 msgstr "Se han detectado carácteres no válidos: %s"
 
-#: gui.py:440
+#: gui.py:439
 #, python-format
 msgid ""
 "Nuevo nombre es demasiado largo, intente con un texto menor de %d caracteres"
 msgstr ""
 
-#: gui.py:459
+#: gui.py:458
 msgid "IDGAME"
 msgstr ""
 
-#: gui.py:460
+#: gui.py:459
 msgid "Nombre"
 msgstr ""
 
-#: gui.py:461
+#: gui.py:460
 msgid "Tamanio"
 msgstr "Tamaño"
 
-#: gui.py:696
+#: gui.py:695
 #, python-format
 msgid "%d juegos"
 msgstr ""
 
-#: gui.py:706
+#: gui.py:705
 #, python-format
 msgid "Hay %d tareas"
 msgstr ""
 
-#: gui.py:796
+#: gui.py:795
 msgid "Tienes que seleccionar una particion WBFS para realizar esta accion"
 msgstr "Tienes que seleccionar una partición WBFS para realizar esta acción"
 
-#: gui.py:822
+#: gui.py:821
 #, python-format
 msgid "Desea copiar el juego %s (%s) a la particion %s?"
 msgstr "¿Desea copiar el juego %s (%s) a la partición %s?"
 
-#: gui.py:825 gui.py:906 gui.py:946 gui.py:956
+#: gui.py:824 gui.py:905 gui.py:946 gui.py:956
 msgid "No has seleccionado ningun juego"
 msgstr "No has seleccionado ningún juego"
 
-#: gui.py:844
+#: gui.py:843
 msgid "Se van a copiar los siguientes juegos a"
 msgstr ""
 
-#: gui.py:851 gui.py:859
+#: gui.py:850 gui.py:858
 msgid "juegos mas"
 msgstr ""
 
-#: gui.py:853
+#: gui.py:852
 msgid ""
 "A continuacion se listan los juego que NO van a ser copiados por ya estar en "
 "la particion de destino"
@@ -544,22 +549,22 @@ msgstr ""
 "A continuación se listan los juego que NO van a ser copiados por ya estar en "
 "la partición de destino"
 
-#: gui.py:861
+#: gui.py:860
 msgid "Empezar a copiar?"
 msgstr "¿Desea que empieze la copia?"
 
-#: gui.py:867
+#: gui.py:866
 #, python-format
 msgid "No hay nada que copiar en %s"
 msgstr ""
 
-#: gui.py:869
+#: gui.py:868
 msgid ""
 "No hay un numero suficiente de particiones validas, para realizar esta "
 "accion."
 msgstr "Tienes que seleccionar una partición WBFS para realizar esta acción"
 
-#: gui.py:874
+#: gui.py:873
 #, python-format
 msgid "Advertencia de borrar %s (%s) en modo ver"
 msgstr ""
@@ -569,21 +574,21 @@ msgstr ""
 "- Esto supone borrar (además de borrar el registro) la carátula y el disco\n"
 "¿Esta seguro de borrar %s (%s)?"
 
-#: gui.py:892
+#: gui.py:891
 #, python-format
 msgid "Quieres borrar el juego con %s (%s)?"
 msgstr "¿Quieres borrar el juego %s (%s)?"
 
-#: gui.py:903
+#: gui.py:902
 msgid "Error borrando"
 msgstr ""
 
-#: gui.py:918
+#: gui.py:917
 #, python-format
 msgid "Elige un directorio donde extraer la ISO de %s"
 msgstr ""
 
-#: gui.py:931
+#: gui.py:929
 #, python-format
 msgid "Desea reemplazar la iso del juego %s (%s)?"
 msgstr "¿Quieres reemplazar la ISO del juego %s (%s)?"

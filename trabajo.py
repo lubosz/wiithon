@@ -207,6 +207,8 @@ class PoolTrabajo(Pool , Thread):
             self.callback_empieza_progreso(trabajo)
         
         exito = core.clonarJuego(juego , DEVICE)
+        if not exito:
+            trabajo.error = _("MOSTRAR_ERROR_AL_COPIAR")
             
         if self.callback_termina_progreso:
             self.callback_termina_progreso(trabajo)

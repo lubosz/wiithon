@@ -673,14 +673,12 @@ unsigned int wbfs_copy_disc(wbfs_disc_t*d_src, wbfs_t*p_dst, progress_callback_t
     printf("dst_wbs_nlb = %d\n" , dst_wbs_nlb);
     */
 
-    /*
     // modified by makiolo
 	if( src_wbs_nlb != dst_wbs_nlb)
 	{
-		ERROR("Difference between source and dest");
+		ERROR("Tamaños de sector distinto");
 		retorno = FALSE;
 	}
-	*/
 
 	copy_buffer = (unsigned char*)wbfs_ioalloc(p_src->wbfs_sec_sz);
 	if(!copy_buffer)
