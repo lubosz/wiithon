@@ -1,7 +1,6 @@
 Interfáz gráfico:
 -------------------------------------------------------------------------------
-
-
+El manual del interfáz gráfico queda pendiente en el desarrollo
 
 Línea de comandos
 -------------------------------------------------------------------------------
@@ -54,18 +53,15 @@ Descargar la caratulas de un juego especificado por su IDGAME, la imagen es baja
 Descargar la caratulas de un juego especificado por menú, la imagen es bajada a 160x225. El comando es un singular, es "caratula" ya que "caratulas" descarga todo: 
 		wiithon -c caratula
 		
-Nuevo:
-wiithon -c disco
-wiithon -c discos
-wiithon -c copiar
-
-Las siguientes 2 opciones, no estan implementadas en el interfáz gráfico:
-		
-	Comprobar Integridad de los juegos. Muchos de nuestros juegos pueden estar corruptos sin aún saberlo debido a el bug de borrado de las primeras versiones de WBFS
-			wiithon -c comprobar
+Las siguientes opcion, no esta implementada en el interfáz gráfico:
 
 	Instar juegos desde el DVD, al estilo del usb loader, pero algo más lento porque dumpea a ISO y cuando termina mete la ISO.
 			wiithon -c instalar
+			
+Tambien ocurre lo contrario, hay 2 opciones que tiene el interfáz, que no tiene el GUI:
+
+	- Descargar disc-art (caratula del disco)
+	- Copiar de partición WBFS a partición WBFS (Copia 1:1)
 
 El programa tiene mas cosillas como alias en algunos parametros:
 renombrar = rename = r
@@ -80,5 +76,5 @@ caratula = cover
 listar = ls
 
 Tambien tiene un parametro oculto sin documentar, el parametro -p:
-Obliga a una pausa al final de la ejecución. Este es usado por los comandos lanzados desde nautilus, si no lo pusiera las ventanas se cerrarian ya que mayoritariamente no requieren intervención del usuario. Se requiere interactividad con el usuario en 2 casos, para aceptar el acuerdo de que no me hago responsable de daños y tal (solo sale la primera vez) y si el programa detecta más de una 1 partición WBFS, nos pregunta con cual trabajar con un menú.
+Obliga a una pausa al final de la ejecución. Este es usado por los comandos lanzados desde nautilus(ahora en desuso), si no lo pusiera las ventanas se cerrarian ya que mayoritariamente no requieren intervención del usuario. Se requiere interactividad con el usuario en 2 casos, para aceptar el acuerdo de que no me hago responsable de daños y tal (solo sale la primera vez) y si el programa detecta más de una 1 partición WBFS, nos pregunta con cual trabajar con un menú.
 

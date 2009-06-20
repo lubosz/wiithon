@@ -121,7 +121,7 @@ class WiithonCORE:
         destino = os.path.join( os.path.abspath(destino) , "%s.png" % (juego.idgame) )
         if( not os.path.exists( destino ) and self.existeDisco(juego.idgame) ):
             origen = self.getRutaCaratula(juego.idgame)
-            print _("Copiando %s ----> %s ... ") % (origen , destino)
+            print "%s %s ----> %s ... " % (_("Copiando"), origen , destino)
             shutil.copy(origen, destino)
             return os.path.exists(destino)
         else:
@@ -132,7 +132,7 @@ class WiithonCORE:
         destino = os.path.join( os.path.abspath(destino) , "%s.png" % (juego.idgame) )
         if( not os.path.exists( destino ) and self.existeCaratula(juego.idgame) ):
             origen = self.getRutaDisco(juego.idgame)
-            print _("Copiando %s ----> %s ... ") % (origen , destino)
+            print "%s %s ----> %s ... " % (_("Copiando"), origen , destino)
             shutil.copy(origen, destino)
             return os.path.exists(destino)
         else:

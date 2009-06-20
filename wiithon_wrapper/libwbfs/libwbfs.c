@@ -1,5 +1,6 @@
 // Copyright 2009 Kwiirk
 // modified by Ricardo Marmolejo García <makiolo@gmail.com>
+// copy 1on1 by Pier-Luc Duchaine <pierduch@gmail.com>
 // Licensed under the terms of the GNU GPL, version 2
 // http://www.gnu.org/licenses/old-licenses/gpl-2.0.txt
 
@@ -653,7 +654,7 @@ error:
 }
 //////////////////////////////////////////////////////////////////////////////////////
 
-
+/*
 unsigned int wbfs_copy_disc(wbfs_disc_t*d_src, wbfs_t*p_dst, progress_callback_t spinner)
 {
     int retorno = FALSE;
@@ -664,17 +665,15 @@ unsigned int wbfs_copy_disc(wbfs_disc_t*d_src, wbfs_t*p_dst, progress_callback_t
 	int src_wbs_nlb=p_src->wbfs_sec_sz/p_src->hd_sec_sz;
 	int dst_wbs_nlb=p_dst->wbfs_sec_sz/p_dst->hd_sec_sz;
 
-    /*
-    printf("p_src->wbfs_sec_sz = %d\n" , p_src->wbfs_sec_sz);
-    printf("p_src->hd_sec_sz = %d\n" , p_src->hd_sec_sz);
-    printf("p_dst->wbfs_sec_sz = %d\n" , p_dst->wbfs_sec_sz);
-    printf("p_dst->hd_sec_sz = %d\n" , p_dst->hd_sec_sz);
-    printf("src_wbs_nlb = %d\n" , src_wbs_nlb);
-    printf("dst_wbs_nlb = %d\n" , dst_wbs_nlb);
-    */
+    //printf("p_src->wbfs_sec_sz = %d\n" , p_src->wbfs_sec_sz);
+    //printf("p_src->hd_sec_sz = %d\n" , p_src->hd_sec_sz);
+    //printf("p_dst->wbfs_sec_sz = %d\n" , p_dst->wbfs_sec_sz);
+    //printf("p_dst->hd_sec_sz = %d\n" , p_dst->hd_sec_sz);
+    //printf("src_wbs_nlb = %d\n" , src_wbs_nlb);
+    //printf("dst_wbs_nlb = %d\n" , dst_wbs_nlb);
 
-    // modified by makiolo
-	if( src_wbs_nlb != dst_wbs_nlb)
+	//if( src_wbs_nlb != dst_wbs_nlb)
+	if( src_wbs_nlb%dst_wbs_nlb != 0 && dst_wbs_nlb%src_wbs_nlb != 0)
 	{
 		ERROR("Tamaños de sector distinto");
 		retorno = FALSE;
@@ -745,6 +744,195 @@ error:
 
 	return retorno;
 }
+*/
+
+// wbfsGUI v14.1 Pier-Luc Duchaine <pierduch@gmail.com>
+unsigned int wbfs_copy_disc(wbfs_disc_t*d_src, wbfs_t*p_dst, progress_callback_t spinner)
+{
+    int retorno = FALSE;
+    
+	wbfs_t *p_src = d_src->p;
+	unsigned char* copy_buffer = 0;
+	unsigned char* dst_copy_buffer = 0;
+	int i;
+
+	int src_wbs_nlb=p_src->wbfs_sec_sz/p_src->hd_sec_sz;
+	int dst_wbs_nlb=p_dst->wbfs_sec_sz/p_dst->hd_sec_sz;
+	wbfs_disc_info_t *info = NULL;
+
+	if( src_wbs_nlb%dst_wbs_nlb != 0 && dst_wbs_nlb%src_wbs_nlb != 0)
+	{
+		ERROR("Difference between source and dest");
+	}
+
+	int n_src_in_dst = 1;
+	int n_dst_in_src = 1;
+
+	if( src_wbs_nlb > dst_wbs_nlb )
+	{
+		n_dst_in_src = src_wbs_nlb / dst_wbs_nlb;
+	}
+	else
+	{
+		n_src_in_dst = dst_wbs_nlb / src_wbs_nlb;
+	}
+
+	copy_buffer = (unsigned char*)wbfs_ioalloc(p_src->wbfs_sec_sz);
+	if(!copy_buffer)
+	{
+		ERROR("alloc memory");
+    }
+
+	for(i=0;i<p_dst->max_disc;i++)// find a free slot.
+		if(p_dst->head->disc_table[i]==0)
+			break;
+	if(i==p_dst->max_disc)
+	{
+		ERROR("no space left on device (table full)");
+    }
+	p_dst->head->disc_table[i] = 1;
+	int discn = i;
+	load_freeblocks(p_dst);
+
+	info = (wbfs_disc_info_t*)wbfs_ioalloc(p_dst->disc_info_sz);
+	memset(info, 0, p_dst->disc_info_sz);
+
+	memcpy(info->disc_header_copy, d_src->header->disc_header_copy, 0x100);
+
+	if( src_wbs_nlb == dst_wbs_nlb)
+	{
+		for( i=0; i< p_src->n_wbfs_sec_per_disc; i++)
+		{
+			unsigned int iwlba = wbfs_ntohs(d_src->header->wlba_table[i]);
+			unsigned short bl = 0;
+			if (iwlba)
+			{
+				bl = alloc_block(p_dst);
+				if (bl==0xffff)
+				{
+					ERROR("no space left on device (disc full)");
+                }
+
+				p_src->read_hdsector( p_src->callback_data, p_src->part_lba + iwlba*src_wbs_nlb, src_wbs_nlb, copy_buffer);
+				p_dst->write_hdsector(p_dst->callback_data, p_dst->part_lba +    bl*dst_wbs_nlb, dst_wbs_nlb, copy_buffer);
+			}
+
+			info->wlba_table[i] = wbfs_htons(bl);
+
+			if(spinner)
+				spinner(i,p_src->n_wbfs_sec_per_disc);
+		}
+	}
+	else if (n_src_in_dst == 1)
+	{
+		int buf_dst_step = p_dst->wbfs_sec_sz;
+
+		for( i=0; i< p_src->n_wbfs_sec_per_disc; i++)
+		{
+			unsigned int iwlba = wbfs_ntohs(d_src->header->wlba_table[i]);
+			unsigned short bl = 0;
+			if (iwlba)
+			{
+				p_src->read_hdsector( p_src->callback_data, p_src->part_lba + iwlba*src_wbs_nlb, src_wbs_nlb, copy_buffer);
+
+                int l = 0;
+				for( l = 0; l < n_dst_in_src; ++l)
+				{
+					bl = alloc_block(p_dst);
+					if (bl==0xffff)
+						ERROR("no space left on device (disc full)");
+
+					p_dst->write_hdsector(p_dst->callback_data, p_dst->part_lba + bl*dst_wbs_nlb, dst_wbs_nlb, copy_buffer + l * buf_dst_step);
+
+					info->wlba_table[i*n_dst_in_src+l] = wbfs_htons(bl);
+				}
+			}
+
+			if(spinner)
+				spinner(i,p_src->n_wbfs_sec_per_disc);
+		}
+	}
+	else if (n_dst_in_src == 1)
+	{
+		dst_copy_buffer = (unsigned char*)wbfs_ioalloc(p_dst->wbfs_sec_sz);
+
+		if(!dst_copy_buffer)
+			ERROR("alloc memory");
+
+		int buf_src_step = p_src->wbfs_sec_sz;
+		int need_to_write = FALSE;
+
+		for( i=0; i< p_src->n_wbfs_sec_per_disc; i++)
+		{
+			if(need_to_write==TRUE && i%n_src_in_dst == 0)
+			{
+				unsigned short bl = 0;
+
+				bl = alloc_block(p_dst);
+				if (bl==0xffff)
+					ERROR("no space left on device (disc full)");
+
+				p_dst->write_hdsector(p_dst->callback_data, p_dst->part_lba +    bl*dst_wbs_nlb, dst_wbs_nlb, dst_copy_buffer);
+				info->wlba_table[(i/n_src_in_dst)-1] = wbfs_htons(bl);
+
+				memset(dst_copy_buffer, 0, p_dst->wbfs_sec_sz);
+				need_to_write = FALSE;
+			}
+
+			unsigned int iwlba = wbfs_ntohs(d_src->header->wlba_table[i]);
+			if (iwlba)
+			{
+				p_src->read_hdsector( p_src->callback_data, p_src->part_lba + iwlba*src_wbs_nlb, src_wbs_nlb, dst_copy_buffer + (i%n_src_in_dst) * buf_src_step);
+				need_to_write = TRUE;
+			}
+
+			if(spinner)
+				spinner(i,p_src->n_wbfs_sec_per_disc);
+		}
+
+		if(need_to_write==TRUE)
+		{
+			unsigned short bl = 0;
+
+			bl = alloc_block(p_dst);
+			if (bl==0xffff)
+			{
+			    printf("%d\n",bl);
+				ERROR("no space left on device (disc full)");
+            }
+
+			p_dst->write_hdsector(p_dst->callback_data, p_dst->part_lba +    bl*dst_wbs_nlb, dst_wbs_nlb, dst_copy_buffer);
+			info->wlba_table[(i/n_src_in_dst)-1] = wbfs_htons(bl);
+
+			memset(dst_copy_buffer, 0, p_dst->wbfs_sec_sz);
+			need_to_write = FALSE;
+		}
+	}
+
+	if(spinner)
+		spinner(p_src->n_wbfs_sec_per_disc,p_src->n_wbfs_sec_per_disc);
+
+	// write disc info
+	int disc_info_sz_lba = p_dst->disc_info_sz>>p_dst->hd_sec_sz_s;
+	p_dst->write_hdsector(p_dst->callback_data, p_dst->part_lba+1+discn*disc_info_sz_lba,disc_info_sz_lba,info);
+	wbfs_sync(p_dst);
+	
+	retorno = TRUE;
+	
+error:
+	if(info)
+		wbfs_iofree(info);
+	if(copy_buffer)
+		wbfs_iofree(copy_buffer);
+	if(dst_copy_buffer)
+		wbfs_iofree(dst_copy_buffer);
+
+
+	// init with all free blocks
+
+	return retorno;
+}
+
 
 void fatal(const char *s, ...)
 {

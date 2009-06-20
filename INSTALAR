@@ -30,8 +30,7 @@ Requiere: apt-get
 		sudo make uninstall
 
 2º  Dependencias, instalar estos paquetes:
-		imagemagick wget rar intltool menu python-sexy
-		python-sqlalchemy python-gtk2 python-glade2 gnome-icon-theme
+		imagemagick wget rar intltool menu python-sexy python-sqlalchemy python-gtk2 python-glade2 gnome-icon-theme
 
 3º Instalar :
 		sudo make install
@@ -57,5 +56,5 @@ Para Ejecutar:
 			- Vaya a su menú de Aplicaciones, y encontrará Wiithon en la sección 'Oficina' (funciona en KDE y GNOME)
 
 		2. Por consola:
-			- sudo wiithon
+			- sudo wiithon (o wiithon sin sudo si hicistes el paso de "Permisos")
 

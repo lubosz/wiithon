@@ -387,8 +387,7 @@ msgid "***************** DESCARGAR DISCO %s ********************"
 msgstr ""
 
 #: core.py:124 core.py:135
-#, python-format
-msgid "Copiando %s ----> %s ... "
+msgid "Copiando"
 msgstr ""
 
 #: core.py:128
@@ -799,7 +798,11 @@ msgstr "No se ha encontrado ningún ISO"
 msgid "%s no es un ningun juego de Wii"
 msgstr "%s no es un ningún juego de Wii"
 
-#: trabajo.py:290
+#: trabajo.py:211
+msgid "MOSTRAR_ERROR_AL_COPIAR"
+msgstr ""
+
+#: trabajo.py:292
 #, python-format
 msgid ""
 "Error al finalizar la siguiente tarea:\n"
@@ -807,37 +810,37 @@ msgid ""
 "%s"
 msgstr ""
 
-#: trabajo.py:294
+#: trabajo.py:296
 #, python-format
 msgid "Anadir %s a la particion %s"
 msgstr "Añadir %s a la partición %s"
 
-#: trabajo.py:296
+#: trabajo.py:298
 #, python-format
 msgid "Extraer %s a la ruta %s"
 msgstr "Extraer %s a la ruta %s"
 
-#: trabajo.py:298
+#: trabajo.py:300
 #, python-format
 msgid "Copiando el juego %s desde %s a la particion %s"
 msgstr "Copiando el juego %s desde %s a la partición %s"
 
-#: trabajo.py:300
+#: trabajo.py:302
 #, python-format
 msgid "Descargando caratula de %s"
 msgstr "Descargando carátula de %s"
 
-#: trabajo.py:302
+#: trabajo.py:304
 #, python-format
 msgid "Descargando disco de %s"
 msgstr ""
 
-#: trabajo.py:304
+#: trabajo.py:306
 #, python-format
 msgid "Copiando la caratula %s a la ruta %s"
 msgstr "Copiando la carátula %s a la ruta %s"
 
-#: trabajo.py:306
+#: trabajo.py:308
 #, python-format
 msgid "Copiando el disco %s a la ruta %s"
 msgstr ""

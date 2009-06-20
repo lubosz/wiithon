@@ -1,0 +1,38 @@
+Funcionalidades básicas
+--------------------------------------------------
+- Añadir fichero ISO mediante el típico selector de ficheros
+- Extraer un juego a un directorio.
+- Borrar un juego
+- Ver espacio ocupado/total
+- Ver número total de juegos.
+
+Funcionalidades que hacen de wiithon ser "especial"
+---------------------------------------------------
+- GUI basado en GTK, exclusivo para GNU/Linux, funciona en cualquier distribución.
+- Probado en GNOME y KDE sin problemas.
+- Gestionar múltiples particiones WBFS de forma sencilla
+- Diseñado con multilenguaje(i8n): Actualmente: Castellano e Inglés
+- Eficiente buscador de juegos: busca en IDGAME y TITULO
+- Copia entre particiones WBFS. (Copia 1:1). Copiar 1 juego o todos, evitando cualquier reemplazo en el destino.
+- Refrescar particiones WBFS "en caliente", sin tener que reabrir el programa.
+- Opción de evitar ejecutar wiithon como root, y dar la opción de ejcutarlo en espacio de usuario.
+- Añadir fichero ISO arrastrando (Drag & Drop)
+- Añadir un directorio: buscará todas los ficheros ISO recursivamente
+- Renombrar nombre del juego (máximo 128 caracteres)
+- Renombrar idgame del juego (máximo 6 caracteres y ser letras y números)
+- La tabla es ordenable por cualquiera de sus columnas.
+- Descarga caratula de portada y disco automáticamente (se guardan en ~/.wiithon/caratulas y ~/.wiithon/discos)
+- Permite sincronizar nuestras caratulas y discos con la tarjeta SD, copiando solo caratulas y discos nuevos.
+- Mantiene los comandos del wiithon 0.98 añadiendo el parametro "-c" o "--no-gui"
+- Para operaciones sencillas (copiar caratulas, descargar caratulas) se utiliza paralelismo para acelerar el proceso (6 hilos).
+- Para operaciones complejas (principalmente escribir/leer en WBFS) la operación es atómica (sin permitir paralelismo), esto es mejor así ya que una sola operación ocupa todo el ancho de banda de la entrada/salida. No obstante esta decisión de diseño sería facilmente modificable.
+
+Problemas conocidos
+---------------------------------------------------
+- La traducción a Ingles posiblemente podría mejorar. (La parte traducida por Sergio Padrino, seguro que esta bien hecha(por si te moskeas xD))
+- Como consecuencia de la librería libwbfs los porcentajes de progreso a veces distan un poco de la realidad.
+
+Problemas desconocidos (léase bugs)
+---------------------------------------------------
+- El sitio oficial para reportar bugs es: https://bugs.launchpad.net/wiithon, aunque responderé tambien por aquí.
+
