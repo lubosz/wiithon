@@ -10,7 +10,6 @@
 //#include "tools.h"
 #include <stdio.h>
 
-
 /*+----------------------------------------------------------------------------------------------+*/
 typedef unsigned char u8;									///< 8bit unsigned integer
 typedef unsigned short u16;								///< 16bit unsigned integer
@@ -45,11 +44,9 @@ typedef volatile float vf32;
 typedef volatile double vf64;
 /*+----------------------------------------------------------------------------------------------+*/
 
-
 // añadido por makiolo
 #define OK 0
 #define TRUE 0
-
 #define FALSE 1
 
 // constantes cogidas del libwbfs del usbloader GX

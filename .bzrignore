@@ -4,7 +4,7 @@ wiithon_wrapper/*.o
 *~
 *.pyc
 recursos/imagenes/*.xcf
-po/*/LC_MESSAGES/wiithon.mo
+po/locale/*/LC_MESSAGES/wiithon.mo
 po/plantilla.pot
 editar.sh
 recursos/threadpool.py

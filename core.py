@@ -42,8 +42,10 @@ class WiithonCORE:
     # index 1 -> Nombre del juego
     # index 2 -> Tamaño en GB redondeado a 2 cifras
     def getListaJuegos(self , DEVICE):
+        '''
         def ordenarPorNombre(juego1 , juego2):
             return cmp( juego1[1].lower() , juego2[1].lower() )
+        '''
 
         lineas = util.getSTDOUT_iterador( config.WBFS_APP+" -p "+DEVICE+" ls" )
 
@@ -52,7 +54,9 @@ class WiithonCORE:
             cachos = linea.strip().split(config.SEPARADOR)
             if(len(cachos)==3):
                 salida.append( [ cachos[0] , cachos[1] , cachos[2] ] )
+        '''
         salida.sort(ordenarPorNombre)
+        '''
         return salida
 
     # renombra el ISO de un IDGAME que esta en DEVICE
@@ -181,7 +185,7 @@ class WiithonCORE:
                     os.system("mogrify -resize 160x224! " + destino)
                 i = i + 1
             return descargada
-                            
+
     # borrar caratula
     def borrarCaratula( self, juego ):
         if self.existeCaratula( juego.idgame ):
@@ -227,7 +231,8 @@ class WiithonCORE:
             #directorioActual = os.getcwd()
             #os.chdir('/tmp')
             comando = 'rar e -o- "%s" "%s"' % (nombreRAR , "*.iso")
-            salida = subprocess.call( comando , shell=True , stderr=subprocess.STDOUT , stdout=open("/dev/null","w"))
+            salida = subprocess.call( comando , shell=True ,
+                    stderr=subprocess.STDOUT , stdout=open(os.devnull,"w"))
             #os.chdir(directorioActual)
             return (salida == 0)
         except KeyboardInterrupt:

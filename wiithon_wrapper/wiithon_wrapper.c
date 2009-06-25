@@ -16,13 +16,6 @@
 wbfs_t *wbfs_try_open(char *disc,char *partition, int reset);
 wbfs_t *wbfs_try_open_partition(char *fn,int reset);
 
-/////////////////////////////////////////////////////////////////////////////////
-// void spinner(u64 x, u64 max)
-// int read_wii_file(void*_fp,u32 offset,u32 count,void*iobuf)
-// int write_wii_sector_file(void*_fp,u32 lba,u32 count,void*iobuf)
-// f32 WBFS_GameSize(wbfs_t *p , u8 *discid)
-// s32 WBFS_DiskSpace(wbfs_t *p , f32 *used, f32 *free)
-
 void spinner(u64 x, u64 max)
 {
 	static time_t start_time;
@@ -32,12 +25,12 @@ void spinner(u64 x, u64 max)
 	u32 h, m, s;
 
 	if (x == 0) {
-		start_time = time(0);
+		start_time = time(NULL);
 		expected_total = 300;
 	}
 
 	if (x == max) {
-        d = time(0) - start_time;
+        d = time(NULL) - start_time;
         h = d / 3600;
         m = (d / 60) % 60;
         s = d % 60;
@@ -45,7 +38,7 @@ void spinner(u64 x, u64 max)
 		return;
 	}
 
-	d = time(0) - start_time;
+	d = time(NULL) - start_time;
 
 	if (d != 0)
 		expected_total = (3 * expected_total + d * max / x) / 4;

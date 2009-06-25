@@ -9,6 +9,7 @@ import re
 from threading import Thread
 
 import gtk
+import glib
 import gobject
 import pango
 
@@ -139,7 +140,10 @@ class WiithonGUI(GtkBuilderWrapper):
         gobject.threads_init()
 
         self.wb_principal.set_title('Wiithon')
-        self.wb_principal.set_icon_from_file(config.ICONO)
+        try:
+            self.wb_principal.set_icon_from_file(config.ICONO)
+        except glib.GError:
+            print _("No se ha encontrado icono, deberia reinstalar.")
         self.wb_principal.show()
 
         # conexion señales de la toolbar
@@ -626,7 +630,8 @@ class WiithonGUI(GtkBuilderWrapper):
 
     def get_usuario_esta_editando(self):
         #return self.editando or self.poolTrabajo.estaOcupado()
-        return self.editando
+        #return self.editando # BUG AQUI
+        return False
 
     # refresco desde memoria (rápido)
     def refrescarListaJuegos(self):

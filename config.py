@@ -21,12 +21,21 @@ WIITHON_FILES_RECURSOS_IMAGENES = \
 
 def getHOME():
     'Method to calculate the HOME dirname of the user'
-    global HOME
+    global HOME, APP, LOCALE
     ruta = os.path.join(WIITHON_FILES , "HOME.conf")
-    filedesc = open(ruta , "r")
-    HOME = filedesc.read().strip()
-    filedesc.close()
-    return HOME
+    if os.path.exists(ruta):
+        APP = "wiithon"
+        LOCALE = "/usr/share/locale/"
+        filedesc = open(ruta , "r")
+        HOME = filedesc.read().strip()
+        filedesc.close()
+        return HOME
+    else:
+        HOME = os.environ['HOME']
+        APP = "wiithon"
+        LOCALE = os.path.join(WIITHON_FILES , "po")
+        LOCALE = os.path.join(LOCALE , "locale")
+        return HOME
 
 HOME = getHOME()
 HOME_WIITHON = os.path.join(HOME , '.wiithon')
@@ -42,9 +51,6 @@ util.try_mkdir( HOME_WIITHON_BDD )
 util.try_mkdir( HOME_WIITHON_CARATULAS )
 util.try_mkdir( HOME_WIITHON_DISCOS )
 util.try_mkdir( HOME_WIITHON_LOGS )
-
-APP = "wiithon"
-LOCALE = "/usr/share/locale/"
 
 GLADE_ALERTA = "alerta"
 
@@ -74,3 +80,4 @@ MAX_LISTA_COPIA_1on1 = 15
 
 # Ruta del icono
 ICONO = "/usr/share/pixmaps/wiithon.png"
+

@@ -381,43 +381,47 @@ msgstr ""
 msgid "Total"
 msgstr ""
 
-#: core.py:105
+#: core.py:109
 #, python-format
 msgid "***************** DESCARGAR DISCO %s ********************"
 msgstr ""
 
-#: core.py:124 core.py:135
+#: core.py:128 core.py:139
 msgid "Copiando"
 msgstr ""
 
-#: core.py:128
+#: core.py:132
 #, python-format
 msgid "Ya tienes la caratula %s"
 msgstr ""
 
-#: core.py:139
+#: core.py:143
 #, python-format
 msgid "Ya tienes el disco-caratula %s"
 msgstr ""
 
-#: core.py:174
+#: core.py:178
 #, python-format
 msgid "***************** DESCARGAR CARATULA %s ********************"
 msgstr ""
 
-#: gui.py:68 recursos/glade/wiithon.ui.h:23
+#: gui.py:69 recursos/glade/wiithon.ui.h:23
 msgid "Renombrar"
 msgstr ""
 
-#: gui.py:71
+#: gui.py:72
 msgid "Extraer"
 msgstr ""
 
-#: gui.py:74
+#: gui.py:75
 msgid "Copiar a otra particion"
 msgstr "Copiar a otra partición"
 
-#: gui.py:271
+#: gui.py:146
+msgid "No se ha encontrado icono, deberia reinstalar."
+msgstr ""
+
+#: gui.py:275
 #, python-format
 msgid "No hay particiones WBFS, solo puede ver sus juegos acumuladas en %s"
 msgstr ""
@@ -430,29 +434,29 @@ msgstr ""
 "- Cuando borre un juego en este modo, borrara el registro y las caratula y "
 "disco descargadas."
 
-#: gui.py:273
+#: gui.py:277
 msgid "No hay particiones WBFS, conecte y refresque"
 msgstr ""
 "No hay particiones WBFS\n"
 "- Conecte una y pulse Refrescar WBFS."
 
-#: gui.py:298
+#: gui.py:302
 msgid "No puedes refrescar las particiones mientras hay tareas sin finalizar"
 msgstr ""
 
-#: gui.py:308
+#: gui.py:312
 msgid "Formato desconocido"
 msgstr ""
 
-#: gui.py:364
+#: gui.py:368
 msgid "Dispositivo"
 msgstr ""
 
-#: gui.py:365
+#: gui.py:369
 msgid "Fabricante"
 msgstr ""
 
-#: gui.py:407
+#: gui.py:411
 #, python-format
 msgid "Advertencia de seguridad de renombrar desde IDGAME = %s a %s"
 msgstr ""
@@ -472,75 +476,75 @@ msgstr ""
 "Guitar Hero y customs de este.\n"
 "¿Está seguro de renombrar el actual IDGAME %s como %s?"
 
-#: gui.py:416 gui.py:435
+#: gui.py:420 gui.py:439
 msgid "Error renombrando"
 msgstr ""
 
-#: gui.py:418
+#: gui.py:422
 msgid "Ya hay un juego con ese IDGAME"
 msgstr ""
 
-#: gui.py:420
+#: gui.py:424
 msgid ""
 "Error: La longitud del IDGAME debe ser 6, y solo puede contener letras y "
 "numeros"
 msgstr ""
 
-#: gui.py:437
+#: gui.py:441
 #, python-format
 msgid "Se han detectado caracteres no validos: %s"
 msgstr "Se han detectado carácteres no válidos: %s"
 
-#: gui.py:439
+#: gui.py:443
 #, python-format
 msgid ""
 "Nuevo nombre es demasiado largo, intente con un texto menor de %d caracteres"
 msgstr ""
 
-#: gui.py:458
+#: gui.py:462
 msgid "IDGAME"
 msgstr ""
 
-#: gui.py:459
+#: gui.py:463
 msgid "Nombre"
 msgstr ""
 
-#: gui.py:460
+#: gui.py:464
 msgid "Tamanio"
 msgstr "Tamaño"
 
-#: gui.py:696
+#: gui.py:701
 #, python-format
 msgid "%d juegos"
 msgstr ""
 
-#: gui.py:706
+#: gui.py:711
 #, python-format
 msgid "Hay %d tareas"
 msgstr ""
 
-#: gui.py:796
+#: gui.py:801
 msgid "Tienes que seleccionar una particion WBFS para realizar esta accion"
 msgstr "Tienes que seleccionar una partición WBFS para realizar esta acción"
 
-#: gui.py:822
+#: gui.py:827
 #, python-format
 msgid "Desea copiar el juego %s (%s) a la particion %s?"
 msgstr "¿Desea copiar el juego %s (%s) a la partición %s?"
 
-#: gui.py:825 gui.py:906 gui.py:947 gui.py:957
+#: gui.py:830 gui.py:911 gui.py:952 gui.py:962
 msgid "No has seleccionado ningun juego"
 msgstr "No has seleccionado ningún juego"
 
-#: gui.py:844
+#: gui.py:849
 msgid "Se van a copiar los siguientes juegos a"
 msgstr ""
 
-#: gui.py:851 gui.py:859
+#: gui.py:856 gui.py:864
 msgid "juegos mas"
 msgstr ""
 
-#: gui.py:853
+#: gui.py:858
 msgid ""
 "A continuacion se listan los juego que NO van a ser copiados por ya estar en "
 "la particion de destino"
@@ -548,22 +552,22 @@ msgstr ""
 "A continuación se listan los juego que NO van a ser copiados por ya estar en "
 "la partición de destino"
 
-#: gui.py:861
+#: gui.py:866
 msgid "Empezar a copiar?"
 msgstr "¿Desea que empieze la copia?"
 
-#: gui.py:867
+#: gui.py:872
 #, python-format
 msgid "No hay nada que copiar en %s"
 msgstr ""
 
-#: gui.py:869
+#: gui.py:874
 msgid ""
 "No hay un numero suficiente de particiones validas, para realizar esta "
 "accion."
 msgstr "Tienes que seleccionar una partición WBFS para realizar esta acción"
 
-#: gui.py:874
+#: gui.py:879
 #, python-format
 msgid "Advertencia de borrar %s (%s) en modo ver"
 msgstr ""
@@ -573,81 +577,81 @@ msgstr ""
 "- Esto supone borrar (además de borrar el registro) la carátula y el disco\n"
 "¿Esta seguro de borrar %s (%s)?"
 
-#: gui.py:892
+#: gui.py:897
 #, python-format
 msgid "Quieres borrar el juego con %s (%s)?"
 msgstr "¿Quieres borrar el juego %s (%s)?"
 
-#: gui.py:903
+#: gui.py:908
 msgid "Error borrando"
 msgstr ""
 
-#: gui.py:918
+#: gui.py:923
 #, python-format
 msgid "Elige un directorio donde extraer la ISO de %s"
 msgstr ""
 
-#: gui.py:930
+#: gui.py:935
 #, python-format
 msgid "Desea reemplazar la iso del juego %s (%s)?"
 msgstr "¿Quieres reemplazar la ISO del juego %s (%s)?"
 
-#: gui.py:969
+#: gui.py:974
 msgid "Elige una imagen ISO valida para Wii"
 msgstr ""
 
-#: gui.py:972
+#: gui.py:977
 msgid "Imagen ISO para Wii"
 msgstr ""
 
-#: gui.py:979
+#: gui.py:984
 msgid "Elige un directorio"
 msgstr ""
 
-#: gui.py:1005
+#: gui.py:1010
 #, python-format
 msgid "El juego ya esta metido, como %s (%s)"
 msgstr ""
 
-#: gui.py:1016
+#: gui.py:1021
 msgid "No has seleccionado ninguna particion"
 msgstr "No has seleccionado ninguna partición"
 
-#: gui.py:1027
+#: gui.py:1032
 msgid "Paso 1 de 2: Elige un directorio para las CARATULAS"
 msgstr "Paso 1 de 2: Elige un directorio donde copiar las CARATULAS"
 
-#: gui.py:1034
+#: gui.py:1039
 msgid "Paso 2 de 2: Elige un directorio para los DISCOS"
 msgstr "Paso 2 de 2: Elige un directorio donde copiar los DISCOS"
 
-#: gui.py:1052
+#: gui.py:1057
 msgid "No tienes ningun juego"
 msgstr "No tienes ningún juego"
 
-#: gui.py:1120
+#: gui.py:1125
 #, python-format
 msgid "Empieza %s"
 msgstr ""
 
-#: gui.py:1132
+#: gui.py:1137
 #, python-format
 msgid "Termina: %s"
 msgstr ""
 
-#: gui.py:1184
+#: gui.py:1189
 msgid "Finalizado."
 msgstr ""
 
-#: gui.py:1186
+#: gui.py:1191
 msgid "ERROR!"
 msgstr ""
 
-#: gui.py:1191
+#: gui.py:1196
 msgid "quedan"
 msgstr ""
 
-#: gui.py:1208
+#: gui.py:1213
 msgid "Empezando ..."
 msgstr ""
 
