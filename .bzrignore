@@ -1,10 +1,12 @@
-COMMIT
+po/locale/*/LC_MESSAGES/wiithon.mo
 wiithon_wrapper/wiithon_wrapper
+
+COMMIT
 wiithon_wrapper/*.o
 *~
 *.pyc
 recursos/imagenes/*.xcf
-po/locale/*/LC_MESSAGES/wiithon.mo
+
 po/plantilla.pot
 editar.sh
 recursos/threadpool.py
