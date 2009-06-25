@@ -1,4 +1,4 @@
-// Basado en wl wbfs.c de Kwiirk
+// Basado en el wbfs.c de Kwiirk
 // Ricardo Marmolejo García <makiolo@gmail.com>
 
 // Licensed under the terms of the GNU GPL, version 2
@@ -258,7 +258,7 @@ int wiithon_wrapper_clonar(wbfs_t *p , u8 *discid, char *destino)
 {
     int retorno = FALSE;
 
-    wbfs_t *p_dst = wbfs_try_open(NULL, destino , 0);
+    wbfs_t *p_dst = wbfs_try_open_partition(destino , 0);
     if(p_dst)
     {
         wbfs_disc_t *d_src = wbfs_open_disc(p_dst,discid);
@@ -278,6 +278,7 @@ int wiithon_wrapper_clonar(wbfs_t *p , u8 *discid, char *destino)
         }
     }
     wbfs_close(p_dst);
+
     return retorno;
 }
 
@@ -313,7 +314,7 @@ int main(int argc, char *argv[])
     int noFormatear;
     char *partition = NULL;
 
-    while ((opt = getopt(argc, argv, "p:d:hf:f")) != -1)
+    while ((opt = getopt(argc, argv, "p:h")) != -1)
     {
             switch (opt)
             {
@@ -333,7 +334,7 @@ int main(int argc, char *argv[])
 
     noFormatear = ((numParametros == 1) && (strcmp(argv[optind], "formatear") == 0)) ? FALSE : TRUE;
 
-    wbfs_t *p = wbfs_try_open(NULL, partition, noFormatear );
+    wbfs_t *p = wbfs_try_open_partition( partition, noFormatear );
     if(p)
     {
         if ( noFormatear == FALSE )
@@ -384,12 +385,13 @@ int main(int argc, char *argv[])
     }
     else
     {
-        printf("Wrapper hecho para wiithon por Ricardo Marmolejo García <makiolo@gmail.com>");
+        printf("Wrapper hecho para wiithon por Ricardo Marmolejo García <makiolo@gmail.com>\n");
         printf("No se ha facilitado ninguna partición WBFS.\n");
+        printf("Para más ayuda:\n\t%s -h\n" , argv[0]);
+        printf("No obstante, este wrapper esta pensado para ser usado por wiithon, y por tanto no se realizan unas serie de comprobaciones, debido a que se asume que los datos han sido verificados previamente por wiithon.\n");
+        printf("Intentando autodetectar ...\n");
         p = wbfs_try_open(0,0,0); //Autodetecta partición WBFS mediante libwbfs
         wbfs_close(p);
-        printf("Para más ayuda:\n\t%s -h\n" , argv[0]);
-        printf("No obstante, este wrapper esta pensado para ser usado desde wiithon, y por tanto no se realizan unas serie de comprobaciones, debido a que se asume que los datos han sido verificados previamente por wiithon.\n");
     }
     exit(retorno);
 }
