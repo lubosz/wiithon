@@ -4,7 +4,7 @@
 #
 # :: Mantenedor: Ricardo Marmolejo García <makiolo@gmail.com>
 # :: Jose Luis Segura <josel.segura@gmail.com>
-# :: Web : http://blogricardo.wordpress.com/2009/04/07/wiithon-wbfs-gui-para-wii/
+# :: Web : http://blogricardo.wordpress.com/2009/06/21/wiithon-1-0-liberado/
 # :: Ver LICENCIA.txt
 
 import sys

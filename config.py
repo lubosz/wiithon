@@ -6,7 +6,6 @@
 Some variable names are generated from some os functions
 '''
 
-
 import os
 import sys
 
@@ -21,22 +20,21 @@ WIITHON_FILES_RECURSOS_IMAGENES = \
 
 def getHOME():
     'Method to calculate the HOME dirname of the user'
-    global HOME, APP, LOCALE
+    global HOME, LOCALE
     ruta = os.path.join(WIITHON_FILES , "HOME.conf")
     if os.path.exists(ruta):
-        APP = "wiithon"
-        LOCALE = "/usr/share/locale/"
         filedesc = open(ruta , "r")
         HOME = filedesc.read().strip()
         filedesc.close()
+        LOCALE = "/usr/share/locale/"
         return HOME
     else:
         HOME = os.environ['HOME']
-        APP = "wiithon"
         LOCALE = os.path.join(WIITHON_FILES , "po")
         LOCALE = os.path.join(LOCALE , "locale")
         return HOME
 
+APP = "wiithon"
 HOME = getHOME()
 HOME_WIITHON = os.path.join(HOME , '.wiithon')
 HOME_WIITHON_BDD = os.path.join(HOME_WIITHON , 'bdd')

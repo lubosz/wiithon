@@ -125,9 +125,9 @@ class WiithonCLI:
                 else:
                     IDGAME = self.get_IDJUEGO_de_Lista(DEVICE , listaJuegos)
                 if(self.core.descargarCaratula(IDGAME)):
-                    print _("OK, descargado %s.png" % IDGAME)
+                    print _("OK, descargado %s.png") % IDGAME
                 else:
-                    print _("ERROR, descargando %s.png" % IDGAME)
+                    print _("ERROR, descargando %s.png") % IDGAME
             else:
                 print _("No hay Juegos para descargar una caratula")
         elif ( parm1 == "caratulas" or parm1 == "covers"):
@@ -157,7 +157,7 @@ class WiithonCLI:
                     NUEVO_NOMBRE = raw_input(_("Escriba el nuevo nombre : "))
                 print "%s = %s %s %s" % ( _("Renombrar juego IDGAME") , IDGAME , _("como") , NUEVO_NOMBRE)
                 if ( self.core.renombrarISO( DEVICE , IDGAME , NUEVO_NOMBRE ) ):
-                    print _("ISO renombrada correctamente a %s" % NUEVO_NOMBRE)
+                    print _("ISO renombrada correctamente a %s") % NUEVO_NOMBRE
                 else:
                     print _("ERROR al renombrar")
             else:
@@ -170,9 +170,9 @@ class WiithonCLI:
                     IDGAME = self.get_IDJUEGO_de_Lista(DEVICE , listaJuegos)
                 print "%s = %s %s %s %s" % ( _("Extraer ISO de juego con IDGAME") ,IDGAME , _("en particion") , DEVICE , FABRICANTE)
                 if( self.core.extraerJuego(DEVICE , IDGAME) ):
-                    print _("Juego %s extraido OK" % (IDGAME))
+                    print _("Juego %s extraido OK") % (IDGAME)
                 else:
-                    print _("ERROR extrayendo la ISO de %s" % (IDGAME))
+                    print _("ERROR extrayendo la ISO de %s") % (IDGAME)
             else:
                 print _("No hay Juegos para extraer")
         elif ( parm1 == "ayuda" or parm1 == "h" or parm1 == "help" or parm1 == "-h" or parm1 == "--help" ):
@@ -184,10 +184,10 @@ class WiithonCLI:
                     if( not os.path.isdir(parametro) ):
                         archivo = "."
 
-                    print _("Buscando en %s ficheros RAR ... " % os.path.dirname(archivo))
+                    print _("Buscando en %s ficheros RAR ... ") % os.path.dirname(archivo)
                     self.encolar( util.rec_glob(archivo, "*.rar") )
 
-                    print _("Buscando en %s Imagenes ISO ... " % os.path.dirname(archivo))
+                    print _("Buscando en %s Imagenes ISO ... ") % os.path.dirname(archivo)
                     self.encolar( util.rec_glob(archivo, "*.iso") )
 
                 elif    (
@@ -450,70 +450,23 @@ class WiithonCLI:
 
     def uso(self):
         wiithon = os.path.basename(sys.argv[0])
-        print '''
-Listar juegos. El programa por defecto, sin parametros, hace un listado de los juegos (lanzara el GUI en alguna prox versión):
-\t\t%s
-
-Añadir ISO mediante una lista explicita de las ISOS:
-\t\t%s "%s/wii/mario.iso" "iso2" "iso3" "isoN"
-
-Añadir ISO con exp. reg. La expresión solo afecta al directorio actual, actualmente no es recursivo:
-\t\t%s *.iso
-
-Buscar y Añadir ISO's recursivamente. Busca todos las imagenes isos RECURSIVAMENTE, incluso tambien busca dentro de RAR, a falta de implementar zip), tal vez necesites apt-get install rar.
-\t\t%s buscar
-
-Borrar juegos. Especificando el juego mediante un menú:
-\t\t%s borrar
-
-Borrar juegos. Podemos borrar con el IDGAME:
-\t\t%s borrar IDJUEGO
-
-Borrar juegos. Podemos borrar con el IDGAME obtenido a partir de un ISO local. El archivo ISO local NO es borrado:
-\t\t%s borrar "%s/wii/mario.iso"
-
-Renombrar juegos. Especificando el juego mediante un menú:
-\t\t%s renombrar
-
-Renombrar juegos, puedes cambiar el nombre de los juegos ya metidos en HD, útil para que nos enteremos cuando estemos con el USB Loader:
-\t\t%s renombrar IDGAME "Mario Kart Wii"
-
-Extraer juegos a un archivo ISO. El juego es especificado mediante un menú:
-\t\t%s extraer
-
-Extraer juegos a un archivo ISO. OJO! : El archivo ISO de salida pertenecerá a root:
-\t\t%s extraer IDJUEGO
-
-Descargar todas las caratulas automaticamente a 160x225. Ojo puede que el servidor te banee, si te ocurre intentalo 5 minutos más tarde:
-\t\t%s caratulas
-
-Descargar la caratulas de un juego especificado por su IDGAME, la imagen es bajada a 160x225. El comando es un singular, es "caratula" ya que "caratulas" descarga todas:
-\t\t%s caratula IDGAME
-
-Descargar la caratulas de un juego especificado por menú, la imagen es bajada a 160x225. El comando es un singular, es "caratula" ya que "caratulas" descarga todo:
-\t\t%s caratula"
-
-Instar juegos desde el DVD, al estilo del usb loader, pero algo más lento porque dumpea a ISO y cuando termina mete la ISO:
-\t\t%s instalar
-
-Web : http://blogricardo.wordpress.com/2009/04/07/wiithon-wbfs-gui-para-wii
-''' % (
-    wiithon,
-    wiithon, sys.argv[0],
-    wiithon,
-    wiithon,
-    wiithon,
-    wiithon,
-    wiithon, sys.argv[0],
-    wiithon,
-    wiithon,
-    wiithon,
-    wiithon,
-    wiithon,
-    wiithon,
-    wiithon,
-    wiithon
-      )
+        print _("AYUDA_CLI") % (
+                                wiithon,
+                                wiithon, sys.argv[0],
+                                wiithon,
+                                wiithon,
+                                wiithon,
+                                wiithon,
+                                wiithon, sys.argv[0],
+                                wiithon,
+                                wiithon,
+                                wiithon,
+                                wiithon,
+                                wiithon,
+                                wiithon,
+                                wiithon,
+                                wiithon
+                                  )
 
     def encolar(self , juegos):
         if type(juegos) == list:

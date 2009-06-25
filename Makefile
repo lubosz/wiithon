@@ -221,7 +221,7 @@ actualizar:
 # Generar plantilla POT
 po/plantilla.pot: recursos/glade/*.ui.h *.py
 	@echo "*** GETTEXT *** Extrayendo strings del código"
-	xgettext --language=Python --no-wrap --omit-header --keyword=_ --keyword=N_ --from-code=utf-8 --sort-by-file --package-name="wiithon" --package-version="$(VERSION)" --msgid-bugs-address=$(EMAIL) -o po/plantilla.pot $^
+	xgettext --language=Python --no-wrap --no-location --sort-output --omit-header --keyword=_ --keyword=N_ --from-code=utf-8 --package-name="wiithon" --package-version="$(VERSION)" --msgid-bugs-address=$(EMAIL) -o po/plantilla.pot $^
 
 # extraer strings del glade
 recursos/glade/%.ui.h: recursos/glade/%.ui
@@ -230,8 +230,8 @@ recursos/glade/%.ui.h: recursos/glade/%.ui
 # generar PO, si ya existe, mezcla o sincroniza
 po/%.po: po/plantilla.pot
 	# He desactivado fuzzy con -N
-	# tambien podemos quitar la referencia a la linea con --no-location
-	msgmerge -U -N --no-wrap $@ $(filter %.pot, $^)
+	# tambien he quitado los comentarios con --no-location
+	msgmerge -U -N --no-wrap --no-location $@ $(filter %.pot, $^)
 	touch $@
 
 # generar MO
@@ -254,7 +254,7 @@ initPO: po/plantilla.pot
 	# Inglés
 	#msginit -i po/plantilla.pot -o po/en.po --no-translator
 	# brasileño
-	msginit -i po/plantilla.pot -o po/pt_BR.po --no-translator
+	#msginit -i po/plantilla.pot -o po/pt_BR.po --no-translator
 	# portugues
 	msginit -i po/plantilla.pot -o po/pt_PT.po --no-translator
 	# alemán
