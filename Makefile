@@ -42,7 +42,7 @@ dependencias:
 	@echo "=================================================================="
 
 permisos:
-	adduser $(USUARIO) disk
+	gpasswd -a $(USUARIO) disk
 	mkdir -p $(HOME_WIITHON)
 	@mkdir -p $(HOME_WIITHON_BDD)
 	@mkdir -p $(HOME_WIITHON_CARATULAS)
