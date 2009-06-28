@@ -37,8 +37,10 @@ permisos: permissions_fix
 install_wiithon: install_auto permissions_fix
 
 install_sin_compilar_auto: uninstall dependencias install_sin_compilar
-
 install_compilando_auto: uninstall dependencias dependencias_dev install_compilando
+
+install_sin_compilar_auto_and_fix: install_sin_compilar_auto
+install_compilando_auto_and_fix: install_compilando_auto
 
 dependencias_dev:
 	apt-get install intltool
@@ -211,12 +213,12 @@ actualizar: actualizar_sin_compilar
 
 actualizar_sin_compilar: uninstall pull install_sin_compilar log
 	@echo "=================================================================="
-	@echo "Update to $(VRSION) rev$(REVISION)"
+	@echo "Update to $(VERSION) rev$(REVISION)"
 	@echo "=================================================================="
 	
 actualizar_compilando: uninstall pull install_compilando log
 	@echo "=================================================================="
-	@echo "Update to $(VRSION) rev$(REVISION)"
+	@echo "Update to $(VERSION) rev$(REVISION)"
 	@echo "=================================================================="
 
 clean: clean_wiithon_wrapper clean_gettext
