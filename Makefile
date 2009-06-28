@@ -42,7 +42,8 @@ install_sin_compilar_auto_and_fix: install_sin_compilar_auto permissions_fix
 install_compilando_auto_and_fix: install_compilando_auto permissions_fix
 
 dependencias:
-	apt-get install intltool imagemagick wget rar python-gtk2 python-glade2 python-sexy python-sqlalchemy gnome-icon-theme menu
+	# intltool
+	apt-get install imagemagick wget rar python-gtk2 python-glade2 python-sexy python-sqlalchemy gnome-icon-theme menu
 	@echo "=================================================================="
 	@echo "Install depends"
 	@echo "=================================================================="
@@ -66,7 +67,7 @@ compilar_forzar: clean compilar
 
 compilar: wiithon_wrapper/wiithon_wrapper ./po/locale/da_DK/LC_MESSAGES/wiithon.mo ./po/locale/fi_FI/LC_MESSAGES/wiithon.mo ./po/locale/tr_TR/LC_MESSAGES/wiithon.mo ./po/locale/ru_RU/LC_MESSAGES/wiithon.mo ./po/locale/ko_KR/LC_MESSAGES/wiithon.mo ./po/locale/it/LC_MESSAGES/wiithon.mo ./po/locale/sv_SE/LC_MESSAGES/wiithon.mo ./po/locale/es/LC_MESSAGES/wiithon.mo ./po/locale/pt_PT/LC_MESSAGES/wiithon.mo ./po/locale/en/LC_MESSAGES/wiithon.mo ./po/locale/nl_NL/LC_MESSAGES/wiithon.mo ./po/locale/nb_NO/LC_MESSAGES/wiithon.mo ./po/locale/ja_JP/LC_MESSAGES/wiithon.mo ./po/locale/fr/LC_MESSAGES/wiithon.mo ./po/locale/pt_BR/LC_MESSAGES/wiithon.mo ./po/locale/de/LC_MESSAGES/wiithon.mo
 
-install_compilando: compilar
+install_compilando: compilar install_sin_compilar
 
 install_sin_compilar:
 	mkdir -p $(PREFIX)/share/wiithon
@@ -256,16 +257,16 @@ recursos/glade/%.ui.h: recursos/glade/%.ui
 # tambien he quitado los comentarios con --no-location
 po/%.po: po/plantilla.pot
 	msgmerge -U -N --no-wrap --no-location $@ $(filter %.pot, $^)
-	touch $@
+	@touch $@
 
 # generar MO
 # FIXME: Crea po/locale/pt_BR/LC_MESSAGES/wiithon
 # debería crear: po/locale/pt_BR/LC_MESSAGES/
 # lo parcheo con el rmdir
 po/locale/%/LC_MESSAGES/wiithon.mo: po/%.po
-	mkdir -p $(basename $@)
+	@mkdir -p $(basename $@)
 	msgfmt $< -o $@
-	rmdir $(basename $@)
+	@rmdir $(basename $@)
 
 # generar PO VACIO a partir de plantilla POT
 initPO: po/plantilla.pot
