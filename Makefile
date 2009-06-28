@@ -27,23 +27,15 @@ all:
 	@echo "Escribe \"sudo make run LANGUAGE=XX\" para instalar & autoejecutar en un idioma"
 	@echo ==================================================================
 
-run: install_compilando
+run: install
 	LANGUAGE=$(LANGUAGE) wiithon
 
-install: install_sin_compilar
 permisos: permissions_fix
-install_auto: install_sin_compilar_auto
-
-# internos
-install_sin_compilar_auto: uninstall dependencias install_sin_compilar
-install_compilando_auto: uninstaill dependencias install_compilando
-
-install_sin_compilar_auto_and_fix: install_sin_compilar_auto permissions_fix
-install_compilando_auto_and_fix: install_compilando_auto permissions_fix
+install_auto: uninstall dependencias install
+install_auto_and_fix: install_auto permisos
 
 dependencias:
-	# intltool
-	apt-get install imagemagick wget rar python-gtk2 python-glade2 python-sexy python-sqlalchemy gnome-icon-theme menu
+	apt-get intltool install imagemagick wget rar python-gtk2 python-glade2 python-sexy python-sqlalchemy gnome-icon-theme menu
 	@echo "=================================================================="
 	@echo "Install depends"
 	@echo "=================================================================="
@@ -67,9 +59,7 @@ compilar_forzar: clean compilar
 
 compilar: wiithon_wrapper/wiithon_wrapper ./po/locale/da_DK/LC_MESSAGES/wiithon.mo ./po/locale/fi_FI/LC_MESSAGES/wiithon.mo ./po/locale/tr_TR/LC_MESSAGES/wiithon.mo ./po/locale/ru_RU/LC_MESSAGES/wiithon.mo ./po/locale/ko_KR/LC_MESSAGES/wiithon.mo ./po/locale/it/LC_MESSAGES/wiithon.mo ./po/locale/sv_SE/LC_MESSAGES/wiithon.mo ./po/locale/es/LC_MESSAGES/wiithon.mo ./po/locale/pt_PT/LC_MESSAGES/wiithon.mo ./po/locale/en/LC_MESSAGES/wiithon.mo ./po/locale/nl_NL/LC_MESSAGES/wiithon.mo ./po/locale/nb_NO/LC_MESSAGES/wiithon.mo ./po/locale/ja_JP/LC_MESSAGES/wiithon.mo ./po/locale/fr/LC_MESSAGES/wiithon.mo ./po/locale/pt_BR/LC_MESSAGES/wiithon.mo ./po/locale/de/LC_MESSAGES/wiithon.mo
 
-install_compilando: compilar install_sin_compilar
-
-install_sin_compilar:
+install: compilar
 	mkdir -p $(PREFIX)/share/wiithon
 	mkdir -p $(PREFIX)/share/wiithon/recursos/glade
 	mkdir -p $(PREFIX)/share/wiithon/recursos/imagenes
@@ -200,14 +190,7 @@ purge: uninstall
 	@echo "Uninstall OK & all clean (purge covers, bdd ...)"
 	@echo "=================================================================="
 
-actualizar: actualizar_sin_compilar
-
-actualizar_sin_compilar: uninstall pull install_sin_compilar log
-	@echo "=================================================================="
-	@echo "Updated to $(VERSION) rev$(REVISION)"
-	@echo "=================================================================="
-	
-actualizar_compilando: uninstall pull install_compilando log
+actualizar: uninstall pull install log
 	@echo "=================================================================="
 	@echo "Updated to $(VERSION) rev$(REVISION)"
 	@echo "=================================================================="
