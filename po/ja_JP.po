@@ -1,14 +1,14 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
+"POT-Creation-Date: \n"
+"PO-Revision-Date: 2009-06-28 05:20+0100\n"
 "Last-Translator: Ricardo Marmolejo García <makiolo@gmail.com>\n"
 "Language-Team: none\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"POT-Creation-Date: \n"
-"PO-Revision-Date: 2009-06-28 05:20+0100\n"
 
 #, python-format
 msgid "%d juegos"
@@ -630,4 +630,3 @@ msgstr ""
 
 msgid "wiithon no borra la ISO temporal, puedes borrarla si no la necesitas"
 msgstr ""
-
