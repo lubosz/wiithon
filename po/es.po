@@ -6,6 +6,10 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"POT-Creation-Date: \n"
+"PO-Revision-Date: 2009-06-28 05:13+0100\n"
+"Last-Translator: Ricardo Marmolejo García <makiolo@gmail.com>\n"
+"Language-Team: \n"
 
 #, python-format
 msgid "%d juegos"
@@ -502,6 +506,9 @@ msgid ""
 "Si has conectado una particion WBFS y no ha sido detectada, es debido a que no hay permisos de lectura y escritura.\n"
 "Para solucionarlo siga los pasos de la guia de instalacion."
 msgstr ""
+"No se han detectado particiones WBFS.\n"
+"Si has conectado una partición WBFS y no ha sido detectada, es debido a que no hay permisos de lectura y escritura.\n"
+"Para solucionarlo siga los pasos de la guía de instalación."
 
 #, python-format
 msgid "No tienes instalado ningun juego en %s"
@@ -563,7 +570,7 @@ msgid "Quieres borrar el juego con %s (%s)?"
 msgstr "¿Quieres borrar el juego %s (%s)?"
 
 msgid "Refrescar WBFS"
-msgstr ""
+msgstr "Actualizar WBFS"
 
 msgid "Renombrar"
 msgstr ""
@@ -703,3 +710,4 @@ msgstr ""
 
 msgid "wiithon no borra la ISO temporal, puedes borrarla si no la necesitas"
 msgstr ""
+
