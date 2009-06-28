@@ -30,26 +30,19 @@ all:
 run: install_compilando
 	LANGUAGE=$(LANGUAGE) wiithon
 
-# alias
-install_auto: install_sin_compilar_auto
+install: install_sin_compilar
 permisos: permissions_fix
+install_auto: install_sin_compilar_auto
 
-install_wiithon: install_auto permissions_fix
-
+# internos
 install_sin_compilar_auto: uninstall dependencias install_sin_compilar
-install_compilando_auto: uninstall dependencias dependencias_dev install_compilando
+install_compilando_auto: uninstaill dependencias install_compilando
 
-install_sin_compilar_auto_and_fix: install_sin_compilar_auto
-install_compilando_auto_and_fix: install_compilando_auto
-
-dependencias_dev:
-	apt-get install intltool
-	@echo "=================================================================="
-	@echo "Install depends of developer"
-	@echo "=================================================================="
+install_sin_compilar_auto_and_fix: install_sin_compilar_auto permissions_fix
+install_compilando_auto_and_fix: install_compilando_auto permissions_fix
 
 dependencias:
-	apt-get install imagemagick wget rar python-gtk2 python-glade2 python-sexy python-sqlalchemy gnome-icon-theme menu
+	apt-get install intltool imagemagick wget rar python-gtk2 python-glade2 python-sexy python-sqlalchemy gnome-icon-theme menu
 	@echo "=================================================================="
 	@echo "Install depends"
 	@echo "=================================================================="
@@ -69,15 +62,13 @@ permissions_fix:
 	@echo "Fix permissions for WBFS. If dont detect, reboot GNOME / KDE"
 	@echo "=================================================================="
 
-install:
-	make --assume-old="wiithon_wrapper/wiithon_wrapper ./po/locale/da_DK/LC_MESSAGES/wiithon.mo ./po/locale/fi_FI/LC_MESSAGES/wiithon.mo ./po/locale/tr_TR/LC_MESSAGES/wiithon.mo ./po/locale/ru_RU/LC_MESSAGES/wiithon.mo ./po/locale/ko_KR/LC_MESSAGES/wiithon.mo ./po/locale/it/LC_MESSAGES/wiithon.mo ./po/locale/sv_SE/LC_MESSAGES/wiithon.mo ./po/locale/es/LC_MESSAGES/wiithon.mo ./po/locale/pt_PT/LC_MESSAGES/wiithon.mo ./po/locale/en/LC_MESSAGES/wiithon.mo ./po/locale/nl_NL/LC_MESSAGES/wiithon.mo ./po/locale/nb_NO/LC_MESSAGES/wiithon.mo ./po/locale/ja_JP/LC_MESSAGES/wiithon.mo ./po/locale/fr/LC_MESSAGES/wiithon.mo ./po/locale/pt_BR/LC_MESSAGES/wiithon.mo ./po/locale/de/LC_MESSAGES/wiithon.mo recursos/glade/*.ui.h *.py po/*.po po/plantilla.pot recursos/glade/*.ui" install_compilando
+compilar_forzar: clean compilar
 
 compilar: wiithon_wrapper/wiithon_wrapper ./po/locale/da_DK/LC_MESSAGES/wiithon.mo ./po/locale/fi_FI/LC_MESSAGES/wiithon.mo ./po/locale/tr_TR/LC_MESSAGES/wiithon.mo ./po/locale/ru_RU/LC_MESSAGES/wiithon.mo ./po/locale/ko_KR/LC_MESSAGES/wiithon.mo ./po/locale/it/LC_MESSAGES/wiithon.mo ./po/locale/sv_SE/LC_MESSAGES/wiithon.mo ./po/locale/es/LC_MESSAGES/wiithon.mo ./po/locale/pt_PT/LC_MESSAGES/wiithon.mo ./po/locale/en/LC_MESSAGES/wiithon.mo ./po/locale/nl_NL/LC_MESSAGES/wiithon.mo ./po/locale/nb_NO/LC_MESSAGES/wiithon.mo ./po/locale/ja_JP/LC_MESSAGES/wiithon.mo ./po/locale/fr/LC_MESSAGES/wiithon.mo ./po/locale/pt_BR/LC_MESSAGES/wiithon.mo ./po/locale/de/LC_MESSAGES/wiithon.mo
 
-install_sin_compilar: install
-
 install_compilando: compilar
 
+install_sin_compilar:
 	mkdir -p $(PREFIX)/share/wiithon
 	mkdir -p $(PREFIX)/share/wiithon/recursos/glade
 	mkdir -p $(PREFIX)/share/wiithon/recursos/imagenes
@@ -212,12 +203,12 @@ actualizar: actualizar_sin_compilar
 
 actualizar_sin_compilar: uninstall pull install_sin_compilar log
 	@echo "=================================================================="
-	@echo "Update to $(VERSION) rev$(REVISION)"
+	@echo "Updated to $(VERSION) rev$(REVISION)"
 	@echo "=================================================================="
 	
 actualizar_compilando: uninstall pull install_compilando log
 	@echo "=================================================================="
-	@echo "Update to $(VERSION) rev$(REVISION)"
+	@echo "Updated to $(VERSION) rev$(REVISION)"
 	@echo "=================================================================="
 
 clean: clean_wiithon_wrapper clean_gettext
@@ -238,8 +229,8 @@ wiithon_wrapper/wiithon_wrapper: wiithon_wrapper/*.c wiithon_wrapper/*.h wiithon
 pull:
 	bzr pull
 
-commit:
-	@if [ `grep -n fuzzy po/*.po | wc -l` -eq 0 ]; then bzr commit --file="COMMIT" && echo "" > COMMIT; else echo "Hay fuzzy en los archivos po, resuelvelo, y repite esta operación"; fi;
+commit: clean
+	bzr commit --file="COMMIT"
 
 log:
 	bzr log --forward --short

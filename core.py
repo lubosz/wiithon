@@ -48,10 +48,7 @@ class WiithonCORE:
         '''
 
         comando = "%s -p %s ls" % (config.WBFS_APP, DEVICE)
-        print comando
         lineas = util.getSTDOUT_iterador( comando )
-        print lineas
-
         salida = []
         for linea in lineas:
             cachos = linea.strip().split(config.SEPARADOR)
