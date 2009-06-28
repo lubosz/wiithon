@@ -98,7 +98,6 @@ install_compilando: compilar
 	cp config.py $(PREFIX)/share/wiithon
 	cp pool.py $(PREFIX)/share/wiithon
 	cp trabajo.py $(PREFIX)/share/wiithon
-	cp mensaje.py $(PREFIX)/share/wiithon
 	cp preferencias.py $(PREFIX)/share/wiithon
 	cp juego.py $(PREFIX)/share/wiithon
 	cp animar.py $(PREFIX)/share/wiithon
