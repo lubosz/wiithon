@@ -47,7 +47,10 @@ class WiithonCORE:
             return cmp( juego1[1].lower() , juego2[1].lower() )
         '''
 
-        lineas = util.getSTDOUT_iterador( config.WBFS_APP+" -p "+DEVICE+" ls" )
+        comando = "%s -p %s ls" % (config.WBFS_APP, DEVICE)
+        print comando
+        lineas = util.getSTDOUT_iterador( comando )
+        print lineas
 
         salida = []
         for linea in lineas:

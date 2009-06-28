@@ -9,7 +9,6 @@ from threading import Thread, Semaphore
 import config
 import util
 from pool import Pool
-from mensaje import Mensaje
 from juego import Juego
 
 # pseudo-enumerado
@@ -164,7 +163,6 @@ class PoolTrabajo(Pool , Thread):
             encontrados =  util.rec_glob(fichero, "*.rar")
             if (len(encontrados) == 0):
                 pass
-                #core.nuevoMensaje( Mensaje("INFO",_("No se ha encontrado ningun RAR con ISOS dentro")))
             else:
                 for encontrado in encontrados:
                     self.nuevoTrabajoAnadir( encontrado , DEVICE)

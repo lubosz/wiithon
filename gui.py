@@ -9,7 +9,6 @@ import re
 from threading import Thread
 
 import gtk
-import glib
 import gobject
 import pango
 
@@ -138,10 +137,7 @@ class WiithonGUI(GtkBuilderWrapper):
         gobject.threads_init()
 
         self.wb_principal.set_title('Wiithon')
-        try:
-            self.wb_principal.set_icon_from_file(config.ICONO)
-        except glib.GError:
-            print _("No se ha encontrado icono, deberia reinstalar.")
+        self.wb_principal.set_icon_from_file(config.ICONO)
         self.wb_principal.show()
 
         # conexion señales de la toolbar
@@ -274,7 +270,7 @@ class WiithonGUI(GtkBuilderWrapper):
                 # indirectamente se carga:
                 # lee el modelo de datos de la partición seleccionada
                 # tambien refresca la lista de juegos del CORE
-                self.seleccionarPrimeraFila( self.wb_tv_partitions)
+                self.seleccionarPrimeraFila( self.wb_tv_partitions )
                 
                 #mostrar algunas coasa
                 self.wb_vboxProgresoEspacio.show()
@@ -573,7 +569,7 @@ class WiithonGUI(GtkBuilderWrapper):
         self.refrescarListaJuegos()
 
     # refresco desde el disco duro (lento)
-    def refrescarListaJuegosFromCore(self):
+    def refrescarListaJuegosFromCore(self):        
         # recargar el modelo de datos la lista de juegos
         self.listaJuegos = self.core.getListaJuegos( self.DEVICEParticionSeleccionada )
 
@@ -1006,14 +1002,12 @@ class WiithonGUI(GtkBuilderWrapper):
                 fc_copiar_SD.set_default_response(gtk.RESPONSE_OK)
                 fc_copiar_SD.set_local_only(True)
                 fc_copiar_SD.set_current_folder( self.preferencia.ruta_copiar_caratulas )
-                fc_copiar_SD.show()
 
                 if ( fc_copiar_SD.run() == gtk.RESPONSE_OK ):
                     fc_copiar_discos_SD = gtk.FileChooserDialog(_('Paso 2 de 2: Elige un directorio para los DISCOS'), None , gtk.FILE_CHOOSER_ACTION_SELECT_FOLDER , botones)
                     fc_copiar_discos_SD.set_default_response(gtk.RESPONSE_OK)
                     fc_copiar_discos_SD.set_local_only(True)
                     fc_copiar_discos_SD.set_current_folder( self.preferencia.ruta_copiar_discos )
-                    fc_copiar_discos_SD.show()
                     if(fc_copiar_discos_SD.run() == gtk.RESPONSE_OK):
                         self.preferencia.ruta_copiar_caratulas = fc_copiar_SD.get_current_folder()
                         self.preferencia.ruta_copiar_discos = fc_copiar_discos_SD.get_current_folder()
