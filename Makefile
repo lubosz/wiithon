@@ -18,46 +18,63 @@ all:
 	@echo "Escribe \"sudo make uninstall\" para desinstalar wiithon"
 	@echo "Escribe \"sudo make dependencias\" para instalar las dependencias con apt-get"
 	@echo "Escribe \"sudo make install\" para instalar wiithon en espacio de root"
+	@echo "Escribe \"install_compilando\" para instalar wiithon recompilando antes textos, wrapper ..."
 	@echo ""
-	@echo "Escribe \"sudo make permisos\" para evitar que wiithon funcione como root"
+	@echo "Escribe \"sudo make permissions_fix\" para evitar que wiithon funcione como root"
 	@echo ""
 	@echo "Escribe \"sudo make purge\" para desinstalar wiithon completamente"
 	@echo ""
-	@echo "Escribe \"sudo make run\" para instalar & autoejecutar en español"
-	@echo "Escribe \"sudo make runEN\" para instalar & autoejecutar en ingles"
+	@echo "Escribe \"sudo make run LANGUAGE=XX\" para instalar & autoejecutar en un idioma"
 	@echo ==================================================================
 
-run: install
-	LANGUAGE=es LANG=es_ES.UTF-8 wiithon
+run: install_compilando
+	LANGUAGE=$(LANGUAGE) wiithon
 
-runEN: install
-	LANGUAGE=en LANG=en_US.UTF-8 wiithon
+# alias
+install_auto: install_sin_compilar_auto
+permisos: permissions_fix
 
-install_auto: uninstall dependencias install
+install_wiithon: install_auto permissions_fix
+
+install_sin_compilar_auto: uninstall dependencias install_sin_compilar
+
+install_compilando_auto: uninstall dependencias dependencias_dev install_compilando
+
+dependencias_dev:
+	apt-get install intltool
+	@echo "=================================================================="
+	@echo "Install depends of developer"
+	@echo "=================================================================="
 
 dependencias:
-	apt-get install imagemagick wget rar intltool python-gtk2 python-glade2 python-sexy python-sqlalchemy gnome-icon-theme menu
+	apt-get install imagemagick wget rar python-gtk2 python-glade2 python-sexy python-sqlalchemy gnome-icon-theme menu
 	@echo "=================================================================="
-	@echo "Instaladas dependencias"
+	@echo "Install depends"
 	@echo "=================================================================="
 
-permisos:
+permissions_fix:
 	gpasswd -a $(USUARIO) disk
 	mkdir -p $(HOME_WIITHON)
-	@mkdir -p $(HOME_WIITHON_BDD)
-	@mkdir -p $(HOME_WIITHON_CARATULAS)
-	@mkdir -p $(HOME_WIITHON_DISCOS)
-	@mkdir -p $(HOME_WIITHON_LOGS)
-	@echo "Corrigiendo permisos de $(HOME_WIITHON)"
-	@chown $(USUARIO) $(HOME_WIITHON) -R
-
-	@echo "Quitando wiithon como root del menu"
+	mkdir -p $(HOME_WIITHON_BDD)
+	mkdir -p $(HOME_WIITHON_CARATULAS)
+	mkdir -p $(HOME_WIITHON_DISCOS)
+	mkdir -p $(HOME_WIITHON_LOGS)
+	@echo "Fix permissions in $(HOME_WIITHON)"
+	chown $(USUARIO) $(HOME_WIITHON) -R
 	-@$(RM) /usr/share/applications/wiithon_root.desktop
-	@echo "Poniendo wiithon como usuario en el menu"
-	@cp wiithon_usuario.desktop /usr/share/applications/
+	cp wiithon_usuario.desktop /usr/share/applications/
+	@echo "=================================================================="
+	@echo "Fix permissions for WBFS. If dont detect, reboot GNOME / KDE"
+	@echo "=================================================================="
 
-# FIXME: alguna forma de expandir todos los moo
-install: wiithon_wrapper/wiithon_wrapper ./po/locale/da_DK/LC_MESSAGES/wiithon.mo ./po/locale/fi_FI/LC_MESSAGES/wiithon.mo ./po/locale/tr_TR/LC_MESSAGES/wiithon.mo ./po/locale/ru_RU/LC_MESSAGES/wiithon.mo ./po/locale/ko_KR/LC_MESSAGES/wiithon.mo ./po/locale/it/LC_MESSAGES/wiithon.mo ./po/locale/sv_SE/LC_MESSAGES/wiithon.mo ./po/locale/es/LC_MESSAGES/wiithon.mo ./po/locale/pt_PT/LC_MESSAGES/wiithon.mo ./po/locale/en/LC_MESSAGES/wiithon.mo ./po/locale/nl_NL/LC_MESSAGES/wiithon.mo ./po/locale/nb_NO/LC_MESSAGES/wiithon.mo ./po/locale/ja_JP/LC_MESSAGES/wiithon.mo ./po/locale/fr/LC_MESSAGES/wiithon.mo ./po/locale/pt_BR/LC_MESSAGES/wiithon.mo ./po/locale/de/LC_MESSAGES/wiithon.mo
+install:
+	make --assume-old="wiithon_wrapper/wiithon_wrapper ./po/locale/da_DK/LC_MESSAGES/wiithon.mo ./po/locale/fi_FI/LC_MESSAGES/wiithon.mo ./po/locale/tr_TR/LC_MESSAGES/wiithon.mo ./po/locale/ru_RU/LC_MESSAGES/wiithon.mo ./po/locale/ko_KR/LC_MESSAGES/wiithon.mo ./po/locale/it/LC_MESSAGES/wiithon.mo ./po/locale/sv_SE/LC_MESSAGES/wiithon.mo ./po/locale/es/LC_MESSAGES/wiithon.mo ./po/locale/pt_PT/LC_MESSAGES/wiithon.mo ./po/locale/en/LC_MESSAGES/wiithon.mo ./po/locale/nl_NL/LC_MESSAGES/wiithon.mo ./po/locale/nb_NO/LC_MESSAGES/wiithon.mo ./po/locale/ja_JP/LC_MESSAGES/wiithon.mo ./po/locale/fr/LC_MESSAGES/wiithon.mo ./po/locale/pt_BR/LC_MESSAGES/wiithon.mo ./po/locale/de/LC_MESSAGES/wiithon.mo" install_compilando
+
+compilar: wiithon_wrapper/wiithon_wrapper ./po/locale/da_DK/LC_MESSAGES/wiithon.mo ./po/locale/fi_FI/LC_MESSAGES/wiithon.mo ./po/locale/tr_TR/LC_MESSAGES/wiithon.mo ./po/locale/ru_RU/LC_MESSAGES/wiithon.mo ./po/locale/ko_KR/LC_MESSAGES/wiithon.mo ./po/locale/it/LC_MESSAGES/wiithon.mo ./po/locale/sv_SE/LC_MESSAGES/wiithon.mo ./po/locale/es/LC_MESSAGES/wiithon.mo ./po/locale/pt_PT/LC_MESSAGES/wiithon.mo ./po/locale/en/LC_MESSAGES/wiithon.mo ./po/locale/nl_NL/LC_MESSAGES/wiithon.mo ./po/locale/nb_NO/LC_MESSAGES/wiithon.mo ./po/locale/ja_JP/LC_MESSAGES/wiithon.mo ./po/locale/fr/LC_MESSAGES/wiithon.mo ./po/locale/pt_BR/LC_MESSAGES/wiithon.mo ./po/locale/de/LC_MESSAGES/wiithon.mo
+
+install_sin_compilar: install
+
+install_compilando: compilar
 
 	mkdir -p $(PREFIX)/share/wiithon
 	mkdir -p $(PREFIX)/share/wiithon/recursos/glade
@@ -106,17 +123,12 @@ install: wiithon_wrapper/wiithon_wrapper ./po/locale/da_DK/LC_MESSAGES/wiithon.m
 	-ln -sf $(PREFIX)/share/wiithon/wiithon_wrapper $(PREFIX)/bin/wiithon_wrapper
 
 	@echo "=================================================================="
-	@echo "Instalado OK"
-	@echo "=================================================================="
-	@echo "¿Como ejecutarlo? :"
-	@echo "    1. Por Interfaz gráfico:"
-	@echo "        - Vaya a su menú de Aplicaciones, y encontrará Wiithon en la sección 'Oficina' (funciona en KDE y GNOME)"
-	@echo "    2. Por consola:"
-	@echo "        - sudo wiithon"
+	@echo "Wiithon Install OK"
 	@echo "=================================================================="
 
+# Se podría resumir en un futuro con -@find /usr/share/locale -name wiithon.mo | xargs rm
 uninstall: 
-	# Limpiando antiguas instalaciones
+	@echo "Limpiando antiguas instalaciones"
 	-$(RM) /usr/bin/wiithon
 	-$(RM) /usr/bin/wiithon_autodetectar
 	-$(RM) /usr/bin/wiithon_autodetectar_lector
@@ -142,12 +154,8 @@ uninstall:
 	-gconftool --recursive-unset /apps/nautilus-actions/configurations
 	-$(RM) /usr/share/gconf/schemas/wiithon*.schemas
 	-$(RM) /usr/share/applications/wiithon.desktop
-	
-	# Desinstalo los locales por "find"
-	#-$(RM) /usr/share/locale/en/LC_MESSAGES/wiithon.mo
-	#-$(RM) /usr/share/locale/es/LC_MESSAGES/wiithon.mo
 
-	# Desinstalando la actual versión
+	@echo "Limpiando instalacion actual"
 
 	-$(RM) $(PREFIX)/bin/wiithon
 	-$(RM) $(PREFIX)/bin/wiithon_wrapper
@@ -160,7 +168,22 @@ uninstall:
 
 	-$(RM) $(PREFIX)/share/wiithon/*.pyc
 	
-	-@find /usr/share/locale -name wiithon.mo | xargs rm
+	-$(RM) /usr/share/locale/en/LC_MESSAGES/wiithon.mo
+	-$(RM) /usr/share/locale/es/LC_MESSAGES/wiithon.mo
+	-$(RM) /usr/share/locale/da_DK/LC_MESSAGES/wiithon.mo
+	-$(RM) /usr/share/locale/fi_FI/LC_MESSAGES/wiithon.mo
+	-$(RM) /usr/share/locale/it/LC_MESSAGES/wiithon.mo
+	-$(RM) /usr/share/locale/ko_KR/LC_MESSAGES/wiithon.mo
+	-$(RM) /usr/share/locale/nl_NL/LC_MESSAGES/wiithon.mo
+	-$(RM) /usr/share/locale/pt_PT/LC_MESSAGES/wiithon.mo
+	-$(RM) /usr/share/locale/sv_SE/LC_MESSAGES/wiithon.mo
+	-$(RM) /usr/share/locale/de/LC_MESSAGES/wiithon.mo
+	-$(RM) /usr/share/locale/fr/LC_MESSAGES/wiithon.mo
+	-$(RM) /usr/share/locale/ja_JP/LC_MESSAGES/wiithon.mo
+	-$(RM) /usr/share/locale/nb_NO/LC_MESSAGES/wiithon.mo
+	-$(RM) /usr/share/locale/pt_BR/LC_MESSAGES/wiithon.mo
+	-$(RM) /usr/share/locale/ru_RU/LC_MESSAGES/wiithon.mo
+	-$(RM) /usr/share/locale/tr_TR/LC_MESSAGES/wiithon.mo
 
 	-$(RM) /usr/share/applications/wiithon_usuario.desktop
 	-$(RM) /usr/share/applications/wiithon_root.desktop
@@ -173,7 +196,7 @@ uninstall:
 	-rmdir $(PREFIX)/share/wiithon/recursos
 	
 	@echo "=================================================================="
-	@echo "Desinstalado OK"
+	@echo "Wiithon Uninstall OK"
 	@echo "=================================================================="
 
 purge: uninstall
@@ -181,7 +204,19 @@ purge: uninstall
 	-$(RM) $(PREFIX)/share/wiithon/HOME.conf
 	-rmdir $(PREFIX)/share/wiithon
 	@echo "=================================================================="
-	@echo "Desinstalado OK y limpiado cualquier configuración"
+	@echo "Uninstall OK & all clean (purge covers, bdd ...)"
+	@echo "=================================================================="
+
+actualizar: actualizar_sin_compilar
+
+actualizar_sin_compilar: uninstall pull install_sin_compilar log
+	@echo "=================================================================="
+	@echo "Update to $(VRSION) rev$(REVISION)"
+	@echo "=================================================================="
+	
+actualizar_compilando: uninstall pull install_compilando log
+	@echo "=================================================================="
+	@echo "Update to $(VRSION) rev$(REVISION)"
 	@echo "=================================================================="
 
 clean: clean_wiithon_wrapper clean_gettext
@@ -202,7 +237,7 @@ wiithon_wrapper/wiithon_wrapper: wiithon_wrapper/*.c wiithon_wrapper/*.h wiithon
 pull:
 	bzr pull
 
-commit: clean
+commit:
 	@if [ `grep -n fuzzy po/*.po | wc -l` -eq 0 ]; then bzr commit --file="COMMIT" && echo "" > COMMIT; else echo "Hay fuzzy en los archivos po, resuelvelo, y repite esta operación"; fi;
 
 log:
@@ -210,10 +245,6 @@ log:
 
 diff:
 	-@bzr diff
-
-# No usar, (sino sabes lo que haces)
-actualizar:
-	bzr pull && sudo make install_auto
 
 # TRADUCCION
 # http://faq.pygtk.org/index.py?req=show&file=faq22.002.htp
@@ -229,17 +260,17 @@ recursos/glade/%.ui.h: recursos/glade/%.ui
 	intltool-extract --type="gettext/glade" $<
 
 # generar PO, si ya existe, mezcla o sincroniza
+# He desactivado fuzzy con -N
+# tambien he quitado los comentarios con --no-location
+# touch $@
 po/%.po: po/plantilla.pot
-	# He desactivado fuzzy con -N
-	# tambien he quitado los comentarios con --no-location
 	msgmerge -U -N --no-wrap --no-location $@ $(filter %.pot, $^)
-	touch $@
 
 # generar MO
+# FIXME: Crea po/locale/pt_BR/LC_MESSAGES/wiithon
+# debería crear: po/locale/pt_BR/LC_MESSAGES/
+# lo parcheo con el rmdir
 po/locale/%/LC_MESSAGES/wiithon.mo: po/%.po
-	# FIXME: Crea po/locale/pt_BR/LC_MESSAGES/wiithon
-	# debería crear: po/locale/pt_BR/LC_MESSAGES/
-	# lo parcheo con el rmdir
 	mkdir -p $(basename $@)
 	msgfmt $< -o $@
 	rmdir $(basename $@)

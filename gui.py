@@ -43,8 +43,6 @@ class WiithonGUI(GtkBuilderWrapper):
         self.core = core
         self.buscar = ""
         self.modo = "ver" # ver | manager
-        self.editando = False
-        self.refresco_pendiente = False
         
         # Cellrenderers que se modifican según cambia el modo
         self.renderEditableIDGAME = None
@@ -176,12 +174,6 @@ class WiithonGUI(GtkBuilderWrapper):
         # carga la Vista para las particiones de la copia 1on1
         self.tv_partitions2_modelo = self.cargarParticionesVista(self.wb_tv_partitions2, self.on_tv_partitions2_cursor_changed)
 
-        '''
-        if os.geteuid() != 0:
-            self.alert("error" , _("REQUIERE_ROOT") % (config.APP , config.APP) )
-            raise AssertionError, _("Error en permisos")
-        '''
-
         # trabajos LIGEROS
         self.poolBash = PoolTrabajo( self.core , 6,
                                     callback_termina_trabajo_descargar_caratula = self.callback_termina_trabajo_descargar_caratula,
@@ -211,6 +203,7 @@ class WiithonGUI(GtkBuilderWrapper):
         destinoIcono = os.path.join(config.WIITHON_FILES_RECURSOS_IMAGENES , "idle-icon.png")
         self.wb_estadoBatch.set_from_file( destinoIcono )
 
+        # Animacion que define si hay actividad de la pool batch
         self.animar = Animador( self.wb_estadoBatch , self.poolBash , self.poolTrabajo)
         self.animar.setDaemon(True)
         self.animar.start()
@@ -218,27 +211,22 @@ class WiithonGUI(GtkBuilderWrapper):
         # reffresco inicial en busca de particiones wbfs
         self.refrescarParticionesWBFS()
         
-        self.wb_estadoTrabajo.set_property("attributes", self.getEstilo_azulGrande() )
-        self.wb_tv_games.connect('start-interactive-search',self.empezar_busqueda)
+        # advertencia si no encuentra
+        if(self.numParticiones == 0):
+            if (os.geteuid() != 0) and (len(self.listaJuegos)==0):
+                self.alert("warning" , _("No se han detectado particiones WBFS.\nSi has conectado una particion WBFS y no ha sido detectada, es debido a que no hay permisos de lectura y escritura.\nPara solucionarlo siga los pasos de la guia de instalacion."))
+            else:
+                if( len(self.listaJuegos)>0 ):
+                    self.alert("warning" , _("No hay particiones WBFS, solo puede ver sus juegos acumuladas en %s") % (config.APP))
+                else:
+                    self.alert("warning" , _("No hay particiones WBFS, conecte y refresque"))
         
         # pongo el foco en el buscador
-        self.wb_busqueda.grab_focus()
-        
-    def empezar_busqueda(*arg):
-        print arg
-        
-    def empieza_editar(self, renderer, editable, path):
-        self.editando = True
-        
-    def cancela_editar(self, renderer):
-        self.termina_editar()
-        
-    def termina_editar(self):
-        self.editando = False
-        if self.refresco_pendiente:
-            self.refrescarParticionesYSeleccionarJuego(self.IDGAMEJuegoSeleccionado , self.DEVICEParticionSeleccionada)
-            self.refresco_pendiente = False
-        
+        if( len(self.listaJuegos)>0 ):
+            self.wb_busqueda.grab_focus()
+        else:
+            self.wb_tb_refrescar_wbfs.grab_focus()
+
     def refrescarParticionesWBFS(self):
         
         if not self.poolTrabajo.estaOcupado():
@@ -270,12 +258,6 @@ class WiithonGUI(GtkBuilderWrapper):
                 #ocultar algunas coasa
                 self.wb_vboxProgresoEspacio.hide()
                 self.wb_labelEspacio.hide()
-
-                if( len(self.listaJuegos)>0 ):
-                    self.alert("warning" , _("No hay particiones WBFS, solo puede ver sus juegos acumuladas en %s") % (config.APP))
-                else:
-                    self.alert("warning" , _("No hay particiones WBFS, conecte y refresque"))
-
             else:
                 # establecemos el modo de wiithon, hay particiones que gestionar
                 self.modo = "manager"
@@ -284,7 +266,6 @@ class WiithonGUI(GtkBuilderWrapper):
                 self.renderEditableIDGAME.set_property("editable", True)
                 self.renderEditableNombre.set_property("editable", True)
                 self.renderEditableNombre.set_property("attributes", self.getEstilo_azulGrande() )
-                #self.editando
 
                 # carga el modelo de datos del TreeView de particiones
                 self.cargarParticionesModelo(self.tv_partitions_modelo , self.listaParticiones)
@@ -400,7 +381,6 @@ class WiithonGUI(GtkBuilderWrapper):
             i = i + 1
 
     def editar_idgame( self, renderEditable, i, nuevoIDGAME):
-        self.termina_editar()
         if self.iteradorJuegoSeleccionado != None:
             nuevoIDGAME = nuevoIDGAME.upper()
             if(self.IDGAMEJuegoSeleccionado != nuevoIDGAME):
@@ -424,7 +404,6 @@ class WiithonGUI(GtkBuilderWrapper):
                     self.alert('error' , _("Error: La longitud del IDGAME debe ser 6, y solo puede contener letras y numeros"))
 
     def editar_nombre( self, renderEditable, i, nuevoNombre):
-        self.termina_editar()
         if self.iteradorJuegoSeleccionado != None:
             nombreActual = self.seleccionJuegoSeleccionado.get_value(self.iteradorJuegoSeleccionado,2)
             if(nombreActual != nuevoNombre):
@@ -453,8 +432,8 @@ class WiithonGUI(GtkBuilderWrapper):
         self.renderEditableNombre = gtk.CellRendererText()
         self.renderEditableIDGAME.connect ("edited", self.editar_idgame)
         self.renderEditableNombre.connect ("edited", self.editar_nombre)
-        self.renderEditableNombre.connect ("editing-started", self.empieza_editar)
-        self.renderEditableNombre.connect ("editing-canceled", self.cancela_editar)
+        #self.renderEditableNombre.connect ("editing-started", self.empieza_editar)
+        #self.renderEditableNombre.connect ("editing-canceled", self.cancela_editar)
         render = gtk.CellRendererText()
 
         # prox versión meter background ----> foreground ... etc
@@ -628,10 +607,12 @@ class WiithonGUI(GtkBuilderWrapper):
         session.commit()
         self.refrescarListaJuegos()
 
+    '''
     def get_usuario_esta_editando(self):
         #return self.editando or self.poolTrabajo.estaOcupado()
         #return self.editando # BUG AQUI
         return False
+    '''
 
     # refresco desde memoria (rápido)
     def refrescarListaJuegos(self):
@@ -657,36 +638,28 @@ class WiithonGUI(GtkBuilderWrapper):
             self.on_tv_partitions2_cursor_changed( self.wb_tv_partitions2 )
 
     def seleccionarFilaConValor(self , treeview, numFilas , columna, valor, callback = True):
-        if not self.get_usuario_esta_editando():                
-            i = 0
-            encontrado = False
-            while (i<numFilas) and (not encontrado):
-                iter = treeview.get_model().get_iter(i)
-                iter_valor = treeview.get_model().get_value(iter , columna)
-                encontrado = (iter_valor == valor)
-                if not encontrado:
-                    i += 1
-            if encontrado:
-                treeview.get_selection().select_path(i)
+        i = 0
+        encontrado = False
+        while (i<numFilas) and (not encontrado):
+            iter = treeview.get_model().get_iter(i)
+            iter_valor = treeview.get_model().get_value(iter , columna)
+            encontrado = (iter_valor == valor)
+            if not encontrado:
+                i += 1
+        if encontrado:
+            treeview.get_selection().select_path(i)
 
-            if callback:
-                self.callback_treeview(treeview)
-        else:
-            if self.editando:
-                self.refresco_pendiente = True
+        if callback:
+            self.callback_treeview(treeview)
 
     def seleccionarPrimeraFila(self , treeview, callback = True):
-        if not self.get_usuario_esta_editando():
-            # selecciono el primero y provoco el evento
-            iter_primero = treeview.get_model().get_iter_first()
-            if iter_primero != None:
-                treeview.get_selection().select_iter( iter_primero )        
+        # selecciono el primero y provoco el evento
+        iter_primero = treeview.get_model().get_iter_first()
+        if iter_primero != None:
+            treeview.get_selection().select_iter( iter_primero )        
 
-            if callback:
-                self.callback_treeview(treeview)
-        else:
-            if self.editando:
-                self.refresco_pendiente = True
+        if callback:
+            self.callback_treeview(treeview)
 
     def refrescarEspacio(self):
         info = self.core.getEspacioLibre( self.DEVICEParticionSeleccionada )

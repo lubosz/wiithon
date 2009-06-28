@@ -454,6 +454,12 @@ msgstr "Não foi encontrado nenhum disco do Wii"
 msgid "No se ha encontrado ninguna imagen ISO"
 msgstr "Não foi encontrada nenhuma imagem ISO"
 
+msgid ""
+"No se han detectado particiones WBFS.\n"
+"Si has conectado una particion WBFS y no ha sido detectada, es debido a que no hay permisos de lectura y escritura.\n"
+"Para solucionarlo siga los pasos de la guia de instalacion."
+msgstr ""
+
 #, python-format
 msgid "No tienes instalado ningun juego en %s"
 msgstr "Não existe jogo instalado em %s"

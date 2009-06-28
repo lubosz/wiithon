@@ -497,6 +497,12 @@ msgstr ""
 msgid "No se ha encontrado ninguna imagen ISO"
 msgstr ""
 
+msgid ""
+"No se han detectado particiones WBFS.\n"
+"Si has conectado una particion WBFS y no ha sido detectada, es debido a que no hay permisos de lectura y escritura.\n"
+"Para solucionarlo siga los pasos de la guia de instalacion."
+msgstr ""
+
 #, python-format
 msgid "No tienes instalado ningun juego en %s"
 msgstr "No tienes instalado ningún juego en %s"
