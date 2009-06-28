@@ -488,9 +488,6 @@ msgstr "A imagem ISO temporária não foi apagada"
 msgid "No se ha encontrado caratula para el juego %s"
 msgstr "Não foi encontrada uma capa para o jogo %s"
 
-msgid "No se ha encontrado icono, deberia reinstalar."
-msgstr "Não foram encontrados ícones, reinstale a aplicação."
-
 msgid "No se ha encontrado ningun ISO"
 msgstr "Não foi encontrado nenhum ISO"
 
@@ -711,3 +708,5 @@ msgstr "são"
 msgid "wiithon no borra la ISO temporal, puedes borrarla si no la necesitas"
 msgstr "wiithon não apaga a ISO temporária, você pode apagá-la caso não necessite mais dela"
 
+#~ msgid "No se ha encontrado icono, deberia reinstalar."
+#~ msgstr "Não foram encontrados ícones, reinstale a aplicação."

@@ -421,9 +421,6 @@ msgstr ""
 msgid "No se ha encontrado caratula para el juego %s"
 msgstr ""
 
-msgid "No se ha encontrado icono, deberia reinstalar."
-msgstr ""
-
 msgid "No se ha encontrado ningun ISO"
 msgstr ""
 

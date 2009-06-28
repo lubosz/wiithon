@@ -35,7 +35,7 @@ install_auto: uninstall dependencias install
 install_auto_and_fix: install_auto permisos
 
 dependencias:
-	apt-get intltool install imagemagick wget rar python-gtk2 python-glade2 python-sexy python-sqlalchemy gnome-icon-theme menu
+	apt-get install intltool imagemagick wget rar python-gtk2 python-glade2 python-sexy python-sqlalchemy gnome-icon-theme menu
 	@echo "=================================================================="
 	@echo "Install depends"
 	@echo "=================================================================="
@@ -214,7 +214,7 @@ pull:
 	bzr pull
 
 commit: clean
-	bzr commit --file="COMMIT"
+	bzr commit --file="COMMIT" && echo "" > COMMIT
 
 log:
 	bzr log --forward --short

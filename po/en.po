@@ -448,9 +448,6 @@ msgstr "Don't delete temporal ISO"
 msgid "No se ha encontrado caratula para el juego %s"
 msgstr "There is not image ISO"
 
-msgid "No se ha encontrado icono, deberia reinstalar."
-msgstr "Dont found icon, you should reinstall"
-
 msgid "No se ha encontrado ningun ISO"
 msgstr "Not found image ISO"
 
@@ -668,3 +665,6 @@ msgstr "remaining"
 
 msgid "wiithon no borra la ISO temporal, puedes borrarla si no la necesitas"
 msgstr "wiithon doesn't remove the temporal ISO, you can remove it if you don't need it"
+
+#~ msgid "No se ha encontrado icono, deberia reinstalar."
+#~ msgstr "Dont found icon, you should reinstall"
