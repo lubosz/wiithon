@@ -169,6 +169,9 @@ class WiithonGUI(GtkBuilderWrapper):
         
         # carga la Vista para las particiones de la copia 1on1
         self.tv_partitions2_modelo = self.cargarParticionesVista(self.wb_tv_partitions2, self.on_tv_partitions2_cursor_changed)
+        
+        # Poner el contador de tareas AZUL
+        self.wb_estadoTrabajo.set_property("attributes", self.getEstilo_azulGrande() )
 
         # trabajos LIGEROS
         self.poolBash = PoolTrabajo( self.core , 6,
@@ -699,7 +702,7 @@ class WiithonGUI(GtkBuilderWrapper):
             self.cargarParticionesModelo(self.tv_partitions2_modelo , self.listaParticiones , False)
             
             #seleccionar primero
-            self.seleccionarPrimeraFila( self.wb_tv_partitions2)
+            self.seleccionarPrimeraFila( self.wb_tv_partitions2 )
 
             # refrescamos la lista de juegos, leyendo del core
             self.refrescarListaJuegosFromCore()
@@ -890,18 +893,18 @@ class WiithonGUI(GtkBuilderWrapper):
 
                 fc_extraer = gtk.FileChooserDialog(
                     _('Elige un directorio donde extraer la ISO de %s') \
-                        %(self.IDGAMEJuegoSeleccionado), None,
+                        % (self.IDGAMEJuegoSeleccionado), None,
                     gtk.FILE_CHOOSER_ACTION_SELECT_FOLDER, botones)
 
                 fc_extraer.set_default_response(gtk.RESPONSE_OK)
                 fc_extraer.set_local_only(True)
-                fc_extraer.set_current_folder( self.preferencia.ruta_extraer_iso )
+                fc_extraer.set_current_folder(self.preferencia.ruta_extraer_iso)
 
                 if ( fc_extraer.run() == gtk.RESPONSE_OK ):
 
                     reemplazar = False
-                    if self.core.existeExtraido(self.juego , fc_extraer.get_filename()):                        
-                        if ( self.question(_('Desea reemplazar la iso del juego %s (%s)?') % (self.juego.title , self.juego.idgame)) == 1 ):
+                    if self.core.existeExtraido(self.juego , fc_extraer.get_filename()):
+                        if( self.question(_('Desea reemplazar la iso del juego %s (%s)?') % (self.juego.title , self.juego.idgame)) == 1 ):
                             reemplazar = True
                     else:
                         reemplazar = True
@@ -912,11 +915,8 @@ class WiithonGUI(GtkBuilderWrapper):
 
                         # extraer *juego* en la ruta seleccionada
                         self.poolTrabajo.nuevoTrabajoExtraer( self.juego , fc_extraer.get_filename() )
-                else:
-                    print "cancelado"
 
                 fc_extraer.destroy()
-
             else:
                 self.alert("warning" , _("No has seleccionado ningun juego"))
 
@@ -1099,7 +1099,7 @@ class WiithonGUI(GtkBuilderWrapper):
             
         # al final, por ser bloqueante
         if not trabajo.exito:
-            gobject.idle_add(self.mostrarError , trabajo.error )
+            gobject.idle_add( self.mostrarError , trabajo.error )
             
         print _("Termina: %s") % trabajo
 
