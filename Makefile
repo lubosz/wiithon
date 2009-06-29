@@ -13,18 +13,16 @@ HOME_WIITHON_LOGS=$(HOME_WIITHON)/logs
 
 all:
 	@echo ==================================================================
+	@echo "Escribe \"sudo make install\" solo instala"
 	@echo "Escribe \"sudo make install_auto\" para instalar Wiithon y sus dependencias (con apt-get)"
+	@echo "Escribe \"sudo make install_auto_and_fix\" igual que el anterior pero además evita el uso de root"
 	@echo ""
 	@echo "Escribe \"sudo make uninstall\" para desinstalar wiithon"
+	@echo "Escribe \"sudo make purge\" para desinstalar wiithon completamente"
 	@echo "Escribe \"sudo make dependencias\" para instalar las dependencias con apt-get"
-	@echo "Escribe \"sudo make install\" para instalar wiithon en espacio de root"
-	@echo "Escribe \"install_compilando\" para instalar wiithon recompilando antes textos, wrapper ..."
-	@echo ""
 	@echo "Escribe \"sudo make permissions_fix\" para evitar que wiithon funcione como root"
 	@echo ""
-	@echo "Escribe \"sudo make purge\" para desinstalar wiithon completamente"
-	@echo ""
-	@echo "Escribe \"sudo make run LANGUAGE=XX\" para instalar & autoejecutar en un idioma"
+	@echo "Escribe \"sudo make run LANGUAGE=XX\" para instalar & autoejecutar en un idioma como es, en, pt_BR ..."
 	@echo ==================================================================
 
 run: install
@@ -36,6 +34,7 @@ install_auto_and_fix: install_auto permisos
 
 dependencias:
 	apt-get install intltool imagemagick wget rar python-gtk2 python-glade2 python-sexy python-sqlalchemy gnome-icon-theme menu
+	-@apt-get install libc6-dev-i386
 	@echo "=================================================================="
 	@echo "Install depends"
 	@echo "=================================================================="
