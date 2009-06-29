@@ -1,9 +1,22 @@
-# Makefile funcional, aunque este mal hecho xD
+# -*- coding: utf-8 -*-
+CC = cc
+CFLAGS = -O2 -Wall -DLARGE_FILES -D_FILE_OFFSET_BITS=64
+LDFLAGS = -Llibwbfs -lwbfs
+INCLUDE = -Ilibwbfs
+OBJETIVOS = libwbfs/libwbfs.so build_wiithon_wrapper/wiithon_wrapper
 
-all:
+all: $(OBJETIVOS)
+
+libwbfs/libwbfs.so:
 	$(MAKE) -C libwbfs
-	gcc -Ilibwbfs -Llibwbfs -lwbfs wiithon_wrapper.c -o build_wiithon_wrapper/wiithon_wrapper
+
+build_wiithon_wrapper/wiithon_wrapper: wiithon_wrapper.o
+	$(CC) $(INCLUDE) $(LDFLAGS) -o $@ $^
+
+%.o: %.c
+	$(CC) $(INCLUDE) $(CFLAGS) -o $@ -c $<
 
 clean:
+	$(RM) *~ *.o $(OBJETIVOS)
 	$(MAKE) -C libwbfs clean
-	$(RM) build_wiithon_wrapper/wiithon_wrapper
+

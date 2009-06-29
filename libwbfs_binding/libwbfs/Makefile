@@ -7,7 +7,7 @@ libwbfs.so: libwbfs.o libwbfs_linux.o wiidisc.o rijndael.o
 	$(CC) $(CFLAGS) $(LDFLAGS) -o $@ $^
 
 clean:
-	$(RM) *~ *.o *.so
+	$(RM) *~ *.o
 
 vclean: clean
 	$(RM) libwfs.so
