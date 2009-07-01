@@ -75,3 +75,6 @@ SEPARADOR = ";@;"
 
 # Maximos juegos que aparecerán en la lista de copia de disco duro completa
 MAX_LISTA_COPIA_1on1 = 15
+
+# Tipo caratula 3d|normal|panoramica
+TIPO_CARATULA = "normal"

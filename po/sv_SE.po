@@ -96,9 +96,6 @@ msgid ""
 "Descargando discos ...\n"
 msgstr ""
 
-msgid "Consola"
-msgstr ""
-
 msgid "Copia directa de particion a particion"
 msgstr ""
 
@@ -362,9 +359,6 @@ msgstr ""
 msgid "Listando juegos de : %s"
 msgstr ""
 
-msgid "Mas informacion"
-msgstr ""
-
 msgid "NO"
 msgstr ""
 
@@ -555,12 +549,6 @@ msgid "Todo metido en el HD correctamente"
 msgstr ""
 
 msgid "Total"
-msgstr ""
-
-msgid "Trabajos de fondo (0)"
-msgstr ""
-
-msgid "Trabajos intensos (0)"
 msgstr ""
 
 msgid "Un gestor de particiones WBFS facil de usar"

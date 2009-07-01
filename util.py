@@ -7,6 +7,7 @@ import fnmatch
 import gtk
 import subprocess
 import copy
+import httplib
 
 # Caracteres que hacen que una expresión no pueda ser expresión regular
 BLACK_LIST = "/\"\'$&|[]"
@@ -225,4 +226,110 @@ except ImportError:
         def __init__(self, clear=False, copy=False):
             gtk.Entry.__init__(self)
 
+class ErrorDescargando(Exception):
+    pass
 
+'''
+
+GET /diskart/160/160/RYX.png HTTP/1.1
+Host: www.wiiboxart.com
+User-Agent: Mozilla/5.0 (X11; U; Linux i686; es-ES; rv:1.9.0.11) Gecko/2009060310 Ubuntu/8.10 (intrepid) Firefox/3.0.11
+Accept: text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8
+Accept-Language: es-es,es;q=0.8,en-us;q=0.5,en;q=0.3
+Accept-Encoding: gzip,deflate
+Accept-Charset: ISO-8859-1,utf-8;q=0.7,*;q=0.7
+Keep-Alive: 300
+Connection: keep-alive
+Referer: http://www.wiiboxart.com/pal.php
+
+HTTP/1.1 200 OK
+Date: Tue, 30 Jun 2009 23:01:42 GMT
+Server: Apache/1.3.41 (Unix) PHP/5.2.6 mod_log_bytes/1.2 mod_bwlimited/1.4 mod_auth_passthrough/1.8 FrontPage/5.0.2.2635 mod_ssl/2.8.31 OpenSSL/0.9.7a
+X-Powered-By: PHP/5.2.6
+Keep-Alive: timeout=15, max=100
+Connection: Keep-Alive
+Transfer-Encoding: chunked
+Content-Type: image/png
+
+'''
+
+def descargarImagen(dominio, ruta_imagen, destino, type = "image/png", referer = "http://www.wiiboxart.com/pal.php"):
+    try:       
+        conn = httplib.HTTPConnection(dominio)
+        
+        #conn.set_debuglevel(1)
+
+        params = None
+        headers = {
+                        "Host": "www.wiiboxart.com",
+                        "User-Agent": "Mozilla/5.0 (X11; U; Linux i686; es-ES; rv:1.9.0.11) Gecko/2009060310 Ubuntu/8.10 (intrepid) Firefox/3.0.11",
+                        "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8",
+                        "Accept-Language": "es-es,es;q=0.8,en-us;q=0.5,en;q=0.3",
+                        "Accept-Encoding": "gzip,deflate",
+                        "Accept-Charset": "ISO-8859-1,utf-8;q=0.7,*;q=0.7",
+                        #"Keep-Alive": "300",
+                        #"Connection": "keep-alive",
+                        "Referer": referer
+                    }
+        
+        conn.request ("GET", '/%s' % (ruta_imagen), params, headers)
+        
+        r = conn.getresponse()
+        
+        i = 0
+        encontrado = False
+        headers = r.getheaders()
+        while (not encontrado) and (i<len(headers)):
+            if headers[i][0] == "content-type":
+                encontrado = (headers[i][1] == type)
+            if not encontrado:
+                i = i + 1
+        
+        if encontrado and r.status == 200 and r.reason == "OK":
+            fichero = file( destino, "wb" )
+            fichero.write(r.read())
+            fichero.close()
+
+            conn.close()
+        else:
+            #print encontrado
+            #print r.status
+            #print r.reason
+            conn.close()
+            raise ErrorDescargando
+    except:
+        raise ErrorDescargando
+
+# Identifies APNGs
+# Written by Foone/Popcorn Mariachi#!9i78bPeIxI
+# This code is in the public domain
+# identify_png returns:
+# '?'   for non-png or corrupt PNG
+# 'png'  for a standard png 
+# 'apng' for an APNG
+# takes one argument, a file handle. When the function reutrns it'll be positioned at the start of the file
+# usage:
+#  fop=open('tempfile.dat','rb')
+#  type=identify_png(fop)
+import struct
+PNG_SIGNATURE='\x89\x50\x4e\x47\x0d\x0a\x1a\x0a'
+def esPNG(ruta):
+    f = file(ruta, "r")
+    data=f.read(8)
+    if data!=PNG_SIGNATURE:
+        return False # not a PNG/APNG
+    try:
+        while True:
+            buffer=f.read(8)
+            if len(buffer)!=8:
+                return False # Early EOF
+            length,type=struct.unpack('!L4s',buffer)
+            if type in ('IDAT','IEND'):
+                # acTL must come before IDAT, so if we see an IDAT this is plain PNG
+                # IEND is end of file.
+				return True
+            if type=='acTL':
+                return True
+            f.seek(length+4,1) # +4 because of the CRC (not checked)
+    finally:
+        f.seek(0)

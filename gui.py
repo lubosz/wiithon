@@ -11,6 +11,7 @@ from threading import Thread
 import gtk
 import gobject
 import pango
+import shutil
 
 import config
 import util
@@ -152,9 +153,6 @@ class WiithonGUI(GtkBuilderWrapper):
         self.wb_tb_acerca_de.connect('clicked' , self.on_tb_toolbar_clicked)
         self.wb_tb_copiar_1_1.connect('clicked' , self.on_tb_toolbar_clicked)
 
-        #ocultar de momento
-        self.wb_expander1.hide()
-
         self.wb_busqueda = util.Entry(clear=True)
         self.wb_busqueda.show()
         self.wb_box_busqueda.pack_start(self.wb_busqueda)
@@ -287,7 +285,7 @@ class WiithonGUI(GtkBuilderWrapper):
                 arg = os.path.abspath(arg)
                 if os.path.exists(arg):
                     if util.getExtension(arg)=="iso":
-                        self.poolTrabajo.nuevoTrabajoAnadir( arg , self.DEVICEParticionSeleccionada)
+                        self.poolTrabajo.nuevoTrabajoAnadir(arg , self.DEVICEParticionSeleccionada)
                     else:
                         self.alert("warning" , _("Formato desconocido"))
 
@@ -465,7 +463,8 @@ class WiithonGUI(GtkBuilderWrapper):
 
         tv_games.connect('cursor-changed', self.on_tv_games_cursor_changed)
 
-        modelo = gtk.ListStore (    gobject.TYPE_INT ,      # orden (campo oculto)
+        modelo = gtk.ListStore (
+                gobject.TYPE_INT ,                          # orden (campo oculto)
                 gobject.TYPE_STRING,                        # IDGAME
                 gobject.TYPE_STRING,                        # Nombre
                 gobject.TYPE_STRING,                        # Tamaño
@@ -569,6 +568,10 @@ class WiithonGUI(GtkBuilderWrapper):
         self.listaJuegos = []
         for juego in session.query(Juego):
             self.listaJuegos.append( juego )
+            if not self.core.existeCaratula(juego.idgame):
+                self.poolBash.nuevoTrabajoDescargaCaratula( juego )
+            if not self.core.existeDisco(juego.idgame):
+                self.poolBash.nuevoTrabajoDescargaDisco( juego )
         self.refrescarListaJuegos()
 
     # refresco desde el disco duro (lento)
@@ -605,13 +608,6 @@ class WiithonGUI(GtkBuilderWrapper):
 
         session.commit()
         self.refrescarListaJuegos()
-
-    '''
-    def get_usuario_esta_editando(self):
-        #return self.editando or self.poolTrabajo.estaOcupado()
-        #return self.editando # BUG AQUI
-        return False
-    '''
 
     # refresco desde memoria (rápido)
     def refrescarListaJuegos(self):
@@ -707,7 +703,7 @@ class WiithonGUI(GtkBuilderWrapper):
             # refrescamos la lista de juegos, leyendo del core
             self.refrescarListaJuegosFromCore()
 
-            # descargar caratulas de todos los juegos de la NUEVA lista de juegos
+            # descargamos las caratulas de los juegos que no tienen
             for juego in self.listaJuegos:
                 if not self.core.existeCaratula(juego.idgame):
                     self.poolBash.nuevoTrabajoDescargaCaratula( juego )
@@ -1058,9 +1054,20 @@ class WiithonGUI(GtkBuilderWrapper):
         listaArrastrados = []
         for fichero in tuplaArrastrados:
             fichero = fichero.replace("file://" , "")
-            #if os.path.exists(fichero) and (util.getExtension(fichero)=="iso" or util.getExtension(fichero)=="rar"):
-            if os.path.exists(fichero) and (util.getExtension(fichero)=="iso"):
-                listaArrastrados.append(fichero)
+            if os.path.exists(fichero):
+                if(util.getExtension(fichero)=="iso"):
+                    listaArrastrados.append(fichero)
+                if self.iteradorJuegoSeleccionado != None:
+                    if  (
+                            (util.getExtension(fichero)=="png") or
+                            (util.getExtension(fichero)=="jpg") or
+                            (util.getExtension(fichero)=="gif")
+                        ):
+                        ruta = self.core.getRutaCaratula(self.IDGAMEJuegoSeleccionado)
+                        shutil.copy(fichero, ruta)
+                        os.system("mogrify -resize 160x224! %s" % (ruta))
+                        self.ponerCaratula(self.IDGAMEJuegoSeleccionado)
+
         listaArrastrados.sort()
         if self.poolTrabajo and len(listaArrastrados)>0:
             self.poolTrabajo.nuevoTrabajoAnadir(listaArrastrados, self.DEVICEParticionSeleccionada)
@@ -1116,11 +1123,15 @@ class WiithonGUI(GtkBuilderWrapper):
         if trabajo.exito:
             if juego.idgame == self.IDGAMEJuegoSeleccionado:
                 gobject.idle_add( self.ponerCaratula , juego.idgame )
+        else:
+            print "Falla la descarga de la caratula de %s" % juego
         
     def callback_termina_trabajo_descargar_disco(self, trabajo, juego):
         if trabajo.exito:
             if juego.idgame == self.IDGAMEJuegoSeleccionado:
                 gobject.idle_add( self.ponerDisco , juego.idgame )
+        else:
+            print "Falla la descarga del disco de %s" % juego
 
 class HiloCalcularProgreso(Thread):
     def __init__(self , trabajo, actualizarLabel , actualizarFraccion):

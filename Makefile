@@ -33,7 +33,7 @@ install_auto: uninstall dependencias install
 install_auto_and_fix: install_auto permisos
 
 dependencias:
-	apt-get install intltool imagemagick wget rar python-gtk2 python-glade2 python-sexy python-sqlalchemy gnome-icon-theme menu
+	apt-get install intltool imagemagick rar python-gtk2 python-glade2 python-sexy python-sqlalchemy gnome-icon-theme menu
 	-@apt-get install libc6-dev-i386
 	@echo "=================================================================="
 	@echo "Install depends"
@@ -93,6 +93,12 @@ install: compilar
 	cp recursos/glade/*.ui $(PREFIX)/share/wiithon/recursos/glade
 	cp recursos/imagenes/*.png $(PREFIX)/share/wiithon/recursos/imagenes
 	cp recursos/imagenes/cargando/*.png $(PREFIX)/share/wiithon/recursos/imagenes
+	
+	mkdir -p $(HOME_WIITHON_CARATULAS)
+	mkdir -p $(HOME_WIITHON_DISCOS)
+	
+	cp caratulas_fix/*.png $(HOME_WIITHON_CARATULAS)
+	cp discos_fix/*.png $(HOME_WIITHON_DISCOS)
 
 	chmod 755 $(PREFIX)/share/wiithon/*.py
 	chmod 755 $(PREFIX)/share/wiithon/*.sh
@@ -125,6 +131,11 @@ uninstall:
 
 	-$(RM) $(PREFIX)/share/wiithon/recursos/glade/*.xml
 	-$(RM) $(PREFIX)/share/wiithon/recursos/glade/*.glade
+	
+	-$(RM) $(HOME_WIITHON_CARATULAS)/index.html*
+	-$(RM) $(HOME_WIITHON_DISCOS)/index.html*
+	-$(RM) $(HOME_WIITHON_CARATULAS)/*.png.1
+	-$(RM) $(HOME_WIITHON_DISCOS)/*.png.1
 
 	-$(RM) $(PREFIX)/share/wiithon/.acuerdo
 	-$(RM) ~/.wiithon_acuerdo

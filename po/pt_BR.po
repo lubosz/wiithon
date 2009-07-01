@@ -156,9 +156,6 @@ msgstr ""
 "Baixando capas ...\n"
 "Baixando discos ...\n"
 
-msgid "Consola"
-msgstr "Console"
-
 msgid "Copia directa de particion a particion"
 msgstr "Cópia direta de partição para partição"
 
@@ -425,9 +422,6 @@ msgstr "Lista de partições autodetectadas :"
 msgid "Listando juegos de : %s"
 msgstr "Listando jogos de: %s"
 
-msgid "Mas informacion"
-msgstr "Mais informação"
-
 msgid "NO"
 msgstr "NÃO"
 
@@ -639,12 +633,6 @@ msgstr "Tudo inserido no HD corretamente"
 msgid "Total"
 msgstr "Total"
 
-msgid "Trabajos de fondo (0)"
-msgstr "Tarefas de fundo (0)"
-
-msgid "Trabajos intensos (0)"
-msgstr "Tarefas intensivas (0)"
-
 msgid "Un gestor de particiones WBFS facil de usar"
 msgstr "Um gerenciador de partições WBFS fácil de usar"
 
@@ -707,6 +695,18 @@ msgstr "são"
 
 msgid "wiithon no borra la ISO temporal, puedes borrarla si no la necesitas"
 msgstr "wiithon não apaga a ISO temporária, você pode apagá-la caso não necessite mais dela"
+
+#~ msgid "Consola"
+#~ msgstr "Console"
+
+#~ msgid "Mas informacion"
+#~ msgstr "Mais informação"
+
+#~ msgid "Trabajos de fondo (0)"
+#~ msgstr "Tarefas de fundo (0)"
+
+#~ msgid "Trabajos intensos (0)"
+#~ msgstr "Tarefas intensivas (0)"
 
 #~ msgid "No se ha encontrado icono, deberia reinstalar."
 #~ msgstr "Não foram encontrados ícones, reinstale a aplicação."

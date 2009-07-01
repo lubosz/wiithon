@@ -42,11 +42,6 @@ class WiithonCORE:
     # index 1 -> Nombre del juego
     # index 2 -> Tamaño en GB redondeado a 2 cifras
     def getListaJuegos(self , DEVICE):
-        '''
-        def ordenarPorNombre(juego1 , juego2):
-            return cmp( juego1[1].lower() , juego2[1].lower() )
-        '''
-
         comando = "%s -p %s ls" % (config.WBFS_APP, DEVICE)
         lineas = util.getSTDOUT_iterador( comando )
         salida = []
@@ -54,9 +49,6 @@ class WiithonCORE:
             cachos = linea.strip().split(config.SEPARADOR)
             if(len(cachos)==3):
                 salida.append( [ cachos[0] , cachos[1] , cachos[2] ] )
-        '''
-        salida.sort(ordenarPorNombre)
-        '''
         return salida
 
     # renombra el ISO de un IDGAME que esta en DEVICE
@@ -100,20 +92,28 @@ class WiithonCORE:
             return False
 
     def existeDisco(self , IDGAME):
-        return (os.path.exists( self.getRutaDisco(IDGAME) ))
+        ruta = self.getRutaDisco(IDGAME)
+        existe = (os.path.exists( ruta ))
+        if existe and not util.esPNG(ruta):
+            os.remove(ruta)
+            existe = False
+        return existe
 
     def descargarDisco(self , IDGAME):
         if (self.existeDisco(IDGAME)):
             return True
         else:
             print _("***************** DESCARGAR DISCO %s ********************" % (IDGAME))
-            origen = 'http://www.theotherzone.com/wii/diskart/160/160/' + IDGAME + '.png'
-            salida = os.system("wget --user-agent=wiithon --timeout=8 --no-cache --directory-prefix=\""+config.HOME_WIITHON_DISCOS+"\" " + origen)
-            descargada = (salida == 0)
-            if descargada:
-                destino = os.path.join(config.HOME_WIITHON_DISCOS , IDGAME+".png")
-                os.system("mogrify -resize 160x160! " + destino)
-            return descargada
+            try:
+                origen = "www.wiiboxart.com"
+                destino = self.getRutaDisco(IDGAME)
+                # Solo las 3 primeras letras del disco, la web cambio a ese formato a finales de junio
+                origenGen = "diskart/160/160/%s.png" % (IDGAME[:3])
+                util.descargarImagen(origen, origenGen, destino)
+                os.system("mogrify -resize 160x160! %s" % (destino))
+                return True
+            except util.ErrorDescargando:
+                return False
 
     def getRutaDisco(self , IDGAME):
         return os.path.join(config.HOME_WIITHON_DISCOS , IDGAME+".png")
@@ -158,7 +158,12 @@ class WiithonCORE:
 
     # Nos dice si existe la caratula del juego "IDGAME"
     def existeCaratula(self , IDGAME):
-        return (os.path.exists( self.getRutaCaratula(IDGAME) ))
+        ruta = self.getRutaCaratula(IDGAME)
+        existe = (os.path.exists( ruta ))
+        if existe and not util.esPNG(ruta):
+            os.remove(ruta)
+            existe = False
+        return existe
 
     # Descarga una caratula de "IDGAME"
     # el Tipo puede ser : normal|panoramica|3d
@@ -166,24 +171,27 @@ class WiithonCORE:
         if (self.existeCaratula(IDGAME)):
             return True
         else:
-            origen = 'http://www.theotherzone.com/wii/'
+            origen = "www.wiiboxart.com"
+            destino = self.getRutaCaratula(IDGAME)
             regiones = ['pal/' , 'ntsc/' , 'ntscj/']
             if(tipo == "panoramica"):
-                origen = origen + "widescreen/"
+                ruta_imagen = "widescreen/"
             elif(tipo == "3d"):
-                origen = origen + "3d/160/225/"
+                ruta_imagen = "3d/160/225/"
                 regiones = ['']
+            else:
+                ruta_imagen = ""
             descargada = False
             i = 0
             print _("***************** DESCARGAR CARATULA %s ********************" % (IDGAME))
-            while ( not descargada and i<len(regiones)  ):
-                origenGen = origen + regiones[i] + IDGAME + ".png"
-                salida = os.system("wget --user-agent=wiithon --timeout=8 --no-cache --directory-prefix=\""+config.HOME_WIITHON_CARATULAS+"\" " + origenGen)
-                descargada = (salida == 0)
-                if descargada:
-                    destino = os.path.join(config.HOME_WIITHON_CARATULAS , IDGAME+".png")
-                    os.system("mogrify -resize 160x224! " + destino)
-                i = i + 1
+            while ( not descargada and i<len(regiones) ):
+                origenGen = ruta_imagen + regiones[i] + IDGAME + ".png"
+                try:
+                    util.descargarImagen(origen, origenGen, destino)
+                    os.system("mogrify -resize 160x224! %s" % (destino))
+                    descargada = True
+                except util.ErrorDescargando:
+                    i += 1
             return descargada
 
     # borrar caratula

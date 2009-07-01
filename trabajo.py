@@ -215,7 +215,7 @@ class PoolTrabajo(Pool , Thread):
         return exito
 
     def descargarCaratula(self , core , juego):
-        return core.descargarCaratula( juego.idgame , "3d" )
+        return core.descargarCaratula( juego.idgame , config.TIPO_CARATULA )
 
     def descargarDisco(self , core , juego):
         return core.descargarDisco( juego.idgame )
