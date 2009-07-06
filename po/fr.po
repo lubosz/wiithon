@@ -34,6 +34,9 @@ msgstr "***************** DOWNLOAD DISC %s ********************"
 msgid "0 Tareas"
 msgstr "0 Tasks"
 
+msgid "2 particiones WBFS"
+msgstr ""
+
 msgid "A continuacion se listan los juego que NO van a ser copiados por ya estar en la particion de destino"
 msgstr "The following are games will NOT be copied because exists in destiny partition"
 
@@ -281,6 +284,9 @@ msgstr "Error: IDGAME length must be 6, and can only contain letters and numbers
 
 msgid "Escriba el nuevo nombre : "
 msgstr "Enter the new name : "
+
+msgid "Esto es Wiithon 1.0"
+msgstr ""
 
 msgid "Extraer"
 msgstr "Extract"

@@ -73,6 +73,7 @@ static int get_capacity(char *file,u32 *sector_size,u32 *n_sector)
                 *n_sector/=512/ *sector_size;
         return 1;
 }
+
 wbfs_t *wbfs_try_open_hd(char *fn,int reset)
 {
         u32 sector_size, n_sector;
@@ -81,23 +82,26 @@ wbfs_t *wbfs_try_open_hd(char *fn,int reset)
         FILE *f = fopen(fn,"r+");
         if (!f)
                 return NULL;
-        return wbfs_open_hd(wbfs_fread_sector,wbfs_fwrite_sector,f,
-                            sector_size ,n_sector,reset);
+        return wbfs_open_hd(wbfs_fread_sector,wbfs_fwrite_sector,f,sector_size ,n_sector,reset);
 }
+
 wbfs_t *wbfs_try_open_partition(char *fn,int reset)
 {
         u32 sector_size, n_sector;
         if(!get_capacity(fn,&sector_size,&n_sector))
+		{
                 return NULL;
+		}
         FILE *f = fopen(fn,"r+");
         if (!f)
+		{
                 return NULL;
-        return wbfs_open_partition(wbfs_fread_sector,wbfs_fwrite_sector,f,
-                                   sector_size ,n_sector,0,reset);
+		}
+        return wbfs_open_partition(wbfs_fread_sector,wbfs_fwrite_sector,f,sector_size ,n_sector,0,reset);
 }
 wbfs_t *wbfs_try_open(char *disc,char *partition, int reset)
 {
-        wbfs_t *p = 0;
+        wbfs_t *p = NULL;
         if(partition)
                 p = wbfs_try_open_partition(partition,reset);
         if (!p && !reset && disc)

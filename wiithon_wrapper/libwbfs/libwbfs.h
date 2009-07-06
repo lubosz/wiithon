@@ -3,6 +3,8 @@
 #ifndef LIBWBFS_H
 #define LIBWBFS_H
 
+#include <time.h>
+
 #include "libwbfs_os.h" // this file is provided by the project wanting to compile libwbfs
 #include "wiidisc.h"
 

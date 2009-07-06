@@ -56,7 +56,9 @@ permissions_fix:
 
 compilar_forzar: clean compilar
 
-compilar: wiithon_wrapper/wiithon_wrapper ./po/locale/da_DK/LC_MESSAGES/wiithon.mo ./po/locale/fi_FI/LC_MESSAGES/wiithon.mo ./po/locale/tr_TR/LC_MESSAGES/wiithon.mo ./po/locale/ru_RU/LC_MESSAGES/wiithon.mo ./po/locale/ko_KR/LC_MESSAGES/wiithon.mo ./po/locale/it/LC_MESSAGES/wiithon.mo ./po/locale/sv_SE/LC_MESSAGES/wiithon.mo ./po/locale/es/LC_MESSAGES/wiithon.mo ./po/locale/pt_PT/LC_MESSAGES/wiithon.mo ./po/locale/en/LC_MESSAGES/wiithon.mo ./po/locale/nl_NL/LC_MESSAGES/wiithon.mo ./po/locale/nb_NO/LC_MESSAGES/wiithon.mo ./po/locale/ja_JP/LC_MESSAGES/wiithon.mo ./po/locale/fr/LC_MESSAGES/wiithon.mo ./po/locale/pt_BR/LC_MESSAGES/wiithon.mo ./po/locale/de/LC_MESSAGES/wiithon.mo
+#compilar: wiithon_wrapper/wiithon_wrapper ./po/locale/da_DK/LC_MESSAGES/wiithon.mo ./po/locale/fi_FI/LC_MESSAGES/wiithon.mo ./po/locale/tr_TR/LC_MESSAGES/wiithon.mo ./po/locale/ru_RU/LC_MESSAGES/wiithon.mo ./po/locale/ko_KR/LC_MESSAGES/wiithon.mo ./po/locale/it/LC_MESSAGES/wiithon.mo ./po/locale/sv_SE/LC_MESSAGES/wiithon.mo ./po/locale/es/LC_MESSAGES/wiithon.mo ./po/locale/pt_PT/LC_MESSAGES/wiithon.mo ./po/locale/en/LC_MESSAGES/wiithon.mo ./po/locale/nl_NL/LC_MESSAGES/wiithon.mo ./po/locale/nb_NO/LC_MESSAGES/wiithon.mo ./po/locale/ja_JP/LC_MESSAGES/wiithon.mo ./po/locale/fr/LC_MESSAGES/wiithon.mo ./po/locale/pt_BR/LC_MESSAGES/wiithon.mo ./po/locale/de/LC_MESSAGES/wiithon.mo
+
+compilar: libwbfs_binding/wiithon_wrapper ./po/locale/da_DK/LC_MESSAGES/wiithon.mo ./po/locale/fi_FI/LC_MESSAGES/wiithon.mo ./po/locale/tr_TR/LC_MESSAGES/wiithon.mo ./po/locale/ru_RU/LC_MESSAGES/wiithon.mo ./po/locale/ko_KR/LC_MESSAGES/wiithon.mo ./po/locale/it/LC_MESSAGES/wiithon.mo ./po/locale/sv_SE/LC_MESSAGES/wiithon.mo ./po/locale/es/LC_MESSAGES/wiithon.mo ./po/locale/pt_PT/LC_MESSAGES/wiithon.mo ./po/locale/en/LC_MESSAGES/wiithon.mo ./po/locale/nl_NL/LC_MESSAGES/wiithon.mo ./po/locale/nb_NO/LC_MESSAGES/wiithon.mo ./po/locale/ja_JP/LC_MESSAGES/wiithon.mo ./po/locale/fr/LC_MESSAGES/wiithon.mo ./po/locale/pt_BR/LC_MESSAGES/wiithon.mo ./po/locale/de/LC_MESSAGES/wiithon.mo
 
 install: compilar
 	mkdir -p $(PREFIX)/share/wiithon
@@ -65,11 +67,17 @@ install: compilar
 
 	echo $(HOME) > $(PREFIX)/share/wiithon/HOME.conf
 
-	cp wiithon_wrapper/wiithon_wrapper $(PREFIX)/share/wiithon
+	#cp wiithon_wrapper/wiithon_wrapper $(PREFIX)/share/wiithon
+	
+	cp libwbfs_binding/wiithon_wrapper $(PREFIX)/share/wiithon
+	cp libwbfs_binding/wiithon_wrapper $(PREFIX)/share/wiithon
+	
 	cp wiithon.py $(PREFIX)/share/wiithon
+	cp libwbfs_binding/libwbfs/libwbfs.so /usr/lib
 	
 	cp wiithon_autodetectar.sh $(PREFIX)/share/wiithon
 	cp wiithon_autodetectar_lector.sh $(PREFIX)/share/wiithon
+	cp wiithon_autodetectar_fat32.sh $(PREFIX)/share/wiithon
 	
 	cp cli.py $(PREFIX)/share/wiithon
 	cp gui.py $(PREFIX)/share/wiithon
@@ -114,7 +122,6 @@ install: compilar
 	@echo "Wiithon Install OK"
 	@echo "=================================================================="
 
-# Se podría resumir en un futuro con -@find /usr/share/locale -name wiithon.mo | xargs rm
 uninstall: 
 	@echo "Limpiando antiguas instalaciones"
 	-$(RM) /usr/bin/wiithon
@@ -155,9 +162,11 @@ uninstall:
 	
 	-$(RM) $(PREFIX)/share/wiithon/*.py
 	-$(RM) $(PREFIX)/share/wiithon/*.sh
-	-$(RM) $(PREFIX)/share/wiithon/wiithon_wrapper
 	-$(RM) $(PREFIX)/share/wiithon/recursos/glade/*.ui
 	-$(RM) $(PREFIX)/share/wiithon/recursos/imagenes/*.png
+	
+	-$(RM) $(PREFIX)/share/wiithon/wiithon_wrapper
+	-$(RM) /usr/lib/libwbfs.so
 
 	-$(RM) $(PREFIX)/share/wiithon/*.pyc
 	
@@ -205,26 +214,53 @@ actualizar: uninstall pull install log
 	@echo "Updated to $(VERSION) rev$(REVISION)"
 	@echo "=================================================================="
 
-clean: clean_wiithon_wrapper clean_gettext
+clean: clean_wiithon_wrapper clean_libwbfs_binding clean_gettext
 	$(RM) *.pyc
 	$(RM) *~
 	$(RM) po/*~
+	touch po/*.pot
 
+# -@find po/locale/ -name wiithon.mo | xargs rm
 clean_gettext:
-	-@find po/locale/ -name wiithon.mo | xargs rm
+	-$(RM) po/locale/en/LC_MESSAGES/wiithon.mo
+	-$(RM) po/locale/es/LC_MESSAGES/wiithon.mo
+	-$(RM) po/locale/da_DK/LC_MESSAGES/wiithon.mo
+	-$(RM) po/locale/fi_FI/LC_MESSAGES/wiithon.mo
+	-$(RM) po/locale/it/LC_MESSAGES/wiithon.mo
+	-$(RM) po/locale/ko_KR/LC_MESSAGES/wiithon.mo
+	-$(RM) po/locale/nl_NL/LC_MESSAGES/wiithon.mo
+	-$(RM) po/locale/pt_PT/LC_MESSAGES/wiithon.mo
+	-$(RM) po/locale/sv_SE/LC_MESSAGES/wiithon.mo
+	-$(RM) po/locale/de/LC_MESSAGES/wiithon.mo
+	-$(RM) po/locale/fr/LC_MESSAGES/wiithon.mo
+	-$(RM) po/locale/ja_JP/LC_MESSAGES/wiithon.mo
+	-$(RM) po/locale/nb_NO/LC_MESSAGES/wiithon.mo
+	-$(RM) po/locale/pt_BR/LC_MESSAGES/wiithon.mo
+	-$(RM) po/locale/ru_RU/LC_MESSAGES/wiithon.mo
+	-$(RM) po/locale/tr_TR/LC_MESSAGES/wiithon.mo
 
 clean_wiithon_wrapper:
 	$(MAKE) -C wiithon_wrapper clean
+	
+clean_libwbfs_binding:
+	$(MAKE) -C libwbfs_binding clean
 
 wiithon_wrapper/wiithon_wrapper: wiithon_wrapper/*.c wiithon_wrapper/*.h wiithon_wrapper/libwbfs/*.c wiithon_wrapper/libwbfs/*.h 
 	$(MAKE) -C wiithon_wrapper
 
+libwbfs_binding/wiithon_wrapper: libwbfs_binding/*.c libwbfs_binding/libwbfs/*.c libwbfs_binding/libwbfs/*.h 
+	$(MAKE) -C libwbfs_binding
+
 # REPOSITORIO
 pull:
 	bzr pull
+	chown `whoami`\: * -R
 
 commit: clean
 	bzr commit --file="COMMIT" && echo "" > COMMIT
+
+publicar: commit
+	bzr push
 
 log:
 	bzr log --forward --short

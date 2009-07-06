@@ -369,7 +369,12 @@ class WiithonCLI:
                     else:
                         reemplazada = True
                 print "%s %s = %s.iso ..." % (FABRICANTE_DVD , _("a un ISO temporal de 4.4GB en") , MAGIC_DVD)
-                if( reemplazada or (os.system("dd if="+LECTOR_DVD+" of="+SALIDA+" bs=1M conv=noerror")==0) ):
+                
+                '''
+                dd if=/dev/source of=/target/name.img bs=1M conv=noerror,sync
+                '''
+                
+                if( reemplazada or (os.system("dd if="+LECTOR_DVD+" of="+SALIDA+" bs=1M conv=noerror,sync")==0) ):
                     if ( self.core.anadirISO(DEVICE , SALIDA)):
                         if( self.core.descargarCaratula(MAGIC_DVD) ):
                             print "%s %s/%s.png" % (_("Caratula descargada como") , os.getcwd() , MAGIC_DVD)

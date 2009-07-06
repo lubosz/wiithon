@@ -1,7 +1,6 @@
 po/locale/*/LC_MESSAGES/wiithon.mo
 wiithon_wrapper/wiithon_wrapper
-libwbfs_binding/build_wiithon_wrapper/wiithon_wrapper
-
+libwbfs_binding/wiithon_wrapper
 COMMIT
 wiithon_wrapper/*.o
 *~

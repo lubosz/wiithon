@@ -33,6 +33,9 @@ msgstr ""
 msgid "0 Tareas"
 msgstr ""
 
+msgid "2 particiones WBFS"
+msgstr ""
+
 msgid "A continuacion se listan los juego que NO van a ser copiados por ya estar en la particion de destino"
 msgstr ""
 
@@ -260,6 +263,9 @@ msgid "Error: La longitud del IDGAME debe ser 6, y solo puede contener letras y 
 msgstr ""
 
 msgid "Escriba el nuevo nombre : "
+msgstr ""
+
+msgid "Esto es Wiithon 1.0"
 msgstr ""
 
 msgid "Extraer"

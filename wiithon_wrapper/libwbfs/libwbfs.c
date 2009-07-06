@@ -5,7 +5,6 @@
 // http://www.gnu.org/licenses/old-licenses/gpl-2.0.txt
 
 #include "libwbfs.h"
-#include <time.h>
 
 #define likely(x)       __builtin_expect(!!(x), 1)
 #define unlikely(x)     __builtin_expect(!!(x), 0)

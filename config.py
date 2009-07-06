@@ -33,7 +33,7 @@ def getHOME():
         HOME = os.environ['HOME']
         LOCALE = os.path.join(WIITHON_FILES , "po")
         LOCALE = os.path.join(LOCALE , "locale")
-        WBFS_APP = "libwbfs_binding/build_wiithon_wrapper/wiithon_wrapper.sh"
+        WBFS_APP = "wiithon_wrapper/wiithon_wrapper"
         WIITHON_FILES_RECURSOS_IMAGENES = os.path.join(WIITHON_FILES_RECURSOS_IMAGENES , "cargando")
         ICONO = os.path.join(WIITHON_FILES_RECURSOS , "icons")
         ICONO = os.path.join(ICONO , "wiithon.png")
