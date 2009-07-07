@@ -110,6 +110,9 @@ class WiithonGUI(GtkBuilderWrapper):
 
         # Referencia copia a la lista de juegos
         self.listaJuegos = None
+        
+        # Referencia a la sublista filtrada por el buscador
+        self.subListaJuegos = None
 
         #
         self.pathJuegoSeleccionado = None
@@ -172,7 +175,7 @@ class WiithonGUI(GtkBuilderWrapper):
         self.wb_estadoTrabajo.set_property("attributes", self.getEstilo_azulGrande() )
 
         # trabajos LIGEROS
-        self.poolBash = PoolTrabajo( self.core , 6,
+        self.poolBash = PoolTrabajo( self.core , config.NUM_HILOS ,
                                     callback_termina_trabajo_descargar_caratula = self.callback_termina_trabajo_descargar_caratula,
                                     callback_termina_trabajo_descargar_disco = self.callback_termina_trabajo_descargar_disco
                                     )
@@ -255,6 +258,8 @@ class WiithonGUI(GtkBuilderWrapper):
                 #ocultar algunas coasa
                 self.wb_vboxProgresoEspacio.hide()
                 self.wb_labelEspacio.hide()
+                
+                self.wb_label_numParticionesWBFS.set_label(_("¡No hay particiones WBFS!"))
             else:
                 # establecemos el modo de wiithon, hay particiones que gestionar
                 self.modo = "manager"
@@ -276,6 +281,11 @@ class WiithonGUI(GtkBuilderWrapper):
                 #mostrar algunas coasa
                 self.wb_vboxProgresoEspacio.show()
                 self.wb_labelEspacio.show()
+                
+                if self.numParticiones == 1:
+                    self.wb_label_numParticionesWBFS.set_label(_("1 particion WBFS"))
+                else:
+                    self.wb_label_numParticionesWBFS.set_label(_("%d particiones WBFS") % self.numParticiones)
         else:
             self.alert("warning" , _("No puedes refrescar las particiones mientras hay tareas sin finalizar"))
 
@@ -383,7 +393,8 @@ class WiithonGUI(GtkBuilderWrapper):
             if(self.IDGAMEJuegoSeleccionado != nuevoIDGAME):
                 exp_reg = "[A-Z0-9]{6}"
                 if re.match(exp_reg,nuevoIDGAME):
-                    juego = session.query(Juego).filter('idgame=="%s" and device=="%s"' % (nuevoIDGAME , self.DEVICEParticionSeleccionada)).first()
+                    sql = util.decode('idgame=="%s" and device=="%s"' % (nuevoIDGAME , self.DEVICEParticionSeleccionada))
+                    juego = session.query(Juego).filter(sql).first()
                     if juego == None:
                         if ( self.question(_('Advertencia de seguridad de renombrar desde IDGAME = %s a %s') % (self.IDGAMEJuegoSeleccionado , nuevoIDGAME)) == 1 ):
                             if self.core.renombrarIDGAME(self.DEVICEParticionSeleccionada , self.IDGAMEJuegoSeleccionado , nuevoIDGAME):
@@ -566,7 +577,7 @@ class WiithonGUI(GtkBuilderWrapper):
 
     def refrescarListaJuegosFromBDD(self):
         self.listaJuegos = []
-        for juego in session.query(Juego):
+        for juego in session.query(Juego).order_by('lower(title)'):
             self.listaJuegos.append( juego )
             if not self.core.existeCaratula(juego.idgame):
                 self.poolBash.nuevoTrabajoDescargaCaratula( juego )
@@ -590,7 +601,8 @@ class WiithonGUI(GtkBuilderWrapper):
             # el core nos da
             tuplaJuego = self.listaJuegos[ i ]
 
-            juego = session.query(Juego).filter( 'idgame=="%s"' % (tuplaJuego[0]) ).first()
+            sql = util.decode('idgame=="%s"' % (tuplaJuego[0]))
+            juego = session.query(Juego).filter(sql).first()
             if juego == None:
                 # es un juego nuevo, se guarda en la bdd
                 juego = Juego(tuplaJuego[0] , tuplaJuego[1] , tuplaJuego[2] , self.DEVICEParticionSeleccionada)
@@ -602,19 +614,20 @@ class WiithonGUI(GtkBuilderWrapper):
                 # previamente se limpiaron los devices
                 juego.device = self.DEVICEParticionSeleccionada
 
-            self.listaJuegos[ i ] = juego
+            self.listaJuegos[i] = juego
 
             i += 1
 
         session.commit()
-        self.refrescarListaJuegos()
+        return self.refrescarListaJuegos()
 
     # refresco desde memoria (rápido)
     def refrescarListaJuegos(self):
         subListaJuegos = []
 
         # ordenado por nombre, insensible a mayusculas
-        for juego in session.query(Juego).filter('device like "%s" and (title like "%%%s%%" or idgame like "%s%%")' % (self.DEVICEParticionSeleccionada , self.buscar , self.buscar)).order_by('lower(title)'):
+        sql = util.decode('device like "%s" and (title like "%%%s%%" or idgame like "%s%%")' % (self.DEVICEParticionSeleccionada , self.buscar , self.buscar))
+        for juego in session.query(Juego).filter(sql).order_by('lower(title)'):
             subListaJuegos.append( juego )
 
         # cargar la lista sobre el Treeview
@@ -622,6 +635,8 @@ class WiithonGUI(GtkBuilderWrapper):
 
         # seleccionar primera fila del treeview de juegos
         self.seleccionarPrimeraFila( self.wb_tv_games)
+        
+        return subListaJuegos
 
     # Llama el callback onchange de los 3 treeview conocidos
     def callback_treeview(self, treeview):
@@ -701,10 +716,10 @@ class WiithonGUI(GtkBuilderWrapper):
             self.seleccionarPrimeraFila( self.wb_tv_partitions2 )
 
             # refrescamos la lista de juegos, leyendo del core
-            self.refrescarListaJuegosFromCore()
+            self.subListaJuegos = self.refrescarListaJuegosFromCore()
 
             # descargamos las caratulas de los juegos que no tienen
-            for juego in self.listaJuegos:
+            for juego in self.subListaJuegos:
                 if not self.core.existeCaratula(juego.idgame):
                     self.poolBash.nuevoTrabajoDescargaCaratula( juego )
                 if not self.core.existeDisco(juego.idgame):
@@ -752,12 +767,13 @@ class WiithonGUI(GtkBuilderWrapper):
         if self.iteradorJuegoSeleccionado != None:
             self.pathJuegoSeleccionado = int(self.seleccionJuegoSeleccionado.get_value(self.iteradorJuegoSeleccionado,0))
             self.IDGAMEJuegoSeleccionado = self.seleccionJuegoSeleccionado.get_value(self.iteradorJuegoSeleccionado,1)
-            self.juego = session.query(Juego).filter('idgame=="%s" and device like "%s"' % (self.IDGAMEJuegoSeleccionado , self.DEVICEParticionSeleccionada)).first()
+            sql = util.decode('idgame=="%s" and device like "%s"' % (self.IDGAMEJuegoSeleccionado , self.DEVICEParticionSeleccionada))
+            self.juego = session.query(Juego).filter(sql).first()
             self.ponerCaratula(self.IDGAMEJuegoSeleccionado)
             self.ponerDisco(self.IDGAMEJuegoSeleccionado)
 
         # autoredimensionar columnas
-        treeview.columns_autosize()
+        #treeview.columns_autosize()
 
     def on_tv_games_click_event(self, widget, event):
         if event.button == 3:
@@ -779,10 +795,6 @@ class WiithonGUI(GtkBuilderWrapper):
             if self.numParticiones > 1:                
                 res = self.wb_dialogo_copia_1on1.run()
                 
-                self.wb_dialogo_copia_1on1.hide()
-                
-                # salir por Cancelar ---> 0
-                # salir por Escape ---> -4
                 if(res > 0):
                     device_destino = self.DEVICEParticionSeleccionada_1on1
                     juegosParaClonar = []
@@ -838,6 +850,8 @@ class WiithonGUI(GtkBuilderWrapper):
                             self.poolTrabajo.nuevoTrabajoClonar( juegosParaClonar, device_destino )
                     else:
                         self.alert('info',_("No hay nada que copiar en %s") % (device_destino))
+                
+                self.wb_dialogo_copia_1on1.hide()
             else:
                 self.alert("warning" , _("No hay un numero suficiente de particiones validas, para realizar esta accion."))
 
@@ -968,7 +982,8 @@ class WiithonGUI(GtkBuilderWrapper):
                         elif( util.getExtension(fichero) == "iso" ):
                             idgame = util.getMagicISO(fichero)
                             if idgame != None:
-                                self.juegoNuevo = session.query(Juego).filter('idgame=="%s" and device=="%s"' % (idgame , self.DEVICEParticionSeleccionada)).first()
+                                sql = util.decode('idgame=="%s" and device=="%s"' % (idgame , self.DEVICEParticionSeleccionada))
+                                self.juegoNuevo = session.query(Juego).filter(sql).first()
                                 if self.juegoNuevo == None:
                                     ficherosSeleccionados.append(fichero)
                                 else:

@@ -13,6 +13,10 @@ msgid "%d juegos"
 msgstr ""
 
 #, python-format
+msgid "%d particiones WBFS"
+msgstr ""
+
+#, python-format
 msgid "%s - Salir"
 msgstr ""
 
@@ -31,7 +35,7 @@ msgstr ""
 msgid "0 Tareas"
 msgstr ""
 
-msgid "2 particiones WBFS"
+msgid "1 particion WBFS"
 msgstr ""
 
 msgid "A continuacion se listan los juego que NO van a ser copiados por ya estar en la particion de destino"
@@ -261,9 +265,6 @@ msgid "Error: La longitud del IDGAME debe ser 6, y solo puede contener letras y 
 msgstr ""
 
 msgid "Escriba el nuevo nombre : "
-msgstr ""
-
-msgid "Esto es Wiithon 1.0"
 msgstr ""
 
 msgid "Extraer"
@@ -566,22 +567,11 @@ msgstr ""
 msgid "Valor incorrecto"
 msgstr ""
 
-msgid "Vuelvelo a intentar o mira en : http://www.theotherzone.com/wii/"
-msgstr ""
-
 msgid "Ya hay un juego con ese IDGAME"
 msgstr ""
 
 #, python-format
 msgid "Ya hay una ISO en : %s"
-msgstr ""
-
-#, python-format
-msgid "Ya tienes el disco-caratula %s"
-msgstr ""
-
-#, python-format
-msgid "Ya tienes la caratula %s"
 msgstr ""
 
 msgid "a la particion"
@@ -618,4 +608,7 @@ msgid "quedan"
 msgstr ""
 
 msgid "wiithon no borra la ISO temporal, puedes borrarla si no la necesitas"
+msgstr ""
+
+msgid "No hay particiones WBFS!"
 msgstr ""

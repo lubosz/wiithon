@@ -214,7 +214,7 @@ actualizar: uninstall pull install log
 	@echo "Updated to $(VERSION) rev$(REVISION)"
 	@echo "=================================================================="
 
-clean: clean_wiithon_wrapper clean_libwbfs_binding clean_gettext
+clean: clean_libwbfs_binding clean_gettext
 	$(RM) *.pyc
 	$(RM) *~
 	$(RM) po/*~
@@ -239,14 +239,14 @@ clean_gettext:
 	-$(RM) po/locale/ru_RU/LC_MESSAGES/wiithon.mo
 	-$(RM) po/locale/tr_TR/LC_MESSAGES/wiithon.mo
 
-clean_wiithon_wrapper:
-	$(MAKE) -C wiithon_wrapper clean
+#clean_wiithon_wrapper:
+	#$(MAKE) -C wiithon_wrapper clean
 	
 clean_libwbfs_binding:
 	$(MAKE) -C libwbfs_binding clean
 
-wiithon_wrapper/wiithon_wrapper: wiithon_wrapper/*.c wiithon_wrapper/*.h wiithon_wrapper/libwbfs/*.c wiithon_wrapper/libwbfs/*.h 
-	$(MAKE) -C wiithon_wrapper
+#wiithon_wrapper/wiithon_wrapper: wiithon_wrapper/*.c wiithon_wrapper/*.h wiithon_wrapper/libwbfs/*.c wiithon_wrapper/libwbfs/*.h 
+	#$(MAKE) -C wiithon_wrapper
 
 libwbfs_binding/wiithon_wrapper: libwbfs_binding/*.c libwbfs_binding/libwbfs/*.c libwbfs_binding/libwbfs/*.h 
 	$(MAKE) -C libwbfs_binding
@@ -259,8 +259,10 @@ pull:
 commit: clean
 	bzr commit --file="COMMIT" && echo "" > COMMIT
 
-publicar: commit
+push: commit
 	bzr push
+
+publicar: commit push log
 
 log:
 	bzr log --forward --short

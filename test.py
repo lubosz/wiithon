@@ -2,6 +2,23 @@
 # -*- coding: utf-8 -*-
 # vim: set fileencoding=utf-8 :
 
+def getDominioYRuta(url, protocolo = 'http://'):
+    pos = url.find(protocolo)
+    if(pos != -1):
+        url = url[len(protocolo):]
+    pos = url.find("/")
+    if(pos != -1):
+        return url[:pos], url[pos+1:]
+    else:
+        return url , ""
+
+id = "RRRXFG"
+patron = "http://www.wiiboxart.com/diskart/160/160/%.3s.png"
+dominio, ruta = getDominioYRuta(patron % id)
+print ">>>>> %s <<<<<<<<" % dominio
+print ">>>>> %s <<<<<<<<" % ruta
+
+'''
 import os
 import time
 import subprocess
@@ -37,7 +54,7 @@ print "Juegos DESPUES de insertar"
 for j in session.query(Juego):
     print j
 
-
+'''
 '''
 class PoolCustomizada(Pool):
     def __init__(self , numHilos):

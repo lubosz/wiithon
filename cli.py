@@ -144,7 +144,6 @@ class WiithonCLI:
                     print _("OK, todas las caratulas se han descargado")
                 else:
                     print _("ERROR, descargando alguna caratula")
-                    print _("Vuelvelo a intentar o mira en : http://www.theotherzone.com/wii/")
             else:
                 print _("No hay Juegos para descargar caratulas")
         elif ( parm1 == "renombrar" or parm1 == "rename" or parm1 == "r"):
@@ -359,7 +358,7 @@ class WiithonCLI:
                 LECTOR_DVD = cachos[0]
                 FABRICANTE_DVD = cachos[1]
                 MAGIC_DVD = util.getMagicISO(LECTOR_DVD)
-                SALIDA = os.getcwd()+"/"+MAGIC_DVD+".iso"
+                SALIDA = "%s/%s.iso" % (os.getcwd(), MAGIC_DVD)
                 reemplazada = False
                 if (os.path.exists(SALIDA)):
                     print _("Ya hay una ISO en : %s") % (SALIDA)

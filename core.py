@@ -99,30 +99,25 @@ class WiithonCORE:
             existe = False
         return existe
 
-    def descargarDisco(self , IDGAME):
-        if (self.existeDisco(IDGAME)):
-            return True
-        else:
-            print _("***************** DESCARGAR DISCO %s ********************" % (IDGAME))
-            try:
-                origen = "www.wiiboxart.com"
-                destino = self.getRutaDisco(IDGAME)
-                # Solo las 3 primeras letras del disco, la web cambio a ese formato a finales de junio
-                origenGen = "diskart/160/160/%s.png" % (IDGAME[:3])
-                util.descargarImagen(origen, origenGen, destino)
-                os.system("mogrify -resize 160x160! %s" % (destino))
-                return True
-            except util.ErrorDescargando:
-                return False
-
     def getRutaDisco(self , IDGAME):
-        return os.path.join(config.HOME_WIITHON_DISCOS , IDGAME+".png")
+        return os.path.join(config.HOME_WIITHON_DISCOS , "%s.png" % (IDGAME))
 
     def getRutaCaratula(self , IDGAME):
-        return os.path.join(config.HOME_WIITHON_CARATULAS , IDGAME+".png")
+        return os.path.join(config.HOME_WIITHON_CARATULAS , "%s.png" % (IDGAME))
 
     def copiarCaratula(self , juego , destino):
         destino = os.path.join( os.path.abspath(destino) , "%s.png" % (juego.idgame) )
+        if( self.existeCaratula(juego.idgame) ):
+            try:
+                origen = self.getRutaCaratula(juego.idgame)
+                print "%s %s ----> %s ... " % (_("Copiando"), origen , destino)
+                shutil.copyfile(origen, destino)
+                return True
+            except:
+                return False
+        else:
+            return False
+        '''
         if( not os.path.exists( destino ) and self.existeDisco(juego.idgame) ):
             origen = self.getRutaCaratula(juego.idgame)
             print "%s %s ----> %s ... " % (_("Copiando"), origen , destino)
@@ -131,9 +126,22 @@ class WiithonCORE:
         else:
             print _("Ya tienes la caratula %s") % (juego.idgame)
             return True
+        '''
 
     def copiarDisco(self , juego , destino):
         destino = os.path.join( os.path.abspath(destino) , "%s.png" % (juego.idgame) )
+        if( self.existeDisco(juego.idgame) ):
+            try:
+                origen = self.getRutaDisco(juego.idgame)
+                print "%s %s ----> %s ... " % (_("Copiando"), origen , destino)
+                shutil.copyfile(origen, destino)
+                return True
+            except:
+                return False
+        else:
+            return False
+            
+        '''
         if( not os.path.exists( destino ) and self.existeCaratula(juego.idgame) ):
             origen = self.getRutaDisco(juego.idgame)
             print "%s %s ----> %s ... " % (_("Copiando"), origen , destino)
@@ -142,6 +150,7 @@ class WiithonCORE:
         else:
             print _("Ya tienes el disco-caratula %s") % (juego.idgame)
             return True
+        '''
 
     # borrar disco
     def borrarDisco( self , juego ):
@@ -165,30 +174,48 @@ class WiithonCORE:
             existe = False
         return existe
 
+    def descargarDisco(self , IDGAME, ancho=160, alto=160):
+        if (self.existeDisco(IDGAME)):
+            return True
+        else:
+            print _("***************** DESCARGAR DISCO %s ********************" % (IDGAME))
+            try:
+                origen = "http://www.wiiboxart.com/diskart/160/160/%.3s.png" % (IDGAME)
+                destino = self.getRutaDisco(IDGAME)
+                util.descargarImagen(origen, destino)
+                os.system("mogrify -resize %dx%d! %s" % (ancho, alto, destino))
+                return True
+            except util.ErrorDescargando:
+                return False
+
     # Descarga una caratula de "IDGAME"
-    # el Tipo puede ser : normal|panoramica|3d
-    def descargarCaratula(self , IDGAME, tipo = "normal"):
+    # el Tipo puede ser : normal|panoramica|3d|full
+    def descargarCaratula(self , IDGAME, tipo = "normal", ancho=160, alto=224):
         if (self.existeCaratula(IDGAME)):
             return True
         else:
-            origen = "www.wiiboxart.com"
-            destino = self.getRutaCaratula(IDGAME)
-            regiones = ['pal/' , 'ntsc/' , 'ntscj/']
+            origenes = []
             if(tipo == "panoramica"):
-                ruta_imagen = "widescreen/"
+                origenes.append("http://www.wiiboxart.com/widescreen/pal/%s.png" % IDGAME)
+                origenes.append("http://www.wiiboxart.com/widescreen/ntsc/%s.png" % IDGAME)
+                origenes.append("http://www.wiiboxart.com/widescreen/ntscj/%s.png" % IDGAME)
             elif(tipo == "3d"):
-                ruta_imagen = "3d/160/225/"
-                regiones = ['']
+                origenes.append("http://www.wiiboxart.com/3d/160/225/%s.png" % IDGAME)
+            elif(tipo == "full"):
+                origenes.append("http://www.wiiboxart.com/fullcover/%s.png" % IDGAME)
             else:
-                ruta_imagen = ""
+                origenes.append("http://www.wiiboxart.com/pal/%s.png" % IDGAME)
+                origenes.append("http://www.wiiboxart.com/ntsc/%s.png" % IDGAME)
+                origenes.append("http://www.wiiboxart.com/ntscj/%s.png" % IDGAME)
+            destino = self.getRutaCaratula(IDGAME)
             descargada = False
             i = 0
-            print _("***************** DESCARGAR CARATULA %s ********************" % (IDGAME))
-            while ( not descargada and i<len(regiones) ):
-                origenGen = ruta_imagen + regiones[i] + IDGAME + ".png"
+            print _("***************** DESCARGAR CARATULA %s ********************") % (IDGAME)
+            
+            while ( not descargada and i<len(origenes) ):
                 try:
-                    util.descargarImagen(origen, origenGen, destino)
-                    os.system("mogrify -resize 160x224! %s" % (destino))
+                    util.descargarImagen(origenes[i], destino)
+                    os.system("mogrify -resize %dx%d! %s" % (ancho, alto, destino))
                     descargada = True
                 except util.ErrorDescargando:
                     i += 1
@@ -211,7 +238,7 @@ class WiithonCORE:
 
     # Devuelve la lista de particiones
     def getListaParticiones(self):
-        salida = util.getSTDOUT_NOERROR_iterador( config.DETECTOR_WBFS)
+        salida = util.getSTDOUT_NOERROR_iterador(config.DETECTOR_WBFS)
 
         self.listaParticiones = []
 
@@ -306,7 +333,6 @@ class WiithonCORE:
 
     def setInterfaz(self , interfaz):
         self.interfaz = interfaz
-
 
     # añade un *ISO* a un *DEVICE*
     def anadirISO(self , DEVICE , ISO):

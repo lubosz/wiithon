@@ -25,62 +25,21 @@ class NonRepeatList(list):
         for i in iterable:
             self.append(i)
 
-'''
-class Observable:
-    def __init__(self, topic_list):
-        self.__observers = {}
-
-        for topic in topic_list:
-            self.__observers[topic] = []
-
-
-    def subscribe(self, topic, callback):
-        if isinstance(topic, list):
-            for t in topic:
-                if self.__observers.has_key(t):
-                    self.__observers[t].append(callback)
-
-                else:
-                    raise SubscriptionError(t)
-
-        else:
-            if self.__observers.has_key(topic):
-                self.__observers[topic].append(callback)
-
-            else:
-                raise SubscriptionError(topic)
-
-    def notify(self, topic, what):
-        if self.__observers.has_key(topic):
-            for observer_cb in self.__observers[topic]:
-                observer_cb(topic, what)
-
-        else:
-            print 'El topic no existe, reporta el bug'
-
-
-class SubscriptionError(Exception):
-    def __init__(self, topic=None):
-        Exception.__init__(self)
-        if topic:
-            self.msg = 'The topic "%s" doesn\'t exist' %(topic)
-
-        else:
-            self.msg = 'Topic not exist'
-
-    def __str__(self):
-        return self.msg
-'''
-
 def getExtension(fichero):
     #fichero = eliminarComillas(fichero)
     posPunto = fichero.rfind(".")
-    return fichero[posPunto+1:len(fichero)].lower()
+    if posPunto != -1:
+        return fichero[posPunto+1:len(fichero)].lower()
+    else:
+        return fichero
 
 def getNombreFichero(fichero):
     #fichero = eliminarComillas(fichero)
     posPunto = fichero.rfind(".")
-    return fichero[0:posPunto]
+    if posPunto != -1:
+        return fichero[0:posPunto]
+    else:
+        return fichero
 
 def getMagicISO(imagenISO):
     f = open(imagenISO , "r")
@@ -226,9 +185,6 @@ except ImportError:
         def __init__(self, clear=False, copy=False):
             gtk.Entry.__init__(self)
 
-class ErrorDescargando(Exception):
-    pass
-
 '''
 
 GET /diskart/160/160/RYX.png HTTP/1.1
@@ -253,15 +209,18 @@ Content-Type: image/png
 
 '''
 
-def descargarImagen(dominio, ruta_imagen, destino, type = "image/png", referer = "http://www.wiiboxart.com/pal.php"):
-    try:       
-        conn = httplib.HTTPConnection(dominio)
+class ErrorDescargando(Exception):
+    pass
+
+def descargarImagen(url, destino, type = "image/png", referer = "http://www.wiiboxart.com/pal.php"):
+    try:
+        dominio, ruta_imagen = getDominioYRuta(url)
         
-        #conn.set_debuglevel(1)
+        conn = httplib.HTTPConnection(dominio)
 
         params = None
         headers = {
-                        "Host": "www.wiiboxart.com",
+                        "Host": dominio,
                         "User-Agent": "Mozilla/5.0 (X11; U; Linux i686; es-ES; rv:1.9.0.11) Gecko/2009060310 Ubuntu/8.10 (intrepid) Firefox/3.0.11",
                         "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8",
                         "Accept-Language": "es-es,es;q=0.8,en-us;q=0.5,en;q=0.3",
@@ -292,13 +251,20 @@ def descargarImagen(dominio, ruta_imagen, destino, type = "image/png", referer =
 
             conn.close()
         else:
-            #print encontrado
-            #print r.status
-            #print r.reason
             conn.close()
             raise ErrorDescargando
     except:
         raise ErrorDescargando
+
+def getDominioYRuta(url, protocolo = 'http://'):
+    pos = url.find(protocolo)
+    if(pos != -1):
+        url = url[len(protocolo):]
+    pos = url.find("/")
+    if(pos != -1):
+        return url[:pos], url[pos+1:]
+    else:
+        return url , ""
 
 # Identifies APNGs
 # Written by Foone/Popcorn Mariachi#!9i78bPeIxI
@@ -333,3 +299,6 @@ def esPNG(ruta):
             f.seek(length+4,1) # +4 because of the CRC (not checked)
     finally:
         f.seek(0)
+
+def decode(s):
+    return s.decode('utf-8')

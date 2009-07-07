@@ -33,7 +33,7 @@ def getHOME():
         HOME = os.environ['HOME']
         LOCALE = os.path.join(WIITHON_FILES , "po")
         LOCALE = os.path.join(LOCALE , "locale")
-        WBFS_APP = "wiithon_wrapper/wiithon_wrapper"
+        WBFS_APP = "libwbfs_binding/wiithon_wrapper.sh"
         WIITHON_FILES_RECURSOS_IMAGENES = os.path.join(WIITHON_FILES_RECURSOS_IMAGENES , "cargando")
         ICONO = os.path.join(WIITHON_FILES_RECURSOS , "icons")
         ICONO = os.path.join(ICONO , "wiithon.png")
@@ -59,6 +59,7 @@ GLADE_ALERTA = "alerta"
 
 DETECTOR_WBFS = os.path.join( WIITHON_FILES , "wiithon_autodetectar.sh" )
 DETECTOR_WBFS_LECTOR = os.path.join( WIITHON_FILES , "wiithon_autodetectar_lector.sh" )
+DETECTOR_WBFS_FAT32 = os.path.join( WIITHON_FILES , "wiithon_autodetectar_fat32.sh" )
 
 # Cuando se descomprime un RAR, definimos si despues se borra la ISO
 borrarISODescomprimida = False
@@ -76,5 +77,8 @@ SEPARADOR = ";@;"
 # Maximos juegos que aparecerán en la lista de copia de disco duro completa
 MAX_LISTA_COPIA_1on1 = 15
 
-# Tipo caratula 3d|normal|panoramica
+# Num de descargas simultaneas
+NUM_HILOS = 15
+
+# Tipo caratula 3d|normal|panoramica|full
 TIPO_CARATULA = "normal"

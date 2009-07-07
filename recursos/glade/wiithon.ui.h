@@ -1,5 +1,5 @@
 char *s = N_("0 Tareas");
-char *s = N_("2 particiones WBFS");
+char *s = N_("1 particion WBFS");
 char *s = N_("Acerca de ...");
 char *s = N_("Aniadir directorio");
 char *s = N_("Buscar:");
@@ -12,7 +12,6 @@ char *s = N_("Copia directa de particion a particion");
 char *s = N_("Copiar 1:1");
 char *s = N_("Copiar el juego seleccionado*");
 char *s = N_("Copiar todo el disco*");
-char *s = N_("Esto es Wiithon 1.0");
 char *s = N_("Extraer a ISO");
 char *s = N_("GNU GENERAL PUBLIC LICENSE Version 3");
 char *s = N_("No cierre wiithon mientras esta animacion indique actividad");
