@@ -143,6 +143,7 @@ uninstall:
 	-$(RM) $(HOME_WIITHON_DISCOS)/index.html*
 	-$(RM) $(HOME_WIITHON_CARATULAS)/*.png.1
 	-$(RM) $(HOME_WIITHON_DISCOS)/*.png.1
+	-$(RM) $(HOME_WIITHON_BDD)/*.db
 
 	-$(RM) $(PREFIX)/share/wiithon/.acuerdo
 	-$(RM) ~/.wiithon_acuerdo
@@ -258,11 +259,6 @@ pull:
 
 commit: clean
 	bzr commit --file="COMMIT" && echo "" > COMMIT
-
-push: commit
-	bzr push
-
-publicar: commit push log
 
 log:
 	bzr log --forward --short
