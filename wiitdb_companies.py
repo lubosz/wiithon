@@ -13,7 +13,7 @@ import config
 motor = create_engine('sqlite:///%s' % os.path.join( config.HOME_WIITHON_BDD , 'juegos.db' ))
 metadatos = MetaData()
 
-tabla = Table('companies',metadatos,
+tabla = Table('wiitdb_companies',metadatos,
     Column('code',VARCHAR(2),primary_key=True),
     Column('name', VARCHAR(255)),
 )

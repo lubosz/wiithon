@@ -13,19 +13,21 @@ http://www.sqlalchemy.org/trac/wiki/05Migration
 import os
 import config
 
-from sqlalchemy.orm import mapper, relation, sessionmaker
+from sqlalchemy.orm import mapper, relation, sessionmaker, backref
 from sqlalchemy import create_engine, Table, Column, Integer, Float, \
-    Text, VARCHAR, MetaData, ForeignKey
-
+    Text, VARCHAR, MetaData, ForeignKey, Unicode
+    
+from wiitdb_juego import tabla_wiitdb_juegos, JuegoWIITDB
+    
 BDD_PERSISTENTE = create_engine('sqlite:///%s'
                                 % os.path.join(
         config.HOME_WIITHON_BDD, 'juegos.db' ))
 
 metadatos = MetaData()
 
-tabla = Table('juegos', metadatos,
-    Column('idgame', VARCHAR(6),primary_key=True),
-    Column('title', VARCHAR(255)),
+tabla_juegos = Table('juegos', metadatos,
+    Column('idgame', VARCHAR(6), primary_key=True),
+    Column('title', Unicode(255)),
     Column('size', Float),
     Column('device', VARCHAR(10)),
 )
@@ -44,8 +46,16 @@ class Juego(object):
     def __repr__(self):
         return "%s (%s)  %s" % (self.title, self.idgame, self.device)
 
-mapper(Juego , tabla)
-Session = sessionmaker(bind=BDD_PERSISTENTE,
-                       autoflush=True, transactional = True)
+from wiitdb_juego import JuegoWIITDB
+
+# http://www.mail-archive.com/sqlalchemy@googlegroups.com/msg09381.html
+mapper(Juego , tabla_juegos, properties={
+    'wiitdb_juegos':relation(JuegoWIITDB, 
+    primaryjoin=tabla_juegos.c.idgame==tabla_wiitdb_juegos.c.idgame,
+    _local_remote_pairs=[(tabla_juegos.c.idgame, tabla_wiitdb_juegos.c.idgame)],
+    foreign_keys=[tabla_wiitdb_juegos.c.idgame],
+    )
+})
+Session = sessionmaker(bind=BDD_PERSISTENTE, autoflush=True, transactional = True)
 session = Session()
 
