@@ -346,6 +346,14 @@ msgstr "Extrair uma ISO"
 msgid "Fabricante"
 msgstr "Fabricante"
 
+#, python-format
+msgid "Falla la descarga de la caratula de %s"
+msgstr ""
+
+#, python-format
+msgid "Falla la descarga del disco de %s"
+msgstr ""
+
 msgid "Finalizado."
 msgstr "Finalizado."
 

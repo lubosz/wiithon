@@ -219,7 +219,7 @@ def descargarImagen(url, destino, type = "image/png", referer = "http://www.wiib
         conn = httplib.HTTPConnection(dominio)
 
         params = None
-        headers = {
+        headers =   {
                         "Host": dominio,
                         "User-Agent": "Mozilla/5.0 (X11; U; Linux i686; es-ES; rv:1.9.0.11) Gecko/2009060310 Ubuntu/8.10 (intrepid) Firefox/3.0.11",
                         "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8",

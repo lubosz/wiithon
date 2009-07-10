@@ -2,21 +2,94 @@
 # -*- coding: utf-8 -*-
 # vim: set fileencoding=utf-8 :
 
-def getDominioYRuta(url, protocolo = 'http://'):
-    pos = url.find(protocolo)
-    if(pos != -1):
-        url = url[len(protocolo):]
-    pos = url.find("/")
-    if(pos != -1):
-        return url[:pos], url[pos+1:]
-    else:
-        return url , ""
+import libxml2
+from companies import Companie, session
 
-id = "RRRXFG"
-patron = "http://www.wiiboxart.com/diskart/160/160/%.3s.png"
-dominio, ruta = getDominioYRuta(patron % id)
-print ">>>>> %s <<<<<<<<" % dominio
-print ">>>>> %s <<<<<<<<" % ruta
+'''
+game
+id
+region
+locale
+title
+synopsis
+developer
+publisher
+date
+genre
+rating
+wi-fi
+input
+control
+rom
+'''
+
+'''
+    * name : returns the node name
+    * type : returns a string indicating the node type
+    * content : returns the content of the node, it is based on xmlNodeGetContent() and hence is recursive.
+    * parent , children, last, next, prev, doc, properties: pointing to the associated element in the tree, those may return None in case no such link exists.
+'''
+'''
+def printNode(node, depth=0):
+    if node.type == "element":
+        #print ' '*depth+str(node.name)+str(node.properties)
+        if node.name == "company":
+            print node
+
+    child = node.children
+    while child is not None:
+        printNode(child, depth+1)
+        child = child.next
+'''
+
+fichXML = 'recursos/wiitdb/wiitdb.xml'
+xmldoc = libxml2.parseFile(fichXML)
+
+for nodo in xmldoc.xpathEval('//companies/company'):
+    code = ""
+    name = ""
+    i = 0
+    attr = nodo.get_properties()
+    while attr != None:
+        if attr.name == "code":
+            code = attr.content
+        elif attr.name == "name":
+            name = attr.content
+        attr = attr.next    
+    # insertar en la bdd
+    comp = Companie(code, name)
+    session.merge(comp)
+
+for nodo in xmldoc.xpathEval('//game/*'):
+    id = ""
+    region = ""
+    locale = ""
+    title = ""
+    synopsis = ""
+    developer = ""
+    publisher = ""
+    date = ""
+    genre = ""
+    rating = ""
+    wifi = ""
+    input = ""
+    control = ""
+    rom = ""
+    if nodo.name == "id":
+        id = nodo.content
+    elif nodo.name == "region":
+        region = nodo.content
+        
+    print "%s - %s" % (id, region)
+
+
+# hacemos efectivas las transacciones
+session.commit()
+
+# libera el xml
+xmldoc.freeDoc()
+
+
 
 '''
 import os

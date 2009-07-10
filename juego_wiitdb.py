@@ -23,11 +23,23 @@ BDD_PERSISTENTE = create_engine('sqlite:///%s'
 
 metadatos = MetaData()
 
-tabla = Table('juegos', metadatos,
-    Column('idgame', VARCHAR(6),primary_key=True),
-    Column('title', VARCHAR(255)),
-    Column('size', Float),
-    Column('device', VARCHAR(10)),
+tabla = Table('juegos_wiitdb', metadatos,
+    Column('idgame', VARCHAR(6)   ,primary_key=True),
+    Column('name'  , VARCHAR(255)),
+    Column('region', VARCHAR(255)),
+    Column('title_EN', VARCHAR(255)),
+    Column('synopsis_EN', VARCHAR(255)),
+    Column('title_ES', VARCHAR(255)),
+    Column('synopsis_ES', VARCHAR(255)),
+    Column('title_PT', VARCHAR(255)),
+    Column('synopsis_PT', VARCHAR(255)),
+    Column('developer', VARCHAR(255)),
+    Column('publisher', VARCHAR(255)),
+    Column('anio', Integer),
+    Column('mes', Integer),
+    Column('dia', Integer),
+    Column('wifi_players', Integer),
+    Column('input_players', Integer),
 )
 
 # solo crea las tablas cuando no existen

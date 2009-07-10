@@ -253,7 +253,7 @@ class WiithonGUI(GtkBuilderWrapper):
                 self.DEVICEParticionSeleccionada = "%"
 
                 # cargar datos desde la base de datos
-                self.refrescarListaJuegosFromBDD()
+                self.subListaJuegos = self.refrescarListaJuegosFromBDD()
 
                 #ocultar algunas coasa
                 self.wb_vboxProgresoEspacio.hide()
@@ -276,7 +276,7 @@ class WiithonGUI(GtkBuilderWrapper):
                 # indirectamente se carga:
                 # lee el modelo de datos de la partición seleccionada
                 # tambien refresca la lista de juegos del CORE
-                self.seleccionarPrimeraFila( self.wb_tv_partitions )
+                self.seleccionarPrimeraFila(self.wb_tv_partitions)
                 
                 #mostrar algunas coasa
                 self.wb_vboxProgresoEspacio.show()
@@ -583,39 +583,19 @@ class WiithonGUI(GtkBuilderWrapper):
                 self.poolBash.nuevoTrabajoDescargaCaratula( juego )
             if not self.core.existeDisco(juego.idgame):
                 self.poolBash.nuevoTrabajoDescargaDisco( juego )
-        self.refrescarListaJuegos()
+        return self.refrescarListaJuegos()
 
     # refresco desde el disco duro (lento)
     def refrescarListaJuegosFromCore(self):        
         # recargar el modelo de datos la lista de juegos
         self.listaJuegos = self.core.getListaJuegos( self.DEVICEParticionSeleccionada )
 
-        # Eliminamos los devices de toda la bdd
-        for juego in session.query(Juego):
-            juego.device = ""
-
-        # el core nos da una lista de tuplas de 3
-        # lo convertimos a una lista de objetos Juego
         i = 0
         while i < len( self.listaJuegos ):
-            # el core nos da
-            tuplaJuego = self.listaJuegos[ i ]
-
-            sql = util.decode('idgame=="%s"' % (tuplaJuego[0]))
-            juego = session.query(Juego).filter(sql).first()
-            if juego == None:
-                # es un juego nuevo, se guarda en la bdd
-                juego = Juego(tuplaJuego[0] , tuplaJuego[1] , tuplaJuego[2] , self.DEVICEParticionSeleccionada)
-                session.save( juego )
-            else:
-                # el nombre puede ser otro aunque tenga el mismo IDGAME (cambiado desde otra gestor por ejemplo)
-                juego.title = tuplaJuego[1]
-
-                # previamente se limpiaron los devices
-                juego.device = self.DEVICEParticionSeleccionada
-
+            tuplaJuego = self.listaJuegos[i]
+            juego = Juego(tuplaJuego[0] , tuplaJuego[1] , tuplaJuego[2] , self.DEVICEParticionSeleccionada)
+            session.merge( juego )
             self.listaJuegos[i] = juego
-
             i += 1
 
         session.commit()
@@ -727,9 +707,6 @@ class WiithonGUI(GtkBuilderWrapper):
 
             # refrescar espacio
             self.refrescarEspacio()
-            
-            # autoredimensionar columnas
-            treeview.columns_autosize()
 
     def on_tv_partitions2_cursor_changed(self , treeview):
         # particion seleccionado
@@ -741,11 +718,8 @@ class WiithonGUI(GtkBuilderWrapper):
             # sincroniza la variable con el core
             self.DEVICEParticionSeleccionada_1on1 = self.core.getDeviceSeleccionado_1on1()
 
-            # autoredimensionar columnas
-            treeview.columns_autosize()
-
     def ponerCaratula(self, IDGAME):
-        destinoCaratula = os.path.join(config.HOME_WIITHON_CARATULAS , IDGAME+".png")
+        destinoCaratula = os.path.join(config.HOME_WIITHON_CARATULAS , "%s.png" % IDGAME)
 
         if not os.path.exists(destinoCaratula):
             destinoCaratula = os.path.join(config.WIITHON_FILES_RECURSOS_IMAGENES , "caratula.png")
@@ -753,7 +727,7 @@ class WiithonGUI(GtkBuilderWrapper):
         self.wb_img_caratula1.set_from_file( destinoCaratula )
 
     def ponerDisco(self, IDGAME):
-        destinoDisco = os.path.join(config.HOME_WIITHON_DISCOS , IDGAME+".png")
+        destinoDisco = os.path.join(config.HOME_WIITHON_DISCOS , "%s.png" % IDGAME)
         
         if not os.path.exists(destinoDisco):
             destinoDisco = os.path.join(config.WIITHON_FILES_RECURSOS_IMAGENES , "disco.png")
@@ -772,8 +746,8 @@ class WiithonGUI(GtkBuilderWrapper):
             self.ponerCaratula(self.IDGAMEJuegoSeleccionado)
             self.ponerDisco(self.IDGAMEJuegoSeleccionado)
 
-        # autoredimensionar columnas
-        #treeview.columns_autosize()
+            # autoredimensionar columnas
+            #treeview.columns_autosize()
 
     def on_tv_games_click_event(self, widget, event):
         if event.button == 3:
@@ -910,7 +884,7 @@ class WiithonGUI(GtkBuilderWrapper):
                 fc_extraer.set_local_only(True)
                 fc_extraer.set_current_folder(self.preferencia.ruta_extraer_iso)
 
-                if ( fc_extraer.run() == gtk.RESPONSE_OK ):
+                if(fc_extraer.run() == gtk.RESPONSE_OK):
 
                     reemplazar = False
                     if self.core.existeExtraido(self.juego , fc_extraer.get_filename()):
@@ -924,7 +898,7 @@ class WiithonGUI(GtkBuilderWrapper):
                         self.preferencia.ruta_extraer_iso = fc_extraer.get_current_folder()
 
                         # extraer *juego* en la ruta seleccionada
-                        self.poolTrabajo.nuevoTrabajoExtraer( self.juego , fc_extraer.get_filename() )
+                        self.poolTrabajo.nuevoTrabajoExtraer(self.juego , fc_extraer.get_filename())
 
                 fc_extraer.destroy()
             else:
@@ -935,7 +909,7 @@ class WiithonGUI(GtkBuilderWrapper):
                 # Obtiene el foco
                 self.wb_tv_games.grab_focus()
                 # Editar celda
-                self.wb_tv_games.set_cursor( self.pathJuegoSeleccionado , self.columna2 , True )
+                self.wb_tv_games.set_cursor(self.pathJuegoSeleccionado , self.columna2 , True)
 
             else:
                 self.alert("warning" , _("No has seleccionado ningun juego"))
@@ -943,11 +917,12 @@ class WiithonGUI(GtkBuilderWrapper):
         elif(id_tb == self.wb_tb_anadir or id_tb == self.wb_tb_anadir_directorio):
             if self.iteradorParticionSeleccionada != None:
 
-                botones = (gtk.STOCK_CANCEL,
-                        gtk.RESPONSE_CANCEL,
-                        gtk.STOCK_OPEN,
-                        gtk.RESPONSE_OK,
-                        )
+                botones =   (
+                                gtk.STOCK_CANCEL,
+                                gtk.RESPONSE_CANCEL,
+                                gtk.STOCK_OPEN,
+                                gtk.RESPONSE_OK,
+                            )
 
                 if(id_tb == self.wb_tb_anadir):
                     fc_anadir = gtk.FileChooserDialog(_("Elige una imagen ISO valida para Wii"), None , gtk.FILE_CHOOSER_ACTION_OPEN , botones)
@@ -1018,14 +993,14 @@ class WiithonGUI(GtkBuilderWrapper):
                     fc_copiar_discos_SD = gtk.FileChooserDialog(_('Paso 2 de 2: Elige un directorio para los DISCOS'), None , gtk.FILE_CHOOSER_ACTION_SELECT_FOLDER , botones)
                     fc_copiar_discos_SD.set_default_response(gtk.RESPONSE_OK)
                     fc_copiar_discos_SD.set_local_only(True)
-                    fc_copiar_discos_SD.set_current_folder( self.preferencia.ruta_copiar_discos )
+                    fc_copiar_discos_SD.set_current_folder(self.preferencia.ruta_copiar_discos)
                     if(fc_copiar_discos_SD.run() == gtk.RESPONSE_OK):
                         self.preferencia.ruta_copiar_caratulas = fc_copiar_SD.get_current_folder()
                         self.preferencia.ruta_copiar_discos = fc_copiar_discos_SD.get_current_folder()
 
                         # copiar toda la lista de juegos
-                        self.poolBash.nuevoTrabajoCopiarCaratula( self.listaJuegos, fc_copiar_SD.get_filename() )
-                        self.poolBash.nuevoTrabajoCopiarDisco( self.listaJuegos, fc_copiar_discos_SD.get_filename() )
+                        self.poolBash.nuevoTrabajoCopiarCaratula(self.listaJuegos, fc_copiar_SD.get_filename())
+                        self.poolBash.nuevoTrabajoCopiarDisco(self.listaJuegos, fc_copiar_discos_SD.get_filename())
 
                     fc_copiar_discos_SD.destroy()
 
@@ -1139,14 +1114,14 @@ class WiithonGUI(GtkBuilderWrapper):
             if juego.idgame == self.IDGAMEJuegoSeleccionado:
                 gobject.idle_add( self.ponerCaratula , juego.idgame )
         else:
-            print "Falla la descarga de la caratula de %s" % juego
+            print _("Falla la descarga de la caratula de %s") % juego
         
     def callback_termina_trabajo_descargar_disco(self, trabajo, juego):
         if trabajo.exito:
             if juego.idgame == self.IDGAMEJuegoSeleccionado:
                 gobject.idle_add( self.ponerDisco , juego.idgame )
         else:
-            print "Falla la descarga del disco de %s" % juego
+            print _("Falla la descarga del disco de %s") % juego
 
 class HiloCalcularProgreso(Thread):
     def __init__(self , trabajo, actualizarLabel , actualizarFraccion):
