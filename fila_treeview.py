@@ -18,6 +18,9 @@ class FilaTreeview:
             self.clave = self.sel.get_value(self.it,0)
         else:
             self.clave = None
+            
+    def get_path(self, treeview):
+        return treeview.get_model().get_path(self.it)
         
     def esSeleccionado(self):
         return self.it != None

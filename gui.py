@@ -744,38 +744,19 @@ class WiithonGUI(GtkBuilderWrapper):
         else:
             return None
 
-    '''
-    Dice el orden en la lista de un juego
-    '''
-    def getOrdenJuego(self, listaJuegos, juego):
-        if juego == None:
-            return None
-        encontrado = False
-        i = 0
-        while not encontrado and i<len(listaJuegos):
-            elemento = listaJuegos[i]
-            encontrado = elemento.idgame == juego.idgame
-            if not encontrado:
-                i += 1
-        if encontrado:
-            return i
-        else:
-            return 0
-
     # Click en juegos --> refresco la imagen de la caratula y disco
     # self.wb_tv_games
     def on_tv_games_cursor_changed(self , treeview):
         self.sel_juego.actualizar_columna(treeview)
         if self.sel_juego.it != None:
             self.sel_juego.obj = self.getBuscarJuego(self.lJuegos, self.sel_juego.clave)
-            print self.sel_juego.clave
                       
             self.ponerCaratula(self.sel_juego.clave)
             self.ponerDisco(self.sel_juego.clave)
             
             sql = util.decode("juegos.idgame=='%s'" % (self.sel_juego.clave))
             for juego in session.query(Juego, JuegoWIITDB).join('wiitdb_juegos').filter(sql):
-                print juego
+                print juego[1]
                 break
 
     # Click en particiones --> refresca la lista de juegos
@@ -983,7 +964,8 @@ class WiithonGUI(GtkBuilderWrapper):
                 # Obtiene el foco
                 self.wb_tv_games.grab_focus()
                 # Editar celda
-                self.wb_tv_games.set_cursor(self.getOrdenJuego(self.lJuegos_filtrada, self.sel_juego.obj) , self.columna2 , True)
+                path = self.sel_juego.get_path(self.wb_tv_games)
+                self.wb_tv_games.set_cursor(path , self.columna2 , True)
 
             else:
                 self.alert("warning" , _("No has seleccionado ningun juego"))
