@@ -302,3 +302,10 @@ def esPNG(ruta):
 
 def decode(s):
     return s.decode('utf-8')
+
+class NoDeberiaPasar(Exception):
+    pass
+
+# lanzado por particion
+class SintaxisInvalida(Exception):
+    pass

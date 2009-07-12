@@ -56,8 +56,6 @@ permissions_fix:
 
 compilar_forzar: clean compilar
 
-#compilar: wiithon_wrapper/wiithon_wrapper ./po/locale/da_DK/LC_MESSAGES/wiithon.mo ./po/locale/fi_FI/LC_MESSAGES/wiithon.mo ./po/locale/tr_TR/LC_MESSAGES/wiithon.mo ./po/locale/ru_RU/LC_MESSAGES/wiithon.mo ./po/locale/ko_KR/LC_MESSAGES/wiithon.mo ./po/locale/it/LC_MESSAGES/wiithon.mo ./po/locale/sv_SE/LC_MESSAGES/wiithon.mo ./po/locale/es/LC_MESSAGES/wiithon.mo ./po/locale/pt_PT/LC_MESSAGES/wiithon.mo ./po/locale/en/LC_MESSAGES/wiithon.mo ./po/locale/nl_NL/LC_MESSAGES/wiithon.mo ./po/locale/nb_NO/LC_MESSAGES/wiithon.mo ./po/locale/ja_JP/LC_MESSAGES/wiithon.mo ./po/locale/fr/LC_MESSAGES/wiithon.mo ./po/locale/pt_BR/LC_MESSAGES/wiithon.mo ./po/locale/de/LC_MESSAGES/wiithon.mo
-
 compilar: libwbfs_binding/wiithon_wrapper ./po/locale/da_DK/LC_MESSAGES/wiithon.mo ./po/locale/fi_FI/LC_MESSAGES/wiithon.mo ./po/locale/tr_TR/LC_MESSAGES/wiithon.mo ./po/locale/ru_RU/LC_MESSAGES/wiithon.mo ./po/locale/ko_KR/LC_MESSAGES/wiithon.mo ./po/locale/it/LC_MESSAGES/wiithon.mo ./po/locale/sv_SE/LC_MESSAGES/wiithon.mo ./po/locale/es/LC_MESSAGES/wiithon.mo ./po/locale/pt_PT/LC_MESSAGES/wiithon.mo ./po/locale/en/LC_MESSAGES/wiithon.mo ./po/locale/nl_NL/LC_MESSAGES/wiithon.mo ./po/locale/nb_NO/LC_MESSAGES/wiithon.mo ./po/locale/ja_JP/LC_MESSAGES/wiithon.mo ./po/locale/fr/LC_MESSAGES/wiithon.mo ./po/locale/pt_BR/LC_MESSAGES/wiithon.mo ./po/locale/de/LC_MESSAGES/wiithon.mo
 
 install: compilar
@@ -79,17 +77,7 @@ install: compilar
 	cp wiithon_autodetectar_lector.sh $(PREFIX)/share/wiithon
 	cp wiithon_autodetectar_fat32.sh $(PREFIX)/share/wiithon
 	
-	cp cli.py $(PREFIX)/share/wiithon
-	cp gui.py $(PREFIX)/share/wiithon
-	cp builder_wrapper.py $(PREFIX)/share/wiithon
-	cp util.py $(PREFIX)/share/wiithon
-	cp core.py $(PREFIX)/share/wiithon
-	cp config.py $(PREFIX)/share/wiithon
-	cp pool.py $(PREFIX)/share/wiithon
-	cp trabajo.py $(PREFIX)/share/wiithon
-	cp preferencias.py $(PREFIX)/share/wiithon
-	cp juego.py $(PREFIX)/share/wiithon
-	cp animar.py $(PREFIX)/share/wiithon
+	cp *.py $(PREFIX)/share/wiithon
 
 	cp wiithon_root.desktop /usr/share/applications/
 

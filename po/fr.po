@@ -20,6 +20,10 @@ msgid "%d particiones WBFS"
 msgstr ""
 
 #, python-format
+msgid "%d/%d juegos"
+msgstr ""
+
+#, python-format
 msgid "%s - Salir"
 msgstr "%s - Exit"
 
@@ -51,12 +55,8 @@ msgid "Acerca de ..."
 msgstr "About ..."
 
 #, python-format
-msgid "Advertencia de borrar %s (%s) en modo ver"
+msgid "Advertencia de borrar %s en modo ver"
 msgstr ""
-"Warning:\n"
-"- The clearing of a game your video library without any partition selected\n"
-"- This means delete (also delete the record) the cover and the disc downloaded\n"
-"Are you sure to delete %s (%s)?"
 
 #, python-format
 msgid "Advertencia de seguridad de renombrar desde IDGAME = %s a %s"
@@ -168,8 +168,8 @@ msgid "Desea copiar el juego %s (%s) a la particion %s?"
 msgstr "Do you want copy game %s (%s) to the partition %s?"
 
 #, python-format
-msgid "Desea reemplazar la iso del juego %s (%s)?"
-msgstr "Do you want to replace the game %s (%s)?"
+msgid "Desea reemplazar la iso del juego %s?"
+msgstr ""
 
 msgid "Desea reemplazarla (S/N) : "
 msgstr "Do you want to replace it? (Y/N) :"
@@ -229,8 +229,8 @@ msgid "ERROR, descargando alguna caratula"
 msgstr "ERROR, downloading some cover"
 
 #, python-format
-msgid "El juego ya esta metido, como %s (%s)"
-msgstr "The game is already in disc as %s (%s)"
+msgid "El juego ya esta metido, como %s"
+msgstr ""
 
 msgid "El numero dado es incorrecto"
 msgstr "Number incorrect"
@@ -301,9 +301,6 @@ msgstr "Extract ISO from game with IDGAME"
 
 msgid "Extraer a ISO"
 msgstr "Extract ISO"
-
-msgid "Fabricante"
-msgstr "Manufacture"
 
 #, python-format
 msgid "Falla la descarga de la caratula de %s"
@@ -524,6 +521,9 @@ msgstr "Press any key for show %d more lines"
 msgid "Programa ejecutado con las opciones incorrectas."
 msgstr "Program run with the incorrect settings"
 
+msgid "Puede llevar mucho tiempo ..."
+msgstr ""
+
 msgid "Pulse cualquier tecla para continuar ...\n"
 msgstr "Press any key to continue ... \n"
 
@@ -531,8 +531,8 @@ msgid "Pulse cualquier tecla para continuar ... "
 msgstr "Press any key to continue ..."
 
 #, python-format
-msgid "Quieres borrar el juego con %s (%s)?"
-msgstr "Do you want to remove the game %s (%s)?"
+msgid "Quieres borrar el juego con %s?"
+msgstr ""
 
 msgid "Refrescar WBFS"
 msgstr "Refresh WBFS"
@@ -663,6 +663,25 @@ msgstr "wiithon doesn't remove the temporal ISO, you can remove it if you don't 
 
 msgid "No hay particiones WBFS!"
 msgstr ""
+
+#~ msgid "Fabricante"
+#~ msgstr "Manufacture"
+
+#~ msgid "Advertencia de borrar %s (%s) en modo ver"
+#~ msgstr ""
+#~ "Warning:\n"
+#~ "- The clearing of a game your video library without any partition selected\n"
+#~ "- This means delete (also delete the record) the cover and the disc downloaded\n"
+#~ "Are you sure to delete %s (%s)?"
+
+#~ msgid "Desea reemplazar la iso del juego %s (%s)?"
+#~ msgstr "Do you want to replace the game %s (%s)?"
+
+#~ msgid "El juego ya esta metido, como %s (%s)"
+#~ msgstr "The game is already in disc as %s (%s)"
+
+#~ msgid "Quieres borrar el juego con %s (%s)?"
+#~ msgstr "Do you want to remove the game %s (%s)?"
 
 #~ msgid "Ya tienes el disco-caratula %s"
 #~ msgstr "You have the cover-disc %s"

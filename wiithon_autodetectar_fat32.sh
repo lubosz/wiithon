@@ -1,5 +1,7 @@
 #!/bin/bash
 
+SEPARADOR=";@;"
+
 # = 1 --> SI tienes udevinfo
 # = 0 --> NO tienes udevinfo
 comprobarTienesUDEV()
@@ -17,9 +19,9 @@ do
 	if [ $NUM_LINEAS -gt 1 ]; then
 		if [ $hayUDEV -eq 1 ]; then
 			NOMBRE=`udevinfo -a -p $(udevinfo -q path -n $i) | egrep 'ATTRS{vendor}|ATTRS{model}' | awk -F== '{print $2}' | sed '3,$d' | sed 's/\"//g' | xargs`;
-			echo $PARTICION":"$NOMBRE"";
-		else
-			echo $PARTICION":";
+				echo $PARTICION$SEPARADOR$NOMBRE;
+			else
+				echo $PARTICION$SEPARADOR;
 		fi
 	fi
 done

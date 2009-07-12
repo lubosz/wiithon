@@ -14,9 +14,6 @@ from juego import Juego
     * parent , children, last, next, prev, doc, properties: pointing to the associated element in the tree, those may return None in case no such link exists.
 '''
 
-for juego in session.query(Juego).join('wiitdb_juegos').filter('wiitdb_juegos.wifi_players > 4'):
-    print juego
-
 def leerAtributo(nodo, atributo):
     valor = ""
     attr = nodo.get_properties()
@@ -39,7 +36,7 @@ while nodo != None:
 
         elif nodo.name == "WiiTDB":
             version = leerAtributo(nodo, 'version')
-            print "Version: %s" % version
+            print "Importando xml version: %s" % version
 
         elif nodo.name == "game":
             while (nodo.next != None):
@@ -122,8 +119,6 @@ while nodo != None:
                                             developer, publisher, anio, mes, dia, wifi_players, input_players)
                         session.merge(juego)
 
-                        #print juego
-
                 nodo = nodo.next
 
         elif nodo.name == "companies":
@@ -145,8 +140,6 @@ while nodo != None:
                             attr = attr.next    
                         comp = Companie(code, name)
                         session.merge(comp)
-
-                        #print comp
 
                 nodo = nodo.next
 

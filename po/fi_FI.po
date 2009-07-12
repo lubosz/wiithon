@@ -17,6 +17,10 @@ msgid "%d particiones WBFS"
 msgstr ""
 
 #, python-format
+msgid "%d/%d juegos"
+msgstr ""
+
+#, python-format
 msgid "%s - Salir"
 msgstr ""
 
@@ -48,7 +52,7 @@ msgid "Acerca de ..."
 msgstr ""
 
 #, python-format
-msgid "Advertencia de borrar %s (%s) en modo ver"
+msgid "Advertencia de borrar %s en modo ver"
 msgstr ""
 
 #, python-format
@@ -149,7 +153,7 @@ msgid "Desea copiar el juego %s (%s) a la particion %s?"
 msgstr ""
 
 #, python-format
-msgid "Desea reemplazar la iso del juego %s (%s)?"
+msgid "Desea reemplazar la iso del juego %s?"
 msgstr ""
 
 msgid "Desea reemplazarla (S/N) : "
@@ -210,7 +214,7 @@ msgid "ERROR, descargando alguna caratula"
 msgstr ""
 
 #, python-format
-msgid "El juego ya esta metido, como %s (%s)"
+msgid "El juego ya esta metido, como %s"
 msgstr ""
 
 msgid "El numero dado es incorrecto"
@@ -278,9 +282,6 @@ msgid "Extraer ISO de juego con IDGAME"
 msgstr ""
 
 msgid "Extraer a ISO"
-msgstr ""
-
-msgid "Fabricante"
 msgstr ""
 
 #, python-format
@@ -492,6 +493,9 @@ msgstr ""
 msgid "Programa ejecutado con las opciones incorrectas."
 msgstr ""
 
+msgid "Puede llevar mucho tiempo ..."
+msgstr ""
+
 msgid "Pulse cualquier tecla para continuar ...\n"
 msgstr ""
 
@@ -499,7 +503,7 @@ msgid "Pulse cualquier tecla para continuar ... "
 msgstr ""
 
 #, python-format
-msgid "Quieres borrar el juego con %s (%s)?"
+msgid "Quieres borrar el juego con %s?"
 msgstr ""
 
 msgid "Refrescar WBFS"

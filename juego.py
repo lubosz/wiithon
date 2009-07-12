@@ -11,14 +11,15 @@ http://www.sqlalchemy.org/trac/wiki/05Migration
 '''
 
 import os
-import config
+import util
 
 from sqlalchemy.orm import mapper, relation, sessionmaker, backref
 from sqlalchemy import create_engine, Table, Column, Integer, Float, \
-    Text, VARCHAR, MetaData, ForeignKey, Unicode
-    
+                    Text, VARCHAR, MetaData, ForeignKey, Unicode
+import config
+from util import SintaxisInvalida   
 from wiitdb_juego import tabla_wiitdb_juegos, JuegoWIITDB
-    
+
 BDD_PERSISTENTE = create_engine('sqlite:///%s'
                                 % os.path.join(
         config.HOME_WIITHON_BDD, 'juegos.db' ))
@@ -38,13 +39,23 @@ metadatos.create_all(BDD_PERSISTENTE)
 class Juego(object):
     'class representing a game on the data base'
     def __init__(self , idgame , title , size, device):
-        self.idgame = idgame
-        self.title = title
+        self.idgame = util.decode(idgame)
+        self.title = util.decode(title)
         self.size = float(size)
-        self.device = device
+        self.device = util.decode(device)
+        
+    def __init__(self, linea, device):
+        cachos = linea.strip().split(config.SEPARADOR)
+        if(len(cachos)==3):
+            self.idgame = util.decode(cachos[0])
+            self.title = util.decode(cachos[1])
+            self.size = float(cachos[2])
+            self.device = util.decode(device)
+        else:
+            raise SintaxisInvalida
 
     def __repr__(self):
-        return "%s (%s)  %s" % (self.title, self.idgame, self.device)
+        return "%s (%s) %s" % (self.title, self.idgame, self.device)
 
 from wiitdb_juego import JuegoWIITDB
 
@@ -58,4 +69,3 @@ mapper(Juego , tabla_juegos, properties={
 })
 Session = sessionmaker(bind=BDD_PERSISTENTE, autoflush=True, transactional = True)
 session = Session()
-

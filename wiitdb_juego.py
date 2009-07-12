@@ -17,7 +17,7 @@ import util
 from sqlalchemy.orm import mapper, relation, sessionmaker, backref
 from sqlalchemy import create_engine, Table, Column, Integer, Float, \
     Text, VARCHAR, MetaData, ForeignKey, Unicode
-
+    
 BDD_PERSISTENTE = create_engine('sqlite:///%s'
                                 % os.path.join(
         config.HOME_WIITHON_BDD, 'juegos.db' ))
@@ -72,11 +72,11 @@ class JuegoWIITDB(object):
         self.input_players = input_players
 
     def __repr__(self):
-        return "%s (%s)" % (self.name, self.idgame)
+        # para debugeo
+        return "WiiTDB info de %s (%s)\nRegion: %s\ntitle_EN: %s\nsynopsis_EN: %s\ntitle_ES: %s\nsynopsis_ES: %s\ndeveloper: %s\npublisher: %s\nanio: %s\nwifi_players: %s\ninput_players: %s\n" % (self.name, self.idgame,self.region,self.title_EN,self.synopsis_EN,self.title_ES,self.synopsis_ES, self.developer,self.publisher,self.anio,self.wifi_players,self.input_players)
 
-from juego import Juego
+from wiitdb_juego import JuegoWIITDB
 
 mapper(JuegoWIITDB , tabla_wiitdb_juegos)
 Session = sessionmaker(bind=BDD_PERSISTENTE, autoflush=True, transactional = True)
 session = Session()
-

@@ -19,6 +19,10 @@ msgid "%d particiones WBFS"
 msgstr ""
 
 #, python-format
+msgid "%d/%d juegos"
+msgstr ""
+
+#, python-format
 msgid "%s - Salir"
 msgstr "%s - Sair"
 
@@ -96,8 +100,8 @@ msgid "Acerca de ..."
 msgstr "Sobre ..."
 
 #, python-format
-msgid "Advertencia de borrar %s (%s) en modo ver"
-msgstr "Advertência de apagar %s (%s) em modo somente leitura"
+msgid "Advertencia de borrar %s en modo ver"
+msgstr ""
 
 #, python-format
 msgid "Advertencia de seguridad de renombrar desde IDGAME = %s a %s"
@@ -209,8 +213,8 @@ msgid "Desea copiar el juego %s (%s) a la particion %s?"
 msgstr "Deseja copiar o jogo %s (%s) para a partição %s ?"
 
 #, python-format
-msgid "Desea reemplazar la iso del juego %s (%s)?"
-msgstr "Deseja sobreescrever a ISO do jogo %s (%s)?"
+msgid "Desea reemplazar la iso del juego %s?"
+msgstr ""
 
 msgid "Desea reemplazarla (S/N) : "
 msgstr "Deseja substituir (S/N) :"
@@ -270,8 +274,8 @@ msgid "ERROR, descargando alguna caratula"
 msgstr "ERRO, baixando alguma capa"
 
 #, python-format
-msgid "El juego ya esta metido, como %s (%s)"
-msgstr "O jogo já está instalado, como %s (%s)"
+msgid "El juego ya esta metido, como %s"
+msgstr ""
 
 msgid "El numero dado es incorrecto"
 msgstr "O número dado está incorreto"
@@ -342,9 +346,6 @@ msgstr "Extrair ISO do jogo com IDGAME"
 
 msgid "Extraer a ISO"
 msgstr "Extrair uma ISO"
-
-msgid "Fabricante"
-msgstr "Fabricante"
 
 #, python-format
 msgid "Falla la descarga de la caratula de %s"
@@ -561,6 +562,9 @@ msgstr "Pressione qualquer tecla para mostrar mais %d linhas"
 msgid "Programa ejecutado con las opciones incorrectas."
 msgstr "Programa executado com as opções incorretas."
 
+msgid "Puede llevar mucho tiempo ..."
+msgstr ""
+
 msgid "Pulse cualquier tecla para continuar ...\n"
 msgstr "Aperte qualquer tecla para continuar ...\n"
 
@@ -568,8 +572,8 @@ msgid "Pulse cualquier tecla para continuar ... "
 msgstr "Aperte qualquer botão para continuar ..."
 
 #, python-format
-msgid "Quieres borrar el juego con %s (%s)?"
-msgstr "Deseja apagar o jogo com ID %s (%s)?"
+msgid "Quieres borrar el juego con %s?"
+msgstr ""
 
 msgid "Refrescar WBFS"
 msgstr "Atualizar WBFS"
@@ -702,6 +706,21 @@ msgstr "wiithon não apaga a ISO temporária, você pode apagá-la caso não nec
 
 msgid "No hay particiones WBFS!"
 msgstr ""
+
+#~ msgid "Fabricante"
+#~ msgstr "Fabricante"
+
+#~ msgid "Advertencia de borrar %s (%s) en modo ver"
+#~ msgstr "Advertência de apagar %s (%s) em modo somente leitura"
+
+#~ msgid "Desea reemplazar la iso del juego %s (%s)?"
+#~ msgstr "Deseja sobreescrever a ISO do jogo %s (%s)?"
+
+#~ msgid "El juego ya esta metido, como %s (%s)"
+#~ msgstr "O jogo já está instalado, como %s (%s)"
+
+#~ msgid "Quieres borrar el juego con %s (%s)?"
+#~ msgstr "Deseja apagar o jogo com ID %s (%s)?"
 
 #~ msgid "Ya tienes el disco-caratula %s"
 #~ msgstr "Já possui a capa de disco %s"

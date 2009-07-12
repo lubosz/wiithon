@@ -20,6 +20,10 @@ msgid "%d particiones WBFS"
 msgstr ""
 
 #, python-format
+msgid "%d/%d juegos"
+msgstr ""
+
+#, python-format
 msgid "%s - Salir"
 msgstr ""
 
@@ -97,12 +101,8 @@ msgid "Acerca de ..."
 msgstr ""
 
 #, python-format
-msgid "Advertencia de borrar %s (%s) en modo ver"
+msgid "Advertencia de borrar %s en modo ver"
 msgstr ""
-"Atención:\n"
-"- Estas borrando un juego de tu videoteca sin tener ninguna partición seleccionada\n"
-"- Esto supone borrar (además de borrar el registro) la carátula y el disco\n"
-"¿Esta seguro de borrar %s (%s)?"
 
 #, python-format
 msgid "Advertencia de seguridad de renombrar desde IDGAME = %s a %s"
@@ -212,8 +212,8 @@ msgid "Desea copiar el juego %s (%s) a la particion %s?"
 msgstr "¿Desea copiar el juego %s (%s) a la partición %s?"
 
 #, python-format
-msgid "Desea reemplazar la iso del juego %s (%s)?"
-msgstr "¿Quieres reemplazar la ISO del juego %s (%s)?"
+msgid "Desea reemplazar la iso del juego %s?"
+msgstr ""
 
 msgid "Desea reemplazarla (S/N) : "
 msgstr ""
@@ -273,7 +273,7 @@ msgid "ERROR, descargando alguna caratula"
 msgstr "ERROR, descargando alguna carátula"
 
 #, python-format
-msgid "El juego ya esta metido, como %s (%s)"
+msgid "El juego ya esta metido, como %s"
 msgstr ""
 
 msgid "El numero dado es incorrecto"
@@ -341,9 +341,6 @@ msgid "Extraer ISO de juego con IDGAME"
 msgstr ""
 
 msgid "Extraer a ISO"
-msgstr ""
-
-msgid "Fabricante"
 msgstr ""
 
 #, python-format
@@ -562,6 +559,9 @@ msgstr "Presiona cualquier tecla para mostrar %d lineas más"
 msgid "Programa ejecutado con las opciones incorrectas."
 msgstr ""
 
+msgid "Puede llevar mucho tiempo ..."
+msgstr ""
+
 msgid "Pulse cualquier tecla para continuar ...\n"
 msgstr ""
 
@@ -569,8 +569,8 @@ msgid "Pulse cualquier tecla para continuar ... "
 msgstr ""
 
 #, python-format
-msgid "Quieres borrar el juego con %s (%s)?"
-msgstr "¿Quieres borrar el juego %s (%s)?"
+msgid "Quieres borrar el juego con %s?"
+msgstr ""
 
 msgid "Refrescar WBFS"
 msgstr "Actualizar WBFS"
@@ -699,6 +699,19 @@ msgstr ""
 
 msgid "No hay particiones WBFS!"
 msgstr ""
+
+#~ msgid "Advertencia de borrar %s (%s) en modo ver"
+#~ msgstr ""
+#~ "Atención:\n"
+#~ "- Estas borrando un juego de tu videoteca sin tener ninguna partición seleccionada\n"
+#~ "- Esto supone borrar (además de borrar el registro) la carátula y el disco\n"
+#~ "¿Esta seguro de borrar %s (%s)?"
+
+#~ msgid "Desea reemplazar la iso del juego %s (%s)?"
+#~ msgstr "¿Quieres reemplazar la ISO del juego %s (%s)?"
+
+#~ msgid "Quieres borrar el juego con %s (%s)?"
+#~ msgstr "¿Quieres borrar el juego %s (%s)?"
 
 #~ msgid "Mas informacion"
 #~ msgstr "Detalles"

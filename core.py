@@ -15,44 +15,36 @@ import gettext
 import shutil
 
 import util
-from util import NonRepeatList
+from util import NonRepeatList, SintaxisInvalida
+from particion import Particion
+from juego import Juego
 import config
 
 class WiithonCORE:
-
-    #globales publicas
-
-    # Lista BIdimensional de particiones
-    # indice 0 -> device  (/dev/sda1)
-    # indice 1 -> Fabricante  (Maxtor)
-    listaParticiones = None
-
-    # indice (fila) de la partición seleccionado
-    particionSeleccionada = 0
-    
-    # indice (fila) de la partición seleccionado para 1on1
-    particionSeleccionada_1on1 = 1
-
-    #constructor
-    def __init__(self):
-        pass
-
     # Obtiene un list de juegos en una tabla de 3 columnas:
     # index 0 -> IDGAME o identificador único del juego
     # index 1 -> Nombre del juego
     # index 2 -> Tamaño en GB redondeado a 2 cifras
     def getListaJuegos(self , DEVICE):
+        
+        # si pasa el objeto, cogemos el string que nos interesa
+        if isinstance(DEVICE, Particion):
+            DEVICE = DEVICE.device
+        
         comando = "%s -p %s ls" % (config.WBFS_APP, DEVICE)
         lineas = util.getSTDOUT_iterador( comando )
         salida = []
         for linea in lineas:
-            cachos = linea.strip().split(config.SEPARADOR)
-            if(len(cachos)==3):
-                salida.append( [ cachos[0] , cachos[1] , cachos[2] ] )
+            salida.append(Juego(linea, DEVICE))
         return salida
 
     # renombra el ISO de un IDGAME que esta en DEVICE
     def renombrarNOMBRE(self , DEVICE , IDGAME , NUEVO_NOMBRE):
+        
+        # si pasa el objeto, cogemos el string que nos interesa
+        if isinstance(DEVICE, Particion):
+            DEVICE = DEVICE.device
+        
         try:
             comando = config.WBFS_APP+" -p "+DEVICE+" rename "+IDGAME+" \""+NUEVO_NOMBRE+"\""
             salida = subprocess.call( comando , shell=True , stderr=subprocess.STDOUT )
@@ -61,6 +53,11 @@ class WiithonCORE:
             return False
             
     def renombrarIDGAME(self , DEVICE , IDGAME , NUEVO_IDGAME):
+        
+        # si pasa el objeto, cogemos el string que nos interesa
+        if isinstance(DEVICE, Particion):
+            DEVICE = DEVICE.device
+        
         try:
             comando = config.WBFS_APP+" -p "+DEVICE+" rename_idgame "+IDGAME+" \""+NUEVO_IDGAME+"\""
             salida = subprocess.call( comando , shell=True , stderr=subprocess.STDOUT )
@@ -70,6 +67,11 @@ class WiithonCORE:
 
     # getEspacioLibre obtiene una tupla [uso , libre , total]
     def getEspacioLibre(self , DEVICE):
+        
+        # si pasa el objeto, cogemos el string que nos interesa
+        if isinstance(DEVICE, Particion):
+            DEVICE = DEVICE.device
+        
         salida = util.getSTDOUT( config.WBFS_APP+" -p "+DEVICE+" df" )
         cachos = salida.split(config.SEPARADOR)
         if(len(cachos) == 3):
@@ -82,6 +84,11 @@ class WiithonCORE:
 
     # borra el juego IDGAME
     def borrarJuego(self , DEVICE , IDGAME):
+        
+        # si pasa el objeto, cogemos el string que nos interesa
+        if isinstance(DEVICE, Particion):
+            DEVICE = DEVICE.device
+        
         try:
             comando = config.WBFS_APP+" -p "+DEVICE+" rm "+IDGAME
             salida = subprocess.call( comando , shell=True , stderr=subprocess.STDOUT )
@@ -158,6 +165,11 @@ class WiithonCORE:
             os.remove( self.getRutaDisco( juego.idgame ) )
 
     def clonarJuego(self, juego , DEVICE ):
+        
+        # si pasa el objeto, cogemos el string que nos interesa
+        if isinstance(DEVICE, Particion):
+            DEVICE = DEVICE.device
+        
         try:
             comando = "%s -p %s clonar %s %s" % (config.WBFS_APP , juego.device , juego.idgame , DEVICE)
             salida = subprocess.call( comando , shell=True , stderr=subprocess.STDOUT , stdout=open(config.HOME_WIITHON_LOGS_PROCESO , "w") )
@@ -227,6 +239,7 @@ class WiithonCORE:
             os.remove( self.getRutaCaratula( juego.idgame ) )
 
     # Descarga todos las caratulas de una lista de juegos
+    # FIXME: DEVICE NO SIRVE PARA NADA
     def descargarTodasLasCaratulaYDiscos(self , DEVICE , listaJuegos , tipo = "normal"):
         ok = True
         for juego in listaJuegos:
@@ -240,12 +253,15 @@ class WiithonCORE:
     def getListaParticiones(self):
         salida = util.getSTDOUT_NOERROR_iterador(config.DETECTOR_WBFS)
 
-        self.listaParticiones = []
+        listaParticiones = []
 
-        for part in salida:
-            if part.find("/dev/") != -1:
-                self.listaParticiones.append(part.strip())
-        return self.listaParticiones
+        for linea in salida:
+            if linea.find("/dev/") != -1:
+                try:
+                    listaParticiones.append(Particion(linea))
+                except SintaxisInvalida:
+                    pass
+        return listaParticiones
 
     # Devuelve el nombre del ISO que hay dentro de un RAR
     def getNombreISOenRAR(self , nombreRAR):
@@ -275,9 +291,13 @@ class WiithonCORE:
 
     # FUNCIÓN de PRUEBAS, no es usado actualmente
     # Se pasa como parametro ej: /dev/sdb2
-    def redimensionarParticionWBFS(self , particion):
+    def redimensionarParticionWBFS(self , DEVICE):
         # 57 42 46 53 00 0b 85 30
         # 57 42 46 53 00 29 ea eb
+        
+        # si pasa el objeto, cogemos el string que nos interesa
+        if isinstance(DEVICE, Particion):
+            DEVICE = DEVICE.device
 
         comando = "fdisk -lu | grep -v 'MB' | grep '"+particion+"' | awk '{print $3-$2+1}'"
         entrada, salida = os.popen2(comando)
@@ -303,39 +323,13 @@ class WiithonCORE:
         else:
             print "sin cambios."
 
-    def setParticionSeleccionada(self , particionSeleccionada):
-        self.particionSeleccionada = particionSeleccionada
-
-    def setParticionSeleccionada_1on1(self , particionSeleccionada):
-        self.particionSeleccionada_1on1 = particionSeleccionada
-
-    #FIXME: rediseñar todo esto ...
-    def getDeviceSeleccionado(self):
-        try:
-            retorno = self.listaParticiones[self.particionSeleccionada].split(":")[0]
-            return retorno
-        except IndexError:
-            return "%"
-
-    def getDeviceSeleccionado_1on1(self):
-        try:
-            retorno = self.listaParticiones[self.particionSeleccionada_1on1].split(":")[0]
-            return retorno
-        except IndexError:
-            return "%"
-
-    def getFabricanteSeleccionado(self):
-        try:
-            retorno = self.listaParticiones[self.particionSeleccionada].split(":")[1]
-            return retorno
-        except IndexError:
-            return "?"
-
-    def setInterfaz(self , interfaz):
-        self.interfaz = interfaz
-
     # añade un *ISO* a un *DEVICE*
     def anadirISO(self , DEVICE , ISO):
+        
+        # si pasa el objeto, cogemos el string que nos interesa
+        if isinstance(DEVICE, Particion):
+            DEVICE = DEVICE.device
+        
         try:
             comando = config.WBFS_APP+" -p "+DEVICE+" add \""+ISO+"\""
             salida = subprocess.call( comando , shell=True , stderr=subprocess.STDOUT , stdout=open(config.HOME_WIITHON_LOGS_PROCESO , "w") )

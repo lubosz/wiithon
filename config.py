@@ -72,6 +72,7 @@ NUM_LINEAS_PAUSA = 21
 TITULO_LONGITUD_MAX = 0x80
 
 # Separador para la interactividad con wiithon_wrapper
+# OJO, si se modifica hay que modificar los wiithon_autodetectar*.sh
 SEPARADOR = ";@;"
 
 # Maximos juegos que aparecerán en la lista de copia de disco duro completa
