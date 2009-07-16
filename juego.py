@@ -57,15 +57,18 @@ class Juego(object):
     def __repr__(self):
         return "%s (%s) %s" % (self.title, self.idgame, self.device)
 
+# http://www.mail-archive.com/sqlalchemy@googlegroups.com/msg09381.html
+'''
 from wiitdb_juego import JuegoWIITDB
 
-# http://www.mail-archive.com/sqlalchemy@googlegroups.com/msg09381.html
 mapper(Juego , tabla_juegos, properties={
     'wiitdb_juegos':relation(JuegoWIITDB, 
-    primaryjoin=tabla_juegos.c.idgame==tabla_wiitdb_juegos.c.idgame,
-    _local_remote_pairs=[(tabla_juegos.c.idgame, tabla_wiitdb_juegos.c.idgame)],
-    foreign_keys=[tabla_wiitdb_juegos.c.idgame],
+        primaryjoin=tabla_juegos.c.idgame==tabla_wiitdb_juegos.c.idgame,
+        _local_remote_pairs=[(tabla_juegos.c.idgame, tabla_wiitdb_juegos.c.idgame)],
+        foreign_keys=[tabla_wiitdb_juegos.c.idgame],
     )
 })
+'''
+mapper(Juego , tabla_juegos)
 Session = sessionmaker(bind=BDD_PERSISTENTE, autoflush=True, transactional = True)
 session = Session()

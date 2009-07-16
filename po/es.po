@@ -12,6 +12,10 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #, python-format
+msgid "%d - Salir"
+msgstr ""
+
+#, python-format
 msgid "%d juegos"
 msgstr ""
 
@@ -21,10 +25,6 @@ msgstr ""
 
 #, python-format
 msgid "%d/%d juegos"
-msgstr ""
-
-#, python-format
-msgid "%s - Salir"
 msgstr ""
 
 #, python-format
@@ -96,6 +96,9 @@ msgstr ""
 "\t\t%s instalar\n"
 "\n"
 "Web : http://blogricardo.wordpress.com/2009/06/21/wiithon-1-0-liberado/"
+
+msgid "Accesorios:"
+msgstr ""
 
 msgid "Acerca de ..."
 msgstr ""
@@ -196,6 +199,9 @@ msgstr ""
 msgid "Copiar todo el disco*"
 msgstr "Copiar todos los juegos*"
 
+msgid "Desarrollador:"
+msgstr ""
+
 #, python-format
 msgid "Descargando caratula de %s"
 msgstr "Descargando carátula de %s"
@@ -272,6 +278,9 @@ msgstr ""
 msgid "ERROR, descargando alguna caratula"
 msgstr "ERROR, descargando alguna carátula"
 
+msgid "Editor:"
+msgstr ""
+
 #, python-format
 msgid "El juego ya esta metido, como %s"
 msgstr ""
@@ -318,9 +327,6 @@ msgstr ""
 msgid "Error borrando"
 msgstr ""
 
-msgid "Error obteniendo el Fabricando del HD"
-msgstr ""
-
 msgid "Error renombrando"
 msgstr ""
 
@@ -351,6 +357,9 @@ msgstr ""
 msgid "Falla la descarga del disco de %s"
 msgstr ""
 
+msgid "Fecha de lanzamiento:"
+msgstr ""
+
 msgid "Finalizado."
 msgstr ""
 
@@ -361,6 +370,9 @@ msgid "Fuera de rango"
 msgstr ""
 
 msgid "GNU GENERAL PUBLIC LICENSE Version 3"
+msgstr ""
+
+msgid "Genero:"
 msgstr ""
 
 msgid "Has conectado el disco duro? No se ha encontrado ninguna particion valida."
@@ -530,6 +542,9 @@ msgstr ""
 msgid "Nuevo nombre es demasiado largo, intente con un texto menor de %d caracteres"
 msgstr ""
 
+msgid "Num de jugadores:"
+msgstr ""
+
 msgid "Numero fuera de rango"
 msgstr "Número fuera de rango"
 
@@ -539,9 +554,6 @@ msgstr ""
 
 msgid "OK, todas las caratulas se han descargado"
 msgstr "OK, todas las carátulas se han descargado"
-
-msgid "Particion"
-msgstr "Partición"
 
 msgid "Paso 1 de 2: Elige un directorio para las CARATULAS"
 msgstr "Paso 1 de 2: Elige un directorio donde copiar las CARATULAS"
@@ -570,6 +582,12 @@ msgstr ""
 
 #, python-format
 msgid "Quieres borrar el juego con %s?"
+msgstr ""
+
+msgid "RXGB2"
+msgstr ""
+
+msgid "Ranking:"
 msgstr ""
 
 msgid "Refrescar WBFS"
@@ -611,6 +629,9 @@ msgid ""
 "Ricardo Marmolejo Garc&#xED;a <makiolo@gmail.com>"
 msgstr ""
 
+msgid "Synopsis:"
+msgstr ""
+
 msgid "TAMANIO"
 msgstr "Tamaño"
 
@@ -636,8 +657,14 @@ msgstr "Tamaño"
 msgid "Termina: %s"
 msgstr ""
 
+msgid "Tiene Online?:"
+msgstr ""
+
 msgid "Tienes que seleccionar una particion WBFS para realizar esta accion"
 msgstr "Tienes que seleccionar una partición WBFS para realizar esta acción"
+
+msgid "Titulo:"
+msgstr ""
 
 msgid "Todo metido en el HD correctamente"
 msgstr ""
@@ -679,6 +706,15 @@ msgstr "en partición"
 msgid "gtk-cancel"
 msgstr ""
 
+msgid "gtk-close"
+msgstr ""
+
+msgid "gtk-media-next"
+msgstr ""
+
+msgid "gtk-media-previous"
+msgstr ""
+
 msgid "gtk-ok"
 msgstr ""
 
@@ -699,6 +735,9 @@ msgstr ""
 
 msgid "No hay particiones WBFS!"
 msgstr ""
+
+#~ msgid "Particion"
+#~ msgstr "Partición"
 
 #~ msgid "Advertencia de borrar %s (%s) en modo ver"
 #~ msgstr ""

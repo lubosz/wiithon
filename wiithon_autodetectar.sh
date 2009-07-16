@@ -22,10 +22,18 @@ do
 			USADO_LIBRE_TOTAL=`wiithon_wrapper -p $i df 2> /dev/null`
 			if [ $hayUDEV -eq 1 ]; then
 				NOMBRE=`udevinfo -a -p $(udevinfo -q path -n $i) | egrep 'ATTRS{vendor}|ATTRS{model}' | awk -F== '{print $2}' | sed '3,$d' | sed 's/\"//g' | xargs`;
-				echo $i$SEPARADOR$USADO_LIBRE_TOTAL$SEPARADOR$NOMBRE;
 			else
-				echo $i$SEPARADOR$USADO_LIBRE_TOTAL$SEPARADOR;
+				NOMBRE=""
 			fi
+			echo -n $i
+			echo -n $SEPARADOR
+			echo -n "wbfs"
+			echo -n $SEPARADOR
+			echo -n $USADO_LIBRE_TOTAL
+			echo -n $SEPARADOR
+			echo -n $NOMBRE
+			echo -n $SEPARADOR
+			echo ""
 		fi
 	fi
 done

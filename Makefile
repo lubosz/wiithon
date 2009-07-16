@@ -3,13 +3,9 @@ PREFIX=/usr/local
 EMAIL="makiolo@gmail.com"
 VERSION=${shell cat VERSION}
 REVISION=${shell bzr revno}
-HOME_EFECTIVO=${shell cat $(PREFIX)/share/wiithon/HOME.conf}
-USUARIO=${shell basename $(HOME_EFECTIVO)}
-HOME_WIITHON=$(HOME_EFECTIVO)/.wiithon
-HOME_WIITHON_BDD=$(HOME_WIITHON)/bdd
-HOME_WIITHON_CARATULAS=$(HOME_WIITHON)/caratulas
-HOME_WIITHON_DISCOS=$(HOME_WIITHON)/discos
-HOME_WIITHON_LOGS=$(HOME_WIITHON)/logs
+
+PREFIX_RECURSOS_IMAGENES_CARATULAS=$(PREFIX)/share/wiithon/recursos/imagenes/caratulas
+PREFIX_RECURSOS_IMAGENES_DISCOS=$(PREFIX)/share/wiithon/recursos/imagenes/discos
 
 all:
 	@echo ==================================================================
@@ -33,23 +29,14 @@ install_auto: uninstall dependencias install
 install_auto_and_fix: install_auto permisos
 
 dependencias:
-	apt-get install intltool imagemagick rar python-gtk2 python-glade2 python-sexy python-sqlalchemy gnome-icon-theme menu
+	apt-get install intltool imagemagick python-gtk2 python-glade2 python-sexy python-sqlalchemy gnome-icon-theme
 	-@apt-get install libc6-dev-i386
 	@echo "=================================================================="
 	@echo "Install depends"
 	@echo "=================================================================="
 
 permissions_fix:
-	gpasswd -a $(USUARIO) disk
-	mkdir -p $(HOME_WIITHON)
-	mkdir -p $(HOME_WIITHON_BDD)
-	mkdir -p $(HOME_WIITHON_CARATULAS)
-	mkdir -p $(HOME_WIITHON_DISCOS)
-	mkdir -p $(HOME_WIITHON_LOGS)
-	@echo "Fix permissions in $(HOME_WIITHON)"
-	chown $(USUARIO) $(HOME_WIITHON) -R
-	-@$(RM) /usr/share/applications/wiithon_root.desktop
-	cp wiithon_usuario.desktop /usr/share/applications/
+	gpasswd -a $(USER) disk
 	@echo "=================================================================="
 	@echo "Fix permissions for WBFS. If dont detect, reboot GNOME / KDE"
 	@echo "=================================================================="
@@ -62,10 +49,6 @@ install: compilar
 	mkdir -p $(PREFIX)/share/wiithon
 	mkdir -p $(PREFIX)/share/wiithon/recursos/glade
 	mkdir -p $(PREFIX)/share/wiithon/recursos/imagenes
-
-	echo $(HOME) > $(PREFIX)/share/wiithon/HOME.conf
-
-	#cp wiithon_wrapper/wiithon_wrapper $(PREFIX)/share/wiithon
 	
 	cp libwbfs_binding/wiithon_wrapper $(PREFIX)/share/wiithon
 	cp libwbfs_binding/wiithon_wrapper $(PREFIX)/share/wiithon
@@ -79,7 +62,7 @@ install: compilar
 	
 	cp *.py $(PREFIX)/share/wiithon
 
-	cp wiithon_root.desktop /usr/share/applications/
+	cp wiithon_usuario.desktop /usr/share/applications/
 
 	cp recursos/icons/wiithon.png /usr/share/pixmaps
 	cp recursos/icons/wiithon.svg /usr/share/pixmaps
@@ -88,13 +71,12 @@ install: compilar
 
 	cp recursos/glade/*.ui $(PREFIX)/share/wiithon/recursos/glade
 	cp recursos/imagenes/*.png $(PREFIX)/share/wiithon/recursos/imagenes
-	cp recursos/imagenes/cargando/*.png $(PREFIX)/share/wiithon/recursos/imagenes
 	
-	mkdir -p $(HOME_WIITHON_CARATULAS)
-	mkdir -p $(HOME_WIITHON_DISCOS)
+	mkdir -p $(PREFIX_RECURSOS_IMAGENES_CARATULAS)
+	mkdir -p $(PREFIX_RECURSOS_IMAGENES_DISCOS)
 	
-	cp caratulas_fix/*.png $(HOME_WIITHON_CARATULAS)
-	cp discos_fix/*.png $(HOME_WIITHON_DISCOS)
+	cp caratulas_fix/*.png $(PREFIX_RECURSOS_IMAGENES_CARATULAS)
+	cp discos_fix/*.png $(PREFIX_RECURSOS_IMAGENES_DISCOS)
 
 	chmod 755 $(PREFIX)/share/wiithon/*.py
 	chmod 755 $(PREFIX)/share/wiithon/*.sh
@@ -102,6 +84,9 @@ install: compilar
 
 	chmod 644 $(PREFIX)/share/wiithon/recursos/glade/*.ui
 	chmod 644 $(PREFIX)/share/wiithon/recursos/imagenes/*.png
+	 
+	chmod 777 $(PREFIX_RECURSOS_IMAGENES_CARATULAS)
+	chmod 777 $(PREFIX_RECURSOS_IMAGENES_DISCOS)
 
 	-ln -sf $(PREFIX)/share/wiithon/wiithon.py $(PREFIX)/bin/wiithon
 	-ln -sf $(PREFIX)/share/wiithon/wiithon_wrapper $(PREFIX)/bin/wiithon_wrapper
@@ -110,8 +95,8 @@ install: compilar
 	@echo "Wiithon Install OK"
 	@echo "=================================================================="
 
-uninstall: 
-	@echo "Limpiando antiguas instalaciones"
+uninstall:
+	@echo "Limpiando posibles instalaciones antiguas"
 	-$(RM) /usr/bin/wiithon
 	-$(RM) /usr/bin/wiithon_autodetectar
 	-$(RM) /usr/bin/wiithon_autodetectar_lector
@@ -127,10 +112,10 @@ uninstall:
 	-$(RM) $(PREFIX)/share/wiithon/recursos/glade/*.xml
 	-$(RM) $(PREFIX)/share/wiithon/recursos/glade/*.glade
 	
-	-$(RM) $(HOME_WIITHON_CARATULAS)/index.html*
-	-$(RM) $(HOME_WIITHON_DISCOS)/index.html*
-	-$(RM) $(HOME_WIITHON_CARATULAS)/*.png.1
-	-$(RM) $(HOME_WIITHON_DISCOS)/*.png.1
+	-$(RM) $(PREFIX_RECURSOS_IMAGENES_CARATULAS)/index.html*
+	-$(RM) $(PREFIX_RECURSOS_IMAGENES_DISCOS)/index.html*
+	-$(RM) $(PREFIX_RECURSOS_IMAGENES_CARATULAS)/*.png.1
+	-$(RM) $(PREFIX_RECURSOS_IMAGENES_DISCOS)/*.png.1
 	-$(RM) $(HOME_WIITHON_BDD)/*.db
 
 	-$(RM) $(PREFIX)/share/wiithon/.acuerdo
@@ -181,19 +166,24 @@ uninstall:
 	
 	-$(RM) /usr/share/pixmaps/wiithon.png
 	-$(RM) /usr/share/pixmaps/wiithon.svg
+	
+	-$(RM) $(PREFIX)/share/wiithon/HOME.conf
 
 	-rmdir $(PREFIX)/share/wiithon/recursos/glade
-	-rmdir $(PREFIX)/share/wiithon/recursos/imagenes
-	-rmdir $(PREFIX)/share/wiithon/recursos
 	
 	@echo "=================================================================="
 	@echo "Wiithon Uninstall OK"
 	@echo "=================================================================="
 
 purge: uninstall
-	-$(RM) -R $(HOME_WIITHON)
-	-$(RM) $(PREFIX)/share/wiithon/HOME.conf
+	-$(RM) $(PREFIX_RECURSOS_IMAGENES_CARATULAS)/*.png
+	-$(RM) $(PREFIX_RECURSOS_IMAGENES_DISCOS)/*.png
+	-rmdir $(PREFIX_RECURSOS_IMAGENES_CARATULAS)
+	-rmdir $(PREFIX_RECURSOS_IMAGENES_DISCOS)
+	-rmdir $(PREFIX)/share/wiithon/recursos/imagenes
+	-rmdir $(PREFIX)/share/wiithon/recursos
 	-rmdir $(PREFIX)/share/wiithon
+	-$(RM) -R $(HOME_WIITHON)
 	@echo "=================================================================="
 	@echo "Uninstall OK & all clean (purge covers, bdd ...)"
 	@echo "=================================================================="

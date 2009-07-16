@@ -17,43 +17,34 @@ WIITHON_FILES_RECURSOS = os.path.join(WIITHON_FILES , "recursos")
 WIITHON_FILES_RECURSOS_GLADE = os.path.join(WIITHON_FILES_RECURSOS , "glade")
 WIITHON_FILES_RECURSOS_IMAGENES = os.path.join(WIITHON_FILES_RECURSOS , "imagenes")
 
-def getHOME():
-    'Method to calculate the HOME dirname of the user'
-    global HOME, LOCALE, WBFS_APP, WIITHON_FILES_RECURSOS_IMAGENES, ICONO
-    ruta = os.path.join(WIITHON_FILES , "HOME.conf")
-    if os.path.exists(ruta):
-        filedesc = open(ruta , "r")
-        HOME = filedesc.read().strip()
-        filedesc.close()
-        LOCALE = "/usr/share/locale/"
-        WBFS_APP = os.path.join(WIITHON_FILES , "wiithon_wrapper")
-        ICONO = "/usr/share/pixmaps/wiithon.png"
-        return HOME
-    else:
-        HOME = os.environ['HOME']
-        LOCALE = os.path.join(WIITHON_FILES , "po")
-        LOCALE = os.path.join(LOCALE , "locale")
-        WBFS_APP = "libwbfs_binding/wiithon_wrapper.sh"
-        WIITHON_FILES_RECURSOS_IMAGENES = os.path.join(WIITHON_FILES_RECURSOS_IMAGENES , "cargando")
-        ICONO = os.path.join(WIITHON_FILES_RECURSOS , "icons")
-        ICONO = os.path.join(ICONO , "wiithon.png")
-        return HOME
+HOME_WIITHON_CARATULAS = os.path.join(WIITHON_FILES_RECURSOS_IMAGENES , 'caratulas')
+HOME_WIITHON_DISCOS = os.path.join(WIITHON_FILES_RECURSOS_IMAGENES , 'discos')
+
+if not os.path.exists(os.path.join(WIITHON_FILES , ".bzr")):
+	LOCALE = "/usr/share/locale/"
+	WBFS_APP = os.path.join(WIITHON_FILES , "wiithon_wrapper")
+	ICONO = "/usr/share/pixmaps/wiithon.png"
+else:
+	LOCALE = os.path.join(WIITHON_FILES , "po")
+	LOCALE = os.path.join(LOCALE , "locale")
+	WBFS_APP = "libwbfs_binding/wiithon_wrapper.sh"
+	ICONO = os.path.join(WIITHON_FILES_RECURSOS , "icons")
+	ICONO = os.path.join(ICONO , "wiithon.png")
 
 APP = "wiithon"
-HOME = getHOME()
+HOME = os.environ['HOME']
 HOME_WIITHON = os.path.join(HOME , '.wiithon')
 HOME_WIITHON_BDD = os.path.join(HOME_WIITHON , 'bdd')
-HOME_WIITHON_CARATULAS = os.path.join(HOME_WIITHON , 'caratulas')
-HOME_WIITHON_DISCOS = os.path.join(HOME_WIITHON , 'discos')
 HOME_WIITHON_LOGS = os.path.join(HOME_WIITHON , 'logs')
 HOME_WIITHON_LOGS_PROCESO = os.path.join(HOME_WIITHON_LOGS , "proceso.log")
 
 # crear directorios si no existen
 util.try_mkdir( HOME_WIITHON )
 util.try_mkdir( HOME_WIITHON_BDD )
+util.try_mkdir( HOME_WIITHON_LOGS )
+
 util.try_mkdir( HOME_WIITHON_CARATULAS )
 util.try_mkdir( HOME_WIITHON_DISCOS )
-util.try_mkdir( HOME_WIITHON_LOGS )
 
 GLADE_ALERTA = "alerta"
 
@@ -83,3 +74,4 @@ NUM_HILOS = 15
 
 # Tipo caratula 3d|normal|panoramica|full
 TIPO_CARATULA = "normal"
+

@@ -12,6 +12,10 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #, python-format
+msgid "%d - Salir"
+msgstr ""
+
+#, python-format
 msgid "%d juegos"
 msgstr "%d games"
 
@@ -22,10 +26,6 @@ msgstr ""
 #, python-format
 msgid "%d/%d juegos"
 msgstr ""
-
-#, python-format
-msgid "%s - Salir"
-msgstr "%s - Exit"
 
 #, python-format
 msgid "%s no es un ningun juego de Wii"
@@ -49,6 +49,9 @@ msgid "A continuacion se listan los juego que NO van a ser copiados por ya estar
 msgstr "The following are games will NOT be copied because exists in destiny partition"
 
 msgid "AYUDA_CLI"
+msgstr ""
+
+msgid "Accesorios:"
 msgstr ""
 
 msgid "Acerca de ..."
@@ -152,6 +155,9 @@ msgstr "Copy selected game*"
 msgid "Copiar todo el disco*"
 msgstr "Copy all games*"
 
+msgid "Desarrollador:"
+msgstr ""
+
 #, python-format
 msgid "Descargando caratula de %s"
 msgstr "Downloading disc %s"
@@ -228,6 +234,9 @@ msgstr "ERROR, downloading %s.png"
 msgid "ERROR, descargando alguna caratula"
 msgstr "ERROR, downloading some cover"
 
+msgid "Editor:"
+msgstr ""
+
 #, python-format
 msgid "El juego ya esta metido, como %s"
 msgstr ""
@@ -277,9 +286,6 @@ msgstr "Error transferring the ISO to the hard drive"
 msgid "Error borrando"
 msgstr "Delete error"
 
-msgid "Error obteniendo el Fabricando del HD"
-msgstr "Error getting HDD manufacturer"
-
 msgid "Error renombrando"
 msgstr "Error renaming"
 
@@ -310,6 +316,9 @@ msgstr ""
 msgid "Falla la descarga del disco de %s"
 msgstr ""
 
+msgid "Fecha de lanzamiento:"
+msgstr ""
+
 msgid "Finalizado."
 msgstr "Finished."
 
@@ -321,6 +330,9 @@ msgstr "Out of range"
 
 msgid "GNU GENERAL PUBLIC LICENSE Version 3"
 msgstr "GNU GENERAL PUBLIC LICENSE Version 3"
+
+msgid "Genero:"
+msgstr ""
 
 msgid "Has conectado el disco duro? No se ha encontrado ninguna particion valida."
 msgstr "Connected your HD with partition WBFS?"
@@ -492,6 +504,9 @@ msgstr "New"
 msgid "Nuevo nombre es demasiado largo, intente con un texto menor de %d caracteres"
 msgstr "New name is too long, try a text smaller than %d characters"
 
+msgid "Num de jugadores:"
+msgstr ""
+
 msgid "Numero fuera de rango"
 msgstr "Out of range"
 
@@ -501,9 +516,6 @@ msgstr "OK, downloaded %s.png"
 
 msgid "OK, todas las caratulas se han descargado"
 msgstr "OK, all covers downloaded"
-
-msgid "Particion"
-msgstr "Partition"
 
 msgid "Paso 1 de 2: Elige un directorio para las CARATULAS"
 msgstr "Step 1 of 2: Choose a folder for COVERS"
@@ -532,6 +544,12 @@ msgstr "Press any key to continue ..."
 
 #, python-format
 msgid "Quieres borrar el juego con %s?"
+msgstr ""
+
+msgid "RXGB2"
+msgstr ""
+
+msgid "Ranking:"
 msgstr ""
 
 msgid "Refrescar WBFS"
@@ -573,6 +591,9 @@ msgid ""
 "Ricardo Marmolejo Garc&#xED;a <makiolo@gmail.com>"
 msgstr ""
 
+msgid "Synopsis:"
+msgstr ""
+
 msgid "TAMANIO"
 msgstr "SIZE"
 
@@ -600,8 +621,14 @@ msgstr "Size"
 msgid "Termina: %s"
 msgstr "Finish: %s"
 
+msgid "Tiene Online?:"
+msgstr ""
+
 msgid "Tienes que seleccionar una particion WBFS para realizar esta accion"
 msgstr "Need select some partition WBFS"
+
+msgid "Titulo:"
+msgstr ""
 
 msgid "Todo metido en el HD correctamente"
 msgstr "All OK in HD successfully"
@@ -643,6 +670,15 @@ msgstr "in partition"
 msgid "gtk-cancel"
 msgstr "gtk-cancel"
 
+msgid "gtk-close"
+msgstr ""
+
+msgid "gtk-media-next"
+msgstr ""
+
+msgid "gtk-media-previous"
+msgstr ""
+
 msgid "gtk-ok"
 msgstr "gtk-ok"
 
@@ -663,6 +699,15 @@ msgstr "wiithon doesn't remove the temporal ISO, you can remove it if you don't 
 
 msgid "No hay particiones WBFS!"
 msgstr ""
+
+#~ msgid "%s - Salir"
+#~ msgstr "%s - Exit"
+
+#~ msgid "Error obteniendo el Fabricando del HD"
+#~ msgstr "Error getting HDD manufacturer"
+
+#~ msgid "Particion"
+#~ msgstr "Partition"
 
 #~ msgid "Fabricante"
 #~ msgstr "Manufacture"

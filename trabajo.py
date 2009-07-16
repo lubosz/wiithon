@@ -125,6 +125,7 @@ class PoolTrabajo(Pool , Thread):
             juego = trabajo.origen
             destino = trabajo.destino
             trabajo.exito = self.copiarCaratula(core , juego, destino)
+
         elif( trabajo.tipo == COPIAR_DISCO ):
             juego = trabajo.origen
             destino = trabajo.destino
@@ -225,6 +226,9 @@ class PoolTrabajo(Pool , Thread):
 
     def copiarDisco(self , core , juego, destino):
         return core.copiarDisco( juego, destino )
+        
+    def sincronizarXML_WiiTDB(self):
+        pass
 
     def nuevoTrabajo( self , tipo , origenes , destino=None ):
         if isinstance(origenes, list):

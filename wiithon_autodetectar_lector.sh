@@ -22,12 +22,21 @@ do
 	if [ $LEGIBLE -eq 7 ]; then
 		RES=`echo $MAGICO | egrep '([A-Z0-9]{6})' | wc -l`;
 		if [ $RES -gt 0 ]; then
+			USADO_LIBRE_TOTAL="0.0"$SEPARADOR"0.0"$SEPARADOR"0.0"
 			if [ $hayUDEV -eq 1 ]; then
 				NOMBRE=`udevinfo -a -p $(udevinfo -q path -n $i) | egrep 'ATTRS{vendor}|ATTRS{model}' | awk -F== '{print $2}' | sed '3,$d' | sed 's/\"//g' | xargs`;
-				echo $i$SEPARADOR$NOMBRE;
 			else
-				echo $i$SEPARADOR;
+				NOMBRE=""
 			fi
+			echo -n $i
+			echo -n $SEPARADOR
+			echo -n "dvd"
+			echo -n $SEPARADOR
+			echo -n $USADO_LIBRE_TOTAL
+			echo -n $SEPARADOR
+			echo -n $NOMBRE
+			echo -n $SEPARADOR
+			echo ""
 		fi
 	fi
 done

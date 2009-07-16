@@ -11,6 +11,10 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #, python-format
+msgid "%d - Salir"
+msgstr ""
+
+#, python-format
 msgid "%d juegos"
 msgstr "%d jogos"
 
@@ -21,10 +25,6 @@ msgstr ""
 #, python-format
 msgid "%d/%d juegos"
 msgstr ""
-
-#, python-format
-msgid "%s - Salir"
-msgstr "%s - Sair"
 
 #, python-format
 msgid "%s no es un ningun juego de Wii"
@@ -95,6 +95,9 @@ msgstr ""
 "\t\t%s instalar\n"
 "\n"
 "Web : http://blogricardo.wordpress.com/2009/06/21/wiithon-1-0-liberado/"
+
+msgid "Accesorios:"
+msgstr ""
 
 msgid "Acerca de ..."
 msgstr "Sobre ..."
@@ -197,6 +200,9 @@ msgstr "Copiar o jogo selecionado*"
 msgid "Copiar todo el disco*"
 msgstr "Copiar todo o disco*"
 
+msgid "Desarrollador:"
+msgstr ""
+
 #, python-format
 msgid "Descargando caratula de %s"
 msgstr "Baixando capa de %s"
@@ -273,6 +279,9 @@ msgstr "ERRO, baixando %s.png"
 msgid "ERROR, descargando alguna caratula"
 msgstr "ERRO, baixando alguma capa"
 
+msgid "Editor:"
+msgstr ""
+
 #, python-format
 msgid "El juego ya esta metido, como %s"
 msgstr ""
@@ -322,9 +331,6 @@ msgstr "Erro ao passar a ISO para o HD"
 msgid "Error borrando"
 msgstr "Erro ao apagar"
 
-msgid "Error obteniendo el Fabricando del HD"
-msgstr "Erro ao obter o fabricante do HD"
-
 msgid "Error renombrando"
 msgstr "Erro ao renomear"
 
@@ -355,6 +361,9 @@ msgstr ""
 msgid "Falla la descarga del disco de %s"
 msgstr ""
 
+msgid "Fecha de lanzamiento:"
+msgstr ""
+
 msgid "Finalizado."
 msgstr "Finalizado."
 
@@ -366,6 +375,9 @@ msgstr "Fora dos limites"
 
 msgid "GNU GENERAL PUBLIC LICENSE Version 3"
 msgstr "GNU GENERAL PUBLIC LICENSE Version 3"
+
+msgid "Genero:"
+msgstr ""
 
 msgid "Has conectado el disco duro? No se ha encontrado ninguna particion valida."
 msgstr "Você conectou um HD ? Não foi encontrada nenhuma partição válida."
@@ -533,6 +545,9 @@ msgstr "Novo"
 msgid "Nuevo nombre es demasiado largo, intente con un texto menor de %d caracteres"
 msgstr "Novo nome é muito grande, entre com um texto menor de %d caracteres"
 
+msgid "Num de jugadores:"
+msgstr ""
+
 msgid "Numero fuera de rango"
 msgstr "Número fora dos limites"
 
@@ -542,9 +557,6 @@ msgstr "OK, baixado %s.png"
 
 msgid "OK, todas las caratulas se han descargado"
 msgstr "OK, todas as capas foram baixadas"
-
-msgid "Particion"
-msgstr "Partição"
 
 msgid "Paso 1 de 2: Elige un directorio para las CARATULAS"
 msgstr "Passo 1 de 2: Escolha um diretório para as CAPAS"
@@ -573,6 +585,12 @@ msgstr "Aperte qualquer botão para continuar ..."
 
 #, python-format
 msgid "Quieres borrar el juego con %s?"
+msgstr ""
+
+msgid "RXGB2"
+msgstr ""
+
+msgid "Ranking:"
 msgstr ""
 
 msgid "Refrescar WBFS"
@@ -616,6 +634,9 @@ msgstr ""
 "Sergio Padrino <sergio.padrino@gmail.com>\n"
 "Ricardo Marmolejo Garc&#xED;a <makiolo@gmail.com>"
 
+msgid "Synopsis:"
+msgstr ""
+
 msgid "TAMANIO"
 msgstr "TAMANHO"
 
@@ -643,8 +664,14 @@ msgstr "Tamanho"
 msgid "Termina: %s"
 msgstr "Terminar: %s"
 
+msgid "Tiene Online?:"
+msgstr ""
+
 msgid "Tienes que seleccionar una particion WBFS para realizar esta accion"
 msgstr "Você tem que selecionar uma partição WBFS para realizar esta ação"
+
+msgid "Titulo:"
+msgstr ""
 
 msgid "Todo metido en el HD correctamente"
 msgstr "Tudo inserido no HD corretamente"
@@ -686,6 +713,15 @@ msgstr "na partição"
 msgid "gtk-cancel"
 msgstr "gtk-cancel"
 
+msgid "gtk-close"
+msgstr ""
+
+msgid "gtk-media-next"
+msgstr ""
+
+msgid "gtk-media-previous"
+msgstr ""
+
 msgid "gtk-ok"
 msgstr "gtk-ok"
 
@@ -706,6 +742,15 @@ msgstr "wiithon não apaga a ISO temporária, você pode apagá-la caso não nec
 
 msgid "No hay particiones WBFS!"
 msgstr ""
+
+#~ msgid "%s - Salir"
+#~ msgstr "%s - Sair"
+
+#~ msgid "Error obteniendo el Fabricando del HD"
+#~ msgstr "Erro ao obter o fabricante do HD"
+
+#~ msgid "Particion"
+#~ msgstr "Partição"
 
 #~ msgid "Fabricante"
 #~ msgstr "Fabricante"

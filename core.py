@@ -250,7 +250,7 @@ class WiithonCORE:
         return ok
 
     # Devuelve la lista de particiones
-    def getListaParticiones(self):
+    def getListaParticiones(self, detector = config.DETECTOR_WBFS):
         salida = util.getSTDOUT_NOERROR_iterador(config.DETECTOR_WBFS)
 
         listaParticiones = []
@@ -294,7 +294,7 @@ class WiithonCORE:
     def redimensionarParticionWBFS(self , DEVICE):
         # 57 42 46 53 00 0b 85 30
         # 57 42 46 53 00 29 ea eb
-        
+
         # si pasa el objeto, cogemos el string que nos interesa
         if isinstance(DEVICE, Particion):
             DEVICE = DEVICE.device
@@ -359,4 +359,9 @@ class WiithonCORE:
             return salida == 0
         except KeyboardInterrupt:
             return False
+
+    def formatearWBFS(self, particion):
+        comando = "%s -p %s formatear" % (config.WBFS_APP, particion.device)
+        salida = subprocess.call( comando , shell=True , stderr=subprocess.STDOUT )
+        return salida == 0
 

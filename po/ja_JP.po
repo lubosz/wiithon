@@ -11,6 +11,10 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #, python-format
+msgid "%d - Salir"
+msgstr ""
+
+#, python-format
 msgid "%d juegos"
 msgstr ""
 
@@ -20,10 +24,6 @@ msgstr ""
 
 #, python-format
 msgid "%d/%d juegos"
-msgstr ""
-
-#, python-format
-msgid "%s - Salir"
 msgstr ""
 
 #, python-format
@@ -48,6 +48,9 @@ msgid "A continuacion se listan los juego que NO van a ser copiados por ya estar
 msgstr ""
 
 msgid "AYUDA_CLI"
+msgstr ""
+
+msgid "Accesorios:"
 msgstr ""
 
 msgid "Acerca de ..."
@@ -139,6 +142,9 @@ msgstr ""
 msgid "Copiar todo el disco*"
 msgstr ""
 
+msgid "Desarrollador:"
+msgstr ""
+
 #, python-format
 msgid "Descargando caratula de %s"
 msgstr ""
@@ -215,6 +221,9 @@ msgstr ""
 msgid "ERROR, descargando alguna caratula"
 msgstr ""
 
+msgid "Editor:"
+msgstr ""
+
 #, python-format
 msgid "El juego ya esta metido, como %s"
 msgstr ""
@@ -261,9 +270,6 @@ msgstr ""
 msgid "Error borrando"
 msgstr ""
 
-msgid "Error obteniendo el Fabricando del HD"
-msgstr ""
-
 msgid "Error renombrando"
 msgstr ""
 
@@ -294,6 +300,9 @@ msgstr ""
 msgid "Falla la descarga del disco de %s"
 msgstr ""
 
+msgid "Fecha de lanzamiento:"
+msgstr ""
+
 msgid "Finalizado."
 msgstr ""
 
@@ -304,6 +313,9 @@ msgid "Fuera de rango"
 msgstr ""
 
 msgid "GNU GENERAL PUBLIC LICENSE Version 3"
+msgstr ""
+
+msgid "Genero:"
 msgstr ""
 
 msgid "Has conectado el disco duro? No se ha encontrado ninguna particion valida."
@@ -466,6 +478,9 @@ msgstr ""
 msgid "Nuevo nombre es demasiado largo, intente con un texto menor de %d caracteres"
 msgstr ""
 
+msgid "Num de jugadores:"
+msgstr ""
+
 msgid "Numero fuera de rango"
 msgstr ""
 
@@ -474,9 +489,6 @@ msgid "OK, descargado %s.png"
 msgstr ""
 
 msgid "OK, todas las caratulas se han descargado"
-msgstr ""
-
-msgid "Particion"
 msgstr ""
 
 msgid "Paso 1 de 2: Elige un directorio para las CARATULAS"
@@ -506,6 +518,12 @@ msgstr ""
 
 #, python-format
 msgid "Quieres borrar el juego con %s?"
+msgstr ""
+
+msgid "RXGB2"
+msgstr ""
+
+msgid "Ranking:"
 msgstr ""
 
 msgid "Refrescar WBFS"
@@ -547,6 +565,9 @@ msgid ""
 "Ricardo Marmolejo Garc&#xED;a <makiolo@gmail.com>"
 msgstr ""
 
+msgid "Synopsis:"
+msgstr ""
+
 msgid "TAMANIO"
 msgstr ""
 
@@ -563,7 +584,13 @@ msgstr ""
 msgid "Termina: %s"
 msgstr ""
 
+msgid "Tiene Online?:"
+msgstr ""
+
 msgid "Tienes que seleccionar una particion WBFS para realizar esta accion"
+msgstr ""
+
+msgid "Titulo:"
 msgstr ""
 
 msgid "Todo metido en el HD correctamente"
@@ -604,6 +631,15 @@ msgid "en particion"
 msgstr ""
 
 msgid "gtk-cancel"
+msgstr ""
+
+msgid "gtk-close"
+msgstr ""
+
+msgid "gtk-media-next"
+msgstr ""
+
+msgid "gtk-media-previous"
 msgstr ""
 
 msgid "gtk-ok"

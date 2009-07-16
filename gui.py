@@ -50,13 +50,23 @@ class WiithonGUI(GtkBuilderWrapper):
 
     # Representación de la fila seleccionada en los distintos treeviews
     sel_juego = FilaTreeview()
-    sel_parti = FilaTreeview()
-    sel_parti_1on1 = FilaTreeview()
+    sel_parti = None
+    sel_parti_1on1 = None
+    
+    # tiempo del ultimo click en tv_games
+    ultimoClick = 0
+    
+    # builder para el glade
+    alert_glade = None
 
     def __init__(self, core):
         GtkBuilderWrapper.__init__(self,
                                    os.path.join(config.WIITHON_FILES_RECURSOS_GLADE,
                                                 'wiithon.ui'))
+                                                
+        self.alert_glade = gtk.Builder()
+        self.alert_glade.add_from_file( os.path.join(config.WIITHON_FILES_RECURSOS_GLADE  , 'alerta.ui') )
+        self.alert_glade.set_translation_domain( config.APP )
 
         self.core = core
         
@@ -263,6 +273,9 @@ class WiithonGUI(GtkBuilderWrapper):
                 
                 self.lJuegos = self.sincronizarParticionesWBFSconBDD(self.lParti)
 
+                self.sel_parti = FilaTreeview()
+                self.sel_parti_1on1 = FilaTreeview()
+
                 # carga el modelo de datos del TreeView de particiones
                 self.cargarParticionesModelo(self.tv_partitions_modelo , self.lParti)
                 
@@ -275,19 +288,15 @@ class WiithonGUI(GtkBuilderWrapper):
                 else:
                     self.wb_label_numParticionesWBFS.set_label(_("%d particiones WBFS") % (len(self.lParti)))
            
+            if(self.lJuegos_filtrada != None and len(self.lJuegos_filtrada) > 0):
+                if self.sel_juego.obj == None:
+                    self.sel_juego.obj = self.lJuegos_filtrada[0]
+           
             # Seleccionamos el primero de cada treeview de particiones
-            if(len(self.lParti) > 0):    
+            if(self.lParti != None and len(self.lParti) > 0):    
                 if self.sel_parti.obj == None:
                     self.sel_parti.obj = self.lParti[0]
                     self.seleccionarPrimeraFila(self.wb_tv_partitions)
-                    '''
-                elif self.sel_parti_1on1.obj == None:
-                    if(len(self.lParti) > 1):
-                        self.sel_parti_1on1.obj = self.lParti[1]
-                        self.seleccionarPrimeraFila(self.wb_tv_partitions2)
-                    else:
-                        self.sel_parti_1on1.obj = self.lParti[0]
-                    '''
 
             # 1º descargamos lo que vemos EN ORDEN
             # 2º despues descargamos el resto de juegos sin importar el orden
@@ -538,10 +547,6 @@ class WiithonGUI(GtkBuilderWrapper):
             pass
 
     def alert(self, level, message):
-        alert_glade = gtk.Builder()
-        alert_glade.add_from_file( os.path.join(config.WIITHON_FILES_RECURSOS_GLADE  , 'alerta.ui') )
-        alert_glade.set_translation_domain( config.APP )
-
         level_icons = {
                 'question': gtk.STOCK_DIALOG_QUESTION,
                 'info':     gtk.STOCK_DIALOG_INFO,
@@ -557,11 +562,11 @@ class WiithonGUI(GtkBuilderWrapper):
                 }
 
         # configure the label text:
-        alert_msg = alert_glade.get_object('lbl_message')
+        alert_msg = self.alert_glade.get_object('lbl_message')
         alert_msg.set_text(message)
 
         # configure the icon to display
-        img = alert_glade.get_object('img_alert')
+        img = self.alert_glade.get_object('img_alert')
 
         try:
             img.set_from_stock(level_icons[level], gtk.ICON_SIZE_DIALOG)
@@ -569,8 +574,8 @@ class WiithonGUI(GtkBuilderWrapper):
             img.set_from_stock(level_icons['info'], gtk.ICON_SIZE_DIALOG)
 
         # configure the buttons
-        btn_ok = alert_glade.get_object('btn_ok')
-        btn_no = alert_glade.get_object('btn_no')
+        btn_ok = self.alert_glade.get_object('btn_ok')
+        btn_no = self.alert_glade.get_object('btn_no')
 
         if level_buttons[level][0]:
             btn_ok.set_label(level_buttons[level][0])
@@ -582,9 +587,9 @@ class WiithonGUI(GtkBuilderWrapper):
         else:
             btn_no.hide()
 
-        alert_glade.get_object(config.GLADE_ALERTA).set_title(level)
-        res = alert_glade.get_object(config.GLADE_ALERTA).run()
-        alert_glade.get_object(config.GLADE_ALERTA).hide()
+        self.alert_glade.get_object(config.GLADE_ALERTA).set_title(level)
+        res = self.alert_glade.get_object(config.GLADE_ALERTA).run()
+        self.alert_glade.get_object(config.GLADE_ALERTA).hide()
 
         return res
 
@@ -603,6 +608,7 @@ class WiithonGUI(GtkBuilderWrapper):
         # Limpiamos los devices
         sql = "update juegos set device=''"
         session.execute(sql)
+        session.commit()
     
         listaJuegosAcumulados = NonRepeatList()
         for particion in particiones:
@@ -612,8 +618,7 @@ class WiithonGUI(GtkBuilderWrapper):
             i = 0
             # merge con la base de datos
             while i < len(listaJuegos):
-                juego = listaJuegos[i]
-                session.merge(juego)
+                session.merge(listaJuegos[i])
                 i += 1
 
             # union con el total
@@ -747,42 +752,40 @@ class WiithonGUI(GtkBuilderWrapper):
     # Click en juegos --> refresco la imagen de la caratula y disco
     # self.wb_tv_games
     def on_tv_games_cursor_changed(self , treeview):
-        self.sel_juego.actualizar_columna(treeview)
-        if self.sel_juego.it != None:
-            self.sel_juego.obj = self.getBuscarJuego(self.lJuegos, self.sel_juego.clave)
-                      
-            self.ponerCaratula(self.sel_juego.clave)
-            self.ponerDisco(self.sel_juego.clave)
-            
-            sql = util.decode("juegos.idgame=='%s'" % (self.sel_juego.clave))
-            for juego in session.query(Juego, JuegoWIITDB).join('wiitdb_juegos').filter(sql):
-                print juego[1]
-                break
+        if self.sel_juego != None:
+            self.sel_juego.actualizar_columna(treeview)
+            if self.sel_juego.it != None:
+                self.sel_juego.obj = self.getBuscarJuego(self.lJuegos, self.sel_juego.clave)
+                          
+                self.ponerCaratula(self.sel_juego.clave)
+                self.ponerDisco(self.sel_juego.clave)
+                
+                sql = util.decode("idgame=='%s'" % (self.sel_juego.clave))
+                for juego in session.query(JuegoWIITDB).filter(sql):
+                    print juego
 
     # Click en particiones --> refresca la lista de juegos
     def on_tv_partitions_cursor_changed(self , treeview):
-        
-        self.sel_parti.actualizar_columna(treeview)
-        if self.sel_parti.it != None:
+        if self.sel_parti != None:
+            self.sel_parti.actualizar_columna(treeview)
+            if self.sel_parti.it != None:
 
-            # selecciono la particion actual
-            self.sel_parti.obj = self.getBuscarParticion(self.lParti, self.sel_parti.clave)
+                # selecciono la particion actual
+                self.sel_parti.obj = self.getBuscarParticion(self.lParti, self.sel_parti.clave)
 
-            # refrescamos el modelo de particiones para la copia 1on1
-            self.cargarParticionesModelo(self.tv_partitions2_modelo , self.lParti , self.sel_parti.obj.device)
-            
-            #seleccionar primero
-            self.seleccionarPrimeraFila( self.wb_tv_partitions2 )
-            
-            # refrescamos la lista de juegos, leyendo del core
-            self.lJuegos_filtrada = self.refrescarListaJuegos()
+                # refrescamos el modelo de particiones para la copia 1on1
+                self.cargarParticionesModelo(self.tv_partitions2_modelo , self.lParti , self.sel_parti.obj.device)
+                
+                #seleccionar primero
+                self.seleccionarPrimeraFila( self.wb_tv_partitions2 )
+                
+                # refrescamos la lista de juegos, leyendo del core
+                self.lJuegos_filtrada = self.refrescarListaJuegos()
 
-            # refrescar espacio
-            self.refrescarEspacio()
+                # refrescar espacio
+                self.refrescarEspacio()
 
-
-    def on_tv_partitions2_cursor_changed(self , treeview):        
-    
+    def on_tv_partitions2_cursor_changed(self , treeview):
         self.sel_parti_1on1.actualizar_columna(treeview)
         if self.sel_parti_1on1.it != None:
             # le selecciono la particion actual al 1on1
@@ -805,7 +808,13 @@ class WiithonGUI(GtkBuilderWrapper):
         self.wb_img_disco1.set_from_file( destinoDisco )
 
     def on_tv_games_click_event(self, widget, event):
-        if event.button == 3:
+        if event.button == 1:
+            tiempo_entre_clicks = event.time - self.ultimoClick
+            self.ultimoClick = event.time
+            if tiempo_entre_clicks < 400:
+                res = self.wb_ficha_juego.run()
+                self.wb_ficha_juego.hide()
+        elif event.button == 3:
             popup = self.uimgr.get_widget('/GamePopup')
             popup.popup(None, None, None, event.button, event.time)
 
