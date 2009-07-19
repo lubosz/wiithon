@@ -306,7 +306,10 @@ def esPNG(ruta):
         f.seek(0)
 
 def decode(s):
-    return s.decode('utf-8')
+    try:
+        return s.decode('utf-8')
+    except UnicodeDecodeError:
+        return s
 
 class NoDeberiaPasar(Exception):
     pass

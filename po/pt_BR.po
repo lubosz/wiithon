@@ -200,6 +200,9 @@ msgstr "Copiar o jogo selecionado*"
 msgid "Copiar todo el disco*"
 msgstr "Copiar todo o disco*"
 
+msgid "Debes tener al menos 2 particiones WBFS para hacer copias 1:1"
+msgstr ""
+
 msgid "Desarrollador:"
 msgstr ""
 
@@ -497,9 +500,6 @@ msgstr ""
 "para funcionar com o USB Loader)\n"
 "- Quando você remove um jogo neste modo, apaga o registro e as capas baixadas."
 
-msgid "No hay un numero suficiente de particiones validas, para realizar esta accion."
-msgstr "Não existe um número suficiente de partições válidas para realizar esta ação."
-
 msgid "No puedes refrescar las particiones mientras hay tareas sin finalizar"
 msgstr "Não é possível atualizar as partições enquanto existem tarefas sem finalizar"
 
@@ -742,6 +742,9 @@ msgstr "wiithon não apaga a ISO temporária, você pode apagá-la caso não nec
 
 msgid "No hay particiones WBFS!"
 msgstr ""
+
+#~ msgid "No hay un numero suficiente de particiones validas, para realizar esta accion."
+#~ msgstr "Não existe um número suficiente de partições válidas para realizar esta ação."
 
 #~ msgid "%s - Salir"
 #~ msgstr "%s - Sair"

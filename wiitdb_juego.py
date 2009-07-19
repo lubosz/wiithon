@@ -134,8 +134,7 @@ class JuegoWIITDB(Base):
         object.__setattr__(self, name, value)
 
     def __repr__(self):
-        # para debugeo
-        return "WiiTDB info de %s (%s)\nRegion: %s\ntitle_EN: %s\nsynopsis_EN: %s\ntitle_ES: %s\nsynopsis_ES: %s\ndeveloper: %s\npublisher: %s\nanio: %s\nwifi_players: %s\ninput_players: %s\n" % (self.name, self.idgame,self.region,self.title_EN,self.synopsis_EN,self.title_ES,self.synopsis_ES, self.developer,self.publisher,self.anio,self.wifi_players,self.input_players)
+        return "%s - %s (%s)" % (self.idgame, self.name, self.region)
 
 #############################################################################
 

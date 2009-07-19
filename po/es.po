@@ -199,6 +199,9 @@ msgstr ""
 msgid "Copiar todo el disco*"
 msgstr "Copiar todos los juegos*"
 
+msgid "Debes tener al menos 2 particiones WBFS para hacer copias 1:1"
+msgstr ""
+
 msgid "Desarrollador:"
 msgstr ""
 
@@ -494,9 +497,6 @@ msgstr ""
 "- Copiar caratulas y discos a una ruta concreta. (Normalmente a la SD, para su correcto funcionamiento con USB Loader)\n"
 "- Cuando borre un juego en este modo, borrara el registro y las caratula y disco descargadas."
 
-msgid "No hay un numero suficiente de particiones validas, para realizar esta accion."
-msgstr "Tienes que seleccionar una partición WBFS para realizar esta acción"
-
 msgid "No puedes refrescar las particiones mientras hay tareas sin finalizar"
 msgstr ""
 
@@ -735,6 +735,9 @@ msgstr ""
 
 msgid "No hay particiones WBFS!"
 msgstr ""
+
+#~ msgid "No hay un numero suficiente de particiones validas, para realizar esta accion."
+#~ msgstr "Tienes que seleccionar una partición WBFS para realizar esta acción"
 
 #~ msgid "Particion"
 #~ msgstr "Partición"

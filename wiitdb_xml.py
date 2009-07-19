@@ -3,11 +3,13 @@
 # vim: set fileencoding=utf-8 :
 
 import libxml2
+from threading import Thread
 
+import config
+import util
 from juego import Juego
 from wiitdb_companies import Companie
 from wiitdb_juego import JuegoWIITDB, Accesorio, RatingContent, RatingType, JuegoDescripcion
-import util
 
 '''
     * name : returns the node name
@@ -19,20 +21,13 @@ import util
 db =        util.getBDD()
 session =   util.getSesionBDD(db)
 
-class WiiTDBXML:
+class WiiTDBXML(Thread):
     
-    def __init__(self):
+    def __init__(self, callback_spinner):
+        Thread.__init__(self)
+        self.callback_spinner = callback_spinner
         self.version = '0'
         self.games = 0
-
-    def leerAtributo(self, nodo, atributo):
-        valor = ""
-        attr = nodo.get_properties()
-        while attr != None:
-            if attr.name == atributo:
-                valor = attr.content
-            attr = attr.next    
-        return valor
         
     def run(self):
         #transicion = session.create_transaction()
@@ -133,7 +128,7 @@ class WiiTDBXML:
                                             # valor es una atributo de la relacion
                                             juego.rating.append(rating_type)
                                             
-                                            #print juego.rating
+                                            print juego.rating
                                                 
                                             if nodo.children is not None:
                                                 nodo = nodo.children
@@ -210,8 +205,7 @@ class WiiTDBXML:
                             print "Error en %s" % name
 
                     cont += 1
-                    if cont % 50 == 0:
-                        print "< %d%% >" % (cont * 100 / self.games)
+                    self.callback_spinner(cont, self.games)
                     
                     nodo = nodo.next
 
@@ -242,3 +236,11 @@ class WiiTDBXML:
         # hacemos efectivas las transacciones
         session.commit()
 
+    def leerAtributo(self, nodo, atributo):
+        valor = ""
+        attr = nodo.get_properties()
+        while attr != None:
+            if attr.name == atributo:
+                valor = attr.content
+            attr = attr.next    
+        return valor

@@ -2,10 +2,17 @@
 # -*- coding: utf-8 -*-
 # vim: set fileencoding=utf-8 :
 
+import sys
+
 from wiitdb_xml import WiiTDBXML
 
-xml = WiiTDBXML()
-xml.run()
+def spinner(cont, total):
+    print ". ",
+    if cont % 10 == 0:
+        sys.stdout.flush()
+
+xml = WiiTDBXML(spinner)
+xml.start()
 
 '''
 import os

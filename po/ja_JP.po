@@ -142,6 +142,9 @@ msgstr ""
 msgid "Copiar todo el disco*"
 msgstr ""
 
+msgid "Debes tener al menos 2 particiones WBFS para hacer copias 1:1"
+msgstr ""
+
 msgid "Desarrollador:"
 msgstr ""
 
@@ -428,9 +431,6 @@ msgstr ""
 
 #, python-format
 msgid "No hay particiones WBFS, solo puede ver sus juegos acumuladas en %s"
-msgstr ""
-
-msgid "No hay un numero suficiente de particiones validas, para realizar esta accion."
 msgstr ""
 
 msgid "No puedes refrescar las particiones mientras hay tareas sin finalizar"

@@ -271,13 +271,18 @@ class WiithonGUI(GtkBuilderWrapper):
                 self.renderEditableNombre.set_property("editable", True)
                 self.renderEditableNombre.set_property("attributes", self.getEstilo_azulGrande())
                 
-                self.lJuegos = self.sincronizarParticionesWBFSconBDD(self.lParti)
-
-                self.sel_parti = FilaTreeview()
-                self.sel_parti_1on1 = FilaTreeview()
-
                 # carga el modelo de datos del TreeView de particiones
                 self.cargarParticionesModelo(self.tv_partitions_modelo , self.lParti)
+                
+                self.lJuegos = self.sincronizarParticionesWBFSconBDD(self.lParti)
+                self.lJuegos_filtrada = None
+
+                self.sel_parti = FilaTreeview()
+                self.sel_parti.obj = self.lParti[0]               
+                self.sel_parti_1on1 = FilaTreeview()
+                
+                # seleccionar primera fila de particiones y por tanto de juego
+                self.seleccionarPrimeraFila(self.wb_tv_partitions)
                 
                 #mostrar algunas coasa
                 self.wb_vboxProgresoEspacio.show()
@@ -287,16 +292,7 @@ class WiithonGUI(GtkBuilderWrapper):
                     self.wb_label_numParticionesWBFS.set_label(_("1 particion WBFS"))
                 else:
                     self.wb_label_numParticionesWBFS.set_label(_("%d particiones WBFS") % (len(self.lParti)))
-           
-            if(self.lJuegos_filtrada != None and len(self.lJuegos_filtrada) > 0):
-                if self.sel_juego.obj == None:
-                    self.sel_juego.obj = self.lJuegos_filtrada[0]
-           
-            # Seleccionamos el primero de cada treeview de particiones
-            if(self.lParti != None and len(self.lParti) > 0):    
-                if self.sel_parti.obj == None:
-                    self.sel_parti.obj = self.lParti[0]
-                    self.seleccionarPrimeraFila(self.wb_tv_partitions)
+
 
             # 1º descargamos lo que vemos EN ORDEN
             # 2º despues descargamos el resto de juegos sin importar el orden
@@ -306,11 +302,12 @@ class WiithonGUI(GtkBuilderWrapper):
                     lista = self.lJuegos_filtrada
                 else:
                     lista = self.lJuegos
-                for juego in lista:
-                    if not self.core.existeCaratula(juego.idgame):
-                        self.poolBash.nuevoTrabajoDescargaCaratula( juego )
-                    if not self.core.existeDisco(juego.idgame):
-                        self.poolBash.nuevoTrabajoDescargaDisco( juego )
+                if lista:
+                    for juego in lista:
+                        if not self.core.existeCaratula(juego.idgame):
+                            self.poolBash.nuevoTrabajoDescargaCaratula( juego )
+                        if not self.core.existeDisco(juego.idgame):
+                            self.poolBash.nuevoTrabajoDescargaDisco( juego )
                 i += 1
             
         else:
@@ -606,9 +603,9 @@ class WiithonGUI(GtkBuilderWrapper):
     # refresco desde el disco duro (lento)
     def sincronizarParticionesWBFSconBDD(self, particiones):       
         # Limpiamos los devices
-        sql = "update juegos set device=''"
-        session.execute(sql)
-        session.commit()
+        # Eliminamos los devices de toda la bdd
+        for juego in session.query(Juego):
+            juego.device = ""
     
         listaJuegosAcumulados = NonRepeatList()
         for particion in particiones:
@@ -684,13 +681,10 @@ class WiithonGUI(GtkBuilderWrapper):
             self.callback_treeview(treeview)
 
     def refrescarEspacio(self):
-        #info = self.core.getEspacioLibre(self.sel_parti.obj.device)
-        #usado = info[0]
-        #libre = info[1]
-        #total = info[2]
-        usado = self.sel_parti.obj.usado
-        libre = self.sel_parti.obj.libre
-        total = self.sel_parti.obj.total
+        info = self.core.getEspacioLibre(self.sel_parti.obj.device)
+        usado = info[0]
+        libre = info[1]
+        total = info[2]
 
         self.wb_labelEspacio.set_text("%.2f GB / %.2f GB" % (usado , total))
         try:
@@ -706,7 +700,6 @@ class WiithonGUI(GtkBuilderWrapper):
         self.wb_progresoEspacio.set_fraction( porcentaje / 100.0 )
 
     def refrescarTareasPendientes(self):
-        # La actual tarea no cuenta
         numTareas = self.poolTrabajo.numTrabajos
 
         if numTareas <= 1:
@@ -756,7 +749,6 @@ class WiithonGUI(GtkBuilderWrapper):
             self.sel_juego.actualizar_columna(treeview)
             if self.sel_juego.it != None:
                 self.sel_juego.obj = self.getBuscarJuego(self.lJuegos, self.sel_juego.clave)
-                          
                 self.ponerCaratula(self.sel_juego.clave)
                 self.ponerDisco(self.sel_juego.clave)
                 
@@ -814,6 +806,7 @@ class WiithonGUI(GtkBuilderWrapper):
             if tiempo_entre_clicks < 400:
                 res = self.wb_ficha_juego.run()
                 self.wb_ficha_juego.hide()
+                return False
         elif event.button == 3:
             popup = self.uimgr.get_widget('/GamePopup')
             popup.popup(None, None, None, event.button, event.time)
@@ -891,13 +884,14 @@ class WiithonGUI(GtkBuilderWrapper):
                 
                 self.wb_dialogo_copia_1on1.hide()
             else:
-                self.alert("warning" , _("No hay un numero suficiente de particiones validas, para realizar esta accion."))
+                self.alert("warning" , _("Debes tener al menos 2 particiones WBFS para hacer copias 1:1"))
 
         elif(id_tb == self.wb_tb_borrar):
             if self.sel_juego.it != None:
                 if self.modo == "ver":
                     if ( self.question(_('Advertencia de borrar %s en modo ver') % (self.sel_juego.obj)) == 1 ):
                         if self.sel_juego.obj != None:
+                            
                             # borrar disco
                             self.core.borrarDisco( self.sel_juego.obj )
 
@@ -909,6 +903,10 @@ class WiithonGUI(GtkBuilderWrapper):
 
                             # borrar de la tabla
                             self.tv_games_modelo.remove( self.sel_juego.it )
+                            
+                            # Borrar de las listas
+                            self.lJuegos.remove( self.sel_juego.obj )
+                            self.lJuegos_filtrada.remove( self.sel_juego.obj )
 
                             # seleccionar el primero
                             self.seleccionarPrimeraFila(self.wb_tv_games)
@@ -918,11 +916,7 @@ class WiithonGUI(GtkBuilderWrapper):
                         # borrar del HD
                         if self.core.borrarJuego( self.sel_parti.obj.device , self.sel_juego.obj.idgame ):
 
-                            # borrar de la tabla
-                            self.tv_games_modelo.remove( self.sel_juego.it )
-                            
-                            #seleccionar la particion actual
-                            self.seleccionarFilaConValor(self.wb_tv_partitions, len(self.lParti) , 1 , self.sel_parti.obj.device)
+                            self.refrescarParticionesWBFS()
 
                         else:
                             self.alert("warning" , _("Error borrando"))
@@ -1105,6 +1099,16 @@ class WiithonGUI(GtkBuilderWrapper):
 
     def drag_data_received_cb(self, widget, drag_context, x, y, selection_data, info, timestamp):
         'Callback invoked when the DnD data is received'
+        
+        print widget
+        print drag_context
+        print x 
+        print y
+        print selection_data
+        print selection_data.get_targets()
+        print info
+        print timestamp
+        
         tuplaArrastrados = selection_data.get_uris()
         listaArrastrados = []
         for fichero in tuplaArrastrados:
