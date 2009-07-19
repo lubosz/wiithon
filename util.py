@@ -9,6 +9,11 @@ import subprocess
 import copy
 import httplib
 
+from sqlalchemy.orm import sessionmaker
+from sqlalchemy import create_engine
+
+import config
+
 # Caracteres que hacen que una expresión no pueda ser expresión regular
 BLACK_LIST = "/\"\'$&|[]"
 BLACK_LIST2 = "\";`$\\\'"
@@ -309,3 +314,17 @@ class NoDeberiaPasar(Exception):
 # lanzado por particion
 class SintaxisInvalida(Exception):
     pass
+
+def getBDD():
+    db = create_engine('sqlite:///%s' % os.path.join(config.HOME_WIITHON_BDD, 'juegos.db' ))
+    return db
+
+def crearBDD(metadatos):
+    db = getBDD()
+    metadatos.create_all(db)
+
+def getSesionBDD(db):
+    Session = sessionmaker(bind=db, autoflush=True, transactional = True)
+    session = Session()
+    return session
+

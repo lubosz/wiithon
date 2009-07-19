@@ -9,7 +9,9 @@ fi
 rm wiitdb.xml
 
 # Descargo la nueva base de datos comprimida
-wget http://wiitdb.com/wiitdb.zip
+# wget http://wiitdb.com/wiitdb.zip
+# wget http://wiitdb.com/wiitdb.zip?LANG=ES?ID=MGP,ENP -O wiitdb.zip
+wget http://wiitdb.com/wiitdb.zip?LANG=ES -O wiitdb.zip
 
 # Descomprime la nueva bdd, generando el nuevo xml
 unzip wiitdb.zip

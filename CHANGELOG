@@ -1,3 +1,20 @@
+Versión 1.1
+???????
+--------------------------------------------------------------------------------------------------------
+NOVEDADES
+----------------------------------
+- Información de los videojuegos obtenida de WiiTDB mediante un XML
+- Barra de estado con información extra
+
+BUGS CORREGIDOS
+----------------------------------
+- Problemas con acentos en algunas versiones sqllite
+- Problemas en modo CLI al elegir un juego para extraer.
+
+CAMBIOS INTERNOS
+----------------------------------
+- Código es más modular para ganar claridad y facilitar el mantenimiento.
+
 Versión 1.0
 sábado, 20 de junio de 2009
 ----------------------------------

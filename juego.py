@@ -11,33 +11,25 @@ http://www.sqlalchemy.org/trac/wiki/05Migration
 '''
 
 import os
-import util
 
-from sqlalchemy.orm import mapper, relation, sessionmaker, backref
-from sqlalchemy import create_engine, Table, Column, Integer, Float, \
-                    Text, VARCHAR, MetaData, ForeignKey, Unicode
+from sqlalchemy import *
+from sqlalchemy.ext.declarative import declarative_base
+from sqlalchemy.orm import relation, backref, sessionmaker
+
 import config
-from util import SintaxisInvalida   
-from wiitdb_juego import tabla_wiitdb_juegos, JuegoWIITDB
+import util
+from util import SintaxisInvalida
 
-BDD_PERSISTENTE = create_engine('sqlite:///%s'
-                                % os.path.join(
-        config.HOME_WIITHON_BDD, 'juegos.db' ))
+Base = declarative_base()
 
-metadatos = MetaData()
+class Juego(Base):    
+    __tablename__ = 'juegos'
 
-tabla_juegos = Table('juegos', metadatos,
-    Column('idgame', VARCHAR(6), primary_key=True),
-    Column('title', Unicode(255)),
-    Column('size', Float),
-    Column('device', VARCHAR(10)),
-)
+    idgame = Column('idgame', VARCHAR(6), primary_key=True)
+    title = Column('title', Unicode(255))
+    size = Column('size', Float)
+    device = Column('device', VARCHAR(10))
 
-# solo crea las tablas cuando no existen
-metadatos.create_all(BDD_PERSISTENTE)
-
-class Juego(object):
-    'class representing a game on the data base'
     def __init__(self , idgame , title , size, device):
         self.idgame = util.decode(idgame)
         self.title = util.decode(title)
@@ -57,8 +49,11 @@ class Juego(object):
     def __repr__(self):
         return "%s (%s) %s" % (self.title, self.idgame, self.device)
 
-# http://www.mail-archive.com/sqlalchemy@googlegroups.com/msg09381.html
+util.crearBDD(Base.metadata)
+
 '''
+# http://www.mail-archive.com/sqlalchemy@googlegroups.com/msg09381.html
+
 from wiitdb_juego import JuegoWIITDB
 
 mapper(Juego , tabla_juegos, properties={
@@ -69,6 +64,3 @@ mapper(Juego , tabla_juegos, properties={
     )
 })
 '''
-mapper(Juego , tabla_juegos)
-Session = sessionmaker(bind=BDD_PERSISTENTE, autoflush=True, transactional = True)
-session = Session()

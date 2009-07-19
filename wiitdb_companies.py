@@ -4,32 +4,26 @@
 
 import os
 
-from sqlalchemy.orm import mapper, relation, sessionmaker
-from sqlalchemy import create_engine, Table, Column, Integer, Text, \
-    VARCHAR, MetaData, ForeignKey
+from sqlalchemy import *
+from sqlalchemy.ext.declarative import declarative_base
+from sqlalchemy.orm import relation, backref, sessionmaker
 
 import config
+import util
 
-motor = create_engine('sqlite:///%s' % os.path.join( config.HOME_WIITHON_BDD , 'juegos.db' ))
-metadatos = MetaData()
+Base = declarative_base()
 
-tabla = Table('wiitdb_companies',metadatos,
-    Column('code',VARCHAR(2),primary_key=True),
-    Column('name', VARCHAR(255)),
-)
-
-# solo crea las tablas cuando no existen
-metadatos.create_all(motor)
-
-class Companie(object):
+class Companie(Base):
+    __tablename__ = 'wiitdb_companies'
+    
+    code = Column('code',VARCHAR(2),primary_key=True)
+    name = Column('name', VARCHAR(255))
 
     def __init__(self, code, name):
-        self.code = code
-        self.name = name
+        self.code = util.decode(code).strip()
+        self.name = util.decode(name).strip()
 
     def __repr__(self):
         return "%s - %s" % (self.code, self.name)
 
-mapper(Companie , tabla)
-Session = sessionmaker(bind=motor , autoflush=True, transactional = True)
-session = Session()
+util.crearBDD(Base.metadata)
