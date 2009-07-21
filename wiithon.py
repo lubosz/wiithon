@@ -1,4 +1,4 @@
-#!/usr/bin/python
+#!/usr/bin/python -W ignore::DeprecationWarning
 # -*- coding: utf-8 -*-
 # vim: set fileencoding=utf-8 :
 #

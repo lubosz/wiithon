@@ -12,4 +12,4 @@ po/plantilla.pot
 editar.sh
 recursos/threadpool.py
 *.iso
-
+doc/*.mwb.bak

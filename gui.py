@@ -18,12 +18,15 @@ import util
 from util import NonRepeatList
 from builder_wrapper import GtkBuilderWrapper
 from trabajo import PoolTrabajo
-from preferencias import session, Preferencia
+from preferencias import Preferencia
 from juego import Juego
 from animar import Animador
 from particion import Particion
 from fila_treeview import FilaTreeview
-from wiitdb_juego import JuegoWIITDB
+from wiitdb_schema import JuegoWIITDB
+
+db =        util.getBDD()
+session =   util.getSesionBDD(db)
 
 class WiithonGUI(GtkBuilderWrapper):
 

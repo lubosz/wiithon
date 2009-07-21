@@ -24,18 +24,34 @@ Base = declarative_base()
 
 #############################################################################
 
+class Companie(Base):
+    __tablename__ = 'wiitdb_companies'
+    
+    code = Column('code',VARCHAR(2),primary_key=True)
+    name = Column('name', VARCHAR(255))
+
+    def __init__(self, code, name):
+        self.code = util.decode(code).strip()
+        self.name = util.decode(name).strip()
+
+    def __repr__(self):
+        return "%s - %s" % (self.code, self.name)
+
 ## EMPIEZA RATING
 
-'''
-1 tipo tiene N contenidos
-1 contenido tiene 1 tipo
-'''
-class RatingContent(Base):
-    __tablename__ = 'rating_contents'
+class RatingValue(Base):
+    __tablename__ = 'rating_value'
+    
+    idRatingValue = Column("idRatingContent", Integer, primary_key=True)
+    idRatingType = Column("idRatingType", Integer , ForeignKey('rating_type.idRatingType'))
+    valor = Column('valor', VARCHAR(255))
 
-    id = Column("id", Integer, primary_key=True)
-    tipo = Column("tipo", VARCHAR(255), ForeignKey('rating_type.tipo'))
-    valor = Column('valor',   VARCHAR(255))
+class RatingContent(Base):
+    __tablename__ = 'rating_content'
+
+    idRatingContent = Column("idRatingContent", Integer, primary_key=True)
+    idRatingType = Column("idRatingType",Integer , ForeignKey('rating_type.idRatingType'))
+    valor = Column('valor', VARCHAR(255))
 
     def __init__(self, valor):
         self.valor = util.decode(valor).strip()
@@ -46,10 +62,12 @@ class RatingContent(Base):
 class RatingType(Base):
     __tablename__ = 'rating_type'
 
-    tipo = Column('tipo',   VARCHAR(255), primary_key=True)
+    idRatingType = Column('idRatingType',   Integer, primary_key=True)
+    tipo = Column('tipo', VARCHAR(255))
     
     contenidos = relation(RatingContent)
-
+    valores = relation(RatingValue)
+w
     def __init__(self, tipo):
         self.tipo = util.decode(tipo).strip()
 
@@ -59,10 +77,9 @@ class RatingType(Base):
 ## TERMINA RATING
 ##############################################################################
 
-rel_rating_juego = Table("rel_rating_juego", Base.metadata, 
-    Column("tipo", VARCHAR(255), ForeignKey('rating_type.tipo'),primary_key=True),
-    Column("idgame", VARCHAR(6), ForeignKey('wiitdb_juegos.idgame'), primary_key=True),
-    Column("valor", VARCHAR(255))
+rel_rating_juego = Table("rel_rating_type_juego", Base.metadata, 
+    Column("idRatingType", VARCHAR(255), ForeignKey('rating_type.idRatingType'),primary_key=True),
+    Column("idgame", VARCHAR(6), ForeignKey('wiitdb_juegos.idgame'), primary_key=True)
     )
 '''
 class RelRatingJuego(object):
@@ -78,8 +95,9 @@ mapper(RelRatingJuego, rel_rating_juego)
 class JuegoDescripcion(Base):
     __tablename__ = 'wiitdb_juego_descripcion'
     
-    lang = Column('lang', Unicode(255) , primary_key=True)
-    idgame = Column('idgame', VARCHAR(6) , primary_key=True)
+    idDescripcion = Column('idDescripcion', Integer , primary_key=True)
+    idgame = Column('idgame', VARCHAR(6) , ForeignKey('wiitdb_juegos.idgame'))
+    lang = Column('lang', VARCHAR(2))
     title = Column('title', Unicode(255))
     synopsis = Column('synopsis', Unicode(255))
     
@@ -113,6 +131,7 @@ class JuegoWIITDB(Base):
     wifi_players = Column('wifi_players', Integer)
     input_players = Column('input_players', Integer)
     
+    descripciones = relation(JuegoDescripcion)
     rating = relation(RatingType, secondary=rel_rating_juego)
     rating_proxie = association_proxy('rating', 'tipo')
 

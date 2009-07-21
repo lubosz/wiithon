@@ -54,8 +54,6 @@ util.crearBDD(Base.metadata)
 '''
 # http://www.mail-archive.com/sqlalchemy@googlegroups.com/msg09381.html
 
-from wiitdb_juego import JuegoWIITDB
-
 mapper(Juego , tabla_juegos, properties={
     'wiitdb_juegos':relation(JuegoWIITDB, 
         primaryjoin=tabla_juegos.c.idgame==tabla_wiitdb_juegos.c.idgame,

@@ -8,8 +8,7 @@ from threading import Thread
 import config
 import util
 from juego import Juego
-from wiitdb_companies import Companie
-from wiitdb_juego import JuegoWIITDB, Accesorio, RatingContent, RatingType, JuegoDescripcion
+from wiitdb_schema import JuegoWIITDB, Accesorio, RatingContent, RatingType, JuegoDescripcion, Companie
 
 '''
     * name : returns the node name
