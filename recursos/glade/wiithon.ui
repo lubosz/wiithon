@@ -420,7 +420,6 @@
                       <object class="GtkTreeView" id="tv_games">
                         <property name="visible">True</property>
                         <property name="can_focus">True</property>
-                        <property name="reorderable">True</property>
                         <property name="enable_search">False</property>
                         <property name="search_column">2</property>
                         <property name="enable_grid_lines">horizontal</property>
@@ -673,7 +672,7 @@ Ricardo Marmolejo Garc&#xED;a &lt;makiolo@gmail.com&gt;</property>
                 <property name="visible">True</property>
                 <property name="orientation">vertical</property>
                 <child>
-                  <object class="GtkLabel" id="gl_idgame1">
+                  <object class="GtkLabel" id="ficha_idgame">
                     <property name="visible">True</property>
                     <property name="label" translatable="yes">RXGB2</property>
                   </object>
@@ -724,6 +723,16 @@ Ricardo Marmolejo Garc&#xED;a &lt;makiolo@gmail.com&gt;</property>
               </packing>
             </child>
             <child>
+              <object class="GtkVSeparator" id="vseparator1">
+                <property name="visible">True</property>
+                <property name="orientation">vertical</property>
+              </object>
+              <packing>
+                <property name="expand">False</property>
+                <property name="position">1</property>
+              </packing>
+            </child>
+            <child>
               <object class="GtkVBox" id="vbox1">
                 <property name="visible">True</property>
                 <property name="orientation">vertical</property>
@@ -741,7 +750,7 @@ Ricardo Marmolejo Garc&#xED;a &lt;makiolo@gmail.com&gt;</property>
                       </object>
                     </child>
                     <child>
-                      <object class="GtkLabel" id="label2">
+                      <object class="GtkLabel" id="ficha_titulo">
                         <property name="visible">True</property>
                         <property name="label">Mario Kart</property>
                         <property name="use_underline">True</property>
@@ -775,7 +784,7 @@ Ricardo Marmolejo Garc&#xED;a &lt;makiolo@gmail.com&gt;</property>
                       </packing>
                     </child>
                     <child>
-                      <object class="GtkLabel" id="label7">
+                      <object class="GtkLabel" id="ficha_num_jugadores">
                         <property name="visible">True</property>
                         <property name="label">2 jugadores</property>
                       </object>
@@ -787,7 +796,7 @@ Ricardo Marmolejo Garc&#xED;a &lt;makiolo@gmail.com&gt;</property>
                       </packing>
                     </child>
                     <child>
-                      <object class="GtkLabel" id="label8">
+                      <object class="GtkLabel" id="ficha_online">
                         <property name="visible">True</property>
                         <property name="label">S&#xED; (1 jugador)</property>
                       </object>
@@ -817,7 +826,7 @@ Ricardo Marmolejo Garc&#xED;a &lt;makiolo@gmail.com&gt;</property>
                         <property name="hscrollbar_policy">automatic</property>
                         <property name="vscrollbar_policy">automatic</property>
                         <child>
-                          <object class="GtkTextView" id="textview1">
+                          <object class="GtkTextView" id="ficha_synopsis">
                             <property name="visible">True</property>
                             <property name="can_focus">True</property>
                             <property name="editable">False</property>
@@ -843,34 +852,12 @@ Ricardo Marmolejo Garc&#xED;a &lt;makiolo@gmail.com&gt;</property>
                       </packing>
                     </child>
                     <child>
-                      <object class="GtkComboBox" id="combobox3">
-                        <property name="visible">True</property>
-                      </object>
-                      <packing>
-                        <property name="left_attach">1</property>
-                        <property name="right_attach">2</property>
-                        <property name="top_attach">5</property>
-                        <property name="bottom_attach">6</property>
-                      </packing>
-                    </child>
-                    <child>
                       <object class="GtkLabel" id="label15">
                         <property name="visible">True</property>
                         <property name="xalign">0.89999997615814209</property>
                         <property name="label" translatable="yes">Accesorios:</property>
                       </object>
                       <packing>
-                        <property name="top_attach">6</property>
-                        <property name="bottom_attach">7</property>
-                      </packing>
-                    </child>
-                    <child>
-                      <object class="GtkComboBox" id="combobox1">
-                        <property name="visible">True</property>
-                      </object>
-                      <packing>
-                        <property name="left_attach">1</property>
-                        <property name="right_attach">2</property>
                         <property name="top_attach">6</property>
                         <property name="bottom_attach">7</property>
                       </packing>
@@ -887,15 +874,13 @@ Ricardo Marmolejo Garc&#xED;a &lt;makiolo@gmail.com&gt;</property>
                       </packing>
                     </child>
                     <child>
-                      <object class="GtkComboBox" id="combobox2">
-                        <property name="visible">True</property>
-                      </object>
-                      <packing>
-                        <property name="left_attach">1</property>
-                        <property name="right_attach">2</property>
-                        <property name="top_attach">7</property>
-                        <property name="bottom_attach">8</property>
-                      </packing>
+                      <placeholder/>
+                    </child>
+                    <child>
+                      <placeholder/>
+                    </child>
+                    <child>
+                      <placeholder/>
                     </child>
                   </object>
                   <packing>
@@ -930,7 +915,7 @@ Ricardo Marmolejo Garc&#xED;a &lt;makiolo@gmail.com&gt;</property>
                       </packing>
                     </child>
                     <child>
-                      <object class="GtkLabel" id="label11">
+                      <object class="GtkLabel" id="ficha_desarrollador">
                         <property name="visible">True</property>
                         <property name="label">Nintendo</property>
                       </object>
@@ -942,7 +927,7 @@ Ricardo Marmolejo Garc&#xED;a &lt;makiolo@gmail.com&gt;</property>
                       </packing>
                     </child>
                     <child>
-                      <object class="GtkLabel" id="label12">
+                      <object class="GtkLabel" id="ficha_editor">
                         <property name="visible">True</property>
                         <property name="label">Nintendo</property>
                       </object>
@@ -961,7 +946,7 @@ Ricardo Marmolejo Garc&#xED;a &lt;makiolo@gmail.com&gt;</property>
                       </object>
                     </child>
                     <child>
-                      <object class="GtkLabel" id="label4">
+                      <object class="GtkLabel" id="ficha_fecha_lanzamiento">
                         <property name="visible">True</property>
                         <property name="label">9 de marzo del 2009</property>
                       </object>
@@ -977,7 +962,7 @@ Ricardo Marmolejo Garc&#xED;a &lt;makiolo@gmail.com&gt;</property>
                 </child>
               </object>
               <packing>
-                <property name="position">1</property>
+                <property name="position">2</property>
               </packing>
             </child>
           </object>
@@ -990,34 +975,6 @@ Ricardo Marmolejo Garc&#xED;a &lt;makiolo@gmail.com&gt;</property>
             <property name="visible">True</property>
             <property name="layout_style">end</property>
             <child>
-              <object class="GtkButton" id="button6">
-                <property name="label" translatable="yes">gtk-media-previous</property>
-                <property name="visible">True</property>
-                <property name="can_focus">True</property>
-                <property name="receives_default">True</property>
-                <property name="use_stock">True</property>
-              </object>
-              <packing>
-                <property name="expand">False</property>
-                <property name="fill">False</property>
-                <property name="position">0</property>
-              </packing>
-            </child>
-            <child>
-              <object class="GtkButton" id="button1">
-                <property name="label" translatable="yes">gtk-media-next</property>
-                <property name="visible">True</property>
-                <property name="can_focus">True</property>
-                <property name="receives_default">True</property>
-                <property name="use_stock">True</property>
-              </object>
-              <packing>
-                <property name="expand">False</property>
-                <property name="fill">False</property>
-                <property name="position">1</property>
-              </packing>
-            </child>
-            <child>
               <object class="GtkButton" id="button2">
                 <property name="label" translatable="yes">gtk-close</property>
                 <property name="visible">True</property>
@@ -1028,7 +985,7 @@ Ricardo Marmolejo Garc&#xED;a &lt;makiolo@gmail.com&gt;</property>
               <packing>
                 <property name="expand">False</property>
                 <property name="fill">False</property>
-                <property name="position">2</property>
+                <property name="position">0</property>
               </packing>
             </child>
           </object>
@@ -1041,8 +998,6 @@ Ricardo Marmolejo Garc&#xED;a &lt;makiolo@gmail.com&gt;</property>
       </object>
     </child>
     <action-widgets>
-      <action-widget response="0">button6</action-widget>
-      <action-widget response="0">button1</action-widget>
       <action-widget response="0">button2</action-widget>
     </action-widgets>
   </object>

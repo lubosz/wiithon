@@ -27,7 +27,7 @@ Base = declarative_base()
 class Companie(Base):
     __tablename__ = 'wiitdb_companies'
     
-    code = Column('code',VARCHAR(2),primary_key=True)
+    code = Column('code',VARCHAR(2), primary_key=True)
     name = Column('name', VARCHAR(255))
 
     def __init__(self, code, name):
@@ -67,7 +67,7 @@ class RatingType(Base):
     
     contenidos = relation(RatingContent)
     valores = relation(RatingValue)
-w
+
     def __init__(self, tipo):
         self.tipo = util.decode(tipo).strip()
 
@@ -81,15 +81,7 @@ rel_rating_juego = Table("rel_rating_type_juego", Base.metadata,
     Column("idRatingType", VARCHAR(255), ForeignKey('rating_type.idRatingType'),primary_key=True),
     Column("idgame", VARCHAR(6), ForeignKey('wiitdb_juegos.idgame'), primary_key=True)
     )
-'''
-class RelRatingJuego(object):
-    def __init__(self, tipo, idgame, valor):
-        self.tipo = tipo
-        self.idgame = idgame
-        self.valor = valor
 
-mapper(RelRatingJuego, rel_rating_juego)
-'''
 ##############################################################################
 
 class JuegoDescripcion(Base):
@@ -101,11 +93,8 @@ class JuegoDescripcion(Base):
     title = Column('title', Unicode(255))
     synopsis = Column('synopsis', Unicode(255))
     
-    # claves primarias obligatorios
-    # rest valores por defecto
-    def __init__(self, lang, idgame, title='', synopsis=''):
+    def __init__(self, lang, title, synopsis):
         self.lang = lang
-        self.idgame = idgame
         self.title = util.decode(title)
         self.synopsis = util.decode(synopsis)
         
@@ -120,7 +109,8 @@ class JuegoDescripcion(Base):
 class JuegoWIITDB(Base):
     __tablename__ = 'wiitdb_juegos'
 
-    idgame = Column('idgame', VARCHAR(6) , primary_key=True)
+    idJuegoWIITDB = Column('idJuegoWIITDB', Integer , primary_key=True)
+    idgame = Column('idgame', VARCHAR(6), unique=True)
     name = Column('name'  , Unicode(255))
     region = Column('region', Unicode(255))
     developer = Column('developer', Unicode(255))
@@ -133,7 +123,6 @@ class JuegoWIITDB(Base):
     
     descripciones = relation(JuegoDescripcion)
     rating = relation(RatingType, secondary=rel_rating_juego)
-    rating_proxie = association_proxy('rating', 'tipo')
 
     def __init__(self , idgame , name , region='', developer='', publisher='', anio='', mes='', dia='', wifi_players='', input_players=''):
         self.idgame = util.decode(idgame)

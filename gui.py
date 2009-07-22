@@ -23,7 +23,7 @@ from juego import Juego
 from animar import Animador
 from particion import Particion
 from fila_treeview import FilaTreeview
-from wiitdb_schema import JuegoWIITDB
+from wiitdb_schema import JuegoWIITDB, JuegoDescripcion
 
 db =        util.getBDD()
 session =   util.getSesionBDD(db)
@@ -752,12 +752,8 @@ class WiithonGUI(GtkBuilderWrapper):
             self.sel_juego.actualizar_columna(treeview)
             if self.sel_juego.it != None:
                 self.sel_juego.obj = self.getBuscarJuego(self.lJuegos, self.sel_juego.clave)
-                self.ponerCaratula(self.sel_juego.clave)
-                self.ponerDisco(self.sel_juego.clave)
-                
-                sql = util.decode("idgame=='%s'" % (self.sel_juego.clave))
-                for juego in session.query(JuegoWIITDB).filter(sql):
-                    print juego
+                self.ponerCaratula(self.sel_juego.clave, self.wb_img_caratula1)
+                self.ponerDisco(self.sel_juego.clave , self.wb_img_disco1)
 
     # Click en particiones --> refresca la lista de juegos
     def on_tv_partitions_cursor_changed(self , treeview):
@@ -786,30 +782,68 @@ class WiithonGUI(GtkBuilderWrapper):
             # le selecciono la particion actual al 1on1
             self.sel_parti_1on1.obj = self.getBuscarParticion(self.lParti, self.sel_parti_1on1.clave)
 
-    def ponerCaratula(self, IDGAME):
+    def ponerCaratula(self, IDGAME, widget_imagen):
         destinoCaratula = os.path.join(config.HOME_WIITHON_CARATULAS , "%s.png" % (IDGAME))
 
         if not os.path.exists(destinoCaratula):
             destinoCaratula = os.path.join(config.WIITHON_FILES_RECURSOS_IMAGENES , "caratula.png")
         
-        self.wb_img_caratula1.set_from_file( destinoCaratula )
+        widget_imagen.set_from_file( destinoCaratula )
 
-    def ponerDisco(self, IDGAME):
+    def ponerDisco(self, IDGAME, widget_imagen):
         destinoDisco = os.path.join(config.HOME_WIITHON_DISCOS , "%s.png" % IDGAME)
         
         if not os.path.exists(destinoDisco):
             destinoDisco = os.path.join(config.WIITHON_FILES_RECURSOS_IMAGENES , "disco.png")
             
-        self.wb_img_disco1.set_from_file( destinoDisco )
+        widget_imagen.set_from_file( destinoDisco )
 
     def on_tv_games_click_event(self, widget, event):
         if event.button == 1:
             tiempo_entre_clicks = event.time - self.ultimoClick
             self.ultimoClick = event.time
             if tiempo_entre_clicks < 400:
-                res = self.wb_ficha_juego.run()
-                self.wb_ficha_juego.hide()
-                return False
+                
+                sql = util.decode("idgame=='%s'" % (self.sel_juego.clave))
+                juego = session.query(JuegoWIITDB).filter(sql).first()
+                
+                if juego != None:
+                    
+                    self.ponerCaratula(juego.idgame, self.wb_img_caratula2)
+                    self.ponerDisco(juego.idgame, self.wb_img_disco2)
+
+                    self.wb_ficha_idgame.set_text( juego.idgame )
+                    self.wb_ficha_num_jugadores.set_text( "%d jugadores" % juego.input_players )
+                    if juego.wifi_players == 0:
+                        self.wb_ficha_online.set_text( "No" )
+                    else:
+                        self.wb_ficha_online.set_text( "Si (%d jugadores)" % juego.wifi_players )
+                    #self.wb_ficha_synopsis.set_text( juego.name )
+                    #self.wb_ficha_fecha_lanzamiento.set_text( "%s/%s/%s" % (juego.dia, juego.mes, juego.anio) )
+                    self.wb_ficha_desarrollador.set_text( juego.developer )
+                    self.wb_ficha_editor.set_text( juego.publisher )
+                    
+                    # synopsis
+                    '''
+                    sql = util.decode("idgame=='%s' and lang='%s'" % (self.sel_juego.clave, "ES"))
+                    descripcion = session.query(JuegoDescripcion).filter(sql).first()
+                    if descripcion == None:
+                        sql = util.decode("idgame=='%s' and lang='%s'" % (self.sel_juego.clave, "EN"))
+                        descripcion = session.query(JuegoDescripcion).filter(sql).first()
+                    if descripcion != None:
+                        self.wb_ficha_titulo.set_text( descripcion.title )
+                        self.wb_ficha_synopsis.set_text( descripcion.synopsis )
+                    else:
+                        self.wb_ficha_titulo.set_text( juego.name )
+                    '''
+                    self.wb_ficha_titulo.set_text( juego.name )
+                    
+                    res = self.wb_ficha_juego.run()
+                    self.wb_ficha_juego.hide()
+                
+                else:
+                    self.alert('error', 'No hay datos de este juego. Intente actualizar la base de datos.')
+                
         elif event.button == 3:
             popup = self.uimgr.get_widget('/GamePopup')
             popup.popup(None, None, None, event.button, event.time)
@@ -918,9 +952,7 @@ class WiithonGUI(GtkBuilderWrapper):
                     if( self.question(_('Quieres borrar el juego con %s?') % (self.sel_juego.obj.title)) == 1 ):
                         # borrar del HD
                         if self.core.borrarJuego( self.sel_parti.obj.device , self.sel_juego.obj.idgame ):
-
                             self.refrescarParticionesWBFS()
-
                         else:
                             self.alert("warning" , _("Error borrando"))
 
@@ -1128,7 +1160,7 @@ class WiithonGUI(GtkBuilderWrapper):
                         ruta = self.core.getRutaCaratula(self.sel_juego.obj.idgame)
                         shutil.copy(fichero, ruta)
                         os.system("mogrify -resize 160x224! %s" % (ruta))
-                        self.ponerCaratula(self.sel_juego.obj.idgame)
+                        self.ponerCaratula(self.sel_juego.obj.idgame, self.wb_img_caratula1)
 
         listaArrastrados.sort()
         if self.poolTrabajo and len(listaArrastrados)>0:
@@ -1184,14 +1216,14 @@ class WiithonGUI(GtkBuilderWrapper):
     def callback_termina_trabajo_descargar_caratula(self, trabajo, juego):
         if trabajo.exito:
             if juego.idgame == self.sel_juego.obj.idgame:
-                gobject.idle_add( self.ponerCaratula , juego.idgame )
+                gobject.idle_add( self.ponerCaratula , juego.idgame , self.wb_img_caratula1)
         else:
             print _("Falla la descarga de la caratula de %s") % juego
         
     def callback_termina_trabajo_descargar_disco(self, trabajo, juego):
         if trabajo.exito:
             if juego.idgame == self.sel_juego.obj.idgame:
-                gobject.idle_add( self.ponerDisco , juego.idgame )
+                gobject.idle_add( self.ponerDisco , juego.idgame , self.wb_img_disco1)
         else:
             print _("Falla la descarga del disco de %s") % juego
 

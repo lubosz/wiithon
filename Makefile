@@ -7,16 +7,20 @@ REVISION=${shell bzr revno}
 PREFIX_RECURSOS_IMAGENES_CARATULAS=$(PREFIX)/share/wiithon/recursos/imagenes/caratulas
 PREFIX_RECURSOS_IMAGENES_DISCOS=$(PREFIX)/share/wiithon/recursos/imagenes/discos
 
-all:
+INSTALL_PKG="apt-get install"
+
+all: compilar
+
+ayuda: help
+
+help:
 	@echo ==================================================================
 	@echo "Escribe \"sudo make install\" solo instala"
 	@echo "Escribe \"sudo make install_auto\" para instalar Wiithon y sus dependencias (con apt-get)"
-	@echo "Escribe \"sudo make install_auto_and_fix\" igual que el anterior pero además evita el uso de root"
 	@echo ""
 	@echo "Escribe \"sudo make uninstall\" para desinstalar wiithon"
 	@echo "Escribe \"sudo make purge\" para desinstalar wiithon completamente"
 	@echo "Escribe \"sudo make dependencias\" para instalar las dependencias con apt-get"
-	@echo "Escribe \"sudo make permissions_fix\" para evitar que wiithon funcione como root"
 	@echo ""
 	@echo "Escribe \"sudo make run LANGUAGE=XX\" para instalar & autoejecutar en un idioma como es, en, pt_BR ..."
 	@echo ==================================================================
@@ -24,28 +28,27 @@ all:
 run: install
 	LANGUAGE=$(LANGUAGE) wiithon
 
-permisos: permissions_fix
 install_auto: uninstall dependencias install
-install_auto_and_fix: install_auto permisos
+
+dependencies: dependencias
 
 dependencias:
-	apt-get install intltool imagemagick python-gtk2 python-glade2 python-sexy python-sqlalchemy gnome-icon-theme
-	-@apt-get install libc6-dev-i386
+	$(INSTALL_PKG) intltool imagemagick python-gtk2 python-glade2 python-sexy python-sqlalchemy gnome-icon-theme
+	-@$(INSTALL_PKG) libc6-dev-i386
 	@echo "=================================================================="
 	@echo "Install depends"
 	@echo "=================================================================="
-
-permissions_fix:
-	gpasswd -a $(USER) disk
-	@echo "=================================================================="
-	@echo "Fix permissions for WBFS. If dont detect, reboot GNOME / KDE"
-	@echo "=================================================================="
-
-compilar_forzar: clean compilar
+#
+#permissions_fix:
+#	gpasswd -a $(USER) disk
+#	@echo "=================================================================="
+#	@echo "Fix permissions for WBFS. If dont detect, reboot GNOME / KDE"
+#	@echo "=================================================================="
+#
 
 compilar: libwbfs_binding/wiithon_wrapper ./po/locale/da_DK/LC_MESSAGES/wiithon.mo ./po/locale/fi_FI/LC_MESSAGES/wiithon.mo ./po/locale/tr_TR/LC_MESSAGES/wiithon.mo ./po/locale/ru_RU/LC_MESSAGES/wiithon.mo ./po/locale/ko_KR/LC_MESSAGES/wiithon.mo ./po/locale/it/LC_MESSAGES/wiithon.mo ./po/locale/sv_SE/LC_MESSAGES/wiithon.mo ./po/locale/es/LC_MESSAGES/wiithon.mo ./po/locale/pt_PT/LC_MESSAGES/wiithon.mo ./po/locale/en/LC_MESSAGES/wiithon.mo ./po/locale/nl_NL/LC_MESSAGES/wiithon.mo ./po/locale/nb_NO/LC_MESSAGES/wiithon.mo ./po/locale/ja_JP/LC_MESSAGES/wiithon.mo ./po/locale/fr/LC_MESSAGES/wiithon.mo ./po/locale/pt_BR/LC_MESSAGES/wiithon.mo ./po/locale/de/LC_MESSAGES/wiithon.mo
 
-install: compilar
+install:
 	mkdir -p $(PREFIX)/share/wiithon
 	mkdir -p $(PREFIX)/share/wiithon/recursos/glade
 	mkdir -p $(PREFIX)/share/wiithon/recursos/imagenes
@@ -199,7 +202,6 @@ clean: clean_libwbfs_binding clean_gettext
 	$(RM) po/*~
 	touch po/*.pot
 
-# -@find po/locale/ -name wiithon.mo | xargs rm
 clean_gettext:
 	-$(RM) po/locale/en/LC_MESSAGES/wiithon.mo
 	-$(RM) po/locale/es/LC_MESSAGES/wiithon.mo
@@ -217,20 +219,13 @@ clean_gettext:
 	-$(RM) po/locale/pt_BR/LC_MESSAGES/wiithon.mo
 	-$(RM) po/locale/ru_RU/LC_MESSAGES/wiithon.mo
 	-$(RM) po/locale/tr_TR/LC_MESSAGES/wiithon.mo
-
-#clean_wiithon_wrapper:
-	#$(MAKE) -C wiithon_wrapper clean
 	
 clean_libwbfs_binding:
 	$(MAKE) -C libwbfs_binding clean
 
-#wiithon_wrapper/wiithon_wrapper: wiithon_wrapper/*.c wiithon_wrapper/*.h wiithon_wrapper/libwbfs/*.c wiithon_wrapper/libwbfs/*.h 
-	#$(MAKE) -C wiithon_wrapper
-
 libwbfs_binding/wiithon_wrapper: libwbfs_binding/*.c libwbfs_binding/libwbfs/*.c libwbfs_binding/libwbfs/*.h 
 	$(MAKE) -C libwbfs_binding
 
-# REPOSITORIO
 pull:
 	bzr pull
 	chown `whoami`\: * -R
