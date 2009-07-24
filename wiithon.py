@@ -17,6 +17,10 @@ from cli import WiithonCLI
 from gui import WiithonGUI
 from core import WiithonCORE
 
+# Para desactivar algun warning de GTK
+import warnings
+warnings.filterwarnings('ignore')
+
 # Importamos los módulos necesarios
 try:
     import pygtk

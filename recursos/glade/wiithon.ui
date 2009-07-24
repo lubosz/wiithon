@@ -659,7 +659,7 @@ Ricardo Marmolejo Garc&#xED;a &lt;makiolo@gmail.com&gt;</property>
     <property name="type_hint">normal</property>
     <property name="has_separator">False</property>
     <child internal-child="vbox">
-      <object class="GtkVBox" id="dialog-vbox3">
+      <object class="GtkVBox" id="dialogo-ficha">
         <property name="visible">True</property>
         <property name="orientation">vertical</property>
         <property name="spacing">2</property>

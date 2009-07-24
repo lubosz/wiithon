@@ -2,6 +2,7 @@ po/locale/*/LC_MESSAGES/wiithon.mo
 wiithon_wrapper/wiithon_wrapper
 libwbfs_binding/wiithon_wrapper
 recursos/wiitdb/wiitdb.xml
+recursos/wiitdb/wiitdb.xsd
 COMMIT
 wiithon_wrapper/*.o
 *~

@@ -7,7 +7,7 @@ REVISION=${shell bzr revno}
 PREFIX_RECURSOS_IMAGENES_CARATULAS=$(PREFIX)/share/wiithon/recursos/imagenes/caratulas
 PREFIX_RECURSOS_IMAGENES_DISCOS=$(PREFIX)/share/wiithon/recursos/imagenes/discos
 
-INSTALL_PKG="apt-get install"
+INSTALL_PKG=apt-get install
 
 all: compilar
 

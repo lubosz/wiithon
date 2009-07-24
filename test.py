@@ -1,4 +1,4 @@
-#!/usr/bin/python
+#!/usr/bin/python -W ignore::DeprecationWarning
 # -*- coding: utf-8 -*-
 # vim: set fileencoding=utf-8 :
 
@@ -7,12 +7,13 @@ import sys
 from wiitdb_xml import WiiTDBXML
 
 def spinner(cont, total):
-    print ". ",
-    if cont % 10 == 0:
-        sys.stdout.flush()
+    # 16 = total / 100
+    if cont % 16 == 0:
+        print "< %d%% >" % (cont * 100 / total)
 
-xml = WiiTDBXML(spinner)
+xml = WiiTDBXML('recursos/wiitdb/wiitdb.xml', spinner)
 xml.start()
+xml.join()
 
 '''
 import os
