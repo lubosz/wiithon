@@ -20,6 +20,16 @@ from sqlalchemy.ext.associationproxy import association_proxy
 import config
 import util
 
+###### PARA AUMENTAR LA RECURRENCIA ##########
+
+from sqlalchemy import pool
+from sqlalchemy.databases.firebird import dialect
+
+# Force SA to use a single connection per thread
+dialect.poolclass = pool.SingletonThreadPool
+  
+###############################################
+
 Base = declarative_base()
 
 #############################################################################
@@ -27,7 +37,8 @@ Base = declarative_base()
 class Companie(Base):
     __tablename__ = 'wiitdb_companies'
     
-    code = Column('code',VARCHAR(2), primary_key=True)
+    idCompanie = Column('idCompanie', Integer, primary_key=True)
+    code = Column('code',VARCHAR(2))
     name = Column('name', VARCHAR(255))
 
     def __init__(self, code, name):    
@@ -36,6 +47,8 @@ class Companie(Base):
 
     def __repr__(self):
         return "%s - %s" % (self.code, self.name)
+
+Index('idUnico_wiitdb_companies', Companie.code, Companie.name, unique=True)
 
 ## EMPIEZA RATING
 
@@ -52,6 +65,8 @@ class RatingValue(Base):
     def __repr__(self):
         return "%s" % (self.valor)
 
+Index('idUnico_rating_value', RatingValue.idRatingType, RatingValue.valor, unique=True)
+
 class RatingContent(Base):
     __tablename__ = 'rating_content'
 
@@ -64,6 +79,8 @@ class RatingContent(Base):
 
     def __repr__(self):
         return "%s" % (self.valor)
+        
+Index('idUnico_rating_content', RatingContent.idRatingType, RatingContent.valor, unique=True)
 
 class RatingType(Base):
     __tablename__ = 'rating_type'
@@ -79,10 +96,12 @@ class RatingType(Base):
 
     def __repr__(self):
         return "%s" % (self.tipo)
+        
+Index('idUnico_rating_type', RatingType.tipo, unique=True)
 
 rel_rating_content_juego = Table("rel_rating_content_juego", Base.metadata, 
-    Column("idRatingContent", Integer, ForeignKey('rating_content.idRatingContent'),primary_key=True),
-    Column("idgame", VARCHAR(6), ForeignKey('wiitdb_juegos.idgame'), primary_key=True)
+    Column("idRatingContent", Integer, ForeignKey('rating_content.idRatingContent')),
+    Column("idgame", VARCHAR(6), ForeignKey('wiitdb_juegos.idgame'))
     )
 
 class OnlineFeatures(Base):
@@ -97,18 +116,19 @@ class OnlineFeatures(Base):
     def __repr__(self):
         return "%s" % (self.valor)
     
+Index('idUnico_online_features', OnlineFeatures.valor, unique=True)
 
 rel_online_features_juego = Table("rel_online_features_juego", Base.metadata, 
-    Column("idgame", VARCHAR(6), ForeignKey('wiitdb_juegos.idgame'), primary_key=True),
-    Column("idFeature", Integer, ForeignKey('online_features.idFeature'),primary_key=True)
-    )   
+    Column("idgame", VARCHAR(6), ForeignKey('wiitdb_juegos.idgame')),
+    Column("idFeature", Integer, ForeignKey('online_features.idFeature'))
+    )
     
 
 class JuegoDescripcion(Base):
     __tablename__ = 'wiitdb_juego_descripcion'
     
     idDescripcion = Column('idDescripcion', Integer , primary_key=True)
-    idgame = Column('idgame', VARCHAR(6) , ForeignKey('wiitdb_juegos.idgame'), nullable=True)
+    idgame = Column('idgame', VARCHAR(6) , ForeignKey('wiitdb_juegos.idgame'))
     lang = Column('lang', VARCHAR(2))
     title = Column('title', Unicode(255))
     synopsis = Column('synopsis', Unicode(255))
@@ -125,6 +145,8 @@ class JuegoDescripcion(Base):
         if isinstance(value, str):
             value = util.decode(value)
         object.__setattr__(self, name, value)
+
+Index('idUnico_wiitdb_juego_descripcion', JuegoDescripcion.idgame, JuegoDescripcion.lang, unique=True)
 
 class Rom(Base):
     __tablename__ = 'roms'
@@ -147,14 +169,33 @@ class Rom(Base):
 
     def __repr__(self):
         return "Ver. %s - %s (%.2f GB)" % (self.version, self.name, self.size/1024.0/1024.0)
+        
+#Index('idUnico_roms', Rom.version, Rom.name, unique=True)
 
-#############################################################################
+class Genero(Base):
+    __tablename__ = 'genero'
+    
+    idGenero = Column('idGenero', Integer, primary_key=True)
+    nombre = Column('nombre', Unicode(255))
+    
+    def __init__(self,  nombre):
+        self.nombre = util.decode(nombre).strip()
+        
+    def __repr__(self):
+        return "%s" % (self.nombre)
+
+Index('idUnico_genero', Genero.nombre, unique=True)
+        
+rel_juego_genero = Table("rel_juego_genero", Base.metadata, 
+    Column("idgame", VARCHAR(6), ForeignKey('wiitdb_juegos.idgame')),
+    Column("idGenero", Integer, ForeignKey('genero.idGenero'))
+    )
 
 class Accesorio(Base):
     __tablename__ = 'accesorio'
 
     nombre = Column('nombre', Unicode(255), primary_key=True)
-    descripcion = Column('descripcion', Unicode(255))
+    descripcion = Column('descripcion', Unicode(6000))
 
     def __init__(self,  nombre, descripcion = ''):
         self.nombre = util.decode(nombre).strip()
@@ -163,14 +204,16 @@ class Accesorio(Base):
     def __repr__(self):
         return "%s %s" % (self.nombre, self.descripcion)
         
+Index('idUnico_accesorio', Accesorio.nombre, unique=True)
+
 rel_accesorio_juego_obligatorio = Table("rel_accesorio_juego_obligatorio", Base.metadata, 
-    Column("idgame", VARCHAR(6), ForeignKey('wiitdb_juegos.idgame'), primary_key=True),
-    Column("nombre", Unicode(255), ForeignKey('accesorio.nombre'),primary_key=True)
+    Column("idgame", VARCHAR(6), ForeignKey('wiitdb_juegos.idgame')),
+    Column("nombre", Unicode(255), ForeignKey('accesorio.nombre'))
     )
     
 rel_accesorio_juego_opcional = Table("rel_accesorio_juego_opcional", Base.metadata, 
-    Column("idgame", VARCHAR(6), ForeignKey('wiitdb_juegos.idgame'), primary_key=True),
-    Column("nombre", Unicode(255), ForeignKey('accesorio.nombre'),primary_key=True)
+    Column("idgame", VARCHAR(6), ForeignKey('wiitdb_juegos.idgame')),
+    Column("nombre", Unicode(255), ForeignKey('accesorio.nombre'))
     )
 
 class JuegoWIITDB(Base):
@@ -182,12 +225,12 @@ class JuegoWIITDB(Base):
     region = Column('region', Unicode(255))
     developer = Column('developer', Unicode(255))
     publisher = Column('publisher', Unicode(255))
-    fecha_lanzamiento = Column('fecha_lanzamiento', Date)
+    fecha_lanzamiento = Column('fecha_lanzamiento', Date, nullable=True)
     wifi_players = Column('wifi_players', Integer)
     input_players = Column('input_players', Integer)
     idRatingType = Column('idRatingType',   Integer , ForeignKey('rating_type.idRatingType'), nullable=True)
     idRatingValue = Column("idRatingValue", Integer , ForeignKey('rating_value.idRatingValue'), nullable=True)
-    idRom = Column("idRom", Integer , ForeignKey('roms.idRom'))
+    idRom = Column("idRom", Integer , ForeignKey('roms.idRom'), nullable=True)
     
     # indices
     # ??
@@ -206,6 +249,7 @@ class JuegoWIITDB(Base):
     features = relation(OnlineFeatures, secondary=rel_online_features_juego)
     obligatorio = relation(Accesorio, secondary=rel_accesorio_juego_obligatorio)
     opcional = relation(Accesorio, secondary=rel_accesorio_juego_opcional)
+    genero = relation(Genero, secondary=rel_juego_genero)
 
     def __init__(self , idgame , name , region='', developer='', publisher='', anio='', mes='', dia='', wifi_players='', input_players=''):
         self.idgame = util.decode(idgame)
@@ -225,23 +269,10 @@ class JuegoWIITDB(Base):
         object.__setattr__(self, name, value)
 
     def __repr__(self):
-        return "%s - %s (%s)" % (self.idgame, self.name, self.region)
+        return "%s - %s" % (self.idgame, self.name)
+
+Index('idUnico_wiitdb_juegos', JuegoWIITDB.idgame, unique=True)
         
 #############################################################################
 
 util.crearBDD(Base.metadata)
-
-#############################################################################
-
-try:
-    db = util.getBDD()
-    db.execute('CREATE INDEX idx_wiitdb_juego_descripcion ON wiitdb_juego_descripcion (lang, idgame)')
-    db.execute('CREATE INDEX idx_rating_type ON rating_type (tipo)')
-    db.execute('CREATE INDEX idx_rating_value ON rating_value (idRatingType, valor)')
-    db.execute('CREATE INDEX idx_rating_content ON rating_content (idRatingType,valor)')
-    db.execute('CREATE INDEX idx_accesorio ON accesorio (nombre)')
-    db.execute('CREATE INDEX idx_online_features ON online_features (valor)')
-    db.execute('CREATE INDEX idx_roms ON roms (version, name)')    
-except:
-    pass
-

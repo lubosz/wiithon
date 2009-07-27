@@ -473,12 +473,7 @@
       </object>
     </child>
   </object>
-  <object class="GtkTextBuffer" id="textbuffer1">
-    <property name="text" translatable="yes">Comprobando integridad ...
-Descargando caratulas ...
-Descargando discos ...
-</property>
-  </object>
+  <object class="GtkTextBuffer" id="ficha_synopsis_buffer"/>
   <object class="GtkAboutDialog" id="aboutdialog">
     <property name="border_width">5</property>
     <property name="modal">True</property>
@@ -656,6 +651,7 @@ Ricardo Marmolejo Garc&#xED;a &lt;makiolo@gmail.com&gt;</property>
   </object>
   <object class="GtkDialog" id="ficha_juego">
     <property name="border_width">5</property>
+    <property name="window_position">center-on-parent</property>
     <property name="type_hint">normal</property>
     <property name="has_separator">False</property>
     <child internal-child="vbox">
@@ -677,6 +673,8 @@ Ricardo Marmolejo Garc&#xED;a &lt;makiolo@gmail.com&gt;</property>
                     <property name="label" translatable="yes">RXGB2</property>
                   </object>
                   <packing>
+                    <property name="expand">False</property>
+                    <property name="fill">False</property>
                     <property name="position">0</property>
                   </packing>
                 </child>
@@ -823,14 +821,17 @@ Ricardo Marmolejo Garc&#xED;a &lt;makiolo@gmail.com&gt;</property>
                       <object class="GtkScrolledWindow" id="scrolledwindow1">
                         <property name="visible">True</property>
                         <property name="can_focus">True</property>
-                        <property name="hscrollbar_policy">automatic</property>
+                        <property name="hscrollbar_policy">never</property>
                         <property name="vscrollbar_policy">automatic</property>
                         <child>
                           <object class="GtkTextView" id="ficha_synopsis">
+                            <property name="width_request">400</property>
+                            <property name="height_request">250</property>
                             <property name="visible">True</property>
                             <property name="can_focus">True</property>
                             <property name="editable">False</property>
-                            <property name="justification">fill</property>
+                            <property name="wrap_mode">word</property>
+                            <property name="buffer">ficha_synopsis_buffer</property>
                           </object>
                         </child>
                       </object>

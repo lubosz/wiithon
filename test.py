@@ -4,16 +4,61 @@
 
 import sys
 
-from wiitdb_xml import WiiTDBXML
+from wiitdb_xml import *
+
+juegos = 0
+descripciones = 0
+generos = 0
+online_features = 0
+accesorios = 0
+companies = 0
 
 def spinner(cont, total):
-    # 16 = total / 100
-    if cont % 16 == 0:
-        print "< %d%% >" % (cont * 100 / total)
+    print "< %d%% >" % (cont * 100 / total)
 
-xml = WiiTDBXML('recursos/wiitdb/wiitdb.xml', spinner)
+def callback_nuevo_juego(juego):
+    global juegos
+    juegos += 1
+    
+def callback_nuevo_descripcion(descripcion):
+    global descripciones
+    descripciones += 1
+    
+def callback_nuevo_genero(genero):
+    global generos
+    generos += 1
+    
+def callback_nuevo_online_feature(online_feature):
+    global online_features
+    online_features += 1
+    
+def callback_nuevo_accesorio(accesorio, obligatorio):
+    global accesorios
+    accesorios += 1
+    
+def callback_nuevo_companie(companie):
+    global companies
+    companies += 1
+
+def callback_error_importando(xml, motivo):
+    print "Error grave, se ha detenido la importación: %s" % motivo
+    xml.interrumpir()
+
+xml = WiiTDBXML('recursos/wiitdb/wiitdb.xml', spinner, callback_nuevo_juego, callback_nuevo_descripcion,
+                                            callback_nuevo_genero, callback_nuevo_online_feature,
+                                            callback_nuevo_accesorio,callback_nuevo_companie,
+                                            callback_error_importando)
 xml.start()
 xml.join()
+
+print "Datos añadidos"
+print "-------------------------------------"
+print "Juegos: %d" % juegos
+print "Synopsis: %d" % descripciones
+print "Generos: %d" % generos
+print "Online features: %d" % online_features
+print "Accesorios: %d" % accesorios
+print "Compañias: %d" % companies
 
 '''
 import os

@@ -39,6 +39,4 @@ char *s = N_("Un gestor de particiones WBFS facil de usar");
 char *s = N_("caratulas a SD");
 char *s = N_("gtk-cancel");
 char *s = N_("gtk-close");
-char *s = N_("gtk-media-next");
-char *s = N_("gtk-media-previous");
 char *s = N_("https://launchpad.net/wiithon");

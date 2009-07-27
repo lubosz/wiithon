@@ -14,3 +14,4 @@ editar.sh
 recursos/threadpool.py
 *.iso
 doc/*.mwb.bak
+sqlalchemy

@@ -4,12 +4,16 @@
 
 import os
 import libxml2
+import datetime
 from threading import Thread
+from datetime import date
 
 import config
 import util
+import wiitdb_schema
 from juego import Juego
-from wiitdb_schema import JuegoWIITDB, Accesorio, RatingContent, RatingType, RatingValue , JuegoDescripcion, Companie, Rom, OnlineFeatures
+from wiitdb_schema import *
+from sqlalchemy import exc
 
 '''
     * name : returns the node name
@@ -21,14 +25,34 @@ from wiitdb_schema import JuegoWIITDB, Accesorio, RatingContent, RatingType, Rat
 db =        util.getBDD()
 session =   util.getSesionBDD(db)
 
+class ErrorImportandoWiiTDB(Exception):
+    pass
+    
+class ErrorCreandoTablas(Exception):
+    pass
+
 class WiiTDBXML(Thread):
     
-    def __init__(self, fichXML, callback_spinner):
+    def __init__(self, fichXML, 
+                                callback_spinner,
+                                callback_nuevo_juego, callback_nuevo_descripcion,
+                                callback_nuevo_genero, callback_nuevo_online_feature,
+                                callback_nuevo_accesorio,callback_nuevo_companie,
+                                callback_error_importando
+                                ):
         Thread.__init__(self)
         self.fichXML = fichXML
         self.callback_spinner = callback_spinner
+        self.callback_nuevo_juego = callback_nuevo_juego
+        self.callback_nuevo_descripcion = callback_nuevo_descripcion
+        self.callback_nuevo_genero = callback_nuevo_genero
+        self.callback_nuevo_online_feature = callback_nuevo_online_feature
+        self.callback_nuevo_accesorio = callback_nuevo_accesorio
+        self.callback_nuevo_companie = callback_nuevo_companie
+        self.callback_error_importando = callback_error_importando
         self.version = '0'
         self.games = 0
+        self.salir = False
         
     def run(self):
         #transicion = session.create_transaction() 
@@ -36,23 +60,26 @@ class WiiTDBXML(Thread):
             xmldoc = libxml2.parseFile(self.fichXML)
             ctxt = xmldoc.xpathNewContext()
             nodo = ctxt.xpathEval("//*[name() = 'datafile']")[0]
-            
+
+            SCHEMA_VERSION = 2
+            VERSION_ACTUAL = 1
+            if SCHEMA_VERSION > VERSION_ACTUAL:
+                try:
+                    metadatos = wiitdb_schema.Base.metadata
+                    metadatos.drop_all(db)
+                    metadatos.create_all(db)
+                except:
+                    self.error_importando("Creando estructura de datos")
+
             cont = 0
-            
-            while nodo != None:
+            while not self.salir and nodo != None:
                 if nodo.type == "element":
 
                     if nodo.name == "datafile":
                         nodo = nodo.children
 
                     elif nodo.name == "WiiTDB":
-                        self.version = int(self.leerAtributo(nodo, 'version'))
-
-                        import time
-                        from datetime import date
-                        
-                        #print time.time()
-                        
+                        self.version = int(self.leerAtributo(nodo, 'version'))                        
                         self.games = int(self.leerAtributo(nodo, 'games'))
                         print "Importando %s juegos. version de XML: %s" % (self.games, self.version)
 
@@ -72,9 +99,14 @@ class WiiTDBXML(Thread):
                                             if nodo.name == "id":
                                                 idgame = nodo.content
                                                 sql = util.decode("idgame=='%s'" % (idgame))
-                                                juego = session.query(JuegoWIITDB).filter(sql).first()
+                                                try:
+                                                    juego = session.query(JuegoWIITDB).filter(sql).first()
+                                                except:
+                                                    self.error_importando("XML inválido")
+
                                                 if juego == None:
                                                     juego = JuegoWIITDB(nodo.content, name)
+
                                                 iniciado = True
                                         
                                         # ya se ha iniciado
@@ -90,6 +122,7 @@ class WiiTDBXML(Thread):
                                                 descripcion = session.query(JuegoDescripcion).filter(sql).first()
                                                 if descripcion == None:
                                                     descripcion = JuegoDescripcion(lang)
+                                                    self.callback_nuevo_descripcion(descripcion)
 
                                                 if nodo.children is not None:
                                                     nodo = nodo.children
@@ -112,19 +145,30 @@ class WiiTDBXML(Thread):
                                                 juego.publisher = nodo.content
                                                 
                                             elif nodo.name == "date":
-                                                year = self.leerAtributo(nodo, 'year')
-                                                month = self.leerAtributo(nodo, 'month')
-                                                day = self.leerAtributo(nodo, 'day')
-                                                
-                                                if year == "" or month == "" or day == "":
-                                                    fecha = "1900-01-01"
-                                                else:
-                                                    fecha = "%s-%s-%s" % (year, month, day)
-                                                juego.fecha_lanzamiento = fecha
+                                                try:
+                                                    year = int(self.leerAtributo(nodo, 'year'))
+                                                    month = int(self.leerAtributo(nodo, 'month'))
+                                                    day = int(self.leerAtributo(nodo, 'day'))
+                                                    
+                                                    fecha = date(year, month, day)
+                                                    
+                                                    juego.fecha_lanzamiento = fecha
+                                                    
+                                                except ValueError:
+                                                    pass
                                                 
                                             elif nodo.name == "genre":
-                                                pass
-                                                
+                                                valores = nodo.content
+                                                for valor in valores.split(","):
+                                                    valor = valor.strip().replace("'","`")
+                                                    sql = util.decode("nombre=='%s'" % (valor))
+                                                    genero = session.query(Genero).filter(sql).first()
+                                                    if genero == None:
+                                                        genero = Genero(valor)
+                                                        self.callback_nuevo_genero(genero)
+
+                                                    juego.genero.append(genero)
+
                                             elif nodo.name == "rating":
                                                 # crear un tipo de rating si es nuevo
                                                 tipo = self.leerAtributo(nodo, 'type')
@@ -180,6 +224,7 @@ class WiiTDBXML(Thread):
                                                                     online_feature = session.query(OnlineFeatures).filter(sql).first()
                                                                     if online_feature == None:
                                                                         online_feature = OnlineFeatures(valor)
+                                                                        self.callback_nuevo_online_feature(online_feature)
                                                                     juego.features.append(online_feature)
                                                         nodo = nodo.next
                                                     nodo = nodo.parent
@@ -194,11 +239,19 @@ class WiiTDBXML(Thread):
                                                             if nodo.name == "control":
                                                                 nombres = self.leerAtributo(nodo, 'type').split(",")
                                                                 obligatorio = self.leerAtributo(nodo, 'required')
-                                                                # EMPIEZA PARCHE NOMBRES
+
                                                                 if nombres[0] == "wiimotenunchuk":
                                                                     nombres = ['wiimote', 'nunchuck']
                                                                 for nombre in nombres:
                                                                     nombre = nombre.strip()
+                                                                    '''
+                                                                    wiimote = wimmote
+                                                                    nunchuk = nunchuck
+                                                                    gamecube = gamegube
+                                                                    classiccontroller = calssiccontroller, classccontroller
+                                                                    balanceboard = wii balance board
+                                                                    motionplus = motion.plus
+                                                                    '''
                                                                     if nombre == "wimmote":
                                                                         nombre = "wiimote"
                                                                     elif nombre == "nunchuck":
@@ -209,11 +262,14 @@ class WiiTDBXML(Thread):
                                                                         nombre = "classiccontroller"
                                                                     elif nombre == "wii balance board":
                                                                         nombre = "balanceboard"
-                                                                    # TERMINA PARCHE NOMBRES
+                                                                    elif nombre == "motion.plus":
+                                                                        nombre = "motionplus"
+
                                                                     sql = util.decode("nombre=='%s'" % (nombre))
                                                                     accesorio = session.query(Accesorio).filter(sql).first()
                                                                     if accesorio == None:
                                                                         accesorio = Accesorio(nombre)
+                                                                        self.callback_nuevo_accesorio(accesorio, obligatorio == 'true')
 
                                                                     if obligatorio == 'true':
                                                                         juego.obligatorio.append(accesorio)
@@ -233,7 +289,7 @@ class WiiTDBXML(Thread):
                                                 crc = self.leerAtributo(nodo, 'crc')
                                                 md5 = self.leerAtributo(nodo, 'md5')
                                                 sha1 = self.leerAtributo(nodo, 'sha1')
-                                                                                           
+
                                                 rom = Rom(version, name, size, crc, md5, sha1)
                                                 juego.rom = rom                                            
 
@@ -244,32 +300,40 @@ class WiiTDBXML(Thread):
                                 nodo = nodo.parent
                                 if iniciado:
                                     session.save_or_update(juego)
+                                    self.callback_nuevo_juego(juego)
+                                else:
+                                    self.error_importando("XML inválido")
 
                             else:
-                                print "Error en %s" % name
+                                self.error_importando("XML inválido")
 
                         cont += 1
-                        self.callback_spinner(cont, self.games)
+                        # callback cada 1%
+                        if cont % (self.games / 100) == 0:
+                            self.callback_spinner(cont, self.games)
                         
                         nodo = nodo.next
 
                     elif nodo.name == "companies":
-
                         if nodo.children is not None:
                             nodo = nodo.children
-
+                            
                             while nodo.next is not None:
                                 if nodo.type == "element":
                                     if nodo.name == "company":
                                         code = self.leerAtributo(nodo, 'code')
                                         name = self.leerAtributo(nodo, 'name')
-                                        comp = Companie(code, name)
-                                        session.merge(comp)
+                                        
+                                        sql = util.decode("code=='%s'" % (code))
+                                        companie = session.query(Companie).filter(sql).first()
+                                        if companie == None:
+                                            companie = Companie(code, name)
+                                            self.callback_nuevo_companie(companie)
 
                                 nodo = nodo.next
                             nodo = nodo.parent
                         else:
-                            print "No hay Companies (?)"
+                            self.error_importando("XML inválido")
 
                 nodo = nodo.next
 
@@ -280,7 +344,7 @@ class WiiTDBXML(Thread):
             # hacemos efectivas las transacciones
             session.commit()
         else:
-            print "El fichero xml %s, no existe" % self.fichXML
+            self.error_importando("No existe el XML")
 
     def leerAtributo(self, nodo, atributo):
         valor = ""
@@ -290,4 +354,10 @@ class WiiTDBXML(Thread):
                 valor = attr.content
             attr = attr.next    
         return valor
-
+        
+    def error_importando(self, motivo):
+        session.rollback()
+        self.callback_error_importando(self, motivo)
+    
+    def interrumpir(self):
+        self.salir = True

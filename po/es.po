@@ -709,12 +709,6 @@ msgstr ""
 msgid "gtk-close"
 msgstr ""
 
-msgid "gtk-media-next"
-msgstr ""
-
-msgid "gtk-media-previous"
-msgstr ""
-
 msgid "gtk-ok"
 msgstr ""
 

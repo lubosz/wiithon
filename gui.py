@@ -818,28 +818,46 @@ class WiithonGUI(GtkBuilderWrapper):
                         self.wb_ficha_online.set_text( "No" )
                     else:
                         self.wb_ficha_online.set_text( "Si (%d jugadores)" % juego.wifi_players )
-                    #self.wb_ficha_synopsis.set_text( juego.name )
-                    #self.wb_ficha_fecha_lanzamiento.set_text( "%s/%s/%s" % (juego.dia, juego.mes, juego.anio) )
+
+                    self.wb_ficha_fecha_lanzamiento.set_text( "%s" % (juego.fecha_lanzamiento) )
                     self.wb_ficha_desarrollador.set_text( juego.developer )
                     self.wb_ficha_editor.set_text( juego.publisher )
                     
                     # synopsis
-                    '''
                     sql = util.decode("idgame=='%s' and lang='%s'" % (self.sel_juego.clave, "ES"))
                     descripcion = session.query(JuegoDescripcion).filter(sql).first()
                     if descripcion == None:
                         sql = util.decode("idgame=='%s' and lang='%s'" % (self.sel_juego.clave, "EN"))
                         descripcion = session.query(JuegoDescripcion).filter(sql).first()
+
                     if descripcion != None:
                         self.wb_ficha_titulo.set_text( descripcion.title )
-                        self.wb_ficha_synopsis.set_text( descripcion.synopsis )
+                        self.wb_ficha_synopsis_buffer.set_text( descripcion.synopsis )
                     else:
                         self.wb_ficha_titulo.set_text( juego.name )
-                    '''
-                    self.wb_ficha_titulo.set_text( juego.name )
                     
                     res = self.wb_ficha_juego.run()
                     self.wb_ficha_juego.hide()
+                    
+                    print "--------------- accesorios obligatorios ------------"
+                    for accesorio in juego.obligatorio:
+                        print accesorio
+
+                    print "--------------- accesorios opcionales ------------"
+                    for accesorio in juego.opcional:
+                        print accesorio
+                        
+                    print "--------------- rating contents ------------"
+                    for accesorio in juego.rating_contents:
+                        print accesorio
+                        
+                    print "--------------- features online ------------"
+                    for accesorio in juego.features:
+                        print accesorio
+                        
+                    print "--------------- genero del juego ------------"
+                    for accesorio in juego.genero:
+                        print accesorio
                 
                 else:
                     self.alert('error', 'No hay datos de este juego. Intente actualizar la base de datos.')
@@ -1133,17 +1151,7 @@ class WiithonGUI(GtkBuilderWrapper):
         return True
 
     def drag_data_received_cb(self, widget, drag_context, x, y, selection_data, info, timestamp):
-        'Callback invoked when the DnD data is received'
-        
-        print widget
-        print drag_context
-        print x 
-        print y
-        print selection_data
-        print selection_data.get_targets()
-        print info
-        print timestamp
-        
+        'Callback invoked when the DnD data is received'        
         tuplaArrastrados = selection_data.get_uris()
         listaArrastrados = []
         for fichero in tuplaArrastrados:
