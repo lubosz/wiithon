@@ -9,7 +9,7 @@ from threading import Thread, Semaphore
 import config
 import util
 from pool import Pool
-from juego import Juego
+from wiitdb_schema import Juego
 
 # pseudo-enumerado
 (ANADIR,EXTRAER,CLONAR,DESCARGA_CARATULA,DESCARGA_DISCO,COPIAR_CARATULA,COPIAR_DISCO)=([ "%d" % i for i in range(7) ])

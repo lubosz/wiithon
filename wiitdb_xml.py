@@ -11,9 +11,7 @@ from datetime import date
 import config
 import util
 import wiitdb_schema
-from juego import Juego
 from wiitdb_schema import *
-from sqlalchemy import exc
 
 '''
     * name : returns the node name
@@ -60,16 +58,14 @@ class WiiTDBXML(Thread):
             xmldoc = libxml2.parseFile(self.fichXML)
             ctxt = xmldoc.xpathNewContext()
             nodo = ctxt.xpathEval("//*[name() = 'datafile']")[0]
-
+            
             SCHEMA_VERSION = 2
             VERSION_ACTUAL = 1
             if SCHEMA_VERSION > VERSION_ACTUAL:
-                try:
-                    metadatos = wiitdb_schema.Base.metadata
-                    metadatos.drop_all(db)
-                    metadatos.create_all(db)
-                except:
-                    self.error_importando("Creando estructura de datos")
+                metadatos = Base.metadata
+                db = util.getBDD()
+                metadatos.drop_all(db)
+                metadatos.create_all(db)
 
             cont = 0
             while not self.salir and nodo != None:
@@ -111,14 +107,14 @@ class WiiTDBXML(Thread):
                                         
                                         # ya se ha iniciado
                                         else:
-                                                                                        
+
                                             if nodo.name == "region":
                                                 juego.region = nodo.content
-                                                
+
                                             elif nodo.name == "locale":
                                                 lang = self.leerAtributo(nodo, 'lang')
 
-                                                sql = util.decode("lang=='%s' and idgame='%s'" % (lang, juego.idgame))
+                                                sql = util.decode("lang=='%s' and idJuegoWIITDB='%s'" % (lang, juego.idJuegoWIITDB))
                                                 descripcion = session.query(JuegoDescripcion).filter(sql).first()
                                                 if descripcion == None:
                                                     descripcion = JuegoDescripcion(lang)
@@ -134,7 +130,7 @@ class WiiTDBXML(Thread):
                                                                 descripcion.synopsis = nodo.content
                                                         nodo = nodo.next
                                                     nodo = nodo.parent
-                                                    
+
                                                 # añadimos la descripcion al juego
                                                 juego.descripciones.append(descripcion)
 
@@ -291,7 +287,7 @@ class WiiTDBXML(Thread):
                                                 sha1 = self.leerAtributo(nodo, 'sha1')
 
                                                 rom = Rom(version, name, size, crc, md5, sha1)
-                                                juego.rom = rom                                            
+                                                juego.roms.append(rom)
 
                                     # siguiente hijo de game
                                     nodo = nodo.next
@@ -328,7 +324,9 @@ class WiiTDBXML(Thread):
                                         companie = session.query(Companie).filter(sql).first()
                                         if companie == None:
                                             companie = Companie(code, name)
+                                            session.save(companie)
                                             self.callback_nuevo_companie(companie)
+                                        print companie
 
                                 nodo = nodo.next
                             nodo = nodo.parent
@@ -358,6 +356,7 @@ class WiiTDBXML(Thread):
     def error_importando(self, motivo):
         session.rollback()
         self.callback_error_importando(self, motivo)
-    
+        self.interrumpir()
+
     def interrumpir(self):
         self.salir = True

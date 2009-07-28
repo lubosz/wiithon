@@ -161,15 +161,6 @@ msgstr "Capa?"
 msgid "Clasificar"
 msgstr "Classificar"
 
-msgid ""
-"Comprobando integridad ...\n"
-"Descargando caratulas ...\n"
-"Descargando discos ...\n"
-msgstr ""
-"verificando integridade ...\n"
-"Baixando capas ...\n"
-"Baixando discos ...\n"
-
 msgid "Copia directa de particion a particion"
 msgstr "Cópia direta de partição para partição"
 
@@ -736,6 +727,15 @@ msgstr "wiithon não apaga a ISO temporária, você pode apagá-la caso não nec
 
 msgid "No hay particiones WBFS!"
 msgstr ""
+
+#~ msgid ""
+#~ "Comprobando integridad ...\n"
+#~ "Descargando caratulas ...\n"
+#~ "Descargando discos ...\n"
+#~ msgstr ""
+#~ "verificando integridade ...\n"
+#~ "Baixando capas ...\n"
+#~ "Baixando discos ...\n"
 
 #~ msgid "No hay un numero suficiente de particiones validas, para realizar esta accion."
 #~ msgstr "Não existe um número suficiente de partições válidas para realizar esta ação."

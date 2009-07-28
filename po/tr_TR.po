@@ -104,12 +104,6 @@ msgstr ""
 msgid "Clasificar"
 msgstr ""
 
-msgid ""
-"Comprobando integridad ...\n"
-"Descargando caratulas ...\n"
-"Descargando discos ...\n"
-msgstr ""
-
 msgid "Copia directa de particion a particion"
 msgstr ""
 

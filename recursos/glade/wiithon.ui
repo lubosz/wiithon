@@ -5,7 +5,7 @@
   <object class="GtkWindow" id="principal">
     <property name="visible">True</property>
     <child>
-      <object class="GtkVBox" id="vbox1">
+      <object class="GtkVBox" id="vbox_principal1">
         <property name="visible">True</property>
         <child>
           <object class="GtkToolbar" id="toolbar1">
@@ -875,13 +875,37 @@ Ricardo Marmolejo Garc&#xED;a &lt;makiolo@gmail.com&gt;</property>
                       </packing>
                     </child>
                     <child>
-                      <placeholder/>
+                      <object class="GtkLabel" id="ficha_genero">
+                        <property name="visible">True</property>
+                      </object>
+                      <packing>
+                        <property name="left_attach">1</property>
+                        <property name="right_attach">2</property>
+                        <property name="top_attach">5</property>
+                        <property name="bottom_attach">6</property>
+                      </packing>
                     </child>
                     <child>
-                      <placeholder/>
+                      <object class="GtkLabel" id="ficha_accesorio">
+                        <property name="visible">True</property>
+                      </object>
+                      <packing>
+                        <property name="left_attach">1</property>
+                        <property name="right_attach">2</property>
+                        <property name="top_attach">6</property>
+                        <property name="bottom_attach">7</property>
+                      </packing>
                     </child>
                     <child>
-                      <placeholder/>
+                      <object class="GtkLabel" id="ficha_ranking">
+                        <property name="visible">True</property>
+                      </object>
+                      <packing>
+                        <property name="left_attach">1</property>
+                        <property name="right_attach">2</property>
+                        <property name="top_attach">7</property>
+                        <property name="bottom_attach">8</property>
+                      </packing>
                     </child>
                   </object>
                   <packing>

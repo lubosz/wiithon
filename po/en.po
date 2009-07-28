@@ -116,15 +116,6 @@ msgstr "Cover?"
 msgid "Clasificar"
 msgstr "Sort"
 
-msgid ""
-"Comprobando integridad ...\n"
-"Descargando caratulas ...\n"
-"Descargando discos ...\n"
-msgstr ""
-"Check integrity ...\n"
-"Download covers ...\n"
-"Download discs ...\n"
-
 msgid "Copia directa de particion a particion"
 msgstr "Direct copy of a partition partition"
 
@@ -693,6 +684,15 @@ msgstr "wiithon doesn't remove the temporal ISO, you can remove it if you don't 
 
 msgid "No hay particiones WBFS!"
 msgstr ""
+
+#~ msgid ""
+#~ "Comprobando integridad ...\n"
+#~ "Descargando caratulas ...\n"
+#~ "Descargando discos ...\n"
+#~ msgstr ""
+#~ "Check integrity ...\n"
+#~ "Download covers ...\n"
+#~ "Download discs ...\n"
 
 #~ msgid "No hay un numero suficiente de particiones validas, para realizar esta accion."
 #~ msgstr "You must select a WBFS partition for use this action"

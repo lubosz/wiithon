@@ -5,10 +5,6 @@ char *s = N_("Acerca de ...");
 char *s = N_("Aniadir directorio");
 char *s = N_("Buscar:");
 char *s = N_("Clasificar");
-char *s = N_("Comprobando integridad ...\n"
-             "Descargando caratulas ...\n"
-             "Descargando discos ...\n"
-             "");
 char *s = N_("Copia directa de particion a particion");
 char *s = N_("Copiar 1:1");
 char *s = N_("Copiar el juego seleccionado*");

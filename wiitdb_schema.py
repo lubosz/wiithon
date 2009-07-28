@@ -20,7 +20,7 @@ from sqlalchemy.ext.associationproxy import association_proxy
 import config
 import util
 
-###### PARA AUMENTAR LA RECURRENCIA ##########
+###### PARA EVITAR PROBLEMAS DE RECURRENCIA ##########
 
 from sqlalchemy import pool
 from sqlalchemy.databases.firebird import dialect
@@ -35,11 +35,11 @@ Base = declarative_base()
 #############################################################################
 
 class Companie(Base):
-    __tablename__ = 'wiitdb_companies'
+    __tablename__ = 'companie'
     
     idCompanie = Column('idCompanie', Integer, primary_key=True)
-    code = Column('code',VARCHAR(2))
-    name = Column('name', VARCHAR(255))
+    code = Column( 'code', VARCHAR(2)   )
+    name = Column( 'name', VARCHAR(255) )
 
     def __init__(self, code, name):    
         self.code = util.decode(code).strip()
@@ -48,7 +48,7 @@ class Companie(Base):
     def __repr__(self):
         return "%s - %s" % (self.code, self.name)
 
-Index('idUnico_wiitdb_companies', Companie.code, Companie.name, unique=True)
+Index('idUnico_companie', Companie.code, unique=True)
 
 ## EMPIEZA RATING
 
@@ -100,8 +100,8 @@ class RatingType(Base):
 Index('idUnico_rating_type', RatingType.tipo, unique=True)
 
 rel_rating_content_juego = Table("rel_rating_content_juego", Base.metadata, 
-    Column("idRatingContent", Integer, ForeignKey('rating_content.idRatingContent')),
-    Column("idgame", VARCHAR(6), ForeignKey('wiitdb_juegos.idgame'))
+    Column("idJuegoWIITDB", Integer, ForeignKey('juego_wiitdb.idJuegoWIITDB')),
+    Column("idRatingContent", Integer, ForeignKey('rating_content.idRatingContent'))
     )
 
 class OnlineFeatures(Base):
@@ -119,19 +119,19 @@ class OnlineFeatures(Base):
 Index('idUnico_online_features', OnlineFeatures.valor, unique=True)
 
 rel_online_features_juego = Table("rel_online_features_juego", Base.metadata, 
-    Column("idgame", VARCHAR(6), ForeignKey('wiitdb_juegos.idgame')),
+    Column("idJuegoWIITDB", Integer, ForeignKey('juego_wiitdb.idJuegoWIITDB')),
     Column("idFeature", Integer, ForeignKey('online_features.idFeature'))
     )
     
 
 class JuegoDescripcion(Base):
-    __tablename__ = 'wiitdb_juego_descripcion'
+    __tablename__ = 'juego_descripcion'
     
     idDescripcion = Column('idDescripcion', Integer , primary_key=True)
-    idgame = Column('idgame', VARCHAR(6) , ForeignKey('wiitdb_juegos.idgame'))
+    idJuegoWIITDB = Column('idJuegoWIITDB', Integer , ForeignKey('juego_wiitdb.idJuegoWIITDB'))
     lang = Column('lang', VARCHAR(2))
     title = Column('title', Unicode(255))
-    synopsis = Column('synopsis', Unicode(255))
+    synopsis = Column('synopsis', Unicode(5000))
     
     def __init__(self, lang='', title='', synopsis=''):
         self.lang = lang
@@ -139,19 +139,20 @@ class JuegoDescripcion(Base):
         self.synopsis = util.decode(synopsis)
         
     def __repr__(self):
-        return "%s - %s (%s): %s" % (self.idgame, self.title, self.lang, self.synopsis)
+        return "%s (%s): %s" % (self.title, self.lang, self.synopsis)
         
     def __setattr__(self, name, value):
         if isinstance(value, str):
             value = util.decode(value)
         object.__setattr__(self, name, value)
 
-Index('idUnico_wiitdb_juego_descripcion', JuegoDescripcion.idgame, JuegoDescripcion.lang, unique=True)
+Index('idUnico_juego_descripcion', JuegoDescripcion.idJuegoWIITDB, JuegoDescripcion.lang, unique=True)
 
 class Rom(Base):
-    __tablename__ = 'roms'
+    __tablename__ = 'rom'
 
     idRom = Column('idRom', Integer , primary_key=True)
+    idJuegoWIITDB = Column('idJuegoWIITDB', Integer , ForeignKey('juego_wiitdb.idJuegoWIITDB'))
     version = Column('version', VARCHAR(255))
     name = Column('name', VARCHAR(255))
     size = Column('size', Integer)
@@ -170,7 +171,7 @@ class Rom(Base):
     def __repr__(self):
         return "Ver. %s - %s (%.2f GB)" % (self.version, self.name, self.size/1024.0/1024.0)
         
-#Index('idUnico_roms', Rom.version, Rom.name, unique=True)
+#Index('idUnico_rom', Rom.version, Rom.name, unique=True)
 
 class Genero(Base):
     __tablename__ = 'genero'
@@ -187,15 +188,16 @@ class Genero(Base):
 Index('idUnico_genero', Genero.nombre, unique=True)
         
 rel_juego_genero = Table("rel_juego_genero", Base.metadata, 
-    Column("idgame", VARCHAR(6), ForeignKey('wiitdb_juegos.idgame')),
+    Column("idJuegoWIITDB", Integer, ForeignKey('juego_wiitdb.idJuegoWIITDB')),
     Column("idGenero", Integer, ForeignKey('genero.idGenero'))
     )
 
 class Accesorio(Base):
     __tablename__ = 'accesorio'
-
-    nombre = Column('nombre', Unicode(255), primary_key=True)
-    descripcion = Column('descripcion', Unicode(6000))
+    
+    idAccesorio = Column('idAccesorio', Integer, primary_key=True)
+    nombre = Column('nombre', Unicode(255))
+    descripcion = Column('descripcion', Unicode(512))
 
     def __init__(self,  nombre, descripcion = ''):
         self.nombre = util.decode(nombre).strip()
@@ -207,42 +209,39 @@ class Accesorio(Base):
 Index('idUnico_accesorio', Accesorio.nombre, unique=True)
 
 rel_accesorio_juego_obligatorio = Table("rel_accesorio_juego_obligatorio", Base.metadata, 
-    Column("idgame", VARCHAR(6), ForeignKey('wiitdb_juegos.idgame')),
-    Column("nombre", Unicode(255), ForeignKey('accesorio.nombre'))
+    Column("idJuegoWIITDB", Integer, ForeignKey('juego_wiitdb.idJuegoWIITDB')),
+    Column("idAccesorio", Integer, ForeignKey('accesorio.idAccesorio'))
     )
     
 rel_accesorio_juego_opcional = Table("rel_accesorio_juego_opcional", Base.metadata, 
-    Column("idgame", VARCHAR(6), ForeignKey('wiitdb_juegos.idgame')),
-    Column("nombre", Unicode(255), ForeignKey('accesorio.nombre'))
+    Column("idJuegoWIITDB", Integer, ForeignKey('juego_wiitdb.idJuegoWIITDB')),
+    Column("idAccesorio", Integer, ForeignKey('accesorio.idAccesorio'))
     )
 
 class JuegoWIITDB(Base):
-    __tablename__ = 'wiitdb_juegos'
+    __tablename__ = 'juego_wiitdb'
 
     # campos
-    idgame = Column('idgame', VARCHAR(6), primary_key=True)
+    idJuegoWIITDB = Column('idJuegoWIITDB', Integer, primary_key=True)
+    idgame = Column('idgame', VARCHAR(6))
     name = Column('name'  , Unicode(255))
-    region = Column('region', Unicode(255))
-    developer = Column('developer', Unicode(255))
-    publisher = Column('publisher', Unicode(255))
+    region = Column('region', Unicode(40))
+    developer = Column('developer', Unicode(100))
+    publisher = Column('publisher', Unicode(100))
     fecha_lanzamiento = Column('fecha_lanzamiento', Date, nullable=True)
     wifi_players = Column('wifi_players', Integer)
     input_players = Column('input_players', Integer)
-    idRatingType = Column('idRatingType',   Integer , ForeignKey('rating_type.idRatingType'), nullable=True)
-    idRatingValue = Column("idRatingValue", Integer , ForeignKey('rating_value.idRatingValue'), nullable=True)
-    idRom = Column("idRom", Integer , ForeignKey('roms.idRom'), nullable=True)
-    
-    # indices
-    # ??
 
     # relaciones
     #   1:1
     rating_type = relation(RatingType)
     rating_value = relation(RatingValue)
-    rom = relation(Rom)    
+    idRatingType = Column('idRatingType',   Integer , ForeignKey('rating_type.idRatingType'), nullable=True)
+    idRatingValue = Column("idRatingValue", Integer , ForeignKey('rating_value.idRatingValue'), nullable=True)
     
     #   1:N
     descripciones = relation(JuegoDescripcion)
+    roms = relation(Rom)
     
     #   N:M
     rating_contents = relation(RatingContent, secondary=rel_rating_content_juego)
@@ -271,8 +270,113 @@ class JuegoWIITDB(Base):
     def __repr__(self):
         return "%s - %s" % (self.idgame, self.name)
 
-Index('idUnico_wiitdb_juegos', JuegoWIITDB.idgame, unique=True)
+Index('idUnico_juego_wiitdb', JuegoWIITDB.idgame, unique=True)
+
+class Particion(Base):
+    __tablename__ = 'particion'
+
+    idParticion = Column('idParticion', Integer, primary_key=True)
+    device = Column('device', VARCHAR(10))
+    tipo = Column('tipo', VARCHAR(5))
+    usado = Column('usado', Float)
+    libre = Column('libre', Float)
+    total = Column('total', Float)
+    fabricante = Column('device', Unicode(255))
+    
+    def __init__(self, cachos):
+        if(len(cachos)==6+1):
+            # nombre lógico unix (/dev/sda1)
+            self.device = util.decode(cachos[0])
+            
+            # tipo de particion "fat32|wbfs"
+            self.tipo = util.decode(cachos[1])
+            
+            # Espacio en GB usados de la partición
+            self.usado = float(cachos[2].replace(",",".").replace("G",""))
+            
+            # Espacio en GB libres de la partición
+            self.libre = float(cachos[3].replace(",",".").replace("G",""))
+            
+            # Espacio en GB total de la partición
+            self.total = float(cachos[4].replace(",",".").replace("G",""))
+            
+            # Nombre del fabricante, requiere udevinfo
+            self.fabricante = util.decode(cachos[5])
+        else:
+            raise SintaxisInvalida
+
+    def __repr__(self):
+        return "%s (%s) %.0f GB" % (self.device, self.fabricante, self.total)
         
+Index('idUnico_particion', Particion.device, unique=True)
+
+rel_particion_juego = Table("rel_particion_juego", Base.metadata, 
+    Column("idParticion", Integer, ForeignKey('particion.idParticion')),
+    Column("idJuego", Integer, ForeignKey('juego.idJuego'))
+    )
+
+class Juego(Base):
+    __tablename__ = 'juego'
+
+    idJuego = Column('idJuego', Integer, primary_key=True)
+    idJuegoWIITDB = Column('idJuegoWIITDB', Integer , ForeignKey('juego_wiitdb.idJuegoWIITDB'))
+    idgame = Column('idgame', VARCHAR(6))
+    title = Column('title', Unicode(255))
+    size = Column('size', Float)
+
+    juego_wiitdb = relation(JuegoWIITDB, primaryjoin='Juego.idgame==JuegoWIITDB.idgame', foreign_keys='Juego.idgame')
+
+    particiones = relation(Particion, secondary=rel_particion_juego, backref='juego')
+
+    def __init__(self , idgame , title , size):
+        self.idgame = util.decode(idgame)
+        self.title = util.decode(title)
+        self.size = float(size)
+        
+    def __init__(self, cachos):
+        if(len(cachos)==3):
+            self.idgame = util.decode(cachos[0])
+            self.title = util.decode(cachos[1])
+            self.size = float(cachos[2])
+        else:
+            raise SintaxisInvalida
+
+    def __repr__(self):
+        return "%s (%s) %s" % (self.title, self.idgame, self.device)
+
+Index('idUnico_juego', Juego.idgame, unique=True)
+
 #############################################################################
 
 util.crearBDD(Base.metadata)
+
+'''
+Documentación: http://www.sqlalchemy.org/docs/05/ormtutorial.html
+#define-and-create-a-table
+Ojo, mi ubuntu va con SQLAlchemy 0.4 pero el último es 0.5x
+Aquí un wiki con las diferencias:
+http://www.sqlalchemy.org/trac/wiki/05Migration
+'''
+
+import os
+
+from sqlalchemy import *
+from sqlalchemy.ext.declarative import declarative_base
+from sqlalchemy.orm import relation, backref, sessionmaker
+
+import config
+import util
+from util import SintaxisInvalida
+
+
+'''
+# http://www.mail-archive.com/sqlalchemy@googlegroups.com/msg09381.html
+
+mapper(Juego , tabla_juegos, properties={
+    'wiitdb_juegos':relation(JuegoWIITDB, 
+        primaryjoin=tabla_juegos.c.idgame==tabla_wiitdb_juegos.c.idgame,
+        _local_remote_pairs=[(tabla_juegos.c.idgame, tabla_wiitdb_juegos.c.idgame)],
+        foreign_keys=[tabla_wiitdb_juegos.c.idgame],
+    )
+})
+'''

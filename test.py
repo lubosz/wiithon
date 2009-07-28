@@ -6,6 +6,24 @@ import sys
 
 from wiitdb_xml import *
 
+if True:
+    from wiitdb_schema import *
+    from juego import *
+
+    db =        util.getBDD()
+    session =   util.getSesionBDD(db)
+
+    i = 0
+    for juego in session.query(JuegoWIITDB).outerjoin(Juego):
+    #for juego in session.query(Juego).outerjoin(JuegoWIITDB):
+        print i
+        print juego
+        i += 1
+
+    sys.exit(0)
+
+#####################################################
+
 juegos = 0
 descripciones = 0
 generos = 0
@@ -14,35 +32,61 @@ accesorios = 0
 companies = 0
 
 def spinner(cont, total):
+    '''
+    print
+    '''
     print "< %d%% >" % (cont * 100 / total)
 
 def callback_nuevo_juego(juego):
     global juegos
     juegos += 1
-    
+    '''
+    print "j ",
+    sys.stdout.flush()
+    '''
+
 def callback_nuevo_descripcion(descripcion):
     global descripciones
     descripciones += 1
-    
+    '''
+    print "d ",
+    sys.stdout.flush()
+    '''
+
 def callback_nuevo_genero(genero):
     global generos
     generos += 1
-    
+    '''
+    print "g ",
+    sys.stdout.flush()
+    '''
+
 def callback_nuevo_online_feature(online_feature):
     global online_features
     online_features += 1
-    
+    '''
+    print "o ",
+    sys.stdout.flush()
+    '''
+
 def callback_nuevo_accesorio(accesorio, obligatorio):
     global accesorios
     accesorios += 1
-    
+    '''
+    print "a ",
+    sys.stdout.flush()
+    '''
+
 def callback_nuevo_companie(companie):
     global companies
     companies += 1
+    '''
+    print "c ",
+    sys.stdout.flush()
+    '''
 
 def callback_error_importando(xml, motivo):
     print "Error grave, se ha detenido la importación: %s" % motivo
-    xml.interrumpir()
 
 xml = WiiTDBXML('recursos/wiitdb/wiitdb.xml', spinner, callback_nuevo_juego, callback_nuevo_descripcion,
                                             callback_nuevo_genero, callback_nuevo_online_feature,
@@ -59,6 +103,7 @@ print "Generos: %d" % generos
 print "Online features: %d" % online_features
 print "Accesorios: %d" % accesorios
 print "Compañias: %d" % companies
+
 
 '''
 import os
@@ -133,4 +178,3 @@ for linea in out:
     print "---------------"
     print linea.strip()
 '''
-

@@ -19,11 +19,9 @@ from util import NonRepeatList
 from builder_wrapper import GtkBuilderWrapper
 from trabajo import PoolTrabajo
 from preferencias import Preferencia
-from juego import Juego
 from animar import Animador
-from particion import Particion
 from fila_treeview import FilaTreeview
-from wiitdb_schema import JuegoWIITDB, JuegoDescripcion
+from wiitdb_schema import Juego, Particion, JuegoWIITDB, JuegoDescripcion
 
 db =        util.getBDD()
 session =   util.getSesionBDD(db)
@@ -604,11 +602,9 @@ class WiithonGUI(GtkBuilderWrapper):
         self.refrescarEspacio()
 
     # refresco desde el disco duro (lento)
-    def sincronizarParticionesWBFSconBDD(self, particiones):       
-        # Limpiamos los devices
-        # Eliminamos los devices de toda la bdd
-        for juego in session.query(Juego):
-            juego.device = ""
+    def sincronizarParticionesWBFSconBDD(self, particiones):
+
+        # Borrar todas las relaciones juego-particion
     
         listaJuegosAcumulados = NonRepeatList()
         for particion in particiones:
@@ -632,13 +628,16 @@ class WiithonGUI(GtkBuilderWrapper):
     def refrescarListaJuegos(self):
 
         if self.sel_parti != None:
-            sql = util.decode('device="%s" and (title like "%%%s%%" or idgame like "%s%%")' % (self.sel_parti.obj.device , self.buscar , self.buscar))
+            sql = util.decode('juego.device="%s" and (juego.title like "%%%s%%" or juego.idgame like "%s%%")' % (self.sel_parti.obj.device , self.buscar , self.buscar))
+            query = session.query(Juego).outerjoin(JuegoWIITDB).filter(sql).order_by('lower(title)')
         else:
-            sql = util.decode('title like "%%%s%%" or idgame like "%s%%"' % (self.buscar , self.buscar))
+            sql = util.decode('juego.title like "%%%s%%" or juego.idgame like "%s%%"' % (self.buscar , self.buscar))
+            query = session.query(JuegoWIITDB).outerjoin(Juego).filter(sql).order_by('lower(title)')
             
         subListaJuegos = []
         # ordenado por nombre, insensible a mayusculas
-        for juego in session.query(Juego).filter(sql).order_by('lower(title)'):
+        for juego in query:
+            print juego.juego_wiitdb
             subListaJuegos.append(juego)
 
         # cargar la lista sobre el Treeview
@@ -684,6 +683,9 @@ class WiithonGUI(GtkBuilderWrapper):
             self.callback_treeview(treeview)
 
     def refrescarEspacio(self):
+        if self.sel_parti == None:
+            return
+            
         info = self.core.getEspacioLibre(self.sel_parti.obj.device)
         usado = info[0]
         libre = info[1]
@@ -694,6 +696,7 @@ class WiithonGUI(GtkBuilderWrapper):
             porcentaje = usado * 100.0 / total
         except ZeroDivisionError:
             porcentaje = 0.0
+            
         numJuegos = len(self.lJuegos)
         numJuegos_filtrados = len(self.lJuegos_filtrada)
         if numJuegos_filtrados == numJuegos:
@@ -804,63 +807,90 @@ class WiithonGUI(GtkBuilderWrapper):
             self.ultimoClick = event.time
             if tiempo_entre_clicks < 400:
                 
-                sql = util.decode("idgame=='%s'" % (self.sel_juego.clave))
-                juego = session.query(JuegoWIITDB).filter(sql).first()
+                if self.sel_juego.obj != None:
                 
-                if juego != None:
+                    juego = self.sel_juego.obj.juego_wiitdb
                     
-                    self.ponerCaratula(juego.idgame, self.wb_img_caratula2)
-                    self.ponerDisco(juego.idgame, self.wb_img_disco2)
+                    if juego != None:
+                        
+                        self.ponerCaratula(juego.idgame, self.wb_img_caratula2)
+                        self.ponerDisco(juego.idgame, self.wb_img_disco2)
 
-                    self.wb_ficha_idgame.set_text( juego.idgame )
-                    self.wb_ficha_num_jugadores.set_text( "%d jugadores" % juego.input_players )
-                    if juego.wifi_players == 0:
-                        self.wb_ficha_online.set_text( "No" )
+                        self.wb_ficha_idgame.set_text( juego.idgame )
+                        if juego.fecha_lanzamiento != None:
+                            self.wb_ficha_fecha_lanzamiento.set_text( "%s" % (juego.fecha_lanzamiento) )
+                        else:
+                            self.wb_ficha_fecha_lanzamiento.set_text( _("Desconocido") )
+                        self.wb_ficha_desarrollador.set_text( juego.developer )
+                        self.wb_ficha_editor.set_text( juego.publisher )
+                        
+                        hayPrincipal = False
+                        haySecundario = False
+                        i = 0
+                        while not hayPrincipal and i<len(juego.descripciones):
+                            descripcion = juego.descripciones[i]
+                            if descripcion.lang == "EN":
+                                haySecundario = True
+                            if descripcion.lang == "ES":
+                                hayPrincipal = True
+                            if hayPrincipal or haySecundario:
+                                title = descripcion.title
+                                synopsis = descripcion.synopsis
+                                haySecundario = False
+                            i += 1
+                                
+                        if hayPrincipal or haySecundario:
+                            self.wb_ficha_titulo.set_text( title )
+                            self.wb_ficha_synopsis_buffer.set_text( synopsis )
+                        else:
+                            self.wb_ficha_titulo.set_text( juego.name )
+                            self.wb_ficha_synopsis_buffer.set_text( "" )
+                        
+                        buffer = ""
+                        for genero in juego.genero:
+                            buffer += genero.nombre + ", "
+                        self.wb_ficha_genero.set_text( buffer )
+                        
+                        buffer = ""
+                        for accesorio in juego.obligatorio:
+                            buffer += "%s, " % accesorio.nombre
+                            print os.path.join(config.WIITHON_FILES_RECURSOS_IMAGENES_ACCESORIO , "%s.jpg" % accesorio.nombre)
+                        for accesorio in juego.opcional:
+                            buffer += "%s (opcional), " % accesorio.nombre
+                            print os.path.join(config.WIITHON_FILES_RECURSOS_IMAGENES_ACCESORIO , "%s.jpg" % accesorio.nombre)
+                        self.wb_ficha_accesorio.set_text( buffer )
+                        
+                        buffer = ""    
+                        for rating_content in juego.rating_contents:
+                            buffer += "%s, " % rating_content.valor
+                        self.wb_ficha_ranking.set_text( "%s (%s+): %s" % (juego.rating_type.tipo, juego.rating_value.valor , buffer) )
+                        
+                        if juego.wifi_players == 0:
+                            self.wb_ficha_online.set_text( _("No") )
+                        else:
+                            buffer = ""
+                            for feature_online in juego.features:
+                                buffer += "%s, " % feature_online.valor
+                            if juego.wifi_players == 1:
+                                buffer = _("Sí, 1 jugador (%s)") % buffer
+                            else:
+                                buffer = _("Sí, %d jugadores (%s)") % (juego.wifi_players, buffer)
+                            self.wb_ficha_online.set_text( buffer )
+                            
+                        if juego.input_players == 1:
+                            self.wb_ficha_num_jugadores.set_text( _("1 jugador") )
+                        else:
+                            self.wb_ficha_num_jugadores.set_text( _("%d jugadores") % juego.input_players )
+                                                
+                        # esperamos a que pulse cerrar
+                        res = self.wb_ficha_juego.run()
+                        self.wb_ficha_juego.hide()
+                    
                     else:
-                        self.wb_ficha_online.set_text( "Si (%d jugadores)" % juego.wifi_players )
-
-                    self.wb_ficha_fecha_lanzamiento.set_text( "%s" % (juego.fecha_lanzamiento) )
-                    self.wb_ficha_desarrollador.set_text( juego.developer )
-                    self.wb_ficha_editor.set_text( juego.publisher )
-                    
-                    # synopsis
-                    sql = util.decode("idgame=='%s' and lang='%s'" % (self.sel_juego.clave, "ES"))
-                    descripcion = session.query(JuegoDescripcion).filter(sql).first()
-                    if descripcion == None:
-                        sql = util.decode("idgame=='%s' and lang='%s'" % (self.sel_juego.clave, "EN"))
-                        descripcion = session.query(JuegoDescripcion).filter(sql).first()
-
-                    if descripcion != None:
-                        self.wb_ficha_titulo.set_text( descripcion.title )
-                        self.wb_ficha_synopsis_buffer.set_text( descripcion.synopsis )
-                    else:
-                        self.wb_ficha_titulo.set_text( juego.name )
-                    
-                    res = self.wb_ficha_juego.run()
-                    self.wb_ficha_juego.hide()
-                    
-                    print "--------------- accesorios obligatorios ------------"
-                    for accesorio in juego.obligatorio:
-                        print accesorio
-
-                    print "--------------- accesorios opcionales ------------"
-                    for accesorio in juego.opcional:
-                        print accesorio
+                        self.alert('warning', _('No hay datos de este juego. Intente actualizar la base de datos.'))
                         
-                    print "--------------- rating contents ------------"
-                    for accesorio in juego.rating_contents:
-                        print accesorio
-                        
-                    print "--------------- features online ------------"
-                    for accesorio in juego.features:
-                        print accesorio
-                        
-                    print "--------------- genero del juego ------------"
-                    for accesorio in juego.genero:
-                        print accesorio
-                
                 else:
-                    self.alert('error', 'No hay datos de este juego. Intente actualizar la base de datos.')
+                    self.alert("warning" , _("No has seleccionado ningun juego"))
                 
         elif event.button == 3:
             popup = self.uimgr.get_widget('/GamePopup')

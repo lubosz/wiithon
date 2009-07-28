@@ -8,7 +8,7 @@ import glob
 
 import util
 from util import NonRepeatList
-from particion import Particion
+from wiitdb_schema import Particion
 import config
 
 class WiithonCLI:

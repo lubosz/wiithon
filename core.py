@@ -16,8 +16,7 @@ import shutil
 
 import util
 from util import NonRepeatList, SintaxisInvalida
-from particion import Particion
-from juego import Juego
+from wiitdb_schema import Juego, Particion
 import config
 
 class WiithonCORE:
@@ -25,18 +24,46 @@ class WiithonCORE:
     # index 0 -> IDGAME o identificador único del juego
     # index 1 -> Nombre del juego
     # index 2 -> Tamaño en GB redondeado a 2 cifras
-    def getListaJuegos(self , DEVICE):
-        
-        # si pasa el objeto, cogemos el string que nos interesa
-        if isinstance(DEVICE, Particion):
-            DEVICE = DEVICE.device
-        
-        comando = "%s -p %s ls" % (config.WBFS_APP, DEVICE)
+    def getListaJuegos(self , particion):        
+        comando = "%s -p %s ls" % (config.WBFS_APP, particion.device)
         lineas = util.getSTDOUT_iterador( comando )
         salida = []
         for linea in lineas:
-            salida.append(Juego(linea, DEVICE))
+            cachos = linea.strip().split(config.SEPARADOR)
+            try:
+                juego = Juego(cachos)
+            except:
+                idgame = util.decode(cachos[0])
+                sql = util.decode("idgame=='%s'" % (idgame))
+                juego = session.query(Juego).filter(sql).first()
+            
+            if juego != None:
+                juego.particiones.append(particion)
+                salida.append(juego)
+
         return salida
+
+    # Devuelve la lista de particiones
+    def getListaParticiones(self, detector = config.DETECTOR_WBFS):
+        salida = util.getSTDOUT_NOERROR_iterador(detector)
+
+        listaParticiones = []
+
+        for linea in salida:
+            if linea.find("/dev/") != -1:
+                cachos = linea.strip().split(config.SEPARADOR)
+                try:
+                    particion = Particion(cachos)
+                except:
+                    device = util.decode(cachos[0])
+                    sql = util.decode("device=='%s'" % (device))
+                    particion = session.query(Particion).filter(sql).first()
+                
+                if particion != None:
+                    listaParticiones.append(particion)
+
+        return listaParticiones
+
 
     # renombra el ISO de un IDGAME que esta en DEVICE
     def renombrarNOMBRE(self , DEVICE , IDGAME , NUEVO_NOMBRE):
@@ -248,20 +275,6 @@ class WiithonCORE:
             if ( not self.descargarDisco( juego[0] ) ):
                 ok = False
         return ok
-
-    # Devuelve la lista de particiones
-    def getListaParticiones(self, detector = config.DETECTOR_WBFS):
-        salida = util.getSTDOUT_NOERROR_iterador(config.DETECTOR_WBFS)
-
-        listaParticiones = []
-
-        for linea in salida:
-            if linea.find("/dev/") != -1:
-                try:
-                    listaParticiones.append(Particion(linea))
-                except SintaxisInvalida:
-                    pass
-        return listaParticiones
 
     # Devuelve el nombre del ISO que hay dentro de un RAR
     def getNombreISOenRAR(self , nombreRAR):
