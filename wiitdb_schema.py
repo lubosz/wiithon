@@ -15,19 +15,18 @@ import os
 from sqlalchemy import *
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import mapper, relation, backref, sessionmaker
-from sqlalchemy.ext.associationproxy import association_proxy
 
 import config
 import util
 
 ###### PARA EVITAR PROBLEMAS DE RECURRENCIA ##########
-
+'''
 from sqlalchemy import pool
 from sqlalchemy.databases.firebird import dialect
 
 # Force SA to use a single connection per thread
 dialect.poolclass = pool.SingletonThreadPool
-  
+'''
 ###############################################
 
 Base = declarative_base()
@@ -38,8 +37,8 @@ class Companie(Base):
     __tablename__ = 'companie'
     
     idCompanie = Column('idCompanie', Integer, primary_key=True)
-    code = Column( 'code', VARCHAR(2)   )
-    name = Column( 'name', VARCHAR(255) )
+    code = Column( 'code', VARCHAR(2) )#, index=True, unique=True)
+    name = Column( 'name', VARCHAR(255))
 
     def __init__(self, code, name):    
         self.code = util.decode(code).strip()
@@ -48,7 +47,7 @@ class Companie(Base):
     def __repr__(self):
         return "%s - %s" % (self.code, self.name)
 
-Index('idUnico_companie', Companie.code, unique=True)
+Index('idUnico_companie', Companie.c.code, unique=True)
 
 ## EMPIEZA RATING
 
@@ -65,7 +64,7 @@ class RatingValue(Base):
     def __repr__(self):
         return "%s" % (self.valor)
 
-Index('idUnico_rating_value', RatingValue.idRatingType, RatingValue.valor, unique=True)
+Index('idUnico_rating_value', RatingValue.c.idRatingType, RatingValue.c.valor, unique=True)
 
 class RatingContent(Base):
     __tablename__ = 'rating_content'
@@ -80,7 +79,7 @@ class RatingContent(Base):
     def __repr__(self):
         return "%s" % (self.valor)
         
-Index('idUnico_rating_content', RatingContent.idRatingType, RatingContent.valor, unique=True)
+Index('idUnico_rating_content', RatingContent.c.idRatingType, RatingContent.c.valor, unique=True)
 
 class RatingType(Base):
     __tablename__ = 'rating_type'
@@ -97,7 +96,7 @@ class RatingType(Base):
     def __repr__(self):
         return "%s" % (self.tipo)
         
-Index('idUnico_rating_type', RatingType.tipo, unique=True)
+Index('idUnico_rating_type', RatingType.c.tipo, unique=True)
 
 rel_rating_content_juego = Table("rel_rating_content_juego", Base.metadata, 
     Column("idJuegoWIITDB", Integer, ForeignKey('juego_wiitdb.idJuegoWIITDB')),
@@ -116,7 +115,7 @@ class OnlineFeatures(Base):
     def __repr__(self):
         return "%s" % (self.valor)
     
-Index('idUnico_online_features', OnlineFeatures.valor, unique=True)
+Index('idUnico_online_features', OnlineFeatures.c.valor, unique=True)
 
 rel_online_features_juego = Table("rel_online_features_juego", Base.metadata, 
     Column("idJuegoWIITDB", Integer, ForeignKey('juego_wiitdb.idJuegoWIITDB')),
@@ -146,7 +145,7 @@ class JuegoDescripcion(Base):
             value = util.decode(value)
         object.__setattr__(self, name, value)
 
-Index('idUnico_juego_descripcion', JuegoDescripcion.idJuegoWIITDB, JuegoDescripcion.lang, unique=True)
+Index('idUnico_juego_descripcion', JuegoDescripcion.c.idJuegoWIITDB, JuegoDescripcion.c.lang, unique=True)
 
 class Rom(Base):
     __tablename__ = 'rom'
@@ -170,8 +169,6 @@ class Rom(Base):
 
     def __repr__(self):
         return "Ver. %s - %s (%.2f GB)" % (self.version, self.name, self.size/1024.0/1024.0)
-        
-#Index('idUnico_rom', Rom.version, Rom.name, unique=True)
 
 class Genero(Base):
     __tablename__ = 'genero'
@@ -185,7 +182,7 @@ class Genero(Base):
     def __repr__(self):
         return "%s" % (self.nombre)
 
-Index('idUnico_genero', Genero.nombre, unique=True)
+Index('idUnico_genero', Genero.c.nombre, unique=True)
         
 rel_juego_genero = Table("rel_juego_genero", Base.metadata, 
     Column("idJuegoWIITDB", Integer, ForeignKey('juego_wiitdb.idJuegoWIITDB')),
@@ -206,7 +203,7 @@ class Accesorio(Base):
     def __repr__(self):
         return "%s %s" % (self.nombre, self.descripcion)
         
-Index('idUnico_accesorio', Accesorio.nombre, unique=True)
+Index('idUnico_accesorio', Accesorio.c.nombre, unique=True)
 
 rel_accesorio_juego_obligatorio = Table("rel_accesorio_juego_obligatorio", Base.metadata, 
     Column("idJuegoWIITDB", Integer, ForeignKey('juego_wiitdb.idJuegoWIITDB')),
@@ -270,7 +267,7 @@ class JuegoWIITDB(Base):
     def __repr__(self):
         return "%s - %s" % (self.idgame, self.name)
 
-Index('idUnico_juego_wiitdb', JuegoWIITDB.idgame, unique=True)
+Index('idUnico_juego_wiitdb', JuegoWIITDB.c.idgame, unique=True)
 
 class Particion(Base):
     __tablename__ = 'particion'
@@ -281,7 +278,7 @@ class Particion(Base):
     usado = Column('usado', Float)
     libre = Column('libre', Float)
     total = Column('total', Float)
-    fabricante = Column('device', Unicode(255))
+    fabricante = Column('fabricante', Unicode(255))
     
     def __init__(self, cachos):
         if(len(cachos)==6+1):
@@ -305,10 +302,15 @@ class Particion(Base):
         else:
             raise SintaxisInvalida
 
+    def __setattr__(self, name, value):
+        if isinstance(value, str):
+            value = util.decode(value)
+        object.__setattr__(self, name, value)
+
     def __repr__(self):
         return "%s (%s) %.0f GB" % (self.device, self.fabricante, self.total)
         
-Index('idUnico_particion', Particion.device, unique=True)
+Index('idUnico_particion', Particion.c.device, unique=True)
 
 rel_particion_juego = Table("rel_particion_juego", Base.metadata, 
     Column("idParticion", Integer, ForeignKey('particion.idParticion')),
@@ -319,20 +321,18 @@ class Juego(Base):
     __tablename__ = 'juego'
 
     idJuego = Column('idJuego', Integer, primary_key=True)
-    idJuegoWIITDB = Column('idJuegoWIITDB', Integer , ForeignKey('juego_wiitdb.idJuegoWIITDB'))
     idgame = Column('idgame', VARCHAR(6))
     title = Column('title', Unicode(255))
     size = Column('size', Float)
 
-    juego_wiitdb = relation(JuegoWIITDB, primaryjoin='Juego.idgame==JuegoWIITDB.idgame', foreign_keys='Juego.idgame')
-
-    particiones = relation(Particion, secondary=rel_particion_juego, backref='juego')
+    juego_wiitdb = relation(JuegoWIITDB, primaryjoin=idgame==JuegoWIITDB.c.idgame, foreign_keys=JuegoWIITDB.c.idgame)
+    particion = relation(Particion, secondary=rel_particion_juego, uselist=False)
 
     def __init__(self , idgame , title , size):
         self.idgame = util.decode(idgame)
         self.title = util.decode(title)
         self.size = float(size)
-        
+
     def __init__(self, cachos):
         if(len(cachos)==3):
             self.idgame = util.decode(cachos[0])
@@ -340,43 +340,15 @@ class Juego(Base):
             self.size = float(cachos[2])
         else:
             raise SintaxisInvalida
+            
+    def __setattr__(self, name, value):
+        if isinstance(value, str):
+            value = util.decode(value)
+        object.__setattr__(self, name, value)
 
     def __repr__(self):
-        return "%s (%s) %s" % (self.title, self.idgame, self.device)
-
-Index('idUnico_juego', Juego.idgame, unique=True)
+        return "%s (%s) %.2f" % (self.title, self.idgame, self.size)
 
 #############################################################################
 
 util.crearBDD(Base.metadata)
-
-'''
-Documentación: http://www.sqlalchemy.org/docs/05/ormtutorial.html
-#define-and-create-a-table
-Ojo, mi ubuntu va con SQLAlchemy 0.4 pero el último es 0.5x
-Aquí un wiki con las diferencias:
-http://www.sqlalchemy.org/trac/wiki/05Migration
-'''
-
-import os
-
-from sqlalchemy import *
-from sqlalchemy.ext.declarative import declarative_base
-from sqlalchemy.orm import relation, backref, sessionmaker
-
-import config
-import util
-from util import SintaxisInvalida
-
-
-'''
-# http://www.mail-archive.com/sqlalchemy@googlegroups.com/msg09381.html
-
-mapper(Juego , tabla_juegos, properties={
-    'wiitdb_juegos':relation(JuegoWIITDB, 
-        primaryjoin=tabla_juegos.c.idgame==tabla_wiitdb_juegos.c.idgame,
-        _local_remote_pairs=[(tabla_juegos.c.idgame, tabla_wiitdb_juegos.c.idgame)],
-        foreign_keys=[tabla_wiitdb_juegos.c.idgame],
-    )
-})
-'''

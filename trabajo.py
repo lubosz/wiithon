@@ -192,15 +192,20 @@ class PoolTrabajo(Pool , Thread):
         return exito
 
     def extraer(self , core , trabajo , juego , destino):
+        
         exito = False
         
         if self.callback_empieza_progreso:
             self.callback_empieza_progreso(trabajo)
+        else:
+            print "no hay progreso que empezar"
         
         exito = core.extraerJuego(juego, destino)
         
         if self.callback_termina_progreso:
             self.callback_termina_progreso(trabajo)
+        else:
+            print "no hay progreso que terminar"
         
         return exito
 

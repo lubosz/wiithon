@@ -33,20 +33,18 @@ install_auto: uninstall dependencias install
 dependencies: dependencias
 
 dependencias:
-	$(INSTALL_PKG) intltool imagemagick python-gtk2 python-glade2 python-sexy python-sqlalchemy gnome-icon-theme
-	-@$(INSTALL_PKG) libc6-dev-i386
+	$(INSTALL_PKG) libc6 libc6-dev intltool imagemagick python-gtk2 python-glade2 python-sexy python-sqlalchemy gnome-icon-theme
+	-@$(INSTALL_PKG) libc6-dev-i386 libc6-i386	
 	@echo "=================================================================="
 	@echo "Install depends"
 	@echo "=================================================================="
-#
-#permissions_fix:
+
 #	gpasswd -a $(USER) disk
-#	@echo "=================================================================="
-#	@echo "Fix permissions for WBFS. If dont detect, reboot GNOME / KDE"
-#	@echo "=================================================================="
-#
 
 compilar: libwbfs_binding/wiithon_wrapper ./po/locale/da_DK/LC_MESSAGES/wiithon.mo ./po/locale/fi_FI/LC_MESSAGES/wiithon.mo ./po/locale/tr_TR/LC_MESSAGES/wiithon.mo ./po/locale/ru_RU/LC_MESSAGES/wiithon.mo ./po/locale/ko_KR/LC_MESSAGES/wiithon.mo ./po/locale/it/LC_MESSAGES/wiithon.mo ./po/locale/sv_SE/LC_MESSAGES/wiithon.mo ./po/locale/es/LC_MESSAGES/wiithon.mo ./po/locale/pt_PT/LC_MESSAGES/wiithon.mo ./po/locale/en/LC_MESSAGES/wiithon.mo ./po/locale/nl_NL/LC_MESSAGES/wiithon.mo ./po/locale/nb_NO/LC_MESSAGES/wiithon.mo ./po/locale/ja_JP/LC_MESSAGES/wiithon.mo ./po/locale/fr/LC_MESSAGES/wiithon.mo ./po/locale/pt_BR/LC_MESSAGES/wiithon.mo ./po/locale/de/LC_MESSAGES/wiithon.mo
+
+fix_permisos:
+	-@sudo chown `whoami`\: * -R ~/.wiithon/
 
 install:
 	cp libwbfs_binding/wiithon_wrapper $(PREFIX)/share/wiithon

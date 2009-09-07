@@ -8,6 +8,7 @@ import gtk
 import subprocess
 import copy
 import httplib
+import re
 
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy import create_engine
@@ -50,7 +51,7 @@ def getMagicISO(imagenISO):
     f = open(imagenISO , "r")
     magic = f.read(6)
     f.close()
-    if len(magic) == 6:
+    if len(magic) == 6 and re.match("[A-Z0-9]{6}",magic):
         return magic
     else:
         return None

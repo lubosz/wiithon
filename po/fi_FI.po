@@ -17,6 +17,10 @@ msgid "%d juegos"
 msgstr ""
 
 #, python-format
+msgid "%d jugadores"
+msgstr ""
+
+#, python-format
 msgid "%d particiones WBFS"
 msgstr ""
 
@@ -25,7 +29,15 @@ msgid "%d/%d juegos"
 msgstr ""
 
 #, python-format
+msgid "%s NO se ha podido formatear"
+msgstr ""
+
+#, python-format
 msgid "%s no es un ningun juego de Wii"
+msgstr ""
+
+#, python-format
+msgid "%s se ha formateado correctamente"
 msgstr ""
 
 #, python-format
@@ -37,6 +49,9 @@ msgid "***************** DESCARGAR DISCO %s ********************"
 msgstr ""
 
 msgid "0 Tareas"
+msgstr ""
+
+msgid "1 jugador"
 msgstr ""
 
 msgid "1 particion WBFS"
@@ -149,6 +164,9 @@ msgid "Descargando disco de %s"
 msgstr ""
 
 msgid "Descomprimido correctamente"
+msgstr ""
+
+msgid "Desconocido"
 msgstr ""
 
 #, python-format
@@ -350,7 +368,13 @@ msgstr ""
 msgid "Inserte un juego de la Wii en su lector de DVD ..."
 msgstr ""
 
+msgid "Instala wiithon, no lo ejecutar desde ./wiithon.py"
+msgstr ""
+
 msgid "Interrumpido por el usuario"
+msgstr ""
+
+msgid "Interrumpido por el usuario."
 msgstr ""
 
 #, python-format
@@ -390,6 +414,9 @@ msgstr ""
 msgid "Necesitas tener instalado pyGTK o GTKv2"
 msgstr ""
 
+msgid "No"
+msgstr ""
+
 msgid "No cierre wiithon mientras esta animacion indique actividad"
 msgstr ""
 
@@ -412,6 +439,9 @@ msgid "No hay Juegos para renombrar"
 msgstr ""
 
 msgid "No hay Juegos que borrar"
+msgstr ""
+
+msgid "No hay datos de este juego. Intente actualizar la base de datos."
 msgstr ""
 
 #, python-format
@@ -442,6 +472,10 @@ msgid "No se ha encontrado ningun disco de la Wii"
 msgstr ""
 
 msgid "No se ha encontrado ninguna imagen ISO"
+msgstr ""
+
+#, python-format
+msgid "No se ha formateado %s"
 msgstr ""
 
 msgid ""
@@ -552,9 +586,12 @@ msgstr ""
 msgid "Selecciona la particion de destino:"
 msgstr ""
 
-msgid ""
-"Sergio Padrino <sergio.padrino@gmail.com>\n"
-"Ricardo Marmolejo Garc&#xED;a <makiolo@gmail.com>"
+#, python-format
+msgid "Si, %d jugadores (%s)"
+msgstr ""
+
+#, python-format
+msgid "Si, 1 jugador (%s)"
 msgstr ""
 
 msgid "Synopsis:"
@@ -643,8 +680,15 @@ msgstr ""
 msgid "quedan"
 msgstr ""
 
+msgid "s"
+msgstr ""
+
 msgid "wiithon no borra la ISO temporal, puedes borrarla si no la necesitas"
 msgstr ""
 
 msgid "No hay particiones WBFS!"
+msgstr ""
+
+#, python-format
+msgid " Esta seguro de formatear %s (S/N)? "
 msgstr ""

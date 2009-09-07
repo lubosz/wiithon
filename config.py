@@ -21,16 +21,9 @@ WIITHON_FILES_RECURSOS_IMAGENES_ACCESORIO = os.path.join(WIITHON_FILES_RECURSOS_
 HOME_WIITHON_CARATULAS = os.path.join(WIITHON_FILES_RECURSOS_IMAGENES , 'caratulas')
 HOME_WIITHON_DISCOS = os.path.join(WIITHON_FILES_RECURSOS_IMAGENES , 'discos')
 
-if not os.path.exists(os.path.join(WIITHON_FILES , ".bzr")):
-	LOCALE = "/usr/share/locale/"
-	WBFS_APP = os.path.join(WIITHON_FILES , "wiithon_wrapper")
-	ICONO = "/usr/share/pixmaps/wiithon.png"
-else:
-	LOCALE = os.path.join(WIITHON_FILES , "po")
-	LOCALE = os.path.join(LOCALE , "locale")
-	WBFS_APP = "libwbfs_binding/wiithon_wrapper.sh"
-	ICONO = os.path.join(WIITHON_FILES_RECURSOS , "icons")
-	ICONO = os.path.join(ICONO , "wiithon.png")
+LOCALE = "/usr/share/locale/"
+WBFS_APP = os.path.join(WIITHON_FILES , "wiithon_wrapper")
+ICONO = "/usr/share/pixmaps/wiithon.png"
 
 APP = "wiithon"
 HOME = os.environ['HOME']
@@ -75,4 +68,22 @@ NUM_HILOS = 15
 
 # Tipo caratula 3d|normal|panoramica|full
 TIPO_CARATULA = "normal"
+
+# idioma principal, se usa para el synopsys
+principal = "ES"
+
+# idioma auxiliar, se usa para el synopsys
+secundario = "EN"
+
+'''
+if not os.path.exists(os.path.join(WIITHON_FILES , ".bzr")):
+'''
+'''
+else:
+	LOCALE = os.path.join(WIITHON_FILES , "po")
+	LOCALE = os.path.join(LOCALE , "locale")
+	WBFS_APP = "libwbfs_binding/wiithon_wrapper.sh"
+	ICONO = os.path.join(WIITHON_FILES_RECURSOS , "icons")
+	ICONO = os.path.join(ICONO , "wiithon.png")
+'''
 

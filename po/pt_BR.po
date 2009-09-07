@@ -19,6 +19,10 @@ msgid "%d juegos"
 msgstr "%d jogos"
 
 #, python-format
+msgid "%d jugadores"
+msgstr ""
+
+#, python-format
 msgid "%d particiones WBFS"
 msgstr ""
 
@@ -27,8 +31,16 @@ msgid "%d/%d juegos"
 msgstr ""
 
 #, python-format
+msgid "%s NO se ha podido formatear"
+msgstr ""
+
+#, python-format
 msgid "%s no es un ningun juego de Wii"
 msgstr "%s não é nenhum jogo de Wii"
+
+#, python-format
+msgid "%s se ha formateado correctamente"
+msgstr ""
 
 #, python-format
 msgid "***************** DESCARGAR CARATULA %s ********************"
@@ -40,6 +52,9 @@ msgstr "***************** BAIXAR DISCO %s ********************"
 
 msgid "0 Tareas"
 msgstr "0 Tarefas"
+
+msgid "1 jugador"
+msgstr ""
 
 msgid "1 particion WBFS"
 msgstr ""
@@ -207,6 +222,9 @@ msgstr "Baixando disco de %s"
 
 msgid "Descomprimido correctamente"
 msgstr "Descompactado corretamente"
+
+msgid "Desconocido"
+msgstr ""
 
 #, python-format
 msgid "Desea copiar el juego %s (%s) a la particion %s?"
@@ -410,8 +428,14 @@ msgstr "Indique o NUM do jogo :"
 msgid "Inserte un juego de la Wii en su lector de DVD ..."
 msgstr "Insira um jogo do Wii em seu leitor de DVD ..."
 
+msgid "Instala wiithon, no lo ejecutar desde ./wiithon.py"
+msgstr ""
+
 msgid "Interrumpido por el usuario"
 msgstr "Interrompido pelo usuário"
+
+msgid "Interrumpido por el usuario."
+msgstr ""
 
 #, python-format
 msgid "Juego %s borrado correctamente"
@@ -450,6 +474,9 @@ msgstr "NÃO"
 msgid "Necesitas tener instalado pyGTK o GTKv2"
 msgstr "Precisa ter instalado pyGTK ou GTKv2"
 
+msgid "No"
+msgstr ""
+
 msgid "No cierre wiithon mientras esta animacion indique actividad"
 msgstr "Não feche o Wiithon enquanto esta animação indique atividade"
 
@@ -473,6 +500,9 @@ msgstr "Não existem jogos para renomear"
 
 msgid "No hay Juegos que borrar"
 msgstr "Não existem jogos para apagar"
+
+msgid "No hay datos de este juego. Intente actualizar la base de datos."
+msgstr ""
 
 #, python-format
 msgid "No hay nada que copiar en %s"
@@ -509,6 +539,10 @@ msgstr "Não foi encontrado nenhum disco do Wii"
 
 msgid "No se ha encontrado ninguna imagen ISO"
 msgstr "Não foi encontrada nenhuma imagem ISO"
+
+#, python-format
+msgid "No se ha formateado %s"
+msgstr ""
 
 msgid ""
 "No se han detectado particiones WBFS.\n"
@@ -618,12 +652,13 @@ msgstr "Os seguintes jogos serão copiados para"
 msgid "Selecciona la particion de destino:"
 msgstr "Selecione a partição de destino:"
 
-msgid ""
-"Sergio Padrino <sergio.padrino@gmail.com>\n"
-"Ricardo Marmolejo Garc&#xED;a <makiolo@gmail.com>"
+#, python-format
+msgid "Si, %d jugadores (%s)"
 msgstr ""
-"Sergio Padrino <sergio.padrino@gmail.com>\n"
-"Ricardo Marmolejo Garc&#xED;a <makiolo@gmail.com>"
+
+#, python-format
+msgid "Si, 1 jugador (%s)"
+msgstr ""
 
 msgid "Synopsis:"
 msgstr ""
@@ -722,11 +757,25 @@ msgstr "mais jogos"
 msgid "quedan"
 msgstr "são"
 
+msgid "s"
+msgstr ""
+
 msgid "wiithon no borra la ISO temporal, puedes borrarla si no la necesitas"
 msgstr "wiithon não apaga a ISO temporária, você pode apagá-la caso não necessite mais dela"
 
 msgid "No hay particiones WBFS!"
 msgstr ""
+
+#, python-format
+msgid " Esta seguro de formatear %s (S/N)? "
+msgstr ""
+
+#~ msgid ""
+#~ "Sergio Padrino <sergio.padrino@gmail.com>\n"
+#~ "Ricardo Marmolejo Garc&#xED;a <makiolo@gmail.com>"
+#~ msgstr ""
+#~ "Sergio Padrino <sergio.padrino@gmail.com>\n"
+#~ "Ricardo Marmolejo Garc&#xED;a <makiolo@gmail.com>"
 
 #~ msgid ""
 #~ "Comprobando integridad ...\n"

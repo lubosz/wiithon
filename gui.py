@@ -276,7 +276,7 @@ class WiithonGUI(GtkBuilderWrapper):
                 self.cargarParticionesModelo(self.tv_partitions_modelo , self.lParti)
                 
                 self.lJuegos = self.sincronizarParticionesWBFSconBDD(self.lParti)
-                self.lJuegos_filtrada = None
+                self.lJuegos_filtrada = self.refrescarListaJuegos()
 
                 self.sel_parti = FilaTreeview()
                 self.sel_parti.obj = self.lParti[0]               
@@ -457,7 +457,6 @@ class WiithonGUI(GtkBuilderWrapper):
 
         return modelo
 
-
     def cargarParticionesModelo(self , modelo , listaParticiones , deviceActual = "$%&/()=!"):
         modelo.clear()
         i = 0
@@ -627,18 +626,18 @@ class WiithonGUI(GtkBuilderWrapper):
 
     def refrescarListaJuegos(self):
 
-        if self.sel_parti != None:
-            sql = util.decode('juego.device="%s" and (juego.title like "%%%s%%" or juego.idgame like "%s%%")' % (self.sel_parti.obj.device , self.buscar , self.buscar))
-            query = session.query(Juego).outerjoin(JuegoWIITDB).filter(sql).order_by('lower(title)')
-        else:
-            sql = util.decode('juego.title like "%%%s%%" or juego.idgame like "%s%%"' % (self.buscar , self.buscar))
-            query = session.query(JuegoWIITDB).outerjoin(Juego).filter(sql).order_by('lower(title)')
-            
         subListaJuegos = []
-        # ordenado por nombre, insensible a mayusculas
-        for juego in query:
-            print juego.juego_wiitdb
-            subListaJuegos.append(juego)
+
+        if self.sel_parti != None:
+            sql = util.decode('particion.device="%s" and (juego.title like "%%%s%%" or juego.idgame like "%s%%")' % (self.sel_parti.obj.device , self.buscar , self.buscar))
+            query = session.query(Juego,Particion).filter(sql).order_by('lower(title)')
+            for juego in query:
+                subListaJuegos.append(juego[0])
+        else:
+            sql = util.decode('title like "%%%s%%" or idgame like "%s%%"' % (self.buscar , self.buscar))
+            query = session.query(Juego).filter(sql).order_by('lower(title)')
+            for juego in query:
+                subListaJuegos.append(juego)
 
         # cargar la lista sobre el Treeview
         self.cargarJuegosModelo(self.tv_games_modelo , subListaJuegos)
@@ -696,9 +695,13 @@ class WiithonGUI(GtkBuilderWrapper):
             porcentaje = usado * 100.0 / total
         except ZeroDivisionError:
             porcentaje = 0.0
-            
+        
         numJuegos = len(self.lJuegos)
-        numJuegos_filtrados = len(self.lJuegos_filtrada)
+        if self.lJuegos_filtrada != None:
+            numJuegos_filtrados = len(self.lJuegos_filtrada)
+        else:
+            numJuegos_filtrados = numJuegos
+
         if numJuegos_filtrados == numJuegos:
             self.wb_progresoEspacio.set_text(_("%d juegos") % (numJuegos))
         else:
@@ -719,7 +722,7 @@ class WiithonGUI(GtkBuilderWrapper):
         self.wb_box_progreso.show()
         
     def getBuscarJuego(self, listaJuegos, idgame):
-        if idgame == None:
+        if listaJuegos == None or idgame == None:
             return None
         encontrado = False
         i = 0
@@ -754,7 +757,7 @@ class WiithonGUI(GtkBuilderWrapper):
         if self.sel_juego != None:
             self.sel_juego.actualizar_columna(treeview)
             if self.sel_juego.it != None:
-                self.sel_juego.obj = self.getBuscarJuego(self.lJuegos, self.sel_juego.clave)
+                self.sel_juego.obj = self.getBuscarJuego(self.lJuegos_filtrada, self.sel_juego.clave)
                 self.ponerCaratula(self.sel_juego.clave, self.wb_img_caratula1)
                 self.ponerDisco(self.sel_juego.clave , self.wb_img_disco1)
 
@@ -811,27 +814,40 @@ class WiithonGUI(GtkBuilderWrapper):
                 
                     juego = self.sel_juego.obj.juego_wiitdb
                     
-                    if juego != None:
+                    if ((juego != None and isinstance(juego, Juego)) or (isinstance(juego, list) and len(juego) > 0)):
                         
+                        # si es una lista, cojo el primero
+                        if isinstance(juego, list):
+                            juego = juego[0]
+
+                        # poner caratulas
                         self.ponerCaratula(juego.idgame, self.wb_img_caratula2)
                         self.ponerDisco(juego.idgame, self.wb_img_disco2)
 
+                        # idgame
                         self.wb_ficha_idgame.set_text( juego.idgame )
+                        
+                        # fecha lanzamiento
                         if juego.fecha_lanzamiento != None:
                             self.wb_ficha_fecha_lanzamiento.set_text( "%s" % (juego.fecha_lanzamiento) )
                         else:
                             self.wb_ficha_fecha_lanzamiento.set_text( _("Desconocido") )
+                            
+                        # desarrollador
                         self.wb_ficha_desarrollador.set_text( juego.developer )
+                        
+                        # editorial
                         self.wb_ficha_editor.set_text( juego.publisher )
                         
+                        # titulo y synopsys
                         hayPrincipal = False
                         haySecundario = False
                         i = 0
                         while not hayPrincipal and i<len(juego.descripciones):
                             descripcion = juego.descripciones[i]
-                            if descripcion.lang == "EN":
+                            if descripcion.lang == config.secundario:
                                 haySecundario = True
-                            if descripcion.lang == "ES":
+                            if descripcion.lang == config.principal:
                                 hayPrincipal = True
                             if hayPrincipal or haySecundario:
                                 title = descripcion.title
@@ -846,25 +862,32 @@ class WiithonGUI(GtkBuilderWrapper):
                             self.wb_ficha_titulo.set_text( juego.name )
                             self.wb_ficha_synopsis_buffer.set_text( "" )
                         
+                        # generos
                         buffer = ""
                         for genero in juego.genero:
                             buffer += genero.nombre + ", "
                         self.wb_ficha_genero.set_text( buffer )
                         
+                        # accesorios obligatorios
                         buffer = ""
                         for accesorio in juego.obligatorio:
                             buffer += "%s, " % accesorio.nombre
-                            print os.path.join(config.WIITHON_FILES_RECURSOS_IMAGENES_ACCESORIO , "%s.jpg" % accesorio.nombre)
+                            #print os.path.join(config.WIITHON_FILES_RECURSOS_IMAGENES_ACCESORIO , "%s.jpg" % accesorio.nombre)
+                            
+                        # accesorios opcionales
                         for accesorio in juego.opcional:
                             buffer += "%s (opcional), " % accesorio.nombre
-                            print os.path.join(config.WIITHON_FILES_RECURSOS_IMAGENES_ACCESORIO , "%s.jpg" % accesorio.nombre)
+                            #print os.path.join(config.WIITHON_FILES_RECURSOS_IMAGENES_ACCESORIO , "%s.jpg" % accesorio.nombre)
+
                         self.wb_ficha_accesorio.set_text( buffer )
                         
+                        # clasificación PEGI
                         buffer = ""    
                         for rating_content in juego.rating_contents:
                             buffer += "%s, " % rating_content.valor
                         self.wb_ficha_ranking.set_text( "%s (%s+): %s" % (juego.rating_type.tipo, juego.rating_value.valor , buffer) )
                         
+                        # numero de jugadores wifi
                         if juego.wifi_players == 0:
                             self.wb_ficha_online.set_text( _("No") )
                         else:
@@ -872,11 +895,12 @@ class WiithonGUI(GtkBuilderWrapper):
                             for feature_online in juego.features:
                                 buffer += "%s, " % feature_online.valor
                             if juego.wifi_players == 1:
-                                buffer = _("Sí, 1 jugador (%s)") % buffer
+                                buffer = _("Si, 1 jugador (%s)") % buffer
                             else:
-                                buffer = _("Sí, %d jugadores (%s)") % (juego.wifi_players, buffer)
+                                buffer = _("Si, %d jugadores (%s)") % (juego.wifi_players, buffer)
                             self.wb_ficha_online.set_text( buffer )
                             
+                        # numero de jugadores en local
                         if juego.input_players == 1:
                             self.wb_ficha_num_jugadores.set_text( _("1 jugador") )
                         else:
@@ -885,10 +909,10 @@ class WiithonGUI(GtkBuilderWrapper):
                         # esperamos a que pulse cerrar
                         res = self.wb_ficha_juego.run()
                         self.wb_ficha_juego.hide()
-                    
+
                     else:
                         self.alert('warning', _('No hay datos de este juego. Intente actualizar la base de datos.'))
-                        
+
                 else:
                     self.alert("warning" , _("No has seleccionado ningun juego"))
                 
@@ -1039,9 +1063,11 @@ class WiithonGUI(GtkBuilderWrapper):
                         self.preferencia.ruta_extraer_iso = fc_extraer.get_current_folder()
 
                         # extraer *juego* en la ruta seleccionada
+                        print self.sel_juego.obj.particion
                         self.poolTrabajo.nuevoTrabajoExtraer(self.sel_juego.obj , fc_extraer.get_filename())
 
                 fc_extraer.destroy()
+                #fc_extraer.hide()
             else:
                 self.alert("warning" , _("No has seleccionado ningun juego"))
 
@@ -1099,7 +1125,9 @@ class WiithonGUI(GtkBuilderWrapper):
                         elif( util.getExtension(fichero) == "iso" ):
                             idgame = util.getMagicISO(fichero)
                             if idgame != None:
-                                sql = util.decode('idgame=="%s" and device=="%s"' % (idgame , self.sel_parti.obj.device))
+                                print len(idgame)
+                                print self.sel_parti.obj.device
+                                sql = util.decode("idgame=='%s' and device=='%s'" % (idgame , self.sel_parti.obj.device))
                                 self.juegoNuevo = session.query(Juego).filter(sql).first()
                                 if self.juegoNuevo == None:
                                     ficherosSeleccionados.append(fichero)

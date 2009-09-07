@@ -75,18 +75,18 @@ class WiithonCLI:
             listaParticiones = self.core.getListaParticiones(config.DETECTOR_WBFS_FAT32)
             self.sel_parti = self.get_elegir_particion(listaParticiones)
             try:
-                respuesta = raw_input("¿ Esta seguro de formatear %s (S/N)? " % self.sel_parti)
-                if respuesta.lower() == "s":
+                respuesta = raw_input(_("¿ Esta seguro de formatear %s (S/N)? ") % self.sel_parti)
+                if respuesta.lower() == _("s"):
                     if self.core.formatearWBFS(self.sel_parti):
-                        print "%s se ha formateado correctamente" % self.sel_parti
+                        print _("%s se ha formateado correctamente") % self.sel_parti
                     else:
-                        print "%s NO se ha podido formatear" % self.sel_parti
+                        print _("%s NO se ha podido formatear") % self.sel_parti
                 else:
-                    print "No se ha formateado %s" % self.sel_parti
+                    print _("No se ha formateado %s") % self.sel_parti
             except KeyboardInterrupt:
                 print
-                print "Interrumpido por el usuario."
-                print "No se ha formateado %s" % self.sel_parti
+                print _("Interrumpido por el usuario.")
+                print _("No se ha formateado %s") % self.sel_parti
         else:
             listaParticiones = self.core.getListaParticiones()
             self.sel_parti = self.get_elegir_particion(listaParticiones)
@@ -94,7 +94,7 @@ class WiithonCLI:
             DEVICE = self.sel_parti.device
             FABRICANTE = self.sel_parti.fabricante
 
-            listaJuegos = self.core.getListaJuegos(DEVICE)
+            listaJuegos = self.core.getListaJuegos(self.sel_parti)
             hayJuegos = len(listaJuegos) > 0
 
             # estamos dentro del if numParametros > 1:
@@ -105,9 +105,6 @@ class WiithonCLI:
                     self.mostrarEspacioLibre(DEVICE)
                 else:
                     print _("No tienes instalado ningun juego en %s") % (DEVICE)
-                    
-            elif ( parm1 == "formatear" or parm1 == "format"):
-                    print "Seguro que quiere formatear %s?" % DEVICE
             elif ( parm1 == "instalar" or parm1 == "install"):
                 try:
                     print _("Inserte un juego de la Wii en su lector de DVD ...")

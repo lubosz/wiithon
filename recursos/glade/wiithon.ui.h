@@ -25,8 +25,6 @@ char *s = N_("Ranking:");
 char *s = N_("Refrescar WBFS");
 char *s = N_("Renombrar");
 char *s = N_("Selecciona la particion de destino:");
-char *s = N_("Sergio Padrino <sergio.padrino@gmail.com>\n"
-             "Ricardo Marmolejo Garc&#xED;a <makiolo@gmail.com>");
 char *s = N_("Synopsis:");
 char *s = N_("TEXTO_LICENCIA");
 char *s = N_("Tiene Online?:");

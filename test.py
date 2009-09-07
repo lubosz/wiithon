@@ -6,18 +6,18 @@ import sys
 
 from wiitdb_xml import *
 
-if True:
+if False:
     from wiitdb_schema import *
-    from juego import *
 
     db =        util.getBDD()
     session =   util.getSesionBDD(db)
 
     i = 0
-    for juego in session.query(JuegoWIITDB).outerjoin(Juego):
-    #for juego in session.query(Juego).outerjoin(JuegoWIITDB):
-        print i
-        print juego
+    #for juego in session.query(JuegoWIITDB).outerjoin(Juego):
+    #for juego in session.query(Juego).filter(Juego.idgame==JuegoWIITDB.idgame):
+    #for juego in session.query(JuegoWIITDB).join(Juego):
+    for juego in session.query(Juego,Particion):
+        print juego[0]
         i += 1
 
     sys.exit(0)

@@ -19,32 +19,43 @@ from util import NonRepeatList, SintaxisInvalida
 from wiitdb_schema import Juego, Particion
 import config
 
+db =        util.getBDD()
+session =   util.getSesionBDD(db)
+
 class WiithonCORE:
     # Obtiene un list de juegos en una tabla de 3 columnas:
     # index 0 -> IDGAME o identificador único del juego
     # index 1 -> Nombre del juego
     # index 2 -> Tamaño en GB redondeado a 2 cifras
-    def getListaJuegos(self , particion):        
+    def getListaJuegos(self , particion):
+        
         comando = "%s -p %s ls" % (config.WBFS_APP, particion.device)
         lineas = util.getSTDOUT_iterador( comando )
         salida = []
         for linea in lineas:
             cachos = linea.strip().split(config.SEPARADOR)
-            try:
+
+            idgame = util.decode(cachos[0])
+            sql = util.decode("juego.idgame=='%s' and particion.device='%s'" % (idgame, particion.device))
+            juego = session.query(Juego,Particion).filter(sql).first()        
+            if juego == None:
                 juego = Juego(cachos)
-            except:
-                idgame = util.decode(cachos[0])
-                sql = util.decode("idgame=='%s'" % (idgame))
-                juego = session.query(Juego).filter(sql).first()
-            
-            if juego != None:
-                juego.particiones.append(particion)
-                salida.append(juego)
+                session.save(juego)
+            else:
+                juego = juego[0]
+                session.update(juego)
+
+            juego.particion = particion
+
+            salida.append(juego)
+        
+        session.commit()
 
         return salida
 
     # Devuelve la lista de particiones
     def getListaParticiones(self, detector = config.DETECTOR_WBFS):
+       
         salida = util.getSTDOUT_NOERROR_iterador(detector)
 
         listaParticiones = []
@@ -52,15 +63,20 @@ class WiithonCORE:
         for linea in salida:
             if linea.find("/dev/") != -1:
                 cachos = linea.strip().split(config.SEPARADOR)
-                try:
-                    particion = Particion(cachos)
-                except:
-                    device = util.decode(cachos[0])
-                    sql = util.decode("device=='%s'" % (device))
-                    particion = session.query(Particion).filter(sql).first()
+
+                device = util.decode(cachos[0])
+                sql = util.decode("device=='%s'" % (device))
+                particion = session.query(Particion).filter(sql).first()
                 
-                if particion != None:
-                    listaParticiones.append(particion)
+                if particion == None:
+                    particion = Particion(cachos)
+                    session.save(particion)
+                else:
+                    session.update(particion)
+
+                listaParticiones.append(particion)
+                
+        session.commit()
 
         return listaParticiones
 
@@ -99,14 +115,16 @@ class WiithonCORE:
         if isinstance(DEVICE, Particion):
             DEVICE = DEVICE.device
         
-        salida = util.getSTDOUT( config.WBFS_APP+" -p "+DEVICE+" df" )
+        comando = "%s -p %s df" % (config.WBFS_APP, DEVICE)
+        #salida = util.getSTDOUT( config.WBFS_APP+" -p "+DEVICE+" df" )
+        salida = util.getSTDOUT( comando )
         cachos = salida.split(config.SEPARADOR)
         if(len(cachos) == 3):
             try:
                 return [ float(cachos[0]) , float(cachos[1]) , float(cachos[2]) ]
             except:
                 pass
-        # en caso de algun error, devuelve una tupla de 3 de float a 0
+        # en caso error, devuelve una tupla de 3 de float a 0
         return [ 0.0 , 0.0 , 0.0 ]
 
     # borra el juego IDGAME
@@ -198,7 +216,7 @@ class WiithonCORE:
             DEVICE = DEVICE.device
         
         try:
-            comando = "%s -p %s clonar %s %s" % (config.WBFS_APP , juego.device , juego.idgame , DEVICE)
+            comando = "%s -p %s clonar %s %s" % (config.WBFS_APP , juego.particion.device , juego.idgame , DEVICE)
             salida = subprocess.call( comando , shell=True , stderr=subprocess.STDOUT , stdout=open(config.HOME_WIITHON_LOGS_PROCESO , "w") )
             return salida == 0
         except KeyboardInterrupt:
@@ -217,7 +235,7 @@ class WiithonCORE:
         if (self.existeDisco(IDGAME)):
             return True
         else:
-            print _("***************** DESCARGAR DISCO %s ********************" % (IDGAME))
+            print _("***************** DESCARGAR DISCO %s ********************") % (IDGAME)
             try:
                 origen = "http://www.wiiboxart.com/diskart/160/160/%.3s.png" % (IDGAME)
                 destino = self.getRutaDisco(IDGAME)
@@ -302,6 +320,7 @@ class WiithonCORE:
         except KeyboardInterrupt:
             return False
 
+    '''
     # FUNCIÓN de PRUEBAS, no es usado actualmente
     # Se pasa como parametro ej: /dev/sdb2
     def redimensionarParticionWBFS(self , DEVICE):
@@ -335,6 +354,7 @@ class WiithonCORE:
             print "4 bytes escritos."
         else:
             print "sin cambios."
+    '''
 
     # añade un *ISO* a un *DEVICE*
     def anadirISO(self , DEVICE , ISO):
@@ -365,7 +385,7 @@ class WiithonCORE:
             trabajoActual = os.getcwd()
             # cambiamos de directorio de trabajo
             os.chdir( destino )
-            comando = "%s -p %s extract %s" % (config.WBFS_APP, juego.device , juego.idgame)
+            comando = "%s -p %s extract %s" % (config.WBFS_APP, juego.particion.device , juego.idgame)
             salida = subprocess.call( comando , shell=True , stderr=subprocess.STDOUT , stdout=open(config.HOME_WIITHON_LOGS_PROCESO , "w") )
             # volvemos al directorio original
             os.chdir( trabajoActual )
@@ -374,7 +394,10 @@ class WiithonCORE:
             return False
 
     def formatearWBFS(self, particion):
-        comando = "%s -p %s formatear" % (config.WBFS_APP, particion.device)
-        salida = subprocess.call( comando , shell=True , stderr=subprocess.STDOUT )
-        return salida == 0
+        if particion.tipo == "fat32":
+            comando = "%s -p %s formatear" % (config.WBFS_APP, particion.device)
+            salida = subprocess.call( comando , shell=True , stderr=subprocess.STDOUT )
+            return salida == 0
+        else:
+            return False
 

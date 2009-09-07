@@ -481,7 +481,7 @@
     <property name="type_hint">normal</property>
     <property name="has_separator">False</property>
     <property name="program_name">Wiithon</property>
-    <property name="version">1.0</property>
+    <property name="version">1.1</property>
     <property name="copyright" translatable="yes">GNU GENERAL PUBLIC LICENSE Version 3</property>
     <property name="comments" translatable="yes">Un gestor de particiones WBFS facil de usar</property>
     <property name="website">https://launchpad.net/wiithon</property>
@@ -501,8 +501,13 @@ Sergio Padrino &lt;sergio.padrino@gmail.com&gt;
 </property>
     <property name="documenters">Ricardo Marmolejo Garc&#xED;a &lt;makiolo@gmail.com&gt;
 Jos&#xE9;-Luis Segura &lt;josel.segura@gmail.com&gt;</property>
-    <property name="translator_credits" translatable="yes">Sergio Padrino &lt;sergio.padrino@gmail.com&gt;
-Ricardo Marmolejo Garc&#xED;a &lt;makiolo@gmail.com&gt;</property>
+    <property name="translator_credits">Spanish: makiolo (Ricardo Marmolejo Garc&#xED;a) &lt;makiolo@gmail.com&gt; [es.po]
+Franc&#xE9;s: carel &lt;carel.foobar@free.fr&gt; [fr.po]
+English: Koen Maes &lt;whacker@gmail.com&gt; [en.po]
+Dutch: Koen Maes &lt;whacker@gmail.com&gt; [nl_NL.po]
+German: Speedygonzales (Markus Gewiss) &lt;fcpower78@googlemail.com&gt; [de.po]
+Brazilian Portuguese: Alex Ant&#xE3;o &lt;alexcarlosantao@gmail.com&gt; [pt_BR.po]
+</property>
     <child internal-child="vbox">
       <object class="GtkVBox" id="dialog-vbox3">
         <property name="visible">True</property>
@@ -538,14 +543,14 @@ Ricardo Marmolejo Garc&#xED;a &lt;makiolo@gmail.com&gt;</property>
     <property name="type_hint">normal</property>
     <property name="has_separator">False</property>
     <child internal-child="vbox">
-      <object class="GtkVBox" id="dialog-vbox2">
+      <object class="GtkVBox" id="c1on1_dialog-vbox2">
         <property name="visible">True</property>
         <property name="spacing">2</property>
         <child>
-          <object class="GtkVBox" id="vbox1">
+          <object class="GtkVBox" id="c1on1_vbox1">
             <property name="visible">True</property>
             <child>
-              <object class="GtkLabel" id="label1">
+              <object class="GtkLabel" id="c1on1_label1">
                 <property name="visible">True</property>
                 <property name="ypad">6</property>
                 <property name="label" translatable="yes">Selecciona la particion de destino:</property>
@@ -556,7 +561,7 @@ Ricardo Marmolejo Garc&#xED;a &lt;makiolo@gmail.com&gt;</property>
               </packing>
             </child>
             <child>
-              <object class="GtkScrolledWindow" id="scrolledwindow1">
+              <object class="GtkScrolledWindow" id="c1on1_scrolledwindow1">
                 <property name="visible">True</property>
                 <property name="can_focus">True</property>
                 <property name="hscrollbar_policy">automatic</property>
@@ -575,7 +580,7 @@ Ricardo Marmolejo Garc&#xED;a &lt;makiolo@gmail.com&gt;</property>
               </packing>
             </child>
             <child>
-              <object class="GtkLabel" id="label2">
+              <object class="GtkLabel" id="c1on1_label2">
                 <property name="visible">True</property>
                 <property name="label" translatable="yes">Nota, la copia no sobreescribire nada, solo copia juegos que no tenga el destino</property>
                 <property name="wrap">True</property>
@@ -591,11 +596,11 @@ Ricardo Marmolejo Garc&#xED;a &lt;makiolo@gmail.com&gt;</property>
           </packing>
         </child>
         <child internal-child="action_area">
-          <object class="GtkHButtonBox" id="dialog-action_area2">
+          <object class="GtkHButtonBox" id="c1on1_dialog-action_area2">
             <property name="visible">True</property>
             <property name="layout_style">end</property>
             <child>
-              <object class="GtkButton" id="button2">
+              <object class="GtkButton" id="c1on1_button2">
                 <property name="label" translatable="yes">gtk-cancel</property>
                 <property name="visible">True</property>
                 <property name="can_focus">True</property>
@@ -609,7 +614,7 @@ Ricardo Marmolejo Garc&#xED;a &lt;makiolo@gmail.com&gt;</property>
               </packing>
             </child>
             <child>
-              <object class="GtkButton" id="button1">
+              <object class="GtkButton" id="c1on1_button1">
                 <property name="label" translatable="yes">Copiar todo el disco*</property>
                 <property name="visible">True</property>
                 <property name="can_focus">True</property>
@@ -622,7 +627,7 @@ Ricardo Marmolejo Garc&#xED;a &lt;makiolo@gmail.com&gt;</property>
               </packing>
             </child>
             <child>
-              <object class="GtkButton" id="button3">
+              <object class="GtkButton" id="c1on1_button3">
                 <property name="label" translatable="yes">Copiar el juego seleccionado*</property>
                 <property name="visible">True</property>
                 <property name="can_focus">True</property>
@@ -644,9 +649,9 @@ Ricardo Marmolejo Garc&#xED;a &lt;makiolo@gmail.com&gt;</property>
       </object>
     </child>
     <action-widgets>
-      <action-widget response="0">button2</action-widget>
-      <action-widget response="2">button1</action-widget>
-      <action-widget response="1">button3</action-widget>
+      <action-widget response="0">c1on1_button2</action-widget>
+      <action-widget response="2">c1on1_button1</action-widget>
+      <action-widget response="1">c1on1_button3</action-widget>
     </action-widgets>
   </object>
   <object class="GtkDialog" id="ficha_juego">
@@ -655,15 +660,15 @@ Ricardo Marmolejo Garc&#xED;a &lt;makiolo@gmail.com&gt;</property>
     <property name="type_hint">normal</property>
     <property name="has_separator">False</property>
     <child internal-child="vbox">
-      <object class="GtkVBox" id="dialogo-ficha">
+      <object class="GtkVBox" id="ficha_dialogo-ficha">
         <property name="visible">True</property>
         <property name="orientation">vertical</property>
         <property name="spacing">2</property>
         <child>
-          <object class="GtkHBox" id="hbox1">
+          <object class="GtkHBox" id="ficha_hbox1">
             <property name="visible">True</property>
             <child>
-              <object class="GtkVBox" id="vbox2">
+              <object class="GtkVBox" id="ficha_vbox2">
                 <property name="width_request">160</property>
                 <property name="visible">True</property>
                 <property name="orientation">vertical</property>
@@ -692,7 +697,7 @@ Ricardo Marmolejo Garc&#xED;a &lt;makiolo@gmail.com&gt;</property>
                   </packing>
                 </child>
                 <child>
-                  <object class="GtkHSeparator" id="hseparator4">
+                  <object class="GtkHSeparator" id="ficha_hseparator4">
                     <property name="visible">True</property>
                   </object>
                   <packing>
@@ -721,7 +726,7 @@ Ricardo Marmolejo Garc&#xED;a &lt;makiolo@gmail.com&gt;</property>
               </packing>
             </child>
             <child>
-              <object class="GtkVSeparator" id="vseparator1">
+              <object class="GtkVSeparator" id="ficha_vseparator1">
                 <property name="visible">True</property>
                 <property name="orientation">vertical</property>
               </object>
@@ -731,16 +736,16 @@ Ricardo Marmolejo Garc&#xED;a &lt;makiolo@gmail.com&gt;</property>
               </packing>
             </child>
             <child>
-              <object class="GtkVBox" id="vbox1">
+              <object class="GtkVBox" id="ficha_vbox1">
                 <property name="visible">True</property>
                 <property name="orientation">vertical</property>
                 <child>
-                  <object class="GtkTable" id="table1">
+                  <object class="GtkTable" id="ficha_table1">
                     <property name="visible">True</property>
                     <property name="n_rows">8</property>
                     <property name="n_columns">2</property>
                     <child>
-                      <object class="GtkLabel" id="label1">
+                      <object class="GtkLabel" id="ficha_label1">
                         <property name="visible">True</property>
                         <property name="xalign">0.89999997615814209</property>
                         <property name="label" translatable="yes">Titulo:</property>
@@ -760,7 +765,7 @@ Ricardo Marmolejo Garc&#xED;a &lt;makiolo@gmail.com&gt;</property>
                       </packing>
                     </child>
                     <child>
-                      <object class="GtkLabel" id="label5">
+                      <object class="GtkLabel" id="ficha_label5">
                         <property name="visible">True</property>
                         <property name="xalign">0.89999997615814209</property>
                         <property name="label" translatable="yes">Num de jugadores:</property>
@@ -771,7 +776,7 @@ Ricardo Marmolejo Garc&#xED;a &lt;makiolo@gmail.com&gt;</property>
                       </packing>
                     </child>
                     <child>
-                      <object class="GtkLabel" id="label6">
+                      <object class="GtkLabel" id="ficha_label6">
                         <property name="visible">True</property>
                         <property name="xalign">0.89999997615814209</property>
                         <property name="label" translatable="yes">Tiene Online?:</property>
@@ -806,7 +811,7 @@ Ricardo Marmolejo Garc&#xED;a &lt;makiolo@gmail.com&gt;</property>
                       </packing>
                     </child>
                     <child>
-                      <object class="GtkLabel" id="label13">
+                      <object class="GtkLabel" id="ficha_label13">
                         <property name="visible">True</property>
                         <property name="xalign">0.029999999329447746</property>
                         <property name="label" translatable="yes">Synopsis:</property>
@@ -818,7 +823,7 @@ Ricardo Marmolejo Garc&#xED;a &lt;makiolo@gmail.com&gt;</property>
                       </packing>
                     </child>
                     <child>
-                      <object class="GtkScrolledWindow" id="scrolledwindow1">
+                      <object class="GtkScrolledWindow" id="ficha_scrolledwindow1">
                         <property name="visible">True</property>
                         <property name="can_focus">True</property>
                         <property name="hscrollbar_policy">never</property>
@@ -842,7 +847,7 @@ Ricardo Marmolejo Garc&#xED;a &lt;makiolo@gmail.com&gt;</property>
                       </packing>
                     </child>
                     <child>
-                      <object class="GtkLabel" id="label14">
+                      <object class="GtkLabel" id="ficha_label14">
                         <property name="visible">True</property>
                         <property name="xalign">0.89999997615814209</property>
                         <property name="label" translatable="yes">Genero:</property>
@@ -853,7 +858,7 @@ Ricardo Marmolejo Garc&#xED;a &lt;makiolo@gmail.com&gt;</property>
                       </packing>
                     </child>
                     <child>
-                      <object class="GtkLabel" id="label15">
+                      <object class="GtkLabel" id="ficha_label15">
                         <property name="visible">True</property>
                         <property name="xalign">0.89999997615814209</property>
                         <property name="label" translatable="yes">Accesorios:</property>
@@ -864,7 +869,7 @@ Ricardo Marmolejo Garc&#xED;a &lt;makiolo@gmail.com&gt;</property>
                       </packing>
                     </child>
                     <child>
-                      <object class="GtkLabel" id="label16">
+                      <object class="GtkLabel" id="ficha_label16">
                         <property name="visible">True</property>
                         <property name="xalign">0.89999997615814209</property>
                         <property name="label" translatable="yes">Ranking:</property>
@@ -913,12 +918,12 @@ Ricardo Marmolejo Garc&#xED;a &lt;makiolo@gmail.com&gt;</property>
                   </packing>
                 </child>
                 <child>
-                  <object class="GtkTable" id="table2">
+                  <object class="GtkTable" id="ficha_table2">
                     <property name="visible">True</property>
                     <property name="n_rows">3</property>
                     <property name="n_columns">2</property>
                     <child>
-                      <object class="GtkLabel" id="label9">
+                      <object class="GtkLabel" id="ficha_label9">
                         <property name="visible">True</property>
                         <property name="xalign">0.89999997615814209</property>
                         <property name="label" translatable="yes">Desarrollador:</property>
@@ -929,7 +934,7 @@ Ricardo Marmolejo Garc&#xED;a &lt;makiolo@gmail.com&gt;</property>
                       </packing>
                     </child>
                     <child>
-                      <object class="GtkLabel" id="label10">
+                      <object class="GtkLabel" id="ficha_label10">
                         <property name="visible">True</property>
                         <property name="xalign">0.89999997615814209</property>
                         <property name="label" translatable="yes">Editor:</property>
@@ -964,7 +969,7 @@ Ricardo Marmolejo Garc&#xED;a &lt;makiolo@gmail.com&gt;</property>
                       </packing>
                     </child>
                     <child>
-                      <object class="GtkLabel" id="label3">
+                      <object class="GtkLabel" id="ficha_label3">
                         <property name="visible">True</property>
                         <property name="xalign">0.89999997615814209</property>
                         <property name="label" translatable="yes">Fecha de lanzamiento:</property>
@@ -1000,7 +1005,7 @@ Ricardo Marmolejo Garc&#xED;a &lt;makiolo@gmail.com&gt;</property>
             <property name="visible">True</property>
             <property name="layout_style">end</property>
             <child>
-              <object class="GtkButton" id="button2">
+              <object class="GtkButton" id="ficha_button2">
                 <property name="label" translatable="yes">gtk-close</property>
                 <property name="visible">True</property>
                 <property name="can_focus">True</property>
@@ -1023,7 +1028,7 @@ Ricardo Marmolejo Garc&#xED;a &lt;makiolo@gmail.com&gt;</property>
       </object>
     </child>
     <action-widgets>
-      <action-widget response="0">button2</action-widget>
+      <action-widget response="0">ficha_button2</action-widget>
     </action-widgets>
   </object>
 </interface>

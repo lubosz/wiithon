@@ -307,7 +307,7 @@ class WiiTDBXML(Thread):
                         # callback cada 1%
                         if cont % (self.games / 100) == 0:
                             self.callback_spinner(cont, self.games)
-                        
+
                         nodo = nodo.next
 
                     elif nodo.name == "companies":
@@ -319,14 +319,12 @@ class WiiTDBXML(Thread):
                                     if nodo.name == "company":
                                         code = self.leerAtributo(nodo, 'code')
                                         name = self.leerAtributo(nodo, 'name')
-                                        
                                         sql = util.decode("code=='%s'" % (code))
                                         companie = session.query(Companie).filter(sql).first()
                                         if companie == None:
                                             companie = Companie(code, name)
                                             session.save(companie)
                                             self.callback_nuevo_companie(companie)
-                                        print companie
 
                                 nodo = nodo.next
                             nodo = nodo.parent
@@ -352,7 +350,7 @@ class WiiTDBXML(Thread):
                 valor = attr.content
             attr = attr.next    
         return valor
-        
+
     def error_importando(self, motivo):
         session.rollback()
         self.callback_error_importando(self, motivo)
