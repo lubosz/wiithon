@@ -250,7 +250,7 @@ class WiithonCLI:
                         if (nombreISO != ""):
                             if( not os.path.exists(nombreISO) ):
                                 # Paso 1 : Descomprimir
-                                if ( self.core.descomprimirRARconISODentro(nombreRAR) ):
+                                if ( self.core.unpack(nombreRAR) ):
                                     print _("Descomprimido correctamente")
                                     # Paso 2 : Añadir la ISO
                                     if ( self.core.anadirISO(DEVICE , nombreISO ) ):

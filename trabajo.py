@@ -149,7 +149,7 @@ class PoolTrabajo(Pool , Thread):
             nombreISO = core.getNombreISOenRAR(nombreRAR)
             if (nombreISO != ""):
                 if( not os.path.exists(nombreISO) ):
-                    if ( core.descomprimirRARconISODentro(nombreRAR) ):
+                    if ( core.unpack(nombreRAR) ):
                         exito = True
                         self.nuevoTrabajoAnadir( nombreISO , DEVICE)
                     else:

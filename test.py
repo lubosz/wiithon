@@ -5,6 +5,17 @@
 import sys
 
 from wiitdb_xml import *
+from core import WiithonCORE
+
+core = WiithonCORE()
+
+print "Empieza a descomprimir"
+exito = core.unpack("/media/datos/wiithon_pruebas/descomprimir/play.rar","/media/datos/wiithon_pruebas/descomprimir/")
+if exito:
+    print "Descomprimido OK"
+else:
+    print "Error al descomprimir"
+sys.exit(0)
 
 if False:
     from wiitdb_schema import *

@@ -41,7 +41,7 @@ dependencias:
 
 #	gpasswd -a $(USER) disk
 
-compilar: libwbfs_binding/wiithon_wrapper ./po/locale/da_DK/LC_MESSAGES/wiithon.mo ./po/locale/fi_FI/LC_MESSAGES/wiithon.mo ./po/locale/tr_TR/LC_MESSAGES/wiithon.mo ./po/locale/ru_RU/LC_MESSAGES/wiithon.mo ./po/locale/ko_KR/LC_MESSAGES/wiithon.mo ./po/locale/it/LC_MESSAGES/wiithon.mo ./po/locale/sv_SE/LC_MESSAGES/wiithon.mo ./po/locale/es/LC_MESSAGES/wiithon.mo ./po/locale/pt_PT/LC_MESSAGES/wiithon.mo ./po/locale/en/LC_MESSAGES/wiithon.mo ./po/locale/nl_NL/LC_MESSAGES/wiithon.mo ./po/locale/nb_NO/LC_MESSAGES/wiithon.mo ./po/locale/ja_JP/LC_MESSAGES/wiithon.mo ./po/locale/fr/LC_MESSAGES/wiithon.mo ./po/locale/pt_BR/LC_MESSAGES/wiithon.mo ./po/locale/de/LC_MESSAGES/wiithon.mo
+compilar: unrar-nonfree/unrar libwbfs_binding/wiithon_wrapper ./po/locale/da_DK/LC_MESSAGES/wiithon.mo ./po/locale/fi_FI/LC_MESSAGES/wiithon.mo ./po/locale/tr_TR/LC_MESSAGES/wiithon.mo ./po/locale/ru_RU/LC_MESSAGES/wiithon.mo ./po/locale/ko_KR/LC_MESSAGES/wiithon.mo ./po/locale/it/LC_MESSAGES/wiithon.mo ./po/locale/sv_SE/LC_MESSAGES/wiithon.mo ./po/locale/es/LC_MESSAGES/wiithon.mo ./po/locale/pt_PT/LC_MESSAGES/wiithon.mo ./po/locale/en/LC_MESSAGES/wiithon.mo ./po/locale/nl_NL/LC_MESSAGES/wiithon.mo ./po/locale/nb_NO/LC_MESSAGES/wiithon.mo ./po/locale/ja_JP/LC_MESSAGES/wiithon.mo ./po/locale/fr/LC_MESSAGES/wiithon.mo ./po/locale/pt_BR/LC_MESSAGES/wiithon.mo ./po/locale/de/LC_MESSAGES/wiithon.mo
 
 fix_permisos:
 	-@sudo chown `whoami`\: * -R ~/.wiithon/
@@ -49,6 +49,7 @@ fix_permisos:
 install:
 	cp libwbfs_binding/wiithon_wrapper $(PREFIX)/share/wiithon
 	cp libwbfs_binding/wiithon_wrapper $(PREFIX)/share/wiithon
+	cp unrar-nonfree/unrar $(PREFIX)/share/wiithon
 	
 	mkdir -p $(PREFIX)/share/wiithon
 	mkdir -p $(PREFIX)/share/wiithon/recursos/glade
@@ -135,6 +136,7 @@ uninstall:
 	-$(RM) $(PREFIX)/bin/wiithon
 	-$(RM) $(PREFIX)/bin/wiithon_wrapper
 	
+	-$(RM) $(PREFIX)/share/wiithon/unrar
 	-$(RM) $(PREFIX)/share/wiithon/*.py
 	-$(RM) $(PREFIX)/share/wiithon/*.sh
 	-$(RM) $(PREFIX)/share/wiithon/recursos/glade/*.ui
@@ -194,7 +196,7 @@ actualizar: uninstall pull install log
 	@echo "Updated to $(VERSION) rev$(REVISION)"
 	@echo "=================================================================="
 
-clean: clean_libwbfs_binding clean_gettext
+clean: clean_libwbfs_binding clean_gettext clean_unrar
 	$(RM) *.pyc
 	$(RM) *~
 	$(RM) po/*~
@@ -218,11 +220,17 @@ clean_gettext:
 	-$(RM) po/locale/ru_RU/LC_MESSAGES/wiithon.mo
 	-$(RM) po/locale/tr_TR/LC_MESSAGES/wiithon.mo
 	
+clean_unrar:
+	$(MAKE) -C unrar-nonfree clean
+	
 clean_libwbfs_binding:
 	$(MAKE) -C libwbfs_binding clean
 
 libwbfs_binding/wiithon_wrapper: libwbfs_binding/*.c libwbfs_binding/libwbfs/*.c libwbfs_binding/libwbfs/*.h 
 	$(MAKE) -C libwbfs_binding
+
+unrar-nonfree/unrar: unrar-nonfree/*.cpp unrar-nonfree/*.hpp
+	$(MAKE) -C unrar-nonfree
 
 pull:
 	bzr pull

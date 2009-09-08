@@ -116,7 +116,6 @@ class WiithonCORE:
             DEVICE = DEVICE.device
         
         comando = "%s -p %s df" % (config.WBFS_APP, DEVICE)
-        #salida = util.getSTDOUT( config.WBFS_APP+" -p "+DEVICE+" df" )
         salida = util.getSTDOUT( comando )
         cachos = salida.split(config.SEPARADOR)
         if(len(cachos) == 3):
@@ -294,29 +293,34 @@ class WiithonCORE:
                 ok = False
         return ok
 
-    # Devuelve el nombre del ISO que hay dentro de un RAR
     def getNombreISOenRAR(self , nombreRAR):
-        comando = "rar lt -c- '"+nombreRAR+"' | grep -i '.iso' | awk -F'.iso'  '{print $1}' | awk -F' ' '{print $0\".iso\"}' | sed 's/^ *//' | sed 's/ *$//'"
-        tuberia = os.popen(comando)
-        salida_estandar = tuberia.readlines()
-        tuberia.close()
-        for linea in salida_estandar:
-            # Quitar el salto de linea
-            linea = linea[:-1]
+        comando = '%s lt "%s"' % (config.UNRAR_APP, nombreRAR)
+        lineas = util.getSTDOUT_iterador( comando )
+        for linea in lineas:
+            linea = linea.strip()
             if( util.getExtension(linea)=="iso" ):
                 return linea
         return ""
 
-    # Descomprime todos los ISO de un RAR (FIXME: se espera que solo haya 1)
-    def descomprimirRARconISODentro(self , nombreRAR ):
+    def unpack(self , nombreRAR , destino):
         try:
-            #directorioActual = os.getcwd()
-            #os.chdir('/tmp')
-            comando = 'rar e -o- "%s" "%s"' % (nombreRAR , "*.iso")
-            salida = subprocess.call( comando , shell=True ,
-                    stderr=subprocess.STDOUT , stdout=open(os.devnull,"w"))
-            #os.chdir(directorioActual)
-            return (salida == 0)
+            if os.path.isfile(nombreRAR) and os.path.isdir(destino):
+                nombreISO = self.getNombreISOenRAR(nombreRAR)
+                if nombreISO != "":
+                    rutaISO = os.path.join(destino, nombreISO)
+                    if not os.path.exists(rutaISO):
+                        directorioActual = os.getcwd()
+                        os.chdir(destino)
+                        comando = '%s e "%s" "%s"' % (config.UNRAR_APP, nombreRAR , nombreISO)
+                        salida = subprocess.call( comando , shell=True , stderr=subprocess.STDOUT, stdout=open(config.HOME_WIITHON_LOGS_PROCESO , "w") )
+                        os.chdir(directorioActual)
+                        return (salida == 0)
+                    else:
+                        return False
+                else:
+                    return False
+            else:
+                return False
         except KeyboardInterrupt:
             return False
 
