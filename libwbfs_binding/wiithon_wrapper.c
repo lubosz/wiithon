@@ -18,42 +18,66 @@ wbfs_t *wbfs_try_open_partition(char *fn,int reset);
 
 void spinner(u64 x, u64 max)
 {
+    // casos de excepcion
+    if(max <= 0 || x > max || x < 0)
+    {
+        printf("Error en el contador\n");
+        return;
+    }
+    
 	static time_t start_time;
-	static u32 expected_total;
-	u32 d;
-	double percent;
+	static u32 d;    
+    static int porcentaje_ponderado;
+    
+	int percent;
+    
+    int diferencia;
+    
+    u32 restante;
 	u32 h, m, s;
 
 	if (x == 0) {
 		start_time = time(NULL);
-		expected_total = 300;
+        d = 300;
+        porcentaje_ponderado = 0;
 	}
 
-	if (x == max) {
-        d = time(NULL) - start_time;
-        h = d / 3600;
-        m = (d / 60) % 60;
-        s = d % 60;
-		fprintf(stderr, "FIN;@;%d;@;%02d;@;%02d\n", h, m, s);
-		return;
-	}
+    d = time(NULL) - start_time;
+    percent = (100 * x) / max;
 
-	d = time(NULL) - start_time;
+    if(percent > 0)
+    {
+        /*
+         * d = tiempo desde que empezo
+         * porcen% --------> d
+         * 100-porcen% ----> restante
+         */
+        
+        if( percent > porcentaje_ponderado )
+        {
+            diferencia = percent - porcentaje_ponderado;
+            porcentaje_ponderado+=(diferencia/4);
+        }
+        restante = (d * (100-porcentaje_ponderado)) / porcentaje_ponderado;
+    }
+    else
+    {
+        porcentaje_ponderado = 0;
+        restante = 0;    
+    }
 
-	if (d != 0)
-		expected_total = (3 * expected_total + d * max / x) / 4;
+    h = (restante / 3600);
+    m = (restante / 60) % 60;
+    s = (restante % 60);
 
-	if (expected_total > d)
-		d = expected_total - d;
-	else
-		d = 0;
-
-	h = d / 3600;
-	m = (d / 60) % 60;
-	s = d % 60;
-	percent = 100.0 * x / max;
-
-    fprintf(stdout , "%5.2f;@;%d;@;%02d;@;%02d\n", percent, h, m, s);
+    if(x != max)
+    {        
+        fprintf(stdout , "%d;@;%d;@;%d;@;%d\n", porcentaje_ponderado, h, m, s);
+    }
+    else
+    {
+        fprintf(stdout, "FIN;@;%d;@;%d;@;%d\n", h, m, s);
+    }
     fflush(stdout);
 }
 
@@ -218,7 +242,7 @@ int wiithon_wrapper_add(wbfs_t *p,char*argv)
         }
         else
         {
-            wbfs_error("Error leyendo disco. Linea 218");
+            wbfs_error("Error leyendo disco.");
             retorno = FALSE;
         }
     }

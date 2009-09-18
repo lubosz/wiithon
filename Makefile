@@ -46,17 +46,17 @@ compilar: unrar-nonfree/unrar libwbfs_binding/wiithon_wrapper ./po/locale/da_DK/
 fix_permisos:
 	-@sudo chown `whoami`\: * -R ~/.wiithon/
 
-install:
-	cp libwbfs_binding/wiithon_wrapper $(PREFIX)/share/wiithon
-	cp libwbfs_binding/wiithon_wrapper $(PREFIX)/share/wiithon
-	cp unrar-nonfree/unrar $(PREFIX)/share/wiithon
-	
+install: uninstall
 	mkdir -p $(PREFIX)/share/wiithon
 	mkdir -p $(PREFIX)/share/wiithon/recursos/glade
 	mkdir -p $(PREFIX)/share/wiithon/recursos/imagenes
 	
+	cp libwbfs_binding/wiithon_wrapper $(PREFIX)/share/wiithon/
+	cp unrar-nonfree/unrar $(PREFIX)/share/wiithon/
+	
 	cp wiithon.py $(PREFIX)/share/wiithon
-	cp libwbfs_binding/libwbfs/libwbfs.so /usr/lib
+	cp libwbfs_binding/libwbfs/libwbfs.so /usr/lib/
+	ln -sf /usr/lib/libwbfs.so $(PREFIX)/lib/
 	
 	cp wiithon_autodetectar.sh $(PREFIX)/share/wiithon
 	cp wiithon_autodetectar_lector.sh $(PREFIX)/share/wiithon
@@ -91,7 +91,6 @@ install:
 	chmod 777 $(PREFIX_RECURSOS_IMAGENES_DISCOS)
 
 	-ln -sf $(PREFIX)/share/wiithon/wiithon.py $(PREFIX)/bin/wiithon
-	-ln -sf $(PREFIX)/share/wiithon/wiithon_wrapper $(PREFIX)/bin/wiithon_wrapper
 
 	@echo "=================================================================="
 	@echo "Wiithon Install OK"
@@ -118,7 +117,7 @@ uninstall:
 	-$(RM) $(PREFIX_RECURSOS_IMAGENES_DISCOS)/index.html*
 	-$(RM) $(PREFIX_RECURSOS_IMAGENES_CARATULAS)/*.png.1
 	-$(RM) $(PREFIX_RECURSOS_IMAGENES_DISCOS)/*.png.1
-	-$(RM) $(HOME_WIITHON_BDD)/*.db
+	-$(RM) -R ~/.wiithon
 
 	-$(RM) $(PREFIX)/share/wiithon/.acuerdo
 	-$(RM) ~/.wiithon_acuerdo
@@ -144,6 +143,7 @@ uninstall:
 	
 	-$(RM) $(PREFIX)/share/wiithon/wiithon_wrapper
 	-$(RM) /usr/lib/libwbfs.so
+	-$(RM) $(PREFIX)/lib/libwbfs.so
 
 	-$(RM) $(PREFIX)/share/wiithon/*.pyc
 	
@@ -186,7 +186,6 @@ purge: uninstall
 	-rmdir $(PREFIX)/share/wiithon/recursos/imagenes
 	-rmdir $(PREFIX)/share/wiithon/recursos
 	-rmdir $(PREFIX)/share/wiithon
-	-$(RM) -R $(HOME_WIITHON)
 	@echo "=================================================================="
 	@echo "Uninstall OK & all clean (purge covers, bdd ...)"
 	@echo "=================================================================="

@@ -18,6 +18,7 @@ from sqlalchemy.orm import mapper, relation, backref, sessionmaker
 
 import config
 import util
+from util import SintaxisInvalida
 
 ###### PARA EVITAR PROBLEMAS DE RECURRENCIA ##########
 '''
@@ -347,7 +348,7 @@ class Juego(Base):
         object.__setattr__(self, name, value)
 
     def __repr__(self):
-        return "%s (%s) %.2f" % (self.title, self.idgame, self.size)
+        return "%s (ID: %s) %.2f GB" % (self.title, self.idgame, self.size)
 
 #############################################################################
 

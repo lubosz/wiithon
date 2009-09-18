@@ -572,6 +572,21 @@ u32 wbfs_extract_disc(wbfs_disc_t*d, rw_sector_callback_t write_dst_wii_sector,v
         copy_buffer = wbfs_ioalloc(p->wbfs_sec_sz);
         if(!copy_buffer)
                 ERROR("alloc memory");
+		
+	// calcular verdadero MAX
+	int max = 0;
+        for( i=0; i< p->n_wbfs_sec_per_disc; i++)
+        {
+                u32 iwlba = wbfs_ntohs(d->header->wlba_table[i]);
+                if (iwlba)
+                {
+		    if(i > max)
+		    {
+			max = i;
+		    }
+		}	
+	}
+	// fin calculo
 
         for( i=0; i< p->n_wbfs_sec_per_disc; i++)
         {
@@ -579,15 +594,18 @@ u32 wbfs_extract_disc(wbfs_disc_t*d, rw_sector_callback_t write_dst_wii_sector,v
                 if (iwlba)
                 {
                         if(spinner)
-                                spinner(i,p->n_wbfs_sec_per_disc);
+		    	{
+				spinner(i,max);
+			}
+			
                         p->read_hdsector(p->callback_data, p->part_lba + iwlba*src_wbs_nlb, src_wbs_nlb, copy_buffer);
                         write_dst_wii_sector(callback_data, i*dst_wbs_nlb, dst_wbs_nlb, copy_buffer);
                 }
         }
         wbfs_iofree(copy_buffer);
-        return 0;
+        return TRUE;
 error:
-        return 1;
+        return FALSE;
 }
 u32 wbfs_extract_file(wbfs_disc_t*d, char *path);
 

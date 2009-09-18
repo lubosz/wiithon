@@ -55,7 +55,7 @@ class WiithonCORE:
 
     # Devuelve la lista de particiones
     def getListaParticiones(self, detector = config.DETECTOR_WBFS):
-       
+
         salida = util.getSTDOUT_NOERROR_iterador(detector)
 
         listaParticiones = []
@@ -69,8 +69,11 @@ class WiithonCORE:
                 particion = session.query(Particion).filter(sql).first()
                 
                 if particion == None:
-                    particion = Particion(cachos)
-                    session.save(particion)
+                    try:
+                        particion = Particion(cachos)
+                        session.save(particion)
+                    except SintaxisInvalida:
+                        continue
                 else:
                     session.update(particion)
 
@@ -311,7 +314,8 @@ class WiithonCORE:
                     if not os.path.exists(rutaISO):
                         directorioActual = os.getcwd()
                         os.chdir(destino)
-                        comando = '%s e "%s" "%s"' % (config.UNRAR_APP, nombreRAR , nombreISO)
+                        #comando = '%s e "%s" "%s"' % (config.UNRAR_APP, nombreRAR , nombreISO)
+                        comando = '%s x -kb -o+ -Idp -- "%s" "%s"' % (config.UNRAR_APP, nombreRAR , nombreISO)
                         salida = subprocess.call( comando , shell=True , stderr=subprocess.STDOUT, stdout=open(config.HOME_WIITHON_LOGS_PROCESO , "w") )
                         os.chdir(directorioActual)
                         return (salida == 0)
@@ -323,42 +327,6 @@ class WiithonCORE:
                 return False
         except KeyboardInterrupt:
             return False
-
-    '''
-    # FUNCIÓN de PRUEBAS, no es usado actualmente
-    # Se pasa como parametro ej: /dev/sdb2
-    def redimensionarParticionWBFS(self , DEVICE):
-        # 57 42 46 53 00 0b 85 30
-        # 57 42 46 53 00 29 ea eb
-
-        # si pasa el objeto, cogemos el string que nos interesa
-        if isinstance(DEVICE, Particion):
-            DEVICE = DEVICE.device
-
-        comando = "fdisk -lu | grep -v 'MB' | grep '"+particion+"' | awk '{print $3-$2+1}'"
-        entrada, salida = os.popen2(comando)
-        salida = salida.read()
-
-        offset = 0x4
-        valor = int(salida)
-
-        print "Se va escribir en la particion %s : %x:%x" % ( particion , offset , valor )
-        respuesta = raw_input("¿Seguir? (S/N)\n")
-
-        if (respuesta.lower() == 's'):
-            byte1 = (valor & 0xFF000000) >> 8*3
-            byte2 = (valor & 0x00FF0000) >> 8*2
-            byte3 = (valor & 0x0000FF00) >> 8
-            byte4 = (valor & 0x000000FF)
-
-            f = open(particion , "wb")
-            f.seek(offset , os.SEEK_SET)
-            f.write('%c%c%c%c' % ( byte1 , byte2 , byte3 , byte4 ) )
-            f.close()
-            print "4 bytes escritos."
-        else:
-            print "sin cambios."
-    '''
 
     # añade un *ISO* a un *DEVICE*
     def anadirISO(self , DEVICE , ISO):
@@ -390,6 +358,7 @@ class WiithonCORE:
             # cambiamos de directorio de trabajo
             os.chdir( destino )
             comando = "%s -p %s extract %s" % (config.WBFS_APP, juego.particion.device , juego.idgame)
+            print comando
             salida = subprocess.call( comando , shell=True , stderr=subprocess.STDOUT , stdout=open(config.HOME_WIITHON_LOGS_PROCESO , "w") )
             # volvemos al directorio original
             os.chdir( trabajoActual )

@@ -19,7 +19,7 @@ do
 	# Si hay 5 caracteres = WBFS\n
 	if [ $LEGIBLE -eq 5 ]; then
 		if [ $MAGICO == "WBFS" ]; then
-			USADO_LIBRE_TOTAL=`wiithon_wrapper -p $i df 2> /dev/null`
+			USADO_LIBRE_TOTAL=`/usr/local/share/wiithon/wiithon_wrapper -p $i df 2> /dev/null`
 			if [ $hayUDEV -eq 1 ]; then
 				NOMBRE=`udevinfo -a -p $(udevinfo -q path -n $i) | egrep 'ATTRS{vendor}|ATTRS{model}' | awk -F== '{print $2}' | sed '3,$d' | sed 's/\"//g' | xargs`;
 			else

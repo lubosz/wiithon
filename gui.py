@@ -94,18 +94,27 @@ class WiithonGUI(GtkBuilderWrapper):
         actiongroup = gtk.ActionGroup('LeftButtonGroup')
 
         actiongroup.add_actions([
-                ('Renombrar', None, _('Renombrar'), None, '',
+                ('Renombrar', None, _('Renombrar'), None, _('Renombra el juego seleccionado'),
                  self.menu_contextual_renombrar),
 
-                ('Extraer', None, _('Extraer'), None, '',
+                ('Extraer', None, _('Extraer'), None, _('Extraer el juego seleccionado'),
                  self.menu_contextual_extraer),
 
-                ('Copiar', None, _('Copiar a otra particion'), None,
-                 '', self.menu_contextual_copiar),
+                ('Copiar', None, _('Copiar a otra particion'), None, _('Copiar el juego seleccionado o todos, a otra particion'),
+                self.menu_contextual_copiar),
 
-                ('Borrar', gtk.STOCK_DELETE, None, None, '',
+                ('Borrar', gtk.STOCK_DELETE, None, None, _('Borrar el juego seleccionado'),
                  self.menu_contextual_borrar),
                 ])
+        
+        '''
+        * The name of the action. Must be specified.
+        * The stock id for the action. Optional with a default value of None if a label is specified.
+        * The label for the action. This field should typically be marked for translation, see the set_translation_domain() method. Optional with a default value of None if a stock id is specified.
+        * The accelerator for the action, in the format understood by the gtk.accelerator_parse() function. Optional with a default value of None.
+        * The tooltip for the action. This field should typically be marked for translation, see the set_translation_domain() method. Optional with a default value of None.
+        * The callback function invoked when the action is activated. Optional with a default value of None.
+        '''
 
         self.uimgr.insert_action_group(actiongroup)
 
@@ -604,7 +613,6 @@ class WiithonGUI(GtkBuilderWrapper):
     def sincronizarParticionesWBFSconBDD(self, particiones):
 
         # Borrar todas las relaciones juego-particion
-    
         listaJuegosAcumulados = NonRepeatList()
         for particion in particiones:
             # obtener los juegos de esa particion
@@ -953,7 +961,8 @@ class WiithonGUI(GtkBuilderWrapper):
                         for juego in self.lJuegos_filtrada:
                             juegosParaClonar.append( util.clonarOBJ(juego) )
                     
-                        self.seleccionarFilaConValor(self.wb_tv_partitions, len(self.lParti) , 1 , self.sel_parti_1on1.obj.device)
+                        # FIXME: ver si es 0 o 1
+                        self.seleccionarFilaConValor(self.wb_tv_partitions, len(self.lParti) , 0 , self.sel_parti_1on1.obj.device)
 
                         for juego in self.lJuegos_filtrada:
                             encontrado = False
@@ -997,6 +1006,9 @@ class WiithonGUI(GtkBuilderWrapper):
 
         elif(id_tb == self.wb_tb_borrar):
             if self.sel_juego.it != None:
+                
+                borrarBDD = False
+                
                 if self.modo == "ver":
                     if ( self.question(_('Advertencia de borrar %s en modo ver') % (self.sel_juego.obj)) == 1 ):
                         if self.sel_juego.obj != None:
@@ -1007,26 +1019,42 @@ class WiithonGUI(GtkBuilderWrapper):
                             # borrar caratula
                             self.core.borrarCaratula( self.sel_juego.obj )
 
-                            # borrar de la bdd
-                            session.delete( self.sel_juego.obj )
-
-                            # borrar de la tabla
-                            self.tv_games_modelo.remove( self.sel_juego.it )
-                            
-                            # Borrar de las listas
-                            self.lJuegos.remove( self.sel_juego.obj )
-                            self.lJuegos_filtrada.remove( self.sel_juego.obj )
-
-                            # seleccionar el primero
-                            self.seleccionarPrimeraFila(self.wb_tv_games)
+                            # orden de borrar de la BDD
+                            borrarBDD = True
 
                 else:
-                    if( self.question(_('Quieres borrar el juego con %s?') % (self.sel_juego.obj.title)) == 1 ):
+                    if( self.question(_('Quieres borrar el juego: %s?') % (self.sel_juego.obj)) == 1 ):
                         # borrar del HD
                         if self.core.borrarJuego( self.sel_parti.obj.device , self.sel_juego.obj.idgame ):
-                            self.refrescarParticionesWBFS()
+                            
+                            # orden de borrar de la BDD
+                            borrarBDD = True
+
                         else:
                             self.alert("warning" , _("Error borrando"))
+                            
+                if borrarBDD:
+                    session.delete(self.sel_juego.obj)
+
+                    # borrar de la tabla
+                    self.tv_games_modelo.remove( self.sel_juego.it )
+                    
+                    # Borrar de las listas
+                    try:
+                        self.lJuegos.remove( self.sel_juego.obj )
+                    except:
+                        pass
+                        
+                    try:
+                        self.lJuegos_filtrada.remove( self.sel_juego.obj )
+                    except:
+                        pass
+                    
+                    # seleccionar el primero
+                    self.seleccionarPrimeraFila(self.wb_tv_games)
+                    
+                    # FIXME: hacer una transacción
+                    session.commit()
 
             else:
                 self.alert("warning" , _("No has seleccionado ningun juego"))
@@ -1047,9 +1075,14 @@ class WiithonGUI(GtkBuilderWrapper):
 
                 fc_extraer.set_default_response(gtk.RESPONSE_OK)
                 fc_extraer.set_local_only(True)
-                fc_extraer.set_current_folder(self.preferencia.ruta_extraer_iso)
+                try:
+                    fc_extraer.add_shortcut_folder(self.preferencia.ruta_extraer_iso)
+                except:
+                    pass
+                
+                res = fc_extraer.run()
 
-                if(fc_extraer.run() == gtk.RESPONSE_OK):
+                if(res == gtk.RESPONSE_OK):
 
                     reemplazar = False
                     if self.core.existeExtraido(self.sel_juego.obj , fc_extraer.get_filename()):
@@ -1063,7 +1096,6 @@ class WiithonGUI(GtkBuilderWrapper):
                         self.preferencia.ruta_extraer_iso = fc_extraer.get_current_folder()
 
                         # extraer *juego* en la ruta seleccionada
-                        print self.sel_juego.obj.particion
                         self.poolTrabajo.nuevoTrabajoExtraer(self.sel_juego.obj , fc_extraer.get_filename())
 
                 fc_extraer.destroy()
@@ -1096,15 +1128,17 @@ class WiithonGUI(GtkBuilderWrapper):
                     fc_anadir = gtk.FileChooserDialog(_("Elige una imagen ISO valida para Wii"), None , gtk.FILE_CHOOSER_ACTION_OPEN , botones)
                     fc_anadir.set_select_multiple(True)
                     filter = gtk.FileFilter()
-                    filter.set_name(_('Imagen ISO para Wii'))
+                    filter.set_name(_('Imagen Wii (ISO o RAR)'))
                     filter.add_pattern('*.iso')
-                    #filter.add_pattern('*.rar')
+                    filter.add_pattern('*.rar')
                     fc_anadir.add_filter(filter)
                     fc_anadir.set_current_folder( self.preferencia.ruta_anadir )
+                    #fc_anadir.set_current_name( self.preferencia.ruta_anadir )
 
                 elif(id_tb == self.wb_tb_anadir_directorio):
                     fc_anadir = gtk.FileChooserDialog(_("Elige un directorio"), None , gtk.FILE_CHOOSER_ACTION_SELECT_FOLDER , botones)
                     fc_anadir.set_current_folder( self.preferencia.ruta_anadir_directorio )
+                    #fc_anadir.set_current_name( self.preferencia.ruta_anadir_directorio )
 
                 fc_anadir.set_default_response(gtk.RESPONSE_OK)
                 fc_anadir.set_local_only(True)
@@ -1113,6 +1147,7 @@ class WiithonGUI(GtkBuilderWrapper):
                     '''
                     Tarea AÑADIR JUEGO
                     '''
+                    
                     if(id_tb == self.wb_tb_anadir):
                         self.preferencia.ruta_anadir = fc_anadir.get_current_folder()
                     elif(id_tb == self.wb_tb_anadir_directorio):
@@ -1122,17 +1157,17 @@ class WiithonGUI(GtkBuilderWrapper):
                     for fichero in fc_anadir.get_filenames():
                         if( os.path.isdir( fichero ) ):
                             ficherosSeleccionados.append(fichero)
+                        elif( util.getExtension(fichero) == "rar" ):
+                            ficherosSeleccionados.append(fichero)
                         elif( util.getExtension(fichero) == "iso" ):
                             idgame = util.getMagicISO(fichero)
                             if idgame != None:
-                                print len(idgame)
-                                print self.sel_parti.obj.device
-                                sql = util.decode("idgame=='%s' and device=='%s'" % (idgame , self.sel_parti.obj.device))
-                                self.juegoNuevo = session.query(Juego).filter(sql).first()
+                                sql = util.decode("juego.idgame=='%s' and particion.device=='%s'" % (idgame , self.sel_parti.obj.device))
+                                self.juegoNuevo = session.query(Juego, Particion).filter(sql).first()
                                 if self.juegoNuevo == None:
                                     ficherosSeleccionados.append(fichero)
                                 else:
-                                    self.alert('warning',_("El juego ya esta metido, como %s") % (self.juegoNuevo))
+                                    self.alert('warning',_("El juego ya esta metido, como %s en %s") % (self.juegoNuevo[0], self.juegoNuevo[1]))
 
                     if len(ficherosSeleccionados) > 0:
                         # ordenar la ruta de archivos
@@ -1191,9 +1226,12 @@ class WiithonGUI(GtkBuilderWrapper):
     def actualizarFraccion( self , fraccion ):
         self.wb_progreso1.set_fraction( fraccion )
 
-    def refrescarParticionesYSeleccionarJuego(self, IDGAME, DEVICE):
-        self.seleccionarFilaConValor(self.wb_tv_partitions, len(self.lParti) , 1 , DEVICE)
-        self.seleccionarFilaConValor(self.wb_tv_games, len(self.lJuegos_filtrada) , 1 , IDGAME)
+    def refrescarParticionesYSeleccionarJuego(self, IDGAME, DEVICE):        
+        #self.seleccionarFilaConValor(self.wb_tv_partitions, len(self.lParti) , 0 , DEVICE)
+        #self.seleccionarFilaConValor(self.wb_tv_games, len(self.lJuegos_filtrada) , 0 , IDGAME)
+        '''
+        Añadir el juego a la base de datos y refrescar
+        '''
         
     def mostrarError(self, error):
         self.alert('error',error)
@@ -1307,53 +1345,68 @@ class HiloCalcularProgreso(Thread):
             pass
 
     def run(self):
-        while not self.interrumpido:
-            try:
-                # si aún no existe el fichero que contiene los mensajes, esperamos:
-                # a) a que el fichero exista
-                # b) desde otro hilo nos den orden de interrupción
-                if os.path.exists(config.HOME_WIITHON_LOGS_PROCESO):
-
-                    try:
-                        for linea in file(config.HOME_WIITHON_LOGS_PROCESO):
-                            ultimaLinea = linea
-
-                        cachos = ultimaLinea.split(config.SEPARADOR)
-
-                        # FIN es un convenio que viene de la funcion "spinner" en libwbfs.c
-                        if self.trabajo.terminado:
-                            self.porcentaje = 100
-                            if self.trabajo.exito:
-                                informativo = _("Finalizado.")
-                            else:
-                                informativo = _("ERROR!")
-                            gobject.idle_add(self.actualizarLabel , "%s - %d%% - %s" % ( self.trabajo , self.porcentaje, informativo ))
-                            self.interrumpir()
-                        else:
-                            self.porcentaje = float(cachos[0])
-                            informativo = _("quedan")
-
-                            hora = int(cachos[1])
-                            minutos = int(cachos[2])
-                            segundos = int(cachos[3])
-
-                            if(hora > 0):
-                                gobject.idle_add(self.actualizarLabel , "%s - %d%% - %s %dh%dm%ds" % ( self.trabajo , self.porcentaje , informativo , hora , minutos , segundos ))
-                            elif(minutos > 0):
-                                gobject.idle_add(self.actualizarLabel , "%s - %d%% - %s %dm%ds" % ( self.trabajo , self.porcentaje , informativo , minutos , segundos ))
-                            else:
-                                gobject.idle_add(self.actualizarLabel , "%s - %d%% - %s %ds" % ( self.trabajo , self.porcentaje, informativo , segundos ))
-
-                        porcentual = self.porcentaje / 100.0
-                        gobject.idle_add(self.actualizarFraccion , porcentual )
-
-                    except UnboundLocalError:
-                        gobject.idle_add(self.actualizarLabel , _("Empezando ..."))
-
+        
+        estaAbierto = False
+        
+        while not estaAbierto:
+            if os.path.exists(config.HOME_WIITHON_LOGS_PROCESO):
+                f = file(config.HOME_WIITHON_LOGS_PROCESO)
+                estaAbierto = True
+            else:
                 time.sleep(1)
+        
+        while not self.interrumpido:
+            '''
+            try:
+            '''
+            # si aún no existe el fichero que contiene los mensajes, esperamos:
+            # a) a que el fichero exista
+            # b) desde otro hilo nos den orden de interrupción
+            try:
+                f.seek(0)
+                for linea in f:
+                    ultimaLinea = linea
 
+                cachos = ultimaLinea.split(config.SEPARADOR)
+
+                # FIN es un convenio que viene de la funcion "spinner" en libwbfs.c
+                if cachos[0] == "FIN" or self.trabajo.terminado:
+                    self.porcentaje = 100
+                    if self.trabajo.exito:
+                        informativo = _("Finalizado.")
+                    else:
+                        informativo = _("ERROR!")
+                    gobject.idle_add(self.actualizarLabel , "%s - %d%% - %s" % ( self.trabajo , self.porcentaje, informativo ))
+                    self.interrumpir()
+                else:
+                    self.porcentaje = float(cachos[0])
+                    informativo = _("quedan")
+
+                    hora = int(cachos[1])
+                    minutos = int(cachos[2])
+                    segundos = int(cachos[3])
+
+                    if(hora > 0):
+                        gobject.idle_add(self.actualizarLabel , "%s - %d%% - %s %dh%dm%ds" % ( self.trabajo , self.porcentaje , informativo , hora , minutos , segundos ))
+                    elif(minutos > 0):
+                        gobject.idle_add(self.actualizarLabel , "%s - %d%% - %s %dm%ds" % ( self.trabajo , self.porcentaje , informativo , minutos , segundos ))
+                    else:
+                        gobject.idle_add(self.actualizarLabel , "%s - %d%% - %s %ds" % ( self.trabajo , self.porcentaje, informativo , segundos ))
+
+                porcentual = self.porcentaje / 100.0
+                gobject.idle_add(self.actualizarFraccion , porcentual )
+
+            except UnboundLocalError:
+                gobject.idle_add(self.actualizarLabel , _("Empezando ..."))
+
+            time.sleep(1)
+
+            '''
             except ValueError:
-                self.interrumpir()
+                print "OJO!! HiloCalcularProgreso"
+                #self.interrumpir()
+            '''
+        f.close()
 
     def interrumpir(self):
         self.interrumpido = True

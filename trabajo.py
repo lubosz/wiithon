@@ -71,16 +71,11 @@ class PoolTrabajo(Pool , Thread):
             fichero = trabajo.origen
             DEVICE = trabajo.destino
             
-            if os.path.isdir( fichero ):
-                idgame = "FOLDER"
-            else:
-                idgame = util.getMagicISO(fichero)
-
-            if idgame != None:
-                trabajo.exito = self.anadir(core ,trabajo , fichero , DEVICE)
-
-            if idgame != "FOLDER":
+            trabajo.exito = self.anadir(core ,trabajo , fichero , DEVICE)
+            
+            if not os.path.isdir( fichero ):
                 if self.callback_termina_trabajo_anadir:
+                    idgame = util.getMagicISO(fichero)
                     self.callback_termina_trabajo_anadir(trabajo, idgame, DEVICE)
 
         elif( trabajo.tipo == EXTRAER):
@@ -143,7 +138,7 @@ class PoolTrabajo(Pool , Thread):
         if( not os.path.exists(DEVICE) or not os.path.exists(fichero) ):
             trabajo.error = _("La ISO o la particion ya no no existen")
             # de momento lo quito para esta version
-            '''
+
         elif( util.getExtension(fichero) == "rar" ):
             nombreRAR = fichero
             nombreISO = core.getNombreISOenRAR(nombreRAR)
@@ -158,16 +153,16 @@ class PoolTrabajo(Pool , Thread):
                     trabajo.error = _("Error: No se puede descomrpimir por que reemplazaria el ISO : %s") % (nombreISO)
             else:
                 trabajo.error = _("Error: El RAR %s no tenia ninguna ISO") % (nombreRAR)
-            '''
+
         elif( os.path.isdir( fichero ) ):
-            '''
+
             encontrados =  util.rec_glob(fichero, "*.rar")
             if (len(encontrados) == 0):
                 pass
             else:
                 for encontrado in encontrados:
                     self.nuevoTrabajoAnadir( encontrado , DEVICE)
-            '''
+
             encontrados =  util.rec_glob(fichero, "*.iso")
             if (len(encontrados) == 0):
                 trabajo.error = _("No se ha encontrado ningun ISO")

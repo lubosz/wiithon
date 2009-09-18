@@ -8,11 +8,11 @@ wiithon_wrapper/*.o
 *~
 *.pyc
 recursos/imagenes/*.xcf
-
 po/plantilla.pot
 editar.sh
 recursos/threadpool.py
-*.iso
 doc/*.mwb.bak
-sqlalchemy
+sqlalchemy/
 schema.sql
+unrar-nonfree/unrar
+

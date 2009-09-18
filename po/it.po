@@ -102,6 +102,9 @@ msgstr "Add RAR containing ISO"
 msgid "Aniadir directorio"
 msgstr "Add folder"
 
+msgid "Borrar el juego seleccionado"
+msgstr ""
+
 msgid "Borrar juego con IDGAME"
 msgstr "Remove game with IDGAME"
 
@@ -154,6 +157,9 @@ msgstr "Copy 1:1"
 
 msgid "Copiar a otra particion"
 msgstr "Copy to other partition"
+
+msgid "Copiar el juego seleccionado o todos, a otra particion"
+msgstr ""
 
 msgid "Copiar el juego seleccionado*"
 msgstr "Copy selected game*"
@@ -250,7 +256,7 @@ msgid "Editor:"
 msgstr ""
 
 #, python-format
-msgid "El juego ya esta metido, como %s"
+msgid "El juego ya esta metido, como %s en %s"
 msgstr ""
 
 msgid "El numero dado es incorrecto"
@@ -320,6 +326,9 @@ msgstr "Extract ISO from game with IDGAME"
 msgid "Extraer a ISO"
 msgstr "Extract ISO"
 
+msgid "Extraer el juego seleccionado"
+msgstr ""
+
 #, python-format
 msgid "Falla la descarga de la caratula de %s"
 msgstr ""
@@ -374,8 +383,8 @@ msgstr "ISO %s uncompressed and added successfully"
 msgid "ISO renombrada correctamente a %s"
 msgstr "Game renamed successfully to %s"
 
-msgid "Imagen ISO para Wii"
-msgstr "ISO image for Wii"
+msgid "Imagen Wii (ISO o RAR)"
+msgstr ""
 
 msgid "Indique el NUM del juego : "
 msgstr "Number of game ? : "
@@ -580,6 +589,9 @@ msgstr ""
 msgid "Refrescar WBFS"
 msgstr "Refresh WBFS"
 
+msgid "Renombra el juego seleccionado"
+msgstr ""
+
 msgid "Renombrar"
 msgstr "Rename"
 
@@ -728,6 +740,9 @@ msgstr ""
 #, python-format
 msgid " Esta seguro de formatear %s (S/N)? "
 msgstr ""
+
+#~ msgid "Imagen ISO para Wii"
+#~ msgstr "ISO image for Wii"
 
 #~ msgid ""
 #~ "Comprobando integridad ...\n"
