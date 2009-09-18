@@ -38,7 +38,7 @@ class Companie(Base):
     __tablename__ = 'companie'
     
     idCompanie = Column('idCompanie', Integer, primary_key=True)
-    code = Column( 'code', VARCHAR(2) )#, index=True, unique=True)
+    code = Column( 'code', VARCHAR(2) )
     name = Column( 'name', VARCHAR(255))
 
     def __init__(self, code, name):    
@@ -315,7 +315,7 @@ Index('idUnico_particion', Particion.c.device, unique=True)
 
 rel_particion_juego = Table("rel_particion_juego", Base.metadata, 
     Column("idParticion", Integer, ForeignKey('particion.idParticion')),
-    Column("idJuego", Integer, ForeignKey('juego.idJuego'))
+    Column("idJuego", Integer, ForeignKey('juego.idJuego')),
     )
 
 class Juego(Base):

@@ -330,6 +330,10 @@ msgstr "Iniciar a cópia ?"
 msgid "Empieza %s"
 msgstr "Iniciar %s"
 
+#, python-format
+msgid "Error al descomrpimir el RAR : %s"
+msgstr ""
+
 msgid "Error al dumpear la ISO"
 msgstr "Erro ao importar a ISO"
 
@@ -352,8 +356,16 @@ msgstr "Erro ao apagar"
 msgid "Error renombrando"
 msgstr "Erro ao renomear"
 
+#, python-format
+msgid "Error: El RAR %s no tenia ninguna ISO"
+msgstr ""
+
 msgid "Error: La longitud del IDGAME debe ser 6, y solo puede contener letras y numeros"
 msgstr "Erro: O comprimento do UDGAME deve ser 6, e somente pode conter letras e números"
+
+#, python-format
+msgid "Error: No se puede descomrpimir por que reemplazaria el ISO : %s"
+msgstr ""
 
 msgid "Escriba el nuevo nombre : "
 msgstr "Escreva o novo nome :"
@@ -385,8 +397,8 @@ msgstr ""
 msgid "Fecha de lanzamiento:"
 msgstr ""
 
-msgid "Finalizado."
-msgstr "Finalizado."
+msgid "Finalizando."
+msgstr ""
 
 msgid "Formato desconocido"
 msgstr "Formato desconhecido"
@@ -618,7 +630,7 @@ msgid "Pulse cualquier tecla para continuar ... "
 msgstr "Aperte qualquer botão para continuar ..."
 
 #, python-format
-msgid "Quieres borrar el juego con %s?"
+msgid "Quieres borrar el juego: %s?"
 msgstr ""
 
 msgid "RXGB2"
@@ -781,6 +793,9 @@ msgstr ""
 #, python-format
 msgid " Esta seguro de formatear %s (S/N)? "
 msgstr ""
+
+#~ msgid "Finalizado."
+#~ msgstr "Finalizado."
 
 #~ msgid "Imagen ISO para Wii"
 #~ msgstr "Imagem ISO para Wii"

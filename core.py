@@ -19,15 +19,18 @@ from util import NonRepeatList, SintaxisInvalida
 from wiitdb_schema import Juego, Particion
 import config
 
-db =        util.getBDD()
-session =   util.getSesionBDD(db)
-
 class WiithonCORE:
     # Obtiene un list de juegos en una tabla de 3 columnas:
     # index 0 -> IDGAME o identificador único del juego
     # index 1 -> Nombre del juego
     # index 2 -> Tamaño en GB redondeado a 2 cifras
-    def getListaJuegos(self , particion):
+    def getListaJuegos(self , session, particion):
+        
+        for juego in session.query(Juego):
+            session.delete(juego)
+            
+        for particion in session.query(Particion):
+            session.delete(particion)
         
         comando = "%s -p %s ls" % (config.WBFS_APP, particion.device)
         lineas = util.getSTDOUT_iterador( comando )
@@ -54,7 +57,7 @@ class WiithonCORE:
         return salida
 
     # Devuelve la lista de particiones
-    def getListaParticiones(self, detector = config.DETECTOR_WBFS):
+    def getListaParticiones(self, session, detector = config.DETECTOR_WBFS):
 
         salida = util.getSTDOUT_NOERROR_iterador(detector)
 

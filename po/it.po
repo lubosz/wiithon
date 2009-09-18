@@ -3,290 +3,286 @@ msgstr ""
 "Project-Id-Version: wiithon 1.0\n"
 "Report-Msgid-Bugs-To: makiolo@gmail.com\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2009-06-30 23:53+0100\n"
-"Last-Translator: Ricardo Marmolejo García <makiolo@gmail.com>\n"
+"PO-Revision-Date: 2009-09-10 11:12+0100\n"
+"Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Poedit-Bookmarks: 18,176,-1,-1,-1,-1,-1,-1,-1,-1\n"
 
 #, python-format
 msgid "%d - Salir"
-msgstr ""
+msgstr "%d - Uscire"
 
 #, python-format
 msgid "%d juegos"
-msgstr "%d games"
+msgstr "%d giochi"
 
 #, python-format
 msgid "%d jugadores"
-msgstr ""
+msgstr "%d giocatori"
 
 #, python-format
 msgid "%d particiones WBFS"
-msgstr ""
+msgstr "%d partizioni WBFS"
 
 #, python-format
 msgid "%d/%d juegos"
-msgstr ""
+msgstr "%d/%d giochi"
 
 #, python-format
 msgid "%s NO se ha podido formatear"
-msgstr ""
+msgstr "%s NON è stato possibile formattare"
 
 #, python-format
 msgid "%s no es un ningun juego de Wii"
-msgstr "%s is not a Wii game"
+msgstr "%s non è un gioco Wii"
 
 #, python-format
 msgid "%s se ha formateado correctamente"
-msgstr ""
+msgstr "%s è stato formattato correttamente"
 
 #, python-format
 msgid "***************** DESCARGAR CARATULA %s ********************"
-msgstr "***************** DOWNLOAD COVER %s ********************"
+msgstr "***************** SCARICAMENTO COPERTINA %s ********************"
 
 #, python-format
 msgid "***************** DESCARGAR DISCO %s ********************"
-msgstr "***************** DOWNLOAD DISC %s ********************"
+msgstr "***************** SCARICAMENTO DISCO %s ********************"
 
 msgid "0 Tareas"
-msgstr "0 Tasks"
+msgstr "0 Operazioni"
 
 msgid "1 jugador"
-msgstr ""
+msgstr "1 giocatore"
 
 msgid "1 particion WBFS"
-msgstr ""
+msgstr "1 partizione WBFS"
 
 msgid "A continuacion se listan los juego que NO van a ser copiados por ya estar en la particion de destino"
-msgstr "The following are games will NOT be copied because exists in destiny partition"
+msgstr "I seguenti giochi NON saranno copiati perchè esistono già nella partizione di destinazione"
 
 msgid "AYUDA_CLI"
-msgstr ""
+msgstr "AYUDA_CLI"
 
 msgid "Accesorios:"
-msgstr ""
+msgstr "Accessori:"
 
 msgid "Acerca de ..."
-msgstr "About ..."
+msgstr "Crediti ..."
 
 #, python-format
 msgid "Advertencia de borrar %s en modo ver"
-msgstr ""
+msgstr "Attenzione verrà cancellato %s solo dal database"
 
 #, python-format
 msgid "Advertencia de seguridad de renombrar desde IDGAME = %s a %s"
-msgstr ""
-"!!!! WARNING ¡¡¡¡\n"
-"\n"
-"This is a security warning to warn of the consequences the renaming IDGAME\n"
-"- It is quite strange really need to rename the IDGAME\n"
-"- If you change the IDGAME might not find the disks and caratulas correctly\n"
-"- The very indistria games videogames identifies a unique and therefore there should be no collision\n"
-"- The only reason to rename a IDGAME would be to take the possibility of several times \n"
-"the same game with different IDGAME. The best example is want to enter Guitar Hero and customs of it.\n"
-"Do you want rename the current IDGAME %s as %s?"
+msgstr "Attenzione!!! Sei sicuro di rinominare questo IDGAME da %s a %s?"
 
 #, python-format
 msgid "Anadir %s a la particion %s"
-msgstr "Add %s to partition %s"
+msgstr "Aggiungo %s sulla partitizione %s"
 
 msgid "Aniadir ISO"
-msgstr "Add ISO"
+msgstr "Aggiungo ISO"
 
 msgid "Aniadir RAR con ISO dentro"
-msgstr "Add RAR containing ISO"
+msgstr "Aggiungo RAR contenente ISO"
 
 msgid "Aniadir directorio"
-msgstr "Add folder"
+msgstr "Aggiungi cartella"
 
 msgid "Borrar el juego seleccionado"
 msgstr ""
 
 msgid "Borrar juego con IDGAME"
-msgstr "Remove game with IDGAME"
+msgstr "Cancella il gioco con IDGAME"
 
 #, python-format
 msgid "Buscando en %s Imagenes ISO ... "
-msgstr "Searching %s ISO Image ..."
+msgstr "Sto cercando l'immagine ISO di %s ..."
 
 #, python-format
 msgid "Buscando en %s ficheros RAR ... "
-msgstr "Searching %s files RAR ..."
+msgstr "Sto cercando %s nel file RAR"
 
 msgid "Buscando un Disco de Wii ..."
-msgstr "Searching Wii disc ..."
+msgstr "Sto cercando un disco Wii ..."
 
 msgid "Buscar:"
-msgstr "Search:"
+msgstr "Cerca:"
 
 msgid "Cararuta?"
-msgstr "Cover?"
+msgstr "Copertina?"
 
 msgid "Caratula descargada como"
-msgstr "Cover downloaded as"
+msgstr "Copertina scaricata come"
 
 msgid "Caratula?"
-msgstr "Cover?"
+msgstr "Copertina?"
 
 msgid "Clasificar"
-msgstr "Sort"
+msgstr "Ordinare"
 
 msgid "Copia directa de particion a particion"
-msgstr "Direct copy of a partition partition"
+msgstr "Copia diretta da partizione a partizione"
 
 msgid "Copiando"
-msgstr "Copying"
+msgstr "Sto copiando"
 
 #, python-format
 msgid "Copiando el disco %s a la ruta %s"
-msgstr "Copy disc %s to path %s"
+msgstr "Sto copiando il disco %s nel percorso %s"
 
 #, python-format
 msgid "Copiando el juego %s desde %s a la particion %s"
-msgstr "Copy game %s from %s to the partition %s"
+msgstr "Sto copiando il gioco %s da %s sulla partizione %s"
 
 #, python-format
 msgid "Copiando la caratula %s a la ruta %s"
-msgstr "Copy cover %s to path %s"
+msgstr "Sto copiando la copertina %s nel percorso %s"
 
 msgid "Copiar 1:1"
-msgstr "Copy 1:1"
+msgstr "Copia 1:1"
 
 msgid "Copiar a otra particion"
-msgstr "Copy to other partition"
+msgstr "Copiare su altra partizione"
 
 msgid "Copiar el juego seleccionado o todos, a otra particion"
 msgstr ""
 
 msgid "Copiar el juego seleccionado*"
-msgstr "Copy selected game*"
+msgstr "Copiare il gioco selezionato*"
 
 msgid "Copiar todo el disco*"
-msgstr "Copy all games*"
+msgstr "Copiare tutti i giochi*"
 
 msgid "Debes tener al menos 2 particiones WBFS para hacer copias 1:1"
-msgstr ""
+msgstr "Bisogna avere almeno 2 partizioni WBFS per lanciare la copia 1:1"
 
 msgid "Desarrollador:"
-msgstr ""
+msgstr "Sviluppatore:"
 
 #, python-format
 msgid "Descargando caratula de %s"
-msgstr "Downloading disc %s"
+msgstr "Sto scaricando la copertina di %s"
 
 #, python-format
 msgid "Descargando disco de %s"
-msgstr "Downloading disc %s"
+msgstr "Sto scaricando il disco di %s"
 
 msgid "Descomprimido correctamente"
-msgstr "Uncompressed successfully"
+msgstr "Decompresso con successo"
 
 msgid "Desconocido"
-msgstr ""
+msgstr "Sconosciuto"
 
 #, python-format
 msgid "Desea copiar el juego %s (%s) a la particion %s?"
-msgstr "Do you want copy game %s (%s) to the partition %s?"
+msgstr "Vuoi copiare il gioco %s (%s) sulla partizione %s?"
 
 #, python-format
 msgid "Desea reemplazar la iso del juego %s?"
-msgstr ""
+msgstr "Vuoi sostituire la iso del gioco %s?"
 
 msgid "Desea reemplazarla (S/N) : "
-msgstr "Do you want to replace it? (Y/N) :"
+msgstr "Vuoi sostituirla? (S/N) :"
 
 msgid "Dispositivo"
-msgstr "Device"
+msgstr "Dispositivo"
 
 #, python-format
 msgid "ERROR %s no es un ningun juego de Wii"
-msgstr "%s is not a Wii game"
+msgstr "ERRORE %s non è un gioco Wii"
 
 #, python-format
 msgid "ERROR al borrar la ISO : %s"
-msgstr "ERROR erasing ISO : %s"
+msgstr "ERRORE durante la cencellazione della ISO : %s"
 
 #, python-format
 msgid "ERROR al descomrpimir el RAR : %s"
-msgstr "ERROR When uncompress RAR : %s"
+msgstr "ERRORE durante la decompressione del RAR : %s"
 
 msgid "ERROR al renombrar"
-msgstr "ERROR in rename"
+msgstr "ERRORE durante la rinomina"
 
 #, python-format
 msgid "ERROR anadiendo la ISO : %s (comprueba que sea una ISO de WII)"
-msgstr "ERROR adding ISO : %s (check that it's an Wii game ISO)"
+msgstr "ERRORE aggiungendo la ISO : %s (verifica che sia una ISO di un gioco Wii)"
 
 #, python-format
 msgid "ERROR aniadiendo la ISO : %s (comprueba que sea una ISO de WII)"
-msgstr "ERROR adding ISO : %s (check that it's an Wii game ISO)"
+msgstr "ERRORE aggiungendo la ISO : %s (verifica che sia una ISO di un gioco Wii)"
 
 msgid "ERROR borrando el juego"
-msgstr "ERROR deleting game"
+msgstr "ERRORE durante la cancellazione del gioco"
 
 #, python-format
 msgid "ERROR el RAR %s no tenia ninguna ISO"
-msgstr "RAR %s don't have ISO"
+msgstr "ERRORE il RAR %s non contiene nessuna ISO"
 
 #, python-format
 msgid "ERROR extrayendo la ISO de %s"
-msgstr "ERROR extracting ISO from %s"
+msgstr "ERRORE durante l'estrazione della ISO di %s"
 
 msgid "ERROR la ISO o la particion no existe"
-msgstr "ISO or the partition don't exists"
+msgstr "ERRORE la ISO o la partitizione non esiste"
 
 #, python-format
 msgid "ERROR no se puede descomrpimir por que reemplazaria el ISO : %s"
-msgstr "Don't can uncompress because reemplace the ISO : %s"
+msgstr "ERRORE non si può decomprimere perchè sovrascrive la ISO: %s"
 
 msgid "ERROR!"
-msgstr ""
+msgstr "ERRORE!"
 
 #, python-format
 msgid "ERROR, descargando %s.png"
-msgstr "ERROR, downloading %s.png"
+msgstr "ERRORE scaricando %s.png"
 
 msgid "ERROR, descargando alguna caratula"
-msgstr "ERROR, downloading some cover"
+msgstr "ERRORE scaricando qualche copertina"
 
 msgid "Editor:"
-msgstr ""
+msgstr "Editor"
 
 #, python-format
 msgid "El juego ya esta metido, como %s en %s"
 msgstr ""
 
 msgid "El numero dado es incorrecto"
-msgstr "Number incorrect"
+msgstr "Il numero indicato è errato"
 
 msgid "Elige la particion WBFS con la que va ha trabajar : "
-msgstr "Choose the WBFS partition which you will work on :"
+msgstr "Scegli la partizione WBFS su cui vuoi lavorare:"
 
 msgid "Elige un directorio"
-msgstr "Choose folder"
+msgstr "Scegli una cartella"
 
 #, python-format
 msgid "Elige un directorio donde extraer la ISO de %s"
-msgstr "Choose folder for extract ISO %s"
+msgstr "Scegli una cartella per estrarre la ISO di %s"
 
 msgid "Elige una imagen ISO valida para Wii"
-msgstr "Choose ISO image valid for Wii"
+msgstr "Scegli una immagine ISO valida per la Wii"
 
 msgid "Empezando ..."
-msgstr "Starting ..."
+msgstr "Avvio ..."
 
 msgid "Empezar a copiar?"
-msgstr "Want to start the copy?"
+msgstr "Iniziare la copia?"
 
 #, python-format
 msgid "Empieza %s"
-msgstr "Start: %s"
+msgstr "Inizio: %s"
+
+#, python-format
+msgid "Error al descomrpimir el RAR : %s"
+msgstr ""
 
 msgid "Error al dumpear la ISO"
-msgstr "Error when dump ISO"
+msgstr "Errore durante il dump ISO"
 
 #, python-format
 msgid ""
@@ -294,348 +290,349 @@ msgid ""
 "\n"
 "%s"
 msgstr ""
-"Error at finish the next task:\n"
+"Errore al termine della seguente operazione:\n"
 "\n"
 "%s"
 
 msgid "Error al pasar la ISO al disco duro"
-msgstr "Error transferring the ISO to the hard drive"
+msgstr "Errore durante il trasferimento della ISO sul disco fisso"
 
 msgid "Error borrando"
-msgstr "Delete error"
+msgstr "Errore durante la cancellazione"
 
 msgid "Error renombrando"
-msgstr "Error renaming"
+msgstr "Errore durante la rinomina"
+
+#, python-format
+msgid "Error: El RAR %s no tenia ninguna ISO"
+msgstr ""
 
 msgid "Error: La longitud del IDGAME debe ser 6, y solo puede contener letras y numeros"
-msgstr "Error: IDGAME length must be 6, and can only contain letters and numbers"
+msgstr "Errore: La lunghezza dell'IDGAME deve essere 6, e può solo contenere lettere e numeri"
+
+#, python-format
+msgid "Error: No se puede descomrpimir por que reemplazaria el ISO : %s"
+msgstr ""
 
 msgid "Escriba el nuevo nombre : "
-msgstr "Enter the new name : "
+msgstr "Inserisci il nuovo nome : "
 
 msgid "Extraer"
-msgstr "Extract"
+msgstr "Estrai"
 
 #, python-format
 msgid "Extraer %s a la ruta %s"
-msgstr "Extract %s to path %s"
+msgstr "Estratto %s sul percorso %s"
 
 msgid "Extraer ISO de juego con IDGAME"
-msgstr "Extract ISO from game with IDGAME"
+msgstr "Estratta ISO dal gioco con IDGAME"
 
 msgid "Extraer a ISO"
-msgstr "Extract ISO"
+msgstr "Estrai ISO"
 
 msgid "Extraer el juego seleccionado"
 msgstr ""
 
 #, python-format
 msgid "Falla la descarga de la caratula de %s"
-msgstr ""
+msgstr "E' fallito lo scaricamento della copertina di %s"
 
 #, python-format
 msgid "Falla la descarga del disco de %s"
-msgstr ""
+msgstr "E' fallito lo scaricamento del disco %s"
 
 msgid "Fecha de lanzamiento:"
-msgstr ""
+msgstr "Data di lancio:"
 
-msgid "Finalizado."
-msgstr "Finished."
+msgid "Finalizando."
+msgstr ""
 
 msgid "Formato desconocido"
-msgstr "Format Unknown"
+msgstr "Formato sconosciuto"
 
 msgid "Fuera de rango"
-msgstr "Out of range"
+msgstr "Non consentito"
 
 msgid "GNU GENERAL PUBLIC LICENSE Version 3"
-msgstr "GNU GENERAL PUBLIC LICENSE Version 3"
+msgstr "Licenza Pubblica Generica GNU Versione 3"
 
 msgid "Genero:"
-msgstr ""
+msgstr "Genere:"
 
 msgid "Has conectado el disco duro? No se ha encontrado ninguna particion valida."
-msgstr "Connected your HD with partition WBFS?"
+msgstr "Hai collegato il tuo disco fisso? Non è stata trovata nessuna partizione WBFS"
 
 #, python-format
 msgid "Hay %d tareas"
-msgstr "There are %d tasks"
+msgstr "Ci sono %d operazioni"
 
 msgid "Hay mas de un juego de la Wii, deja solo 1 para eliminar la ambiguedad"
-msgstr "There are more than one Wii game, leave only 1 to eliminate the ambiguity"
+msgstr "Ci sono più giochi Wii. Lasciane solo 1 per eliminare l'ambiguità"
 
 msgid "IDGAME"
 msgstr "IDGAME"
 
 msgid "INFORME DE RESULTADOS"
-msgstr "REPORT OF RESULTS"
+msgstr "REPORT DEI RISULTATI"
 
 #, python-format
 msgid "ISO %s aniadida correctamente"
-msgstr "ISO %s added successfully"
+msgstr "ISO %s aggiunta con successo"
 
 #, python-format
 msgid "ISO %s descomprimida y anadida correctamente"
-msgstr "ISO %s uncompressed and added successfully"
+msgstr "ISO %s decompressa e aggiunta con successo"
 
 #, python-format
 msgid "ISO renombrada correctamente a %s"
-msgstr "Game renamed successfully to %s"
+msgstr "ISO rinominata con successo in %s"
 
 msgid "Imagen Wii (ISO o RAR)"
 msgstr ""
 
 msgid "Indique el NUM del juego : "
-msgstr "Number of game ? : "
+msgstr "Indica il NUM del gioco : "
 
 msgid "Inserte un juego de la Wii en su lector de DVD ..."
-msgstr "Insert a Wii game in your DVD ..."
+msgstr "Inserisci un gioco Wii nel lettore DVD ..."
 
 msgid "Instala wiithon, no lo ejecutar desde ./wiithon.py"
-msgstr ""
+msgstr "Installa wiithon, non lanciarlo da ./wiithon.py"
 
 msgid "Interrumpido por el usuario"
-msgstr "Interrupt by user"
+msgstr "Interrotto dall'utente"
 
 msgid "Interrumpido por el usuario."
-msgstr ""
+msgstr "Interrotto dall'utente"
 
 #, python-format
 msgid "Juego %s borrado correctamente"
-msgstr "ISO %s delete successfully"
+msgstr "Gioco %s cancellato con successo"
 
 #, python-format
 msgid "Juego %s extraido OK"
-msgstr "Game %s extracted OK"
+msgstr "Gioco %s estratto correttamente"
 
 msgid "Juegos correctos"
-msgstr "Good games"
+msgstr "Giochi corretti"
 
 msgid "Juegos erroneos"
-msgstr "Bad games"
+msgstr "Giochi errati"
 
 #, python-format
 msgid "La ISO %s temporal fue borrada"
-msgstr "The temporal ISO %s was removed"
+msgstr "La ISO temporanea %s è stata rimossa"
 
 msgid "La ISO o la particion ya no no existen"
-msgstr "ISO or the partition don't exists"
+msgstr "La ISO o la partizione non esiste"
 
 msgid "Libre"
-msgstr "Free"
+msgstr "Liberi"
 
 msgid "Lista de particiones autodetectadas : "
-msgstr "Automatically detected partitions:"
+msgstr "Partizioni riconosciute automaticamente:"
 
 #, python-format
 msgid "Listando juegos de : %s"
-msgstr "Listing games of : %s"
+msgstr "Elenco giochi su : %s"
 
 msgid "NO"
 msgstr "NO"
 
 msgid "Necesitas tener instalado pyGTK o GTKv2"
-msgstr "Need have pyGTK or GTKv2"
+msgstr "Deve essere installato pyGTK o GTKv2"
 
 msgid "No"
-msgstr ""
+msgstr "No"
 
 msgid "No cierre wiithon mientras esta animacion indique actividad"
-msgstr "Do not close wiithon while this animated activity"
+msgstr "Non chiudere wiithon mentre questa animazione indica attiva in corso"
 
 msgid "No has seleccionado ningun juego"
-msgstr "Don't have a game selected"
+msgstr "Nessun gioco selezionato"
 
 msgid "No has seleccionado ninguna particion"
-msgstr "Don't have a partition selected"
+msgstr "Nessuna partizione selezionata"
 
 msgid "No hay Juegos para descargar caratulas"
-msgstr "No games for downloading covers"
+msgstr "Non ci sono giochi per scaricare le copertine"
 
 msgid "No hay Juegos para descargar una caratula"
-msgstr "No games for downloading a cover"
+msgstr "Non ci sono giochi per scaricare una copertina"
 
 msgid "No hay Juegos para extraer"
-msgstr "There aren't games to extract"
+msgstr "Non ci sono giochi da estrarre"
 
 msgid "No hay Juegos para renombrar"
-msgstr "They aren't games for rename"
+msgstr "Non ci sono giochi da rinominare"
 
 msgid "No hay Juegos que borrar"
-msgstr "They aren't games that delete"
+msgstr "Non ci sono giochi da cancellare"
 
 msgid "No hay datos de este juego. Intente actualizar la base de datos."
-msgstr ""
+msgstr "Nessun dato per questo gioco. Prova ad aggiornare il database."
 
 #, python-format
 msgid "No hay nada que copiar en %s"
-msgstr "Nothing that copy to %s"
+msgstr "Niente da copiare su %s"
 
 msgid "No hay particiones WBFS, conecte y refresque"
-msgstr ""
-"There are no partitions WBFS\n"
-"- Connect a WBFS and press Refresh."
+msgstr "Non ci sono partizione WBFS, verifica e premi \"Aggiorna WBFS\"."
 
 #, python-format
 msgid "No hay particiones WBFS, solo puede ver sus juegos acumuladas en %s"
-msgstr ""
-"There are not partitions WBFS connect, connect it and press Refresh WBFS.\n"
-"While in this mode, you can only do the following tasks:\n"
-"- See all the games database accumulated by %s.\n"
-"- Copy to a disc and caratulas to a path. (Usually the SD, for functioning USB Loader)\n"
-"- When you delete a game in this mode, delete the record and covers and discs downloaded"
+msgstr "Non è stata trovata nessuna partizione WBFS, puoi solo vedere il database dei giochi accumulati da %s"
 
 msgid "No puedes refrescar las particiones mientras hay tareas sin finalizar"
-msgstr "Don't can refresh partitions while exists tasks without finish"
+msgstr "Non posso aggiornare le partizioni finchè le operazioni in corso non sono finiteDon't can refresh partitions while exists tasks without finish"
 
 msgid "No se ha borrado la ISO temporal"
-msgstr "Don't delete temporal ISO"
+msgstr "Non è stata cancellata la ISO tempranea"
 
 #, python-format
 msgid "No se ha encontrado caratula para el juego %s"
-msgstr "There is not image ISO"
+msgstr "Non è stata trovata la copertina per il gioco %s"
 
 msgid "No se ha encontrado ningun ISO"
-msgstr "Not found image ISO"
+msgstr "Non è stata trovata nessuna ISO"
 
 msgid "No se ha encontrado ningun disco de la Wii"
-msgstr "No Wii Disc"
+msgstr "Non è stato trovato nessun disco Wii"
 
 msgid "No se ha encontrado ninguna imagen ISO"
-msgstr "There is not image ISO"
+msgstr "Non è stata trovata nessuna immagine ISO"
 
 #, python-format
 msgid "No se ha formateado %s"
-msgstr ""
+msgstr "Non è stato formattato %s"
 
 msgid ""
 "No se han detectado particiones WBFS.\n"
 "Si has conectado una particion WBFS y no ha sido detectada, es debido a que no hay permisos de lectura y escritura.\n"
 "Para solucionarlo siga los pasos de la guia de instalacion."
 msgstr ""
-"Don't detect partitions WBFS.\n"
-"If you has connected a partition WBFS but don't detect it, then you you must fix permissions of read and write.\n"
-"You must read the steps of the guide."
+"Non è stata trovata nessuna partizione WBFS.\n"
+"Se hai collegato una partizione WBFS ma non è stata riconosciuta, verifica i permessi un lettura e scrittura.\n"
+"Per la risoluzione segui i passi nella guida di installazione."
 
 #, python-format
 msgid "No tienes instalado ningun juego en %s"
-msgstr "No games installed in %s"
+msgstr "Nessun gioco installato in %s"
 
 msgid "No tienes ningun juego"
-msgstr "Don't have some game"
+msgstr "Nessun gioco"
 
 msgid "Nombre"
-msgstr "Name"
+msgstr "Nome"
 
 msgid "Nota, la copia no sobreescribire nada, solo copia juegos que no tenga el destino"
-msgstr "Note: the copy will not start immediately, you are prompted for confirmation."
+msgstr "Nota: la copia non sovrascriverà nulla, verranno copiati solo i giochi non presenti sulla destinazione"
 
 msgid "Nuevo"
-msgstr "New"
+msgstr "Nuovo"
 
 #, python-format
 msgid "Nuevo nombre es demasiado largo, intente con un texto menor de %d caracteres"
-msgstr "New name is too long, try a text smaller than %d characters"
+msgstr "Il nuovo nome è troppo lungo, prova con un testo con meno di %d caratteri"
 
 msgid "Num de jugadores:"
-msgstr ""
+msgstr "Numero di giocatori:"
 
 msgid "Numero fuera de rango"
-msgstr "Out of range"
+msgstr "Valore non consentito"
 
 #, python-format
 msgid "OK, descargado %s.png"
-msgstr "OK, downloaded %s.png"
+msgstr "OK, scaricato %s.png"
 
 msgid "OK, todas las caratulas se han descargado"
-msgstr "OK, all covers downloaded"
+msgstr "OK, tutte le copertine sono state scaricate"
 
 msgid "Paso 1 de 2: Elige un directorio para las CARATULAS"
-msgstr "Step 1 of 2: Choose a folder for COVERS"
+msgstr "Passo 1 di 2: Scegli una cartella per le COPERTINE"
 
 msgid "Paso 2 de 2: Elige un directorio para los DISCOS"
-msgstr "Step 2 of 2: Choose a folder for DISCS"
+msgstr "Passo 2 di 2: Scegli una cartella per i DISCHI"
 
 msgid "Preferencias"
-msgstr "Preferences"
+msgstr "Preferenze"
 
 #, python-format
 msgid "Presiona cualquier tecla para mostrar %d lineas mas"
-msgstr "Press any key for show %d more lines"
+msgstr "Premi un tasto per visualizzare %d linee in più"
 
 msgid "Programa ejecutado con las opciones incorrectas."
-msgstr "Program run with the incorrect settings"
+msgstr "Programma eseguito con parametri errati."
 
 msgid "Puede llevar mucho tiempo ..."
-msgstr ""
+msgstr "Può richiedere molto tempo ..."
 
 msgid "Pulse cualquier tecla para continuar ...\n"
-msgstr "Press any key to continue ... \n"
+msgstr "Premi un tasto per continuare ... \n"
 
 msgid "Pulse cualquier tecla para continuar ... "
-msgstr "Press any key to continue ..."
+msgstr "Premi un tasto per continuare ..."
 
 #, python-format
-msgid "Quieres borrar el juego con %s?"
+msgid "Quieres borrar el juego: %s?"
 msgstr ""
 
 msgid "RXGB2"
-msgstr ""
+msgstr "RXGB2"
 
 msgid "Ranking:"
-msgstr ""
+msgstr "Posizione in classifica:"
 
 msgid "Refrescar WBFS"
-msgstr "Refresh WBFS"
+msgstr "Aggiorna WBFS"
 
 msgid "Renombra el juego seleccionado"
 msgstr ""
 
 msgid "Renombrar"
-msgstr "Rename"
+msgstr "Rinomina"
 
 msgid "Renombrar juego IDGAME"
-msgstr "Rename game IDGAME"
+msgstr "Rinomina gioco IDGAME"
 
 msgid "SI"
-msgstr "YES"
+msgstr "SI"
 
 msgid "Saliendo por peticion del usuario."
-msgstr "Exiting by user request."
+msgstr "Uscita su richiesta dell'utente."
 
 msgid "Se descargaran en 3D"
-msgstr "They'll be downloaded in 3D"
+msgstr "Saranno scaricate in 3D"
 
 msgid "Se descargaran en formato paronamico"
-msgstr "They'll be downloaded in widescreen format"
+msgstr "Saranno scaricate in formato panoramico"
 
 #, python-format
 msgid "Se han detectado caracteres no validos: %s"
-msgstr "Characters not valid: %s"
+msgstr "Caratteri non validi: %s"
 
 msgid "Se va ha borrar la ISO descomprimida"
-msgstr "The uncompressed ISO is going to be removed"
+msgstr "La ISO non compressa verrà eliminata"
 
 msgid "Se van a copiar los siguientes juegos a"
-msgstr "Will be copied to the following games"
+msgstr "Saranno copiati i seguenti giochi"
 
 msgid "Selecciona la particion de destino:"
-msgstr "Select the destine partition:"
+msgstr "Seleziona la partizione di destinazione:"
 
 #, python-format
 msgid "Si, %d jugadores (%s)"
-msgstr ""
+msgstr "Si, %d giocatori (%s)"
 
 #, python-format
 msgid "Si, 1 jugador (%s)"
-msgstr ""
+msgstr "Si, 1 giocatore (%s)"
 
 msgid "Synopsis:"
-msgstr ""
+msgstr "Riassunto:"
 
 msgid "TAMANIO"
-msgstr "SIZE"
+msgstr "DIMENSIONE"
 
 msgid "TEXTO_LICENCIA"
 msgstr ""
@@ -652,66 +649,66 @@ msgstr ""
 "51 Franklin St, Fifth Floor, Boston, MA 02110-1301  USA"
 
 msgid "TITULO"
-msgstr "TITLE"
+msgstr "TITOLO"
 
 msgid "Tamanio"
-msgstr "Size"
+msgstr "Dimensione"
 
 #, python-format
 msgid "Termina: %s"
-msgstr "Finish: %s"
+msgstr "Finito: %s"
 
 msgid "Tiene Online?:"
-msgstr ""
+msgstr "Online?"
 
 msgid "Tienes que seleccionar una particion WBFS para realizar esta accion"
-msgstr "Need select some partition WBFS"
+msgstr "Bisogna selezionare una partizione WBFS per eseguire questa azione"
 
 msgid "Titulo:"
-msgstr ""
+msgstr "Titolo:"
 
 msgid "Todo metido en el HD correctamente"
-msgstr "All OK in HD successfully"
+msgstr "Copiato tutto con successo sul disco fisso"
 
 msgid "Total"
-msgstr "Total"
+msgstr "Totale"
 
 msgid "Un gestor de particiones WBFS facil de usar"
-msgstr "WBFS Partition Manager of easy to use"
+msgstr "Un gestore di partizioni WBFS facile da usare"
 
 msgid "Usado"
-msgstr "Used"
+msgstr "Usato"
 
 msgid "Valor incorrecto"
-msgstr "Value error"
+msgstr "Valore errato"
 
 msgid "Ya hay un juego con ese IDGAME"
-msgstr "There is already a game with this IDGAME"
+msgstr "Esiste già un gioco con questo IDGAME"
 
 #, python-format
 msgid "Ya hay una ISO en : %s"
-msgstr "There is already an ISO in : %s"
+msgstr "Esiste già una ISO in : %s"
 
 msgid "a la particion"
-msgstr "to partition"
+msgstr "su partizione"
 
 msgid "a un ISO temporal de 4.4GB en"
-msgstr "to a temporal 4.4GB ISO in"
+msgstr "su iso temporanea dal 4.4GB ISO in"
 
 msgid "caratulas a SD"
-msgstr "copy to SD"
+msgstr "Immagini su SD"
 
 msgid "como"
-msgstr "as"
+msgstr "come"
 
 msgid "en particion"
-msgstr "in partition"
+msgstr "su partizione"
 
 msgid "gtk-cancel"
 msgstr "gtk-cancel"
 
 msgid "gtk-close"
-msgstr ""
+msgstr "gtk-close"
 
 msgid "gtk-ok"
 msgstr "gtk-ok"
@@ -720,29 +717,38 @@ msgid "https://launchpad.net/wiithon"
 msgstr "https://launchpad.net/wiithon"
 
 msgid "juegos de WII"
-msgstr "games of WII"
+msgstr "giochi WII"
 
 msgid "juegos mas"
-msgstr "more games"
+msgstr "più giochi"
 
 msgid "quedan"
-msgstr "remaining"
+msgstr "mancano"
 
 msgid "s"
-msgstr ""
+msgstr "s"
 
 msgid "wiithon no borra la ISO temporal, puedes borrarla si no la necesitas"
-msgstr "wiithon doesn't remove the temporal ISO, you can remove it if you don't need it"
+msgstr "wiithon non rimuove la ISO temporanea, puoi cancellarla se non ne hai bisogno"
 
 msgid "No hay particiones WBFS!"
-msgstr ""
+msgstr "Non ci sono partizioni WBFS"
 
 #, python-format
 msgid " Esta seguro de formatear %s (S/N)? "
-msgstr ""
+msgstr "Sei sicuro di voler formattare %s (S/N)?"
+
+#~ msgid "El juego ya esta metido, como %s"
+#~ msgstr "Il gioco è già stato inserito come %s"
+
+#~ msgid "Finalizado."
+#~ msgstr "Finito."
 
 #~ msgid "Imagen ISO para Wii"
-#~ msgstr "ISO image for Wii"
+#~ msgstr "Immagine ISO per Wii"
+
+#~ msgid "Quieres borrar el juego con %s?"
+#~ msgstr "Vuoi cancellare il gioco %s?"
 
 #~ msgid ""
 #~ "Comprobando integridad ...\n"

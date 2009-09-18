@@ -15,6 +15,8 @@ ayuda: help
 
 help:
 	@echo ==================================================================
+	@echo "Escribe \"make\" para compilar todo"
+	@echo ""
 	@echo "Escribe \"sudo make install\" solo instala"
 	@echo "Escribe \"sudo make install_auto\" para instalar Wiithon y sus dependencias (con apt-get)"
 	@echo ""
@@ -22,29 +24,25 @@ help:
 	@echo "Escribe \"sudo make purge\" para desinstalar wiithon completamente"
 	@echo "Escribe \"sudo make dependencias\" para instalar las dependencias con apt-get"
 	@echo ""
-	@echo "Escribe \"sudo make run LANGUAGE=XX\" para instalar & autoejecutar en un idioma como es, en, pt_BR ..."
+	@echo "Escribe \"make run LANGUAGE=XX\" para instalar & autoejecutar en un idioma como es, en, pt_BR ..."
 	@echo ==================================================================
 
 run: install
 	LANGUAGE=$(LANGUAGE) wiithon
 
-install_auto: uninstall dependencias install
+install_auto: dependencias install
 
-dependencies: dependencias
-
-dependencias:
+dependencias: permisos
 	$(INSTALL_PKG) libc6 libc6-dev intltool imagemagick python-gtk2 python-glade2 python-sexy python-sqlalchemy gnome-icon-theme
-	-@$(INSTALL_PKG) libc6-dev-i386 libc6-i386	
+	-@$(INSTALL_PKG) libc6-dev-i386 libc6-i386
 	@echo "=================================================================="
 	@echo "Install depends"
 	@echo "=================================================================="
 
-#	gpasswd -a $(USER) disk
+permisos:
+	gpasswd -a ${SUDO_USER} disk
 
-compilar: unrar-nonfree/unrar libwbfs_binding/wiithon_wrapper ./po/locale/da_DK/LC_MESSAGES/wiithon.mo ./po/locale/fi_FI/LC_MESSAGES/wiithon.mo ./po/locale/tr_TR/LC_MESSAGES/wiithon.mo ./po/locale/ru_RU/LC_MESSAGES/wiithon.mo ./po/locale/ko_KR/LC_MESSAGES/wiithon.mo ./po/locale/it/LC_MESSAGES/wiithon.mo ./po/locale/sv_SE/LC_MESSAGES/wiithon.mo ./po/locale/es/LC_MESSAGES/wiithon.mo ./po/locale/pt_PT/LC_MESSAGES/wiithon.mo ./po/locale/en/LC_MESSAGES/wiithon.mo ./po/locale/nl_NL/LC_MESSAGES/wiithon.mo ./po/locale/nb_NO/LC_MESSAGES/wiithon.mo ./po/locale/ja_JP/LC_MESSAGES/wiithon.mo ./po/locale/fr/LC_MESSAGES/wiithon.mo ./po/locale/pt_BR/LC_MESSAGES/wiithon.mo ./po/locale/de/LC_MESSAGES/wiithon.mo
-
-fix_permisos:
-	-@sudo chown `whoami`\: * -R ~/.wiithon/
+compilar: ./po/locale/da_DK/LC_MESSAGES/wiithon.mo ./po/locale/fi_FI/LC_MESSAGES/wiithon.mo ./po/locale/tr_TR/LC_MESSAGES/wiithon.mo ./po/locale/ru_RU/LC_MESSAGES/wiithon.mo ./po/locale/ko_KR/LC_MESSAGES/wiithon.mo ./po/locale/it/LC_MESSAGES/wiithon.mo ./po/locale/sv_SE/LC_MESSAGES/wiithon.mo ./po/locale/es/LC_MESSAGES/wiithon.mo ./po/locale/pt_PT/LC_MESSAGES/wiithon.mo ./po/locale/en/LC_MESSAGES/wiithon.mo ./po/locale/nl_NL/LC_MESSAGES/wiithon.mo ./po/locale/nb_NO/LC_MESSAGES/wiithon.mo ./po/locale/ja_JP/LC_MESSAGES/wiithon.mo ./po/locale/fr/LC_MESSAGES/wiithon.mo ./po/locale/pt_BR/LC_MESSAGES/wiithon.mo ./po/locale/de/LC_MESSAGES/wiithon.mo unrar-nonfree/unrar libwbfs_binding/wiithon_wrapper
 
 install: uninstall
 	mkdir -p $(PREFIX)/share/wiithon

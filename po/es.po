@@ -332,6 +332,10 @@ msgstr "¿Desea que empieze la copia?"
 msgid "Empieza %s"
 msgstr ""
 
+#, python-format
+msgid "Error al descomrpimir el RAR : %s"
+msgstr ""
+
 msgid "Error al dumpear la ISO"
 msgstr ""
 
@@ -351,7 +355,15 @@ msgstr ""
 msgid "Error renombrando"
 msgstr ""
 
+#, python-format
+msgid "Error: El RAR %s no tenia ninguna ISO"
+msgstr ""
+
 msgid "Error: La longitud del IDGAME debe ser 6, y solo puede contener letras y numeros"
+msgstr ""
+
+#, python-format
+msgid "Error: No se puede descomrpimir por que reemplazaria el ISO : %s"
 msgstr ""
 
 msgid "Escriba el nuevo nombre : "
@@ -384,7 +396,7 @@ msgstr ""
 msgid "Fecha de lanzamiento:"
 msgstr ""
 
-msgid "Finalizado."
+msgid "Finalizando."
 msgstr ""
 
 msgid "Formato desconocido"
@@ -618,7 +630,7 @@ msgid "Pulse cualquier tecla para continuar ... "
 msgstr ""
 
 #, python-format
-msgid "Quieres borrar el juego con %s?"
+msgid "Quieres borrar el juego: %s?"
 msgstr ""
 
 msgid "RXGB2"

@@ -246,7 +246,7 @@ class WiithonGUI(GtkBuilderWrapper):
             # oculto la fila de progreso
             self.wb_box_progreso.hide()
 
-            self.lParti = self.core.getListaParticiones()
+            self.lParti = self.core.getListaParticiones(session)
             if(len(self.lParti) == 0):
                 # establecemos el modo de wiithon
                 self.modo = "ver"
@@ -616,7 +616,7 @@ class WiithonGUI(GtkBuilderWrapper):
         listaJuegosAcumulados = NonRepeatList()
         for particion in particiones:
             # obtener los juegos de esa particion
-            listaJuegos = self.core.getListaJuegos(particion)
+            listaJuegos = self.core.getListaJuegos(session, particion)
 
             i = 0
             # merge con la base de datos
@@ -1226,12 +1226,11 @@ class WiithonGUI(GtkBuilderWrapper):
     def actualizarFraccion( self , fraccion ):
         self.wb_progreso1.set_fraction( fraccion )
 
-    def refrescarParticionesYSeleccionarJuego(self, IDGAME, DEVICE):        
-        #self.seleccionarFilaConValor(self.wb_tv_partitions, len(self.lParti) , 0 , DEVICE)
-        #self.seleccionarFilaConValor(self.wb_tv_games, len(self.lJuegos_filtrada) , 0 , IDGAME)
-        '''
-        Añadir el juego a la base de datos y refrescar
-        '''
+    def refrescarParticionesYSeleccionarJuego(self, IDGAME, DEVICE):
+        self.refrescarParticionesWBFS()
+        
+        self.seleccionarFilaConValor(self.wb_tv_partitions, len(self.lParti) , 0 , DEVICE)
+        self.seleccionarFilaConValor(self.wb_tv_games, len(self.lJuegos_filtrada) , 0 , IDGAME)
         
     def mostrarError(self, error):
         self.alert('error',error)
@@ -1370,10 +1369,10 @@ class HiloCalcularProgreso(Thread):
                 cachos = ultimaLinea.split(config.SEPARADOR)
 
                 # FIN es un convenio que viene de la funcion "spinner" en libwbfs.c
-                if cachos[0] == "FIN" or self.trabajo.terminado:
+                if self.trabajo.terminado or cachos[0] == "FIN":
                     self.porcentaje = 100
-                    if self.trabajo.exito:
-                        informativo = _("Finalizado.")
+                    if self.trabajo.exito or cachos[0] == "FIN":
+                        informativo = _("Finalizando.")
                     else:
                         informativo = _("ERROR!")
                     gobject.idle_add(self.actualizarLabel , "%s - %d%% - %s" % ( self.trabajo , self.porcentaje, informativo ))
