@@ -26,12 +26,10 @@ class WiithonCORE:
     # index 2 -> Tamaño en GB redondeado a 2 cifras
     def getListaJuegos(self , session, particion):
         
-        for juego in session.query(Juego):
+        sql = util.decode("particion.device = '%s'" % particion.device)
+        for juego in session.query(Juego,Particion).filter(sql):
             session.delete(juego)
-            
-        for particion in session.query(Particion):
-            session.delete(particion)
-        
+
         comando = "%s -p %s ls" % (config.WBFS_APP, particion.device)
         lineas = util.getSTDOUT_iterador( comando )
         salida = []
@@ -55,9 +53,13 @@ class WiithonCORE:
         session.commit()
 
         return salida
-
+        
+        
     # Devuelve la lista de particiones
     def getListaParticiones(self, session, detector = config.DETECTOR_WBFS):
+            
+        for particion in session.query(Particion):
+            session.delete(particion)
 
         salida = util.getSTDOUT_NOERROR_iterador(detector)
 
@@ -68,8 +70,8 @@ class WiithonCORE:
                 cachos = linea.strip().split(config.SEPARADOR)
 
                 device = util.decode(cachos[0])
-                sql = util.decode("device=='%s'" % (device))
-                particion = session.query(Particion).filter(sql).first()
+                
+                particion = self.getParticion(session, device)
                 
                 if particion == None:
                     try:
@@ -85,6 +87,40 @@ class WiithonCORE:
         session.commit()
 
         return listaParticiones
+        
+        
+    def getParticion(self, session, DEVICE):
+        sql = util.decode("device=='%s'" % (DEVICE))
+        particion = session.query(Particion).filter(sql).first()
+        return particion
+    
+    def getInfoJuego(self, session, DEVICE, IDGAME):
+        
+        particion = self.getParticion(session, DEVICE)
+        if particion != None:
+            
+            comando = "%s -p %s ls %s" % (config.WBFS_APP, particion.device, IDGAME)
+            linea = util.getSTDOUT( comando )
+
+            cachos = linea.strip().split(config.SEPARADOR)
+
+            sql = util.decode("juego.idgame=='%s' and particion.device='%s'" % (IDGAME, particion.device))
+            juego = session.query(Juego,Particion).filter(sql).first()        
+            if juego == None:
+                juego = Juego(cachos)
+                session.save(juego)
+            else:
+                juego = juego[0]
+                session.update(juego)
+
+            juego.particion = particion
+            
+            session.commit()
+
+            return juego
+
+        else:
+            return None
 
 
     # renombra el ISO de un IDGAME que esta en DEVICE

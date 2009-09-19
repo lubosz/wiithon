@@ -7,6 +7,7 @@ import libxml2
 import datetime
 from threading import Thread
 from datetime import date
+import zipfile
 
 import config
 import util
@@ -31,14 +32,18 @@ class ErrorCreandoTablas(Exception):
 
 class WiiTDBXML(Thread):
     
-    def __init__(self, fichXML, 
+    def __init__(self, url, destino, fichXML, 
                                 callback_spinner,
                                 callback_nuevo_juego, callback_nuevo_descripcion,
                                 callback_nuevo_genero, callback_nuevo_online_feature,
                                 callback_nuevo_accesorio,callback_nuevo_companie,
-                                callback_error_importando
+                                callback_error_importando,
+                                callback_empieza_descarga,
+                                callback_empieza_descomprimir
                                 ):
         Thread.__init__(self)
+        self.url = url
+        self.destino = destino
         self.fichXML = fichXML
         self.callback_spinner = callback_spinner
         self.callback_nuevo_juego = callback_nuevo_juego
@@ -48,11 +53,36 @@ class WiiTDBXML(Thread):
         self.callback_nuevo_accesorio = callback_nuevo_accesorio
         self.callback_nuevo_companie = callback_nuevo_companie
         self.callback_error_importando = callback_error_importando
+        self.callback_empieza_descarga = callback_empieza_descarga
+        self.callback_empieza_descomprimir = callback_empieza_descomprimir
         self.version = '0'
         self.games = 0
         self.salir = False
         
+    def limpiarTemporales(self):
+        if os.path.exists(self.destino):
+            os.remove(self.destino)
+            
+        if os.path.exists(self.fichXML):
+            os.remove(self.fichXML)
+    
+    def descargarZIP(self):
+        self.callback_empieza_descarga(self.url)
+        util.descargar(self.url, self.destino)
+        
+    def descomprimirZIP(self):
+        self.callback_empieza_descomprimir(self.destino)
+        # descargar XML
+        zip = zipfile.ZipFile(self.destino)
+        zip.extract(self.fichXML)
+        zip.close()
+        
     def run(self):
+        self.limpiarTemporales()
+
+        self.descargarZIP()
+        self.descomprimirZIP()
+
         #transicion = session.create_transaction() 
         if os.path.exists(self.fichXML):
             xmldoc = libxml2.parseFile(self.fichXML)
@@ -339,6 +369,8 @@ class WiiTDBXML(Thread):
 
             # hacemos efectivas las transacciones
             session.commit()
+            
+            self.limpiarTemporales()
         else:
             self.error_importando("No existe el XML")
 

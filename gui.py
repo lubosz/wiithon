@@ -705,10 +705,14 @@ class WiithonGUI(GtkBuilderWrapper):
             porcentaje = 0.0
         
         numJuegos = len(self.lJuegos)
+        '''
         if self.lJuegos_filtrada != None:
-            numJuegos_filtrados = len(self.lJuegos_filtrada)
+        '''
+        numJuegos_filtrados = len(self.lJuegos_filtrada)
+        '''
         else:
             numJuegos_filtrados = numJuegos
+        '''
 
         if numJuegos_filtrados == numJuegos:
             self.wb_progresoEspacio.set_text(_("%d juegos") % (numJuegos))
@@ -1053,6 +1057,8 @@ class WiithonGUI(GtkBuilderWrapper):
                     # seleccionar el primero
                     self.seleccionarPrimeraFila(self.wb_tv_games)
                     
+                    self.refrescarEspacio()
+                    
                     # FIXME: hacer una transacción
                     session.commit()
 
@@ -1227,7 +1233,11 @@ class WiithonGUI(GtkBuilderWrapper):
         self.wb_progreso1.set_fraction( fraccion )
 
     def refrescarParticionesYSeleccionarJuego(self, IDGAME, DEVICE):
-        self.refrescarParticionesWBFS()
+
+        # consultamos al wiithon wrapper info sobre el juego con nueva IDGAME
+        # lo añadimos a la lista
+        juego = self.core.getInfoJuego(session, DEVICE, IDGAME)
+        self.lJuegos.append(juego)
         
         self.seleccionarFilaConValor(self.wb_tv_partitions, len(self.lParti) , 0 , DEVICE)
         self.seleccionarFilaConValor(self.wb_tv_games, len(self.lJuegos_filtrada) , 0 , IDGAME)
@@ -1368,6 +1378,10 @@ class HiloCalcularProgreso(Thread):
 
                 cachos = ultimaLinea.split(config.SEPARADOR)
 
+                if cachos[0] == "YA_ESTA_EN_DISCO" or cachos[0] == "ISO_NO_EXISTE":
+                    self.interrumpir()
+                    continue
+
                 # FIN es un convenio que viene de la funcion "spinner" en libwbfs.c
                 if self.trabajo.terminado or cachos[0] == "FIN":
                     self.porcentaje = 100
@@ -1400,11 +1414,6 @@ class HiloCalcularProgreso(Thread):
 
             time.sleep(1)
 
-            '''
-            except ValueError:
-                print "OJO!! HiloCalcularProgreso"
-                #self.interrumpir()
-            '''
         f.close()
 
     def interrumpir(self):

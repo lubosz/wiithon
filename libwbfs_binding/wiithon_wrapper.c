@@ -56,7 +56,7 @@ void spinner(u64 x, u64 max)
         if( percent > porcentaje_ponderado )
         {
             diferencia = percent - porcentaje_ponderado;
-            porcentaje_ponderado+=(diferencia/4);
+            porcentaje_ponderado+=(diferencia/2);
         }
         restante = (d * (100-porcentaje_ponderado)) / porcentaje_ponderado;
     }
@@ -185,6 +185,36 @@ wiithon_wrapper_ls(wbfs_t *p)
                 f32 size = WBFS_GameSize( p , (u8*)gameid);
                 if( size < 0) size = 0.0f;
                 fprintf(stdout, "%s;@;%s;@;%f\n", gameid , b + 0x20, size );
+            }
+        }
+        wbfs_iofree(b);
+    }
+
+    return OK;
+}
+
+int
+wiithon_wrapper_ls_idgame(wbfs_t *p, u8 *idgame)
+{
+    int count = wbfs_count_discs(p);
+
+    if(count > 0)
+    {
+        int i;
+        u8 *b = wbfs_ioalloc(0x100);
+        char gameid[7];
+
+        for (i=0; i<count; i++)
+        {
+            if(!wbfs_get_disc_info(p, i, b, 0x100, NULL))
+            {
+                sprintf( gameid, "%c%c%c%c%c%c", b[0], b[1], b[2], b[3], b[4], b[5] );
+                if(wbfs_memcmp(gameid, idgame ,6)==0)
+                {
+                    f32 size = WBFS_GameSize( p , (u8*)gameid);
+                    if( size < 0) size = 0.0f;
+                    fprintf(stdout, "%s;@;%s;@;%f\n", gameid , b + 0x20, size );
+                }
             }
         }
         wbfs_iofree(b);
@@ -345,6 +375,7 @@ int uso(char *argv[])
 {
     printf("\t%s -p /dev/sdxY formatear\n" , argv[0]);
     printf("\t%s -p /dev/sdxY ls\n" , argv[0]);
+    printf("\t%s -p /dev/sdxY ls IDGAME\n" , argv[0]);
     printf("\t%s -p /dev/sdxY df\n" , argv[0]);
     printf("\t%s -p /dev/sdxY add fichero.iso\n" , argv[0]);
     printf("\t%s -p /dev/sdxY rm IDGAME\n" , argv[0]);
@@ -414,6 +445,10 @@ int main(int argc, char *argv[])
         else if ((numParametros == 1) && (strcmp(argv[optind], "ls") == 0))
         {
             retorno = wiithon_wrapper_ls(p);
+        }
+        else if ((numParametros == 2) && (strcmp(argv[optind], "ls") == 0))
+        {
+            retorno = wiithon_wrapper_ls_idgame(p, (u8*)argv[4]);
         }
         else if ((numParametros == 1) && (strcmp(argv[optind], "df") == 0))
         {

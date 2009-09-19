@@ -8,6 +8,7 @@ import gtk
 import subprocess
 import copy
 import httplib
+import urllib
 import re
 
 from sqlalchemy.orm import sessionmaker
@@ -217,6 +218,13 @@ Content-Type: image/png
 
 class ErrorDescargando(Exception):
     pass
+    
+def descargar(url, destino):
+    mysock = urllib.urlopen(url)
+    fileToSave = mysock.read()
+    oFile = open(destino ,'wb')
+    oFile.write(fileToSave)
+    oFile.close()
 
 def descargarImagen(url, destino, type = "image/png", referer = "http://www.wiiboxart.com/pal.php"):
     try:
@@ -261,7 +269,7 @@ def descargarImagen(url, destino, type = "image/png", referer = "http://www.wiib
             raise ErrorDescargando
     except:
         raise ErrorDescargando
-
+        
 def getDominioYRuta(url, protocolo = 'http://'):
     pos = url.find(protocolo)
     if(pos != -1):
