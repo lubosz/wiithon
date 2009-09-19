@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <interface>
-  <requires lib="gtk+" version="2.14"/>
+  <requires lib="gtk+" version="2.16"/>
   <!-- interface-naming-policy project-wide -->
   <object class="GtkDialog" id="alerta">
     <property name="border_width">5</property>
@@ -22,6 +22,8 @@
                 <property name="stock">gtk-missing-image</property>
               </object>
               <packing>
+                <property name="expand">False</property>
+                <property name="fill">False</property>
                 <property name="position">0</property>
               </packing>
             </child>
@@ -30,11 +32,14 @@
                 <property name="visible">True</property>
               </object>
               <packing>
+                <property name="fill">False</property>
                 <property name="position">1</property>
               </packing>
             </child>
           </object>
           <packing>
+            <property name="expand">False</property>
+            <property name="fill">False</property>
             <property name="position">1</property>
           </packing>
         </child>

@@ -28,7 +28,7 @@ class WiithonCORE:
         
         sql = util.decode("particion.device = '%s'" % particion.device)
         for juego in session.query(Juego,Particion).filter(sql):
-            session.delete(juego)
+            session.delete(juego[0])
 
         comando = "%s -p %s ls" % (config.WBFS_APP, particion.device)
         lineas = util.getSTDOUT_iterador( comando )
