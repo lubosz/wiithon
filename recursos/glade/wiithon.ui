@@ -4,6 +4,7 @@
   <!-- interface-naming-policy project-wide -->
   <object class="GtkWindow" id="principal">
     <property name="visible">True</property>
+    <property name="title" translatable="yes">Wiithon 1.1</property>
     <child>
       <object class="GtkVBox" id="vbox_principal1">
         <property name="visible">True</property>
@@ -11,6 +12,7 @@
           <object class="GtkToolbar" id="toolbar1">
             <property name="visible">True</property>
             <property name="show_arrow">False</property>
+            <property name="icon_size">6</property>
             <child>
               <object class="GtkToolButton" id="tb_anadir">
                 <property name="visible">True</property>
@@ -144,7 +146,7 @@
               <object class="GtkToolButton" id="tb_refrescar_wbfs">
                 <property name="visible">True</property>
                 <property name="label" translatable="yes">Refrescar WBFS</property>
-                <property name="icon_name">applications-system</property>
+                <property name="icon_name">media-playlist-repeat</property>
               </object>
               <packing>
                 <property name="expand">False</property>
@@ -152,21 +154,11 @@
               </packing>
             </child>
             <child>
-              <object class="GtkToolButton" id="tb_preferencias1">
+              <object class="GtkToolButton" id="tb_actualizar_wiitdb">
                 <property name="visible">True</property>
-                <property name="visible_horizontal">False</property>
-                <property name="visible_vertical">False</property>
-                <property name="label" translatable="yes">Preferencias</property>
-                <property name="icon_name">emblem-system</property>
-              </object>
-              <packing>
-                <property name="expand">False</property>
-                <property name="homogeneous">True</property>
-              </packing>
-            </child>
-            <child>
-              <object class="GtkSeparatorToolItem" id="toolbutton4">
-                <property name="visible">True</property>
+                <property name="label" translatable="yes">WiiTDB</property>
+                <property name="icon_widget">icono_wiitdb</property>
+                <signal name="clicked" handler="on_tb_actualizar_wiitdb_clicked"/>
               </object>
               <packing>
                 <property name="expand">False</property>
@@ -454,10 +446,45 @@
           <object class="GtkStatusbar" id="statusbar1">
             <property name="visible">True</property>
             <child>
-              <object class="GtkLabel" id="label_numParticionesWBFS">
+              <object class="GtkHBox" id="hbox1">
                 <property name="visible">True</property>
-                <property name="xalign">0.029999999329447746</property>
-                <property name="label" translatable="yes">1 particion WBFS</property>
+                <child>
+                  <object class="GtkLabel" id="label_numParticionesWBFS">
+                    <property name="visible">True</property>
+                    <property name="xalign">0.029999999329447746</property>
+                    <property name="label" translatable="yes">1 particion WBFS</property>
+                  </object>
+                  <packing>
+                    <property name="position">0</property>
+                  </packing>
+                </child>
+                <child>
+                  <object class="GtkLabel" id="label_juegosConInfoWiiTDB">
+                    <property name="visible">True</property>
+                    <property name="label">160/172 juegos con informaci&#xF3;n WiiTDB</property>
+                  </object>
+                  <packing>
+                    <property name="position">1</property>
+                  </packing>
+                </child>
+                <child>
+                  <object class="GtkLabel" id="label_juegosSinCaratula">
+                    <property name="visible">True</property>
+                    <property name="label">4 juegos sin caratula</property>
+                  </object>
+                  <packing>
+                    <property name="position">2</property>
+                  </packing>
+                </child>
+                <child>
+                  <object class="GtkLabel" id="label_juegosSinDiscArt">
+                    <property name="visible">True</property>
+                    <property name="label">2 juegos sin disc-art</property>
+                  </object>
+                  <packing>
+                    <property name="position">3</property>
+                  </packing>
+                </child>
               </object>
               <packing>
                 <property name="position">0</property>
@@ -1030,5 +1057,9 @@ Brazilian Portuguese: Alex Ant&#xE3;o &lt;alexcarlosantao@gmail.com&gt; [pt_BR.p
     <action-widgets>
       <action-widget response="0">ficha_button2</action-widget>
     </action-widgets>
+  </object>
+  <object class="GtkImage" id="icono_wiitdb">
+    <property name="visible">True</property>
+    <property name="pixbuf">../imagenes/wiitdb.png</property>
   </object>
 </interface>

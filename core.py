@@ -342,20 +342,22 @@ class WiithonCORE:
             linea = linea.strip()
             if( util.getExtension(linea)=="iso" ):
                 return linea
-        return ""
+        return None
 
     def unpack(self , nombreRAR , destino):
         try:
             if os.path.isfile(nombreRAR) and os.path.isdir(destino):
                 nombreISO = self.getNombreISOenRAR(nombreRAR)
-                if nombreISO != "":
+                if nombreISO != None:
                     rutaISO = os.path.join(destino, nombreISO)
+                    print rutaISO
                     if not os.path.exists(rutaISO):
                         directorioActual = os.getcwd()
                         os.chdir(destino)
-                        #comando = '%s e "%s" "%s"' % (config.UNRAR_APP, nombreRAR , nombreISO)
-                        comando = '%s x -kb -o+ -Idp -- "%s" "%s"' % (config.UNRAR_APP, nombreRAR , nombreISO)
+                        comando = '%s e "%s" "%s"' % (config.UNRAR_APP, nombreRAR , nombreISO)
+                        #comando = '%s x -kb -o+ -Idp -- "%s" "%s"' % (config.UNRAR_APP, nombreRAR , nombreISO)
                         salida = subprocess.call( comando , shell=True , stderr=subprocess.STDOUT, stdout=open(config.HOME_WIITHON_LOGS_PROCESO , "w") )
+                        #salida = subprocess.call( comando , shell=True , stderr=subprocess.STDOUT )
                         os.chdir(directorioActual)
                         return (salida == 0)
                     else:

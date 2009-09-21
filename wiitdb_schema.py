@@ -34,6 +34,39 @@ Base = declarative_base()
 
 #############################################################################
 
+class Preferencia(Base):
+    
+    __tablename__ = "preferencias"
+    
+    id = Column('id',Integer,primary_key=True)
+    ruta_anadir = Column('ruta_anadir', VARCHAR(255))
+    ruta_anadir_directorio = Column('ruta_anadir_directorio', VARCHAR(255))
+    ruta_extraer_iso = Column('ruta_extraer_iso', VARCHAR(255))
+    ruta_copiar_caratulas = Column('ruta_copiar_caratulas', VARCHAR(255))
+    ruta_copiar_discos = Column('ruta_copiar_discos', VARCHAR(255))
+    device_seleccionado = Column('device_seleccionado', VARCHAR(255))
+    idgame_seleccionado = Column('idgame_seleccionado', VARCHAR(255))
+
+    def __init__(self):
+        self.ruta_anadir = config.HOME
+        self.ruta_anadir_directorio = config.HOME
+        self.ruta_extraer_iso = config.HOME
+        self.ruta_copiar_caratulas = config.HOME
+        self.ruta_copiar_discos = config.HOME
+        self.device_seleccionado = ""
+        self.idgame_seleccionado = ""
+
+    def __repr__(self):
+        retorno = "ruta_anadir = %s\nruta_anadir_directorio = %s\nruta_extraer = %s\nruta_copiar_caratulas = %s\nruta_copiar_discos = %s\ndevice seleccionado = %s\nidgame seleccionado = %s\n" % (
+                    self.ruta_anadir ,
+                    self.ruta_anadir_directorio ,
+                    self.ruta_extraer_iso ,
+                    self.ruta_copiar_caratulas ,
+                    self.ruta_copiar_discos ,
+                    self.device_seleccionado ,
+                    self.idgame_seleccionado )
+        return retorno
+
 class Companie(Base):
     __tablename__ = 'companie'
     

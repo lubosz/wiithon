@@ -28,11 +28,23 @@ msgid "%d particiones WBFS"
 msgstr ""
 
 #, python-format
+msgid "%d%% - %d/%d games - %d descriptions - %d genre - %d accesories - %d companies - %d online features"
+msgstr ""
+
+#, python-format
 msgid "%d/%d juegos"
 msgstr ""
 
 #, python-format
 msgid "%s NO se ha podido formatear"
+msgstr ""
+
+#, python-format
+msgid "%s no es un archivo RAR"
+msgstr ""
+
+#, python-format
+msgid "%s no es un directorio"
 msgstr ""
 
 #, python-format
@@ -73,6 +85,10 @@ msgid "Acerca de ..."
 msgstr "Über ..."
 
 #, python-format
+msgid "Actualizar WiiTDB desde %s"
+msgstr ""
+
+#, python-format
 msgid "Advertencia de borrar %s en modo ver"
 msgstr ""
 
@@ -88,6 +104,11 @@ msgstr ""
 "Man hat ein Spiel selber abgeändert, z.B. in Sing It eigene Lieder eingefügt.\n"
 "Möchten Sie wirklich die IDGAME %s zu %s umbenennen?"
 
+msgid ""
+"Algunos juegos no se han introducido:\n"
+"\n"
+msgstr ""
+
 #, python-format
 msgid "Anadir %s a la particion %s"
 msgstr "Füge %s zur Partition %s hinzu"
@@ -101,7 +122,7 @@ msgstr "RAR Archiv mit ISO Datei hinzufügen"
 msgid "Aniadir directorio"
 msgstr "Neuer Ordner"
 
-msgid "Borrar el juego seleccionado"
+msgid "Base de datos ocupada."
 msgstr ""
 
 msgid "Borrar juego con IDGAME"
@@ -157,9 +178,6 @@ msgstr "1:1 Kopie"
 msgid "Copiar a otra particion"
 msgstr "Kopiere zu anderer Partition"
 
-msgid "Copiar el juego seleccionado o todos, a otra particion"
-msgstr ""
-
 msgid "Copiar el juego seleccionado*"
 msgstr "Kopiere markiertes Spiel*"
 
@@ -173,6 +191,10 @@ msgid "Desarrollador:"
 msgstr ""
 
 #, python-format
+msgid "Descargando WiiTDB desde %s, espere unos minutos ..."
+msgstr ""
+
+#, python-format
 msgid "Descargando caratula de %s"
 msgstr "Lade Titelbild herunter %s"
 
@@ -182,6 +204,10 @@ msgstr "Lade Disk %s herunter"
 
 msgid "Descomprimido correctamente"
 msgstr "Entpacken erfolgreich"
+
+#, python-format
+msgid "Descomprimir RAR %s"
+msgstr ""
 
 msgid "Desconocido"
 msgstr ""
@@ -255,7 +281,19 @@ msgid "Editor:"
 msgstr ""
 
 #, python-format
-msgid "El juego ya esta metido, como %s en %s"
+msgid "El archivo ISO %s: No existe"
+msgstr ""
+
+#, python-format
+msgid "El archivo RAR %s: No existe"
+msgstr ""
+
+#, python-format
+msgid "El directorio %s: No existe"
+msgstr ""
+
+#, python-format
+msgid "El juego ya esta metido, como %s en %s\n"
 msgstr ""
 
 msgid "El numero dado es incorrecto"
@@ -276,6 +314,12 @@ msgstr "Wähle ISO Abbild"
 
 msgid "Empezando ..."
 msgstr "Start ..."
+
+msgid "Empezando a descomprimir la informacion WiiTDB"
+msgstr ""
+
+msgid "Empezando a obtener datos de juegos desde WiiTDB"
+msgstr ""
 
 msgid "Empezar a copiar?"
 msgstr "Kopiervorgang starten?"
@@ -307,11 +351,19 @@ msgstr "Fehler beim kopieren der ISO auf die Festplatte"
 msgid "Error borrando"
 msgstr "Fehler beim löschen"
 
+#, python-format
+msgid "Error importando %s: %s"
+msgstr ""
+
 msgid "Error renombrando"
 msgstr "Fehler beim umbenennen"
 
 #, python-format
-msgid "Error: El RAR %s no tenia ninguna ISO"
+msgid "Error: Al descargar la bdd wiitdb de: %s"
+msgstr ""
+
+#, python-format
+msgid "Error: El archivo RAR %s no contiene ninguna ISO"
 msgstr ""
 
 msgid "Error: La longitud del IDGAME debe ser 6, y solo puede contener letras y numeros"
@@ -319,6 +371,9 @@ msgstr "FEHLER: IDGAME muss eine Länge von 6 Zahlen und Buchstaben haben"
 
 #, python-format
 msgid "Error: No se puede descomrpimir por que reemplazaria el ISO : %s"
+msgstr ""
+
+msgid "Error: Ocurrio un error al introducir la informacion de juegos de WiiTDB"
 msgstr ""
 
 msgid "Escriba el nuevo nombre : "
@@ -337,9 +392,6 @@ msgstr "Entpacke ISO mit der IDGAME"
 msgid "Extraer a ISO"
 msgstr "Entpacke ISO"
 
-msgid "Extraer el juego seleccionado"
-msgstr ""
-
 #, python-format
 msgid "Falla la descarga de la caratula de %s"
 msgstr ""
@@ -349,6 +401,9 @@ msgid "Falla la descarga del disco de %s"
 msgstr ""
 
 msgid "Fecha de lanzamiento:"
+msgstr ""
+
+msgid "Finalizada satisfactoriamente la importacion de datos desde WiiTDB"
 msgstr ""
 
 msgid "Finalizando."
@@ -368,6 +423,10 @@ msgstr ""
 
 msgid "Has conectado el disco duro? No se ha encontrado ninguna particion valida."
 msgstr "Haben Sie die Festplatte mit einer WBFS Partition angeschlossen?"
+
+#, python-format
+msgid "Hay %d juegos con informacion WiiTDB"
+msgstr ""
 
 #, python-format
 msgid "Hay %d tareas"
@@ -430,8 +489,9 @@ msgstr "Fehlerhafte Spiele"
 msgid "La ISO %s temporal fue borrada"
 msgstr "Temporäre ISO %s wurde entfernt"
 
-msgid "La ISO o la particion ya no no existen"
-msgstr "ISO oder Partition nicht vorhanden"
+#, python-format
+msgid "La particion %s: Ya no existe"
+msgstr ""
 
 msgid "Libre"
 msgstr "Leer"
@@ -454,6 +514,9 @@ msgstr ""
 
 msgid "No cierre wiithon mientras esta animacion indique actividad"
 msgstr "Wiithon nicht beenden solange Animation läuft"
+
+msgid "No existe el XML"
+msgstr ""
 
 msgid "No has seleccionado ningun juego"
 msgstr "Kein Spiel ausgewählt"
@@ -502,8 +565,9 @@ msgstr "Temporäre ISO nicht löschen"
 msgid "No se ha encontrado caratula para el juego %s"
 msgstr "Das Spiel %s wurde nicht gefunden"
 
-msgid "No se ha encontrado ningun ISO"
-msgstr "Kein ISO Abbild gefunden"
+#, python-format
+msgid "No se ha encontrado ningun ISO/RAR en el directorio %s"
+msgstr ""
 
 msgid "No se ha encontrado ningun disco de la Wii"
 msgstr "keine Wii Disk"
@@ -592,11 +656,12 @@ msgstr ""
 msgid "Ranking:"
 msgstr ""
 
+#, python-format
+msgid "Recorrer directorio %s"
+msgstr ""
+
 msgid "Refrescar WBFS"
 msgstr "WBFS aktualisieren"
-
-msgid "Renombra el juego seleccionado"
-msgstr ""
 
 msgid "Renombrar"
 msgstr "Umbenennen"
@@ -680,6 +745,15 @@ msgstr "benutzt"
 msgid "Valor incorrecto"
 msgstr "Falscher Wert"
 
+msgid "WiiTDB"
+msgstr ""
+
+msgid "Wiithon 1.1"
+msgstr ""
+
+msgid "XML invalido"
+msgstr ""
+
 msgid "Ya hay un juego con ese IDGAME"
 msgstr "Es besteht schon ein Spiel mit der IDGAME"
 
@@ -735,6 +809,12 @@ msgstr ""
 #, python-format
 msgid " Esta seguro de formatear %s (S/N)? "
 msgstr ""
+
+#~ msgid "La ISO o la particion ya no no existen"
+#~ msgstr "ISO oder Partition nicht vorhanden"
+
+#~ msgid "No se ha encontrado ningun ISO"
+#~ msgstr "Kein ISO Abbild gefunden"
 
 #~ msgid "Finalizado."
 #~ msgstr "Abschließen."

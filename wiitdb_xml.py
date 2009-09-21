@@ -34,12 +34,17 @@ class WiiTDBXML(Thread):
     
     def __init__(self, url, destino, fichXML, 
                                 callback_spinner,
-                                callback_nuevo_juego, callback_nuevo_descripcion,
-                                callback_nuevo_genero, callback_nuevo_online_feature,
-                                callback_nuevo_accesorio,callback_nuevo_companie,
+                                callback_nuevo_juego,
+                                callback_nuevo_descripcion,
+                                callback_nuevo_genero,
+                                callback_nuevo_online_feature,
+                                callback_nuevo_accesorio,
+                                callback_nuevo_companie,
                                 callback_error_importando,
                                 callback_empieza_descarga,
-                                callback_empieza_descomprimir
+                                callback_empieza_descomprimir,
+                                callback_empieza_importar,
+                                callback_termina_importar
                                 ):
         Thread.__init__(self)
         self.url = url
@@ -55,6 +60,8 @@ class WiiTDBXML(Thread):
         self.callback_error_importando = callback_error_importando
         self.callback_empieza_descarga = callback_empieza_descarga
         self.callback_empieza_descomprimir = callback_empieza_descomprimir
+        self.callback_empieza_importar = callback_empieza_importar
+        self.callback_termina_importar = callback_termina_importar
         self.version = '0'
         self.games = 0
         self.salir = False
@@ -67,19 +74,24 @@ class WiiTDBXML(Thread):
             os.remove(self.fichXML)
     
     def descargarZIP(self):
-        self.callback_empieza_descarga(self.url)
+        if self.callback_empieza_descarga:
+            self.callback_empieza_descarga(self.url)
         util.descargar(self.url, self.destino)
         
     def descomprimirZIP(self):
-        self.callback_empieza_descomprimir(self.destino)
+        if self.callback_empieza_descomprimir:
+            self.callback_empieza_descomprimir(self.destino)
         # descargar XML
         zip = zipfile.ZipFile(self.destino)
         zip.extract(self.fichXML)
         zip.close()
         
     def run(self):
+        
+        self.callback_empieza_importar(self.fichXML)
+        
         self.limpiarTemporales()
-
+        
         self.descargarZIP()
         self.descomprimirZIP()
 
@@ -89,13 +101,13 @@ class WiiTDBXML(Thread):
             ctxt = xmldoc.xpathNewContext()
             nodo = ctxt.xpathEval("//*[name() = 'datafile']")[0]
             
-            SCHEMA_VERSION = 2
-            VERSION_ACTUAL = 1
-            if SCHEMA_VERSION > VERSION_ACTUAL:
+            try:
                 metadatos = Base.metadata
                 db = util.getBDD()
                 metadatos.drop_all(db)
                 metadatos.create_all(db)
+            except:
+                self.error_importando(_("Base de datos ocupada."))
 
             cont = 0
             while not self.salir and nodo != None:
@@ -107,7 +119,7 @@ class WiiTDBXML(Thread):
                     elif nodo.name == "WiiTDB":
                         self.version = int(self.leerAtributo(nodo, 'version'))                        
                         self.games = int(self.leerAtributo(nodo, 'games'))
-                        print "Importando %s juegos. version de XML: %s" % (self.games, self.version)
+                        #print "Importando %s juegos. version de XML: %s" % (self.games, self.version)
 
                     elif nodo.name == "game":
                         if nodo.type == "element":
@@ -128,7 +140,7 @@ class WiiTDBXML(Thread):
                                                 try:
                                                     juego = session.query(JuegoWIITDB).filter(sql).first()
                                                 except:
-                                                    self.error_importando("XML inválido")
+                                                    self.error_importando(_("XML invalido"))
 
                                                 if juego == None:
                                                     juego = JuegoWIITDB(nodo.content, name)
@@ -328,10 +340,10 @@ class WiiTDBXML(Thread):
                                     session.save_or_update(juego)
                                     self.callback_nuevo_juego(juego)
                                 else:
-                                    self.error_importando("XML inválido")
+                                    self.error_importando(_("XML invalido"))
 
                             else:
-                                self.error_importando("XML inválido")
+                                self.error_importando(_("XML invalido"))
 
                         cont += 1
                         # callback cada 1%
@@ -359,7 +371,7 @@ class WiiTDBXML(Thread):
                                 nodo = nodo.next
                             nodo = nodo.parent
                         else:
-                            self.error_importando("XML inválido")
+                            self.error_importando(_("XML invalido"))
 
                 nodo = nodo.next
 
@@ -371,8 +383,10 @@ class WiiTDBXML(Thread):
             session.commit()
             
             self.limpiarTemporales()
+            
+            self.callback_termina_importar(self.fichXML)
         else:
-            self.error_importando("No existe el XML")
+            self.error_importando(_("No existe el XML"))
 
     def leerAtributo(self, nodo, atributo):
         valor = ""
@@ -384,9 +398,10 @@ class WiiTDBXML(Thread):
         return valor
 
     def error_importando(self, motivo):
-        session.rollback()
-        self.callback_error_importando(self, motivo)
         self.interrumpir()
+        #session.rollback()
+        self.limpiarTemporales()
+        self.callback_error_importando(self, self.fichXML, motivo)
 
     def interrumpir(self):
         self.salir = True

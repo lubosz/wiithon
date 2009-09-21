@@ -11,8 +11,8 @@ recursos/imagenes/*.xcf
 po/plantilla.pot
 editar.sh
 recursos/threadpool.py
-doc/*.mwb.bak
-sqlalchemy/
 schema.sql
 unrar-nonfree/unrar
+doc/Análisis/
+doc/Diseño/
 

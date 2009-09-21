@@ -221,9 +221,8 @@ class ErrorDescargando(Exception):
     
 def descargar(url, destino):
     mysock = urllib.urlopen(url)
-    fileToSave = mysock.read()
     oFile = open(destino ,'wb')
-    oFile.write(fileToSave)
+    oFile.write(mysock.read())
     oFile.close()
 
 def descargarImagen(url, destino, type = "image/png", referer = "http://www.wiiboxart.com/pal.php"):
@@ -328,7 +327,7 @@ class SintaxisInvalida(Exception):
     pass
 
 def getBDD():
-    db = create_engine('sqlite:///%s' % os.path.join(config.HOME_WIITHON_BDD, 'juegos.db' ))
+    db = create_engine(config.URI_ENGINE)
     return db
 
 def crearBDD(metadatos):

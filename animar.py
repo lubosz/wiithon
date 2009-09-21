@@ -20,6 +20,9 @@ class Animador(Thread):
         self.ocupado = False
         self.interrumpido = False
 
+        destinoIcono = os.path.join(config.WIITHON_FILES_RECURSOS_IMAGENES , "idle-icon.png")
+        gobject.idle_add( self.modificarIcono , destinoIcono )
+
     def run(self):
         i = 0
         while not self.interrumpido:

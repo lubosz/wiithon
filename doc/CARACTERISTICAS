@@ -26,6 +26,7 @@ Funcionalidades que hacen de wiithon ser "especial"
 - Mantiene los comandos del wiithon 0.98 añadiendo el parametro "-c" o "--no-gui"
 - Para operaciones sencillas (copiar caratulas, descargar caratulas) se utiliza paralelismo para acelerar el proceso (6 hilos).
 - Para operaciones complejas (principalmente escribir/leer en WBFS) la operación es atómica (sin permitir paralelismo), esto es mejor así ya que una sola operación ocupa todo el ancho de banda de la entrada/salida. No obstante esta decisión de diseño sería facilmente modificable.
+- Recuerda la última partición y juego seleccionado.
 
 Problemas conocidos
 ---------------------------------------------------

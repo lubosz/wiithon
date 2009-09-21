@@ -10,9 +10,14 @@ import config
 import util
 from pool import Pool
 from wiitdb_schema import Juego
+from wiitdb_xml import *
+from util import ErrorDescargando
 
 # pseudo-enumerado
-(ANADIR,EXTRAER,CLONAR,DESCARGA_CARATULA,DESCARGA_DISCO,COPIAR_CARATULA,COPIAR_DISCO)=([ "%d" % i for i in range(7) ])
+(ANADIR,EXTRAER,CLONAR,DESCARGA_CARATULA,
+DESCARGA_DISCO,COPIAR_CARATULA,COPIAR_DISCO,
+RECORRER_DIRECTORIO,DESCOMPRIMIR_RAR,
+ACTUALIZAR_WIITDB)=([ "%d" % i for i in range(10) ])
 
 '''
 Herencia Multiple, Es un Pool (implementado en pool.py) y un Thread
@@ -21,20 +26,33 @@ Para poner un Trabajo llamamos al metodo nuevoTrabajo( x )
     Su unico parametro es un objeto de tipo trabajo
 '''
 class PoolTrabajo(Pool , Thread):
-    def __init__(self , core , numHilos = 1 , 
-                                        callback_empieza_trabajo = None,
-                                        callback_termina_trabajo = None,
-                                        callback_nuevo_trabajo = None,
-                                        callback_empieza_trabajo_anadir = None,
-                                        callback_termina_trabajo_anadir = None,
-                                        callback_empieza_progreso = None,
-                                        callback_termina_progreso = None,
-                                        callback_empieza_trabajo_extraer = None,
-                                        callback_termina_trabajo_extraer = None,
-                                        callback_empieza_trabajo_copiar = None,
-                                        callback_termina_trabajo_copiar = None,
-                                        callback_termina_trabajo_descargar_caratula = None,
-                                        callback_termina_trabajo_descargar_disco = None
+    def __init__(
+                                        self , core , numHilos , 
+                                        callback_empieza_trabajo,
+                                        callback_termina_trabajo,
+                                        callback_nuevo_trabajo,
+                                        callback_empieza_trabajo_anadir,
+                                        callback_termina_trabajo_anadir,
+                                        callback_empieza_progreso,
+                                        callback_termina_progreso,
+                                        callback_empieza_trabajo_extraer,
+                                        callback_termina_trabajo_extraer,
+                                        callback_empieza_trabajo_copiar,
+                                        callback_termina_trabajo_copiar,
+                                        callback_termina_trabajo_descargar_caratula,
+                                        callback_termina_trabajo_descargar_disco,
+                                        callback_spinner, 
+                                        callback_nuevo_juego,
+                                        callback_nuevo_descripcion,
+                                        callback_nuevo_genero, 
+                                        callback_nuevo_online_feature,
+                                        callback_nuevo_accesorio, 
+                                        callback_nuevo_companie,
+                                        callback_error_importando,
+                                        callback_empieza_descarga,
+                                        callback_empieza_descomprimir,
+                                        callback_empieza_importar,
+                                        callback_termina_importar
                                         ):
         Pool.__init__(self , numHilos)
         Thread.__init__(self)
@@ -54,6 +72,18 @@ class PoolTrabajo(Pool , Thread):
         self.callback_termina_trabajo_copiar = callback_termina_trabajo_copiar
         self.callback_termina_trabajo_descargar_caratula = callback_termina_trabajo_descargar_caratula
         self.callback_termina_trabajo_descargar_disco = callback_termina_trabajo_descargar_disco
+        self.callback_spinner = callback_spinner
+        self.callback_nuevo_juego = callback_nuevo_juego
+        self.callback_nuevo_descripcion = callback_nuevo_descripcion
+        self.callback_nuevo_genero = callback_nuevo_genero
+        self.callback_nuevo_online_feature = callback_nuevo_online_feature
+        self.callback_nuevo_accesorio = callback_nuevo_accesorio
+        self.callback_nuevo_companie = callback_nuevo_companie
+        self.callback_error_importando = callback_error_importando
+        self.callback_empieza_descarga = callback_empieza_descarga
+        self.callback_empieza_descomprimir = callback_empieza_descomprimir
+        self.callback_empieza_importar = callback_empieza_importar
+        self.callback_termina_importar = callback_termina_importar
 
     def run(self):
         self.empezar( args=(self.core,) )
@@ -70,13 +100,10 @@ class PoolTrabajo(Pool , Thread):
             
             fichero = trabajo.origen
             DEVICE = trabajo.destino
-            
             trabajo.exito = self.anadir(core ,trabajo , fichero , DEVICE)
             
-            if not os.path.isdir( fichero ):
-                if self.callback_termina_trabajo_anadir:
-                    idgame = util.getMagicISO(fichero)
-                    self.callback_termina_trabajo_anadir(trabajo, idgame, DEVICE)
+            if self.callback_termina_trabajo_anadir:
+                self.callback_termina_trabajo_anadir(trabajo, fichero, DEVICE)
 
         elif( trabajo.tipo == EXTRAER):
 
@@ -101,21 +128,21 @@ class PoolTrabajo(Pool , Thread):
 
             if self.callback_termina_trabajo_copiar:
                 self.callback_termina_trabajo_copiar(trabajo, juego, DEVICE)
-            
+
         elif( trabajo.tipo == DESCARGA_CARATULA ):
             juego = trabajo.origen
             trabajo.exito = self.descargarCaratula(core , juego)
-            
+
             if self.callback_termina_trabajo_descargar_caratula:
                 self.callback_termina_trabajo_descargar_caratula(trabajo, juego)
-            
+
         elif( trabajo.tipo == DESCARGA_DISCO ):
             juego = trabajo.origen
             trabajo.exito = self.descargarDisco(core , juego)
-            
+
             if self.callback_termina_trabajo_descargar_disco:
                 self.callback_termina_trabajo_descargar_disco(trabajo, juego)
-            
+
         elif( trabajo.tipo == COPIAR_CARATULA ):
             juego = trabajo.origen
             destino = trabajo.destino
@@ -125,7 +152,21 @@ class PoolTrabajo(Pool , Thread):
             juego = trabajo.origen
             destino = trabajo.destino
             trabajo.exito = self.copiarDisco(core , juego , destino)
-        
+
+        elif( trabajo.tipo == RECORRER_DIRECTORIO ):
+            directorio = trabajo.origen
+            particion = trabajo.destino
+            trabajo.exito = self.recorrerDirectorioYAnadir(core , directorio, particion)
+
+        elif( trabajo.tipo == DESCOMPRIMIR_RAR ):
+            archivoRAR = trabajo.origen
+            particion = trabajo.destino
+            trabajo.exito = self.descomprimirRARYAnadir(core , trabajo , archivoRAR, particion)
+
+        elif( trabajo.tipo == ACTUALIZAR_WIITDB ):
+            url = trabajo.origen
+            trabajo.exito = self.actualizarWiiTDB(url)
+
         trabajo.terminado = True
 
         # termina un trabajo genérico
@@ -135,41 +176,11 @@ class PoolTrabajo(Pool , Thread):
     def anadir(self , core ,trabajo , fichero , DEVICE):
         exito = False
 
-        if( not os.path.exists(DEVICE) or not os.path.exists(fichero) ):
-            trabajo.error = _("La ISO o la particion ya no no existen")
-            # de momento lo quito para esta version
-
-        elif( util.getExtension(fichero) == "rar" ):
-            nombreRAR = fichero
-            nombreISO = core.getNombreISOenRAR(nombreRAR)
-            if (nombreISO != ""):
-                if( not os.path.exists(nombreISO) ):
-                    if ( core.unpack(nombreRAR) ):
-                        exito = True
-                        self.nuevoTrabajoAnadir( nombreISO , DEVICE)
-                    else:
-                        trabajo.error = _("Error al descomrpimir el RAR : %s") % (nombreRAR)
-                else:
-                    trabajo.error = _("Error: No se puede descomrpimir por que reemplazaria el ISO : %s") % (nombreISO)
-            else:
-                trabajo.error = _("Error: El RAR %s no tenia ninguna ISO") % (nombreRAR)
-
-        elif( os.path.isdir( fichero ) ):
-
-            encontrados =  util.rec_glob(fichero, "*.rar")
-            if (len(encontrados) == 0):
-                pass
-            else:
-                for encontrado in encontrados:
-                    self.nuevoTrabajoAnadir( encontrado , DEVICE)
-
-            encontrados =  util.rec_glob(fichero, "*.iso")
-            if (len(encontrados) == 0):
-                trabajo.error = _("No se ha encontrado ningun ISO")
-            else:
-                for encontrado in encontrados:
-                    self.nuevoTrabajoAnadir( encontrado , DEVICE)
-                exito = True
+        if (  not os.path.exists(DEVICE)):
+            trabajo.error = _("La particion %s: Ya no existe") % particion.device
+            
+        elif( not os.path.exists(fichero) ):
+            trabajo.error = _("El archivo ISO %s: No existe") % fichero
 
         elif( util.getExtension(fichero) == "iso" ):
             
@@ -180,7 +191,6 @@ class PoolTrabajo(Pool , Thread):
 
             if self.callback_termina_progreso:
                 self.callback_termina_progreso(trabajo)
-
         else:
             trabajo.error = _("%s no es un ningun juego de Wii") % (os.path.basename(fichero))
 
@@ -205,11 +215,12 @@ class PoolTrabajo(Pool , Thread):
         return exito
 
     def clonar(self, core , trabajo , juego , DEVICE):
+
         if self.callback_empieza_progreso:
             self.callback_empieza_progreso(trabajo)
-        
+
         exito = core.clonarJuego(juego , DEVICE)
-            
+
         if self.callback_termina_progreso:
             self.callback_termina_progreso(trabajo)
 
@@ -227,8 +238,107 @@ class PoolTrabajo(Pool , Thread):
     def copiarDisco(self , core , juego, destino):
         return core.copiarDisco( juego, destino )
         
-    def sincronizarXML_WiiTDB(self):
-        pass
+    def recorrerDirectorioYAnadir(self , core , directorio, particion):
+
+        exito = False
+
+        if( not os.path.exists(particion.device) ):
+            trabajo.error = _("La particion %s: Ya no existe") % particion.device
+
+        elif (not os.path.exists(directorio)):
+            trabajo.error = _("El directorio %s: No existe") % directorio
+
+        elif( os.path.isdir( directorio ) ):
+
+            encontrados =  util.rec_glob(directorio, "*.rar")
+            hayRAR = len(encontrados) > 0
+            if hayRAR:
+                for encontrado in encontrados:
+                    self.nuevoTrabajoAnadir( encontrado , particion.device)
+
+            encontrados =  util.rec_glob(directorio, "*.iso")
+            hayISO = len(encontrados) > 0
+            if hayISO:
+                for encontrado in encontrados:
+                    self.nuevoTrabajoAnadir( encontrado , particion.device)
+
+            if hayRAR or hayISO:
+                exito = True
+            else:
+                trabajo.error = _("No se ha encontrado ningun ISO/RAR en el directorio %s") % directorio
+
+        else:
+            trabajo.error = _("%s no es un directorio") % directorio
+
+        return exito
+
+    def descomprimirRARYAnadir(self , core , trabajo , archivoRAR, particion):
+        exito = False
+        
+        if( not os.path.exists(particion.device) ):
+            trabajo.error = _("La particion %s: Ya no existe") % particion.device
+            
+        elif (not os.path.exists(archivoRAR)):
+            trabajo.error = _("El archivo RAR %s: No existe") % archivoRAR
+        
+        elif( util.getExtension(archivoRAR) == "rar" ):
+            carpetaDescomprimido = "/home/makiolo/Escritorio"
+            nombreISO = core.getNombreISOenRAR(archivoRAR)
+            if (nombreISO != None):
+                if( not os.path.exists(nombreISO) ):
+                    
+                    if self.callback_empieza_progreso:
+                        self.callback_empieza_progreso(trabajo)
+                    
+                    if ( core.unpack(archivoRAR, carpetaDescomprimido) ):
+                        exito = True
+                        isoExtraida = os.path.join(carpetaDescomprimido, nombreISO)
+                        self.nuevoTrabajoAnadir( isoExtraida , particion.device)
+                    else:
+                        trabajo.error = _("Error al descomrpimir el RAR : %s") % (archivoRAR)
+                        
+                    if self.callback_termina_progreso:
+                        self.callback_termina_progreso(trabajo)
+                else:
+                    trabajo.error = _("Error: No se puede descomrpimir por que reemplazaria el ISO : %s") % (nombreISO)
+            else:
+                trabajo.error = _("Error: El archivo RAR %s no contiene ninguna ISO") % (archivoRAR)
+
+        else:
+            trabajo.error = _("%s no es un archivo RAR") % archivoRAR
+                
+        return exito
+
+    # TAREA UNICA EN COLA
+    def actualizarWiiTDB(self , url):
+        exito = False        
+        try:
+            xmlWiiTDB = WiiTDBXML(url,'wiitdb.zip','wiitdb.xml',
+                                                        self.callback_spinner, 
+                                                        self.callback_nuevo_juego,
+                                                        self.callback_nuevo_descripcion,
+                                                        self.callback_nuevo_genero,
+                                                        self.callback_nuevo_online_feature,
+                                                        self.callback_nuevo_accesorio,
+                                                        self.callback_nuevo_companie,
+                                                        self.callback_error_importando,
+                                                        self.callback_empieza_descarga,
+                                                        self.callback_empieza_descomprimir,
+                                                        self.callback_empieza_importar,
+                                                        self.callback_termina_importar
+                                                        )
+            xmlWiiTDB.start()
+            xmlWiiTDB.join()
+            exito = True
+
+        except ErrorDescargando:
+            trabajo.error = _("Error: Al descargar la bdd wiitdb de: %s") % (url)
+        except:
+            trabajo.error = _("Error: Ocurrio un error al introducir la informacion de juegos de WiiTDB")
+        
+        return exito
+
+    ######################### INTERFAZ PUBLICO #######################################
 
     def nuevoTrabajo( self , tipo , origenes , destino=None ):
         if isinstance(origenes, list):
@@ -271,11 +381,21 @@ class PoolTrabajo(Pool , Thread):
 
     def nuevoTrabajoCopiarDisco(self , juegos, destino):
         self.nuevoTrabajo( COPIAR_DISCO , juegos, destino )
+        
+    def nuevoTrabajoRecorrerDirectorio(self , directorio, particion):
+        self.nuevoTrabajo( RECORRER_DIRECTORIO , directorio, particion )
+
+    def nuevoTrabajoDescomprimirRAR(self , archivoRAR, particion):
+        self.nuevoTrabajo( DESCOMPRIMIR_RAR , archivoRAR, particion )
+
+    def nuevoTrabajoActualizarWiiTDB(self , url):
+        self.nuevoTrabajo( ACTUALIZAR_WIITDB , url )
 
 '''
 tipo:
     tipo de Trabajo
-    (ANADIR,EXTRAER,CLONAR,DESCARGA_CARATULA,DESCARGA_DISCO,COPIAR_CARATULA,COPIAR_DISCO)
+    (ANADIR,EXTRAER,CLONAR,DESCARGA_CARATULA,DESCARGA_DISCO,COPIAR_CARATULA,COPIAR_DISCO,
+    RECORRER_DIRECTORIO,DESCOMPRIMIR_RAR,ACTUALIZAR_WIITDB)
 origen y destino:
     Casi todos los trabajos, son de gestión, es decir transacciones que tienen 
     un origen y un destino, en general.
@@ -309,3 +429,9 @@ class Trabajo:
             return _("Copiando la caratula %s a la ruta %s") % (self.origen.title, self.destino)
         elif self.tipo == COPIAR_DISCO and isinstance(self.origen, Juego):
             return _("Copiando el disco %s a la ruta %s") % (self.origen.title, self.destino)
+        elif self.tipo == RECORRER_DIRECTORIO:
+            return _("Recorrer directorio %s") % (os.path.basename(self.origen))
+        elif self.tipo == DESCOMPRIMIR_RAR:
+            return _("Descomprimir RAR %s") % (os.path.basename(self.origen))
+        elif self.tipo == ACTUALIZAR_WIITDB:
+            return _("Actualizar WiiTDB desde %s") % (self.origen)

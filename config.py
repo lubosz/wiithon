@@ -34,6 +34,8 @@ HOME_WIITHON_BDD = os.path.join(HOME_WIITHON , 'bdd')
 HOME_WIITHON_LOGS = os.path.join(HOME_WIITHON , 'logs')
 HOME_WIITHON_LOGS_PROCESO = os.path.join(HOME_WIITHON_LOGS , "proceso.log")
 
+URI_ENGINE = 'sqlite:///%s' % os.path.join(HOME_WIITHON_BDD, 'wiithon.db')
+
 # crear directorios si no existen
 util.try_mkdir( HOME_WIITHON )
 util.try_mkdir( HOME_WIITHON_BDD )
