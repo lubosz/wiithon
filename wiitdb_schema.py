@@ -300,6 +300,61 @@ class JuegoWIITDB(Base):
 
     def __repr__(self):
         return "%s - %s" % (self.idgame, self.name)
+        
+    def getTextPlayersWifi(self, corto = False):
+        buffer = ""
+        if self.wifi_players == 0:
+            if corto:
+                buffer = _("NO")
+            else:
+                buffer = _("No")
+        else:
+            if not corto:
+                for feature_online in self.features:
+                    buffer += "%s, " % feature_online.valor
+            if self.wifi_players == 1:
+                if corto:
+                    buffer = _("SI, 1j.")
+                else:
+                    buffer = _("Si, 1 jugador (%s)") % buffer
+            else:
+                if corto:
+                    buffer = _("SI, %djs.") % (self.wifi_players)
+                else:
+                    buffer = _("Si, %d jugadores (%s)") % (self.wifi_players, buffer)
+        return buffer
+        
+    def getTextPlayersLocal(self, corto = False):
+        buffer = ""
+        if self.input_players == 1:
+            if corto:
+                buffer = _("1j.")
+            else:
+                buffer = _("1 jugador")
+        else:
+            if corto:
+                buffer = _("%djs.") %  self.input_players
+            else:
+                buffer = _("%d jugadores") %  self.input_players
+        return buffer
+        
+    def getTextFechaLanzamiento(self, corto = False):
+        buffer = ""
+        if  self.fecha_lanzamiento != None:
+            buffer = "%s" % ( self.fecha_lanzamiento)
+        else:
+            buffer = _("??")
+        return buffer
+        
+    def getTextRating(self, corto = False):
+        buffer = ""
+        if not corto:
+            for rating_content in  self.rating_contents:
+                buffer += "%s, " % rating_content.valor
+            buffer = "%s (%s+): %s" % ( self.rating_type.tipo,  self.rating_value.valor , buffer)
+        else:
+            buffer = "%s(%s+)" % ( self.rating_type.tipo,  self.rating_value.valor)
+        return buffer
 
 Index('idUnico_juego_wiitdb', JuegoWIITDB.c.idgame, unique=True)
 
@@ -359,7 +414,7 @@ class Juego(Base):
     title = Column('title', Unicode(255))
     size = Column('size', Float)
 
-    juego_wiitdb = relation(JuegoWIITDB, primaryjoin=idgame==JuegoWIITDB.c.idgame, foreign_keys=JuegoWIITDB.c.idgame)
+    #juego_wiitdb = relation(JuegoWIITDB, primaryjoin=(idgame==JuegoWIITDB.c.idgame), foreign_keys=JuegoWIITDB.c.idgame)
     particion = relation(Particion, secondary=rel_particion_juego, uselist=False)
 
     def __init__(self , idgame , title , size):
@@ -382,6 +437,11 @@ class Juego(Base):
 
     def __repr__(self):
         return "%s (ID: %s) %.2f GB" % (self.title, self.idgame, self.size)
+        
+    def getJuegoWIITDB(self, session):
+        sql = util.decode("juego_wiitdb.idgame=='%s'" % (self.idgame))
+        return session.query(JuegoWIITDB).filter(sql).first()
+       
 
 #############################################################################
 

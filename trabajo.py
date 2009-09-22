@@ -282,7 +282,7 @@ class PoolTrabajo(Pool , Thread):
             trabajo.error = _("El archivo RAR %s: No existe") % archivoRAR
         
         elif( util.getExtension(archivoRAR) == "rar" ):
-            carpetaDescomprimido = "/home/makiolo/Escritorio"
+            carpetaDescomprimido = "/home/makiolo"
             nombreISO = core.getNombreISOenRAR(archivoRAR)
             if (nombreISO != None):
                 if( not os.path.exists(nombreISO) ):

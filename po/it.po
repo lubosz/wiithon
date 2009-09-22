@@ -3,8 +3,8 @@ msgstr ""
 "Project-Id-Version: wiithon 1.0\n"
 "Report-Msgid-Bugs-To: makiolo@gmail.com\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2009-09-10 11:12+0100\n"
-"Last-Translator: \n"
+"PO-Revision-Date: 2009-09-21 09:57+0100\n"
+"Last-Translator: Carlo Mandelli <camandel@gmail.com>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -30,11 +30,15 @@ msgstr "%d partizioni WBFS"
 
 #, python-format
 msgid "%d%% - %d/%d games - %d descriptions - %d genre - %d accesories - %d companies - %d online features"
-msgstr ""
+msgstr "%d%% - %d/%d giochi - %d descrizione - %d genere - %d accessori - %d compagnie - %d online"
 
 #, python-format
 msgid "%d/%d juegos"
 msgstr "%d/%d giochi"
+
+#, python-format
+msgid "%djs."
+msgstr ""
 
 #, python-format
 msgid "%s NO se ha podido formatear"
@@ -42,11 +46,11 @@ msgstr "%s NON è stato possibile formattare"
 
 #, python-format
 msgid "%s no es un archivo RAR"
-msgstr ""
+msgstr "%s non è un archivio RAR"
 
 #, python-format
 msgid "%s no es un directorio"
-msgstr ""
+msgstr "%s non è una cartella"
 
 #, python-format
 msgid "%s no es un ningun juego de Wii"
@@ -73,6 +77,12 @@ msgstr "1 giocatore"
 msgid "1 particion WBFS"
 msgstr "1 partizione WBFS"
 
+msgid "1j."
+msgstr ""
+
+msgid "??"
+msgstr ""
+
 msgid "A continuacion se listan los juego que NO van a ser copiados por ya estar en la particion de destino"
 msgstr "I seguenti giochi NON saranno copiati perchè esistono già nella partizione di destinazione"
 
@@ -87,7 +97,7 @@ msgstr "Crediti ..."
 
 #, python-format
 msgid "Actualizar WiiTDB desde %s"
-msgstr ""
+msgstr "Aggiornamento WiiTDB da %s"
 
 #, python-format
 msgid "Advertencia de borrar %s en modo ver"
@@ -101,6 +111,8 @@ msgid ""
 "Algunos juegos no se han introducido:\n"
 "\n"
 msgstr ""
+"Alcuni giochi non sono stati inseriti:\n"
+"\n"
 
 #, python-format
 msgid "Anadir %s a la particion %s"
@@ -114,9 +126,6 @@ msgstr "Aggiungo RAR contenente ISO"
 
 msgid "Aniadir directorio"
 msgstr "Aggiungi cartella"
-
-msgid "Base de datos ocupada."
-msgstr ""
 
 msgid "Borrar juego con IDGAME"
 msgstr "Cancella il gioco con IDGAME"
@@ -169,13 +178,13 @@ msgid "Copiar 1:1"
 msgstr "Copia 1:1"
 
 msgid "Copiar a otra particion"
-msgstr "Copiare su altra partizione"
+msgstr "Copia su altra partizione"
 
 msgid "Copiar el juego seleccionado*"
-msgstr "Copiare il gioco selezionato*"
+msgstr "Copia il gioco selezionato*"
 
 msgid "Copiar todo el disco*"
-msgstr "Copiare tutti i giochi*"
+msgstr "Copia tutti i giochi*"
 
 msgid "Debes tener al menos 2 particiones WBFS para hacer copias 1:1"
 msgstr "Bisogna avere almeno 2 partizioni WBFS per lanciare la copia 1:1"
@@ -185,7 +194,7 @@ msgstr "Sviluppatore:"
 
 #, python-format
 msgid "Descargando WiiTDB desde %s, espere unos minutos ..."
-msgstr ""
+msgstr "Sto scaricando WiiTDB da %s, attendere qualche minuto ..."
 
 #, python-format
 msgid "Descargando caratula de %s"
@@ -200,10 +209,7 @@ msgstr "Decompresso con successo"
 
 #, python-format
 msgid "Descomprimir RAR %s"
-msgstr ""
-
-msgid "Desconocido"
-msgstr "Sconosciuto"
+msgstr "Decompressione RAR %s"
 
 #, python-format
 msgid "Desea copiar el juego %s (%s) a la particion %s?"
@@ -275,19 +281,19 @@ msgstr "Editor"
 
 #, python-format
 msgid "El archivo ISO %s: No existe"
-msgstr ""
+msgstr "Il file ISO %s: non esiste"
 
 #, python-format
 msgid "El archivo RAR %s: No existe"
-msgstr ""
+msgstr "L'archivio RAR %s: non esiste"
 
 #, python-format
 msgid "El directorio %s: No existe"
-msgstr ""
+msgstr "La cartella %s: non esiste"
 
 #, python-format
 msgid "El juego ya esta metido, como %s en %s\n"
-msgstr ""
+msgstr "Il gioco è stato inserito come %s in %s\n"
 
 msgid "El numero dado es incorrecto"
 msgstr "Il numero indicato è errato"
@@ -309,10 +315,10 @@ msgid "Empezando ..."
 msgstr "Avvio ..."
 
 msgid "Empezando a descomprimir la informacion WiiTDB"
-msgstr ""
+msgstr "Inizio a decomprimere il informazioni WiiTDB"
 
 msgid "Empezando a obtener datos de juegos desde WiiTDB"
-msgstr ""
+msgstr "Inizio a ottenere i dati dei giochi da WiiTDB"
 
 msgid "Empezar a copiar?"
 msgstr "Iniziare la copia?"
@@ -323,7 +329,7 @@ msgstr "Inizio: %s"
 
 #, python-format
 msgid "Error al descomrpimir el RAR : %s"
-msgstr ""
+msgstr "Errore durante la decompressione del RAR: %s"
 
 msgid "Error al dumpear la ISO"
 msgstr "Errore durante il dump ISO"
@@ -346,28 +352,28 @@ msgstr "Errore durante la cancellazione"
 
 #, python-format
 msgid "Error importando %s: %s"
-msgstr ""
+msgstr "Errore importando %s: %s"
 
 msgid "Error renombrando"
 msgstr "Errore durante la rinomina"
 
 #, python-format
 msgid "Error: Al descargar la bdd wiitdb de: %s"
-msgstr ""
+msgstr "Errore durante lo scaricamento della base dato WiiTDB da: %s"
 
 #, python-format
 msgid "Error: El archivo RAR %s no contiene ninguna ISO"
-msgstr ""
+msgstr "Errore: l'archivio RAR %s non contiene nessuna ISO"
 
 msgid "Error: La longitud del IDGAME debe ser 6, y solo puede contener letras y numeros"
 msgstr "Errore: La lunghezza dell'IDGAME deve essere 6, e può solo contenere lettere e numeri"
 
 #, python-format
 msgid "Error: No se puede descomrpimir por que reemplazaria el ISO : %s"
-msgstr ""
+msgstr "Errore: non si può decomprimere perchè sostituirebbe la ISO: %s"
 
 msgid "Error: Ocurrio un error al introducir la informacion de juegos de WiiTDB"
-msgstr ""
+msgstr "Errore: si è verificato un problema durante l'inserimento delle informazioni dei giochi da WiiTDB"
 
 msgid "Escriba el nuevo nombre : "
 msgstr "Inserisci il nuovo nome : "
@@ -393,14 +399,17 @@ msgstr "E' fallito lo scaricamento della copertina di %s"
 msgid "Falla la descarga del disco de %s"
 msgstr "E' fallito lo scaricamento del disco %s"
 
+msgid "Fecha"
+msgstr ""
+
 msgid "Fecha de lanzamiento:"
 msgstr "Data di lancio:"
 
 msgid "Finalizada satisfactoriamente la importacion de datos desde WiiTDB"
-msgstr ""
+msgstr "Importazione dei dati da WiiTDB conclusa correttamente"
 
 msgid "Finalizando."
-msgstr ""
+msgstr "Finito."
 
 msgid "Formato desconocido"
 msgstr "Formato sconosciuto"
@@ -416,10 +425,6 @@ msgstr "Genere:"
 
 msgid "Has conectado el disco duro? No se ha encontrado ninguna particion valida."
 msgstr "Hai collegato il tuo disco fisso? Non è stata trovata nessuna partizione WBFS"
-
-#, python-format
-msgid "Hay %d juegos con informacion WiiTDB"
-msgstr ""
 
 #, python-format
 msgid "Hay %d tareas"
@@ -447,7 +452,7 @@ msgid "ISO renombrada correctamente a %s"
 msgstr "ISO rinominata con successo in %s"
 
 msgid "Imagen Wii (ISO o RAR)"
-msgstr ""
+msgstr "Immagine Wii (ISO o RAR)"
 
 msgid "Indique el NUM del juego : "
 msgstr "Indica il NUM del gioco : "
@@ -484,7 +489,7 @@ msgstr "La ISO temporanea %s è stata rimossa"
 
 #, python-format
 msgid "La particion %s: Ya no existe"
-msgstr ""
+msgstr "La partizione %s: non esiste"
 
 msgid "Libre"
 msgstr "Liberi"
@@ -495,6 +500,9 @@ msgstr "Partizioni riconosciute automaticamente:"
 #, python-format
 msgid "Listando juegos de : %s"
 msgstr "Elenco giochi su : %s"
+
+msgid "Local"
+msgstr ""
 
 msgid "NO"
 msgstr "NO"
@@ -509,7 +517,7 @@ msgid "No cierre wiithon mientras esta animacion indique actividad"
 msgstr "Non chiudere wiithon mentre questa animazione indica attiva in corso"
 
 msgid "No existe el XML"
-msgstr ""
+msgstr "Non esiste il file XML"
 
 msgid "No has seleccionado ningun juego"
 msgstr "Nessun gioco selezionato"
@@ -558,7 +566,7 @@ msgstr "Non è stata trovata la copertina per il gioco %s"
 
 #, python-format
 msgid "No se ha encontrado ningun ISO/RAR en el directorio %s"
-msgstr ""
+msgstr "Non esiste nessun file ISO/RAR nella cartella %s"
 
 msgid "No se ha encontrado ningun disco de la Wii"
 msgstr "Non è stato trovato nessun disco Wii"
@@ -612,6 +620,9 @@ msgstr "OK, scaricato %s.png"
 msgid "OK, todas las caratulas se han descargado"
 msgstr "OK, tutte le copertine sono state scaricate"
 
+msgid "Online?"
+msgstr ""
+
 msgid "Paso 1 de 2: Elige un directorio para las CARATULAS"
 msgstr "Passo 1 di 2: Scegli una cartella per le COPERTINE"
 
@@ -639,7 +650,7 @@ msgstr "Premi un tasto per continuare ..."
 
 #, python-format
 msgid "Quieres borrar el juego: %s?"
-msgstr ""
+msgstr "Vuoi cancellare il gioco: %s?"
 
 msgid "RXGB2"
 msgstr "RXGB2"
@@ -647,9 +658,12 @@ msgstr "RXGB2"
 msgid "Ranking:"
 msgstr "Posizione in classifica:"
 
+msgid "Rating"
+msgstr ""
+
 #, python-format
 msgid "Recorrer directorio %s"
-msgstr ""
+msgstr "Andare nella cartella %s"
 
 msgid "Refrescar WBFS"
 msgstr "Aggiorna WBFS"
@@ -662,6 +676,13 @@ msgstr "Rinomina gioco IDGAME"
 
 msgid "SI"
 msgstr "SI"
+
+#, python-format
+msgid "SI, %djs."
+msgstr ""
+
+msgid "SI, 1j."
+msgstr ""
 
 msgid "Saliendo por peticion del usuario."
 msgstr "Uscita su richiesta dell'utente."
@@ -748,13 +769,13 @@ msgid "Valor incorrecto"
 msgstr "Valore errato"
 
 msgid "WiiTDB"
-msgstr ""
+msgstr "WiiTDB"
 
 msgid "Wiithon 1.1"
-msgstr ""
+msgstr "Wiithon 1.1"
 
 msgid "XML invalido"
-msgstr ""
+msgstr "XML non valido"
 
 msgid "Ya hay un juego con ese IDGAME"
 msgstr "Esiste già un gioco con questo IDGAME"
@@ -811,6 +832,18 @@ msgstr "Non ci sono partizioni WBFS"
 #, python-format
 msgid " Esta seguro de formatear %s (S/N)? "
 msgstr "Sei sicuro di voler formattare %s (S/N)?"
+
+#~ msgid "Base de datos ocupada."
+#~ msgstr "Base dati occupata."
+
+#~ msgid "Desconocido"
+#~ msgstr "Sconosciuto"
+
+#~ msgid "Error: El RAR %s no tenia ninguna ISO"
+#~ msgstr "Errore: il RAR %s non contiene nessuna ISO"
+
+#~ msgid "Hay %d juegos con informacion WiiTDB"
+#~ msgstr "Ci sono %d giochi con informazioni WiiTDB"
 
 #~ msgid "La ISO o la particion ya no no existen"
 #~ msgstr "La ISO o la partizione non esiste"

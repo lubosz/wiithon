@@ -26,9 +26,12 @@ class WiithonCORE:
     # index 2 -> Tamaño en GB redondeado a 2 cifras
     def getListaJuegos(self , session, particion):
         
+        '''
         sql = util.decode("particion.device = '%s'" % particion.device)
         for juego in session.query(Juego,Particion).filter(sql):
             session.delete(juego[0])
+        '''
+        session.execute('DELETE FROM rel_particion_juego')
 
         comando = "%s -p %s ls" % (config.WBFS_APP, particion.device)
         lineas = util.getSTDOUT_iterador( comando )
@@ -57,9 +60,11 @@ class WiithonCORE:
         
     # Devuelve la lista de particiones
     def getListaParticiones(self, session, detector = config.DETECTOR_WBFS):
-            
+        
+        '''
         for particion in session.query(Particion):
             session.delete(particion)
+        '''
 
         salida = util.getSTDOUT_NOERROR_iterador(detector)
 
@@ -350,18 +355,14 @@ class WiithonCORE:
                 nombreISO = self.getNombreISOenRAR(nombreRAR)
                 if nombreISO != None:
                     rutaISO = os.path.join(destino, nombreISO)
-                    print rutaISO
-                    if not os.path.exists(rutaISO):
-                        directorioActual = os.getcwd()
-                        os.chdir(destino)
-                        comando = '%s e "%s" "%s"' % (config.UNRAR_APP, nombreRAR , nombreISO)
-                        #comando = '%s x -kb -o+ -Idp -- "%s" "%s"' % (config.UNRAR_APP, nombreRAR , nombreISO)
-                        salida = subprocess.call( comando , shell=True , stderr=subprocess.STDOUT, stdout=open(config.HOME_WIITHON_LOGS_PROCESO , "w") )
-                        #salida = subprocess.call( comando , shell=True , stderr=subprocess.STDOUT )
-                        os.chdir(directorioActual)
-                        return (salida == 0)
-                    else:
-                        return False
+                    if os.path.exists(rutaISO):
+                        os.remove(rutaISO)
+                    directorioActual = os.getcwd()
+                    os.chdir(destino)
+                    comando = '%s e "%s" "%s"' % (config.UNRAR_APP, nombreRAR , nombreISO)
+                    salida = subprocess.call( comando , shell=True , stderr=subprocess.STDOUT, stdout=open(config.HOME_WIITHON_LOGS_PROCESO , "w") )
+                    os.chdir(directorioActual)
+                    return (salida == 0)
                 else:
                     return False
             else:
@@ -399,7 +400,6 @@ class WiithonCORE:
             # cambiamos de directorio de trabajo
             os.chdir( destino )
             comando = "%s -p %s extract %s" % (config.WBFS_APP, juego.particion.device , juego.idgame)
-            print comando
             salida = subprocess.call( comando , shell=True , stderr=subprocess.STDOUT , stdout=open(config.HOME_WIITHON_LOGS_PROCESO , "w") )
             # volvemos al directorio original
             os.chdir( trabajoActual )

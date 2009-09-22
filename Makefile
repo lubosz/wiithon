@@ -36,7 +36,7 @@ dependencias: permisos
 	$(INSTALL_PKG) libc6 libc6-dev intltool imagemagick python-gtk2 python-glade2 python-sexy python-sqlalchemy gnome-icon-theme
 	-@$(INSTALL_PKG) libc6-dev-i386 libc6-i386
 	@echo "=================================================================="
-	@echo "Install depends"
+	@echo "Install depends OK"
 	@echo "=================================================================="
 
 permisos:
@@ -118,7 +118,6 @@ uninstall:
 	-$(RM) $(PREFIX_RECURSOS_IMAGENES_DISCOS)/index.html*
 	-$(RM) $(PREFIX_RECURSOS_IMAGENES_CARATULAS)/*.png.1
 	-$(RM) $(PREFIX_RECURSOS_IMAGENES_DISCOS)/*.png.1
-	-$(RM) -R ~/.wiithon
 
 	-$(RM) $(PREFIX)/share/wiithon/.acuerdo
 	-$(RM) ~/.wiithon_acuerdo
@@ -172,14 +171,18 @@ uninstall:
 	-$(RM) /usr/share/pixmaps/wiithon.svg
 	
 	-$(RM) $(PREFIX)/share/wiithon/HOME.conf
-
 	-rmdir $(PREFIX)/share/wiithon/recursos/glade
+
+
 	
 	@echo "=================================================================="
 	@echo "Wiithon Uninstall OK"
 	@echo "=================================================================="
 
 purge: uninstall
+
+	#-$(RM) -R ~/.wiithon
+
 	-$(RM) $(PREFIX_RECURSOS_IMAGENES_CARATULAS)/*.png
 	-$(RM) $(PREFIX_RECURSOS_IMAGENES_DISCOS)/*.png
 	-rmdir $(PREFIX_RECURSOS_IMAGENES_CARATULAS)
@@ -188,7 +191,7 @@ purge: uninstall
 	-rmdir $(PREFIX)/share/wiithon/recursos
 	-rmdir $(PREFIX)/share/wiithon
 	@echo "=================================================================="
-	@echo "Uninstall OK & all clean (purge covers, bdd ...)"
+	@echo "Uninstall OK & all clean (purge covers & disc-art ...)"
 	@echo "=================================================================="
 
 actualizar: uninstall pull install log
@@ -286,14 +289,14 @@ initPO: po/plantilla.pot
 	#msginit -i po/plantilla.pot -o po/en.po --no-translator
 	# brasileño
 	#msginit -i po/plantilla.pot -o po/pt_BR.po --no-translator
+	# alemán
+	#msginit -i po/plantilla.pot -o po/de.po --no-translator
+	# francés
+	#msginit -i po/plantilla.pot -o po/fr.po --no-translator
+	# italiano
+	#msginit -i po/plantilla.pot -o po/it.po --no-translator
 	# portugues
 	msginit -i po/plantilla.pot -o po/pt_PT.po --no-translator
-	# alemán
-	msginit -i po/plantilla.pot -o po/de.po --no-translator
-	# francés
-	msginit -i po/plantilla.pot -o po/fr.po --no-translator
-	# italiano
-	msginit -i po/plantilla.pot -o po/it.po --no-translator
 	# danish da_DK
 	msginit -i po/plantilla.pot -o po/da_DK.po --no-translator
 	# dutch nl_NL

@@ -36,6 +36,10 @@ msgid "%d/%d juegos"
 msgstr ""
 
 #, python-format
+msgid "%djs."
+msgstr ""
+
+#, python-format
 msgid "%s NO se ha podido formatear"
 msgstr ""
 
@@ -70,6 +74,12 @@ msgid "1 jugador"
 msgstr ""
 
 msgid "1 particion WBFS"
+msgstr ""
+
+msgid "1j."
+msgstr ""
+
+msgid "??"
 msgstr ""
 
 msgid "A continuacion se listan los juego que NO van a ser copiados por ya estar en la particion de destino"
@@ -122,9 +132,6 @@ msgstr "Add RAR containing ISO"
 
 msgid "Aniadir directorio"
 msgstr "Add folder"
-
-msgid "Base de datos ocupada."
-msgstr ""
 
 msgid "Borrar juego con IDGAME"
 msgstr "Remove game with IDGAME"
@@ -208,9 +215,6 @@ msgstr "Extracted successfully"
 
 #, python-format
 msgid "Descomprimir RAR %s"
-msgstr ""
-
-msgid "Desconocido"
 msgstr ""
 
 #, python-format
@@ -401,6 +405,9 @@ msgstr ""
 msgid "Falla la descarga del disco de %s"
 msgstr ""
 
+msgid "Fecha"
+msgstr ""
+
 msgid "Fecha de lanzamiento:"
 msgstr ""
 
@@ -424,10 +431,6 @@ msgstr ""
 
 msgid "Has conectado el disco duro? No se ha encontrado ninguna particion valida."
 msgstr "Is your hard disk connected and does it have a valid WBFS partition?"
-
-#, python-format
-msgid "Hay %d juegos con informacion WiiTDB"
-msgstr ""
 
 #, python-format
 msgid "Hay %d tareas"
@@ -503,6 +506,9 @@ msgstr "Automatically detected partitions:"
 #, python-format
 msgid "Listando juegos de : %s"
 msgstr "Listing games of : %s"
+
+msgid "Local"
+msgstr ""
 
 msgid "NO"
 msgstr "NO"
@@ -627,6 +633,9 @@ msgstr "OK, downloaded %s.png"
 msgid "OK, todas las caratulas se han descargado"
 msgstr "OK, all covers downloaded"
 
+msgid "Online?"
+msgstr ""
+
 msgid "Paso 1 de 2: Elige un directorio para las CARATULAS"
 msgstr "Step 1 of 2: Choose a folder for COVERS"
 
@@ -662,6 +671,9 @@ msgstr ""
 msgid "Ranking:"
 msgstr ""
 
+msgid "Rating"
+msgstr ""
+
 #, python-format
 msgid "Recorrer directorio %s"
 msgstr ""
@@ -677,6 +689,13 @@ msgstr "Rename game IDGAME"
 
 msgid "SI"
 msgstr "YES"
+
+#, python-format
+msgid "SI, %djs."
+msgstr ""
+
+msgid "SI, 1j."
+msgstr ""
 
 msgid "Saliendo por peticion del usuario."
 msgstr "Exiting by user request."

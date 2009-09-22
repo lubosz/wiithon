@@ -36,6 +36,10 @@ msgid "%d/%d juegos"
 msgstr ""
 
 #, python-format
+msgid "%djs."
+msgstr ""
+
+#, python-format
 msgid "%s NO se ha podido formatear"
 msgstr ""
 
@@ -70,6 +74,12 @@ msgid "1 jugador"
 msgstr ""
 
 msgid "1 particion WBFS"
+msgstr ""
+
+msgid "1j."
+msgstr ""
+
+msgid "??"
 msgstr ""
 
 msgid "A continuacion se listan los juego que NO van a ser copiados por ya estar en la particion de destino"
@@ -170,9 +180,6 @@ msgstr "Añadir RAR con ISO dentro"
 msgid "Aniadir directorio"
 msgstr "Añadir directorio"
 
-msgid "Base de datos ocupada."
-msgstr ""
-
 msgid "Borrar juego con IDGAME"
 msgstr ""
 
@@ -255,9 +262,6 @@ msgstr ""
 
 #, python-format
 msgid "Descomprimir RAR %s"
-msgstr ""
-
-msgid "Desconocido"
 msgstr ""
 
 #, python-format
@@ -445,6 +449,9 @@ msgstr ""
 msgid "Falla la descarga del disco de %s"
 msgstr ""
 
+msgid "Fecha"
+msgstr ""
+
 msgid "Fecha de lanzamiento:"
 msgstr ""
 
@@ -468,10 +475,6 @@ msgstr ""
 
 msgid "Has conectado el disco duro? No se ha encontrado ninguna particion valida."
 msgstr "¿Has conectado el disco duro? No se ha encontrado ninguna partición válida."
-
-#, python-format
-msgid "Hay %d juegos con informacion WiiTDB"
-msgstr ""
 
 #, python-format
 msgid "Hay %d tareas"
@@ -546,6 +549,9 @@ msgstr ""
 
 #, python-format
 msgid "Listando juegos de : %s"
+msgstr ""
+
+msgid "Local"
 msgstr ""
 
 msgid "NO"
@@ -668,6 +674,9 @@ msgstr ""
 msgid "OK, todas las caratulas se han descargado"
 msgstr "OK, todas las carátulas se han descargado"
 
+msgid "Online?"
+msgstr "¿OnLine?"
+
 msgid "Paso 1 de 2: Elige un directorio para las CARATULAS"
 msgstr "Paso 1 de 2: Elige un directorio donde copiar las CARATULAS"
 
@@ -703,6 +712,9 @@ msgstr ""
 msgid "Ranking:"
 msgstr ""
 
+msgid "Rating"
+msgstr ""
+
 #, python-format
 msgid "Recorrer directorio %s"
 msgstr ""
@@ -717,6 +729,13 @@ msgid "Renombrar juego IDGAME"
 msgstr ""
 
 msgid "SI"
+msgstr ""
+
+#, python-format
+msgid "SI, %djs."
+msgstr ""
+
+msgid "SI, 1j."
 msgstr ""
 
 msgid "Saliendo por peticion del usuario."

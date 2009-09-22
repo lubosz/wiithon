@@ -18,18 +18,18 @@ if False:
         print "Error al descomprimir"
     sys.exit(0)
 
-if False:
+if True:
     from wiitdb_schema import *
 
     db =        util.getBDD()
     session =   util.getSesionBDD(db)
 
     i = 0
-    #for juego in session.query(JuegoWIITDB).outerjoin(Juego):
-    #for juego in session.query(Juego).filter(Juego.idgame==JuegoWIITDB.idgame):
+    #for juego in session.query(Juego).outerjoin(JuegoWIITDB):
+    for juego in session.query(Juego):
     #for juego in session.query(JuegoWIITDB).join(Juego):
-    for juego in session.query(Juego,Particion):
-        print juego[0]
+        print juego.juego_wiitdb
+        print "."
         i += 1
 
     sys.exit(0)

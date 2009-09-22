@@ -87,9 +87,6 @@ class WiiTDBXML(Thread):
         zip.close()
         
     def run(self):
-        
-        self.callback_empieza_importar(self.fichXML)
-        
         self.limpiarTemporales()
         
         self.descargarZIP()
@@ -101,6 +98,7 @@ class WiiTDBXML(Thread):
             ctxt = xmldoc.xpathNewContext()
             nodo = ctxt.xpathEval("//*[name() = 'datafile']")[0]
             
+            '''
             try:
                 metadatos = Base.metadata
                 db = util.getBDD()
@@ -108,9 +106,13 @@ class WiiTDBXML(Thread):
                 metadatos.create_all(db)
             except:
                 self.error_importando(_("Base de datos ocupada."))
+            '''
+
+            self.callback_empieza_importar(self.fichXML)
 
             cont = 0
             while not self.salir and nodo != None:
+                
                 if nodo.type == "element":
 
                     if nodo.name == "datafile":
@@ -118,8 +120,7 @@ class WiiTDBXML(Thread):
 
                     elif nodo.name == "WiiTDB":
                         self.version = int(self.leerAtributo(nodo, 'version'))                        
-                        self.games = int(self.leerAtributo(nodo, 'games'))
-                        #print "Importando %s juegos. version de XML: %s" % (self.games, self.version)
+                        self.games = int(self.leerAtributo(nodo, 'games').split("/")[0])
 
                     elif nodo.name == "game":
                         if nodo.type == "element":
@@ -347,7 +348,12 @@ class WiiTDBXML(Thread):
 
                         cont += 1
                         # callback cada 1%
-                        if cont % (self.games / 100) == 0:
+                        try:
+                            llamarCallback = (cont % (self.games / 100) == 0)
+                        except ZeroDivisionError:
+                            llamarCallback = True
+                        
+                        if llamarCallback:
                             self.callback_spinner(cont, self.games)
 
                         nodo = nodo.next

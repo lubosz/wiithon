@@ -448,7 +448,7 @@ class WiithonGUI(GtkBuilderWrapper):
         treeview.connect('cursor-changed', callback_cursor_changed)
 
         modelo = gtk.ListStore (
-                gobject.TYPE_STRING,    # device
+                gobject.TYPE_STRING,   # device
                 gobject.TYPE_STRING    # total
                                 )
 
@@ -476,6 +476,10 @@ class WiithonGUI(GtkBuilderWrapper):
         self.columna1 = columna1 = gtk.TreeViewColumn(_('IDGAME'), self.renderEditableIDGAME , text=0)
         self.columna2 = columna2 = gtk.TreeViewColumn(_('Nombre'), self.renderEditableNombre , text=1)
         self.columna3 = columna3 = gtk.TreeViewColumn(_('Tamanio'), render , text=2)
+        self.columna4 = columna4 = gtk.TreeViewColumn(_('Online?'), render , text=3)
+        self.columna5 = columna5 = gtk.TreeViewColumn(_('Local'), render , text=4)
+        self.columna6 = columna6 = gtk.TreeViewColumn(_('Fecha'), render , text=5)
+        self.columna7 = columna7 = gtk.TreeViewColumn(_('Rating'), render , text=6)
 
         columna1.set_expand(False)
         columna1.set_min_width(80)
@@ -494,10 +498,38 @@ class WiithonGUI(GtkBuilderWrapper):
         columna3.set_reorderable(True)
         columna3.set_sort_order(gtk.SORT_DESCENDING)
         columna3.set_sort_column_id(2)
+        
+        columna4.set_expand(False)
+        columna4.set_min_width(80)
+        columna4.set_reorderable(True)
+        columna4.set_sort_order(gtk.SORT_ASCENDING)
+        columna4.set_sort_column_id(3)
+        
+        columna5.set_expand(False)
+        columna5.set_min_width(60)
+        columna5.set_reorderable(True)
+        columna5.set_sort_order(gtk.SORT_ASCENDING)
+        columna5.set_sort_column_id(4)
+        
+        columna6.set_expand(False)
+        columna6.set_min_width(110)
+        columna6.set_reorderable(True)
+        columna6.set_sort_order(gtk.SORT_ASCENDING)
+        columna6.set_sort_column_id(5)
+        
+        columna7.set_expand(False)
+        columna7.set_min_width(100)
+        columna7.set_reorderable(True)
+        columna7.set_sort_order(gtk.SORT_ASCENDING)
+        columna7.set_sort_column_id(6)
 
         tv_games.append_column(columna1)
         tv_games.append_column(columna2)
         tv_games.append_column(columna3)
+        tv_games.append_column(columna4)
+        tv_games.append_column(columna5)
+        tv_games.append_column(columna6)
+        tv_games.append_column(columna7)
 
         tv_games.connect('cursor-changed', self.on_tv_games_cursor_changed)
 
@@ -505,10 +537,50 @@ class WiithonGUI(GtkBuilderWrapper):
                 gobject.TYPE_STRING,                        # IDGAME
                 gobject.TYPE_STRING,                        # Nombre
                 gobject.TYPE_STRING,                        # Tamaño
+                gobject.TYPE_STRING,                        # Online?
+                gobject.TYPE_STRING,                        # Local
+                gobject.TYPE_STRING,                        # Fecha
+                gobject.TYPE_STRING,                        # Rating
                 )
         tv_games.set_model(modelo)
 
         return modelo
+        
+
+    def cargarJuegosModelo(self , modelo , listaJuegos):
+        modelo.clear()
+        i = 0
+        for juego in listaJuegos:
+            iterador = modelo.insert(i)
+            # El modelo tiene una columna más no representada
+            modelo.set_value(iterador,0,                juego.idgame)
+            modelo.set_value(iterador,1,                juego.title)
+            modelo.set_value(iterador,2, "%.2f GB" %    juego.size)
+
+            #juegoWiiTDB = juego.juego_wiitdb
+            juegoWiiTDB = juego.getJuegoWIITDB(session)
+            
+            #if ((juegoWiiTDB != None and isinstance(juegoWiiTDB, Juego)) or (isinstance(juegoWiiTDB, list) and len(juegoWiiTDB) > 0)):
+            if juegoWiiTDB != None:
+                '''
+                # si es una lista, cojo el primero
+                if isinstance(juegoWiiTDB, list):
+                    juegoWiiTDB = juegoWiiTDB[0]
+                '''
+
+                modelo.set_value(iterador,3, juegoWiiTDB.getTextPlayersWifi(True))
+                modelo.set_value(iterador,4, juegoWiiTDB.getTextPlayersLocal(True))
+                modelo.set_value(iterador,5, juegoWiiTDB.getTextFechaLanzamiento(True))
+                modelo.set_value(iterador,6, juegoWiiTDB.getTextRating(True))
+
+            else:
+                
+                modelo.set_value(iterador,3, _("??"))
+                modelo.set_value(iterador,4, _("??"))
+                modelo.set_value(iterador,5, _("??"))
+                modelo.set_value(iterador,6, _("??"))
+
+            i = i + 1
 
     def cargarParticionesModelo(self , modelo , listaParticiones , deviceActual = "$%&/()=!"):
         modelo.clear()
@@ -564,18 +636,6 @@ class WiithonGUI(GtkBuilderWrapper):
                         self.alert('error' , _("Se han detectado caracteres no validos: %s") % (util.BLACK_LIST2))
                 else:
                     self.alert('error' , _("Nuevo nombre es demasiado largo, intente con un texto menor de %d caracteres") % (config.TITULO_LONGITUD_MAX))
-
-
-    def cargarJuegosModelo(self , modelo , listaJuegos):
-        modelo.clear()
-        i = 0
-        for juego in listaJuegos:
-            iterador = modelo.insert(i)
-            # El modelo tiene una columna más no representada
-            modelo.set_value(iterador,0,                juego.idgame)
-            modelo.set_value(iterador,1,                juego.title)
-            modelo.set_value(iterador,2, "%.2f GB" %    juego.size)
-            i = i + 1
 
     def salir(self , widget=None, data=None):
 
@@ -758,15 +818,17 @@ class WiithonGUI(GtkBuilderWrapper):
         
         # BARRA DE ESTADO
         
+        '''
         numInfos = 0
         for juego in session.query(Juego, Particion):
             if len(juego[0].juego_wiitdb) > 0:
                 numInfos += 1
         self.wb_label_juegosConInfoWiiTDB.set_text(_("Hay %d juegos con informacion WiiTDB") % numInfos)
+        '''
         
         #label_juegosSinCaratula
         
-        #
+        #label_juegosSinDiscArt
 
     def refrescarTareasPendientes(self):
         numTareas = self.poolTrabajo.numTrabajos
@@ -879,14 +941,17 @@ class WiithonGUI(GtkBuilderWrapper):
                 
                 if self.sel_juego.obj != None:
                 
-                    juego = self.sel_juego.obj.juego_wiitdb
+                    #juego = self.sel_juego.obj.juego_wiitdb
+                    juego = self.sel_juego.obj.getJuegoWIITDB(session)
                     
-                    if ((juego != None and isinstance(juego, Juego)) or (isinstance(juego, list) and len(juego) > 0)):
-                        
+                    #if ((juego != None and isinstance(juego, Juego)) or (isinstance(juego, list) and len(juego) > 0)):
+                    if juego != None:
+                        '''
                         # si es una lista, cojo el primero
                         if isinstance(juego, list):
                             juego = juego[0]
-
+                        '''
+                        
                         # poner caratulas
                         self.ponerCaratula(juego.idgame, self.wb_img_caratula2)
                         self.ponerDisco(juego.idgame, self.wb_img_disco2)
@@ -894,11 +959,8 @@ class WiithonGUI(GtkBuilderWrapper):
                         # idgame
                         self.wb_ficha_idgame.set_text( juego.idgame )
                         
-                        # fecha lanzamiento
-                        if juego.fecha_lanzamiento != None:
-                            self.wb_ficha_fecha_lanzamiento.set_text( "%s" % (juego.fecha_lanzamiento) )
-                        else:
-                            self.wb_ficha_fecha_lanzamiento.set_text( _("Desconocido") )
+                        # fecha lanzamiento                            
+                        self.wb_ficha_fecha_lanzamiento.set_text(juego.getTextFechaLanzamiento())
                             
                         # desarrollador
                         self.wb_ficha_desarrollador.set_text( juego.developer )
@@ -946,39 +1008,21 @@ class WiithonGUI(GtkBuilderWrapper):
                         buffer = ""
                         for accesorio in juego.obligatorio:
                             buffer += "%s, " % accesorio.nombre
-                            #print os.path.join(config.WIITHON_FILES_RECURSOS_IMAGENES_ACCESORIO , "%s.jpg" % accesorio.nombre)
                             
                         # accesorios opcionales
                         for accesorio in juego.opcional:
                             buffer += "%s (opcional), " % accesorio.nombre
-                            #print os.path.join(config.WIITHON_FILES_RECURSOS_IMAGENES_ACCESORIO , "%s.jpg" % accesorio.nombre)
 
                         self.wb_ficha_accesorio.set_text( buffer )
                         
                         # clasificación PEGI
-                        buffer = ""    
-                        for rating_content in juego.rating_contents:
-                            buffer += "%s, " % rating_content.valor
-                        self.wb_ficha_ranking.set_text( "%s (%s+): %s" % (juego.rating_type.tipo, juego.rating_value.valor , buffer) )
+                        self.wb_ficha_ranking.set_text( juego.getTextRating() )
                         
-                        # numero de jugadores wifi
-                        if juego.wifi_players == 0:
-                            self.wb_ficha_online.set_text( _("No") )
-                        else:
-                            buffer = ""
-                            for feature_online in juego.features:
-                                buffer += "%s, " % feature_online.valor
-                            if juego.wifi_players == 1:
-                                buffer = _("Si, 1 jugador (%s)") % buffer
-                            else:
-                                buffer = _("Si, %d jugadores (%s)") % (juego.wifi_players, buffer)
-                            self.wb_ficha_online.set_text( buffer )
+                        
+                        self.wb_ficha_online.set_text( juego.getTextPlayersWifi() )
                             
-                        # numero de jugadores en local
-                        if juego.input_players == 1:
-                            self.wb_ficha_num_jugadores.set_text( _("1 jugador") )
-                        else:
-                            self.wb_ficha_num_jugadores.set_text( _("%d jugadores") % juego.input_players )
+                        # numero de jugadores en local                            
+                        self.wb_ficha_num_jugadores.set_text(juego.getTextPlayersLocal())
                                                 
                         # esperamos a que pulse cerrar
                         res = self.wb_ficha_juego.run()
@@ -1008,7 +1052,7 @@ class WiithonGUI(GtkBuilderWrapper):
         elif(id_tb == self.wb_tb_copiar_1_1):
             if len(self.lParti) > 1:                
                 res = self.wb_dialogo_copia_1on1.run()
-                
+
                 if(res > 0):
                     device_destino = self.sel_parti_1on1.obj.device
                     juegosParaClonar = []
@@ -1298,28 +1342,24 @@ class WiithonGUI(GtkBuilderWrapper):
                 
 ########## WIITDB ###########
                 
-    def on_tb_actualizar_wiitdb_clicked(self, boton):
+    def on_tb_actualizar_wiitdb_clicked(self, boton):        
+        self.poolTrabajo.nuevoTrabajoActualizarWiiTDB('http://wiitdb.com/wiitdb.zip')
+        
+    def callback_empieza_importar(self, xml):
         self.juegos = 0
         self.descripciones = 0
         self.generos = 0
         self.online_features = 0
         self.accesorios = 0
         self.companies = 0
-        
-        self.poolTrabajo.nuevoTrabajoActualizarWiiTDB('http://wiitdb.com/wiitdb.zip')
-        
-    def callback_empieza_importar(self, xml):
         self.actualizarLabel(_("Empezando a obtener datos de juegos desde WiiTDB"))
         self.actualizarFraccion(0.0)
         
     def callback_termina_importar(self, xml):
+        gobject.idle_add(self.refrescarListaJuegos)
         self.actualizarLabel(_("Finalizada satisfactoriamente la importacion de datos desde WiiTDB"))
-        self.actualizarFraccion(1.0)
-        
-        # la BDD se ha quedado vacia, se refresca para rellenarla
-        #self.refrescarParticionesWBFS(False)
-        #gobject.idle_add(self.refrescarParticionesWBFS (False)
-        
+        self.actualizarFraccion(1.0)        
+
     def callback_spinner(self, cont, total):
         porcentaje = (cont * 100.0 / total)
         self.actualizarLabel(_("%d%% - %d/%d games - %d descriptions - %d genre - %d accesories - %d companies - %d online features") % (porcentaje, cont, total , self.descripciones, self.generos, self.accesorios, self.companies, self.online_features))
@@ -1370,7 +1410,7 @@ class WiithonGUI(GtkBuilderWrapper):
         self.wb_progreso1.set_fraction( fraccion )
 
     def refrescarParticionesYSeleccionarJuego(self, fichero, DEVICE):
-        
+
         # leer IDGAME del juego añadido
         IDGAME = util.getMagicISO(fichero)
 
@@ -1378,10 +1418,13 @@ class WiithonGUI(GtkBuilderWrapper):
         # lo añadimos a la lista
         juego = self.core.getInfoJuego(session, DEVICE, IDGAME)
         self.lJuegos.append(juego)
-        
+       
         # seleccionamos la particion y la fila del juego añadido
         self.seleccionarFilaConValor(self.wb_tv_partitions, len(self.lParti) , 0 , DEVICE)
         self.seleccionarFilaConValor(self.wb_tv_games, len(self.lJuegos_filtrada) , 0 , IDGAME)
+        
+        # descargamos su info wiitdb
+        self.poolTrabajo.nuevoTrabajoActualizarWiiTDB('http://wiitdb.com/wiitdb.zip?ID=%s' % IDGAME)
         
     def mostrarError(self, error):
         self.alert('error',error)
@@ -1413,7 +1456,7 @@ class WiithonGUI(GtkBuilderWrapper):
                         ):
                         ruta = self.core.getRutaCaratula(self.sel_juego.obj.idgame)
                         shutil.copy(fichero, ruta)
-                        os.system("mogrify -resize 160x224! %s" % (ruta))
+                        os.system('mogrify -resize 160x224! "%s"' % (ruta))
                         self.ponerCaratula(self.sel_juego.obj.idgame, self.wb_img_caratula1)
 
         listaArrastrados.sort()

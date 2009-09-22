@@ -36,6 +36,10 @@ msgid "%d/%d juegos"
 msgstr ""
 
 #, python-format
+msgid "%djs."
+msgstr ""
+
+#, python-format
 msgid "%s NO se ha podido formatear"
 msgstr ""
 
@@ -70,6 +74,12 @@ msgid "1 jugador"
 msgstr ""
 
 msgid "1 particion WBFS"
+msgstr ""
+
+msgid "1j."
+msgstr ""
+
+msgid "??"
 msgstr ""
 
 msgid "A continuacion se listan los juego que NO van a ser copiados por ya estar en la particion de destino"
@@ -122,9 +132,6 @@ msgstr "Ajouter RAR contenant une ISO"
 
 msgid "Aniadir directorio"
 msgstr "Ajouter dossier"
-
-msgid "Base de datos ocupada."
-msgstr ""
 
 msgid "Borrar juego con IDGAME"
 msgstr "Supprimer jeu IDGAME"
@@ -208,9 +215,6 @@ msgstr "Décompression réussie"
 
 #, python-format
 msgid "Descomprimir RAR %s"
-msgstr ""
-
-msgid "Desconocido"
 msgstr ""
 
 #, python-format
@@ -401,6 +405,9 @@ msgstr ""
 msgid "Falla la descarga del disco de %s"
 msgstr ""
 
+msgid "Fecha"
+msgstr ""
+
 msgid "Fecha de lanzamiento:"
 msgstr ""
 
@@ -424,10 +431,6 @@ msgstr ""
 
 msgid "Has conectado el disco duro? No se ha encontrado ninguna particion valida."
 msgstr " Aucune partition WBFS trouvée : avez vous connecté votre disque contenant la partition WBFS ?"
-
-#, python-format
-msgid "Hay %d juegos con informacion WiiTDB"
-msgstr ""
 
 #, python-format
 msgid "Hay %d tareas"
@@ -503,6 +506,9 @@ msgstr "Partitions détectées automatiquement :"
 #, python-format
 msgid "Listando juegos de : %s"
 msgstr "Liste des jeux de : %s"
+
+msgid "Local"
+msgstr ""
 
 msgid "NO"
 msgstr "NON"
@@ -627,6 +633,9 @@ msgstr "OK, téléchargement de %s.png"
 msgid "OK, todas las caratulas se han descargado"
 msgstr "OK, toutes les jaquettes ont été téléchargées"
 
+msgid "Online?"
+msgstr ""
+
 msgid "Paso 1 de 2: Elige un directorio para las CARATULAS"
 msgstr "Étape 1 sur 2 : Choisissez un dossier pour les JAQUETTES"
 
@@ -662,6 +671,9 @@ msgstr ""
 msgid "Ranking:"
 msgstr ""
 
+msgid "Rating"
+msgstr ""
+
 #, python-format
 msgid "Recorrer directorio %s"
 msgstr ""
@@ -677,6 +689,13 @@ msgstr "Renommer le jeu IDGAME"
 
 msgid "SI"
 msgstr "OUI"
+
+#, python-format
+msgid "SI, %djs."
+msgstr ""
+
+msgid "SI, 1j."
+msgstr ""
 
 msgid "Saliendo por peticion del usuario."
 msgstr "Sortie à la demande de l'utilisateur."
