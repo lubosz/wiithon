@@ -18,6 +18,7 @@ wbfs_t *wbfs_try_open_partition(char *fn,int reset);
 
 void spinner(u64 x, u64 max)
 {
+    
     // casos de excepcion
     if(max <= 0 || x > max || x < 0)
     {
@@ -43,6 +44,8 @@ void spinner(u64 x, u64 max)
 	}
 
     d = time(NULL) - start_time;
+    
+    
     percent = (100 * x) / max;
 
     if(percent > 0)
@@ -58,7 +61,15 @@ void spinner(u64 x, u64 max)
             diferencia = percent - porcentaje_ponderado;
             porcentaje_ponderado+=(diferencia/2);
         }
-        restante = (d * (100-porcentaje_ponderado)) / porcentaje_ponderado;
+
+        if (porcentaje_ponderado != 0)
+        {
+            restante = (d * (100-porcentaje_ponderado)) / porcentaje_ponderado;
+        }
+        else
+        {
+            restante = 300;    
+        }
     }
     else
     {
@@ -69,7 +80,7 @@ void spinner(u64 x, u64 max)
     h = (restante / 3600);
     m = (restante / 60) % 60;
     s = (restante % 60);
-
+    
     if(x != max)
     {        
         fprintf(stdout , "%d;@;%d;@;%d;@;%d\n", porcentaje_ponderado, h, m, s);
@@ -78,6 +89,7 @@ void spinner(u64 x, u64 max)
     {
         fprintf(stdout, "FIN;@;%d;@;%d;@;%d\n", h, m, s);
     }
+    
     fflush(stdout);
 }
 

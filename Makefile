@@ -78,8 +78,8 @@ install: uninstall
 	mkdir -p $(PREFIX_RECURSOS_IMAGENES_CARATULAS)
 	mkdir -p $(PREFIX_RECURSOS_IMAGENES_DISCOS)
 	
-	cp caratulas_fix/*.png $(PREFIX_RECURSOS_IMAGENES_CARATULAS)
-	cp discos_fix/*.png $(PREFIX_RECURSOS_IMAGENES_DISCOS)
+	cp recursos/caratulas_fix/*.png $(PREFIX_RECURSOS_IMAGENES_CARATULAS)
+	cp recursos/discos_fix/*.png $(PREFIX_RECURSOS_IMAGENES_DISCOS)
 
 	chmod 755 $(PREFIX)/share/wiithon/*.py
 	chmod 755 $(PREFIX)/share/wiithon/*.sh
@@ -173,15 +173,13 @@ uninstall:
 	-$(RM) $(PREFIX)/share/wiithon/HOME.conf
 	-rmdir $(PREFIX)/share/wiithon/recursos/glade
 
-
+	-$(RM) -R ~/.wiithon
 	
 	@echo "=================================================================="
 	@echo "Wiithon Uninstall OK"
 	@echo "=================================================================="
 
 purge: uninstall
-
-	#-$(RM) -R ~/.wiithon
 
 	-$(RM) $(PREFIX_RECURSOS_IMAGENES_CARATULAS)/*.png
 	-$(RM) $(PREFIX_RECURSOS_IMAGENES_DISCOS)/*.png

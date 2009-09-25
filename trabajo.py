@@ -123,11 +123,11 @@ class PoolTrabajo(Pool , Thread):
                 self.callback_empieza_trabajo_copiar(trabajo)
 
             juego = trabajo.origen
-            DEVICE = trabajo.destino
-            trabajo.exito = self.clonar(core ,trabajo, juego , DEVICE)
+            particion = trabajo.destino
+            trabajo.exito = self.clonar(core ,trabajo, juego , particion)
 
             if self.callback_termina_trabajo_copiar:
-                self.callback_termina_trabajo_copiar(trabajo, juego, DEVICE)
+                self.callback_termina_trabajo_copiar(trabajo, juego, particion)
 
         elif( trabajo.tipo == DESCARGA_CARATULA ):
             juego = trabajo.origen
@@ -214,12 +214,12 @@ class PoolTrabajo(Pool , Thread):
         
         return exito
 
-    def clonar(self, core , trabajo , juego , DEVICE):
+    def clonar(self, core , trabajo , juego , particion):
 
         if self.callback_empieza_progreso:
             self.callback_empieza_progreso(trabajo)
 
-        exito = core.clonarJuego(juego , DEVICE)
+        exito = core.clonarJuego(juego , particion)
 
         if self.callback_termina_progreso:
             self.callback_termina_progreso(trabajo)
@@ -420,7 +420,7 @@ class Trabajo:
         elif self.tipo == EXTRAER and isinstance(self.origen, Juego):
             return _("Extraer %s a la ruta %s") % (self.origen.title, self.destino)
         elif self.tipo == CLONAR and isinstance(self.origen, Juego):
-            return _("Copiando el juego %s desde %s a la particion %s") % (self.origen.title, self.origen.device , self.destino)
+            return _("Copiando el juego %s desde %s a la particion %s") % (self.origen.title, self.origen.particion , self.destino)
         elif self.tipo == DESCARGA_CARATULA and isinstance(self.origen, Juego):
             return _("Descargando caratula de %s") % (self.origen.title)
         elif self.tipo == DESCARGA_DISCO and isinstance(self.origen, Juego):

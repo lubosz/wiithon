@@ -50,8 +50,8 @@ class WiithonGUI(GtkBuilderWrapper):
 
     # Representación de la fila seleccionada en los distintos treeviews
     sel_juego = FilaTreeview()
-    sel_parti = None
-    sel_parti_1on1 = None
+    sel_parti = FilaTreeview()
+    sel_parti_1on1 = FilaTreeview()
     
     # tiempo del ultimo click en tv_games
     ultimoClick = 0
@@ -289,7 +289,12 @@ class WiithonGUI(GtkBuilderWrapper):
             # oculto la fila de progreso
             self.wb_box_progreso.hide()
 
+            # 
             self.lParti = self.core.getListaParticiones(session)
+            
+            # carga el modelo de datos del TreeView de particiones
+            self.cargarParticionesModelo(self.tv_partitions_modelo , self.lParti)
+            
             if(len(self.lParti) == 0):
                 # establecemos el modo de wiithon
                 self.modo = "ver"
@@ -300,11 +305,10 @@ class WiithonGUI(GtkBuilderWrapper):
                 self.renderEditableNombre.set_property("attributes", self.getEstilo_grisGrande())
                 
                 # limpiar particiones del modelo
-                self.tv_partitions_modelo.clear()
+                # self.tv_partitions_modelo.clear()
 
-                # No hay particion seleccionada
-                self.sel_parti = None
-                self.sel_parti_1on1 = None
+                # Filtrar por partición
+                self.todo = True
 
                 # cargar datos desde la base de datos
                 self.lJuegos = []
@@ -313,8 +317,6 @@ class WiithonGUI(GtkBuilderWrapper):
                 #ocultar algunas coasa
                 self.wb_vboxProgresoEspacio.hide()
                 self.wb_labelEspacio.hide()
-                
-                self.wb_label_numParticionesWBFS.set_label(_("¡No hay particiones WBFS!"))
             else:
                 # establecemos el modo de wiithon, hay particiones que gestionar
                 self.modo = "manager"
@@ -324,15 +326,12 @@ class WiithonGUI(GtkBuilderWrapper):
                 self.renderEditableNombre.set_property("editable", True)
                 self.renderEditableNombre.set_property("attributes", self.getEstilo_azulGrande())
                 
-                # carga el modelo de datos del TreeView de particiones
-                self.cargarParticionesModelo(self.tv_partitions_modelo , self.lParti)
+                # Filtrar por partición
+                self.todo = False
+                self.sel_parti.obj = self.lParti[0]
                 
                 self.lJuegos = self.sincronizarParticionesWBFSconBDD(self.lParti)
                 self.lJuegos_filtrada = self.refrescarListaJuegos()
-
-                self.sel_parti = FilaTreeview()
-                self.sel_parti.obj = self.lParti[0]               
-                self.sel_parti_1on1 = FilaTreeview()
                 
                 # seleccionar primera fila de particiones y por tanto de juego
                 self.seleccionarPrimeraFila(self.wb_tv_partitions)
@@ -340,28 +339,17 @@ class WiithonGUI(GtkBuilderWrapper):
                 #mostrar algunas coasa
                 self.wb_vboxProgresoEspacio.show()
                 self.wb_labelEspacio.show()
-                
-                if len(self.lParti) == 1:
-                    self.wb_label_numParticionesWBFS.set_label(_("1 particion WBFS"))
+            
+            for juego in session.query(Juego).order_by('lower(title)'):
+                if not self.core.existeCaratula(juego.idgame):
+                    self.poolBash.nuevoTrabajoDescargaCaratula( juego )
                 else:
-                    self.wb_label_numParticionesWBFS.set_label(_("%d particiones WBFS") % (len(self.lParti)))
+                    juego.tieneCaratula = True
 
-
-            # 1º descargamos lo que vemos EN ORDEN
-            # 2º despues descargamos el resto de juegos sin importar el orden
-            i=0
-            while i<2:
-                if i==1:
-                    lista = self.lJuegos_filtrada
+                if not self.core.existeDisco(juego.idgame):
+                    self.poolBash.nuevoTrabajoDescargaDisco( juego )
                 else:
-                    lista = self.lJuegos
-                if lista:
-                    for juego in lista:
-                        if not self.core.existeCaratula(juego.idgame):
-                            self.poolBash.nuevoTrabajoDescargaCaratula( juego )
-                        if not self.core.existeDisco(juego.idgame):
-                            self.poolBash.nuevoTrabajoDescargaDisco( juego )
-                i += 1
+                    juego.tieneDiscArt = True
             
         else:
             if verbose:
@@ -473,13 +461,14 @@ class WiithonGUI(GtkBuilderWrapper):
 
         # prox versión meter background ----> foreground ... etc
         # http://www.pygtk.org/docs/pygtk/class-gtkcellrenderertext.html
-        self.columna1 = columna1 = gtk.TreeViewColumn(_('IDGAME'), self.renderEditableIDGAME , text=0)
-        self.columna2 = columna2 = gtk.TreeViewColumn(_('Nombre'), self.renderEditableNombre , text=1)
-        self.columna3 = columna3 = gtk.TreeViewColumn(_('Tamanio'), render , text=2)
-        self.columna4 = columna4 = gtk.TreeViewColumn(_('Online?'), render , text=3)
-        self.columna5 = columna5 = gtk.TreeViewColumn(_('Local'), render , text=4)
-        self.columna6 = columna6 = gtk.TreeViewColumn(_('Fecha'), render , text=5)
-        self.columna7 = columna7 = gtk.TreeViewColumn(_('Rating'), render , text=6)
+        self.columna1 = columna1 = gtk.TreeViewColumn(_('IDGAME'), self.renderEditableIDGAME , text=0, foreground=8, background=9)
+        self.columna2 = columna2 = gtk.TreeViewColumn(_('Nombre'), self.renderEditableNombre , text=1, foreground=8, background=9)
+        self.columna3 = columna3 = gtk.TreeViewColumn(_('Tamanio'), render , text=2, foreground=8, background=9)
+        self.columna4 = columna4 = gtk.TreeViewColumn(_('Online?'), render , text=3, foreground=8, background=9)
+        self.columna5 = columna5 = gtk.TreeViewColumn(_('Local'), render , text=4, foreground=8, background=9)
+        self.columna6 = columna6 = gtk.TreeViewColumn(_('Fecha'), render , text=5, foreground=8, background=9)
+        self.columna7 = columna7 = gtk.TreeViewColumn(_('Rating'), render , text=6, foreground=8, background=9)
+        self.columna8 = columna8 = gtk.TreeViewColumn(_('Particion'), render , text=7, foreground=8, background=9)
 
         columna1.set_expand(False)
         columna1.set_min_width(80)
@@ -522,6 +511,12 @@ class WiithonGUI(GtkBuilderWrapper):
         columna7.set_reorderable(True)
         columna7.set_sort_order(gtk.SORT_ASCENDING)
         columna7.set_sort_column_id(6)
+        
+        columna8.set_expand(False)
+        columna8.set_min_width(85)
+        columna8.set_reorderable(True)
+        columna8.set_sort_order(gtk.SORT_ASCENDING)
+        columna8.set_sort_column_id(7)
 
         tv_games.append_column(columna1)
         tv_games.append_column(columna2)
@@ -530,6 +525,7 @@ class WiithonGUI(GtkBuilderWrapper):
         tv_games.append_column(columna5)
         tv_games.append_column(columna6)
         tv_games.append_column(columna7)
+        tv_games.append_column(columna8)
 
         tv_games.connect('cursor-changed', self.on_tv_games_cursor_changed)
 
@@ -541,6 +537,9 @@ class WiithonGUI(GtkBuilderWrapper):
                 gobject.TYPE_STRING,                        # Local
                 gobject.TYPE_STRING,                        # Fecha
                 gobject.TYPE_STRING,                        # Rating
+                gobject.TYPE_STRING,                        # Device
+                gobject.TYPE_STRING,                              # Color letra
+                gobject.TYPE_STRING                               # Color fondo
                 )
         tv_games.set_model(modelo)
 
@@ -562,11 +561,6 @@ class WiithonGUI(GtkBuilderWrapper):
             
             #if ((juegoWiiTDB != None and isinstance(juegoWiiTDB, Juego)) or (isinstance(juegoWiiTDB, list) and len(juegoWiiTDB) > 0)):
             if juegoWiiTDB != None:
-                '''
-                # si es una lista, cojo el primero
-                if isinstance(juegoWiiTDB, list):
-                    juegoWiiTDB = juegoWiiTDB[0]
-                '''
 
                 modelo.set_value(iterador,3, juegoWiiTDB.getTextPlayersWifi(True))
                 modelo.set_value(iterador,4, juegoWiiTDB.getTextPlayersLocal(True))
@@ -579,21 +573,38 @@ class WiithonGUI(GtkBuilderWrapper):
                 modelo.set_value(iterador,4, _("??"))
                 modelo.set_value(iterador,5, _("??"))
                 modelo.set_value(iterador,6, _("??"))
-
+                
+            modelo.set_value(iterador,7, juego.particion.device)
+            '''
+            color = util.gdk2int(gtk.gdk.Color(0x0011,0x4444,0xFFFF))
+            modelo.set_value(iterador,8, color)
+            modelo.set_value(iterador,9, color)
+            '''
+            '''
+            modelo.set_value(iterador,8, juego.particion.color_foreground)
+            modelo.set_value(iterador,9, juego.particion.color_background)
+            '''
             i = i + 1
 
-    def cargarParticionesModelo(self , modelo , listaParticiones , deviceActual = "$%&/()=!"):
+    def cargarParticionesModelo(self , modelo , listaParticiones, filtrarTodo = False):
         modelo.clear()
-        i = 0
-        for p in listaParticiones:
-            if(p.device != deviceActual):
-                iterador = modelo.insert(i)
-                modelo.set_value(iterador,0,p.device)
-                modelo.set_value(iterador,1,"%.2f GB" % p.total)
+
+        i = 1
+        for particion in listaParticiones:
+            if( self.sel_parti == None or particion != self.sel_parti.obj ):
+                iterador = modelo.insert(               i                           )
+                modelo.set_value(iterador,0,            particion.device            )
+                modelo.set_value(iterador,1,            "%.2f GB" % particion.total )
             # el contador esta fuera del if debido a:
             # si lo metemos la numeracion es secuencial, pero cuando insertarDeviceSeleccionado sea False
             # quiero reflejar los huecos. Esto permite un alineamiento con la lista del core
             i = i + 1
+        
+        if not filtrarTodo:
+            # Añadir TODOS
+            iterador = modelo.insert(0)
+            modelo.set_value(iterador,0,            _("Todos")              )
+            modelo.set_value(iterador,1,            "XX GB"                 )
 
     def editar_idgame( self, renderEditable, i, nuevoIDGAME):
         if self.sel_juego.it != None:
@@ -601,8 +612,8 @@ class WiithonGUI(GtkBuilderWrapper):
             if(self.sel_juego.obj.idgame != nuevoIDGAME):
                 exp_reg = "[A-Z0-9]{6}"
                 if re.match(exp_reg,nuevoIDGAME):
-                    sql = util.decode('juego.idgame=="%s" and particion.device=="%s"' % (nuevoIDGAME , self.sel_parti.obj.device))
-                    juego = session.query(Juego, Particion).filter(sql).first()
+                    sql = util.decode('idgame=="%s" and idParticion=="%d"' % (nuevoIDGAME , self.sel_parti.obj.idParticion))
+                    juego = session.query(Juego).filter(sql).first()
                     if juego == None:
                         if ( self.question(_('Advertencia de seguridad de renombrar desde IDGAME = %s a %s') % (self.sel_juego.obj.idgame , nuevoIDGAME)) == 1 ):
                             if self.core.renombrarIDGAME(self.sel_parti.obj.device , self.sel_juego.obj.idgame , nuevoIDGAME):
@@ -740,16 +751,14 @@ class WiithonGUI(GtkBuilderWrapper):
 
         subListaJuegos = []
 
-        if self.sel_parti != None:
-            sql = util.decode('particion.device="%s" and (juego.title like "%%%s%%" or juego.idgame like "%s%%")' % (self.sel_parti.obj.device , self.buscar , self.buscar))
-            query = session.query(Juego,Particion).filter(sql).order_by('lower(title)')
-            for juego in query:
-                subListaJuegos.append(juego[0])
-        else:
+        if self.todo:
             sql = util.decode('title like "%%%s%%" or idgame like "%s%%"' % (self.buscar , self.buscar))
-            query = session.query(Juego).filter(sql).order_by('lower(title)')
-            for juego in query:
-                subListaJuegos.append(juego)
+        else:
+            sql = util.decode('idParticion="%d" and (title like "%%%s%%" or idgame like "%s%%")' % (self.sel_parti.obj.idParticion , self.buscar , self.buscar))
+
+        query = session.query(Juego).filter(sql).order_by('lower(title)')
+        for juego in query:
+            subListaJuegos.append(juego)
 
         # cargar la lista sobre el Treeview
         self.cargarJuegosModelo(self.tv_games_modelo , subListaJuegos)
@@ -794,13 +803,15 @@ class WiithonGUI(GtkBuilderWrapper):
             self.callback_treeview(treeview)
 
     def refrescarEspacio(self):
-        if self.sel_parti == None:
+        
+        particion = self.sel_parti.obj
+        
+        if particion == None:
             return
-            
-        info = self.core.getEspacioLibre(self.sel_parti.obj.device)
-        usado = info[0]
-        libre = info[1]
-        total = info[2]
+
+        usado = particion.usado
+        libre = particion.libre
+        total = particion.total
 
         self.wb_labelEspacio.set_text("%.2f GB / %.2f GB" % (usado , total))
         try:
@@ -818,17 +829,30 @@ class WiithonGUI(GtkBuilderWrapper):
         
         # BARRA DE ESTADO
         
-        '''
+        if len(self.lParti) == 0:
+            self.wb_label_numParticionesWBFS.set_label(_("No hay particiones WBFS"))
+        elif len(self.lParti) == 1:
+            self.wb_label_numParticionesWBFS.set_label(_("1 particion WBFS"))
+        else:
+            self.wb_label_numParticionesWBFS.set_label(_("%d particiones WBFS") % (len(self.lParti)))
+        
         numInfos = 0
-        for juego in session.query(Juego, Particion):
-            if len(juego[0].juego_wiitdb) > 0:
+        for juego in session.query(Juego):
+            if juego.getJuegoWIITDB(session) != None:
                 numInfos += 1
         self.wb_label_juegosConInfoWiiTDB.set_text(_("Hay %d juegos con informacion WiiTDB") % numInfos)
-        '''
         
-        #label_juegosSinCaratula
+        sinCaratulas = 0
+        for juego in session.query(Juego):
+            if not juego.tieneCaratula:
+                sinCaratulas += 1
+        self.wb_label_juegosSinCaratula.set_text(_("%d sin caratula") % sinCaratulas)
         
-        #label_juegosSinDiscArt
+        sinDiscArt = 0
+        for juego in session.query(Juego):
+            if not juego.tieneDiscArt:
+                sinDiscArt += 1
+        self.wb_label_juegosSinDiscArt.set_text(_("%d juegos sin disc-art") % sinDiscArt)
 
     def refrescarTareasPendientes(self):
         numTareas = self.poolTrabajo.numTrabajos
@@ -896,11 +920,17 @@ class WiithonGUI(GtkBuilderWrapper):
                 # selecciono la particion actual
                 self.sel_parti.obj = self.getBuscarParticion(self.lParti, self.sel_parti.clave)
                 
-                self.preferencia.device_seleccionado = self.sel_parti.obj.device
-                session.commit()
-
+                try:
+                    self.preferencia.device_seleccionado = self.sel_parti.obj.device
+                    session.commit()
+                    
+                    self.todo = False
+                except AttributeError:
+                    
+                    self.todo = True
+                    
                 # refrescamos el modelo de particiones para la copia 1on1
-                self.cargarParticionesModelo(self.tv_partitions2_modelo , self.lParti , self.sel_parti.obj.device)
+                self.cargarParticionesModelo(self.tv_partitions2_modelo , self.lParti, True)
                 
                 #seleccionar primero
                 self.seleccionarPrimeraFila( self.wb_tv_partitions2 )
@@ -910,6 +940,7 @@ class WiithonGUI(GtkBuilderWrapper):
 
                 # refrescar espacio
                 self.refrescarEspacio()
+
 
     def on_tv_partitions2_cursor_changed(self , treeview):
         self.sel_parti_1on1.actualizar_columna(treeview)
@@ -940,17 +971,10 @@ class WiithonGUI(GtkBuilderWrapper):
             if tiempo_entre_clicks < 400:
                 
                 if self.sel_juego.obj != None:
-                
-                    #juego = self.sel_juego.obj.juego_wiitdb
+
                     juego = self.sel_juego.obj.getJuegoWIITDB(session)
                     
-                    #if ((juego != None and isinstance(juego, Juego)) or (isinstance(juego, list) and len(juego) > 0)):
                     if juego != None:
-                        '''
-                        # si es una lista, cojo el primero
-                        if isinstance(juego, list):
-                            juego = juego[0]
-                        '''
                         
                         # poner caratulas
                         self.ponerCaratula(juego.idgame, self.wb_img_caratula2)
@@ -1054,7 +1078,6 @@ class WiithonGUI(GtkBuilderWrapper):
                 res = self.wb_dialogo_copia_1on1.run()
 
                 if(res > 0):
-                    device_destino = self.sel_parti_1on1.obj.device
                     juegosParaClonar = []
                     juegosExistentesEnDestino = []
 
@@ -1062,7 +1085,7 @@ class WiithonGUI(GtkBuilderWrapper):
                         if self.sel_juego.it != None:
                             juegosParaClonar.append( util.clonarOBJ(self.sel_juego.obj) )
                             
-                            pregunta = _("Desea copiar el juego %s (%s) a la particion %s?") % (self.sel_juego.obj.title, self.sel_juego.obj.idgame, device_destino)
+                            pregunta = _("Desea copiar el juego %s a la particion %s?") % (self.sel_juego.obj, self.sel_parti_1on1.obj)
 
                         else:
                             self.alert("warning" , _("No has seleccionado ningun juego"))
@@ -1085,7 +1108,7 @@ class WiithonGUI(GtkBuilderWrapper):
                                 juegosExistentesEnDestino.append(juegosParaClonar[i])
                                 juegosParaClonar.remove(juegosParaClonar[i])
                                 
-                        pregunta  = "%s %s:\n\n" % (_("Se van a copiar los siguientes juegos a"), device_destino)
+                        pregunta  = "%s %s:\n\n" % (_("Se van a copiar los siguientes juegos a"), self.sel_parti_1on1.obj)
                         
                         i = 0
                         for juego in juegosParaClonar:
@@ -1094,7 +1117,7 @@ class WiithonGUI(GtkBuilderWrapper):
                             if i >= config.MAX_LISTA_COPIA_1on1:
                                 pregunta += "[...] (%d %s)\n" % (len(juegosParaClonar)-config.MAX_LISTA_COPIA_1on1, _("juegos mas"))
                                 break
-                        pregunta += "\n\n%s %s:\n\n" % (_("A continuacion se listan los juego que NO van a ser copiados por ya estar en la particion de destino"),device_destino)
+                        pregunta += "\n\n%s %s:\n\n" % (_("A continuacion se listan los juego que NO van a ser copiados por ya estar en la particion de destino"),self.sel_parti_1on1.obj)
                         i = 0
                         for juego in juegosExistentesEnDestino:
                             pregunta += "%s\n" % (juego)
@@ -1106,9 +1129,9 @@ class WiithonGUI(GtkBuilderWrapper):
                         
                     if len(juegosParaClonar) > 0:
                         if((self.question(pregunta) == 1)):
-                            self.poolTrabajo.nuevoTrabajoClonar( juegosParaClonar, device_destino )
+                            self.poolTrabajo.nuevoTrabajoClonar( juegosParaClonar, self.sel_parti_1on1.obj )
                     else:
-                        self.alert('info',_("No hay nada que copiar en %s") % (device_destino))
+                        self.alert('info',_("No hay nada que copiar en %s") % (self.sel_parti_1on1.obj))
                 
                 self.wb_dialogo_copia_1on1.hide()
             else:
@@ -1278,13 +1301,13 @@ class WiithonGUI(GtkBuilderWrapper):
                         elif( util.getExtension(fichero) == "iso" ):
                             idgame = util.getMagicISO(fichero)
                             if idgame != None:
-                                sql = util.decode("juego.idgame=='%s' and particion.device=='%s'" % (idgame , self.sel_parti.obj.device))
-                                self.juegoNuevo = session.query(Juego, Particion).filter(sql).first()
+                                sql = util.decode("idgame=='%s' and idParticion=='%d'" % (idgame , self.sel_parti.obj.idParticion))
+                                self.juegoNuevo = session.query(Juego).filter(sql).first()
                                 if self.juegoNuevo == None:
                                     listaISO.append(fichero)
                                 else:
                                     hay_juegosYaMetidos = True
-                                    buffer_juegosYaMetidos += _("El juego ya esta metido, como %s en %s\n") % (self.juegoNuevo[0], self.juegoNuevo[1])
+                                    buffer_juegosYaMetidos += _("%s ya existe en %s\n") % (self.juegoNuevo.title, self.juegoNuevo.particion.device)
                     
                     if hay_juegosYaMetidos:
                         self.alert('warning',buffer_juegosYaMetidos)
@@ -1426,6 +1449,15 @@ class WiithonGUI(GtkBuilderWrapper):
         # descargamos su info wiitdb
         self.poolTrabajo.nuevoTrabajoActualizarWiiTDB('http://wiitdb.com/wiitdb.zip?ID=%s' % IDGAME)
         
+    def refrescarParticionesYSeleccionarJuego2(self, juego , particion):
+        
+        juego = self.core.getInfoJuego(session, particion.device, juego.idgame)        
+        self.lJuegos.append(juego)
+        
+        # seleccionamos la particion y la fila del juego añadido
+        self.seleccionarFilaConValor(self.wb_tv_partitions, len(self.lParti) , 0 , particion.device)
+        self.seleccionarFilaConValor(self.wb_tv_games, len(self.lJuegos_filtrada) , 0 , juego.idgame)
+        
     def mostrarError(self, error):
         self.alert('error',error)
 
@@ -1479,9 +1511,9 @@ class WiithonGUI(GtkBuilderWrapper):
             gobject.idle_add( self.refrescarParticionesYSeleccionarJuego , fichero , device)
             
     # Al terminar hay que seleccionar la partición destino y el juego copiado
-    def callback_termina_trabajo_copiar(self, trabajo, juego, device):
+    def callback_termina_trabajo_copiar(self, trabajo, juego, particion):
         if trabajo.exito:
-            gobject.idle_add( self.refrescarParticionesYSeleccionarJuego , juego.idgame , device)
+            gobject.idle_add( self.refrescarParticionesYSeleccionarJuego2 , juego , particion)
 
     def callback_nuevo_trabajo(self, trabajo):
         gobject.idle_add( self.refrescarTareasPendientes )
@@ -1511,14 +1543,16 @@ class WiithonGUI(GtkBuilderWrapper):
         pass
         
     def callback_termina_trabajo_descargar_caratula(self, trabajo, juego):
-        if trabajo.exito:
+        juego.tieneDiscArt = trabajo.exito
+        if juego.tieneDiscArt:
             if juego.idgame == self.sel_juego.obj.idgame:
                 gobject.idle_add( self.ponerCaratula , juego.idgame , self.wb_img_caratula1)
         else:
             print _("Falla la descarga de la caratula de %s") % juego
         
     def callback_termina_trabajo_descargar_disco(self, trabajo, juego):
-        if trabajo.exito:
+        juego.tieneCaratula = trabajo.exito
+        if juego.tieneCaratula:
             if juego.idgame == self.sel_juego.obj.idgame:
                 gobject.idle_add( self.ponerDisco , juego.idgame , self.wb_img_disco1)
         else:
@@ -1576,25 +1610,29 @@ class HiloCalcularProgreso(Thread):
                     gobject.idle_add(self.actualizarLabel , "%s - %d%% - %s" % ( self.trabajo , self.porcentaje, informativo ))
                     self.interrumpir()
                 else:
-
-                    self.porcentaje = float(cachos[0])
-                    
                     try:
-                        informativo = _("quedan")
+                        self.porcentaje = float(cachos[0])
                         
-                        hora = int(cachos[1])
-                        minutos = int(cachos[2])
-                        segundos = int(cachos[3])
+                        try:
+                            informativo = _("quedan")
+                            
+                            hora = int(cachos[1])
+                            minutos = int(cachos[2])
+                            segundos = int(cachos[3])
 
-                        if(hora > 0):
-                            gobject.idle_add(self.actualizarLabel , "%s - %d%% - %s %dh%dm%ds" % ( self.trabajo , self.porcentaje , informativo , hora , minutos , segundos ))
-                        elif(minutos > 0):
-                            gobject.idle_add(self.actualizarLabel , "%s - %d%% - %s %dm%ds" % ( self.trabajo , self.porcentaje , informativo , minutos , segundos ))
-                        else:
-                            gobject.idle_add(self.actualizarLabel , "%s - %d%% - %s %ds" % ( self.trabajo , self.porcentaje, informativo , segundos ))
+                            if(hora > 0):
+                                gobject.idle_add(self.actualizarLabel , "%s - %d%% - %s %dh%dm%ds" % ( self.trabajo , self.porcentaje , informativo , hora , minutos , segundos ))
+                            elif(minutos > 0):
+                                gobject.idle_add(self.actualizarLabel , "%s - %d%% - %s %dm%ds" % ( self.trabajo , self.porcentaje , informativo , minutos , segundos ))
+                            else:
+                                gobject.idle_add(self.actualizarLabel , "%s - %d%% - %s %ds" % ( self.trabajo , self.porcentaje, informativo , segundos ))
+                        except ValueError:
+                            # para descomprimir RAR
+                            gobject.idle_add(self.actualizarLabel , "%s - %d%%" % ( self.trabajo , self.porcentaje ))
                     except ValueError:
-                        # para descomprimir RAR
-                        gobject.idle_add(self.actualizarLabel , "%s - %d%%" % ( self.trabajo , self.porcentaje ))
+                        print _("Error en progreso")
+                        self.porcentaje = 100.0
+                        self.interrumpir()
 
                 porcentual = self.porcentaje / 100.0
                 gobject.idle_add(self.actualizarFraccion , porcentual )

@@ -358,6 +358,42 @@ class JuegoWIITDB(Base):
 
 Index('idUnico_juego_wiitdb', JuegoWIITDB.c.idgame, unique=True)
 
+class Juego(Base):
+    __tablename__ = 'juego'
+
+    idJuego = Column('idJuego', Integer, primary_key=True)
+    idgame = Column('idgame', VARCHAR(6))
+    title = Column('title', Unicode(255))
+    size = Column('size', Float)
+    idParticion = Column("idParticion", Integer , ForeignKey('particion.idParticion'))
+    tieneCaratula = False
+    tieneDiscArt = False
+
+    def __init__(self , idgame , title , size):
+        self.idgame = util.decode(idgame)
+        self.title = util.decode(title)
+        self.size = float(size)
+
+    def __init__(self, cachos):
+        if(len(cachos)==3):
+            self.idgame = util.decode(cachos[0])
+            self.title = util.decode(cachos[1])
+            self.size = float(cachos[2])
+        else:
+            raise SintaxisInvalida
+            
+    def __setattr__(self, name, value):
+        if isinstance(value, str):
+            value = util.decode(value)
+        object.__setattr__(self, name, value)
+
+    def __repr__(self):
+        return "%s (ID: %s) %.2f GB (%s)" % (self.title, self.idgame, self.size, self.particion.device)
+        
+    def getJuegoWIITDB(self, session):
+        sql = util.decode("juego_wiitdb.idgame=='%s'" % (self.idgame))
+        return session.query(JuegoWIITDB).filter(sql).first()
+       
 class Particion(Base):
     __tablename__ = 'particion'
 
@@ -368,6 +404,10 @@ class Particion(Base):
     libre = Column('libre', Float)
     total = Column('total', Float)
     fabricante = Column('fabricante', Unicode(255))
+    color_foreground = "black"
+    color_background = "lightblue"
+    
+    juegos = relation(Juego, backref='particion')
     
     def __init__(self, cachos):
         if(len(cachos)==6+1):
@@ -397,51 +437,9 @@ class Particion(Base):
         object.__setattr__(self, name, value)
 
     def __repr__(self):
-        return "%s (%s) %.0f GB" % (self.device, self.fabricante, self.total)
+        return "%s (%.0f GB)" % (self.device, self.total)
         
 Index('idUnico_particion', Particion.c.device, unique=True)
-
-rel_particion_juego = Table("rel_particion_juego", Base.metadata, 
-    Column("idParticion", Integer, ForeignKey('particion.idParticion')),
-    Column("idJuego", Integer, ForeignKey('juego.idJuego')),
-    )
-
-class Juego(Base):
-    __tablename__ = 'juego'
-
-    idJuego = Column('idJuego', Integer, primary_key=True)
-    idgame = Column('idgame', VARCHAR(6))
-    title = Column('title', Unicode(255))
-    size = Column('size', Float)
-
-    #juego_wiitdb = relation(JuegoWIITDB, primaryjoin=(idgame==JuegoWIITDB.c.idgame), foreign_keys=JuegoWIITDB.c.idgame)
-    particion = relation(Particion, secondary=rel_particion_juego, uselist=False)
-
-    def __init__(self , idgame , title , size):
-        self.idgame = util.decode(idgame)
-        self.title = util.decode(title)
-        self.size = float(size)
-
-    def __init__(self, cachos):
-        if(len(cachos)==3):
-            self.idgame = util.decode(cachos[0])
-            self.title = util.decode(cachos[1])
-            self.size = float(cachos[2])
-        else:
-            raise SintaxisInvalida
-            
-    def __setattr__(self, name, value):
-        if isinstance(value, str):
-            value = util.decode(value)
-        object.__setattr__(self, name, value)
-
-    def __repr__(self):
-        return "%s (ID: %s) %.2f GB" % (self.title, self.idgame, self.size)
-        
-    def getJuegoWIITDB(self, session):
-        sql = util.decode("juego_wiitdb.idgame=='%s'" % (self.idgame))
-        return session.query(JuegoWIITDB).filter(sql).first()
-       
 
 #############################################################################
 

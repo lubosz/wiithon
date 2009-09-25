@@ -338,4 +338,3 @@ def getSesionBDD(db):
     Session = sessionmaker(bind=db, autoflush=True, transactional = True)
     session = Session()
     return session
-

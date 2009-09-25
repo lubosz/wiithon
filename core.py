@@ -25,13 +25,6 @@ class WiithonCORE:
     # index 1 -> Nombre del juego
     # index 2 -> Tamaño en GB redondeado a 2 cifras
     def getListaJuegos(self , session, particion):
-        
-        '''
-        sql = util.decode("particion.device = '%s'" % particion.device)
-        for juego in session.query(Juego,Particion).filter(sql):
-            session.delete(juego[0])
-        '''
-        session.execute('DELETE FROM rel_particion_juego')
 
         comando = "%s -p %s ls" % (config.WBFS_APP, particion.device)
         lineas = util.getSTDOUT_iterador( comando )
@@ -40,13 +33,15 @@ class WiithonCORE:
             cachos = linea.strip().split(config.SEPARADOR)
 
             idgame = util.decode(cachos[0])
-            sql = util.decode("juego.idgame=='%s' and particion.device='%s'" % (idgame, particion.device))
-            juego = session.query(Juego,Particion).filter(sql).first()        
+            sql = util.decode("idgame=='%s' and idParticion='%s'" % (idgame, particion.idParticion))
+            juego = session.query(Juego).filter(sql).first()
             if juego == None:
-                juego = Juego(cachos)
-                session.save(juego)
+                try:
+                    juego = Juego(cachos)
+                    session.save(juego)
+                except SintaxisInvalida:
+                    continue
             else:
-                juego = juego[0]
                 session.update(juego)
 
             juego.particion = particion
@@ -60,11 +55,9 @@ class WiithonCORE:
         
     # Devuelve la lista de particiones
     def getListaParticiones(self, session, detector = config.DETECTOR_WBFS):
-        
-        '''
-        for particion in session.query(Particion):
-            session.delete(particion)
-        '''
+
+        #session.execute('DELETE FROM rel_particion_juego where idParticion = "%d"' % particion.idParticion)
+        #session.execute('DELETE FROM rel_particion_juego')
 
         salida = util.getSTDOUT_NOERROR_iterador(detector)
 
@@ -215,16 +208,6 @@ class WiithonCORE:
                 return False
         else:
             return False
-        '''
-        if( not os.path.exists( destino ) and self.existeDisco(juego.idgame) ):
-            origen = self.getRutaCaratula(juego.idgame)
-            print "%s %s ----> %s ... " % (_("Copiando"), origen , destino)
-            shutil.copy(origen, destino)
-            return os.path.exists(destino)
-        else:
-            print _("Ya tienes la caratula %s") % (juego.idgame)
-            return True
-        '''
 
     def copiarDisco(self , juego , destino):
         destino = os.path.join( os.path.abspath(destino) , "%s.png" % (juego.idgame) )
@@ -238,31 +221,16 @@ class WiithonCORE:
                 return False
         else:
             return False
-            
-        '''
-        if( not os.path.exists( destino ) and self.existeCaratula(juego.idgame) ):
-            origen = self.getRutaDisco(juego.idgame)
-            print "%s %s ----> %s ... " % (_("Copiando"), origen , destino)
-            shutil.copy(origen, destino)
-            return os.path.exists(destino)
-        else:
-            print _("Ya tienes el disco-caratula %s") % (juego.idgame)
-            return True
-        '''
 
     # borrar disco
     def borrarDisco( self , juego ):
         if self.existeDisco( juego.idgame ):
             os.remove( self.getRutaDisco( juego.idgame ) )
 
-    def clonarJuego(self, juego , DEVICE ):
-        
-        # si pasa el objeto, cogemos el string que nos interesa
-        if isinstance(DEVICE, Particion):
-            DEVICE = DEVICE.device
-        
+    def clonarJuego(self, juego , particion ):
+
         try:
-            comando = "%s -p %s clonar %s %s" % (config.WBFS_APP , juego.particion.device , juego.idgame , DEVICE)
+            comando = "%s -p %s clonar %s %s" % (config.WBFS_APP , juego.particion.device , juego.idgame , particion.device)
             salida = subprocess.call( comando , shell=True , stderr=subprocess.STDOUT , stdout=open(config.HOME_WIITHON_LOGS_PROCESO , "w") )
             return salida == 0
         except KeyboardInterrupt:
