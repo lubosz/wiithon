@@ -67,10 +67,6 @@ class WiithonGUI(GtkBuilderWrapper):
                                    os.path.join(config.WIITHON_FILES_RECURSOS_GLADE,
                                                 'wiithon.ui'))
                                                 
-        self.alert_glade = gtk.Builder()
-        self.alert_glade.add_from_file( os.path.join(config.WIITHON_FILES_RECURSOS_GLADE  , 'alerta.ui') )
-        self.alert_glade.set_translation_domain( config.APP )
-
         self.core = core
         
         self.buscar = ""
@@ -436,8 +432,8 @@ class WiithonGUI(GtkBuilderWrapper):
         treeview.connect('cursor-changed', callback_cursor_changed)
 
         modelo = gtk.ListStore (
-                gobject.TYPE_STRING,   # device
-                gobject.TYPE_STRING    # total
+                                    gobject.TYPE_STRING,   # device
+                                    gobject.TYPE_STRING    # total
                                 )
 
         treeview.set_model(modelo)
@@ -575,15 +571,9 @@ class WiithonGUI(GtkBuilderWrapper):
                 modelo.set_value(iterador,6, _("??"))
                 
             modelo.set_value(iterador,7, juego.particion.device)
-            '''
-            color = util.gdk2int(gtk.gdk.Color(0x0011,0x4444,0xFFFF))
-            modelo.set_value(iterador,8, color)
-            modelo.set_value(iterador,9, color)
-            '''
-            '''
             modelo.set_value(iterador,8, juego.particion.color_foreground)
             modelo.set_value(iterador,9, juego.particion.color_background)
-            '''
+
             i = i + 1
 
     def cargarParticionesModelo(self , modelo , listaParticiones, filtrarTodo = False):
@@ -603,8 +593,8 @@ class WiithonGUI(GtkBuilderWrapper):
         if not filtrarTodo:
             # Añadir TODOS
             iterador = modelo.insert(0)
-            modelo.set_value(iterador,0,            _("Todos")              )
-            modelo.set_value(iterador,1,            "XX GB"                 )
+            modelo.set_value(iterador,0,        _("TODOS")          )
+            modelo.set_value(iterador,1,        ""                  )
 
     def editar_idgame( self, renderEditable, i, nuevoIDGAME):
         if self.sel_juego.it != None:
@@ -682,12 +672,15 @@ class WiithonGUI(GtkBuilderWrapper):
                 'error':    (gtk.STOCK_CLOSE, None),
                 }
 
-        # configure the label text:
-        alert_msg = self.alert_glade.get_object('lbl_message')
+        alert_glade = gtk.Builder()
+        alert_glade.add_from_file( os.path.join(config.WIITHON_FILES_RECURSOS_GLADE  , 'alerta.ui') )
+        alert_glade.set_translation_domain( config.APP )
+        
+        alert_msg = alert_glade.get_object('lbl_message')
         alert_msg.set_text(message)
 
         # configure the icon to display
-        img = self.alert_glade.get_object('img_alert')
+        img = alert_glade.get_object('img_alert')
 
         try:
             img.set_from_stock(level_icons[level], gtk.ICON_SIZE_DIALOG)
@@ -695,8 +688,8 @@ class WiithonGUI(GtkBuilderWrapper):
             img.set_from_stock(level_icons['info'], gtk.ICON_SIZE_DIALOG)
 
         # configure the buttons
-        btn_ok = self.alert_glade.get_object('btn_ok')
-        btn_no = self.alert_glade.get_object('btn_no')
+        btn_ok = alert_glade.get_object('btn_ok')
+        btn_no = alert_glade.get_object('btn_no')
 
         if level_buttons[level][0]:
             btn_ok.set_label(level_buttons[level][0])
@@ -708,10 +701,9 @@ class WiithonGUI(GtkBuilderWrapper):
         else:
             btn_no.hide()
 
-        self.alert_glade.get_object(config.GLADE_ALERTA).set_title(level)
-        res = self.alert_glade.get_object(config.GLADE_ALERTA).run()
-        self.alert_glade.get_object(config.GLADE_ALERTA).hide()
-
+        alert_glade.get_object(config.GLADE_ALERTA).set_title(level)
+        res = alert_glade.get_object(config.GLADE_ALERTA).run()
+        alert_glade.get_object(config.GLADE_ALERTA).hide()
         return res
 
     def question(self, pregunta):
@@ -722,7 +714,7 @@ class WiithonGUI(GtkBuilderWrapper):
     def on_busqueda_changed(self , widget):
         self.buscar = widget.get_text()
         self.lJuegos_filtrada = self.refrescarListaJuegos()
-        self.refrescarEspacio()
+        #self.refrescarEspacio()
 
     # refresco desde el disco duro (lento)
     def sincronizarParticionesWBFSconBDD(self, particiones):
@@ -809,6 +801,7 @@ class WiithonGUI(GtkBuilderWrapper):
         if particion == None:
             return
 
+        # porcentaje uso total
         usado = particion.usado
         libre = particion.libre
         total = particion.total
@@ -818,14 +811,15 @@ class WiithonGUI(GtkBuilderWrapper):
             porcentaje = usado * 100.0 / total
         except ZeroDivisionError:
             porcentaje = 0.0
-
-        numJuegos = len(self.lJuegos)
-        numJuegos_filtrados = len(self.lJuegos_filtrada)
-        if numJuegos_filtrados == numJuegos:
-            self.wb_progresoEspacio.set_text(_("%d juegos") % (numJuegos))
-        else:
-            self.wb_progresoEspacio.set_text(_("%d/%d juegos") % (numJuegos_filtrados, numJuegos))
         self.wb_progresoEspacio.set_fraction( porcentaje / 100.0 )
+
+        # filtrados / totales
+        numJuegos = len(particion.juegos)
+        #numJuegos_filtrados = len(self.lJuegos_filtrada)
+        #if numJuegos_filtrados == numJuegos:
+        self.wb_progresoEspacio.set_text(_("%d juegos") % (numJuegos))
+        #else:
+        #self.wb_progresoEspacio.set_text(_("%d/%d juegos") % (numJuegos_filtrados, numJuegos))
         
         # BARRA DE ESTADO
         
@@ -839,18 +833,21 @@ class WiithonGUI(GtkBuilderWrapper):
         numInfos = 0
         for juego in session.query(Juego):
             if juego.getJuegoWIITDB(session) != None:
+                print "%s no tiene INFO" % juego
                 numInfos += 1
         self.wb_label_juegosConInfoWiiTDB.set_text(_("Hay %d juegos con informacion WiiTDB") % numInfos)
         
         sinCaratulas = 0
         for juego in session.query(Juego):
             if not juego.tieneCaratula:
+                print "%s no tiene caratula" % juego
                 sinCaratulas += 1
         self.wb_label_juegosSinCaratula.set_text(_("%d sin caratula") % sinCaratulas)
         
         sinDiscArt = 0
         for juego in session.query(Juego):
             if not juego.tieneDiscArt:
+                print "%s no tiene disc-art" % juego
                 sinDiscArt += 1
         self.wb_label_juegosSinDiscArt.set_text(_("%d juegos sin disc-art") % sinDiscArt)
 
@@ -1076,8 +1073,13 @@ class WiithonGUI(GtkBuilderWrapper):
         elif(id_tb == self.wb_tb_copiar_1_1):
             if len(self.lParti) > 1:                
                 res = self.wb_dialogo_copia_1on1.run()
+                self.wb_dialogo_copia_1on1.hide()
+                device_destino = self.sel_parti_1on1.obj
 
+                # salir por Cancelar ---> 0
+                # salir por Escape ---> -4
                 if(res > 0):
+                    
                     juegosParaClonar = []
                     juegosExistentesEnDestino = []
 
@@ -1085,7 +1087,7 @@ class WiithonGUI(GtkBuilderWrapper):
                         if self.sel_juego.it != None:
                             juegosParaClonar.append( util.clonarOBJ(self.sel_juego.obj) )
                             
-                            pregunta = _("Desea copiar el juego %s a la particion %s?") % (self.sel_juego.obj, self.sel_parti_1on1.obj)
+                            pregunta = _("Desea copiar el juego %s a la particion %s?") % (self.sel_juego.obj, device_destino)
 
                         else:
                             self.alert("warning" , _("No has seleccionado ningun juego"))
@@ -1094,8 +1096,7 @@ class WiithonGUI(GtkBuilderWrapper):
                         for juego in self.lJuegos_filtrada:
                             juegosParaClonar.append( util.clonarOBJ(juego) )
                     
-                        # FIXME: ver si es 0 o 1
-                        self.seleccionarFilaConValor(self.wb_tv_partitions, len(self.lParti) , 0 , self.sel_parti_1on1.obj.device)
+                        self.seleccionarFilaConValor(self.wb_tv_partitions, len(self.lParti) , 0 , device_destino.device)
 
                         for juego in self.lJuegos_filtrada:
                             encontrado = False
@@ -1108,7 +1109,7 @@ class WiithonGUI(GtkBuilderWrapper):
                                 juegosExistentesEnDestino.append(juegosParaClonar[i])
                                 juegosParaClonar.remove(juegosParaClonar[i])
                                 
-                        pregunta  = "%s %s:\n\n" % (_("Se van a copiar los siguientes juegos a"), self.sel_parti_1on1.obj)
+                        pregunta  = "%s %s:\n\n" % (_("Se van a copiar los siguientes juegos a"), device_destino)
                         
                         i = 0
                         for juego in juegosParaClonar:
@@ -1117,7 +1118,7 @@ class WiithonGUI(GtkBuilderWrapper):
                             if i >= config.MAX_LISTA_COPIA_1on1:
                                 pregunta += "[...] (%d %s)\n" % (len(juegosParaClonar)-config.MAX_LISTA_COPIA_1on1, _("juegos mas"))
                                 break
-                        pregunta += "\n\n%s %s:\n\n" % (_("A continuacion se listan los juego que NO van a ser copiados por ya estar en la particion de destino"),self.sel_parti_1on1.obj)
+                        pregunta += "\n\n%s %s:\n\n" % (_("A continuacion se listan los juego que NO van a ser copiados por ya estar en la particion de destino"),device_destino)
                         i = 0
                         for juego in juegosExistentesEnDestino:
                             pregunta += "%s\n" % (juego)
@@ -1129,11 +1130,9 @@ class WiithonGUI(GtkBuilderWrapper):
                         
                     if len(juegosParaClonar) > 0:
                         if((self.question(pregunta) == 1)):
-                            self.poolTrabajo.nuevoTrabajoClonar( juegosParaClonar, self.sel_parti_1on1.obj )
-                    else:
-                        self.alert('info',_("No hay nada que copiar en %s") % (self.sel_parti_1on1.obj))
-                
-                self.wb_dialogo_copia_1on1.hide()
+                            self.poolTrabajo.nuevoTrabajoClonar( juegosParaClonar, device_destino )
+                else:
+                    self.alert('info',_("No hay nada que copiar a %s") % (device_destino))
             else:
                 self.alert("warning" , _("Debes tener al menos 2 particiones WBFS para hacer copias 1:1"))
 

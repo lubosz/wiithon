@@ -48,6 +48,7 @@ compilar: ./po/locale/da_DK/LC_MESSAGES/wiithon.mo ./po/locale/fi_FI/LC_MESSAGES
 	@echo "=================================================================="
 
 install: uninstall
+	mkdir -p $(PREFIX)/bin
 	mkdir -p $(PREFIX)/share/wiithon
 	mkdir -p $(PREFIX)/share/wiithon/recursos/glade
 	mkdir -p $(PREFIX)/share/wiithon/recursos/imagenes
