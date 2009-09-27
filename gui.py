@@ -41,11 +41,7 @@ class WiithonGUI(GtkBuilderWrapper):
 
     # Lista de particiones, obtenido por el core
     lParti = None
-
-    # Union de la listas de juegos de cada particion
-    lJuegos = None
     
-    # subconjunto de la lista de juegos, filtrada por el core
     lJuegos_filtrada = None
 
     # Representación de la fila seleccionada en los distintos treeviews
@@ -61,6 +57,15 @@ class WiithonGUI(GtkBuilderWrapper):
     
     # Hilo que actualiza wiitdb
     xmlWiiTDB = None
+    
+    # muestra toda las particiones o no
+    todo = True
+    
+    # valor busqueda
+    buscar = ""
+    
+    # modo ver | manager
+    modo = "ver"
 
     def __init__(self, core):
         GtkBuilderWrapper.__init__(self,
@@ -68,9 +73,6 @@ class WiithonGUI(GtkBuilderWrapper):
                                                 'wiithon.ui'))
                                                 
         self.core = core
-        
-        self.buscar = ""
-        self.modo = "ver" # ver | manager
         
         # Cellrenderers que se modifican según cambia el modo
         self.renderEditableIDGAME = None
@@ -260,10 +262,10 @@ class WiithonGUI(GtkBuilderWrapper):
         
         # advertencia si no encuentra
         if(len(self.lParti) == 0):
-            if (os.geteuid() != 0) and (len(self.lJuegos)==0):
+            if (os.geteuid() != 0) and (len(self.lJuegos_filtrada)==0):
                 self.alert("warning" , _("No se han detectado particiones WBFS.\nSi has conectado una particion WBFS y no ha sido detectada, es debido a que no hay permisos de lectura y escritura.\nPara solucionarlo siga los pasos de la guia de instalacion."))
             else:
-                if(len(self.lJuegos)>0):
+                if(len(self.lJuegos_filtrada)>0):
                     self.alert("warning" , _("No hay particiones WBFS, solo puede ver sus juegos acumuladas en %s") % (config.APP))
                 else:
                     self.alert("warning" , _("No hay particiones WBFS, conecte y refresque"))
@@ -273,7 +275,7 @@ class WiithonGUI(GtkBuilderWrapper):
                 self.seleccionarFilaConValor(self.wb_tv_games, len(self.lJuegos_filtrada) , 0 , backup_preferencia_idgame)
         
         # pongo el foco en el buscador
-        if( len(self.lJuegos)>0 ):
+        if( len(self.lJuegos_filtrada)>0 ):
             self.wb_busqueda.grab_focus()
         else:
             self.wb_tb_refrescar_wbfs.grab_focus()
@@ -282,60 +284,26 @@ class WiithonGUI(GtkBuilderWrapper):
         
         if not self.poolTrabajo.estaOcupado():
             
-            # oculto la fila de progreso
-            self.wb_box_progreso.hide()
-
-            # 
-            self.lParti = self.core.getListaParticiones(session)
-            
-            # carga el modelo de datos del TreeView de particiones
+            ##################################################################################
+            # autodeteccion de particiones wbfs
+            self.lParti = self.core.getListaParticiones(session)           
+            #
+            # carga particiones al treeview
             self.cargarParticionesModelo(self.tv_partitions_modelo , self.lParti)
-            
-            if(len(self.lParti) == 0):
-                # establecemos el modo de wiithon
-                self.modo = "ver"
-
-                # poner la columna titulo desactivada
-                self.renderEditableIDGAME.set_property("editable", False)
-                self.renderEditableNombre.set_property("editable", False)
-                self.renderEditableNombre.set_property("attributes", self.getEstilo_grisGrande())
-                
-                # limpiar particiones del modelo
-                # self.tv_partitions_modelo.clear()
-
-                # Filtrar por partición
-                self.todo = True
-
-                # cargar datos desde la base de datos
-                self.lJuegos = []
-                self.lJuegos_filtrada = self.refrescarListaJuegos()
-
-                #ocultar algunas coasa
-                self.wb_vboxProgresoEspacio.hide()
-                self.wb_labelEspacio.hide()
-            else:
-                # establecemos el modo de wiithon, hay particiones que gestionar
-                self.modo = "manager"
-                
-                # poner la columna titulo activada
-                self.renderEditableIDGAME.set_property("editable", True)
-                self.renderEditableNombre.set_property("editable", True)
-                self.renderEditableNombre.set_property("attributes", self.getEstilo_azulGrande())
-                
-                # Filtrar por partición
-                self.todo = False
-                self.sel_parti.obj = self.lParti[0]
-                
-                self.lJuegos = self.sincronizarParticionesWBFSconBDD(self.lParti)
-                self.lJuegos_filtrada = self.refrescarListaJuegos()
-                
-                # seleccionar primera fila de particiones y por tanto de juego
-                self.seleccionarPrimeraFila(self.wb_tv_partitions)
-                
-                #mostrar algunas coasa
-                self.wb_vboxProgresoEspacio.show()
-                self.wb_labelEspacio.show()
-            
+            #
+            # leer juegos de las aparticiones y guardar en la BDD
+            self.leer_juegos_de_las_particiones(self.lParti)
+            #
+            # Buscar juego en la bdd
+            self.lJuegos_filtrada = self.buscar_juego_bdd(self.buscar)
+            #
+            # refrescar de los resultados de busqueda.
+            self.refrescarModeloJuegos( self.lJuegos_filtrada )
+            #
+            # Selecciona el primer juego
+            self.seleccionarPrimeraFila(self.wb_tv_partitions)
+            #
+            # descargar caratulas y discos            
             for juego in session.query(Juego).order_by('lower(title)'):
                 if not self.core.existeCaratula(juego.idgame):
                     self.poolBash.nuevoTrabajoDescargaCaratula( juego )
@@ -346,6 +314,7 @@ class WiithonGUI(GtkBuilderWrapper):
                     self.poolBash.nuevoTrabajoDescargaDisco( juego )
                 else:
                     juego.tieneDiscArt = True
+            ##################################################################################
             
         else:
             if verbose:
@@ -443,9 +412,6 @@ class WiithonGUI(GtkBuilderWrapper):
     def cargarJuegosVista(self):
         # Documentacion útil: http://blog.rastersoft.com/index.php/2007/01/27/trabajando-con-gtktreeview-en-python/
         tv_games = self.wb_tv_games
-
-        # FIXME
-        #tv_games.set_enable_search(True)
 
         self.renderEditableIDGAME = gtk.CellRendererText()
         self.renderEditableNombre = gtk.CellRendererText()
@@ -552,10 +518,7 @@ class WiithonGUI(GtkBuilderWrapper):
             modelo.set_value(iterador,1,                juego.title)
             modelo.set_value(iterador,2, "%.2f GB" %    juego.size)
 
-            #juegoWiiTDB = juego.juego_wiitdb
-            juegoWiiTDB = juego.getJuegoWIITDB(session)
-            
-            #if ((juegoWiiTDB != None and isinstance(juegoWiiTDB, Juego)) or (isinstance(juegoWiiTDB, list) and len(juegoWiiTDB) > 0)):
+            juegoWiiTDB = juego.getJuegoWIITDB(session)            
             if juegoWiiTDB != None:
 
                 modelo.set_value(iterador,3, juegoWiiTDB.getTextPlayersWifi(True))
@@ -639,8 +602,13 @@ class WiithonGUI(GtkBuilderWrapper):
                     self.alert('error' , _("Nuevo nombre es demasiado largo, intente con un texto menor de %d caracteres") % (config.TITULO_LONGITUD_MAX))
 
     def salir(self , widget=None, data=None):
+        
+        if self.sel_juego.obj != None:
+            self.preferencia.idgame_seleccionado = self.sel_juego.obj.idgame
 
-        # guardar cambios en las preferencias
+        if self.sel_parti.obj != None:
+            self.preferencia.device_seleccionado = self.sel_parti.obj.device
+
         session.commit()
 
         # cerrar gui
@@ -713,52 +681,49 @@ class WiithonGUI(GtkBuilderWrapper):
     # Refresca de la base de datos y filtra según lo escrito.
     def on_busqueda_changed(self , widget):
         self.buscar = widget.get_text()
-        self.lJuegos_filtrada = self.refrescarListaJuegos()
+        self.lJuegos_filtrada = self.buscar_juego_bdd(self.buscar)
+        self.refrescarModeloJuegos( self.lJuegos_filtrada )
         #self.refrescarEspacio()
 
-    # refresco desde el disco duro (lento)
-    def sincronizarParticionesWBFSconBDD(self, particiones):
+    def leer_juegos_de_las_particiones(self, particiones):
 
-        # Borrar todas las relaciones juego-particion
-        listaJuegosAcumulados = NonRepeatList()
-        for particion in particiones:
-            # obtener los juegos de esa particion
-            listaJuegos = self.core.getListaJuegos(session, particion)
+        if len(particiones) > 0:
+            for particion in particiones:
+                # obtener los juegos de esa particion
+                #listaJuegos = self.core.getListaJuegos(session, particion)
+                self.core.getListaJuegos(session, particion)
+                '''
+                i = 0
+                # merge con la base de datos
+                while i < len(listaJuegos):
+                    session.merge(listaJuegos[i])
+                    i += 1
+                '''
 
-            i = 0
-            # merge con la base de datos
-            while i < len(listaJuegos):
-                session.merge(listaJuegos[i])
-                i += 1
+            # hacer efectivos los querys sql acumulados en el bucle
+            #session.commit()
 
-            # union con el total
-            listaJuegosAcumulados.extend(listaJuegos)
-
-        # hacer efectivos los querys sql acumulados en el bucle
-        session.commit()
-
-        return listaJuegosAcumulados
-
-    def refrescarListaJuegos(self):
+    def buscar_juego_bdd(self, buscar):
 
         subListaJuegos = []
 
         if self.todo:
-            sql = util.decode('title like "%%%s%%" or idgame like "%s%%"' % (self.buscar , self.buscar))
+            sql = util.decode('title like "%%%s%%" or idgame like "%s%%"' % (buscar , buscar))
         else:
-            sql = util.decode('idParticion="%d" and (title like "%%%s%%" or idgame like "%s%%")' % (self.sel_parti.obj.idParticion , self.buscar , self.buscar))
+            sql = util.decode('idParticion="%d" and (title like "%%%s%%" or idgame like "%s%%")' % (self.sel_parti.obj.idParticion , buscar , buscar))
 
         query = session.query(Juego).filter(sql).order_by('lower(title)')
         for juego in query:
             subListaJuegos.append(juego)
-
+        
+        return subListaJuegos
+        
+    def refrescarModeloJuegos(self, listaJuegos):
         # cargar la lista sobre el Treeview
-        self.cargarJuegosModelo(self.tv_games_modelo , subListaJuegos)
+        self.cargarJuegosModelo(self.tv_games_modelo , listaJuegos)
 
         # seleccionar primera fila del treeview de juegos
         self.seleccionarPrimeraFila(self.wb_tv_games)
-        
-        return subListaJuegos
 
     # Llama el callback onchange de los 3 treeview conocidos
     def callback_treeview(self, treeview):
@@ -833,21 +798,21 @@ class WiithonGUI(GtkBuilderWrapper):
         numInfos = 0
         for juego in session.query(Juego):
             if juego.getJuegoWIITDB(session) != None:
-                print "%s no tiene INFO" % juego
+                #print "%s no tiene INFO" % juego
                 numInfos += 1
         self.wb_label_juegosConInfoWiiTDB.set_text(_("Hay %d juegos con informacion WiiTDB") % numInfos)
         
         sinCaratulas = 0
         for juego in session.query(Juego):
             if not juego.tieneCaratula:
-                print "%s no tiene caratula" % juego
+                #print "%s no tiene caratula" % juego
                 sinCaratulas += 1
         self.wb_label_juegosSinCaratula.set_text(_("%d sin caratula") % sinCaratulas)
         
         sinDiscArt = 0
         for juego in session.query(Juego):
             if not juego.tieneDiscArt:
-                print "%s no tiene disc-art" % juego
+                #print "%s no tiene disc-art" % juego
                 sinDiscArt += 1
         self.wb_label_juegosSinDiscArt.set_text(_("%d juegos sin disc-art") % sinDiscArt)
 
@@ -902,9 +867,6 @@ class WiithonGUI(GtkBuilderWrapper):
             if self.sel_juego.it != None:
                 self.sel_juego.obj = self.getBuscarJuego(self.lJuegos_filtrada, self.sel_juego.clave)
                 
-                self.preferencia.idgame_seleccionado = self.sel_juego.clave
-                session.commit()
-                
                 self.ponerCaratula(self.sel_juego.clave, self.wb_img_caratula1)
                 self.ponerDisco(self.sel_juego.clave , self.wb_img_disco1)
 
@@ -918,26 +880,54 @@ class WiithonGUI(GtkBuilderWrapper):
                 self.sel_parti.obj = self.getBuscarParticion(self.lParti, self.sel_parti.clave)
                 
                 try:
-                    self.preferencia.device_seleccionado = self.sel_parti.obj.device
-                    session.commit()
-                    
+                    print self.sel_parti.obj.device
                     self.todo = False
                 except AttributeError:
-                    
                     self.todo = True
+                
+                # oculta partes del gui cuando esta en todo
+                self.toggle_todo_particion()
+                
+                if not self.todo:
+                    # refrescamos el modelo de particiones para la copia 1on1
+                    self.cargarParticionesModelo(self.tv_partitions2_modelo , self.lParti, True)
                     
-                # refrescamos el modelo de particiones para la copia 1on1
-                self.cargarParticionesModelo(self.tv_partitions2_modelo , self.lParti, True)
-                
-                #seleccionar primero
-                self.seleccionarPrimeraFila( self.wb_tv_partitions2 )
-                
-                # refrescamos la lista de juegos, leyendo del core
-                self.lJuegos_filtrada = self.refrescarListaJuegos()
+                    #seleccionar primero
+                    self.seleccionarPrimeraFila( self.wb_tv_partitions2 )
+                    
+                    # refrescamos la lista de juegos, leyendo del core
+                    self.lJuegos_filtrada = self.buscar_juego_bdd(self.buscar)
+                    
+                    self.refrescarModeloJuegos( self.lJuegos_filtrada )
+                    
+                    # refrescar espacio
+                    self.refrescarEspacio()
 
-                # refrescar espacio
-                self.refrescarEspacio()
+    def toggle_todo_particion(self):
+        if self.todo:
+            # establecemos el modo de wiithon
+            self.modo = "ver"
 
+            # poner la columna titulo desactivada
+            self.renderEditableIDGAME.set_property("editable", False)
+            self.renderEditableNombre.set_property("editable", False)
+            self.renderEditableNombre.set_property("attributes", self.getEstilo_grisGrande())
+            
+            #ocultar algunas coasa
+            self.wb_vboxProgresoEspacio.hide()
+            self.wb_labelEspacio.hide()
+        else:
+            # establecemos el modo de wiithon, hay particiones que gestionar
+            self.modo = "manager"
+            
+            # poner la columna titulo activada
+            self.renderEditableIDGAME.set_property("editable", True)
+            self.renderEditableNombre.set_property("editable", True)
+            self.renderEditableNombre.set_property("attributes", self.getEstilo_azulGrande())
+            
+            #mostrar algunas coasa
+            self.wb_vboxProgresoEspacio.show()
+            self.wb_labelEspacio.show()
 
     def on_tv_partitions2_cursor_changed(self , treeview):
         self.sel_parti_1on1.actualizar_columna(treeview)
@@ -1172,18 +1162,22 @@ class WiithonGUI(GtkBuilderWrapper):
                     self.tv_games_modelo.remove( self.sel_juego.it )
                     
                     # Borrar de las listas
+                    '''
                     try:
                         self.lJuegos.remove( self.sel_juego.obj )
                     except:
                         pass
+                    '''
                         
-                    try:
-                        self.lJuegos_filtrada.remove( self.sel_juego.obj )
-                    except:
-                        pass
+                    #try:
+                    self.lJuegos_filtrada.remove( self.sel_juego.obj )
+                    #except:
+                    #pass
+                    
+                    self.refrescarModeloJuegos( self.lJuegos_filtrada )
                     
                     # seleccionar el primero
-                    self.seleccionarPrimeraFila(self.wb_tv_games)
+                    #self.seleccionarPrimeraFila(self.wb_tv_games)
                     
                     self.refrescarEspacio()
                     
@@ -1378,9 +1372,9 @@ class WiithonGUI(GtkBuilderWrapper):
         self.actualizarFraccion(0.0)
         
     def callback_termina_importar(self, xml):
-        gobject.idle_add(self.refrescarListaJuegos)
         self.actualizarLabel(_("Finalizada satisfactoriamente la importacion de datos desde WiiTDB"))
-        self.actualizarFraccion(1.0)        
+        self.actualizarFraccion(1.0)
+        gobject.idle_add(self.refrescarModeloJuegos, self.lJuegos_filtrada)
 
     def callback_spinner(self, cont, total):
         porcentaje = (cont * 100.0 / total)
@@ -1439,7 +1433,7 @@ class WiithonGUI(GtkBuilderWrapper):
         # consultamos al wiithon wrapper info sobre el juego con nueva IDGAME
         # lo añadimos a la lista
         juego = self.core.getInfoJuego(session, DEVICE, IDGAME)
-        self.lJuegos.append(juego)
+        self.lJuegos_filtrada.append(juego)
        
         # seleccionamos la particion y la fila del juego añadido
         self.seleccionarFilaConValor(self.wb_tv_partitions, len(self.lParti) , 0 , DEVICE)
@@ -1451,7 +1445,7 @@ class WiithonGUI(GtkBuilderWrapper):
     def refrescarParticionesYSeleccionarJuego2(self, juego , particion):
         
         juego = self.core.getInfoJuego(session, particion.device, juego.idgame)        
-        self.lJuegos.append(juego)
+        self.lJuegos_filtrada.append(juego)
         
         # seleccionamos la particion y la fila del juego añadido
         self.seleccionarFilaConValor(self.wb_tv_partitions, len(self.lParti) , 0 , particion.device)

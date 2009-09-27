@@ -20,6 +20,10 @@ msgid "%d juegos"
 msgstr "%d giochi"
 
 #, python-format
+msgid "%d juegos sin disc-art"
+msgstr ""
+
+#, python-format
 msgid "%d jugadores"
 msgstr "%d giocatori"
 
@@ -28,12 +32,12 @@ msgid "%d particiones WBFS"
 msgstr "%d partizioni WBFS"
 
 #, python-format
-msgid "%d%% - %d/%d games - %d descriptions - %d genre - %d accesories - %d companies - %d online features"
-msgstr "%d%% - %d/%d giochi - %d descrizione - %d genere - %d accessori - %d compagnie - %d online"
+msgid "%d sin caratula"
+msgstr ""
 
 #, python-format
-msgid "%d/%d juegos"
-msgstr "%d/%d giochi"
+msgid "%d%% - %d/%d games - %d descriptions - %d genre - %d accesories - %d companies - %d online features"
+msgstr "%d%% - %d/%d giochi - %d descrizione - %d genere - %d accessori - %d compagnie - %d online"
 
 #, python-format
 msgid "%djs."
@@ -58,6 +62,10 @@ msgstr "%s non è un gioco Wii"
 #, python-format
 msgid "%s se ha formateado correctamente"
 msgstr "%s è stato formattato correttamente"
+
+#, python-format
+msgid "%s ya existe en %s\n"
+msgstr ""
 
 #, python-format
 msgid "***************** DESCARGAR CARATULA %s ********************"
@@ -211,8 +219,8 @@ msgid "Descomprimir RAR %s"
 msgstr "Decompressione RAR %s"
 
 #, python-format
-msgid "Desea copiar el juego %s (%s) a la particion %s?"
-msgstr "Vuoi copiare il gioco %s (%s) sulla partizione %s?"
+msgid "Desea copiar el juego %s a la particion %s?"
+msgstr ""
 
 #, python-format
 msgid "Desea reemplazar la iso del juego %s?"
@@ -290,10 +298,6 @@ msgstr "L'archivio RAR %s: non esiste"
 msgid "El directorio %s: No existe"
 msgstr "La cartella %s: non esiste"
 
-#, python-format
-msgid "El juego ya esta metido, como %s en %s\n"
-msgstr "Il gioco è stato inserito come %s in %s\n"
-
 msgid "El numero dado es incorrecto"
 msgstr "Il numero indicato è errato"
 
@@ -348,6 +352,9 @@ msgstr "Errore durante il trasferimento della ISO sul disco fisso"
 
 msgid "Error borrando"
 msgstr "Errore durante la cancellazione"
+
+msgid "Error en progreso"
+msgstr ""
 
 #, python-format
 msgid "Error importando %s: %s"
@@ -424,6 +431,10 @@ msgstr "Genere:"
 
 msgid "Has conectado el disco duro? No se ha encontrado ninguna particion valida."
 msgstr "Hai collegato il tuo disco fisso? Non è stata trovata nessuna partizione WBFS"
+
+#, python-format
+msgid "Hay %d juegos con informacion WiiTDB"
+msgstr "Ci sono %d giochi con informazioni WiiTDB"
 
 #, python-format
 msgid "Hay %d tareas"
@@ -543,8 +554,11 @@ msgid "No hay datos de este juego. Intente actualizar la base de datos."
 msgstr "Nessun dato per questo gioco. Prova ad aggiornare il database."
 
 #, python-format
-msgid "No hay nada que copiar en %s"
-msgstr "Niente da copiare su %s"
+msgid "No hay nada que copiar a %s"
+msgstr ""
+
+msgid "No hay particiones WBFS"
+msgstr ""
 
 msgid "No hay particiones WBFS, conecte y refresque"
 msgstr "Non ci sono partizione WBFS, verifica e premi \"Aggiorna WBFS\"."
@@ -621,6 +635,9 @@ msgstr "OK, tutte le copertine sono state scaricate"
 
 msgid "Online?"
 msgstr "Online?"
+
+msgid "Particion"
+msgstr "Partition"
 
 msgid "Paso 1 de 2: Elige un directorio para las CARATULAS"
 msgstr "Passo 1 di 2: Scegli una cartella per le COPERTINE"
@@ -736,6 +753,9 @@ msgstr ""
 msgid "TITULO"
 msgstr "TITOLO"
 
+msgid "TODOS"
+msgstr ""
+
 msgid "Tamanio"
 msgstr "Dimensione"
 
@@ -825,33 +845,52 @@ msgstr "s"
 msgid "wiithon no borra la ISO temporal, puedes borrarla si no la necesitas"
 msgstr "wiithon non rimuove la ISO temporanea, puoi cancellarla se non ne hai bisogno"
 
-msgid "No hay particiones WBFS!"
-msgstr "Non ci sono partizioni WBFS"
-
 #, python-format
 msgid " Esta seguro de formatear %s (S/N)? "
 msgstr "Sei sicuro di voler formattare %s (S/N)?"
 
+#~ msgid "%d/%d juegos"
+#~ msgstr "%d/%d giochi"
+
+#~ msgid "Desea copiar el juego %s (%s) a la particion %s?"
+#~ msgstr "Vuoi copiare il gioco %s (%s) sulla partizione %s?"
+
+#~ msgid "El juego ya esta metido, como %s en %s\n"
+#~ msgstr "Il gioco è stato inserito come %s in %s\n"
+
+#~ msgid "No hay nada que copiar en %s"
+#~ msgstr "Niente da copiare su %s"
+
+#~ msgid "No hay particiones WBFS!"
+#~ msgstr "Non ci sono partizioni WBFS"
+
 #~ msgid "Base de datos ocupada."
 #~ msgstr "Base dati occupata."
+
 #~ msgid "Desconocido"
 #~ msgstr "Sconosciuto"
+
 #~ msgid "Error: El RAR %s no tenia ninguna ISO"
 #~ msgstr "Errore: il RAR %s non contiene nessuna ISO"
-#~ msgid "Hay %d juegos con informacion WiiTDB"
-#~ msgstr "Ci sono %d giochi con informazioni WiiTDB"
+
 #~ msgid "La ISO o la particion ya no no existen"
 #~ msgstr "La ISO o la partizione non esiste"
+
 #~ msgid "No se ha encontrado ningun ISO"
 #~ msgstr "Non è stata trovata nessuna ISO"
+
 #~ msgid "El juego ya esta metido, como %s"
 #~ msgstr "Il gioco è già stato inserito come %s"
+
 #~ msgid "Finalizado."
 #~ msgstr "Finito."
+
 #~ msgid "Imagen ISO para Wii"
 #~ msgstr "Immagine ISO per Wii"
+
 #~ msgid "Quieres borrar el juego con %s?"
 #~ msgstr "Vuoi cancellare il gioco %s?"
+
 #~ msgid ""
 #~ "Comprobando integridad ...\n"
 #~ "Descargando caratulas ...\n"
@@ -860,40 +899,52 @@ msgstr "Sei sicuro di voler formattare %s (S/N)?"
 #~ "Check integrity ...\n"
 #~ "Download covers ...\n"
 #~ "Download discs ...\n"
+
 #~ msgid "No hay un numero suficiente de particiones validas, para realizar esta accion."
 #~ msgstr "You must select a WBFS partition for use this action"
+
 #~ msgid "%s - Salir"
 #~ msgstr "%s - Exit"
+
 #~ msgid "Error obteniendo el Fabricando del HD"
 #~ msgstr "Error getting HDD manufacturer"
-#~ msgid "Particion"
-#~ msgstr "Partition"
+
 #~ msgid "Fabricante"
 #~ msgstr "Manufacture"
+
 #~ msgid "Advertencia de borrar %s (%s) en modo ver"
 #~ msgstr ""
 #~ "Warning:\n"
 #~ "- The clearing of a game your video library without any partition selected\n"
 #~ "- This means delete (also delete the record) the cover and the disc downloaded\n"
 #~ "Are you sure to delete %s (%s)?"
+
 #~ msgid "Desea reemplazar la iso del juego %s (%s)?"
 #~ msgstr "Do you want to replace the game %s (%s)?"
+
 #~ msgid "El juego ya esta metido, como %s (%s)"
 #~ msgstr "The game is already in disc as %s (%s)"
+
 #~ msgid "Quieres borrar el juego con %s (%s)?"
 #~ msgstr "Do you want to remove the game %s (%s)?"
+
 #~ msgid "Ya tienes el disco-caratula %s"
 #~ msgstr "You have the cover-disc %s"
+
 #~ msgid "Ya tienes la caratula %s"
 #~ msgstr "You have the cover %s"
+
 #~ msgid "Vuelvelo a intentar o mira en : http://www.theotherzone.com/wii/"
 #~ msgstr "Try again or visit: http://www.theotherzone.com/wii/"
+
 #~ msgid "Consola"
 #~ msgstr "Console"
+
 #~ msgid "Mas informacion"
 #~ msgstr "Details"
+
 #~ msgid "Trabajos de fondo (0)"
 #~ msgstr "Batch work (0)"
+
 #~ msgid "Trabajos intensos (0)"
 #~ msgstr "Intense work (0)"
-

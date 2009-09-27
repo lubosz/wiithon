@@ -497,8 +497,7 @@
                 <child>
                   <object class="GtkLabel" id="label_numParticionesWBFS">
                     <property name="visible">True</property>
-                    <property name="xalign">0.029999999329447746</property>
-                    <property name="label" translatable="yes">1 particion WBFS</property>
+                    <property name="xalign">0</property>
                   </object>
                   <packing>
                     <property name="position">0</property>
@@ -507,7 +506,6 @@
                 <child>
                   <object class="GtkLabel" id="label_juegosConInfoWiiTDB">
                     <property name="visible">True</property>
-                    <property name="label">160/172 juegos con informaci&#xF3;n WiiTDB</property>
                   </object>
                   <packing>
                     <property name="position">1</property>
@@ -516,7 +514,6 @@
                 <child>
                   <object class="GtkLabel" id="label_juegosSinCaratula">
                     <property name="visible">True</property>
-                    <property name="label">4 juegos sin caratula</property>
                   </object>
                   <packing>
                     <property name="position">2</property>
@@ -525,7 +522,6 @@
                 <child>
                   <object class="GtkLabel" id="label_juegosSinDiscArt">
                     <property name="visible">True</property>
-                    <property name="label">2 juegos sin disc-art</property>
                   </object>
                   <packing>
                     <property name="position">3</property>

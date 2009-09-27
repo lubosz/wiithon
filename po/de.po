@@ -20,6 +20,10 @@ msgid "%d juegos"
 msgstr "%d Spiele"
 
 #, python-format
+msgid "%d juegos sin disc-art"
+msgstr ""
+
+#, python-format
 msgid "%d jugadores"
 msgstr ""
 
@@ -28,11 +32,11 @@ msgid "%d particiones WBFS"
 msgstr ""
 
 #, python-format
-msgid "%d%% - %d/%d games - %d descriptions - %d genre - %d accesories - %d companies - %d online features"
+msgid "%d sin caratula"
 msgstr ""
 
 #, python-format
-msgid "%d/%d juegos"
+msgid "%d%% - %d/%d games - %d descriptions - %d genre - %d accesories - %d companies - %d online features"
 msgstr ""
 
 #, python-format
@@ -57,6 +61,10 @@ msgstr "%s ist kein Wii Spiel"
 
 #, python-format
 msgid "%s se ha formateado correctamente"
+msgstr ""
+
+#, python-format
+msgid "%s ya existe en %s\n"
 msgstr ""
 
 #, python-format
@@ -217,8 +225,8 @@ msgid "Descomprimir RAR %s"
 msgstr ""
 
 #, python-format
-msgid "Desea copiar el juego %s (%s) a la particion %s?"
-msgstr "Möchten Sie das Spiel %s (%s) zur Partition %s kopieren?"
+msgid "Desea copiar el juego %s a la particion %s?"
+msgstr ""
 
 #, python-format
 msgid "Desea reemplazar la iso del juego %s?"
@@ -296,10 +304,6 @@ msgstr ""
 msgid "El directorio %s: No existe"
 msgstr ""
 
-#, python-format
-msgid "El juego ya esta metido, como %s en %s\n"
-msgstr ""
-
 msgid "El numero dado es incorrecto"
 msgstr "Falsche Nummer"
 
@@ -354,6 +358,9 @@ msgstr "Fehler beim kopieren der ISO auf die Festplatte"
 
 msgid "Error borrando"
 msgstr "Fehler beim löschen"
+
+msgid "Error en progreso"
+msgstr ""
 
 #, python-format
 msgid "Error importando %s: %s"
@@ -430,6 +437,10 @@ msgstr ""
 
 msgid "Has conectado el disco duro? No se ha encontrado ninguna particion valida."
 msgstr "Haben Sie die Festplatte mit einer WBFS Partition angeschlossen?"
+
+#, python-format
+msgid "Hay %d juegos con informacion WiiTDB"
+msgstr ""
 
 #, python-format
 msgid "Hay %d tareas"
@@ -549,8 +560,11 @@ msgid "No hay datos de este juego. Intente actualizar la base de datos."
 msgstr ""
 
 #, python-format
-msgid "No hay nada que copiar en %s"
-msgstr "Nichts ausgewählt um nach %s zu kopieren"
+msgid "No hay nada que copiar a %s"
+msgstr ""
+
+msgid "No hay particiones WBFS"
+msgstr ""
 
 msgid "No hay particiones WBFS, conecte y refresque"
 msgstr "Es sind keine WBFS Partitionen vorhanden.Schließen Sie eine an und laden Sie neu."
@@ -629,6 +643,9 @@ msgstr "OK, alle Titelbilder runtergeladen"
 
 msgid "Online?"
 msgstr ""
+
+msgid "Particion"
+msgstr "Partition"
 
 msgid "Paso 1 de 2: Elige un directorio para las CARATULAS"
 msgstr "Schritt 1 von 2: Wähle einen Ordner für TITELBILDER"
@@ -733,6 +750,9 @@ msgstr "Wiithon ist freie Software. Sie darf verändert und weitergegeben werden
 msgid "TITULO"
 msgstr "TITEL"
 
+msgid "TODOS"
+msgstr ""
+
 msgid "Tamanio"
 msgstr "Größe"
 
@@ -822,12 +842,15 @@ msgstr ""
 msgid "wiithon no borra la ISO temporal, puedes borrarla si no la necesitas"
 msgstr "Wiithon entfernt die temporäre ISO Datei nicht, Sie können Sie entfernen wenn sie nicht mehr benötigt wird"
 
-msgid "No hay particiones WBFS!"
-msgstr ""
-
 #, python-format
 msgid " Esta seguro de formatear %s (S/N)? "
 msgstr ""
+
+#~ msgid "Desea copiar el juego %s (%s) a la particion %s?"
+#~ msgstr "Möchten Sie das Spiel %s (%s) zur Partition %s kopieren?"
+
+#~ msgid "No hay nada que copiar en %s"
+#~ msgstr "Nichts ausgewählt um nach %s zu kopieren"
 
 #~ msgid "La ISO o la particion ya no no existen"
 #~ msgstr "ISO oder Partition nicht vorhanden"
@@ -878,9 +901,6 @@ msgstr ""
 
 #~ msgid "No hay un numero suficiente de particiones validas, para realizar esta accion."
 #~ msgstr "Sie müssen für dies Aktion eine WBFS Partition auswählen"
-
-#~ msgid "Particion"
-#~ msgstr "Partition"
 
 #~ msgid "Quieres borrar el juego con %s (%s)?"
 #~ msgstr "Möchten Sie das Spiel entfernen %s (%s)?"

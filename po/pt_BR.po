@@ -19,6 +19,10 @@ msgid "%d juegos"
 msgstr "%d jogos"
 
 #, python-format
+msgid "%d juegos sin disc-art"
+msgstr ""
+
+#, python-format
 msgid "%d jugadores"
 msgstr ""
 
@@ -27,11 +31,11 @@ msgid "%d particiones WBFS"
 msgstr ""
 
 #, python-format
-msgid "%d%% - %d/%d games - %d descriptions - %d genre - %d accesories - %d companies - %d online features"
+msgid "%d sin caratula"
 msgstr ""
 
 #, python-format
-msgid "%d/%d juegos"
+msgid "%d%% - %d/%d games - %d descriptions - %d genre - %d accesories - %d companies - %d online features"
 msgstr ""
 
 #, python-format
@@ -56,6 +60,10 @@ msgstr "%s não é nenhum jogo de Wii"
 
 #, python-format
 msgid "%s se ha formateado correctamente"
+msgstr ""
+
+#, python-format
+msgid "%s ya existe en %s\n"
 msgstr ""
 
 #, python-format
@@ -263,8 +271,8 @@ msgid "Descomprimir RAR %s"
 msgstr ""
 
 #, python-format
-msgid "Desea copiar el juego %s (%s) a la particion %s?"
-msgstr "Deseja copiar o jogo %s (%s) para a partição %s ?"
+msgid "Desea copiar el juego %s a la particion %s?"
+msgstr ""
 
 #, python-format
 msgid "Desea reemplazar la iso del juego %s?"
@@ -342,10 +350,6 @@ msgstr ""
 msgid "El directorio %s: No existe"
 msgstr ""
 
-#, python-format
-msgid "El juego ya esta metido, como %s en %s\n"
-msgstr ""
-
 msgid "El numero dado es incorrecto"
 msgstr "O número dado está incorreto"
 
@@ -400,6 +404,9 @@ msgstr "Erro ao passar a ISO para o HD"
 
 msgid "Error borrando"
 msgstr "Erro ao apagar"
+
+msgid "Error en progreso"
+msgstr ""
 
 #, python-format
 msgid "Error importando %s: %s"
@@ -476,6 +483,10 @@ msgstr ""
 
 msgid "Has conectado el disco duro? No se ha encontrado ninguna particion valida."
 msgstr "Você conectou um HD ? Não foi encontrada nenhuma partição válida."
+
+#, python-format
+msgid "Hay %d juegos con informacion WiiTDB"
+msgstr ""
 
 #, python-format
 msgid "Hay %d tareas"
@@ -595,8 +606,11 @@ msgid "No hay datos de este juego. Intente actualizar la base de datos."
 msgstr ""
 
 #, python-format
-msgid "No hay nada que copiar en %s"
-msgstr "Nada para copiar em %s"
+msgid "No hay nada que copiar a %s"
+msgstr ""
+
+msgid "No hay particiones WBFS"
+msgstr ""
 
 msgid "No hay particiones WBFS, conecte y refresque"
 msgstr "Não existem partições WBFS, conecte e atualize"
@@ -676,6 +690,9 @@ msgstr "OK, todas as capas foram baixadas"
 
 msgid "Online?"
 msgstr ""
+
+msgid "Particion"
+msgstr "Partição"
 
 msgid "Paso 1 de 2: Elige un directorio para las CARATULAS"
 msgstr "Passo 1 de 2: Escolha um diretório para as CAPAS"
@@ -791,6 +808,9 @@ msgstr ""
 msgid "TITULO"
 msgstr "TÍTULO"
 
+msgid "TODOS"
+msgstr ""
+
 msgid "Tamanio"
 msgstr "Tamanho"
 
@@ -880,12 +900,15 @@ msgstr ""
 msgid "wiithon no borra la ISO temporal, puedes borrarla si no la necesitas"
 msgstr "wiithon não apaga a ISO temporária, você pode apagá-la caso não necessite mais dela"
 
-msgid "No hay particiones WBFS!"
-msgstr ""
-
 #, python-format
 msgid " Esta seguro de formatear %s (S/N)? "
 msgstr ""
+
+#~ msgid "Desea copiar el juego %s (%s) a la particion %s?"
+#~ msgstr "Deseja copiar o jogo %s (%s) para a partição %s ?"
+
+#~ msgid "No hay nada que copiar en %s"
+#~ msgstr "Nada para copiar em %s"
 
 #~ msgid "La ISO o la particion ya no no existen"
 #~ msgstr "A ISO ou a partição não existem"
@@ -923,9 +946,6 @@ msgstr ""
 
 #~ msgid "Error obteniendo el Fabricando del HD"
 #~ msgstr "Erro ao obter o fabricante do HD"
-
-#~ msgid "Particion"
-#~ msgstr "Partição"
 
 #~ msgid "Fabricante"
 #~ msgstr "Fabricante"
