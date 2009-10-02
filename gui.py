@@ -1348,9 +1348,8 @@ class WiithonGUI(GtkBuilderWrapper):
 ########## WIITDB ###########
                 
     def on_tb_actualizar_wiitdb_clicked(self, boton):
-        
-        if ( self.question(_('Seguro que deseas descargar información de los juegos de WiiTDB?\n\n%s') % (config.URL_ZIP_WIITDB)) == 1 ):
-            self.poolTrabajo.nuevoTrabajoActualizarWiiTDB()
+        if (self.question(_('Seguro que deseas descargar información de los juegos de WiiTDB?\n\n%s') % (config.URL_ZIP_WIITDB)) == 1):
+            self.poolTrabajo.nuevoTrabajoActualizarWiiTDB(config.URL_ZIP_WIITDB)
         
     def callback_empieza_importar(self, xml):
         self.juegos = 0
@@ -1431,7 +1430,7 @@ class WiithonGUI(GtkBuilderWrapper):
         self.seleccionarFilaConValor(self.wb_tv_games, len(self.lJuegos_filtrada) , 0 , IDGAME)
         
         # descargamos su info wiitdb
-        self.poolTrabajo.nuevoTrabajoActualizarWiiTDB('http://wiitdb.com/wiitdb.zip?ID=%s' % IDGAME)
+        self.poolTrabajo.nuevoTrabajoActualizarWiiTDB('%s?ID=%s' % (config.URL_ZIP_WIITDB, IDGAME))
         
     def refrescarParticionesYSeleccionarJuego2(self, juego , particion):
         
