@@ -20,6 +20,10 @@ msgid "%d juegos"
 msgstr "%d giochi"
 
 #, python-format
+msgid "%d juegos sin caratula"
+msgstr ""
+
+#, python-format
 msgid "%d juegos sin disc-art"
 msgstr ""
 
@@ -30,10 +34,6 @@ msgstr "%d giocatori"
 #, python-format
 msgid "%d particiones WBFS"
 msgstr "%d partizioni WBFS"
-
-#, python-format
-msgid "%d sin caratula"
-msgstr ""
 
 #, python-format
 msgid "%d%% - %d/%d games - %d descriptions - %d genre - %d accesories - %d companies - %d online features"
@@ -77,6 +77,12 @@ msgstr "***************** SCARICAMENTO DISCO %s ********************"
 
 msgid "0 Tareas"
 msgstr "0 Operazioni"
+
+msgid "1 juego sin caratula"
+msgstr ""
+
+msgid "1 juego sin disc-art"
+msgstr ""
 
 msgid "1 jugador"
 msgstr "1 giocatore"
@@ -151,9 +157,6 @@ msgstr "Sto cercando un disco Wii ..."
 msgid "Buscar:"
 msgstr "Cerca:"
 
-msgid "Cararuta?"
-msgstr "Copertina?"
-
 msgid "Caratula descargada como"
 msgstr "Copertina scaricata come"
 
@@ -165,6 +168,9 @@ msgstr "Ordinare"
 
 msgid "Copia directa de particion a particion"
 msgstr "Copia diretta da partizione a partizione"
+
+msgid "Copia disco a disco"
+msgstr ""
 
 msgid "Copiando"
 msgstr "Sto copiando"
@@ -181,17 +187,14 @@ msgstr "Sto copiando il gioco %s da %s sulla partizione %s"
 msgid "Copiando la caratula %s a la ruta %s"
 msgstr "Sto copiando la copertina %s nel percorso %s"
 
-msgid "Copiar 1:1"
-msgstr "Copia 1:1"
-
 msgid "Copiar a otra particion"
 msgstr "Copia su altra partizione"
 
 msgid "Copiar el juego seleccionado*"
 msgstr "Copia il gioco selezionato*"
 
-msgid "Copiar todo el disco*"
-msgstr "Copia tutti i giochi*"
+msgid "Copiar todos los juegos*"
+msgstr ""
 
 msgid "Debes tener al menos 2 particiones WBFS para hacer copias 1:1"
 msgstr "Bisogna avere almeno 2 partizioni WBFS per lanciare la copia 1:1"
@@ -414,8 +417,8 @@ msgstr "Data di lancio:"
 msgid "Finalizada satisfactoriamente la importacion de datos desde WiiTDB"
 msgstr "Importazione dei dati da WiiTDB conclusa correttamente"
 
-msgid "Finalizando."
-msgstr "Finito."
+msgid "Finalizando ..."
+msgstr ""
 
 msgid "Formato desconocido"
 msgstr "Formato sconosciuto"
@@ -528,6 +531,12 @@ msgstr "Non chiudere wiithon mentre questa animazione indica attiva in corso"
 
 msgid "No existe el XML"
 msgstr "Non esiste il file XML"
+
+msgid "No faltan caratulas"
+msgstr ""
+
+msgid "No faltan disc-art"
+msgstr ""
 
 msgid "No has seleccionado ningun juego"
 msgstr "Nessun gioco selezionato"
@@ -719,6 +728,13 @@ msgstr "La ISO non compressa verrà eliminata"
 msgid "Se van a copiar los siguientes juegos a"
 msgstr "Saranno copiati i seguenti giochi"
 
+#, python-format
+msgid ""
+"Seguro que deseas descargar informacin de los juegos de WiiTDB?\n"
+"\n"
+"%s"
+msgstr ""
+
 msgid "Selecciona la particion de destino:"
 msgstr "Seleziona la partizione di destinazione:"
 
@@ -848,6 +864,18 @@ msgstr "wiithon non rimuove la ISO temporanea, puoi cancellarla se non ne hai bi
 #, python-format
 msgid " Esta seguro de formatear %s (S/N)? "
 msgstr "Sei sicuro di voler formattare %s (S/N)?"
+
+#~ msgid "Finalizando."
+#~ msgstr "Finito."
+
+#~ msgid "Cararuta?"
+#~ msgstr "Copertina?"
+
+#~ msgid "Copiar 1:1"
+#~ msgstr "Copia 1:1"
+
+#~ msgid "Copiar todo el disco*"
+#~ msgstr "Copia tutti i giochi*"
 
 #~ msgid "%d/%d juegos"
 #~ msgstr "%d/%d giochi"

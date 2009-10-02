@@ -25,7 +25,6 @@ LOCALE = "/usr/share/locale/"
 WBFS_APP = os.path.join(WIITHON_FILES , "wiithon_wrapper")
 ICONO = "/usr/share/pixmaps/wiithon.png"
 UNRAR_APP = os.path.join(WIITHON_FILES , "unrar")
-#UNRAR_APP = "/usr/local/share/wiithon/unrar"
 
 APP = "wiithon"
 HOME = os.environ['HOME']
@@ -79,15 +78,4 @@ principal = "ES"
 # idioma auxiliar, se usa para el synopsys
 secundario = "EN"
 
-'''
-if not os.path.exists(os.path.join(WIITHON_FILES , ".bzr")):
-'''
-'''
-else:
-	LOCALE = os.path.join(WIITHON_FILES , "po")
-	LOCALE = os.path.join(LOCALE , "locale")
-	WBFS_APP = "libwbfs_binding/wiithon_wrapper.sh"
-	ICONO = os.path.join(WIITHON_FILES_RECURSOS , "icons")
-	ICONO = os.path.join(ICONO , "wiithon.png")
-'''
-
+URL_ZIP_WIITDB = 'http://wiitdb.com/wiitdb.zip'

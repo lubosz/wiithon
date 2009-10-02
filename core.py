@@ -81,7 +81,15 @@ class WiithonCORE:
                     session.update(particion)
 
                 listaParticiones.append(particion)
-                
+
+        session.commit()
+        
+        sql = "DELETE FROM juego WHERE "
+        for particion in listaParticiones:
+            sql += "idParticion <> %d AND " % particion.idParticion
+        sql += "1"
+        session.execute(sql)
+        
         session.commit()
 
         return listaParticiones

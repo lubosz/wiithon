@@ -430,7 +430,7 @@ class WiithonCLI:
         numJuegos = len(listaJuegos)
         if(numJuegos > 0):
             print "--------------------------------------------------------------------------------"
-            print "%6s\t%-55s\t%7s\t%6s" % ("IDGAME",_("TITULO"),_("TAMANIO") , _("Cararuta?"))
+            print "%6s\t%-55s\t%7s\t%6s" % ("IDGAME",_("TITULO"),_("TAMANIO") , _("Caratula?"))
             print "--------------------------------------------------------------------------------"
             i = 1
             for juego in listaJuegos:

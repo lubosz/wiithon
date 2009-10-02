@@ -12,7 +12,7 @@
           <object class="GtkToolbar" id="toolbar1">
             <property name="visible">True</property>
             <property name="show_arrow">False</property>
-            <property name="icon_size">6</property>
+            <property name="icon_size">5</property>
             <child>
               <object class="GtkToolButton" id="tb_anadir">
                 <property name="visible">True</property>
@@ -41,7 +41,7 @@
               <object class="GtkToolButton" id="tb_extraer">
                 <property name="visible">True</property>
                 <property name="label" translatable="yes">Extraer a ISO</property>
-                <property name="icon_name">emblem-symbolic-link</property>
+                <property name="icon_name">emblem-downloads</property>
               </object>
               <packing>
                 <property name="expand">False</property>
@@ -51,8 +51,8 @@
             <child>
               <object class="GtkToolButton" id="tb_copiar_1_1">
                 <property name="visible">True</property>
-                <property name="label" translatable="yes">Copiar 1:1</property>
-                <property name="icon_name">drive-removable-media</property>
+                <property name="label" translatable="yes">Copia disco a disco</property>
+                <property name="icon_name">media-tape</property>
               </object>
               <packing>
                 <property name="expand">False</property>
@@ -146,7 +146,7 @@
               <object class="GtkToolButton" id="tb_refrescar_wbfs">
                 <property name="visible">True</property>
                 <property name="label" translatable="yes">Refrescar WBFS</property>
-                <property name="icon_name">media-playlist-repeat</property>
+                <property name="icon_name">view-refresh</property>
               </object>
               <packing>
                 <property name="expand">False</property>
@@ -169,7 +169,7 @@
               <object class="GtkToolButton" id="tb_preferencias">
                 <property name="visible">True</property>
                 <property name="label" translatable="yes">Preferencias</property>
-                <property name="icon_name">emblem-system</property>
+                <property name="icon_name">document-properties</property>
               </object>
               <packing>
                 <property name="expand">False</property>
@@ -180,7 +180,7 @@
               <object class="GtkToolButton" id="tb_acerca_de">
                 <property name="visible">True</property>
                 <property name="label" translatable="yes">Acerca de ...</property>
-                <property name="icon_name">face-smile</property>
+                <property name="icon_widget">icono_wiithon</property>
               </object>
               <packing>
                 <property name="expand">False</property>
@@ -238,6 +238,7 @@
                     <property name="vscrollbar_policy">automatic</property>
                     <child>
                       <object class="GtkTreeView" id="tv_partitions">
+                        <property name="height_request">100</property>
                         <property name="visible">True</property>
                         <property name="can_focus">True</property>
                       </object>
@@ -684,7 +685,7 @@ Brazilian Portuguese: Alex Ant&#xE3;o &lt;alexcarlosantao@gmail.com&gt; [pt_BR.p
             </child>
             <child>
               <object class="GtkButton" id="c1on1_button1">
-                <property name="label" translatable="yes">Copiar todo el disco*</property>
+                <property name="label" translatable="yes">Copiar todos los juegos*</property>
                 <property name="visible">True</property>
                 <property name="can_focus">True</property>
                 <property name="receives_default">True</property>
@@ -913,6 +914,8 @@ Brazilian Portuguese: Alex Ant&#xE3;o &lt;alexcarlosantao@gmail.com&gt; [pt_BR.p
                         <property name="right_attach">2</property>
                         <property name="top_attach">4</property>
                         <property name="bottom_attach">5</property>
+                        <property name="x_padding">3</property>
+                        <property name="y_padding">3</property>
                       </packing>
                     </child>
                     <child>
@@ -1103,5 +1106,9 @@ Brazilian Portuguese: Alex Ant&#xE3;o &lt;alexcarlosantao@gmail.com&gt; [pt_BR.p
   <object class="GtkImage" id="icono_wiitdb">
     <property name="visible">True</property>
     <property name="pixbuf">../imagenes/wiitdb.png</property>
+  </object>
+  <object class="GtkImage" id="icono_wiithon">
+    <property name="visible">True</property>
+    <property name="pixbuf">../imagenes/wiithon.png</property>
   </object>
 </interface>

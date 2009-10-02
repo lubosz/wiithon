@@ -20,6 +20,10 @@ msgid "%d juegos"
 msgstr ""
 
 #, python-format
+msgid "%d juegos sin caratula"
+msgstr ""
+
+#, python-format
 msgid "%d juegos sin disc-art"
 msgstr ""
 
@@ -29,10 +33,6 @@ msgstr ""
 
 #, python-format
 msgid "%d particiones WBFS"
-msgstr ""
-
-#, python-format
-msgid "%d sin caratula"
 msgstr ""
 
 #, python-format
@@ -69,7 +69,7 @@ msgstr ""
 
 #, python-format
 msgid "***************** DESCARGAR CARATULA %s ********************"
-msgstr ""
+msgstr "***************** DESCARGAR CARÁTULA %s ********************"
 
 #, python-format
 msgid "***************** DESCARGAR DISCO %s ********************"
@@ -78,11 +78,17 @@ msgstr ""
 msgid "0 Tareas"
 msgstr ""
 
+msgid "1 juego sin caratula"
+msgstr ""
+
+msgid "1 juego sin disc-art"
+msgstr ""
+
 msgid "1 jugador"
 msgstr ""
 
 msgid "1 particion WBFS"
-msgstr ""
+msgstr "1 partición WBFS"
 
 msgid "1j."
 msgstr ""
@@ -205,11 +211,8 @@ msgstr ""
 msgid "Buscar:"
 msgstr ""
 
-msgid "Cararuta?"
-msgstr "¿Car.?"
-
 msgid "Caratula descargada como"
-msgstr ""
+msgstr "Carátula descargada como"
 
 msgid "Caratula?"
 msgstr "¿Car.?"
@@ -219,6 +222,9 @@ msgstr ""
 
 msgid "Copia directa de particion a particion"
 msgstr "Copia directa de partición a partición"
+
+msgid "Copia disco a disco"
+msgstr ""
 
 msgid "Copiando"
 msgstr ""
@@ -235,17 +241,14 @@ msgstr "Copiando el juego %s desde %s a la partición %s"
 msgid "Copiando la caratula %s a la ruta %s"
 msgstr "Copiando la carátula %s a la ruta %s"
 
-msgid "Copiar 1:1"
-msgstr ""
-
 msgid "Copiar a otra particion"
 msgstr "Copiar a otra partición"
 
 msgid "Copiar el juego seleccionado*"
 msgstr ""
 
-msgid "Copiar todo el disco*"
-msgstr "Copiar todos los juegos*"
+msgid "Copiar todos los juegos*"
+msgstr ""
 
 msgid "Debes tener al menos 2 particiones WBFS para hacer copias 1:1"
 msgstr ""
@@ -465,7 +468,7 @@ msgstr ""
 msgid "Finalizada satisfactoriamente la importacion de datos desde WiiTDB"
 msgstr ""
 
-msgid "Finalizando."
+msgid "Finalizando ..."
 msgstr ""
 
 msgid "Formato desconocido"
@@ -578,6 +581,12 @@ msgid "No cierre wiithon mientras esta animacion indique actividad"
 msgstr "No cierre wiithon mientras esta animación indique actividad"
 
 msgid "No existe el XML"
+msgstr ""
+
+msgid "No faltan caratulas"
+msgstr ""
+
+msgid "No faltan disc-art"
 msgstr ""
 
 msgid "No has seleccionado ningun juego"
@@ -774,6 +783,13 @@ msgstr ""
 msgid "Se van a copiar los siguientes juegos a"
 msgstr ""
 
+#, python-format
+msgid ""
+"Seguro que deseas descargar informacin de los juegos de WiiTDB?\n"
+"\n"
+"%s"
+msgstr ""
+
 msgid "Selecciona la particion de destino:"
 msgstr "Selecciona la partición de destino:"
 
@@ -902,39 +918,5 @@ msgstr ""
 msgid " Esta seguro de formatear %s (S/N)? "
 msgstr ""
 
-#~ msgid "Desea copiar el juego %s (%s) a la particion %s?"
-#~ msgstr "¿Desea copiar el juego %s (%s) a la partición %s?"
-
-#~ msgid "La ISO o la particion ya no no existen"
-#~ msgstr "La ISO o la partición ya no existen"
-
-#~ msgid "No se ha encontrado ningun ISO"
-#~ msgstr "No se ha encontrado ningún ISO"
-
-#~ msgid "No hay un numero suficiente de particiones validas, para realizar esta accion."
-#~ msgstr "Tienes que seleccionar una partición WBFS para realizar esta acción"
-
-#~ msgid "Advertencia de borrar %s (%s) en modo ver"
-#~ msgstr ""
-#~ "Atención:\n"
-#~ "- Estas borrando un juego de tu videoteca sin tener ninguna partición seleccionada\n"
-#~ "- Esto supone borrar (además de borrar el registro) la carátula y el disco\n"
-#~ "¿Esta seguro de borrar %s (%s)?"
-
-#~ msgid "Desea reemplazar la iso del juego %s (%s)?"
-#~ msgstr "¿Quieres reemplazar la ISO del juego %s (%s)?"
-
-#~ msgid "Quieres borrar el juego con %s (%s)?"
-#~ msgstr "¿Quieres borrar el juego %s (%s)?"
-
-#~ msgid "Mas informacion"
-#~ msgstr "Detalles"
-
-#~ msgid ""
-#~ "No se han detectado particiones WBFS.\n"
-#~ "Si has conectado una particion WBFS y no ha sido detectada, es debido a que no hay permisos de lectura y escritura.\n"
-#~ "Para solucionarlo, pruebe a reiniciar GNOME / KDE."
-#~ msgstr ""
-#~ "No se han detectado particiones WBFS.\n"
-#~ "Si has conectado una partición WBFS y no ha sido detectada, es debido a que no hay permisos de lectura y escritura.\n"
-#~ "Para solucionarlo siga los pasos de la guía de instalación."
+#~ msgid "%d sin caratula"
+#~ msgstr "%d sin carátula"

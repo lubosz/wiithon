@@ -58,9 +58,6 @@ class WiithonGUI(GtkBuilderWrapper):
     # Hilo que actualiza wiitdb
     xmlWiiTDB = None
     
-    # muestra toda las particiones o no
-    todo = True
-    
     # valor busqueda
     buscar = ""
     
@@ -154,6 +151,9 @@ class WiithonGUI(GtkBuilderWrapper):
         # permite usar hilos con PyGTK http://faq.pygtk.org/index.py?req=show&file=faq20.006.htp
         # modo seguro con hilos
         gobject.threads_init()
+
+        # ocultar barra de progreso
+        self.ocultarHBoxProgreso()
 
         self.wb_principal.set_icon_from_file(config.ICONO)
         self.wb_principal.show()
@@ -285,8 +285,14 @@ class WiithonGUI(GtkBuilderWrapper):
         if not self.poolTrabajo.estaOcupado():
             
             ##################################################################################
+            # No hay particion seleccionada
+            self.sel_parti.obj = None
+            #
+            # Inicialmente se muestran todas las particiones
+            self.todo = True
+            #
             # autodeteccion de particiones wbfs
-            self.lParti = self.core.getListaParticiones(session)           
+            self.lParti = self.core.getListaParticiones(session)
             #
             # carga particiones al treeview
             self.cargarParticionesModelo(self.tv_partitions_modelo , self.lParti)
@@ -297,14 +303,8 @@ class WiithonGUI(GtkBuilderWrapper):
             # Buscar juego en la bdd
             self.lJuegos_filtrada = self.buscar_juego_bdd(self.buscar)
             #
-            # refrescar de los resultados de busqueda.
-            self.refrescarModeloJuegos( self.lJuegos_filtrada )
-            #
-            # Selecciona el primer juego
-            self.seleccionarPrimeraFila(self.wb_tv_partitions)
-            #
-            # descargar caratulas y discos            
-            for juego in session.query(Juego).order_by('lower(title)'):
+            # descargar caratulas y discos
+            for juego in session.query(Juego).group_by('idgame').order_by('lower(title)'):
                 if not self.core.existeCaratula(juego.idgame):
                     self.poolBash.nuevoTrabajoDescargaCaratula( juego )
                 else:
@@ -314,6 +314,13 @@ class WiithonGUI(GtkBuilderWrapper):
                     self.poolBash.nuevoTrabajoDescargaDisco( juego )
                 else:
                     juego.tieneDiscArt = True
+            #
+            # refrescar de los resultados de busqueda.
+            self.refrescarModeloJuegos( self.lJuegos_filtrada )
+            #                    
+            # Selecciona el primer juego
+            self.seleccionarPrimeraFila(self.wb_tv_partitions)
+            
             ##################################################################################
             
         else:
@@ -500,8 +507,8 @@ class WiithonGUI(GtkBuilderWrapper):
                 gobject.TYPE_STRING,                        # Fecha
                 gobject.TYPE_STRING,                        # Rating
                 gobject.TYPE_STRING,                        # Device
-                gobject.TYPE_STRING,                              # Color letra
-                gobject.TYPE_STRING                               # Color fondo
+                gobject.TYPE_STRING,                        # Color letra
+                gobject.TYPE_STRING                         # Color fondo
                 )
         tv_games.set_model(modelo)
 
@@ -534,8 +541,8 @@ class WiithonGUI(GtkBuilderWrapper):
                 modelo.set_value(iterador,6, _("??"))
                 
             modelo.set_value(iterador,7, juego.particion.device)
-            modelo.set_value(iterador,8, juego.particion.color_foreground)
-            modelo.set_value(iterador,9, juego.particion.color_background)
+            modelo.set_value(iterador,8, juego.particion.getColorForeground())
+            modelo.set_value(iterador,9, juego.particion.getColorBackground())
 
             i = i + 1
 
@@ -552,8 +559,8 @@ class WiithonGUI(GtkBuilderWrapper):
             # si lo metemos la numeracion es secuencial, pero cuando insertarDeviceSeleccionado sea False
             # quiero reflejar los huecos. Esto permite un alineamiento con la lista del core
             i = i + 1
-        
-        if not filtrarTodo:
+
+        if not filtrarTodo and (len(listaParticiones) > 1):
             # Añadir TODOS
             iterador = modelo.insert(0)
             modelo.set_value(iterador,0,        _("TODOS")          )
@@ -641,7 +648,7 @@ class WiithonGUI(GtkBuilderWrapper):
                 }
 
         alert_glade = gtk.Builder()
-        alert_glade.add_from_file( os.path.join(config.WIITHON_FILES_RECURSOS_GLADE  , 'alerta.ui') )
+        alert_glade.add_from_file( os.path.join(config.WIITHON_FILES_RECURSOS_GLADE  , "%s.ui" % config.GLADE_ALERTA) )
         alert_glade.set_translation_domain( config.APP )
         
         alert_msg = alert_glade.get_object('lbl_message')
@@ -690,18 +697,7 @@ class WiithonGUI(GtkBuilderWrapper):
         if len(particiones) > 0:
             for particion in particiones:
                 # obtener los juegos de esa particion
-                #listaJuegos = self.core.getListaJuegos(session, particion)
                 self.core.getListaJuegos(session, particion)
-                '''
-                i = 0
-                # merge con la base de datos
-                while i < len(listaJuegos):
-                    session.merge(listaJuegos[i])
-                    i += 1
-                '''
-
-            # hacer efectivos los querys sql acumulados en el bucle
-            #session.commit()
 
     def buscar_juego_bdd(self, buscar):
 
@@ -778,16 +774,10 @@ class WiithonGUI(GtkBuilderWrapper):
             porcentaje = 0.0
         self.wb_progresoEspacio.set_fraction( porcentaje / 100.0 )
 
-        # filtrados / totales
         numJuegos = len(particion.juegos)
-        #numJuegos_filtrados = len(self.lJuegos_filtrada)
-        #if numJuegos_filtrados == numJuegos:
         self.wb_progresoEspacio.set_text(_("%d juegos") % (numJuegos))
-        #else:
-        #self.wb_progresoEspacio.set_text(_("%d/%d juegos") % (numJuegos_filtrados, numJuegos))
         
         # BARRA DE ESTADO
-        
         if len(self.lParti) == 0:
             self.wb_label_numParticionesWBFS.set_label(_("No hay particiones WBFS"))
         elif len(self.lParti) == 1:
@@ -795,26 +785,37 @@ class WiithonGUI(GtkBuilderWrapper):
         else:
             self.wb_label_numParticionesWBFS.set_label(_("%d particiones WBFS") % (len(self.lParti)))
         
+        #######################
+        
+        sql = util.decode("idParticion=='%d'" % (particion.idParticion))
+        
         numInfos = 0
-        for juego in session.query(Juego):
+        for juego in session.query(Juego).filter(sql):
             if juego.getJuegoWIITDB(session) != None:
-                #print "%s no tiene INFO" % juego
                 numInfos += 1
         self.wb_label_juegosConInfoWiiTDB.set_text(_("Hay %d juegos con informacion WiiTDB") % numInfos)
         
         sinCaratulas = 0
-        for juego in session.query(Juego):
+        for juego in session.query(Juego).filter(sql):
             if not juego.tieneCaratula:
-                #print "%s no tiene caratula" % juego
                 sinCaratulas += 1
-        self.wb_label_juegosSinCaratula.set_text(_("%d sin caratula") % sinCaratulas)
+        if sinCaratulas == 0:
+            self.wb_label_juegosSinCaratula.set_text(_("No faltan caratulas"))
+        elif sinCaratulas == 1:
+            self.wb_label_juegosSinCaratula.set_text(_("1 juego sin caratula"))
+        else:
+            self.wb_label_juegosSinCaratula.set_text(_("%d juegos sin caratula") % sinCaratulas)
         
         sinDiscArt = 0
-        for juego in session.query(Juego):
+        for juego in session.query(Juego).filter(sql):
             if not juego.tieneDiscArt:
-                #print "%s no tiene disc-art" % juego
                 sinDiscArt += 1
-        self.wb_label_juegosSinDiscArt.set_text(_("%d juegos sin disc-art") % sinDiscArt)
+        if sinDiscArt == 0:
+            self.wb_label_juegosSinDiscArt.set_text(_("No faltan disc-art"))
+        elif sinDiscArt == 1:
+            self.wb_label_juegosSinDiscArt.set_text(_("1 juego sin disc-art"))
+        else:
+            self.wb_label_juegosSinDiscArt.set_text(_("%d juegos sin disc-art") % sinDiscArt)
 
     def refrescarTareasPendientes(self):
         numTareas = self.poolTrabajo.numTrabajos
@@ -828,7 +829,7 @@ class WiithonGUI(GtkBuilderWrapper):
 
         # mostrar espacio barra progreso    
         self.wb_box_progreso.show()
-        
+
     def getBuscarJuego(self, listaJuegos, idgame):
         if listaJuegos == None or idgame == None:
             return None
@@ -879,29 +880,26 @@ class WiithonGUI(GtkBuilderWrapper):
                 # selecciono la particion actual
                 self.sel_parti.obj = self.getBuscarParticion(self.lParti, self.sel_parti.clave)
                 
-                try:
-                    print self.sel_parti.obj.device
-                    self.todo = False
-                except AttributeError:
-                    self.todo = True
+                self.todo = self.sel_parti.obj == None
                 
                 # oculta partes del gui cuando esta en todo
                 self.toggle_todo_particion()
                 
-                if not self.todo:
-                    # refrescamos el modelo de particiones para la copia 1on1
-                    self.cargarParticionesModelo(self.tv_partitions2_modelo , self.lParti, True)
-                    
-                    #seleccionar primero
-                    self.seleccionarPrimeraFila( self.wb_tv_partitions2 )
-                    
-                    # refrescamos la lista de juegos, leyendo del core
-                    self.lJuegos_filtrada = self.buscar_juego_bdd(self.buscar)
-                    
-                    self.refrescarModeloJuegos( self.lJuegos_filtrada )
-                    
-                    # refrescar espacio
-                    self.refrescarEspacio()
+                #if not self.todo:
+            
+                # refrescamos el modelo de particiones para la copia 1on1
+                self.cargarParticionesModelo(self.tv_partitions2_modelo , self.lParti, True)
+                
+                #seleccionar primero
+                self.seleccionarPrimeraFila( self.wb_tv_partitions2 )
+                
+                # refrescamos la lista de juegos, leyendo del core
+                self.lJuegos_filtrada = self.buscar_juego_bdd(self.buscar)
+                
+                self.refrescarModeloJuegos( self.lJuegos_filtrada )
+                
+                # refrescar espacio
+                self.refrescarEspacio()
 
     def toggle_todo_particion(self):
         if self.todo:
@@ -1161,19 +1159,10 @@ class WiithonGUI(GtkBuilderWrapper):
                     # borrar de la tabla
                     self.tv_games_modelo.remove( self.sel_juego.it )
                     
-                    # Borrar de las listas
-                    '''
-                    try:
-                        self.lJuegos.remove( self.sel_juego.obj )
-                    except:
-                        pass
-                    '''
-                        
-                    #try:
+                    # Borrar de las listas                        
                     self.lJuegos_filtrada.remove( self.sel_juego.obj )
-                    #except:
-                    #pass
                     
+                    # recargar modelo de datos
                     self.refrescarModeloJuegos( self.lJuegos_filtrada )
                     
                     # seleccionar el primero
@@ -1358,8 +1347,10 @@ class WiithonGUI(GtkBuilderWrapper):
                 
 ########## WIITDB ###########
                 
-    def on_tb_actualizar_wiitdb_clicked(self, boton):        
-        self.poolTrabajo.nuevoTrabajoActualizarWiiTDB('http://wiitdb.com/wiitdb.zip')
+    def on_tb_actualizar_wiitdb_clicked(self, boton):
+        
+        if ( self.question(_('Seguro que deseas descargar información de los juegos de WiiTDB?\n\n%s') % (config.URL_ZIP_WIITDB)) == 1 ):
+            self.poolTrabajo.nuevoTrabajoActualizarWiiTDB()
         
     def callback_empieza_importar(self, xml):
         self.juegos = 0
@@ -1536,16 +1527,16 @@ class WiithonGUI(GtkBuilderWrapper):
         pass
         
     def callback_termina_trabajo_descargar_caratula(self, trabajo, juego):
-        juego.tieneDiscArt = trabajo.exito
-        if juego.tieneDiscArt:
+        juego.tieneCaratula = trabajo.exito
+        if juego.tieneCaratula:
             if juego.idgame == self.sel_juego.obj.idgame:
                 gobject.idle_add( self.ponerCaratula , juego.idgame , self.wb_img_caratula1)
         else:
             print _("Falla la descarga de la caratula de %s") % juego
         
     def callback_termina_trabajo_descargar_disco(self, trabajo, juego):
-        juego.tieneCaratula = trabajo.exito
-        if juego.tieneCaratula:
+        juego.tieneDiscArt = trabajo.exito
+        if juego.tieneDiscArt:
             if juego.idgame == self.sel_juego.obj.idgame:
                 gobject.idle_add( self.ponerDisco , juego.idgame , self.wb_img_disco1)
         else:
@@ -1576,9 +1567,6 @@ class HiloCalcularProgreso(Thread):
                 time.sleep(1)
         
         while not self.interrumpido:
-            '''
-            try:
-            '''
             # si aún no existe el fichero que contiene los mensajes, esperamos:
             # a) a que el fichero exista
             # b) desde otro hilo nos den orden de interrupción
@@ -1597,7 +1585,7 @@ class HiloCalcularProgreso(Thread):
                 if self.trabajo.terminado or cachos[0] == "FIN":
                     self.porcentaje = 100
                     if self.trabajo.exito or cachos[0] == "FIN":
-                        informativo = _("Finalizando.")
+                        informativo = _("Finalizando ...")
                     else:
                         informativo = _("ERROR!")
                     gobject.idle_add(self.actualizarLabel , "%s - %d%% - %s" % ( self.trabajo , self.porcentaje, informativo ))

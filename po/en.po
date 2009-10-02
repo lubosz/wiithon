@@ -20,6 +20,10 @@ msgid "%d juegos"
 msgstr "%d games"
 
 #, python-format
+msgid "%d juegos sin caratula"
+msgstr ""
+
+#, python-format
 msgid "%d juegos sin disc-art"
 msgstr ""
 
@@ -29,10 +33,6 @@ msgstr ""
 
 #, python-format
 msgid "%d particiones WBFS"
-msgstr ""
-
-#, python-format
-msgid "%d sin caratula"
 msgstr ""
 
 #, python-format
@@ -77,6 +77,12 @@ msgstr "***************** DOWNLOAD DISC %s ********************"
 
 msgid "0 Tareas"
 msgstr "0 Tasks"
+
+msgid "1 juego sin caratula"
+msgstr ""
+
+msgid "1 juego sin disc-art"
+msgstr ""
 
 msgid "1 jugador"
 msgstr ""
@@ -158,9 +164,6 @@ msgstr "Searching Wii disc ..."
 msgid "Buscar:"
 msgstr "Search:"
 
-msgid "Cararuta?"
-msgstr "Cover?"
-
 msgid "Caratula descargada como"
 msgstr "Cover downloaded as"
 
@@ -172,6 +175,9 @@ msgstr "Sort"
 
 msgid "Copia directa de particion a particion"
 msgstr "Direct copy of a partition to a partition"
+
+msgid "Copia disco a disco"
+msgstr ""
 
 msgid "Copiando"
 msgstr "Copying"
@@ -188,17 +194,14 @@ msgstr "Copy game %s from %s to the partition %s"
 msgid "Copiando la caratula %s a la ruta %s"
 msgstr "Copy cover %s to path %s"
 
-msgid "Copiar 1:1"
-msgstr "Copy 1:1"
-
 msgid "Copiar a otra particion"
 msgstr "Copy to other partition"
 
 msgid "Copiar el juego seleccionado*"
 msgstr "Copy selected game*"
 
-msgid "Copiar todo el disco*"
-msgstr "Copy all games*"
+msgid "Copiar todos los juegos*"
+msgstr ""
 
 msgid "Debes tener al menos 2 particiones WBFS para hacer copias 1:1"
 msgstr ""
@@ -421,7 +424,7 @@ msgstr ""
 msgid "Finalizada satisfactoriamente la importacion de datos desde WiiTDB"
 msgstr ""
 
-msgid "Finalizando."
+msgid "Finalizando ..."
 msgstr ""
 
 msgid "Formato desconocido"
@@ -534,6 +537,12 @@ msgid "No cierre wiithon mientras esta animacion indique actividad"
 msgstr "Do not close wiithon while this animation indicates activity"
 
 msgid "No existe el XML"
+msgstr ""
+
+msgid "No faltan caratulas"
+msgstr ""
+
+msgid "No faltan disc-art"
 msgstr ""
 
 msgid "No has seleccionado ningun juego"
@@ -733,6 +742,13 @@ msgstr "The extracted ISO is going to be removed"
 msgid "Se van a copiar los siguientes juegos a"
 msgstr "The following games will be copied to"
 
+#, python-format
+msgid ""
+"Seguro que deseas descargar informacin de los juegos de WiiTDB?\n"
+"\n"
+"%s"
+msgstr ""
+
 msgid "Selecciona la particion de destino:"
 msgstr "Select the destination partition:"
 
@@ -862,6 +878,15 @@ msgstr "wiithon doesn't remove the temporal ISO, you can remove it if you don't 
 #, python-format
 msgid " Esta seguro de formatear %s (S/N)? "
 msgstr ""
+
+#~ msgid "Cararuta?"
+#~ msgstr "Cover?"
+
+#~ msgid "Copiar 1:1"
+#~ msgstr "Copy 1:1"
+
+#~ msgid "Copiar todo el disco*"
+#~ msgstr "Copy all games*"
 
 #~ msgid "Desea copiar el juego %s (%s) a la particion %s?"
 #~ msgstr "Do you want copy game %s (%s) to the partition %s?"

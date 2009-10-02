@@ -439,6 +439,22 @@ class Particion(Base):
     def __repr__(self):
         return "%s (%.0f GB)" % (self.device, self.total)
         
+    def getColorForeground(self):
+        if self.idParticion == 1:
+            return "black"
+        elif self.idParticion == 2:
+            return "darkblue"
+        else:
+            return "black"
+
+    def getColorBackground(self):
+        if self.idParticion == 1:
+            return "white"
+        elif self.idParticion == 2:
+            return "gray"
+        else:
+            return "red"
+        
 Index('idUnico_particion', Particion.c.device, unique=True)
 
 #############################################################################
