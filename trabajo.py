@@ -282,7 +282,7 @@ class PoolTrabajo(Pool , Thread):
             trabajo.error = _("El archivo RAR %s: No existe") % archivoRAR
         
         elif( util.getExtension(archivoRAR) == "rar" ):
-            carpetaDescomprimido = "/home/makiolo"
+            carpetaDescomprimido = os.join.abspath(archivoRAR)
             nombreISO = core.getNombreISOenRAR(archivoRAR)
             if (nombreISO != None):
                 if( not os.path.exists(nombreISO) ):
@@ -290,7 +290,7 @@ class PoolTrabajo(Pool , Thread):
                     if self.callback_empieza_progreso:
                         self.callback_empieza_progreso(trabajo)
                     
-                    if ( core.unpack(archivoRAR, carpetaDescomprimido) ):
+                    if ( core.unpack(archivoRAR, carpetaDescomprimido, nombreISO) ):
                         exito = True
                         isoExtraida = os.path.join(carpetaDescomprimido, nombreISO)
                         self.nuevoTrabajoAnadir( isoExtraida , particion.device)

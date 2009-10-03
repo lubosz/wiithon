@@ -28,6 +28,10 @@ from sqlalchemy.databases.firebird import dialect
 # Force SA to use a single connection per thread
 dialect.poolclass = pool.SingletonThreadPool
 '''
+
+db =        util.getBDD()
+session =   util.getSesionBDD(db)
+
 ###############################################
 
 Base = declarative_base()
@@ -454,6 +458,16 @@ class Particion(Base):
             return "gray"
         else:
             return "red"
+            
+    def refrescarEspacioLibreUsado(self):
+        comando = "%s -p %s df" % (config.WBFS_APP, self.device)
+        salida = util.getSTDOUT( comando )
+        cachos = salida.split(config.SEPARADOR)
+        if(len(cachos) == 3):
+            self.usado = float(cachos[0])
+            self.libre = float(cachos[1])
+            self.total = float(cachos[2])
+            session.commit()
         
 Index('idUnico_particion', Particion.c.device, unique=True)
 

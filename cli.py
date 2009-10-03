@@ -123,7 +123,7 @@ class WiithonCLI:
                     else:
                         juego = self.getJuego(DEVICE , listaJuegos)
                     print "%s = %s %s %s %s" % (_("Borrar juego con IDGAME") , juego.idgame , _("en particion"), DEVICE , FABRICANTE)
-                    if( juego != None and self.core.borrarJuego(DEVICE , juego.idgame) ):
+                    if( juego != None and self.core.borrarJuego(juego) ):
                         print _("Juego %s borrado correctamente" % (juego))
                     else:
                         print _("ERROR borrando el juego")
@@ -152,7 +152,7 @@ class WiithonCLI:
                         elif (parm2 == "3d"):
                             print _("Se descargaran en 3D")
                             tipo = "3d"
-                    if(self.core.descargarTodasLasCaratulaYDiscos(DEVICE , listaJuegos , tipo)):
+                    if(self.core.descargarTodasLasCaratulaYDiscos(listaJuegos , tipo)):
                         print _("OK, todas las caratulas se han descargado")
                     else:
                         print _("ERROR, descargando alguna caratula")
@@ -262,6 +262,7 @@ class WiithonCLI:
                                         print "ERROR"
                                         erroneos.append(mensaje)
 
+                                        '''
                                     if config.borrarISODescomprimida:
                                         # Paso 3 : Borrar la iso descomprimida
                                         try:
@@ -274,6 +275,7 @@ class WiithonCLI:
                                         print
                                     else:
                                         print _("No se ha borrado la ISO temporal")
+                                        '''
                                 else:
                                     mensaje = _("ERROR al descomrpimir el RAR : %s") % (nombreRAR)
                                     print "ERROR"

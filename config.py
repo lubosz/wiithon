@@ -11,6 +11,8 @@ import sys
 
 import util
 
+DEBUG = True
+
 WIITHON_PATH = os.path.dirname(sys.argv[0])
 WIITHON_FILES = os.path.dirname(__file__)
 WIITHON_FILES_RECURSOS = os.path.join(WIITHON_FILES , "recursos")
@@ -21,40 +23,34 @@ WIITHON_FILES_RECURSOS_IMAGENES_ACCESORIO = os.path.join(WIITHON_FILES_RECURSOS_
 HOME_WIITHON_CARATULAS = os.path.join(WIITHON_FILES_RECURSOS_IMAGENES , 'caratulas')
 HOME_WIITHON_DISCOS = os.path.join(WIITHON_FILES_RECURSOS_IMAGENES , 'discos')
 
+#util.try_mkdir( HOME_WIITHON_CARATULAS )
+#util.try_mkdir( HOME_WIITHON_DISCOS 
+
 LOCALE = "/usr/share/locale/"
 WBFS_APP = os.path.join(WIITHON_FILES , "wiithon_wrapper")
 ICONO = "/usr/share/pixmaps/wiithon.png"
 UNRAR_APP = os.path.join(WIITHON_FILES , "unrar")
 
 APP = "wiithon"
+VER = "1.1"
 HOME = os.environ['HOME']
 HOME_WIITHON = os.path.join(HOME , '.wiithon')
 HOME_WIITHON_BDD = os.path.join(HOME_WIITHON , 'bdd')
 HOME_WIITHON_LOGS = os.path.join(HOME_WIITHON , 'logs')
 HOME_WIITHON_LOGS_PROCESO = os.path.join(HOME_WIITHON_LOGS , "proceso.log")
 
-URI_ENGINE = 'sqlite:///%s' % os.path.join(HOME_WIITHON_BDD, 'wiithon.db')
+URI_ENGINE = 'sqlite:///%s' % os.path.join(HOME_WIITHON_BDD, '%s%s.db' % (APP, VER))
 
 # crear directorios si no existen
 util.try_mkdir( HOME_WIITHON )
 util.try_mkdir( HOME_WIITHON_BDD )
 util.try_mkdir( HOME_WIITHON_LOGS )
 
-util.try_mkdir( HOME_WIITHON_CARATULAS )
-util.try_mkdir( HOME_WIITHON_DISCOS )
-
 GLADE_ALERTA = "alerta"
 
 DETECTOR_WBFS = os.path.join( WIITHON_FILES , "wiithon_autodetectar.sh" )
 DETECTOR_WBFS_LECTOR = os.path.join( WIITHON_FILES , "wiithon_autodetectar_lector.sh" )
 DETECTOR_WBFS_FAT32 = os.path.join( WIITHON_FILES , "wiithon_autodetectar_fat32.sh" )
-
-# Cuando se descomprime un RAR, definimos si despues se borra la ISO
-borrarISODescomprimida = False
-
-# Lineas de pantallazo en consola (esta variable hay que trasladarlo
-# a WiithonCLI)
-NUM_LINEAS_PAUSA = 21
 
 # Definido en libwbfs, longitud maxima de un titulo
 TITULO_LONGITUD_MAX = 0x80
@@ -73,9 +69,14 @@ NUM_HILOS = 15
 TIPO_CARATULA = "normal"
 
 # idioma principal, se usa para el synopsys
-principal = "ES"
+LANG_PRINCIPAL = "ES"
 
 # idioma auxiliar, se usa para el synopsys
-secundario = "EN"
+LANG_SECUNDARIO = "EN"
 
+# URL por defecto
 URL_ZIP_WIITDB = 'http://wiitdb.com/wiitdb.zip'
+
+# CLI
+# Lineas de pantallazo en consola
+NUM_LINEAS_PAUSA = 21

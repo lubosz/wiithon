@@ -14,6 +14,26 @@
             <property name="show_arrow">False</property>
             <property name="icon_size">5</property>
             <child>
+              <object class="GtkToolButton" id="tb_refrescar_wbfs">
+                <property name="visible">True</property>
+                <property name="label" translatable="yes">Refrescar WBFS</property>
+                <property name="icon_name">view-refresh</property>
+              </object>
+              <packing>
+                <property name="expand">False</property>
+                <property name="homogeneous">True</property>
+              </packing>
+            </child>
+            <child>
+              <object class="GtkSeparatorToolItem" id="toolbutton4">
+                <property name="visible">True</property>
+              </object>
+              <packing>
+                <property name="expand">False</property>
+                <property name="homogeneous">True</property>
+              </packing>
+            </child>
+            <child>
               <object class="GtkToolButton" id="tb_anadir">
                 <property name="visible">True</property>
                 <property name="has_tooltip">True</property>
@@ -143,33 +163,11 @@
               </packing>
             </child>
             <child>
-              <object class="GtkToolButton" id="tb_refrescar_wbfs">
-                <property name="visible">True</property>
-                <property name="label" translatable="yes">Refrescar WBFS</property>
-                <property name="icon_name">view-refresh</property>
-              </object>
-              <packing>
-                <property name="expand">False</property>
-                <property name="homogeneous">True</property>
-              </packing>
-            </child>
-            <child>
               <object class="GtkToolButton" id="tb_actualizar_wiitdb">
                 <property name="visible">True</property>
-                <property name="label" translatable="yes">WiiTDB</property>
+                <property name="label" translatable="yes">+INFO</property>
                 <property name="icon_widget">icono_wiitdb</property>
                 <signal name="clicked" handler="on_tb_actualizar_wiitdb_clicked"/>
-              </object>
-              <packing>
-                <property name="expand">False</property>
-                <property name="homogeneous">True</property>
-              </packing>
-            </child>
-            <child>
-              <object class="GtkToolButton" id="tb_preferencias">
-                <property name="visible">True</property>
-                <property name="label" translatable="yes">Preferencias</property>
-                <property name="icon_name">document-properties</property>
               </object>
               <packing>
                 <property name="expand">False</property>
@@ -181,6 +179,16 @@
                 <property name="visible">True</property>
                 <property name="label" translatable="yes">Acerca de ...</property>
                 <property name="icon_widget">icono_wiithon</property>
+              </object>
+              <packing>
+                <property name="expand">False</property>
+                <property name="homogeneous">True</property>
+              </packing>
+            </child>
+            <child>
+              <object class="GtkToolButton" id="tb_preferencias">
+                <property name="label" translatable="yes">Preferencias</property>
+                <property name="icon_name">document-properties</property>
               </object>
               <packing>
                 <property name="expand">False</property>
@@ -1104,10 +1112,12 @@ Brazilian Portuguese: Alex Ant&#xE3;o &lt;alexcarlosantao@gmail.com&gt; [pt_BR.p
     </action-widgets>
   </object>
   <object class="GtkImage" id="icono_wiitdb">
+    <property name="width_request">50</property>
     <property name="visible">True</property>
     <property name="pixbuf">../imagenes/wiitdb.png</property>
   </object>
   <object class="GtkImage" id="icono_wiithon">
+    <property name="width_request">50</property>
     <property name="visible">True</property>
     <property name="pixbuf">../imagenes/wiithon.png</property>
   </object>

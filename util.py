@@ -11,7 +11,7 @@ import httplib
 import urllib
 import re
 
-from sqlalchemy.orm import sessionmaker
+from sqlalchemy.orm import scoped_session, sessionmaker
 from sqlalchemy import create_engine
 
 import config
@@ -335,6 +335,7 @@ def crearBDD(metadatos):
     metadatos.create_all(db)
 
 def getSesionBDD(db):
-    Session = sessionmaker(bind=db, autoflush=True, transactional = True)
+    # con scoped se resuelven todos los problemas de concurrencia!
+    Session = scoped_session(sessionmaker(bind=db, autoflush=True, transactional = True))
     session = Session()
     return session

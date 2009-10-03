@@ -93,6 +93,8 @@ class WiiTDBXML(Thread):
         self.descomprimirZIP()
 
         #transicion = session.create_transaction() 
+        # empieza transacion
+        #session.begin()
         if os.path.exists(self.fichXML):
             xmldoc = libxml2.parseFile(self.fichXML)
             ctxt = xmldoc.xpathNewContext()

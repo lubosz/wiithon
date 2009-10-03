@@ -19,12 +19,12 @@ from util import NonRepeatList, SintaxisInvalida
 from wiitdb_schema import Juego, Particion
 import config
 
+db =        util.getBDD()
+session =   util.getSesionBDD(db)
+
 class WiithonCORE:
-    # Obtiene un list de juegos en una tabla de 3 columnas:
-    # index 0 -> IDGAME o identificador único del juego
-    # index 1 -> Nombre del juego
-    # index 2 -> Tamaño en GB redondeado a 2 cifras
-    def getListaJuegos(self , session, particion):
+
+    def syncronizarJuegos(self , particion):
 
         comando = "%s -p %s ls" % (config.WBFS_APP, particion.device)
         lineas = util.getSTDOUT_iterador( comando )
@@ -54,7 +54,7 @@ class WiithonCORE:
         
         
     # Devuelve la lista de particiones
-    def getListaParticiones(self, session, detector = config.DETECTOR_WBFS):
+    def sincronizarParticiones(self, detector = config.DETECTOR_WBFS):
 
         #session.execute('DELETE FROM rel_particion_juego where idParticion = "%d"' % particion.idParticion)
         #session.execute('DELETE FROM rel_particion_juego')
@@ -69,7 +69,7 @@ class WiithonCORE:
 
                 device = util.decode(cachos[0])
                 
-                particion = self.getParticion(session, device)
+                particion = self.getParticion(device)
                 
                 if particion == None:
                     try:
@@ -95,14 +95,23 @@ class WiithonCORE:
         return listaParticiones
         
         
-    def getParticion(self, session, DEVICE):
+    def getParticion(self, DEVICE):
         sql = util.decode("device=='%s'" % (DEVICE))
         particion = session.query(Particion).filter(sql).first()
         return particion
-    
-    def getInfoJuego(self, session, DEVICE, IDGAME):
         
-        particion = self.getParticion(session, DEVICE)
+    def getJuego(self, DEVICE, IDGAME):
+        sql = util.decode("particion.device='%s' and juego.idgame=='%s'" % (DEVICE, IDGAME))
+        juego = session.query(Juego,Particion).filter(sql).first()        
+        if juego != None:
+            juego = juego[0]
+        return juego
+    
+    def getInfoJuego(self, DEVICE, IDGAME):
+        
+        print session
+        
+        particion = self.getParticion(DEVICE)
         if particion != None:
             
             comando = "%s -p %s ls %s" % (config.WBFS_APP, particion.device, IDGAME)
@@ -110,13 +119,11 @@ class WiithonCORE:
 
             cachos = linea.strip().split(config.SEPARADOR)
 
-            sql = util.decode("juego.idgame=='%s' and particion.device='%s'" % (IDGAME, particion.device))
-            juego = session.query(Juego,Particion).filter(sql).first()        
+            juego = self.getJuego(particion.device, IDGAME)
             if juego == None:
                 juego = Juego(cachos)
                 session.save(juego)
             else:
-                juego = juego[0]
                 session.update(juego)
 
             juego.particion = particion
@@ -130,59 +137,28 @@ class WiithonCORE:
 
 
     # renombra el ISO de un IDGAME que esta en DEVICE
-    def renombrarNOMBRE(self , DEVICE , IDGAME , NUEVO_NOMBRE):
-        
-        # si pasa el objeto, cogemos el string que nos interesa
-        if isinstance(DEVICE, Particion):
-            DEVICE = DEVICE.device
-        
+    def renombrarNOMBRE(self , juego, nuevoNombre):
         try:
-            comando = config.WBFS_APP+" -p "+DEVICE+" rename "+IDGAME+" \""+NUEVO_NOMBRE+"\""
+            comando = '%s -p %s rename "%s" "%s"' % (config.WBFS_APP, juego.particion.device, juego.idgame, nuevoNombre)
             salida = subprocess.call( comando , shell=True , stderr=subprocess.STDOUT )
             return salida == 0
         except KeyboardInterrupt:
             return False
             
-    def renombrarIDGAME(self , DEVICE , IDGAME , NUEVO_IDGAME):
-        
-        # si pasa el objeto, cogemos el string que nos interesa
-        if isinstance(DEVICE, Particion):
-            DEVICE = DEVICE.device
-        
+    def renombrarIDGAME(self , juego , nuevoIDGAME):
         try:
-            comando = config.WBFS_APP+" -p "+DEVICE+" rename_idgame "+IDGAME+" \""+NUEVO_IDGAME+"\""
+            comando = '%s -p %s rename_idgame "%s" "%s"' % (config.WBFS_APP, juego.particion.device, juego.idgame, nuevoIDGAME)
             salida = subprocess.call( comando , shell=True , stderr=subprocess.STDOUT )
             return salida == 0
         except KeyboardInterrupt:
             return False
 
-    # getEspacioLibre obtiene una tupla [uso , libre , total]
-    def getEspacioLibre(self , DEVICE):
-        
-        # si pasa el objeto, cogemos el string que nos interesa
-        if isinstance(DEVICE, Particion):
-            DEVICE = DEVICE.device
-        
-        comando = "%s -p %s df" % (config.WBFS_APP, DEVICE)
-        salida = util.getSTDOUT( comando )
-        cachos = salida.split(config.SEPARADOR)
-        if(len(cachos) == 3):
-            try:
-                return [ float(cachos[0]) , float(cachos[1]) , float(cachos[2]) ]
-            except:
-                pass
-        # en caso error, devuelve una tupla de 3 de float a 0
-        return [ 0.0 , 0.0 , 0.0 ]
-
     # borra el juego IDGAME
-    def borrarJuego(self , DEVICE , IDGAME):
-        
-        # si pasa el objeto, cogemos el string que nos interesa
-        if isinstance(DEVICE, Particion):
-            DEVICE = DEVICE.device
-        
+    def borrarJuego(self , juego):
+    
         try:
-            comando = config.WBFS_APP+" -p "+DEVICE+" rm "+IDGAME
+            #comando = config.WBFS_APP+" -p "+DEVICE+" rm "+IDGAME
+            comando = "%s -p %s rm %s" % (config.WBFS_APP, juego.particion.device, juego.idgame)
             salida = subprocess.call( comando , shell=True , stderr=subprocess.STDOUT )
             return salida == 0
         except KeyboardInterrupt:
@@ -306,13 +282,12 @@ class WiithonCORE:
             os.remove( self.getRutaCaratula( juego.idgame ) )
 
     # Descarga todos las caratulas de una lista de juegos
-    # FIXME: DEVICE NO SIRVE PARA NADA
-    def descargarTodasLasCaratulaYDiscos(self , DEVICE , listaJuegos , tipo = "normal"):
+    def descargarTodasLasCaratulaYDiscos(self , listaJuegos , tipo = "normal"):
         ok = True
         for juego in listaJuegos:
-            if ( not self.descargarCaratula( juego[0] , tipo ) ):
+            if ( not self.descargarCaratula( juego , tipo ) ):
                 ok = False
-            if ( not self.descargarDisco( juego[0] ) ):
+            if ( not self.descargarDisco( juego ) ):
                 ok = False
         return ok
 
@@ -325,22 +300,18 @@ class WiithonCORE:
                 return linea
         return None
 
-    def unpack(self , nombreRAR , destino):
+    def unpack(self , nombreRAR , destino, nombreISO):
         try:
             if os.path.isfile(nombreRAR) and os.path.isdir(destino):
-                nombreISO = self.getNombreISOenRAR(nombreRAR)
-                if nombreISO != None:
-                    rutaISO = os.path.join(destino, nombreISO)
-                    if os.path.exists(rutaISO):
-                        os.remove(rutaISO)
-                    directorioActual = os.getcwd()
-                    os.chdir(destino)
-                    comando = '%s e "%s" "%s"' % (config.UNRAR_APP, nombreRAR , nombreISO)
-                    salida = subprocess.call( comando , shell=True , stderr=subprocess.STDOUT, stdout=open(config.HOME_WIITHON_LOGS_PROCESO , "w") )
-                    os.chdir(directorioActual)
-                    return (salida == 0)
-                else:
-                    return False
+                rutaISO = os.path.join(destino, nombreISO)
+                if os.path.exists(rutaISO):
+                    os.remove(rutaISO)
+                directorioActual = os.getcwd()
+                os.chdir(destino)
+                comando = '%s e "%s" "%s"' % (config.UNRAR_APP, nombreRAR , nombreISO)
+                salida = subprocess.call( comando , shell=True , stderr=subprocess.STDOUT, stdout=open(config.HOME_WIITHON_LOGS_PROCESO , "w") )
+                os.chdir(directorioActual)
+                return (salida == 0)
             else:
                 return False
         except KeyboardInterrupt:
