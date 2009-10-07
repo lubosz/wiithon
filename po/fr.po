@@ -75,6 +75,12 @@ msgstr "************** TELECHARGEMENT JAQUETTE %s *****************"
 msgid "***************** DESCARGAR DISCO %s ********************"
 msgstr "************* TELECHARGEMENT DISQUE %s ****************"
 
+msgid "+INFO"
+msgstr ""
+
+msgid "+Info"
+msgstr ""
+
 msgid "0 Tareas"
 msgstr "0 Tâches"
 
@@ -112,22 +118,8 @@ msgstr "A propos ..."
 msgid "Actualizar WiiTDB desde %s"
 msgstr ""
 
-#, python-format
-msgid "Advertencia de borrar %s en modo ver"
+msgid "Advertencia de seguridad de renombrar desde IDGAME = "
 msgstr ""
-
-#, python-format
-msgid "Advertencia de seguridad de renombrar desde IDGAME = %s a %s"
-msgstr ""
-"!!!! ATTENTION ¡¡¡¡\n"
-"\n"
-"Renommer IDGAME a des conséquences graves\n"
-"- C'est vraiment étrange de vouloir renommer IDGAME\n"
-"- Si vous changez IDGAME vous ne pourrez plus trouver les jaquettes et les disques\n"
-"- Chaque jeu est identifié de façon unique grâce à son nom, pour éviter tout conflit\n"
-"- La seule raison de changer IDGAME srait de vouloir essayer le même jeu sous différentes version\n"
-"Le meilleur exemple est Guitar Hero et ses versions modifiées.\n"
-"Souhaitez-vous vraiment renommer IDGAME %s en tant que %s?"
 
 msgid ""
 "Algunos juegos no se han introducido:\n"
@@ -245,10 +237,6 @@ msgstr "Périphérique"
 #, python-format
 msgid "ERROR %s no es un ningun juego de Wii"
 msgstr "ERREUR : %s n'est pas un eu Wii"
-
-#, python-format
-msgid "ERROR al borrar la ISO : %s"
-msgstr "ERREUR lors de l'effacement de l'ISO : %s"
 
 #, python-format
 msgid "ERROR al descomrpimir el RAR : %s"
@@ -504,10 +492,6 @@ msgid "Juegos erroneos"
 msgstr "Mauvais jeux"
 
 #, python-format
-msgid "La ISO %s temporal fue borrada"
-msgstr "L'ISO temporaire %s a été supprimée"
-
-#, python-format
 msgid "La particion %s: Ya no existe"
 msgstr ""
 
@@ -592,9 +576,6 @@ msgstr ""
 
 msgid "No puedes refrescar las particiones mientras hay tareas sin finalizar"
 msgstr "Vous ne pouvez pas actualiser tant qu'il existe des tâches inachevées"
-
-msgid "No se ha borrado la ISO temporal"
-msgstr "Ne supprimez pas d'ISO temporaire"
 
 #, python-format
 msgid "No se ha encontrado caratula para el juego %s"
@@ -736,9 +717,6 @@ msgstr "Elles seront téléchargées en format panoramique"
 msgid "Se han detectado caracteres no validos: %s"
 msgstr "Caractères invalides : %s"
 
-msgid "Se va ha borrar la ISO descomprimida"
-msgstr "L'ISO non-compressée va être supprimée"
-
 msgid "Se van a copiar los siguientes juegos a"
 msgstr "Copie des jeux suivants vers"
 
@@ -817,9 +795,6 @@ msgstr "Utilisé"
 msgid "Valor incorrecto"
 msgstr "Valeur incorrecte"
 
-msgid "WiiTDB"
-msgstr ""
-
 msgid "Wiithon 1.1"
 msgstr ""
 
@@ -878,6 +853,30 @@ msgstr "wiithon ne supprime pas l'ISO temporaire, vous pouvez le faire si vous n
 #, python-format
 msgid " Esta seguro de formatear %s (S/N)? "
 msgstr ""
+
+#~ msgid "Advertencia de seguridad de renombrar desde IDGAME = %s a %s"
+#~ msgstr ""
+#~ "!!!! ATTENTION ¡¡¡¡\n"
+#~ "\n"
+#~ "Renommer IDGAME a des conséquences graves\n"
+#~ "- C'est vraiment étrange de vouloir renommer IDGAME\n"
+#~ "- Si vous changez IDGAME vous ne pourrez plus trouver les jaquettes et les disques\n"
+#~ "- Chaque jeu est identifié de façon unique grâce à son nom, pour éviter tout conflit\n"
+#~ "- La seule raison de changer IDGAME srait de vouloir essayer le même jeu sous différentes version\n"
+#~ "Le meilleur exemple est Guitar Hero et ses versions modifiées.\n"
+#~ "Souhaitez-vous vraiment renommer IDGAME %s en tant que %s?"
+
+#~ msgid "ERROR al borrar la ISO : %s"
+#~ msgstr "ERREUR lors de l'effacement de l'ISO : %s"
+
+#~ msgid "La ISO %s temporal fue borrada"
+#~ msgstr "L'ISO temporaire %s a été supprimée"
+
+#~ msgid "No se ha borrado la ISO temporal"
+#~ msgstr "Ne supprimez pas d'ISO temporaire"
+
+#~ msgid "Se va ha borrar la ISO descomprimida"
+#~ msgstr "L'ISO non-compressée va être supprimée"
 
 #~ msgid "Cararuta?"
 #~ msgstr "Jaquette?"

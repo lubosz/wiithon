@@ -370,8 +370,8 @@ class Juego(Base):
     title = Column('title', Unicode(255))
     size = Column('size', Float)
     idParticion = Column("idParticion", Integer , ForeignKey('particion.idParticion'))
-    tieneCaratula = False
-    tieneDiscArt = False
+    tieneCaratula = True
+    tieneDiscArt = True
 
     def __init__(self , idgame , title , size):
         self.idgame = util.decode(idgame)
@@ -394,7 +394,7 @@ class Juego(Base):
     def __repr__(self):
         return "%s (ID: %s) %.2f GB (%s)" % (self.title, self.idgame, self.size, self.particion.device)
         
-    def getJuegoWIITDB(self, session):
+    def getJuegoWIITDB(self):
         sql = util.decode("juego_wiitdb.idgame=='%s'" % (self.idgame))
         return session.query(JuegoWIITDB).filter(sql).first()
        

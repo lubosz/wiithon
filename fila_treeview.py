@@ -10,7 +10,7 @@ class FilaTreeview:
         self.sel = None                                 # gtk.ListStore
         self.it = None                                  # gtk.TreeIter
         self.clave = None                               # campo clave
-        self.obj = None
+        self.obj = None                                 # custom class user
         
     def actualizar_columna(self, treeview):
         self.sel, self.it  = treeview.get_selection().get_selected()

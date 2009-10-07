@@ -75,6 +75,12 @@ msgstr "***************** SCARICAMENTO COPERTINA %s ********************"
 msgid "***************** DESCARGAR DISCO %s ********************"
 msgstr "***************** SCARICAMENTO DISCO %s ********************"
 
+msgid "+INFO"
+msgstr ""
+
+msgid "+Info"
+msgstr ""
+
 msgid "0 Tareas"
 msgstr "0 Operazioni"
 
@@ -112,13 +118,8 @@ msgstr "Crediti ..."
 msgid "Actualizar WiiTDB desde %s"
 msgstr "Aggiornamento WiiTDB da %s"
 
-#, python-format
-msgid "Advertencia de borrar %s en modo ver"
-msgstr "Attenzione verrà cancellato %s solo dal database"
-
-#, python-format
-msgid "Advertencia de seguridad de renombrar desde IDGAME = %s a %s"
-msgstr "Attenzione!!! Sei sicuro di rinominare questo IDGAME da %s a %s?"
+msgid "Advertencia de seguridad de renombrar desde IDGAME = "
+msgstr ""
 
 msgid ""
 "Algunos juegos no se han introducido:\n"
@@ -238,10 +239,6 @@ msgstr "Dispositivo"
 #, python-format
 msgid "ERROR %s no es un ningun juego de Wii"
 msgstr "ERRORE %s non è un gioco Wii"
-
-#, python-format
-msgid "ERROR al borrar la ISO : %s"
-msgstr "ERRORE durante la cencellazione della ISO : %s"
 
 #, python-format
 msgid "ERROR al descomrpimir el RAR : %s"
@@ -497,10 +494,6 @@ msgid "Juegos erroneos"
 msgstr "Giochi errati"
 
 #, python-format
-msgid "La ISO %s temporal fue borrada"
-msgstr "La ISO temporanea %s è stata rimossa"
-
-#, python-format
 msgid "La particion %s: Ya no existe"
 msgstr "La partizione %s: non esiste"
 
@@ -578,9 +571,6 @@ msgstr "Non è stata trovata nessuna partizione WBFS, puoi solo vedere il databa
 
 msgid "No puedes refrescar las particiones mientras hay tareas sin finalizar"
 msgstr "Non posso aggiornare le partizioni finchè le operazioni in corso non sono finiteDon't can refresh partitions while exists tasks without finish"
-
-msgid "No se ha borrado la ISO temporal"
-msgstr "Non è stata cancellata la ISO tempranea"
 
 #, python-format
 msgid "No se ha encontrado caratula para el juego %s"
@@ -722,9 +712,6 @@ msgstr "Saranno scaricate in formato panoramico"
 msgid "Se han detectado caracteres no validos: %s"
 msgstr "Caratteri non validi: %s"
 
-msgid "Se va ha borrar la ISO descomprimida"
-msgstr "La ISO non compressa verrà eliminata"
-
 msgid "Se van a copiar los siguientes juegos a"
 msgstr "Saranno copiati i seguenti giochi"
 
@@ -803,9 +790,6 @@ msgstr "Usato"
 msgid "Valor incorrecto"
 msgstr "Valore errato"
 
-msgid "WiiTDB"
-msgstr "WiiTDB"
-
 msgid "Wiithon 1.1"
 msgstr "Wiithon 1.1"
 
@@ -864,6 +848,27 @@ msgstr "wiithon non rimuove la ISO temporanea, puoi cancellarla se non ne hai bi
 #, python-format
 msgid " Esta seguro de formatear %s (S/N)? "
 msgstr "Sei sicuro di voler formattare %s (S/N)?"
+
+#~ msgid "Advertencia de seguridad de renombrar desde IDGAME = %s a %s"
+#~ msgstr "Attenzione!!! Sei sicuro di rinominare questo IDGAME da %s a %s?"
+
+#~ msgid "Advertencia de borrar %s en modo ver"
+#~ msgstr "Attenzione verrà cancellato %s solo dal database"
+
+#~ msgid "ERROR al borrar la ISO : %s"
+#~ msgstr "ERRORE durante la cencellazione della ISO : %s"
+
+#~ msgid "La ISO %s temporal fue borrada"
+#~ msgstr "La ISO temporanea %s è stata rimossa"
+
+#~ msgid "No se ha borrado la ISO temporal"
+#~ msgstr "Non è stata cancellata la ISO tempranea"
+
+#~ msgid "Se va ha borrar la ISO descomprimida"
+#~ msgstr "La ISO non compressa verrà eliminata"
+
+#~ msgid "WiiTDB"
+#~ msgstr "WiiTDB"
 
 #~ msgid "Finalizando."
 #~ msgstr "Finito."

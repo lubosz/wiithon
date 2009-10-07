@@ -75,6 +75,12 @@ msgstr "***************** DOWNLOAD COVER %s ********************"
 msgid "***************** DESCARGAR DISCO %s ********************"
 msgstr "***************** DOWNLOAD DISC %s ********************"
 
+msgid "+INFO"
+msgstr ""
+
+msgid "+Info"
+msgstr ""
+
 msgid "0 Tareas"
 msgstr "0 Tasks"
 
@@ -112,22 +118,8 @@ msgstr "About ..."
 msgid "Actualizar WiiTDB desde %s"
 msgstr ""
 
-#, python-format
-msgid "Advertencia de borrar %s en modo ver"
+msgid "Advertencia de seguridad de renombrar desde IDGAME = "
 msgstr ""
-
-#, fuzzy, python-format
-msgid "Advertencia de seguridad de renombrar desde IDGAME = %s a %s"
-msgstr ""
-"WARNING !!!\n"
-"\n"
-"These are the consequences of renaming IDGAME\n"
-"- A real need to rename the IDGAME is exceptional\n"
-"- If you change the IDGAME, the disks and covers might be incorrect\n"
-"- The very indistria games videogames identifies a unique and therefore there should be no collision\n"
-"- The only reason to rename a IDGAME would be to have the same game several times. \n"
-"The best example is Guitar Hero and custom versions of Guitar Hero.\n"
-"Do you want rename the current IDGAME %s to %s?"
 
 msgid ""
 "Algunos juegos no se han introducido:\n"
@@ -245,10 +237,6 @@ msgstr "Device"
 #, python-format
 msgid "ERROR %s no es un ningun juego de Wii"
 msgstr "%s is not a Wii game"
-
-#, python-format
-msgid "ERROR al borrar la ISO : %s"
-msgstr "ERROR erasing ISO : %s"
 
 #, python-format
 msgid "ERROR al descomrpimir el RAR : %s"
@@ -504,10 +492,6 @@ msgid "Juegos erroneos"
 msgstr "Bad games"
 
 #, python-format
-msgid "La ISO %s temporal fue borrada"
-msgstr "The temporal ISO %s was removed"
-
-#, python-format
 msgid "La particion %s: Ya no existe"
 msgstr ""
 
@@ -592,9 +576,6 @@ msgstr ""
 
 msgid "No puedes refrescar las particiones mientras hay tareas sin finalizar"
 msgstr "Partitions can not be refreshed before tasks are finished"
-
-msgid "No se ha borrado la ISO temporal"
-msgstr "Don't delete temporal ISO"
 
 #, python-format
 msgid "No se ha encontrado caratula para el juego %s"
@@ -736,9 +717,6 @@ msgstr "They'll be downloaded in widescreen format"
 msgid "Se han detectado caracteres no validos: %s"
 msgstr "Characters not valid: %s"
 
-msgid "Se va ha borrar la ISO descomprimida"
-msgstr "The extracted ISO is going to be removed"
-
 msgid "Se van a copiar los siguientes juegos a"
 msgstr "The following games will be copied to"
 
@@ -817,9 +795,6 @@ msgstr "Used"
 msgid "Valor incorrecto"
 msgstr "Value error"
 
-msgid "WiiTDB"
-msgstr ""
-
 msgid "Wiithon 1.1"
 msgstr ""
 
@@ -878,6 +853,31 @@ msgstr "wiithon doesn't remove the temporal ISO, you can remove it if you don't 
 #, python-format
 msgid " Esta seguro de formatear %s (S/N)? "
 msgstr ""
+
+#, fuzzy
+#~ msgid "Advertencia de seguridad de renombrar desde IDGAME = %s a %s"
+#~ msgstr ""
+#~ "WARNING !!!\n"
+#~ "\n"
+#~ "These are the consequences of renaming IDGAME\n"
+#~ "- A real need to rename the IDGAME is exceptional\n"
+#~ "- If you change the IDGAME, the disks and covers might be incorrect\n"
+#~ "- The very indistria games videogames identifies a unique and therefore there should be no collision\n"
+#~ "- The only reason to rename a IDGAME would be to have the same game several times. \n"
+#~ "The best example is Guitar Hero and custom versions of Guitar Hero.\n"
+#~ "Do you want rename the current IDGAME %s to %s?"
+
+#~ msgid "ERROR al borrar la ISO : %s"
+#~ msgstr "ERROR erasing ISO : %s"
+
+#~ msgid "La ISO %s temporal fue borrada"
+#~ msgstr "The temporal ISO %s was removed"
+
+#~ msgid "No se ha borrado la ISO temporal"
+#~ msgstr "Don't delete temporal ISO"
+
+#~ msgid "Se va ha borrar la ISO descomprimida"
+#~ msgstr "The extracted ISO is going to be removed"
 
 #~ msgid "Cararuta?"
 #~ msgstr "Cover?"

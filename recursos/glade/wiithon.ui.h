@@ -1,3 +1,4 @@
+char *s = N_("+INFO");
 char *s = N_("0 Tareas");
 char *s = N_("Accesorios:");
 char *s = N_("Acerca de ...");
@@ -29,7 +30,6 @@ char *s = N_("TEXTO_LICENCIA");
 char *s = N_("Tiene Online?:");
 char *s = N_("Titulo:");
 char *s = N_("Un gestor de particiones WBFS facil de usar");
-char *s = N_("WiiTDB");
 char *s = N_("Wiithon 1.1");
 char *s = N_("caratulas a SD");
 char *s = N_("gtk-cancel");

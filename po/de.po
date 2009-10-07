@@ -75,6 +75,12 @@ msgstr "***************** TITELBILD RUNTERLADEN %s ********************"
 msgid "***************** DESCARGAR DISCO %s ********************"
 msgstr "***************** DISKBILD RUNTERLADEN %s ********************"
 
+msgid "+INFO"
+msgstr ""
+
+msgid "+Info"
+msgstr ""
+
 msgid "0 Tareas"
 msgstr "0 Aufgaben"
 
@@ -112,21 +118,8 @@ msgstr "Über ..."
 msgid "Actualizar WiiTDB desde %s"
 msgstr ""
 
-#, python-format
-msgid "Advertencia de borrar %s en modo ver"
+msgid "Advertencia de seguridad de renombrar desde IDGAME = "
 msgstr ""
-
-#, python-format
-msgid "Advertencia de seguridad de renombrar desde IDGAME = %s a %s"
-msgstr ""
-"!!!! Warnung ¡¡¡¡\n"
-"\n"
-"Dies ist eine Warnung vor dem umbenennen der IDGAME\n"
-"- Bei veränderter IDGAME kann für das Spiel kein Titelbild und Diskbild mehr gefunden werden\n"
-"- Es kann zu abstürzen des Spieles kommen\n"
-"- Sinnvoll ist es nur die IDGAME im folgenden Fall zu ändern \n"
-"Man hat ein Spiel selber abgeändert, z.B. in Sing It eigene Lieder eingefügt.\n"
-"Möchten Sie wirklich die IDGAME %s zu %s umbenennen?"
 
 msgid ""
 "Algunos juegos no se han introducido:\n"
@@ -244,10 +237,6 @@ msgstr "Gerät"
 #, python-format
 msgid "ERROR %s no es un ningun juego de Wii"
 msgstr "%s ist kein WII Spiel"
-
-#, python-format
-msgid "ERROR al borrar la ISO : %s"
-msgstr "FEHELR beim löschen der ISO Datei : %s"
 
 #, python-format
 msgid "ERROR al descomrpimir el RAR : %s"
@@ -503,10 +492,6 @@ msgid "Juegos erroneos"
 msgstr "Fehlerhafte Spiele"
 
 #, python-format
-msgid "La ISO %s temporal fue borrada"
-msgstr "Temporäre ISO %s wurde entfernt"
-
-#, python-format
 msgid "La particion %s: Ya no existe"
 msgstr ""
 
@@ -586,9 +571,6 @@ msgstr ""
 
 msgid "No puedes refrescar las particiones mientras hay tareas sin finalizar"
 msgstr "Neuladen der Partition nicht möglich solange Vorgang nicht abgeschlossen ist."
-
-msgid "No se ha borrado la ISO temporal"
-msgstr "Temporäre ISO nicht löschen"
 
 #, python-format
 msgid "No se ha encontrado caratula para el juego %s"
@@ -730,9 +712,6 @@ msgstr "Wird runtergeladen im Breitbildformat"
 msgid "Se han detectado caracteres no validos: %s"
 msgstr "Werte ungültig: %s"
 
-msgid "Se va ha borrar la ISO descomprimida"
-msgstr "Das entpackte ISO wird entfernt"
-
 msgid "Se van a copiar los siguientes juegos a"
 msgstr "Wir zu folgenden Spiel kopiert"
 
@@ -800,9 +779,6 @@ msgstr "benutzt"
 msgid "Valor incorrecto"
 msgstr "Falscher Wert"
 
-msgid "WiiTDB"
-msgstr ""
-
 msgid "Wiithon 1.1"
 msgstr ""
 
@@ -861,6 +837,29 @@ msgstr "Wiithon entfernt die temporäre ISO Datei nicht, Sie können Sie entfern
 #, python-format
 msgid " Esta seguro de formatear %s (S/N)? "
 msgstr ""
+
+#~ msgid "Advertencia de seguridad de renombrar desde IDGAME = %s a %s"
+#~ msgstr ""
+#~ "!!!! Warnung ¡¡¡¡\n"
+#~ "\n"
+#~ "Dies ist eine Warnung vor dem umbenennen der IDGAME\n"
+#~ "- Bei veränderter IDGAME kann für das Spiel kein Titelbild und Diskbild mehr gefunden werden\n"
+#~ "- Es kann zu abstürzen des Spieles kommen\n"
+#~ "- Sinnvoll ist es nur die IDGAME im folgenden Fall zu ändern \n"
+#~ "Man hat ein Spiel selber abgeändert, z.B. in Sing It eigene Lieder eingefügt.\n"
+#~ "Möchten Sie wirklich die IDGAME %s zu %s umbenennen?"
+
+#~ msgid "ERROR al borrar la ISO : %s"
+#~ msgstr "FEHELR beim löschen der ISO Datei : %s"
+
+#~ msgid "La ISO %s temporal fue borrada"
+#~ msgstr "Temporäre ISO %s wurde entfernt"
+
+#~ msgid "No se ha borrado la ISO temporal"
+#~ msgstr "Temporäre ISO nicht löschen"
+
+#~ msgid "Se va ha borrar la ISO descomprimida"
+#~ msgstr "Das entpackte ISO wird entfernt"
 
 #~ msgid "Cararuta?"
 #~ msgstr "Titelbild?"

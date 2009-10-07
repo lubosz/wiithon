@@ -75,6 +75,12 @@ msgstr "***************** DESCARGAR CARÁTULA %s ********************"
 msgid "***************** DESCARGAR DISCO %s ********************"
 msgstr ""
 
+msgid "+INFO"
+msgstr ""
+
+msgid "+Info"
+msgstr ""
+
 msgid "0 Tareas"
 msgstr ""
 
@@ -158,23 +164,8 @@ msgstr ""
 msgid "Actualizar WiiTDB desde %s"
 msgstr ""
 
-#, python-format
-msgid "Advertencia de borrar %s en modo ver"
+msgid "Advertencia de seguridad de renombrar desde IDGAME = "
 msgstr ""
-
-#, python-format
-msgid "Advertencia de seguridad de renombrar desde IDGAME = %s a %s"
-msgstr ""
-"!!!!ATENCIÓN¡¡¡¡\n"
-"\n"
-"Esto es una advertencia de seguridad, para advertirle de las consecuencias de renombrar el IDGAME\n"
-"- Es bastante extraño que realmente necesite renombrar el IDGAME\n"
-"- Si cambia el IDGAME posiblemente no se encuentre las caratulas y discos correctamente\n"
-"- La propia indistria del videojuego identifica los juegos de forma única, y por tanto no debería haber colisión\n"
-"- El ÚNICO motivo justificado de renombrar un IDGAME sería para poder tener la posibilidad de introducir \n"
-"varias veces el mismo juego con distintos IDGAME. El mejor ejemplo es el de querar introducir el \n"
-"Guitar Hero y customs de este.\n"
-"¿Está seguro de renombrar el actual IDGAME %s como %s?"
 
 msgid ""
 "Algunos juegos no se han introducido:\n"
@@ -292,10 +283,6 @@ msgstr ""
 #, python-format
 msgid "ERROR %s no es un ningun juego de Wii"
 msgstr "ERROR %s no es un juego de Wii"
-
-#, python-format
-msgid "ERROR al borrar la ISO : %s"
-msgstr ""
 
 #, python-format
 msgid "ERROR al descomrpimir el RAR : %s"
@@ -548,10 +535,6 @@ msgid "Juegos erroneos"
 msgstr ""
 
 #, python-format
-msgid "La ISO %s temporal fue borrada"
-msgstr ""
-
-#, python-format
 msgid "La particion %s: Ya no existe"
 msgstr ""
 
@@ -635,9 +618,6 @@ msgstr ""
 "- Cuando borre un juego en este modo, borrara el registro y las caratula y disco descargadas."
 
 msgid "No puedes refrescar las particiones mientras hay tareas sin finalizar"
-msgstr ""
-
-msgid "No se ha borrado la ISO temporal"
 msgstr ""
 
 #, python-format
@@ -777,9 +757,6 @@ msgstr "Se descargarán en formato paronámico"
 msgid "Se han detectado caracteres no validos: %s"
 msgstr "Se han detectado carácteres no válidos: %s"
 
-msgid "Se va ha borrar la ISO descomprimida"
-msgstr ""
-
 msgid "Se van a copiar los siguientes juegos a"
 msgstr ""
 
@@ -856,9 +833,6 @@ msgstr ""
 msgid "Valor incorrecto"
 msgstr ""
 
-msgid "WiiTDB"
-msgstr ""
-
 msgid "Wiithon 1.1"
 msgstr ""
 
@@ -917,6 +891,19 @@ msgstr ""
 #, python-format
 msgid " Esta seguro de formatear %s (S/N)? "
 msgstr ""
+
+#~ msgid "Advertencia de seguridad de renombrar desde IDGAME = %s a %s"
+#~ msgstr ""
+#~ "!!!!ATENCIÓN¡¡¡¡\n"
+#~ "\n"
+#~ "Esto es una advertencia de seguridad, para advertirle de las consecuencias de renombrar el IDGAME\n"
+#~ "- Es bastante extraño que realmente necesite renombrar el IDGAME\n"
+#~ "- Si cambia el IDGAME posiblemente no se encuentre las caratulas y discos correctamente\n"
+#~ "- La propia indistria del videojuego identifica los juegos de forma única, y por tanto no debería haber colisión\n"
+#~ "- El ÚNICO motivo justificado de renombrar un IDGAME sería para poder tener la posibilidad de introducir \n"
+#~ "varias veces el mismo juego con distintos IDGAME. El mejor ejemplo es el de querar introducir el \n"
+#~ "Guitar Hero y customs de este.\n"
+#~ "¿Está seguro de renombrar el actual IDGAME %s como %s?"
 
 #~ msgid "%d sin caratula"
 #~ msgstr "%d sin carátula"

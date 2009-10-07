@@ -74,6 +74,12 @@ msgstr ""
 msgid "***************** DESCARGAR DISCO %s ********************"
 msgstr ""
 
+msgid "+INFO"
+msgstr ""
+
+msgid "+Info"
+msgstr ""
+
 msgid "0 Tareas"
 msgstr ""
 
@@ -111,12 +117,7 @@ msgstr ""
 msgid "Actualizar WiiTDB desde %s"
 msgstr ""
 
-#, python-format
-msgid "Advertencia de borrar %s en modo ver"
-msgstr ""
-
-#, python-format
-msgid "Advertencia de seguridad de renombrar desde IDGAME = %s a %s"
+msgid "Advertencia de seguridad de renombrar desde IDGAME = "
 msgstr ""
 
 msgid ""
@@ -234,10 +235,6 @@ msgstr ""
 
 #, python-format
 msgid "ERROR %s no es un ningun juego de Wii"
-msgstr ""
-
-#, python-format
-msgid "ERROR al borrar la ISO : %s"
 msgstr ""
 
 #, python-format
@@ -491,10 +488,6 @@ msgid "Juegos erroneos"
 msgstr ""
 
 #, python-format
-msgid "La ISO %s temporal fue borrada"
-msgstr ""
-
-#, python-format
 msgid "La particion %s: Ya no existe"
 msgstr ""
 
@@ -571,9 +564,6 @@ msgid "No hay particiones WBFS, solo puede ver sus juegos acumuladas en %s"
 msgstr ""
 
 msgid "No puedes refrescar las particiones mientras hay tareas sin finalizar"
-msgstr ""
-
-msgid "No se ha borrado la ISO temporal"
 msgstr ""
 
 #, python-format
@@ -713,9 +703,6 @@ msgstr ""
 msgid "Se han detectado caracteres no validos: %s"
 msgstr ""
 
-msgid "Se va ha borrar la ISO descomprimida"
-msgstr ""
-
 msgid "Se van a copiar los siguientes juegos a"
 msgstr ""
 
@@ -781,9 +768,6 @@ msgid "Usado"
 msgstr ""
 
 msgid "Valor incorrecto"
-msgstr ""
-
-msgid "WiiTDB"
 msgstr ""
 
 msgid "Wiithon 1.1"

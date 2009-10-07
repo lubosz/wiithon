@@ -3,7 +3,6 @@
 # vim: set fileencoding=utf-8 :
 #
 # :: Mantenedor: Ricardo Marmolejo García <makiolo@gmail.com>
-# :: Jose Luis Segura <josel.segura@gmail.com>
 # :: Web : http://blogricardo.wordpress.com/2009/06/21/wiithon-1-0-liberado/
 # :: Ver LICENCIA.txt
 

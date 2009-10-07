@@ -48,6 +48,7 @@ class WiiTDBXML(Thread):
                                 ):
         Thread.__init__(self)
         self.url = url
+        self.todos = not url.find("?ID=")!=-1
         self.destino = destino
         self.fichXML = fichXML
         self.callback_spinner = callback_spinner
@@ -109,8 +110,8 @@ class WiiTDBXML(Thread):
             except:
                 self.error_importando(_("Base de datos ocupada."))
             '''
-
-            self.callback_empieza_importar(self.fichXML)
+            if self.callback_empieza_importar:
+                self.callback_empieza_importar(self.fichXML)
 
             cont = 0
             while not self.salir and nodo != None:
@@ -163,7 +164,8 @@ class WiiTDBXML(Thread):
                                                 descripcion = session.query(JuegoDescripcion).filter(sql).first()
                                                 if descripcion == None:
                                                     descripcion = JuegoDescripcion(lang)
-                                                    self.callback_nuevo_descripcion(descripcion)
+                                                    if self.callback_nuevo_descripcion:
+                                                        self.callback_nuevo_descripcion(descripcion)
 
                                                 if nodo.children is not None:
                                                     nodo = nodo.children
@@ -206,7 +208,8 @@ class WiiTDBXML(Thread):
                                                     genero = session.query(Genero).filter(sql).first()
                                                     if genero == None:
                                                         genero = Genero(valor)
-                                                        self.callback_nuevo_genero(genero)
+                                                        if self.callback_nuevo_genero:
+                                                            self.callback_nuevo_genero(genero)
 
                                                     juego.genero.append(genero)
 
@@ -265,7 +268,8 @@ class WiiTDBXML(Thread):
                                                                     online_feature = session.query(OnlineFeatures).filter(sql).first()
                                                                     if online_feature == None:
                                                                         online_feature = OnlineFeatures(valor)
-                                                                        self.callback_nuevo_online_feature(online_feature)
+                                                                        if self.callback_nuevo_online_feature:
+                                                                            self.callback_nuevo_online_feature(online_feature)
                                                                     juego.features.append(online_feature)
                                                         nodo = nodo.next
                                                     nodo = nodo.parent
@@ -310,7 +314,8 @@ class WiiTDBXML(Thread):
                                                                     accesorio = session.query(Accesorio).filter(sql).first()
                                                                     if accesorio == None:
                                                                         accesorio = Accesorio(nombre)
-                                                                        self.callback_nuevo_accesorio(accesorio, obligatorio == 'true')
+                                                                        if self.callback_nuevo_accesorio:
+                                                                            self.callback_nuevo_accesorio(accesorio, obligatorio == 'true')
 
                                                                     if obligatorio == 'true':
                                                                         juego.obligatorio.append(accesorio)
@@ -341,7 +346,8 @@ class WiiTDBXML(Thread):
                                 nodo = nodo.parent
                                 if iniciado:
                                     session.save_or_update(juego)
-                                    self.callback_nuevo_juego(juego)
+                                    if self.callback_nuevo_juego:
+                                        self.callback_nuevo_juego(juego)
                                 else:
                                     self.error_importando(_("XML invalido"))
 
@@ -355,7 +361,7 @@ class WiiTDBXML(Thread):
                         except ZeroDivisionError:
                             llamarCallback = True
                         
-                        if llamarCallback:
+                        if llamarCallback and self.callback_spinner:
                             self.callback_spinner(cont, self.games)
 
                         nodo = nodo.next
@@ -374,7 +380,8 @@ class WiiTDBXML(Thread):
                                         if companie == None:
                                             companie = Companie(code, name)
                                             session.save(companie)
-                                            self.callback_nuevo_companie(companie)
+                                            if self.callback_nuevo_companie:
+                                                self.callback_nuevo_companie(companie)
 
                                 nodo = nodo.next
                             nodo = nodo.parent
@@ -392,7 +399,8 @@ class WiiTDBXML(Thread):
             
             self.limpiarTemporales()
             
-            self.callback_termina_importar(self.fichXML)
+            if self.callback_termina_importar:
+                self.callback_termina_importar(self.fichXML, self.todos)
         else:
             self.error_importando(_("No existe el XML"))
 
@@ -409,7 +417,8 @@ class WiiTDBXML(Thread):
         self.interrumpir()
         #session.rollback()
         self.limpiarTemporales()
-        self.callback_error_importando(self, self.fichXML, motivo)
+        if self.callback_error_importando:
+            self.callback_error_importando(self, self.fichXML, motivo)
 
     def interrumpir(self):
         self.salir = True

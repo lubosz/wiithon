@@ -109,8 +109,6 @@ class WiithonCORE:
     
     def getInfoJuego(self, DEVICE, IDGAME):
         
-        print session
-        
         particion = self.getParticion(DEVICE)
         if particion != None:
             
@@ -247,6 +245,7 @@ class WiithonCORE:
     # el Tipo puede ser : normal|panoramica|3d|full
     def descargarCaratula(self , IDGAME, tipo = "normal", ancho=160, alto=224):
         if (self.existeCaratula(IDGAME)):
+            print "ya existe %s" % IDGAME
             return True
         else:
             origenes = []
