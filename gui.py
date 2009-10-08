@@ -41,10 +41,11 @@ class WiithonGUI(GtkBuilderWrapper):
 </ui>
 '''
 
-    # Lista de particiones, obtenido por el core
+    # Lista de particiones
     lParti = None
     
-    lJuegos_filtrada = None
+    # lista de juegos mostrados
+    lJuegos = None
 
     # Representación de la fila seleccionada en los distintos treeviews
     sel_juego = FilaTreeview()
@@ -265,20 +266,20 @@ class WiithonGUI(GtkBuilderWrapper):
         
         # advertencia si no encuentra
         if(len(self.lParti) == 0):
-            if (os.geteuid() != 0) and (len(self.lJuegos_filtrada)==0):
+            if (os.geteuid() != 0) and (len(self.lJuegos)==0):
                 self.alert("warning" , _("No se han detectado particiones WBFS.\nSi has conectado una particion WBFS y no ha sido detectada, es debido a que no hay permisos de lectura y escritura.\nPara solucionarlo siga los pasos de la guia de instalacion."))
             else:
-                if(len(self.lJuegos_filtrada)>0):
+                if(len(self.lJuegos)>0):
                     self.alert("warning" , _("No hay particiones WBFS, solo puede ver sus juegos acumuladas en %s") % (config.APP))
                 else:
                     self.alert("warning" , _("No hay particiones WBFS, conecte y refresque"))
         else:
             if backup_preferencia_device != "" and backup_preferencia_idgame != "":
                 self.seleccionarFilaConValor(self.wb_tv_partitions, len(self.lParti) , 0 , backup_preferencia_device)
-                self.seleccionarFilaConValor(self.wb_tv_games, len(self.lJuegos_filtrada) , 0 , backup_preferencia_idgame)
+                self.seleccionarFilaConValor(self.wb_tv_games, len(self.lJuegos) , 0 , backup_preferencia_idgame)
         
         # pongo el foco en el buscador
-        if( len(self.lJuegos_filtrada)>0 ):
+        if( len(self.lJuegos)>0 ):
             self.wb_busqueda.grab_focus()
         else:
             self.wb_tb_refrescar_wbfs.grab_focus()
@@ -305,6 +306,9 @@ class WiithonGUI(GtkBuilderWrapper):
             #
             # leer juegos de las aparticiones y guardar en la BDD
             self.leer_juegos_de_las_particiones(self.lParti)
+            #
+            # Buscar juego en la bdd
+            self.lJuegos = self.buscar_juego_bdd(self.buscar)
             #                    
             # Selecciona el primer juego
             self.seleccionarPrimeraFila(self.wb_tv_partitions)
@@ -716,9 +720,9 @@ class WiithonGUI(GtkBuilderWrapper):
             print "on_busqueda_changed"
         
         self.buscar = widget.get_text()
-        self.lJuegos_filtrada = self.buscar_juego_bdd(self.buscar)
-        self.refrescarModeloJuegos( self.lJuegos_filtrada )
-        #self.info.arriba_num_juegos = len(self.lJuegos_filtrada)
+        self.lJuegos = self.buscar_juego_bdd(self.buscar)
+        self.refrescarModeloJuegos( self.lJuegos )
+        #self.info.arriba_num_juegos = len(self.lJuegos)
 
     def leer_juegos_de_las_particiones(self, particiones):
         
@@ -887,7 +891,7 @@ class WiithonGUI(GtkBuilderWrapper):
         if self.sel_juego != None:
             self.sel_juego.actualizar_columna(treeview)
             if self.sel_juego.it != None:
-                self.sel_juego.obj = self.getBuscarJuego(self.lJuegos_filtrada, self.sel_juego.clave)
+                self.sel_juego.obj = self.getBuscarJuego(self.lJuegos, self.sel_juego.clave)
                 
                 self.ponerCaratula(self.sel_juego.clave, self.wb_img_caratula1)
                 self.ponerDisco(self.sel_juego.clave , self.wb_img_disco1)
@@ -917,9 +921,9 @@ class WiithonGUI(GtkBuilderWrapper):
                 self.seleccionarPrimeraFila( self.wb_tv_partitions2 )
                 
                 # refrescamos la lista de juegos, leyendo del core
-                self.lJuegos_filtrada = self.buscar_juego_bdd(self.buscar)
+                self.lJuegos = self.buscar_juego_bdd(self.buscar)
                 
-                self.refrescarModeloJuegos( self.lJuegos_filtrada )
+                self.refrescarModeloJuegos( self.lJuegos )
                 
                 # refrescar espacio
                 self.refrescarEspacio()
@@ -1117,12 +1121,12 @@ class WiithonGUI(GtkBuilderWrapper):
                             self.alert("warning" , _("No has seleccionado ningun juego"))
 
                     elif(res == 2):
-                        for juego in self.lJuegos_filtrada:
+                        for juego in self.lJuegos:
                             juegosParaClonar.append( util.clonarOBJ(juego) )
                     
                         self.seleccionarFilaConValor(self.wb_tv_partitions, len(self.lParti) , 0 , device_destino.device)
 
-                        for juego in self.lJuegos_filtrada:
+                        for juego in self.lJuegos:
                             encontrado = False
                             i = 0
                             while (not encontrado) and (i<len(juegosParaClonar)):
@@ -1178,12 +1182,12 @@ class WiithonGUI(GtkBuilderWrapper):
                         self.tv_games_modelo.remove( self.sel_juego.it )
                         
                         # Borrar de las listas                        
-                        self.lJuegos_filtrada.remove( self.sel_juego.obj )
+                        self.lJuegos.remove( self.sel_juego.obj )
                         
                         session.delete(self.sel_juego.obj)
                         
                         # recargar modelo de datos
-                        self.refrescarModeloJuegos( self.lJuegos_filtrada )
+                        self.refrescarModeloJuegos( self.lJuegos )
                         
                         # refrescar numero de juegos, etc ...
                         self.refrescarEspacio()
@@ -1325,8 +1329,8 @@ class WiithonGUI(GtkBuilderWrapper):
                         session.commit()
 
                         # copiar toda la lista de juegos
-                        self.poolBash.nuevoTrabajoCopiarCaratula(self.lJuegos_filtrada , fc_copiar_SD.get_filename())
-                        self.poolBash.nuevoTrabajoCopiarDisco(self.lJuegos_filtrada, fc_copiar_discos_SD.get_filename())
+                        self.poolBash.nuevoTrabajoCopiarCaratula(self.lJuegos , fc_copiar_SD.get_filename())
+                        self.poolBash.nuevoTrabajoCopiarDisco(self.lJuegos, fc_copiar_discos_SD.get_filename())
 
                     fc_copiar_discos_SD.destroy()
 
@@ -1354,7 +1358,7 @@ class WiithonGUI(GtkBuilderWrapper):
     def callback_termina_importar(self, xml, todos):
         self.actualizarLabel(_("Finalizada satisfactoriamente la importacion de datos desde WiiTDB"))
         self.actualizarFraccion(1.0)
-        gobject.idle_add(self.refrescarModeloJuegos, self.lJuegos_filtrada)
+        gobject.idle_add(self.refrescarModeloJuegos, self.lJuegos)
 
     def callback_spinner(self, cont, total):
         porcentaje = (cont * 100.0 / total)
@@ -1412,11 +1416,11 @@ class WiithonGUI(GtkBuilderWrapper):
         # consultamos al wiithon wrapper info sobre el juego con nueva IDGAME
         # lo añadimos a la lista
         juego = self.core.getInfoJuego(DEVICE, IDGAME)
-        self.lJuegos_filtrada.append(juego)
+        self.lJuegos.append(juego)
 
         # seleccionamos la particion y la fila del juego añadido
         self.seleccionarFilaConValor(self.wb_tv_partitions, len(self.lParti) , 0 , DEVICE)
-        self.seleccionarFilaConValor(self.wb_tv_games, len(self.lJuegos_filtrada) , 0 , IDGAME)
+        self.seleccionarFilaConValor(self.wb_tv_games, len(self.lJuegos) , 0 , IDGAME)
         
         # vamos descargando caratulas
         if not self.core.existeCaratula(IDGAME):
@@ -1428,11 +1432,11 @@ class WiithonGUI(GtkBuilderWrapper):
     def termina_trabajo_copiar(self, juego , particion):
         
         juego = self.core.getInfoJuego(particion.device, juego.idgame)        
-        self.lJuegos_filtrada.append(juego)
+        self.lJuegos.append(juego)
         
         # seleccionamos la particion y la fila del juego añadido
         self.seleccionarFilaConValor(self.wb_tv_partitions, len(self.lParti) , 0 , particion.device)
-        self.seleccionarFilaConValor(self.wb_tv_games, len(self.lJuegos_filtrada) , 0 , juego.idgame)
+        self.seleccionarFilaConValor(self.wb_tv_games, len(self.lJuegos) , 0 , juego.idgame)
         
     def mostrarError(self, error):
         self.alert('error',error)

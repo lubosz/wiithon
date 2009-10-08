@@ -591,7 +591,7 @@ Brazilian Portuguese: Alex Ant&#xE3;o &lt;alexcarlosantao@gmail.com&gt; [pt_BR.p
         <property name="visible">True</property>
         <property name="spacing">2</property>
         <child>
-          <object class="GtkLabel" id="label1">
+          <object class="GtkLabel" id="label234729478">
             <property name="height_request">2</property>
             <property name="visible">True</property>
           </object>
@@ -1081,7 +1081,7 @@ Brazilian Portuguese: Alex Ant&#xE3;o &lt;alexcarlosantao@gmail.com&gt; [pt_BR.p
           </packing>
         </child>
         <child internal-child="action_area">
-          <object class="GtkHButtonBox" id="dialog-action_area3">
+          <object class="GtkHButtonBox" id="dialog-action_area3274687234">
             <property name="visible">True</property>
             <property name="layout_style">end</property>
             <child>

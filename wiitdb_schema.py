@@ -85,7 +85,10 @@ class Companie(Base):
     def __repr__(self):
         return "%s - %s" % (self.code, self.name)
 
-Index('idUnico_companie', Companie.c.code, unique=True)
+try:
+    Index('idUnico_companie', Companie.code, unique=True)
+except:
+    Index('idUnico_companie', Companie.c.code, unique=True)
 
 ## EMPIEZA RATING
 
@@ -102,7 +105,10 @@ class RatingValue(Base):
     def __repr__(self):
         return "%s" % (self.valor)
 
-Index('idUnico_rating_value', RatingValue.c.idRatingType, RatingValue.c.valor, unique=True)
+try:
+    Index('idUnico_rating_value', RatingValue.idRatingType, RatingValue.valor, unique=True)
+except:
+    Index('idUnico_rating_value', RatingValue.c.idRatingType, RatingValue.c.valor, unique=True)
 
 class RatingContent(Base):
     __tablename__ = 'rating_content'
@@ -117,7 +123,10 @@ class RatingContent(Base):
     def __repr__(self):
         return "%s" % (self.valor)
         
-Index('idUnico_rating_content', RatingContent.c.idRatingType, RatingContent.c.valor, unique=True)
+try:
+    Index('idUnico_rating_content', RatingContent.idRatingType, RatingContent.valor, unique=True)
+except:
+    Index('idUnico_rating_content', RatingContent.c.idRatingType, RatingContent.c.valor, unique=True)
 
 class RatingType(Base):
     __tablename__ = 'rating_type'
@@ -133,8 +142,11 @@ class RatingType(Base):
 
     def __repr__(self):
         return "%s" % (self.tipo)
-        
-Index('idUnico_rating_type', RatingType.c.tipo, unique=True)
+
+try:
+    Index('idUnico_rating_type', RatingType.tipo, unique=True)
+except:
+    Index('idUnico_rating_type', RatingType.c.tipo, unique=True)
 
 rel_rating_content_juego = Table("rel_rating_content_juego", Base.metadata, 
     Column("idJuegoWIITDB", Integer, ForeignKey('juego_wiitdb.idJuegoWIITDB')),
@@ -152,8 +164,11 @@ class OnlineFeatures(Base):
 
     def __repr__(self):
         return "%s" % (self.valor)
-    
-Index('idUnico_online_features', OnlineFeatures.c.valor, unique=True)
+
+try:    
+    Index('idUnico_online_features', OnlineFeatures.valor, unique=True)
+except:
+    Index('idUnico_online_features', OnlineFeatures.c.valor, unique=True)
 
 rel_online_features_juego = Table("rel_online_features_juego", Base.metadata, 
     Column("idJuegoWIITDB", Integer, ForeignKey('juego_wiitdb.idJuegoWIITDB')),
@@ -183,7 +198,10 @@ class JuegoDescripcion(Base):
             value = util.decode(value)
         object.__setattr__(self, name, value)
 
-Index('idUnico_juego_descripcion', JuegoDescripcion.c.idJuegoWIITDB, JuegoDescripcion.c.lang, unique=True)
+try:
+    Index('idUnico_juego_descripcion', JuegoDescripcion.idJuegoWIITDB, JuegoDescripcion.lang, unique=True)
+except:
+    Index('idUnico_juego_descripcion', JuegoDescripcion.c.idJuegoWIITDB, JuegoDescripcion.c.lang, unique=True)
 
 class Rom(Base):
     __tablename__ = 'rom'
@@ -220,7 +238,10 @@ class Genero(Base):
     def __repr__(self):
         return "%s" % (self.nombre)
 
-Index('idUnico_genero', Genero.c.nombre, unique=True)
+try:
+    Index('idUnico_genero', Genero.nombre, unique=True)
+except:
+    Index('idUnico_genero', Genero.c.nombre, unique=True)
         
 rel_juego_genero = Table("rel_juego_genero", Base.metadata, 
     Column("idJuegoWIITDB", Integer, ForeignKey('juego_wiitdb.idJuegoWIITDB')),
@@ -240,8 +261,11 @@ class Accesorio(Base):
 
     def __repr__(self):
         return "%s %s" % (self.nombre, self.descripcion)
-        
-Index('idUnico_accesorio', Accesorio.c.nombre, unique=True)
+
+try:        
+    Index('idUnico_accesorio', Accesorio.nombre, unique=True)
+except:
+    Index('idUnico_accesorio', Accesorio.c.nombre, unique=True)
 
 rel_accesorio_juego_obligatorio = Table("rel_accesorio_juego_obligatorio", Base.metadata, 
     Column("idJuegoWIITDB", Integer, ForeignKey('juego_wiitdb.idJuegoWIITDB')),
@@ -360,7 +384,10 @@ class JuegoWIITDB(Base):
             buffer = "%s(%s+)" % ( self.rating_type.tipo,  self.rating_value.valor)
         return buffer
 
-Index('idUnico_juego_wiitdb', JuegoWIITDB.c.idgame, unique=True)
+try:
+    Index('idUnico_juego_wiitdb', JuegoWIITDB.idgame, unique=True)
+except:
+    Index('idUnico_juego_wiitdb', JuegoWIITDB.c.idgame, unique=True)
 
 class Juego(Base):
     __tablename__ = 'juego'
@@ -468,8 +495,11 @@ class Particion(Base):
             self.libre = float(cachos[1])
             self.total = float(cachos[2])
             session.commit()
-        
-Index('idUnico_particion', Particion.c.device, unique=True)
+
+try:        
+    Index('idUnico_particion', Particion.device, unique=True)
+except:
+    Index('idUnico_particion', Particion.c.device, unique=True)
 
 #############################################################################
 
