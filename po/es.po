@@ -12,6 +12,10 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #, python-format
+msgid " Esta seguro de formatear %s (S/N)? "
+msgstr ""
+
+#, python-format
 msgid "%d - Salir"
 msgstr ""
 
@@ -101,6 +105,9 @@ msgstr ""
 
 msgid "A continuacion se listan los juego que NO van a ser copiados por ya estar en la particion de destino"
 msgstr "A continuación se listan los juego que NO van a ser copiados por ya estar en la partición de destino"
+
+msgid "AUTENTIFICACION:"
+msgstr ""
 
 msgid "AYUDA_CLI"
 msgstr ""
@@ -324,6 +331,9 @@ msgstr ""
 msgid "ERROR, descargando alguna caratula"
 msgstr "ERROR, descargando alguna carátula"
 
+msgid "ERROR:"
+msgstr ""
+
 msgid "Editor:"
 msgstr ""
 
@@ -482,6 +492,9 @@ msgid "Hay mas de un juego de la Wii, deja solo 1 para eliminar la ambiguedad"
 msgstr "Hay más de un juego de la Wii, deja solo 1 para eliminar la ambigüedad"
 
 msgid "IDGAME"
+msgstr ""
+
+msgid "INFORMACION:"
 msgstr ""
 
 msgid "INFORME DE RESULTADOS"
@@ -677,6 +690,9 @@ msgstr "OK, todas las carátulas se han descargado"
 msgid "Online?"
 msgstr "¿OnLine?"
 
+msgid "PREGUNTA:"
+msgstr ""
+
 msgid "Particion"
 msgstr "Partición"
 
@@ -753,7 +769,7 @@ msgstr ""
 
 #, python-format
 msgid ""
-"Seguro que deseas descargar informacin de los juegos de WiiTDB?\n"
+"Seguro que deseas descargar informacion de los juegos de WiiTDB?\n"
 "\n"
 "%s"
 msgstr ""
@@ -809,6 +825,9 @@ msgstr "Tienes que seleccionar una partición WBFS para realizar esta acción"
 msgid "Titulo:"
 msgstr ""
 
+msgid "To enter location manually press <CTRL>+L"
+msgstr ""
+
 msgid "Todo metido en el HD correctamente"
 msgstr ""
 
@@ -823,6 +842,9 @@ msgstr ""
 
 msgid "Valor incorrecto"
 msgstr ""
+
+msgid "WARNING:"
+msgstr "ADVERTENCIA:"
 
 msgid "Wiithon 1.1"
 msgstr ""
@@ -858,9 +880,6 @@ msgstr ""
 msgid "gtk-close"
 msgstr ""
 
-msgid "gtk-ok"
-msgstr ""
-
 msgid "https://launchpad.net/wiithon"
 msgstr ""
 
@@ -877,10 +896,6 @@ msgid "s"
 msgstr ""
 
 msgid "wiithon no borra la ISO temporal, puedes borrarla si no la necesitas"
-msgstr ""
-
-#, python-format
-msgid " Esta seguro de formatear %s (S/N)? "
 msgstr ""
 
 #~ msgid "Se descargaran en 3D"

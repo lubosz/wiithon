@@ -9,6 +9,10 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #, python-format
+msgid " Esta seguro de formatear %s (S/N)? "
+msgstr ""
+
+#, python-format
 msgid "%d - Salir"
 msgstr ""
 
@@ -97,6 +101,9 @@ msgid "??"
 msgstr ""
 
 msgid "A continuacion se listan los juego que NO van a ser copiados por ya estar en la particion de destino"
+msgstr ""
+
+msgid "AUTENTIFICACION:"
 msgstr ""
 
 msgid "AYUDA_CLI"
@@ -275,6 +282,9 @@ msgstr ""
 msgid "ERROR, descargando alguna caratula"
 msgstr ""
 
+msgid "ERROR:"
+msgstr ""
+
 msgid "Editor:"
 msgstr ""
 
@@ -433,6 +443,9 @@ msgid "Hay mas de un juego de la Wii, deja solo 1 para eliminar la ambiguedad"
 msgstr ""
 
 msgid "IDGAME"
+msgstr ""
+
+msgid "INFORMACION:"
 msgstr ""
 
 msgid "INFORME DE RESULTADOS"
@@ -621,6 +634,9 @@ msgstr ""
 msgid "Online?"
 msgstr ""
 
+msgid "PREGUNTA:"
+msgstr ""
+
 msgid "Particion"
 msgstr ""
 
@@ -697,7 +713,7 @@ msgstr ""
 
 #, python-format
 msgid ""
-"Seguro que deseas descargar informacin de los juegos de WiiTDB?\n"
+"Seguro que deseas descargar informacion de los juegos de WiiTDB?\n"
 "\n"
 "%s"
 msgstr ""
@@ -744,6 +760,9 @@ msgstr ""
 msgid "Titulo:"
 msgstr ""
 
+msgid "To enter location manually press <CTRL>+L"
+msgstr ""
+
 msgid "Todo metido en el HD correctamente"
 msgstr ""
 
@@ -757,6 +776,9 @@ msgid "Usado"
 msgstr ""
 
 msgid "Valor incorrecto"
+msgstr ""
+
+msgid "WARNING:"
 msgstr ""
 
 msgid "Wiithon 1.1"
@@ -793,9 +815,6 @@ msgstr ""
 msgid "gtk-close"
 msgstr ""
 
-msgid "gtk-ok"
-msgstr ""
-
 msgid "https://launchpad.net/wiithon"
 msgstr ""
 
@@ -812,8 +831,4 @@ msgid "s"
 msgstr ""
 
 msgid "wiithon no borra la ISO temporal, puedes borrarla si no la necesitas"
-msgstr ""
-
-#, python-format
-msgid " Esta seguro de formatear %s (S/N)? "
 msgstr ""

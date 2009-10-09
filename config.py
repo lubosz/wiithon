@@ -11,7 +11,7 @@ import sys
 
 import util
 
-DEBUG = True
+DEBUG = False
 
 WIITHON_PATH = os.path.dirname(sys.argv[0])
 WIITHON_FILES = os.path.dirname(__file__)
@@ -22,9 +22,6 @@ WIITHON_FILES_RECURSOS_IMAGENES_ACCESORIO = os.path.join(WIITHON_FILES_RECURSOS_
 
 HOME_WIITHON_CARATULAS = os.path.join(WIITHON_FILES_RECURSOS_IMAGENES , 'caratulas')
 HOME_WIITHON_DISCOS = os.path.join(WIITHON_FILES_RECURSOS_IMAGENES , 'discos')
-
-#util.try_mkdir( HOME_WIITHON_CARATULAS )
-#util.try_mkdir( HOME_WIITHON_DISCOS 
 
 LOCALE = "/usr/share/locale/"
 WBFS_APP = os.path.join(WIITHON_FILES , "wiithon_wrapper")
@@ -45,8 +42,6 @@ URI_ENGINE = 'sqlite:///%s' % os.path.join(HOME_WIITHON_BDD, '%s%s.db' % (APP, V
 util.try_mkdir( HOME_WIITHON )
 util.try_mkdir( HOME_WIITHON_BDD )
 util.try_mkdir( HOME_WIITHON_LOGS )
-
-GLADE_ALERTA = "alerta"
 
 DETECTOR_WBFS = os.path.join( WIITHON_FILES , "wiithon_autodetectar.sh" )
 DETECTOR_WBFS_LECTOR = os.path.join( WIITHON_FILES , "wiithon_autodetectar_lector.sh" )

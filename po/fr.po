@@ -12,6 +12,10 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #, python-format
+msgid " Esta seguro de formatear %s (S/N)? "
+msgstr ""
+
+#, python-format
 msgid "%d - Salir"
 msgstr ""
 
@@ -101,6 +105,9 @@ msgstr ""
 
 msgid "A continuacion se listan los juego que NO van a ser copiados por ya estar en la particion de destino"
 msgstr "Les jeux suivants ne seront PAS copiés car ils existent dans la partition cible"
+
+msgid "AUTENTIFICACION:"
+msgstr ""
 
 msgid "AYUDA_CLI"
 msgstr "AYUDA_CLI"
@@ -278,6 +285,9 @@ msgstr "ERREUR lors du téléchargement %s.png"
 msgid "ERROR, descargando alguna caratula"
 msgstr "ERREUR, lors du téléchargement de jaquettes"
 
+msgid "ERROR:"
+msgstr ""
+
 msgid "Editor:"
 msgstr ""
 
@@ -440,6 +450,9 @@ msgstr "Plus d'un jeu Wii est présent, laissez-en un seul pour lever l'ambiguï
 
 msgid "IDGAME"
 msgstr "IDGAME"
+
+msgid "INFORMACION:"
+msgstr ""
 
 msgid "INFORME DE RESULTADOS"
 msgstr "SYNTHESE DES RESULTATS"
@@ -637,6 +650,9 @@ msgstr "OK, toutes les jaquettes ont été téléchargées"
 msgid "Online?"
 msgstr ""
 
+msgid "PREGUNTA:"
+msgstr ""
+
 msgid "Particion"
 msgstr "Partition"
 
@@ -713,7 +729,7 @@ msgstr "Copie des jeux suivants vers"
 
 #, python-format
 msgid ""
-"Seguro que deseas descargar informacin de los juegos de WiiTDB?\n"
+"Seguro que deseas descargar informacion de los juegos de WiiTDB?\n"
 "\n"
 "%s"
 msgstr ""
@@ -771,6 +787,9 @@ msgstr "Vous devez sélectionner une partition WBFS pour réaliser cette action"
 msgid "Titulo:"
 msgstr ""
 
+msgid "To enter location manually press <CTRL>+L"
+msgstr ""
+
 msgid "Todo metido en el HD correctamente"
 msgstr "Tout est OK sur le disque dur"
 
@@ -785,6 +804,9 @@ msgstr "Utilisé"
 
 msgid "Valor incorrecto"
 msgstr "Valeur incorrecte"
+
+msgid "WARNING:"
+msgstr ""
 
 msgid "Wiithon 1.1"
 msgstr ""
@@ -820,9 +842,6 @@ msgstr "gtk-cancel"
 msgid "gtk-close"
 msgstr ""
 
-msgid "gtk-ok"
-msgstr "gtk-ok"
-
 msgid "https://launchpad.net/wiithon"
 msgstr "https://launchpad.net/wiithon"
 
@@ -841,9 +860,8 @@ msgstr ""
 msgid "wiithon no borra la ISO temporal, puedes borrarla si no la necesitas"
 msgstr "wiithon ne supprime pas l'ISO temporaire, vous pouvez le faire si vous n'en avez pas besoin"
 
-#, python-format
-msgid " Esta seguro de formatear %s (S/N)? "
-msgstr ""
+#~ msgid "gtk-ok"
+#~ msgstr "gtk-ok"
 
 #~ msgid "0 Tareas"
 #~ msgstr "0 Tâches"

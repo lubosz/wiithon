@@ -7,6 +7,47 @@ import sys
 from wiitdb_xml import *
 from core import WiithonCORE
 
+
+##############################################
+import gtk
+
+window = gtk.Window(gtk.WINDOW_TOPLEVEL)
+window.connect("destroy", gtk.mainquit)
+window.set_border_width(0)
+
+# Set up the text widgets
+table = gtk.TextTagTable()
+buffer = gtk.TextBuffer(table)
+view = gtk.TextView(buffer)
+
+# Create a green-color tag
+green = buffer.create_tag("green")
+green.set_property("foreground", "green")
+
+# Apply the green tag to inserted text
+def bufferInsert(widget, event, *args):
+    end = widget.get_iter_at_mark(widget.get_insert())
+    start = end.copy()
+    start.backward_chars(args[1])
+    widget.apply_tag(green, start, end)
+    view.queue_draw()
+    gtk.mainiteration()
+    
+buffer.connect_after("insert-text", bufferInsert)
+
+# Create scrollbars around the TextView.
+scroll_window = gtk.ScrolledWindow()
+scroll_window.add(view)
+
+# Finish up.
+window.add(scroll_window)
+window.resize(400, 300)
+scroll_window.show()
+view.show()
+window.show()
+gtk.main()
+
+
 if False:
     core = WiithonCORE()
 
@@ -18,7 +59,7 @@ if False:
         print "Error al descomprimir"
     sys.exit(0)
 
-if True:
+if False:
     from wiitdb_schema import *
 
     db =        util.getBDD()

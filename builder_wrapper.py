@@ -53,4 +53,3 @@ class GtkBuilderWrapper:
                     return ret
 
             raise AttributeError, "%s: %s" % (str(self.__class__), exception)
-

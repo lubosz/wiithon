@@ -23,6 +23,7 @@ from fila_treeview import FilaTreeview
 from wiitdb_schema import Juego, Particion, JuegoWIITDB, JuegoDescripcion, Preferencia
 from informacion_gui import InformacionGuiPresentacion
 from selector_ficheros import SelectorFicheros
+from textview_custom import TextViewCustom
 
 db =        util.getBDD()
 session =   util.getSesionBDD(db)
@@ -155,6 +156,7 @@ class WiithonGUI(GtkBuilderWrapper):
         self.ocultarHBoxProgreso()
 
         self.wb_principal.set_icon_from_file(config.ICONO)
+        self.wb_principal.maximize()
         self.wb_principal.show()
 
         # conexion señales de la toolbar
@@ -604,7 +606,7 @@ class WiithonGUI(GtkBuilderWrapper):
                     sql = util.decode('idgame=="%s" and idParticion=="%d"' % (nuevoIDGAME , self.sel_parti.obj.idParticion))
                     juego = session.query(Juego).filter(sql).first()
                     if juego == None:
-                        if ( self.question(_('Advertencia de seguridad de renombrar desde IDGAME = ') + ('%s -> %s') % (self.sel_juego.obj.idgame , nuevoIDGAME)) == 1 ):
+                        if ( self.question(_('Advertencia de seguridad de renombrar desde IDGAME = ') + ('%s -> %s') % (self.sel_juego.obj.idgame , nuevoIDGAME)) ):
                             if self.core.renombrarIDGAME(self.sel_juego.obj , nuevoIDGAME):
                                 # modificamos el juego modificado de la BDD
                                 if self.sel_juego.obj != None:
@@ -665,80 +667,112 @@ class WiithonGUI(GtkBuilderWrapper):
         except AttributeError:
             pass
 
-    # test dialog
-    def alert(self, level, message):
-        # crear
-        confirmar = gtk.Dialog("Confirmacion", self.window, gtk.DIALOG_MODAL | gtk.DIALOG_DESTROY_WITH_PARENT,
-                     (gtk.STOCK_OK, gtk.RESPONSE_ACCEPT, gtk.STOCK_CANCEL, gtk.RESPONSE_REJECT))
+    '''
+    question
+    warning
+    info
+    error
+    '''
+    def alert(self, level, message, titulo = ''):
+        if level == 'question':
+            botones = (gtk.STOCK_OK, gtk.RESPONSE_ACCEPT, gtk.STOCK_CANCEL, gtk.RESPONSE_REJECT)
+        else:
+            botones = (gtk.STOCK_OK, gtk.RESPONSE_ACCEPT)
+        
+        confirmar = gtk.Dialog(titulo, self.wb_principal,
+                        gtk.DIALOG_MODAL | gtk.DIALOG_DESTROY_WITH_PARENT,
+                        botones)
+
+        if level == 'question':                
+            confirmar.set_default_response(gtk.RESPONSE_REJECT)
+        else:
+            confirmar.set_default_response(gtk.RESPONSE_ACCEPT)
+
+        # poner icono a la ventana
+        # 2º parametro: http://www.pygtk.org/docs/pygtk/gtk-constants.html#gtk-icon-size-constants
         logo = gtk.Image()
-        logo.set_from_stock(gtk.STOCK_DIALOG_QUESTION, 6)
-        icon = confirmar.render_icon(gtk.STOCK_DIALOG_QUESTION, 1)
+        if level == 'question':
+            const_stock_icon = gtk.STOCK_DIALOG_QUESTION
+            if titulo == '':
+                titulo = _("PREGUNTA:")
+        elif level == 'warning':
+            const_stock_icon = gtk.STOCK_DIALOG_WARNING
+            if titulo == '':
+                titulo = _("WARNING:")
+        elif level == 'error':
+            const_stock_icon = gtk.STOCK_DIALOG_ERROR
+            if titulo == '':
+                titulo = _("ERROR:")
+        elif level == 'auth':
+            const_stock_icon = gtk.STOCK_DIALOG_AUTHENTICATION
+            if titulo == '':
+                titulo = _("AUTENTIFICACION:")
+        else:
+            const_stock_icon = gtk.STOCK_DIALOG_INFO
+            if titulo == '':
+                titulo = _("INFORMACION:")
+
+        icon = confirmar.render_icon(const_stock_icon, gtk.ICON_SIZE_DIALOG)
         confirmar.set_icon(icon)
-        pregunta = gtk.Label(message)
+        logo.set_from_stock(const_stock_icon, gtk.ICON_SIZE_DIALOG)
 
-        h1 = gtk.HBox(False, 10)
+        h1 = gtk.HBox(homogeneous=False, spacing=10)
+        h1.pack_start(logo, expand=True, fill=False, padding=10)
+       
+        ###############################        
+        view = TextViewCustom()
+        margenes = view.nuevoTag("wide_margins", left_margin=8, right_margin=8)
+        letra_azul = view.nuevoTag("letra_azul", foreground="blue")
+        negrita = view.nuevoTag("negrita", weight=pango.WEIGHT_BOLD)
+        grande = view.nuevoTag("grande", rise=15 * pango.SCALE, size=15 * pango.SCALE)
+        letra_roja = view.nuevoTag("fondo_rojo", foreground="red")
+        peque = view.nuevoTag("peque", rise=10 * pango.SCALE, size=10 * pango.SCALE)
+        subrayado = view.nuevoTag("underline",underline=pango.UNDERLINE_SINGLE)
+        
+        margenes.activar()
+        letra_azul.activar()
+        grande.activar()
+        subrayado.activar()
+        view.imprimirln(titulo)
+        subrayado.desactivar()
+        grande.desactivar()
+        letra_azul.desactivar()
+        
+        letra_roja.activar()
+        view.imprimirln(message)
+        letra_roja.desactivar()
+        margenes.desactivar()
+        
+        sw1 = gtk.ScrolledWindow()
+        sw1.set_policy(gtk.POLICY_AUTOMATIC, gtk.POLICY_AUTOMATIC)
+        sw1.set_size_request(600, 140)
+        sw1.add(view)
 
-        # añadir
-        h1.pack_start(logo, True, False, 10)
-        h1.pack_start(pregunta, True, False, 10)
+        h1.pack_start(sw1, expand=True, fill=False, padding=10)
+
+        ###############################
 
         confirmar.vbox.pack_start(h1, True, False, 10)
 
-        # mostrar
         confirmar.show_all()
-        response  = confirmar.run()
+        respuesta  = confirmar.run()
         confirmar.destroy()
-        if response == gtk.RESPONSE_ACCEPT:
-            print "OK!"
 
-    def alert2(self, level, message):
-        level_icons = {
-                'question': gtk.STOCK_DIALOG_QUESTION,
-                'info':     gtk.STOCK_DIALOG_INFO,
-                'warning':  gtk.STOCK_DIALOG_WARNING,
-                'error':    gtk.STOCK_DIALOG_ERROR,
-                }
-
-        level_buttons = {
-                'question': (gtk.STOCK_YES, gtk.STOCK_NO),
-                'info':     (gtk.STOCK_APPLY, None),
-                'warning':  (gtk.STOCK_APPLY, None),
-                'error':    (gtk.STOCK_CLOSE, None),
-                }
-
-        alert_glade = gtk.Builder()
-        alert_glade.add_from_file( os.path.join(config.WIITHON_FILES_RECURSOS_GLADE  , "%s.ui" % config.GLADE_ALERTA) )
-        alert_glade.set_translation_domain( config.APP )
-        
-        alert_msg = alert_glade.get_object('lbl_message')
-        alert_msg.set_text(message)
-
-        # configure the icon to display
-        img = alert_glade.get_object('img_alert')
-
-        try:
-            img.set_from_stock(level_icons[level], gtk.ICON_SIZE_DIALOG)
-        except IndexError:
-            img.set_from_stock(level_icons['info'], gtk.ICON_SIZE_DIALOG)
-
-        # configure the buttons
-        btn_ok = alert_glade.get_object('btn_ok')
-        btn_no = alert_glade.get_object('btn_no')
-
-        if level_buttons[level][0]:
-            btn_ok.set_label(level_buttons[level][0])
-        else:
-            btn_ok.set_visible(False)
-
-        if level_buttons[level][1]:
-            btn_no.set_label(level_buttons[level][1])
-        else:
-            btn_no.hide()
-
-        alert_glade.get_object(config.GLADE_ALERTA).set_title(level)
-        res = alert_glade.get_object(config.GLADE_ALERTA).run()
-        alert_glade.get_object(config.GLADE_ALERTA).hide()
-        return res
+        if config.DEBUG:
+            print "gtk.RESPONSE_NONE = %d" % gtk.RESPONSE_NONE
+            print "gtk.RESPONSE_REJECT = %d" % gtk.RESPONSE_REJECT
+            print "gtk.RESPONSE_ACCEPT = %d" % gtk.RESPONSE_ACCEPT
+            print "gtk.RESPONSE_DELETE_EVENT = %d" % gtk.RESPONSE_DELETE_EVENT
+            print "gtk.RESPONSE_OK = %d" % gtk.RESPONSE_OK
+            print "gtk.RESPONSE_CANCEL = %d" % gtk.RESPONSE_CANCEL
+            print "gtk.RESPONSE_CLOSE = %d" % gtk.RESPONSE_CLOSE
+            print "gtk.RESPONSE_YES = %d" % gtk.RESPONSE_YES
+            print "gtk.RESPONSE_NO = %d" % gtk.RESPONSE_NO
+            print "gtk.RESPONSE_APPLY = %d" % gtk.RESPONSE_APPLY
+            print "gtk.RESPONSE_HELP = %d" % gtk.RESPONSE_HELP
+            print "RESPUESTA = %d" % respuesta
+            
+        return respuesta == gtk.RESPONSE_ACCEPT
 
     def question(self, pregunta):
         return self.alert('question', pregunta)
@@ -1192,7 +1226,7 @@ class WiithonGUI(GtkBuilderWrapper):
                         pregunta += "\n%s" % _("Empezar a copiar?")
                         
                     if len(juegosParaClonar) > 0:
-                        if((self.question(pregunta) == 1)):
+                        if((self.question(pregunta))):
                             self.poolTrabajo.nuevoTrabajoClonar( juegosParaClonar, device_destino )
                 else:
                     self.alert('info',_("No hay nada que copiar a %s") % (device_destino))
@@ -1202,7 +1236,7 @@ class WiithonGUI(GtkBuilderWrapper):
         elif(id_tb == self.wb_tb_borrar):
             if self.sel_juego.it != None:
                 
-                if( self.question(_('Quieres borrar el juego: %s?') % (self.sel_juego.obj)) == 1 ):
+                if( self.question(_('Quieres borrar el juego: %s?') % (self.sel_juego.obj)) ):
                     # borrar del HD
                     if self.core.borrarJuego( self.sel_juego.obj ):
                         
@@ -1245,7 +1279,7 @@ class WiithonGUI(GtkBuilderWrapper):
 
                     reemplazar = False
                     if self.core.existeExtraido(self.sel_juego.obj , fc_extraer.get_filename()):
-                        if( self.question(_('Desea reemplazar la iso del juego %s?') % (self.sel_juego.obj)) == 1 ):
+                        if( self.question(_('Desea reemplazar la iso del juego %s?') % (self.sel_juego.obj)) ):
                             reemplazar = True
                     else:
                         reemplazar = True
@@ -1379,7 +1413,7 @@ class WiithonGUI(GtkBuilderWrapper):
 ########## WIITDB ###########
                 
     def on_tb_actualizar_wiitdb_clicked(self, boton):
-        if (self.question(_('Seguro que deseas descargar informacion de los juegos de WiiTDB?\n\n%s') % (config.URL_ZIP_WIITDB)) == 1):
+        if (self.question(_('Seguro que deseas descargar informacion de los juegos de WiiTDB?\n\n%s') % (config.URL_ZIP_WIITDB)) ):
             self.poolTrabajo.nuevoTrabajoActualizarWiiTDB(config.URL_ZIP_WIITDB)
         
     def callback_empieza_importar(self, xml):
