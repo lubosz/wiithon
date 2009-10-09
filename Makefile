@@ -1,7 +1,7 @@
 PREFIX=/usr/local
 
 EMAIL="makiolo@gmail.com"
-VERSION=${shell cat VERSION}
+VERSION=${shell cat doc/VERSION}
 REVISION=${shell bzr revno}
 
 PREFIX_RECURSOS_IMAGENES_CARATULAS=$(PREFIX)/share/wiithon/recursos/imagenes/caratulas
@@ -93,6 +93,7 @@ install: uninstall
 	chmod 777 $(PREFIX_RECURSOS_IMAGENES_DISCOS)
 
 	-ln -sf $(PREFIX)/share/wiithon/wiithon.py $(PREFIX)/bin/wiithon
+	-ln -sf $(PREFIX)/share/wiithon/wiithon_wrapper $(PREFIX)/bin/wiithon_wrapper
 
 	@echo "=================================================================="
 	@echo "Wiithon Install OK"
@@ -202,7 +203,8 @@ clean: clean_libwbfs_binding clean_gettext clean_unrar
 	$(RM) *.pyc
 	$(RM) *~
 	$(RM) po/*~
-	touch po/*.pot
+	# touch po/*.pot
+	$(RM) po/plantilla.pot
 
 clean_gettext:
 	-$(RM) po/locale/en/LC_MESSAGES/wiithon.mo

@@ -573,12 +573,10 @@ Ricardo Marmolejo Garc&#xED;a
 E-mail: makiolo@gmail.com
 Userid: makiolo
 
-Jos&#xE9;-Luis Segura
-E-mail: josel.segura@gmail.com
-Userid: LK2
-
 Colaboradores:
+Jos&#xE9;-Luis Segura josel.segura@gmail.com
 Sergio Padrino &lt;sergio.padrino@gmail.com&gt;
+Carlo Mandelli &lt;camandel@gmail.com&gt;
 </property>
     <property name="documenters">Ricardo Marmolejo Garc&#xED;a &lt;makiolo@gmail.com&gt;
 Jos&#xE9;-Luis Segura &lt;josel.segura@gmail.com&gt;</property>
@@ -588,6 +586,7 @@ English: Koen Maes &lt;whacker@gmail.com&gt; [en.po]
 Dutch: Koen Maes &lt;whacker@gmail.com&gt; [nl_NL.po]
 German: Speedygonzales (Markus Gewiss) &lt;fcpower78@googlemail.com&gt; [de.po]
 Brazilian Portuguese: Alex Ant&#xE3;o &lt;alexcarlosantao@gmail.com&gt; [pt_BR.po]
+Italian: Carlo Mandelli &lt;camandel@gmail.com&gt; [it.po]
 </property>
     <child internal-child="vbox">
       <object class="GtkVBox" id="dialog-vbox3">

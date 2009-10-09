@@ -75,7 +75,7 @@ class WiithonCLI:
             listaParticiones = self.core.getListaParticiones(config.DETECTOR_WBFS_FAT32)
             self.sel_parti = self.get_elegir_particion(listaParticiones)
             try:
-                respuesta = raw_input(_("¿ Esta seguro de formatear %s (S/N)? ") % self.sel_parti)
+                respuesta = raw_input(_(" Esta seguro de formatear %s (S/N)? ") % self.sel_parti)
                 if respuesta.lower() == _("s"):
                     if self.core.formatearWBFS(self.sel_parti):
                         print _("%s se ha formateado correctamente") % self.sel_parti

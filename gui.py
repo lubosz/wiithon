@@ -508,7 +508,7 @@ class WiithonGUI(GtkBuilderWrapper):
         tv_games.append_column(columna5)# Local
         tv_games.append_column(columna6)# Fecha
         tv_games.append_column(columna7)# Rating
-        #tv_games.append_column(columna8)# Device
+        tv_games.append_column(columna8)# Device
         tv_games.append_column(columna3)# Tamaño
 
         tv_games.connect('cursor-changed', self.on_tv_games_cursor_changed)
@@ -665,7 +665,33 @@ class WiithonGUI(GtkBuilderWrapper):
         except AttributeError:
             pass
 
+    # test dialog
     def alert(self, level, message):
+        # crear
+        confirmar = gtk.Dialog("Confirmacion", self.window, gtk.DIALOG_MODAL | gtk.DIALOG_DESTROY_WITH_PARENT,
+                     (gtk.STOCK_OK, gtk.RESPONSE_ACCEPT, gtk.STOCK_CANCEL, gtk.RESPONSE_REJECT))
+        logo = gtk.Image()
+        logo.set_from_stock(gtk.STOCK_DIALOG_QUESTION, 6)
+        icon = confirmar.render_icon(gtk.STOCK_DIALOG_QUESTION, 1)
+        confirmar.set_icon(icon)
+        pregunta = gtk.Label(message)
+
+        h1 = gtk.HBox(False, 10)
+
+        # añadir
+        h1.pack_start(logo, True, False, 10)
+        h1.pack_start(pregunta, True, False, 10)
+
+        confirmar.vbox.pack_start(h1, True, False, 10)
+
+        # mostrar
+        confirmar.show_all()
+        response  = confirmar.run()
+        confirmar.destroy()
+        if response == gtk.RESPONSE_ACCEPT:
+            print "OK!"
+
+    def alert2(self, level, message):
         level_icons = {
                 'question': gtk.STOCK_DIALOG_QUESTION,
                 'info':     gtk.STOCK_DIALOG_INFO,
@@ -1353,7 +1379,7 @@ class WiithonGUI(GtkBuilderWrapper):
 ########## WIITDB ###########
                 
     def on_tb_actualizar_wiitdb_clicked(self, boton):
-        if (self.question(_('Seguro que deseas descargar información de los juegos de WiiTDB?\n\n%s') % (config.URL_ZIP_WIITDB)) == 1):
+        if (self.question(_('Seguro que deseas descargar informacion de los juegos de WiiTDB?\n\n%s') % (config.URL_ZIP_WIITDB)) == 1):
             self.poolTrabajo.nuevoTrabajoActualizarWiiTDB(config.URL_ZIP_WIITDB)
         
     def callback_empieza_importar(self, xml):

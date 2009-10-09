@@ -348,7 +348,7 @@ def descomprimirZIP(file_in, file_out):
         zip = zipfile.ZipFile(file_in)
         zip.extract(file_out)
         zip.close()
-    except ImportError:
+    except:
         comando = "unzip %s" % (file_in)
         subprocess.call( comando , shell=True , stdout=open("/dev/null" , "w"), stderr=subprocess.STDOUT )
 
