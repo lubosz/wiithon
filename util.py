@@ -80,7 +80,7 @@ def getSTDOUT_NOERROR_iterador(comando):
     out = p.stdout.readlines()
     return out
 
-def getSTDOUT(comando , mostrarError = True):
+def getSTDOUT(comando , mostrarError = False):
     if mostrarError:
         out = getSTDOUT_iterador(comando)
     else:
@@ -94,12 +94,15 @@ def escribir(f , texto):
     f.write(texto + "\n")
     f.flush()
 
+'''
 def getUltimaLinea(fichero):
     f = open( fichero , "r")
     ultimaLinea = ""
     for linea in file.readlines():
         ultimaLinea = linea
+    f.close()
     return ultimaLinea
+'''
 
 def try_mkdir(carpeta):
     if not os.path.exists(carpeta):
@@ -183,7 +186,6 @@ try:
                 return True
 
             self.__clipboard.set_text(str(self.get_text()))
-
 
 except ImportError:
     #logging.warning("There is no python-sexy available. fallback to standard gtk.")
@@ -339,3 +341,40 @@ def getSesionBDD(db):
     Session = scoped_session(sessionmaker(bind=db, autoflush=True, transactional = True))
     session = Session()
     return session
+
+def descomprimirZIP(file_in, file_out):
+    try:
+        import zipfile
+        zip = zipfile.ZipFile(file_in)
+        zip.extract(file_out)
+        zip.close()
+    except ImportError:
+        comando = "unzip %s" % (file_in)
+        subprocess.call( comando , shell=True , stdout=open("/dev/null" , "w"), stderr=subprocess.STDOUT )
+
+def call_out_file(comando):
+    try:
+        salida = subprocess.call( comando , shell=True , stderr=subprocess.STDOUT , stdout=open(config.HOME_WIITHON_LOGS_PROCESO , "w") )
+        return salida == 0
+    except KeyboardInterrupt:
+        return False
+    except TypeError:
+        return False
+
+def call_out_null(comando):
+    try:
+        salida = subprocess.call( comando , shell=True , stderr=subprocess.STDOUT , stdout=open("/dev/null" , "w") )
+        return salida == 0
+    except KeyboardInterrupt:
+        return False
+    except TypeError:
+        return False
+
+def call_out_screen(comando):
+    try:
+        salida = subprocess.call( comando , shell=True , stderr=subprocess.STDOUT)
+        return salida == 0
+    except KeyboardInterrupt:
+        return False
+    except TypeError:
+        return False

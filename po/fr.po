@@ -81,9 +81,6 @@ msgstr ""
 msgid "+Info"
 msgstr ""
 
-msgid "0 Tareas"
-msgstr "0 Tâches"
-
 msgid "1 juego sin caratula"
 msgstr ""
 
@@ -707,12 +704,6 @@ msgstr ""
 msgid "Saliendo por peticion del usuario."
 msgstr "Sortie à la demande de l'utilisateur."
 
-msgid "Se descargaran en 3D"
-msgstr "Elles seront téléchargées en 3D"
-
-msgid "Se descargaran en formato paronamico"
-msgstr "Elles seront téléchargées en format panoramique"
-
 #, python-format
 msgid "Se han detectado caracteres no validos: %s"
 msgstr "Caractères invalides : %s"
@@ -853,6 +844,15 @@ msgstr "wiithon ne supprime pas l'ISO temporaire, vous pouvez le faire si vous n
 #, python-format
 msgid " Esta seguro de formatear %s (S/N)? "
 msgstr ""
+
+#~ msgid "0 Tareas"
+#~ msgstr "0 Tâches"
+
+#~ msgid "Se descargaran en 3D"
+#~ msgstr "Elles seront téléchargées en 3D"
+
+#~ msgid "Se descargaran en formato paronamico"
+#~ msgstr "Elles seront téléchargées en format panoramique"
 
 #~ msgid "Advertencia de seguridad de renombrar desde IDGAME = %s a %s"
 #~ msgstr ""

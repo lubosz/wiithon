@@ -1,5 +1,4 @@
 char *s = N_("+INFO");
-char *s = N_("0 Tareas");
 char *s = N_("Accesorios:");
 char *s = N_("Acerca de ...");
 char *s = N_("Aniadir directorio");

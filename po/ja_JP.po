@@ -80,9 +80,6 @@ msgstr ""
 msgid "+Info"
 msgstr ""
 
-msgid "0 Tareas"
-msgstr ""
-
 msgid "1 juego sin caratula"
 msgstr ""
 
@@ -691,12 +688,6 @@ msgid "SI, 1j."
 msgstr ""
 
 msgid "Saliendo por peticion del usuario."
-msgstr ""
-
-msgid "Se descargaran en 3D"
-msgstr ""
-
-msgid "Se descargaran en formato paronamico"
 msgstr ""
 
 #, python-format

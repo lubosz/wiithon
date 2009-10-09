@@ -81,9 +81,6 @@ msgstr ""
 msgid "+Info"
 msgstr ""
 
-msgid "0 Tareas"
-msgstr ""
-
 msgid "1 juego sin caratula"
 msgstr ""
 
@@ -747,12 +744,6 @@ msgstr ""
 msgid "Saliendo por peticion del usuario."
 msgstr "Saliendo por petición del usuario."
 
-msgid "Se descargaran en 3D"
-msgstr "Se descargarán en 3D"
-
-msgid "Se descargaran en formato paronamico"
-msgstr "Se descargarán en formato paronámico"
-
 #, python-format
 msgid "Se han detectado caracteres no validos: %s"
 msgstr "Se han detectado carácteres no válidos: %s"
@@ -891,6 +882,12 @@ msgstr ""
 #, python-format
 msgid " Esta seguro de formatear %s (S/N)? "
 msgstr ""
+
+#~ msgid "Se descargaran en 3D"
+#~ msgstr "Se descargarán en 3D"
+
+#~ msgid "Se descargaran en formato paronamico"
+#~ msgstr "Se descargarán en formato paronámico"
 
 #~ msgid "Advertencia de seguridad de renombrar desde IDGAME = %s a %s"
 #~ msgstr ""

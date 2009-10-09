@@ -317,10 +317,10 @@ class WiithonGUI(GtkBuilderWrapper):
             for juego in session.query(Juego).order_by('idParticion, lower(title)'):
 
                 if not self.core.existeCaratula(juego.idgame):
-                    self.poolBash.nuevoTrabajoDescargaCaratula( juego )
+                    self.poolBash.nuevoTrabajoDescargaCaratula( juego.idgame )
 
                 if not self.core.existeDisco(juego.idgame):
-                    self.poolBash.nuevoTrabajoDescargaDisco( juego )
+                    self.poolBash.nuevoTrabajoDescargaDisco( juego.idgame )
             #
             ##################################################################################
             
@@ -608,7 +608,9 @@ class WiithonGUI(GtkBuilderWrapper):
                             if self.core.renombrarIDGAME(self.sel_juego.obj , nuevoIDGAME):
                                 # modificamos el juego modificado de la BDD
                                 if self.sel_juego.obj != None:
+                                    # cambiar idgame de la bdd
                                     self.sel_juego.obj.idgame = nuevoIDGAME
+                                    session.commit()
 
                                     # Refrescamos del modelo la columna modificada
                                     self.tv_games_modelo.set_value(self.sel_juego.it , 0 ,nuevoIDGAME)
@@ -627,7 +629,10 @@ class WiithonGUI(GtkBuilderWrapper):
                     if not util.tieneCaracteresRaros(nuevoNombre , util.BLACK_LIST2):
                         if self.core.renombrarNOMBRE(self.sel_juego.obj , nuevoNombre):
                             if self.sel_juego.obj != None:
+                                # cambiar nombre en la bdd
                                 self.sel_juego.obj.title = nuevoNombre
+                                session.commit()
+
                                 # Refrescamos del modelo la columna modificada
                                 self.tv_games_modelo.set_value(self.sel_juego.it , 1 , nuevoNombre)
                         else:
@@ -808,7 +813,7 @@ class WiithonGUI(GtkBuilderWrapper):
         particion = self.sel_parti.obj
         if particion != None:            
 
-            particion.refrescarEspacioLibreUsado()
+            #particion.refrescarEspacioLibreUsado()
 
             self.info.arriba_usado = particion.usado
             self.info.arriba_total = particion.total
@@ -828,6 +833,10 @@ class WiithonGUI(GtkBuilderWrapper):
                     sinCaratulas += 1
                 if not juego.tieneDiscArt:
                     sinDiscArt += 1
+                    
+            print numInfos
+            print sinCaratulas
+            print sinDiscArt
                     
             self.info.abajo_num_juegos_wiitdb = numInfos
             self.info.abajo_juegos_sin_caratula = sinCaratulas
@@ -1171,29 +1180,23 @@ class WiithonGUI(GtkBuilderWrapper):
                     # borrar del HD
                     if self.core.borrarJuego( self.sel_juego.obj ):
                         
-                        if session.query(Juego).filter('idgame=="%s"' % self.sel_juego.obj.idgame).count() <= 0:
+                        # borrar caratulas no usadas
+                        if session.query(Juego).filter('idgame=="%s"' % self.sel_juego.obj.idgame).count() == 1:
+
                             # borrar disco
                             self.core.borrarDisco( self.sel_juego.obj )
 
                             # borrar caratula
                             self.core.borrarCaratula( self.sel_juego.obj )
                         
-                        # borrar de la tabla
-                        self.tv_games_modelo.remove( self.sel_juego.it )
-                        
-                        # Borrar de las listas                        
-                        self.lJuegos.remove( self.sel_juego.obj )
-                        
+                        # borrar de la bdd
                         session.delete(self.sel_juego.obj)
-                        
-                        # recargar modelo de datos
-                        self.refrescarModeloJuegos( self.lJuegos )
-                        
-                        # refrescar numero de juegos, etc ...
-                        self.refrescarEspacio()
                         
                         # go
                         session.commit()
+                        
+                        # Selecciona el primer juego
+                        self.seleccionarFilaConValor(self.wb_tv_partitions, len(self.lParti) , 0 , self.sel_parti.obj.device)
 
                     else:
                         self.alert("warning" , _("Error borrando"))
@@ -1285,8 +1288,16 @@ class WiithonGUI(GtkBuilderWrapper):
                                 sql = util.decode("idgame=='%s' and idParticion=='%d'" % (idgame , self.sel_parti.obj.idParticion))
                                 self.juegoNuevo = session.query(Juego).filter(sql).first()
                                 if self.juegoNuevo == None:
+
                                     # vamos descargando info wiitdb
                                     self.poolBash.nuevoTrabajoActualizarWiiTDB('%s?ID=%s' % (config.URL_ZIP_WIITDB, idgame))
+
+                                    # vamos descargando caratulas
+                                    if not self.core.existeCaratula(idgame):
+                                        self.poolBash.nuevoTrabajoDescargaCaratula( idgame )
+
+                                    if not self.core.existeDisco(idgame):
+                                        self.poolBash.nuevoTrabajoDescargaDisco( idgame )
 
                                     listaISO.append(fichero)
                                 else:
@@ -1415,28 +1426,33 @@ class WiithonGUI(GtkBuilderWrapper):
 
         # consultamos al wiithon wrapper info sobre el juego con nueva IDGAME
         # lo añadimos a la lista
-        juego = self.core.getInfoJuego(DEVICE, IDGAME)
-        self.lJuegos.append(juego)
+        juegoNuevo = self.core.getInfoJuego(DEVICE, IDGAME)
 
-        # seleccionamos la particion y la fila del juego añadido
-        self.seleccionarFilaConValor(self.wb_tv_partitions, len(self.lParti) , 0 , DEVICE)
-        self.seleccionarFilaConValor(self.wb_tv_games, len(self.lJuegos) , 0 , IDGAME)
-        
-        # vamos descargando caratulas
-        if not self.core.existeCaratula(IDGAME):
-            self.poolBash.nuevoTrabajoDescargaCaratula( juego )
-
-        if not self.core.existeDisco(IDGAME):
-            self.poolBash.nuevoTrabajoDescargaDisco( juego )
+        # seleccionamos la particion y la fila del juego añadido       
+        self.seleccionarFilaConValor(self.wb_tv_partitions, len(self.lParti) , 0 , juegoNuevo.particion.device)
+        self.seleccionarFilaConValor(self.wb_tv_games, len(self.lJuegos) , 0 , juegoNuevo.idgame)
         
     def termina_trabajo_copiar(self, juego , particion):
         
-        juego = self.core.getInfoJuego(particion.device, juego.idgame)        
-        self.lJuegos.append(juego)
+        if config.DEBUG:
+            print "--------- juego origen ---------"
+            print juego
+            print "--------------------"
+            
+            print "--------- particion destino ---------"
+            print particion
+            print "--------------------"
+            
+        juegoNuevo = self.core.getInfoJuego(particion.device, juego.idgame)        
+        
+        if config.DEBUG:
+            print "--------- juego destino ---------"
+            print juegoNuevo
+            print "--------------------"
         
         # seleccionamos la particion y la fila del juego añadido
-        self.seleccionarFilaConValor(self.wb_tv_partitions, len(self.lParti) , 0 , particion.device)
-        self.seleccionarFilaConValor(self.wb_tv_games, len(self.lJuegos) , 0 , juego.idgame)
+        self.seleccionarFilaConValor(self.wb_tv_partitions, len(self.lParti) , 0 , juegoNuevo.particion.device)
+        self.seleccionarFilaConValor(self.wb_tv_games, len(self.lJuegos) , 0 , juegoNuevo.idgame)
         
     def mostrarError(self, error):
         self.alert('error',error)

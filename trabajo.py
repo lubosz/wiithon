@@ -130,15 +130,15 @@ class PoolTrabajo(Pool , Thread):
                 self.callback_termina_trabajo_copiar(trabajo, juego, particion)
 
         elif( trabajo.tipo == DESCARGA_CARATULA ):
-            juego = trabajo.origen
-            trabajo.exito = self.descargarCaratula(core , juego)
+            idgame = trabajo.origen
+            trabajo.exito = self.descargarCaratula(core , idgame)
 
             if self.callback_termina_trabajo_descargar_caratula:
                 self.callback_termina_trabajo_descargar_caratula(trabajo, juego)
 
         elif( trabajo.tipo == DESCARGA_DISCO ):
-            juego = trabajo.origen
-            trabajo.exito = self.descargarDisco(core , juego)
+            idgame = trabajo.origen
+            trabajo.exito = self.descargarDisco(core , idgame)
 
             if self.callback_termina_trabajo_descargar_disco:
                 self.callback_termina_trabajo_descargar_disco(trabajo, juego)
@@ -226,17 +226,17 @@ class PoolTrabajo(Pool , Thread):
 
         return exito
 
-    def descargarCaratula(self , core , juego):
-        return core.descargarCaratula( juego.idgame , config.TIPO_CARATULA )
+    def descargarCaratula(self , core , idgame):
+        return core.descargarCaratula(idgame)
 
-    def descargarDisco(self , core , juego):
-        return core.descargarDisco( juego.idgame )
+    def descargarDisco(self , core , idgame):
+        return core.descargarDisco(idgame)
 
     def copiarCaratula(self , core , juego, destino):
-        return core.copiarCaratula( juego, destino )
+        return core.copiarCaratula(juego, destino)
 
     def copiarDisco(self , core , juego, destino):
-        return core.copiarDisco( juego, destino )
+        return core.copiarDisco(juego, destino)
         
     def recorrerDirectorioYAnadir(self , core , directorio, particion):
 

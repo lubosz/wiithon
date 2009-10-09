@@ -81,9 +81,6 @@ msgstr ""
 msgid "+Info"
 msgstr ""
 
-msgid "0 Tareas"
-msgstr "0 Aufgaben"
-
 msgid "1 juego sin caratula"
 msgstr ""
 
@@ -702,12 +699,6 @@ msgstr ""
 msgid "Saliendo por peticion del usuario."
 msgstr "Abbruch durch Benutzer."
 
-msgid "Se descargaran en 3D"
-msgstr "Wird runtergeladen in 3D"
-
-msgid "Se descargaran en formato paronamico"
-msgstr "Wird runtergeladen im Breitbildformat"
-
 #, python-format
 msgid "Se han detectado caracteres no validos: %s"
 msgstr "Werte ungültig: %s"
@@ -837,6 +828,15 @@ msgstr "Wiithon entfernt die temporäre ISO Datei nicht, Sie können Sie entfern
 #, python-format
 msgid " Esta seguro de formatear %s (S/N)? "
 msgstr ""
+
+#~ msgid "0 Tareas"
+#~ msgstr "0 Aufgaben"
+
+#~ msgid "Se descargaran en 3D"
+#~ msgstr "Wird runtergeladen in 3D"
+
+#~ msgid "Se descargaran en formato paronamico"
+#~ msgstr "Wird runtergeladen im Breitbildformat"
 
 #~ msgid "Advertencia de seguridad de renombrar desde IDGAME = %s a %s"
 #~ msgstr ""

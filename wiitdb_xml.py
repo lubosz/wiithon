@@ -7,7 +7,6 @@ import libxml2
 import datetime
 from threading import Thread
 from datetime import date
-import zipfile
 
 import config
 import util
@@ -82,34 +81,20 @@ class WiiTDBXML(Thread):
     def descomprimirZIP(self):
         if self.callback_empieza_descomprimir:
             self.callback_empieza_descomprimir(self.destino)
-        # descargar XML
-        zip = zipfile.ZipFile(self.destino)
-        zip.extract(self.fichXML)
-        zip.close()
-        
+
+        util.descomprimirZIP(self.destino, self.fichXML)
+
     def run(self):
         self.limpiarTemporales()
         
         self.descargarZIP()
         self.descomprimirZIP()
 
-        #transicion = session.create_transaction() 
-        # empieza transacion
-        #session.begin()
         if os.path.exists(self.fichXML):
             xmldoc = libxml2.parseFile(self.fichXML)
             ctxt = xmldoc.xpathNewContext()
             nodo = ctxt.xpathEval("//*[name() = 'datafile']")[0]
-            
-            '''
-            try:
-                metadatos = Base.metadata
-                db = util.getBDD()
-                metadatos.drop_all(db)
-                metadatos.create_all(db)
-            except:
-                self.error_importando(_("Base de datos ocupada."))
-            '''
+
             if self.callback_empieza_importar:
                 self.callback_empieza_importar(self.fichXML)
 
@@ -228,11 +213,11 @@ class WiiTDBXML(Thread):
                                                 sql = util.decode("idRatingType=='%s' and valor=='%s'" % (rating_type.idRatingType , valor))
                                                 rating_value = session.query(RatingValue).filter(sql).first()
                                                 if rating_value == None:
-                                                    rating_value = RatingValue(valor)                                        
+                                                    rating_value = RatingValue(valor)
                                                     rating_type.valores.append(rating_value)
-                                                    
+
                                                 juego.rating_value = rating_value
-                                                    
+
                                                 if nodo.children is not None:
                                                     nodo = nodo.children
                                                     while nodo.next is not None:
@@ -247,7 +232,7 @@ class WiiTDBXML(Thread):
                                                                     if rating_content == None:
                                                                         rating_content = RatingContent(valor)
                                                                         rating_type.contenidos.append(rating_content)
-                                                                        
+
                                                                     juego.rating_contents.append(rating_content)
 
                                                         nodo = nodo.next
@@ -273,7 +258,7 @@ class WiiTDBXML(Thread):
                                                                     juego.features.append(online_feature)
                                                         nodo = nodo.next
                                                     nodo = nodo.parent
-                                                
+
                                             elif nodo.name == "input":
                                                 juego.input_players = self.leerAtributo(nodo, 'players')
 
@@ -410,15 +395,15 @@ class WiiTDBXML(Thread):
         while attr != None:
             if attr.name == atributo:
                 valor = attr.content
-            attr = attr.next    
+            attr = attr.next
         return valor
 
     def error_importando(self, motivo):
         self.interrumpir()
-        #session.rollback()
+        session.rollback()
         self.limpiarTemporales()
         if self.callback_error_importando:
-            self.callback_error_importando(self, self.fichXML, motivo)
+            self.callback_error_importando(self.fichXML, motivo)
 
     def interrumpir(self):
         self.salir = True

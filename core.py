@@ -8,16 +8,15 @@ import time
 import commands
 from Queue import Queue
 from threading import Thread
-import subprocess
 
 import gtk
 import gettext
 import shutil
 
 import util
+import config
 from util import NonRepeatList, SintaxisInvalida
 from wiitdb_schema import Juego, Particion
-import config
 
 db =        util.getBDD()
 session =   util.getSesionBDD(db)
@@ -25,13 +24,11 @@ session =   util.getSesionBDD(db)
 class WiithonCORE:
 
     def syncronizarJuegos(self , particion):
-
         comando = "%s -p %s ls" % (config.WBFS_APP, particion.device)
-        lineas = util.getSTDOUT_iterador( comando )
+        lineas = util.getSTDOUT_NOERROR_iterador( comando )
         salida = []
         for linea in lineas:
             cachos = linea.strip().split(config.SEPARADOR)
-
             idgame = util.decode(cachos[0])
             sql = util.decode("idgame=='%s' and idParticion='%s'" % (idgame, particion.idParticion))
             juego = session.query(Juego).filter(sql).first()
@@ -41,23 +38,22 @@ class WiithonCORE:
                     session.save(juego)
                 except SintaxisInvalida:
                     continue
+                '''
             else:
                 session.update(juego)
+                '''
 
-            juego.particion = particion
+                juego.particion = particion
 
             salida.append(juego)
-        
+
         session.commit()
 
         return salida
-        
-        
+
+
     # Devuelve la lista de particiones
     def sincronizarParticiones(self, detector = config.DETECTOR_WBFS):
-
-        #session.execute('DELETE FROM rel_particion_juego where idParticion = "%d"' % particion.idParticion)
-        #session.execute('DELETE FROM rel_particion_juego')
 
         salida = util.getSTDOUT_NOERROR_iterador(detector)
 
@@ -66,20 +62,18 @@ class WiithonCORE:
         for linea in salida:
             if linea.find("/dev/") != -1:
                 cachos = linea.strip().split(config.SEPARADOR)
-
                 device = util.decode(cachos[0])
-                
                 particion = self.getParticion(device)
-                
                 if particion == None:
                     try:
                         particion = Particion(cachos)
                         session.save(particion)
                     except SintaxisInvalida:
                         continue
+                    '''
                 else:
                     session.update(particion)
-
+                    '''
                 listaParticiones.append(particion)
 
         session.commit()
@@ -99,70 +93,77 @@ class WiithonCORE:
         sql = util.decode("device=='%s'" % (DEVICE))
         particion = session.query(Particion).filter(sql).first()
         return particion
-        
+    
+    '''
     def getJuego(self, DEVICE, IDGAME):
         sql = util.decode("particion.device='%s' and juego.idgame=='%s'" % (DEVICE, IDGAME))
         juego = session.query(Juego,Particion).filter(sql).first()        
         if juego != None:
             juego = juego[0]
         return juego
-    
+    '''
+
     def getInfoJuego(self, DEVICE, IDGAME):
-        
         particion = self.getParticion(DEVICE)
+        print particion
         if particion != None:
-            
-            comando = "%s -p %s ls %s" % (config.WBFS_APP, particion.device, IDGAME)
+            comando = "%s -p %s ls %s" % (config.WBFS_APP, DEVICE, IDGAME)
             linea = util.getSTDOUT( comando )
-
             cachos = linea.strip().split(config.SEPARADOR)
-
-            juego = self.getJuego(particion.device, IDGAME)
-            if juego == None:
-                juego = Juego(cachos)
-                session.save(juego)
-            else:
-                session.update(juego)
-
+            print cachos
+            juego = Juego(cachos)
             juego.particion = particion
-            
+            session.save(juego)
+            print session
+            print juego
             session.commit()
-
             return juego
-
         else:
             return None
 
+    '''
+    def getJuego(self, particion, IDGAME):
+        sql = util.decode("particion.idParticion='%d' and juego.idgame=='%s'" % (particion.idParticion, IDGAME))
+        juego = session.query(Juego,Particion).filter(sql).first()        
+        if juego != None:
+            juego = juego[0]
+        return juego
+    
+    def getInfoJuego(self, DEVICE, IDGAME):
+        particion = self.getParticion(DEVICE)
+        print particion
+        if particion != None:
+            #juego = self.getJuego(particion, IDGAME)
+            #print juego
+            #if juego == None:
+            comando = "%s -p %s ls %s" % (config.WBFS_APP, DEVICE, IDGAME)
+            linea = util.getSTDOUT(comando)
+            cachos = linea.split(config.SEPARADOR)
+            juego = Juego(cachos)
+            session.save(juego)
+            juego.particion = particion
+            session.commit()
+            return juego
+        else:
+            return None
+    '''
 
     # renombra el ISO de un IDGAME que esta en DEVICE
     def renombrarNOMBRE(self , juego, nuevoNombre):
-        try:
-            comando = '%s -p %s rename "%s" "%s"' % (config.WBFS_APP, juego.particion.device, juego.idgame, nuevoNombre)
-            salida = subprocess.call( comando , shell=True , stderr=subprocess.STDOUT )
-            return salida == 0
-        except KeyboardInterrupt:
-            return False
-            
+        comando = '%s -p %s rename "%s" "%s"' % (config.WBFS_APP, juego.particion.device, juego.idgame, nuevoNombre)
+        salida = util.call_out_screen(comando)
+        return salida
+
     def renombrarIDGAME(self , juego , nuevoIDGAME):
-        try:
-            comando = '%s -p %s rename_idgame "%s" "%s"' % (config.WBFS_APP, juego.particion.device, juego.idgame, nuevoIDGAME)
-            salida = subprocess.call( comando , shell=True , stderr=subprocess.STDOUT )
-            return salida == 0
-        except KeyboardInterrupt:
-            return False
+        comando = '%s -p %s rename_idgame "%s" "%s"' % (config.WBFS_APP, juego.particion.device, juego.idgame, nuevoIDGAME)
+        salida = util.call_out_screen(comando)
+        return salida
 
     # borra el juego IDGAME
     def borrarJuego(self , juego):
-    
-        try:
-            #comando = config.WBFS_APP+" -p "+DEVICE+" rm "+IDGAME
-            comando = "%s -p %s rm %s" % (config.WBFS_APP, juego.particion.device, juego.idgame)
-            salida = subprocess.call( comando , shell=True , stderr=subprocess.STDOUT )
-            return salida == 0
-        except KeyboardInterrupt:
-            return False
-        except TypeError:
-            return False
+        comando = "%s -p %s rm %s" % (config.WBFS_APP, juego.particion.device, juego.idgame)
+        salida = util.call_out_screen(comando)
+        return salida
 
     def existeDisco(self , IDGAME):
         ruta = self.getRutaDisco(IDGAME)
@@ -209,14 +210,10 @@ class WiithonCORE:
         if self.existeDisco( juego.idgame ):
             os.remove( self.getRutaDisco( juego.idgame ) )
 
-    def clonarJuego(self, juego , particion ):
-
-        try:
-            comando = "%s -p %s clonar %s %s" % (config.WBFS_APP , juego.particion.device , juego.idgame , particion.device)
-            salida = subprocess.call( comando , shell=True , stderr=subprocess.STDOUT , stdout=open(config.HOME_WIITHON_LOGS_PROCESO , "w") )
-            return salida == 0
-        except KeyboardInterrupt:
-            return False
+    def clonarJuego(self, juego , parti_destino ):
+        comando = "%s -p %s clonar %s %s" % (config.WBFS_APP , juego.particion.device , juego.idgame , parti_destino.device)
+        salida = util.call_out_file(comando)
+        return salida
 
     # Nos dice si existe la caratula del juego "IDGAME"
     def existeCaratula(self , IDGAME):
@@ -227,12 +224,14 @@ class WiithonCORE:
             existe = False
         return existe
 
-    def descargarDisco(self , IDGAME, ancho=160, alto=160):
+    def descargarDisco(self , IDGAME):
         if (self.existeDisco(IDGAME)):
             return True
         else:
             print _("***************** DESCARGAR DISCO %s ********************") % (IDGAME)
             try:
+                ancho = 160
+                alto = 160
                 origen = "http://www.wiiboxart.com/diskart/160/160/%.3s.png" % (IDGAME)
                 destino = self.getRutaDisco(IDGAME)
                 util.descargarImagen(origen, destino)
@@ -242,25 +241,21 @@ class WiithonCORE:
                 return False
 
     # Descarga una caratula de "IDGAME"
-    # el Tipo puede ser : normal|panoramica|3d|full
-    def descargarCaratula(self , IDGAME, tipo = "normal", ancho=160, alto=224):
+    def descargarCaratula(self , IDGAME):
         if (self.existeCaratula(IDGAME)):
-            print "ya existe %s" % IDGAME
             return True
         else:
+            ancho = 160
+            alto = 224
             origenes = []
-            if(tipo == "panoramica"):
-                origenes.append("http://www.wiiboxart.com/widescreen/pal/%s.png" % IDGAME)
-                origenes.append("http://www.wiiboxart.com/widescreen/ntsc/%s.png" % IDGAME)
-                origenes.append("http://www.wiiboxart.com/widescreen/ntscj/%s.png" % IDGAME)
-            elif(tipo == "3d"):
-                origenes.append("http://www.wiiboxart.com/3d/160/225/%s.png" % IDGAME)
-            elif(tipo == "full"):
-                origenes.append("http://www.wiiboxart.com/fullcover/%s.png" % IDGAME)
-            else:
-                origenes.append("http://www.wiiboxart.com/pal/%s.png" % IDGAME)
-                origenes.append("http://www.wiiboxart.com/ntsc/%s.png" % IDGAME)
-                origenes.append("http://www.wiiboxart.com/ntscj/%s.png" % IDGAME)
+            origenes.append("http://www.wiiboxart.com/pal/%s.png" % IDGAME)
+            origenes.append("http://www.wiiboxart.com/ntsc/%s.png" % IDGAME)
+            origenes.append("http://www.wiiboxart.com/ntscj/%s.png" % IDGAME)
+            origenes.append("http://www.wiiboxart.com/3d/160/225/%s.png" % IDGAME)
+            origenes.append("http://www.wiiboxart.com/widescreen/pal/%s.png" % IDGAME)
+            origenes.append("http://www.wiiboxart.com/widescreen/ntsc/%s.png" % IDGAME)
+            origenes.append("http://www.wiiboxart.com/widescreen/ntscj/%s.png" % IDGAME)
+            origenes.append("http://www.wiiboxart.com/fullcover/%s.png" % IDGAME)
             destino = self.getRutaCaratula(IDGAME)
             descargada = False
             i = 0
@@ -281,18 +276,18 @@ class WiithonCORE:
             os.remove( self.getRutaCaratula( juego.idgame ) )
 
     # Descarga todos las caratulas de una lista de juegos
-    def descargarTodasLasCaratulaYDiscos(self , listaJuegos , tipo = "normal"):
+    def descargarTodasLasCaratulaYDiscos(self , listaJuegos):
         ok = True
         for juego in listaJuegos:
-            if ( not self.descargarCaratula( juego , tipo ) ):
+            if ( not self.descargarCaratula( juego.idgame ) ):
                 ok = False
-            if ( not self.descargarDisco( juego ) ):
+            if ( not self.descargarDisco( juego.idgame ) ):
                 ok = False
         return ok
 
     def getNombreISOenRAR(self , nombreRAR):
         comando = '%s lt "%s"' % (config.UNRAR_APP, nombreRAR)
-        lineas = util.getSTDOUT_iterador( comando )
+        lineas = util.getSTDOUT_NOERROR_iterador( comando )
         for linea in lineas:
             linea = linea.strip()
             if( util.getExtension(linea)=="iso" ):
@@ -300,35 +295,28 @@ class WiithonCORE:
         return None
 
     def unpack(self , nombreRAR , destino, nombreISO):
-        try:
-            if os.path.isfile(nombreRAR) and os.path.isdir(destino):
-                rutaISO = os.path.join(destino, nombreISO)
-                if os.path.exists(rutaISO):
-                    os.remove(rutaISO)
-                directorioActual = os.getcwd()
-                os.chdir(destino)
-                comando = '%s e "%s" "%s"' % (config.UNRAR_APP, nombreRAR , nombreISO)
-                salida = subprocess.call( comando , shell=True , stderr=subprocess.STDOUT, stdout=open(config.HOME_WIITHON_LOGS_PROCESO , "w") )
-                os.chdir(directorioActual)
-                return (salida == 0)
-            else:
-                return False
-        except KeyboardInterrupt:
+        if os.path.isfile(nombreRAR) and os.path.isdir(destino):
+            rutaISO = os.path.join(destino, nombreISO)
+            if os.path.exists(rutaISO):
+                os.remove(rutaISO)
+            directorioActual = os.getcwd()
+            os.chdir(destino)
+            comando = '%s e "%s" "%s"' % (config.UNRAR_APP, nombreRAR , nombreISO)
+            salida = util.call_out_file(comando)
+            os.chdir(directorioActual)
+            return salida
+        else:
             return False
 
-    # añade un *ISO* a un *DEVICE*
     def anadirISO(self , DEVICE , ISO):
         
         # si pasa el objeto, cogemos el string que nos interesa
         if isinstance(DEVICE, Particion):
             DEVICE = DEVICE.device
-        
-        try:
-            comando = config.WBFS_APP+" -p "+DEVICE+" add \""+ISO+"\""
-            salida = subprocess.call( comando , shell=True , stderr=subprocess.STDOUT , stdout=open(config.HOME_WIITHON_LOGS_PROCESO , "w") )
-            return salida == 0
-        except KeyboardInterrupt:
-            return False
+
+        comando = '%s -p %s add "%s"' % (config.WBFS_APP, DEVICE, ISO)
+        salida = util.call_out_file(comando)
+        return salida
 
     def existeExtraido(self, juego, destino):
         fichero = "%s.iso" % juego.title
@@ -340,24 +328,18 @@ class WiithonCORE:
 
     # extrae el juego a un destino
     def extraerJuego(self ,juego , destino):
-        try:
-            # backup del actual pwd
-            trabajoActual = os.getcwd()
-            # cambiamos de directorio de trabajo
-            os.chdir( destino )
-            comando = "%s -p %s extract %s" % (config.WBFS_APP, juego.particion.device , juego.idgame)
-            salida = subprocess.call( comando , shell=True , stderr=subprocess.STDOUT , stdout=open(config.HOME_WIITHON_LOGS_PROCESO , "w") )
-            # volvemos al directorio original
-            os.chdir( trabajoActual )
-            return salida == 0
-        except KeyboardInterrupt:
-            return False
+        trabajoActual = os.getcwd()
+        os.chdir( destino )
+        comando = "%s -p %s extract %s" % (config.WBFS_APP, juego.particion.device , juego.idgame)
+        salida = util.call_out_file(comando)
+        os.chdir( trabajoActual )
+        return salida
 
     def formatearWBFS(self, particion):
         if particion.tipo == "fat32":
             comando = "%s -p %s formatear" % (config.WBFS_APP, particion.device)
-            salida = subprocess.call( comando , shell=True , stderr=subprocess.STDOUT )
-            return salida == 0
+            salida = util.call_out_screen(comando)
+            return salida
         else:
             return False
 

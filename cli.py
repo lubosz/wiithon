@@ -144,18 +144,11 @@ class WiithonCLI:
                     print _("No hay Juegos para descargar una caratula")
             elif ( parm1 == "caratulas" or parm1 == "covers"):
                 if(hayJuegos):
-                    tipo = "normal"
-                    if(numParametros >= 2): # 3 parametros
-                        if (parm2 == "panoramico" or parm2 == "widescreen"):
-                            print _("Se descargaran en formato paronamico")
-                            tipo = "panoramico"
-                        elif (parm2 == "3d"):
-                            print _("Se descargaran en 3D")
-                            tipo = "3d"
-                    if(self.core.descargarTodasLasCaratulaYDiscos(listaJuegos , tipo)):
-                        print _("OK, todas las caratulas se han descargado")
-                    else:
-                        print _("ERROR, descargando alguna caratula")
+                    if(numParametros >= 1): # 2 parametros
+                        if(self.core.descargarTodasLasCaratulaYDiscos(listaJuegos)):
+                            print _("OK, todas las caratulas se han descargado")
+                        else:
+                            print _("ERROR, descargando alguna caratula")
                 else:
                     print _("No hay Juegos para descargar caratulas")
             elif ( parm1 == "renombrar" or parm1 == "rename" or parm1 == "r"):

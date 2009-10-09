@@ -81,9 +81,6 @@ msgstr ""
 msgid "+Info"
 msgstr ""
 
-msgid "0 Tareas"
-msgstr "0 Tasks"
-
 msgid "1 juego sin caratula"
 msgstr ""
 
@@ -707,12 +704,6 @@ msgstr ""
 msgid "Saliendo por peticion del usuario."
 msgstr "Exiting by user request."
 
-msgid "Se descargaran en 3D"
-msgstr "They'll be downloaded in 3D"
-
-msgid "Se descargaran en formato paronamico"
-msgstr "They'll be downloaded in widescreen format"
-
 #, python-format
 msgid "Se han detectado caracteres no validos: %s"
 msgstr "Characters not valid: %s"
@@ -853,6 +844,15 @@ msgstr "wiithon doesn't remove the temporal ISO, you can remove it if you don't 
 #, python-format
 msgid " Esta seguro de formatear %s (S/N)? "
 msgstr ""
+
+#~ msgid "0 Tareas"
+#~ msgstr "0 Tasks"
+
+#~ msgid "Se descargaran en 3D"
+#~ msgstr "They'll be downloaded in 3D"
+
+#~ msgid "Se descargaran en formato paronamico"
+#~ msgstr "They'll be downloaded in widescreen format"
 
 #, fuzzy
 #~ msgid "Advertencia de seguridad de renombrar desde IDGAME = %s a %s"
