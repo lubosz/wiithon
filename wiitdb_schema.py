@@ -368,8 +368,25 @@ class JuegoWIITDB(Base):
         
     def getTextFechaLanzamiento(self, corto = False):
         buffer = ""
-        if  self.fecha_lanzamiento != None:
-            buffer = "%s" % ( self.fecha_lanzamiento)
+        if  self.fecha_lanzamiento != None:            
+            if corto:
+                # Q1 --> 1 <= x <= 3
+                # Q2 --> 4 <= x <= 6
+                # Q3 --> 7 <= x <= 9
+                # Q4 --> 10 <= x <= 12
+                mes = self.fecha_lanzamiento.month
+                if 1 <= mes and mes <= 3:
+                    buffer = "%dQ1" % ( self.fecha_lanzamiento.year)
+                elif 4 <= mes and mes <= 6:
+                    buffer = "%dQ2" % ( self.fecha_lanzamiento.year)
+                elif 7 <= mes and mes <= 9:
+                    buffer = "%dQ3" % ( self.fecha_lanzamiento.year)
+                elif 10 <= mes and mes <= 12:
+                    buffer = "%dQ4" % ( self.fecha_lanzamiento.year)
+                else:
+                    buffer = _("??")
+            else:
+                buffer = "%s" % ( self.fecha_lanzamiento.strftime(config.FORMATO_FECHA_WIITDB) )
         else:
             buffer = _("??")
         return buffer

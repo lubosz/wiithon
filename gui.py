@@ -156,7 +156,7 @@ class WiithonGUI(GtkBuilderWrapper):
         self.ocultarHBoxProgreso()
 
         self.wb_principal.set_icon_from_file(config.ICONO)
-        self.wb_principal.maximize()
+        #self.wb_principal.maximize()
         self.wb_principal.show()
 
         # conexion señales de la toolbar
@@ -170,6 +170,7 @@ class WiithonGUI(GtkBuilderWrapper):
         self.wb_tb_copiar_SD.connect('clicked' , self.on_tb_toolbar_clicked)
         self.wb_tb_acerca_de.connect('clicked' , self.on_tb_toolbar_clicked)
         self.wb_tb_copiar_1_1.connect('clicked' , self.on_tb_toolbar_clicked)
+        self.wb_tb_preferencias.connect('clicked' , self.on_tb_toolbar_clicked)
 
         self.wb_busqueda = util.Entry(clear=True)
         self.wb_busqueda.show()
@@ -484,7 +485,7 @@ class WiithonGUI(GtkBuilderWrapper):
         columna3.set_sort_column_id(2)
         
         columna4.set_expand(False)
-        columna4.set_min_width(80)
+        columna4.set_min_width(90)
         columna4.set_reorderable(True)
         columna4.set_sort_order(gtk.SORT_ASCENDING)
         columna4.set_sort_column_id(3)
@@ -496,7 +497,7 @@ class WiithonGUI(GtkBuilderWrapper):
         columna5.set_sort_column_id(4)
         
         columna6.set_expand(False)
-        columna6.set_min_width(110)
+        columna6.set_min_width(70)
         columna6.set_reorderable(True)
         columna6.set_sort_order(gtk.SORT_ASCENDING)
         columna6.set_sort_column_id(5)
@@ -918,7 +919,7 @@ class WiithonGUI(GtkBuilderWrapper):
             sinCaratulas = 0
             sinDiscArt = 0
             for juego in session.query(Juego).filter(sql):
-                if juego.getJuegoWIITDB() != None:
+                if juego.getJuegoWIITDB() is not None:
                     numInfos += 1
                 if not juego.tieneCaratula:
                     sinCaratulas += 1
@@ -1165,19 +1166,19 @@ class WiithonGUI(GtkBuilderWrapper):
             <pr>%s</pr><br />
         </justificar>
         <br />
-        <gris><pr>Fecha de lanzamiento: </pr></gris><i><pr>%s</pr></i>
+        <b><gris><pr>Fecha de lanzamiento: </pr></gris></b><i><pr>%s</pr></i>
         <br />
-        <gris><pr>Desarrolador/Editorial: </pr></gris><i><pr>%s/%s</pr></i>
+        <b><gris><pr>Desarrolador/Editorial: </pr></gris></b><i><pr>%s/%s</pr></i>
         <br />
-        <gris><pr>Núm. jugadores en off-line: </pr></gris><i><pr>%s</pr></i>
+        <b><gris><pr>Núm. jugadores en off-line: </pr></gris></b><i><pr>%s</pr></i>
         <br />
-        <gris><pr>Capacidad On-line: </pr></gris><i><pr>%s</pr></i>
+        <b><gris><pr>Capacidad On-line: </pr></gris></b><i><pr>%s</pr></i>
         <br />
-        <gris><pr>Accesorios obligatorios: </pr></gris><i><pr>%s</pr></i>
+        <b><gris><pr>Accesorios obligatorios: </pr></gris></b><i><pr>%s</pr></i>
         <br />
-        <gris><pr>Accesorios opcionales: </pr></gris><i><pr>%s</pr></i>
+        <b><gris><pr>Accesorios opcionales: </pr></gris></b><i><pr>%s</pr></i>
         <br />
-        <gris><pr>Clasificación parental: </pr></gris><i><pr>%s</pr></i>
+        <b><gris><pr>Clasificación parental: </pr></gris></b><i><pr>%s</pr></i>
     </margin8>
 </xhtml>
                 """ % (util.parsear_a_XML(title), util.parsear_a_XML(generos),
@@ -1480,6 +1481,10 @@ class WiithonGUI(GtkBuilderWrapper):
 
             else:
                 self.alert("warning" , _("No tienes ningun juego"))
+                
+        elif(id_tb == self.wb_tb_preferencias):
+            print "PEFERENCIAS"
+
                 
 ########## WIITDB ###########
                 

@@ -33,7 +33,6 @@ class NonRepeatList(list):
             self.append(i)
 
 def getExtension(fichero):
-    #fichero = eliminarComillas(fichero)
     posPunto = fichero.rfind(".")
     if posPunto != -1:
         return fichero[posPunto+1:len(fichero)].lower()
@@ -41,7 +40,6 @@ def getExtension(fichero):
         return fichero
 
 def getNombreFichero(fichero):
-    #fichero = eliminarComillas(fichero)
     posPunto = fichero.rfind(".")
     if posPunto != -1:
         return fichero[0:posPunto]

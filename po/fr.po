@@ -667,9 +667,6 @@ msgstr "Appuyez sur une touche pour continuer..."
 msgid "Quieres borrar el juego: %s?"
 msgstr ""
 
-msgid "RXGB2"
-msgstr ""
-
 msgid "Rating"
 msgstr ""
 
@@ -757,9 +754,6 @@ msgstr "Terminé : %s"
 msgid "Tienes que seleccionar una particion WBFS para realizar esta accion"
 msgstr "Vous devez sélectionner une partition WBFS pour réaliser cette action"
 
-msgid "To enter location manually press <CTRL>+L"
-msgstr ""
-
 msgid "Todo metido en el HD correctamente"
 msgstr "Tout est OK sur le disque dur"
 
@@ -808,9 +802,6 @@ msgstr "dans la partition"
 
 msgid "gtk-cancel"
 msgstr "gtk-cancel"
-
-msgid "gtk-close"
-msgstr ""
 
 msgid "https://launchpad.net/wiithon"
 msgstr "https://launchpad.net/wiithon"

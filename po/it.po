@@ -662,9 +662,6 @@ msgstr "Premi un tasto per continuare ..."
 msgid "Quieres borrar el juego: %s?"
 msgstr "Vuoi cancellare il gioco: %s?"
 
-msgid "RXGB2"
-msgstr "RXGB2"
-
 msgid "Rating"
 msgstr "Classificazione"
 
@@ -755,9 +752,6 @@ msgstr "Finito: %s"
 msgid "Tienes que seleccionar una particion WBFS para realizar esta accion"
 msgstr "Bisogna selezionare una partizione WBFS per eseguire questa azione"
 
-msgid "To enter location manually press <CTRL>+L"
-msgstr ""
-
 msgid "Todo metido en el HD correctamente"
 msgstr "Copiato tutto con successo sul disco fisso"
 
@@ -807,9 +801,6 @@ msgstr "su partizione"
 msgid "gtk-cancel"
 msgstr "gtk-cancel"
 
-msgid "gtk-close"
-msgstr "gtk-close"
-
 msgid "https://launchpad.net/wiithon"
 msgstr "https://launchpad.net/wiithon"
 
@@ -827,6 +818,12 @@ msgstr "s"
 
 msgid "wiithon no borra la ISO temporal, puedes borrarla si no la necesitas"
 msgstr "wiithon non rimuove la ISO temporanea, puoi cancellarla se non ne hai bisogno"
+
+#~ msgid "RXGB2"
+#~ msgstr "RXGB2"
+
+#~ msgid "gtk-close"
+#~ msgstr "gtk-close"
 
 #~ msgid "Accesorios:"
 #~ msgstr "Accessori:"

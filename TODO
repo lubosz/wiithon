@@ -6,9 +6,9 @@ Corto plazo
 -----------------
 
 Preferencias
-	Formato de fecha
-	++++++++++
-Lista de generos y categorías o generos y años
+	Buscar una forma eficiente de guardar-cargar
+Formato de fecha
+	2009Q1 - Por trimestres
 
 Largo plazo
 -----------------
@@ -38,8 +38,4 @@ Traducción:
 		#: gui.py:215
 		msgid "Tamanio"
 		msgstr "Size"
-
-	Para probarlo es sencillamente:
-		sudo make run (para probarlo en español)
-		sudo make runEN (para probarlo en ingles)
 
