@@ -54,7 +54,7 @@ class WiithonGUI(GtkBuilderWrapper):
     sel_parti_1on1 = FilaTreeview()
     
     # tiempo del ultimo click en tv_games
-    ultimoClick = 0
+    # ultimoClick = 0
     
     # Hilo que actualiza wiitdb
     xmlWiiTDB = None
@@ -186,6 +186,22 @@ class WiithonGUI(GtkBuilderWrapper):
         # carga la vista del TreeView de juegos
         self.tv_games_modelo = self.cargarJuegosVista()
         
+        ################### crear text view custom para info de wiitdb #########
+        self.tvc_info_juego = TextViewCustom()
+        self.tvc_info_juego.cargar_tags_html()
+        
+        sw1 = gtk.ScrolledWindow()
+        sw1.set_policy(gtk.POLICY_AUTOMATIC, gtk.POLICY_AUTOMATIC)
+        sw1.set_size_request(400, 540)
+        sw1.set_shadow_type(gtk.SHADOW_IN)
+        sw1.add(self.tvc_info_juego)
+        
+        self.tvc_info_juego.show()
+        sw1.show()
+        self.wb_hbox_hueco_info_juego.pack_start(sw1, expand=True, fill=True, padding=0)
+        #self.wb_ficha_vbox.pack_start(sw1, expand=True, fill=True, padding=0)
+        ################## /FIN ##################################################
+        
         # estilos
         self.wb_estadoTrabajo.set_property("attributes", self.getEstilo_azulGrande())
 
@@ -285,20 +301,6 @@ class WiithonGUI(GtkBuilderWrapper):
             self.wb_busqueda.grab_focus()
         else:
             self.wb_tb_refrescar_wbfs.grab_focus()
-            
-        ####################### TEST ################
-        
-        self.tvc_info_juego = TextViewCustom()
-        self.tvc_info_juego.cargar_tags_html()
-        
-        sw1 = gtk.ScrolledWindow()
-        sw1.set_policy(gtk.POLICY_AUTOMATIC, gtk.POLICY_AUTOMATIC)
-        sw1.set_size_request(400, 540)
-        sw1.add(self.tvc_info_juego)
-        
-        self.tvc_info_juego.show()
-        sw1.show()
-        self.wb_ficha_vbox.pack_start(sw1, expand=True, fill=True, padding=0)
 
     def refrescarParticionesWBFS(self, verbose = True):
         
@@ -987,6 +989,10 @@ class WiithonGUI(GtkBuilderWrapper):
             if self.sel_juego.it != None:
                 self.sel_juego.obj = self.getBuscarJuego(self.lJuegos, self.sel_juego.clave)
                 
+                # info wiitdb
+                self.actualizar_textview_info_wiitdb()
+                
+                # caratulas
                 self.ponerCaratula(self.sel_juego.clave, self.wb_img_caratula1)
                 self.ponerDisco(self.sel_juego.clave , self.wb_img_disco1)
 
@@ -1080,79 +1086,68 @@ class WiithonGUI(GtkBuilderWrapper):
             
         widget_imagen.set_from_file( destinoDisco )
 
-    def on_tv_games_click_event(self, widget, event):
-        if event.button == 1:
-            tiempo_entre_clicks = event.time - self.ultimoClick
-            self.ultimoClick = event.time
-            if tiempo_entre_clicks < 400:
+    def actualizar_textview_info_wiitdb(self):
+        if self.sel_juego.obj != None:
+
+            juego = self.sel_juego.obj.getJuegoWIITDB()
+            if juego != None:
                 
-                if self.sel_juego.obj != None:
+                # titulo y synopsys
+                hayPrincipal = False
+                haySecundario = False
+                i = 0
+                while not hayPrincipal and i<len(juego.descripciones):
+                    descripcion = juego.descripciones[i]
+                    hayPrincipal = descripcion.lang == config.LANG_PRINCIPAL
+                    if hayPrincipal:
+                        title = descripcion.title
+                        synopsis = descripcion.synopsis
+                    i += 1
+                
+                if not hayPrincipal:
+                    haySecundario = False
+                    i = 0
+                    while not haySecundario and i<len(juego.descripciones):
+                        descripcion = juego.descripciones[i]
+                        haySecundario = descripcion.lang == config.LANG_SECUNDARIO
+                        if haySecundario:
+                            title = descripcion.title
+                            synopsis = descripcion.synopsis
+                        i += 1
+                        
+                if not hayPrincipal and not haySecundario:
+                    title = juego.name
+                    synopsis = ''
 
-                    juego = self.sel_juego.obj.getJuegoWIITDB()
-                    if juego != None:
-                        
-                        # poner caratulas
-                        self.ponerCaratula(juego.idgame, self.wb_img_caratula2)
-                        self.ponerDisco(juego.idgame, self.wb_img_disco2)
-                        
-                        #ficha_vbox
-                        
-                        # titulo y synopsys
-                        hayPrincipal = False
-                        haySecundario = False
-                        i = 0
-                        while not hayPrincipal and i<len(juego.descripciones):
-                            descripcion = juego.descripciones[i]
-                            hayPrincipal = descripcion.lang == config.LANG_PRINCIPAL
-                            if hayPrincipal:
-                                title = descripcion.title
-                                synopsis = descripcion.synopsis
-                            i += 1
-                        
-                        if not hayPrincipal:
-                            haySecundario = False
-                            i = 0
-                            while not haySecundario and i<len(juego.descripciones):
-                                descripcion = juego.descripciones[i]
-                                haySecundario = descripcion.lang == config.LANG_SECUNDARIO
-                                if haySecundario:
-                                    title = descripcion.title
-                                    synopsis = descripcion.synopsis
-                                i += 1
-                                
-                        if not hayPrincipal and not haySecundario:
-                            title = juego.name
-                            synopsis = ''
-
-                        # generos
-                        generos = ""
-                        for genero in juego.genero:
-                            generos += genero.nombre + ", "
-                            
-                        
-                        # accesorios obligatorios
-                        accesorios_obligatorios = ""
-                        for accesorio in juego.obligatorio:
-                            accesorios_obligatorios += "%s, " % accesorio.nombre
-                            
-                        # accesorios opcionales
-                        accesorios_opcionales = ""
-                        for accesorio in juego.opcional:
-                            accesorios_opcionales += "%s (opcional), " % accesorio.nombre
-                        
-                        xml_plantilla = """<?xml version="1.0" encoding="UTF-8"?>
+                # generos
+                generos = ""
+                for genero in juego.genero:
+                    generos += genero.nombre + ", "
+                    
+                
+                # accesorios obligatorios
+                accesorios_obligatorios = ""
+                for accesorio in juego.obligatorio:
+                    accesorios_obligatorios += "%s, " % accesorio.nombre
+                    
+                # accesorios opcionales
+                accesorios_opcionales = ""
+                for accesorio in juego.opcional:
+                    accesorios_opcionales += "%s (opcional), " % accesorio.nombre
+                
+                xml_plantilla = """<?xml version="1.0" encoding="UTF-8"?>
 <xhtml>
     <margin8>
-        <h1>
-            <pr>Ficha del juego %s</pr>
-        </h1>
-        <br />
         <big>
             <rojo>
                 <pr>TITULO: </pr>
             </rojo>
         </big>
-        <b><pr>%s</pr></b>
+        <superbig>
+            <b>
+                <pr>%s</pr>
+            </b>
+        </superbig>
         <br />
         <big>
             <azul>
@@ -1161,19 +1156,14 @@ class WiithonGUI(GtkBuilderWrapper):
         </big>
         <pr>%s</pr>
         <br />
+        <big>
+            <verde>
+                <pr>DESCRIPCIÓN: </pr>
+            </verde>
+        </big>
         <justificar>
-            <big>
-                <verde>
-                    <pr>DESCRIPCIÓN: </pr>
-                </verde>
-            </big>
-            <i>
-                <pr>%s</pr>
-            </i>
+            <pr>%s</pr><br />
         </justificar>
-        <br />
-        <br />
-        <h1><pr>Más información</pr></h1>
         <br />
         <gris><pr>Fecha de lanzamiento: </pr></gris><i><pr>%s</pr></i>
         <br />
@@ -1190,23 +1180,39 @@ class WiithonGUI(GtkBuilderWrapper):
         <gris><pr>Clasificación parental: </pr></gris><i><pr>%s</pr></i>
     </margin8>
 </xhtml>
-                        """ % (juego.idgame, title, generos, synopsis, juego.getTextFechaLanzamiento(),
-                        juego.developer,juego.publisher, juego.getTextPlayersLocal(), juego.getTextPlayersWifi(),
-                        accesorios_obligatorios, accesorios_opcionales, juego.getTextRating())
+                """ % (util.parsear_a_XML(title), util.parsear_a_XML(generos),
+                util.parsear_a_XML(synopsis), juego.getTextFechaLanzamiento(),
+                util.parsear_a_XML(juego.developer), util.parsear_a_XML(juego.publisher),
+                util.parsear_a_XML(juego.getTextPlayersLocal()), util.parsear_a_XML(juego.getTextPlayersWifi()),
+                util.parsear_a_XML(accesorios_obligatorios), util.parsear_a_XML(accesorios_opcionales),
+                util.parsear_a_XML(juego.getTextRating()))
 
-                        self.tvc_info_juego.render_xml(xml_plantilla)
+            else:
+                xml_plantilla = """<?xml version="1.0" encoding="UTF-8"?>
+<xhtml>
+<h1>%s</h1>
+</xhtml>
+                """ % (_('No hay datos de este juego. Intente actualizar la base de datos.'))
 
-                        # esperamos a que pulse cerrar
-                        res = self.wb_ficha_juego.run()
-                        self.wb_ficha_juego.hide()
+        else:
+            xml_plantilla = """<?xml version="1.0" encoding="UTF-8"?>
+<xhtml>
+<h1>%s</h1>
+</xhtml>
+            """ % (_("No has seleccionado ningun juego"))
 
-                    else:
-                        self.alert('warning', _('No hay datos de este juego. Intente actualizar la base de datos.'))
+        self.tvc_info_juego.render_xml(xml_plantilla)
 
-                else:
-                    self.alert("warning" , _("No has seleccionado ningun juego"))
-                
-        elif event.button == 3:
+
+    def on_tv_games_click_event(self, widget, event):
+        '''
+        if event.button == 1:
+            tiempo_entre_clicks = event.time - self.ultimoClick
+            self.ultimoClick = event.time
+            if tiempo_entre_clicks < 400:
+                print "click"
+        '''
+        if event.button == 3:
             popup = self.uimgr.get_widget('/GamePopup')
             popup.popup(None, None, None, event.button, event.time)
 

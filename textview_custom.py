@@ -5,6 +5,8 @@ import gtk
 import pango
 import libxml2
 
+import util
+
 class TagCustom(gtk.TextTag):
     
     def __init__(self, name):
@@ -92,9 +94,9 @@ class TextViewCustom(gtk.TextView):
         a = self.nuevoTag
         a("h1", underline=pango.UNDERLINE_SINGLE, size=17 * pango.SCALE, foreground='darkgray')
         a("rojo", foreground='red')
-        a("verde", foreground='green')
+        a("verde", foreground='darkgreen')
         a("azul", foreground='blue')
-        a("gris", foreground='gray')
+        a("gris", foreground='darkgray')
         a("superbig", size=18 * pango.SCALE)
         a("big", size=14 * pango.SCALE)
         a("small", size=7 * pango.SCALE)

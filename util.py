@@ -315,9 +315,9 @@ def esPNG(ruta):
     finally:
         f.seek(0)
 
-def decode(s):
+def decode(s, code = 'utf-8'):
     try:
-        return s.decode('utf-8')
+        return s.decode(code)
     except UnicodeDecodeError:
         return s
 
@@ -378,3 +378,11 @@ def call_out_screen(comando):
         return False
     except TypeError:
         return False
+
+def parsear_a_XML(texto):
+    texto = texto.replace("&" , "&amp;")
+    texto = texto.replace(">" , "&gt;")
+    texto = texto.replace("<" , "&lt;")
+    texto = texto.replace("\'" , "&apos;")
+    texto = texto.replace("\"" , "&quot;")
+    return texto
