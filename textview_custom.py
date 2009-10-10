@@ -2,6 +2,7 @@
 # vim: set fileencoding=utf-8 :
 
 import gtk
+import pango
 import libxml2
 
 class TagCustom(gtk.TextTag):
@@ -68,53 +69,70 @@ class TextViewCustom(gtk.TextView):
                     
                     if nodo.name == 'br':
                         self.imprimir('\n')
+                    elif nodo.name == 'pr':
+                        self.imprimir(nodo.content)
                     else:                    
                         self.activarTag(nodo.name)
-                        if nodo.children.next == None:
-                            self.imprimir(nodo.content.strip())
                         recorrer_nodo(nodo.children)
                         self.desactivarTag(nodo.name)
                 nodo = nodo.next
 
+        self.buffer.set_text('')
         doc = libxml2.parseDoc(xml)
         ctxt = doc.xpathNewContext()
-        nodo = ctxt.xpathEval("//*[name() = 'plantilla']")[0]
-        recorrer_nodo(nodo.children)
+        try:
+            nodo = ctxt.xpathEval("//*[name() = 'xhtml']")[0]
+            recorrer_nodo(nodo.children)
+        except IndexError:
+            pass
         ctxt.xpathFreeContext()
         doc.freeDoc()
+               
+    def cargar_tags_html(self):
+        a = self.nuevoTag
+        a("h1", underline=pango.UNDERLINE_SINGLE, size=17 * pango.SCALE, foreground='darkgray')
+        a("rojo", foreground='red')
+        a("verde", foreground='green')
+        a("azul", foreground='blue')
+        a("gris", foreground='gray')
+        a("superbig", size=18 * pango.SCALE)
+        a("big", size=14 * pango.SCALE)
+        a("small", size=7 * pango.SCALE)
+        a("b", weight=pango.WEIGHT_BOLD)
+        a("i", style=pango.STYLE_ITALIC)
+        a("u", underline=pango.UNDERLINE_SINGLE)
+        a("justificar", justification=gtk.JUSTIFY_FILL)
+        a("margin8", left_margin=8, right_margin=8)
+        a("margin12", left_margin=12, right_margin=12)
 
-        # examples
+    def cargar_otros_tags(self):
         # http://www.pygtk.org/docs/pygtk/class-gtktexttag.html
-        '''
-        #import pango
-        #a(b("strikethrough", strikethrough=True))
-        #a(b("underline",underline=pango.UNDERLINE_SINGLE))
-        #a(b("superscript",rise=5 * pango.SCALE, size=8 * pango.SCALE))
-        #a(b("fg_black", foreground="black"))
-        #a(b("fg_gray", foreground="gray"))
-        #a(b("fg_darkgray", foreground="darkgray"))
-        #a(b("fg_red", foreground="red"))
-        #a(b("fg_blue", foreground="blue"))
-        #a(b("fg_green", foreground="green"))
-        #a(b("fg_darkcyan", foreground="darkcyan"))
-        #a(b("fg_purple", foreground="purple"))
-        #a(b("bg_white", background="white"))
-        #a(b("bg_cyan", background="cyan"))
-        #a(b("bg_green", background="green"))
-        #a(b("bg_blue", background="blue"))
-        #a(b("bg_lightgray", background="lightgray"))
-        #a(b("bg_lightgreen", background="lightgreen"))
-        #a(b("bg_hotpink", background="hotpink"))
-        #a(b("bg_yellow", background="yellow"))
-        #a(b("bg_lightyellow", background="lightyellow"))
-        #a(b("bg_mistyrose", background="mistyrose"))
-        #a(b("bg_lightblue", background="lightblue"))
-        #a(b("bg_khaki", background="khaki"))
-        #a(b("bg_selected", background="yellow"))
-        #a(b("bold", weight=pango.WEIGHT_BOLD))
-        #a(b("italic", style=pango.STYLE_ITALIC))
-        #a(b("big_gap_before_line", pixels_above_lines=30))
-        #a(b("big_gap_after_line", pixels_below_lines=30))
-        #a(b("wide_margins", left_margin=10, right_margin=10))
-        '''
-
+        a("strikethrough", strikethrough=True)
+        a("underline",underline=pango.UNDERLINE_SINGLE)
+        a("superscript",rise=5 * pango.SCALE, size=8 * pango.SCALE)
+        a("fg_black", foreground="black")
+        a("fg_gray", foreground="gray")
+        a("fg_darkgray", foreground="darkgray")
+        a("fg_red", foreground="red")
+        a("fg_blue", foreground="blue")
+        a("fg_green", foreground="green")
+        a("fg_darkcyan", foreground="darkcyan")
+        a("fg_purple", foreground="purple")
+        a("bg_white", background="white")
+        a("bg_cyan", background="cyan")
+        a("bg_green", background="green")
+        a("bg_blue", background="blue")
+        a("bg_lightgray", background="lightgray")
+        a("bg_lightgreen", background="lightgreen")
+        a("bg_hotpink", background="hotpink")
+        a("bg_yellow", background="yellow")
+        a("bg_lightyellow", background="lightyellow")
+        a("bg_mistyrose", background="mistyrose")
+        a("bg_lightblue", background="lightblue")
+        a("bg_khaki", background="khaki")
+        a("bg_selected", background="yellow")
+        a("bold", weight=pango.WEIGHT_BOLD)
+        a("italic", style=pango.STYLE_ITALIC)
+        a("big_gap_before_line", pixels_above_lines=30)
+        a("big_gap_after_line", pixels_below_lines=30)
+        a("wide_margins", left_margin=10, right_margin=10)

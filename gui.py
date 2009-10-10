@@ -289,19 +289,7 @@ class WiithonGUI(GtkBuilderWrapper):
         ####################### TEST ################
         
         self.tvc_info_juego = TextViewCustom()
-        a = self.tvc_info_juego.nuevoTag
-        a("h1", underline=pango.UNDERLINE_SINGLE, size=17 * pango.SCALE, foreground='darkgray')
-        a("rojo", foreground='red')
-        a("verde", foreground='green')
-        a("azul", foreground='blue')
-        a("gris", foreground='gray')
-        a("superbig", size=18 * pango.SCALE)
-        a("big", size=14 * pango.SCALE)
-        a("small", size=7 * pango.SCALE)
-        a("b", weight=pango.WEIGHT_BOLD)
-        a("i", style=pango.STYLE_ITALIC)
-        a("u", underline=pango.UNDERLINE_SINGLE)
-        a("justificar", justification=gtk.JUSTIFY_FILL)
+        self.tvc_info_juego.cargar_tags_html()
         
         sw1 = gtk.ScrolledWindow()
         sw1.set_policy(gtk.POLICY_AUTOMATIC, gtk.POLICY_AUTOMATIC)
@@ -531,12 +519,12 @@ class WiithonGUI(GtkBuilderWrapper):
 
         tv_games.append_column(columna1)# IDGAME
         tv_games.append_column(columna2)# Nombre
-        tv_games.append_column(columna9)# Info
+        #tv_games.append_column(columna9)# Info
         tv_games.append_column(columna4)# Online?
         tv_games.append_column(columna5)# Local
         tv_games.append_column(columna6)# Fecha
-        tv_games.append_column(columna7)# Rating
-        tv_games.append_column(columna8)# Device
+        #tv_games.append_column(columna7)# Rating
+        #tv_games.append_column(columna8)# Device
         tv_games.append_column(columna3)# Tamaño
 
         tv_games.connect('cursor-changed', self.on_tv_games_cursor_changed)
@@ -702,7 +690,7 @@ class WiithonGUI(GtkBuilderWrapper):
     def alert(self, level, message, titulo = ''):
         
         if level == 'question':
-            botones = (gtk.STOCK_OK, gtk.RESPONSE_ACCEPT, gtk.STOCK_CANCEL, gtk.RESPONSE_REJECT)
+            botones = (gtk.STOCK_YES, gtk.RESPONSE_ACCEPT, gtk.STOCK_NO, gtk.RESPONSE_REJECT)
             const_stock_icon = gtk.STOCK_DIALOG_QUESTION
             default_response = gtk.RESPONSE_REJECT
             if titulo == '':
@@ -736,6 +724,11 @@ class WiithonGUI(GtkBuilderWrapper):
                         gtk.DIALOG_MODAL | gtk.DIALOG_DESTROY_WITH_PARENT,
                         botones)           
         confirmar.set_default_response(default_response)
+        confirmar.set_position(gtk.WIN_POS_CENTER)
+        #confirmar.set_default_size(500,400)
+        confirmar.set_border_width(12)
+        confirmar.vbox.set_spacing(6)
+
 
         # poner icono a la ventana
         # 2º parametro: http://www.pygtk.org/docs/pygtk/gtk-constants.html#gtk-icon-size-constants
@@ -749,27 +742,27 @@ class WiithonGUI(GtkBuilderWrapper):
        
         ###############################
         view = TextViewCustom()
-        view.nuevoTag("margenes", left_margin=8, right_margin=8)
-        view.nuevoTag("letra_azul", foreground="blue")
-        view.nuevoTag("negrita", weight=pango.WEIGHT_BOLD)
-        view.nuevoTag("grande", rise=15 * pango.SCALE, size=15 * pango.SCALE)
-        view.nuevoTag("letra_roja", foreground="red")
-        view.nuevoTag("peque", rise=10 * pango.SCALE, size=10 * pango.SCALE)
-        view.nuevoTag("subrayado",underline=pango.UNDERLINE_SINGLE)
+        view.cargar_tags_html()
 
         xml_plantilla = """<?xml version="1.0" encoding="UTF-8"?>
-        <margenes>
-            <letra_azul>
-                <grande>
-                    <subrayado>
-                        %s
-                    </subrayado>
-                </grande>
-            </letra_azul>
-            <letra_roja>
-                %s
-            </letra_roja>
-        </margenes>
+        <xhtml>
+            <margin8>
+                <azul>
+                    <big>
+                        <u>
+                            <pr>%s</pr><br />
+                        </u>
+                    </big>
+                </azul>
+            </margin8>
+            <margin12>
+                <rojo>
+                    <b>
+                        <pr>%s</pr><br />
+                    </b>
+                </rojo>
+            </margin12>
+        </xhtml>
         """ % (titulo, message)
 
         view.render_xml(xml_plantilla)
@@ -909,9 +902,7 @@ class WiithonGUI(GtkBuilderWrapper):
             print "refrescarEspacio"
         
         particion = self.sel_parti.obj
-        if particion != None:            
-
-            #particion.refrescarEspacioLibreUsado()
+        if particion != None:
 
             self.info.arriba_usado = particion.usado
             self.info.arriba_total = particion.total
@@ -1128,110 +1119,80 @@ class WiithonGUI(GtkBuilderWrapper):
                                     title = descripcion.title
                                     synopsis = descripcion.synopsis
                                 i += 1
-                        
-                        '''
-                        # idgame
-                        self.wb_ficha_idgame.set_text( juego.idgame )
-                        
-                        # fecha lanzamiento                            
-                        self.wb_ficha_fecha_lanzamiento.set_text(juego.getTextFechaLanzamiento())
-                            
-                        # desarrollador
-                        self.wb_ficha_desarrollador.set_text( juego.developer )
-                        
-                        # editorial
-                        self.wb_ficha_editor.set_text( juego.publisher )
-                        
                                 
-                        if hayPrincipal or haySecundario:
-                            self.wb_ficha_titulo.set_text( title )
-                            self.wb_ficha_synopsis_buffer.set_text( synopsis )
-                        else:
-                            self.wb_ficha_titulo.set_text( juego.name )
-                            self.wb_ficha_synopsis_buffer.set_text( "" )
+                        if not hayPrincipal and not haySecundario:
+                            title = juego.name
+                            synopsis = ''
 
                         # generos
-                        buffer = ""
+                        generos = ""
                         for genero in juego.genero:
-                            buffer += genero.nombre + ", "
-                        self.wb_ficha_genero.set_text( buffer )
+                            generos += genero.nombre + ", "
+                            
                         
                         # accesorios obligatorios
-                        buffer = ""
+                        accesorios_obligatorios = ""
                         for accesorio in juego.obligatorio:
-                            buffer += "%s, " % accesorio.nombre
+                            accesorios_obligatorios += "%s, " % accesorio.nombre
                             
                         # accesorios opcionales
+                        accesorios_opcionales = ""
                         for accesorio in juego.opcional:
-                            buffer += "%s (opcional), " % accesorio.nombre
-
-                        self.wb_ficha_accesorio.set_text( buffer )
-                        
-                        # clasificación PEGI
-                        self.wb_ficha_ranking.set_text( juego.getTextRating() )
-                        
-                        
-                        self.wb_ficha_online.set_text( juego.getTextPlayersWifi() )
-                            
-                        # numero de jugadores en local                            
-                        self.wb_ficha_num_jugadores.set_text(juego.getTextPlayersLocal())
-                        '''
+                            accesorios_opcionales += "%s (opcional), " % accesorio.nombre
                         
                         xml_plantilla = """<?xml version="1.0" encoding="UTF-8"?>
-<plantilla>
-    <h1>Ficha del juego %s</h1>
-    <br />
-    <br />
-    <big>
-        <red>
-            TITULO:
-        </red>
-    </big>
-    <b>
-        %s
-    </b>
-    <br />
-    <br />
-    <big>
-        <azul>
-            GENEROS:
-        </azul>
-    </big>
-    <superbig>action</superbig>,
-    <big>survival</big>,
-    <small>horror</small>
-    <br />
-    <br />
-    <justificar>
+<xhtml>
+    <margin8>
+        <h1>
+            <pr>Ficha del juego %s</pr>
+        </h1>
+        <br />
         <big>
-            <verde>
-                DESCRIPCIÓN:
-            </verde>
+            <rojo>
+                <pr>TITULO: </pr>
+            </rojo>
         </big>
-        <i>
-        %s
-        </i>
-    </justificar>
-    <br />
-    <br />
-    <h1>Más información</h1>
-    <br />
-    <br />
-    <gris>Fecha de lanzamiento:</gris><i> 29-jun-2007</i>
-    <br />
-    <gris>Desarrolador/Editorial:</gris><i> Capcom/Capcom</i>
-    <br />
-    <gris>Núm. jugadores en off-line:</gris><i> 1</i>
-    <br />
-    <gris>Capacidad On-line:</gris><i> No</i>
-    <br />
-    <gris>Accesorios opcionales:</gris><i> classiccontroller</i>
-    <br />
-    <gris>Accesorios obligatorios:</gris><i> wiimote, nunchuk</i>
-    <br />
-    <gris>Clasificación parental:</gris><i> PEGI 18+</i>
-</plantilla>
-                        """ % (juego.idgame, title, synopsis)
+        <b><pr>%s</pr></b>
+        <br />
+        <big>
+            <azul>
+                <pr>GENEROS: </pr>
+            </azul>
+        </big>
+        <pr>%s</pr>
+        <br />
+        <justificar>
+            <big>
+                <verde>
+                    <pr>DESCRIPCIÓN: </pr>
+                </verde>
+            </big>
+            <i>
+                <pr>%s</pr>
+            </i>
+        </justificar>
+        <br />
+        <br />
+        <h1><pr>Más información</pr></h1>
+        <br />
+        <gris><pr>Fecha de lanzamiento: </pr></gris><i><pr>%s</pr></i>
+        <br />
+        <gris><pr>Desarrolador/Editorial: </pr></gris><i><pr>%s/%s</pr></i>
+        <br />
+        <gris><pr>Núm. jugadores en off-line: </pr></gris><i><pr>%s</pr></i>
+        <br />
+        <gris><pr>Capacidad On-line: </pr></gris><i><pr>%s</pr></i>
+        <br />
+        <gris><pr>Accesorios obligatorios: </pr></gris><i><pr>%s</pr></i>
+        <br />
+        <gris><pr>Accesorios opcionales: </pr></gris><i><pr>%s</pr></i>
+        <br />
+        <gris><pr>Clasificación parental: </pr></gris><i><pr>%s</pr></i>
+    </margin8>
+</xhtml>
+                        """ % (juego.idgame, title, generos, synopsis, juego.getTextFechaLanzamiento(),
+                        juego.developer,juego.publisher, juego.getTextPlayersLocal(), juego.getTextPlayersWifi(),
+                        accesorios_obligatorios, accesorios_opcionales, juego.getTextRating())
 
                         self.tvc_info_juego.render_xml(xml_plantilla)
 
@@ -1325,6 +1286,10 @@ class WiithonGUI(GtkBuilderWrapper):
                     if len(juegosParaClonar) > 0:
                         if((self.question(pregunta))):
                             self.poolTrabajo.nuevoTrabajoClonar( juegosParaClonar, device_destino )
+                            '''
+                    else:
+                        self.alert('info', _('No hay nada que copiar al otro disco.'))
+                            '''
                 else:
                     self.alert('info',_("No hay nada que copiar a %s") % (device_destino))
             else:
@@ -1351,6 +1316,9 @@ class WiithonGUI(GtkBuilderWrapper):
                         
                         # go
                         session.commit()
+                        
+                        # actualizar valores de usado/libre/total
+                        self.sel_parti.obj.refrescarEspacioLibreUsado()
                         
                         # Selecciona el primer juego
                         self.seleccionarFilaConValor(self.wb_tv_partitions, len(self.lParti) , 0 , self.sel_parti.obj.device)
@@ -1562,8 +1530,6 @@ class WiithonGUI(GtkBuilderWrapper):
     def callback_empieza_descomprimir(self, zip):
         self.actualizarLabel(_("Empezando a descomprimir la informacion WiiTDB"))
         self.actualizarFraccion(0.99)
-        
-#############################
 
 ############# METODOS que modifican el GUI, si se llaman desde hilos, se hacen con gobject
 
@@ -1584,6 +1550,9 @@ class WiithonGUI(GtkBuilderWrapper):
         # consultamos al wiithon wrapper info sobre el juego con nueva IDGAME
         # lo añadimos a la lista
         juegoNuevo = self.core.getInfoJuego(DEVICE, IDGAME)
+        
+        # refrescar su espacio uso/libre/total
+        juegoNuevo.particion.refrescarEspacioLibreUsado()
 
         # seleccionamos la particion y la fila del juego añadido       
         self.seleccionarFilaConValor(self.wb_tv_partitions, len(self.lParti) , 0 , juegoNuevo.particion.device)
@@ -1606,13 +1575,13 @@ class WiithonGUI(GtkBuilderWrapper):
             print "--------- juego destino ---------"
             print juegoNuevo
             print "--------------------"
+            
+        # refrescar su espacio uso/libre/total
+        particion.refrescarEspacioLibreUsado()
         
         # seleccionamos la particion y la fila del juego añadido
         self.seleccionarFilaConValor(self.wb_tv_partitions, len(self.lParti) , 0 , juegoNuevo.particion.device)
         self.seleccionarFilaConValor(self.wb_tv_games, len(self.lJuegos) , 0 , juegoNuevo.idgame)
-        
-    def mostrarError(self, error):
-        self.alert('error',error)
 
 ############# CALLBACKS
 
@@ -1675,7 +1644,7 @@ class WiithonGUI(GtkBuilderWrapper):
     def callback_termina_trabajo_anadir(self, trabajo , fichero, device):
         if trabajo.exito:
             gobject.idle_add( self.termina_trabajo_anadir , fichero , device)
-            
+
     # Al terminar hay que seleccionar la partición destino y el juego copiado
     def callback_termina_trabajo_copiar(self, trabajo, juego, particion):
         if trabajo.exito:
@@ -1692,10 +1661,10 @@ class WiithonGUI(GtkBuilderWrapper):
         # No hay trabajo cuando el contador este a 1, que es el propio trabajo que da la señal
         if(self.poolTrabajo.numTrabajos <= 1):
             gobject.timeout_add( 5000, self.ocultarHBoxProgreso )
-            
+
         # al final, por ser bloqueante
         if not trabajo.exito:
-            gobject.idle_add( self.mostrarError , trabajo.error )
+            gobject.idle_add( self.alert , 'error' , trabajo.error )
             
         print _("Termina: %s") % trabajo
 
@@ -1707,10 +1676,8 @@ class WiithonGUI(GtkBuilderWrapper):
 
     def callback_empieza_trabajo_copiar(self, trabajo):
         pass
-        
+
     def callback_termina_trabajo_descargar_caratula(self, trabajo, juego):
-        print "caratula"
-        print juego
         juego.tieneCaratula = trabajo.exito
         if juego.tieneCaratula:
             if juego.idgame == self.sel_juego.obj.idgame:
@@ -1718,10 +1685,8 @@ class WiithonGUI(GtkBuilderWrapper):
         else:
             self.info.abajo_juegos_sin_caratula += 1
             print _("Falla la descarga de la caratula de %s") % juego
-        
+
     def callback_termina_trabajo_descargar_disco(self, trabajo, juego):
-        print "disco"
-        print juego
         juego.tieneDiscArt = trabajo.exito
         if juego.tieneDiscArt:
             if juego.idgame == self.sel_juego.obj.idgame:

@@ -112,9 +112,6 @@ msgstr ""
 msgid "AYUDA_CLI"
 msgstr "AYUDA_CLI"
 
-msgid "Accesorios:"
-msgstr "Accessori:"
-
 msgid "Acerca de ..."
 msgstr "Crediti ..."
 
@@ -204,9 +201,6 @@ msgstr "Copia tutti i giochi*"
 msgid "Debes tener al menos 2 particiones WBFS para hacer copias 1:1"
 msgstr "Bisogna avere almeno 2 partizioni WBFS per lanciare la copia 1:1"
 
-msgid "Desarrollador:"
-msgstr "Sviluppatore:"
-
 #, python-format
 msgid "Descargando WiiTDB desde %s, espere unos minutos ..."
 msgstr "Sto scaricando WiiTDB da %s, attendere qualche istante ..."
@@ -289,9 +283,6 @@ msgstr "ERRORE durante il download di qualche copertina"
 
 msgid "ERROR:"
 msgstr ""
-
-msgid "Editor:"
-msgstr "Editor:"
 
 #, python-format
 msgid "El archivo ISO %s: No existe"
@@ -415,9 +406,6 @@ msgstr "E' fallito il download della disc-art di %s"
 msgid "Fecha"
 msgstr "Data"
 
-msgid "Fecha de lanzamiento:"
-msgstr "Data di lancio:"
-
 msgid "Finalizada satisfactoriamente la importacion de datos desde WiiTDB"
 msgstr "Importazione dei dati da WiiTDB conclusa correttamente"
 
@@ -432,9 +420,6 @@ msgstr "Non consentito"
 
 msgid "GNU GENERAL PUBLIC LICENSE Version 3"
 msgstr "Licenza Pubblica Generica GNU Versione 3"
-
-msgid "Genero:"
-msgstr "Genere:"
 
 msgid "Has conectado el disco duro? No se ha encontrado ninguna particion valida."
 msgstr "Hai collegato il tuo disco fisso? Non è stata trovata nessuna partizione WBFS"
@@ -629,9 +614,6 @@ msgstr "Nuovo"
 msgid "Nuevo nombre es demasiado largo, intente con un texto menor de %d caracteres"
 msgstr "Il nuovo nome è troppo lungo, prova con un testo con meno di %d caratteri"
 
-msgid "Num de jugadores:"
-msgstr "Numero di giocatori:"
-
 msgid "Numero fuera de rango"
 msgstr "Valore non consentito"
 
@@ -682,9 +664,6 @@ msgstr "Vuoi cancellare il gioco: %s?"
 
 msgid "RXGB2"
 msgstr "RXGB2"
-
-msgid "Ranking:"
-msgstr "Classificazione:"
 
 msgid "Rating"
 msgstr "Classificazione"
@@ -743,9 +722,6 @@ msgstr "Si, %d giocatori (%s)"
 msgid "Si, 1 jugador (%s)"
 msgstr "Si, 1 giocatore (%s)"
 
-msgid "Synopsis:"
-msgstr "Riassunto:"
-
 msgid "TAMANIO"
 msgstr "DIMENSIONE"
 
@@ -776,14 +752,8 @@ msgstr "Dimensione"
 msgid "Termina: %s"
 msgstr "Finito: %s"
 
-msgid "Tiene Online?:"
-msgstr "Online?"
-
 msgid "Tienes que seleccionar una particion WBFS para realizar esta accion"
 msgstr "Bisogna selezionare una partizione WBFS per eseguire questa azione"
-
-msgid "Titulo:"
-msgstr "Titolo:"
 
 msgid "To enter location manually press <CTRL>+L"
 msgstr ""
@@ -857,6 +827,36 @@ msgstr "s"
 
 msgid "wiithon no borra la ISO temporal, puedes borrarla si no la necesitas"
 msgstr "wiithon non rimuove la ISO temporanea, puoi cancellarla se non ne hai bisogno"
+
+#~ msgid "Accesorios:"
+#~ msgstr "Accessori:"
+
+#~ msgid "Desarrollador:"
+#~ msgstr "Sviluppatore:"
+
+#~ msgid "Editor:"
+#~ msgstr "Editor:"
+
+#~ msgid "Fecha de lanzamiento:"
+#~ msgstr "Data di lancio:"
+
+#~ msgid "Genero:"
+#~ msgstr "Genere:"
+
+#~ msgid "Num de jugadores:"
+#~ msgstr "Numero di giocatori:"
+
+#~ msgid "Ranking:"
+#~ msgstr "Classificazione:"
+
+#~ msgid "Synopsis:"
+#~ msgstr "Riassunto:"
+
+#~ msgid "Tiene Online?:"
+#~ msgstr "Online?"
+
+#~ msgid "Titulo:"
+#~ msgstr "Titolo:"
 
 #~ msgid "gtk-ok"
 #~ msgstr "gtk-ok"

@@ -112,9 +112,6 @@ msgstr ""
 msgid "AYUDA_CLI"
 msgstr ""
 
-msgid "Accesorios:"
-msgstr ""
-
 msgid "Acerca de ..."
 msgstr "About ..."
 
@@ -202,9 +199,6 @@ msgstr ""
 msgid "Debes tener al menos 2 particiones WBFS para hacer copias 1:1"
 msgstr ""
 
-msgid "Desarrollador:"
-msgstr ""
-
 #, python-format
 msgid "Descargando WiiTDB desde %s, espere unos minutos ..."
 msgstr ""
@@ -286,9 +280,6 @@ msgid "ERROR, descargando alguna caratula"
 msgstr "ERROR, downloading some cover"
 
 msgid "ERROR:"
-msgstr ""
-
-msgid "Editor:"
 msgstr ""
 
 #, python-format
@@ -413,9 +404,6 @@ msgstr ""
 msgid "Fecha"
 msgstr ""
 
-msgid "Fecha de lanzamiento:"
-msgstr ""
-
 msgid "Finalizada satisfactoriamente la importacion de datos desde WiiTDB"
 msgstr ""
 
@@ -430,9 +418,6 @@ msgstr "Out of range"
 
 msgid "GNU GENERAL PUBLIC LICENSE Version 3"
 msgstr "GNU GENERAL PUBLIC LICENSE Version 3"
-
-msgid "Genero:"
-msgstr ""
 
 msgid "Has conectado el disco duro? No se ha encontrado ninguna particion valida."
 msgstr "Is your hard disk connected and does it have a valid WBFS partition?"
@@ -634,9 +619,6 @@ msgstr "New"
 msgid "Nuevo nombre es demasiado largo, intente con un texto menor de %d caracteres"
 msgstr "New name is too long, try a text smaller than %d characters"
 
-msgid "Num de jugadores:"
-msgstr ""
-
 msgid "Numero fuera de rango"
 msgstr "Out of range"
 
@@ -686,9 +668,6 @@ msgid "Quieres borrar el juego: %s?"
 msgstr ""
 
 msgid "RXGB2"
-msgstr ""
-
-msgid "Ranking:"
 msgstr ""
 
 msgid "Rating"
@@ -745,9 +724,6 @@ msgstr ""
 msgid "Si, 1 jugador (%s)"
 msgstr ""
 
-msgid "Synopsis:"
-msgstr ""
-
 msgid "TAMANIO"
 msgstr "SIZE"
 
@@ -778,14 +754,8 @@ msgstr "Size"
 msgid "Termina: %s"
 msgstr "Finish: %s"
 
-msgid "Tiene Online?:"
-msgstr ""
-
 msgid "Tienes que seleccionar una particion WBFS para realizar esta accion"
 msgstr "You need to select a WBFS partition"
-
-msgid "Titulo:"
-msgstr ""
 
 msgid "To enter location manually press <CTRL>+L"
 msgstr ""
