@@ -376,8 +376,8 @@ class WiiTDBXML(Thread):
                 nodo = nodo.next
 
             # libera el xml
-            xmldoc.freeDoc()
             ctxt.xpathFreeContext()
+            xmldoc.freeDoc()
 
             # hacemos efectivas las transacciones
             session.commit()

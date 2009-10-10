@@ -2,7 +2,7 @@
 # vim: set fileencoding=utf-8 :
 
 import gtk
-import pango
+import libxml2
 
 class TagCustom(gtk.TextTag):
     
@@ -24,7 +24,6 @@ class TextViewCustom(gtk.TextView):
         self.buffer = gtk.TextBuffer(self.tabla)
         self.buffer.connect_after("insert-text", self.bufferInsert)
         self.set_buffer(self.buffer)
-        #gtk.WRAP_NONE, gtk.WRAP_CHAR, gtk.WRAP_WORD or gtk.WRAP_WORD_CHAR
         self.set_wrap_mode(gtk.WRAP_WORD_CHAR)
         self.set_editable(False)
         self.set_cursor_visible(False)
@@ -48,13 +47,46 @@ class TextViewCustom(gtk.TextView):
         self.tabla.foreach(aplicarTag, (start, end))
         self.queue_draw()
     
-    def imprimir(self, texto):    
+    def imprimir(self, texto = ''):    
         self.buffer.insert_at_cursor("%s" % texto)
         
-    def imprimirln(self, texto):
-        self.buffer.insert_at_cursor("%s\n" % texto)
+    def activarTag(self, name):
+        tag = self.tabla.lookup(name)
+        if tag is not None:
+            tag.activar()
+        
+    def desactivarTag(self, name):
+        tag = self.tabla.lookup(name)
+        if tag is not None:
+            tag.desactivar()
 
+    def render_xml(self, xml):
+
+        def recorrer_nodo(nodo):
+            while nodo is not None:
+                if nodo.type == 'element':
+                    
+                    if nodo.name == 'br':
+                        self.imprimir('\n')
+                    else:                    
+                        self.activarTag(nodo.name)
+                        if nodo.children.next == None:
+                            self.imprimir(nodo.content.strip())
+                        recorrer_nodo(nodo.children)
+                        self.desactivarTag(nodo.name)
+                nodo = nodo.next
+
+        doc = libxml2.parseDoc(xml)
+        ctxt = doc.xpathNewContext()
+        nodo = ctxt.xpathEval("//*[name() = 'plantilla']")[0]
+        recorrer_nodo(nodo.children)
+        ctxt.xpathFreeContext()
+        doc.freeDoc()
+
+        # examples
+        # http://www.pygtk.org/docs/pygtk/class-gtktexttag.html
         '''
+        #import pango
         #a(b("strikethrough", strikethrough=True))
         #a(b("underline",underline=pango.UNDERLINE_SINGLE))
         #a(b("superscript",rise=5 * pango.SCALE, size=8 * pango.SCALE))

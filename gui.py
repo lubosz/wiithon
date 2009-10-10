@@ -285,6 +285,32 @@ class WiithonGUI(GtkBuilderWrapper):
             self.wb_busqueda.grab_focus()
         else:
             self.wb_tb_refrescar_wbfs.grab_focus()
+            
+        ####################### TEST ################
+        
+        self.tvc_info_juego = TextViewCustom()
+        a = self.tvc_info_juego.nuevoTag
+        a("h1", underline=pango.UNDERLINE_SINGLE, size=17 * pango.SCALE, foreground='darkgray')
+        a("rojo", foreground='red')
+        a("verde", foreground='green')
+        a("azul", foreground='blue')
+        a("gris", foreground='gray')
+        a("superbig", size=18 * pango.SCALE)
+        a("big", size=14 * pango.SCALE)
+        a("small", size=7 * pango.SCALE)
+        a("b", weight=pango.WEIGHT_BOLD)
+        a("i", style=pango.STYLE_ITALIC)
+        a("u", underline=pango.UNDERLINE_SINGLE)
+        a("justificar", justification=gtk.JUSTIFY_FILL)
+        
+        sw1 = gtk.ScrolledWindow()
+        sw1.set_policy(gtk.POLICY_AUTOMATIC, gtk.POLICY_AUTOMATIC)
+        sw1.set_size_request(400, 540)
+        sw1.add(self.tvc_info_juego)
+        
+        self.tvc_info_juego.show()
+        sw1.show()
+        self.wb_ficha_vbox.pack_start(sw1, expand=True, fill=True, padding=0)
 
     def refrescarParticionesWBFS(self, verbose = True):
         
@@ -674,88 +700,100 @@ class WiithonGUI(GtkBuilderWrapper):
     error
     '''
     def alert(self, level, message, titulo = ''):
+        
         if level == 'question':
             botones = (gtk.STOCK_OK, gtk.RESPONSE_ACCEPT, gtk.STOCK_CANCEL, gtk.RESPONSE_REJECT)
+            const_stock_icon = gtk.STOCK_DIALOG_QUESTION
+            default_response = gtk.RESPONSE_REJECT
+            if titulo == '':
+                titulo = _("PREGUNTA:")
+        elif level == 'warning':
+            botones = (gtk.STOCK_OK, gtk.RESPONSE_ACCEPT)
+            const_stock_icon = gtk.STOCK_DIALOG_WARNING
+            default_response = gtk.RESPONSE_ACCEPT
+            if titulo == '':
+                titulo = _("WARNING:")
+        elif level == 'error':
+            botones = (gtk.STOCK_OK, gtk.RESPONSE_ACCEPT)
+            const_stock_icon = gtk.STOCK_DIALOG_ERROR
+            default_response = gtk.RESPONSE_ACCEPT
+            if titulo == '':
+                titulo = _("ERROR:")
+        elif level == 'auth':
+            botones = (gtk.STOCK_OK, gtk.RESPONSE_ACCEPT)
+            const_stock_icon = gtk.STOCK_DIALOG_AUTHENTICATION
+            default_response = gtk.RESPONSE_ACCEPT
+            if titulo == '':
+                titulo = _("AUTENTIFICACION:")
         else:
             botones = (gtk.STOCK_OK, gtk.RESPONSE_ACCEPT)
+            const_stock_icon = gtk.STOCK_DIALOG_INFO
+            default_response = gtk.RESPONSE_ACCEPT
+            if titulo == '':
+                titulo = _("INFORMACION:")
         
         confirmar = gtk.Dialog(titulo, self.wb_principal,
                         gtk.DIALOG_MODAL | gtk.DIALOG_DESTROY_WITH_PARENT,
-                        botones)
-
-        if level == 'question':                
-            confirmar.set_default_response(gtk.RESPONSE_REJECT)
-        else:
-            confirmar.set_default_response(gtk.RESPONSE_ACCEPT)
+                        botones)           
+        confirmar.set_default_response(default_response)
 
         # poner icono a la ventana
         # 2º parametro: http://www.pygtk.org/docs/pygtk/gtk-constants.html#gtk-icon-size-constants
         logo = gtk.Image()
-        if level == 'question':
-            const_stock_icon = gtk.STOCK_DIALOG_QUESTION
-            if titulo == '':
-                titulo = _("PREGUNTA:")
-        elif level == 'warning':
-            const_stock_icon = gtk.STOCK_DIALOG_WARNING
-            if titulo == '':
-                titulo = _("WARNING:")
-        elif level == 'error':
-            const_stock_icon = gtk.STOCK_DIALOG_ERROR
-            if titulo == '':
-                titulo = _("ERROR:")
-        elif level == 'auth':
-            const_stock_icon = gtk.STOCK_DIALOG_AUTHENTICATION
-            if titulo == '':
-                titulo = _("AUTENTIFICACION:")
-        else:
-            const_stock_icon = gtk.STOCK_DIALOG_INFO
-            if titulo == '':
-                titulo = _("INFORMACION:")
-
+        logo.set_from_stock(const_stock_icon, gtk.ICON_SIZE_DIALOG)
         icon = confirmar.render_icon(const_stock_icon, gtk.ICON_SIZE_DIALOG)
         confirmar.set_icon(icon)
-        logo.set_from_stock(const_stock_icon, gtk.ICON_SIZE_DIALOG)
 
         h1 = gtk.HBox(homogeneous=False, spacing=10)
-        h1.pack_start(logo, expand=True, fill=False, padding=10)
+        h1.pack_start(logo, expand=False, fill=False, padding=10)
        
-        ###############################        
+        ###############################
         view = TextViewCustom()
-        margenes = view.nuevoTag("wide_margins", left_margin=8, right_margin=8)
-        letra_azul = view.nuevoTag("letra_azul", foreground="blue")
-        negrita = view.nuevoTag("negrita", weight=pango.WEIGHT_BOLD)
-        grande = view.nuevoTag("grande", rise=15 * pango.SCALE, size=15 * pango.SCALE)
-        letra_roja = view.nuevoTag("fondo_rojo", foreground="red")
-        peque = view.nuevoTag("peque", rise=10 * pango.SCALE, size=10 * pango.SCALE)
-        subrayado = view.nuevoTag("underline",underline=pango.UNDERLINE_SINGLE)
-        
-        margenes.activar()
-        letra_azul.activar()
-        grande.activar()
-        subrayado.activar()
-        view.imprimirln(titulo)
-        subrayado.desactivar()
-        grande.desactivar()
-        letra_azul.desactivar()
-        
-        letra_roja.activar()
-        view.imprimirln(message)
-        letra_roja.desactivar()
-        margenes.desactivar()
-        
+        view.nuevoTag("margenes", left_margin=8, right_margin=8)
+        view.nuevoTag("letra_azul", foreground="blue")
+        view.nuevoTag("negrita", weight=pango.WEIGHT_BOLD)
+        view.nuevoTag("grande", rise=15 * pango.SCALE, size=15 * pango.SCALE)
+        view.nuevoTag("letra_roja", foreground="red")
+        view.nuevoTag("peque", rise=10 * pango.SCALE, size=10 * pango.SCALE)
+        view.nuevoTag("subrayado",underline=pango.UNDERLINE_SINGLE)
+
+        xml_plantilla = """<?xml version="1.0" encoding="UTF-8"?>
+        <margenes>
+            <letra_azul>
+                <grande>
+                    <subrayado>
+                        %s
+                    </subrayado>
+                </grande>
+            </letra_azul>
+            <letra_roja>
+                %s
+            </letra_roja>
+        </margenes>
+        """ % (titulo, message)
+
+        view.render_xml(xml_plantilla)
+        ###############################
+
         sw1 = gtk.ScrolledWindow()
         sw1.set_policy(gtk.POLICY_AUTOMATIC, gtk.POLICY_AUTOMATIC)
         sw1.set_size_request(600, 140)
         sw1.add(view)
 
-        h1.pack_start(sw1, expand=True, fill=False, padding=10)
+        h1.pack_start(sw1, expand=True, fill=True, padding=10)
 
         ###############################
 
+        # poner el hbox (columnas) en el vbox reservado del dialogo
         confirmar.vbox.pack_start(h1, True, False, 10)
 
+        # calculos del pintado
         confirmar.show_all()
+        
+        # modal, esperando respuesta
         respuesta  = confirmar.run()
+        
+        # destruir dialogo
         confirmar.destroy()
 
         if config.DEBUG:
@@ -893,10 +931,6 @@ class WiithonGUI(GtkBuilderWrapper):
                     sinCaratulas += 1
                 if not juego.tieneDiscArt:
                     sinDiscArt += 1
-                    
-            print numInfos
-            print sinCaratulas
-            print sinDiscArt
                     
             self.info.abajo_num_juegos_wiitdb = numInfos
             self.info.abajo_juegos_sin_caratula = sinCaratulas
@@ -1069,18 +1103,8 @@ class WiithonGUI(GtkBuilderWrapper):
                         # poner caratulas
                         self.ponerCaratula(juego.idgame, self.wb_img_caratula2)
                         self.ponerDisco(juego.idgame, self.wb_img_disco2)
-
-                        # idgame
-                        self.wb_ficha_idgame.set_text( juego.idgame )
                         
-                        # fecha lanzamiento                            
-                        self.wb_ficha_fecha_lanzamiento.set_text(juego.getTextFechaLanzamiento())
-                            
-                        # desarrollador
-                        self.wb_ficha_desarrollador.set_text( juego.developer )
-                        
-                        # editorial
-                        self.wb_ficha_editor.set_text( juego.publisher )
+                        #ficha_vbox
                         
                         # titulo y synopsys
                         hayPrincipal = False
@@ -1104,6 +1128,20 @@ class WiithonGUI(GtkBuilderWrapper):
                                     title = descripcion.title
                                     synopsis = descripcion.synopsis
                                 i += 1
+                        
+                        '''
+                        # idgame
+                        self.wb_ficha_idgame.set_text( juego.idgame )
+                        
+                        # fecha lanzamiento                            
+                        self.wb_ficha_fecha_lanzamiento.set_text(juego.getTextFechaLanzamiento())
+                            
+                        # desarrollador
+                        self.wb_ficha_desarrollador.set_text( juego.developer )
+                        
+                        # editorial
+                        self.wb_ficha_editor.set_text( juego.publisher )
+                        
                                 
                         if hayPrincipal or haySecundario:
                             self.wb_ficha_titulo.set_text( title )
@@ -1111,7 +1149,7 @@ class WiithonGUI(GtkBuilderWrapper):
                         else:
                             self.wb_ficha_titulo.set_text( juego.name )
                             self.wb_ficha_synopsis_buffer.set_text( "" )
-                        
+
                         # generos
                         buffer = ""
                         for genero in juego.genero:
@@ -1137,7 +1175,66 @@ class WiithonGUI(GtkBuilderWrapper):
                             
                         # numero de jugadores en local                            
                         self.wb_ficha_num_jugadores.set_text(juego.getTextPlayersLocal())
-                                                
+                        '''
+                        
+                        xml_plantilla = """<?xml version="1.0" encoding="UTF-8"?>
+<plantilla>
+    <h1>Ficha del juego %s</h1>
+    <br />
+    <br />
+    <big>
+        <red>
+            TITULO:
+        </red>
+    </big>
+    <b>
+        %s
+    </b>
+    <br />
+    <br />
+    <big>
+        <azul>
+            GENEROS:
+        </azul>
+    </big>
+    <superbig>action</superbig>,
+    <big>survival</big>,
+    <small>horror</small>
+    <br />
+    <br />
+    <justificar>
+        <big>
+            <verde>
+                DESCRIPCIÓN:
+            </verde>
+        </big>
+        <i>
+        %s
+        </i>
+    </justificar>
+    <br />
+    <br />
+    <h1>Más información</h1>
+    <br />
+    <br />
+    <gris>Fecha de lanzamiento:</gris><i> 29-jun-2007</i>
+    <br />
+    <gris>Desarrolador/Editorial:</gris><i> Capcom/Capcom</i>
+    <br />
+    <gris>Núm. jugadores en off-line:</gris><i> 1</i>
+    <br />
+    <gris>Capacidad On-line:</gris><i> No</i>
+    <br />
+    <gris>Accesorios opcionales:</gris><i> classiccontroller</i>
+    <br />
+    <gris>Accesorios obligatorios:</gris><i> wiimote, nunchuk</i>
+    <br />
+    <gris>Clasificación parental:</gris><i> PEGI 18+</i>
+</plantilla>
+                        """ % (juego.idgame, title, synopsis)
+
+                        self.tvc_info_juego.render_xml(xml_plantilla)
+
                         # esperamos a que pulse cerrar
                         res = self.wb_ficha_juego.run()
                         self.wb_ficha_juego.hide()
