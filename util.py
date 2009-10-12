@@ -10,6 +10,9 @@ import copy
 import httplib
 import urllib
 import re
+import locale
+import gettext
+from gettext import gettext as _
 
 from sqlalchemy.orm import scoped_session, sessionmaker
 from sqlalchemy import create_engine
@@ -384,3 +387,21 @@ def parsear_a_XML(texto):
     texto = texto.replace("\'" , "&apos;")
     texto = texto.replace("\"" , "&quot;")
     return texto
+
+def setLanguage(locale = 'default'):
+        
+    if locale == 'default':
+        gettext.install(config.APP,config.LOCALE, unicode=1)
+    else:
+        lang = gettext.translation(config.APP, languages=[locale])
+        lang.install()
+
+def configurarLenguaje():
+
+    locale.setlocale(locale.LC_ALL, '')
+
+    for module in (gettext, gtk.glade):
+        module.bindtextdomain(config.APP,config.LOCALE)
+        module.textdomain(config.APP)
+        
+    setLanguage('default')

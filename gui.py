@@ -1483,7 +1483,7 @@ class WiithonGUI(GtkBuilderWrapper):
                 self.alert("warning" , _("No tienes ningun juego"))
                 
         elif(id_tb == self.wb_tb_preferencias):
-            print "PEFERENCIAS"
+            pass
 
                 
 ########## WIITDB ###########

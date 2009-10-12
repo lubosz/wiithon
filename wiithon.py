@@ -35,25 +35,11 @@ try:
 except ImportError:
     print _("Necesitas tener instalado pyGTK o GTKv2")
     sys.exit(1)
-
-def configurarLenguaje():
-    import locale
-    import gettext
-
-    locale.setlocale(locale.LC_ALL, '')
-
-    from gettext import gettext as _
-
-    for module in (gettext, gtk.glade):
-        module.bindtextdomain(config.APP,config.LOCALE)
-        module.textdomain(config.APP)
-
-    gettext.install(config.APP,config.LOCALE, unicode=1)
-
+    
 def App():
     
     try:
-        configurarLenguaje()
+        util.configurarLenguaje()
 
         if os.path.exists(os.path.join(config.WIITHON_FILES , ".bzr")):
             print _("Instala wiithon, no lo ejecutar desde ./wiithon.py")

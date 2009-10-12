@@ -78,3 +78,28 @@ NUM_LINEAS_PAUSA = 21
 
 # Formato de la fecha cuando se muestra en WiiTDB
 FORMATO_FECHA_WIITDB = "%d-%m-%Y"
+
+# dimension caratula
+WIDTH_COVERS = 160
+HEIGHT_COVERS = 224
+
+# ciclo de proveedores de caratulas
+PROVIDER_COVERS = []
+a = PROVIDER_COVERS.append
+a("http://wiitdb.com/wiitdb/artwork/cover/ES/%s.png")
+a("http://wiitdb.com/wiitdb/artwork/cover/EN/%s.png")
+a("http://wiitdb.com/wiitdb/artwork/cover3D/ES/%s.png")
+a("http://wiitdb.com/wiitdb/artwork/cover3D/EN/%s.png")
+a("http://wiitdb.com/wiitdb/artwork/coverfull/FR/%s.png")
+a("http://www.wiiboxart.com/pal/%s.png")
+a("http://www.wiiboxart.com/ntsc/%s.png")
+a("http://www.wiiboxart.com/ntscj/%s.png")
+a("http://www.wiiboxart.com/3d/160/225/%s.png")
+a("http://www.wiiboxart.com/widescreen/pal/%s.png")
+a("http://www.wiiboxart.com/widescreen/ntsc/%s.png")
+a("http://www.wiiboxart.com/widescreen/ntscj/%s.png")
+a("http://www.wiiboxart.com/fullcover/%s.png")
+
+# dimension disc-art
+WIDTH_DISCS = 160
+HEIGHT_DISCS = 160

@@ -3,11 +3,17 @@ PREFIX=/usr/local
 EMAIL="makiolo@gmail.com"
 VERSION=${shell cat doc/VERSION}
 REVISION=${shell bzr revno}
+ARCH=${shell uname -m}
 
 PREFIX_RECURSOS_IMAGENES_CARATULAS=$(PREFIX)/share/wiithon/recursos/imagenes/caratulas
 PREFIX_RECURSOS_IMAGENES_DISCOS=$(PREFIX)/share/wiithon/recursos/imagenes/discos
 
 INSTALL_PKG=apt-get install
+
+DEB-ROOT=/tmp/wiithon-$(VERSION)
+DEB-PREFIX=$(DEB-ROOT)$(PREFIX)
+DEB-PREFIX_RECURSOS_IMAGENES_CARATULAS=$(DEB-PREFIX)/share/wiithon/recursos/imagenes/caratulas
+DEB-PREFIX_RECURSOS_IMAGENES_DISCOS=$(DEB-PREFIX)/share/wiithon/recursos/imagenes/discos
 
 all: compilar
 
@@ -49,6 +55,7 @@ compilar: ./po/locale/da_DK/LC_MESSAGES/wiithon.mo ./po/locale/fi_FI/LC_MESSAGES
 
 install: uninstall
 	mkdir -p $(PREFIX)/bin
+	mkdir -p $(PREFIX)/lib
 	mkdir -p $(PREFIX)/share/wiithon
 	mkdir -p $(PREFIX)/share/wiithon/recursos/glade
 	mkdir -p $(PREFIX)/share/wiithon/recursos/imagenes
@@ -58,7 +65,12 @@ install: uninstall
 	
 	cp wiithon.py $(PREFIX)/share/wiithon
 	cp libwbfs_binding/libwbfs/libwbfs.so /usr/lib/
+
+ifeq ($(ARCH), x86_64)
+	ln -sf /usr/lib/libwbfs.so $(PREFIX)/lib32/
+else
 	ln -sf /usr/lib/libwbfs.so $(PREFIX)/lib/
+endif
 	
 	cp wiithon_autodetectar.sh $(PREFIX)/share/wiithon
 	cp wiithon_autodetectar_lector.sh $(PREFIX)/share/wiithon
@@ -316,4 +328,62 @@ initPO: po/plantilla.pot
 	msginit -i po/plantilla.pot -o po/sv_SE.po --no-translator
 	# turkish tr_TR
 	msginit -i po/plantilla.pot -o po/tr_TR.po --no-translator
+
+deb: compilar
+	mkdir -p $(DEB-ROOT)/DEBIAN
+	mkdir -p $(DEB-ROOT)/usr/share/pixmaps
+	mkdir -p $(DEB-ROOT)/usr/lib
+	mkdir -p $(DEB-ROOT)/usr/share/applications
+	mkdir -p $(DEB-PREFIX)/bin
+	mkdir -p $(DEB-PREFIX)/share/wiithon/recursos/glade
+	mkdir -p $(DEB-PREFIX)/share/wiithon/recursos/imagenes
+	mkdir -p $(DEB-PREFIX_RECURSOS_IMAGENES_CARATULAS)
+	mkdir -p $(DEB-PREFIX_RECURSOS_IMAGENES_DISCOS)
+
+	cp libwbfs_binding/wiithon_wrapper $(DEB-PREFIX)/share/wiithon/
+	cp unrar-nonfree/unrar $(DEB-PREFIX)/share/wiithon/
+
+	cp wiithon.py $(DEB-PREFIX)/share/wiithon
+	cp libwbfs_binding/libwbfs/libwbfs.so $(DEB-PREFIX)/lib
+
+	cp wiithon_autodetectar.sh $(DEB-PREFIX)/share/wiithon
+	cp wiithon_autodetectar_lector.sh $(DEB-PREFIX)/share/wiithon
+	cp wiithon_autodetectar_fat32.sh $(DEB-PREFIX)/share/wiithon
+
+	cp *.py $(DEB-PREFIX)/share/wiithon
+
+	cp wiithon_usuario.desktop $(DEB-ROOT)/usr/share/applications
+
+	cp recursos/icons/wiithon.png $(DEB-ROOT)/usr/share/pixmaps
+	cp recursos/icons/wiithon.svg $(DEB-ROOT)/usr/share/pixmaps
+
+	cp -R po/locale/ $(DEB-ROOT)/usr/share/
+
+	cp recursos/glade/*.ui $(DEB-PREFIX)/share/wiithon/recursos/glade
+	cp recursos/imagenes/*.png $(DEB-PREFIX)/share/wiithon/recursos/imagenes
+
+	mkdir -p $(DEB-PREFIX_RECURSOS_IMAGENES_CARATULAS)
+	mkdir -p $(DEB-PREFIX_RECURSOS_IMAGENES_DISCOS)
+
+	cp recursos/caratulas_fix/*.png $(DEB-PREFIX_RECURSOS_IMAGENES_CARATULAS)
+	cp recursos/discos_fix/*.png $(DEB-PREFIX_RECURSOS_IMAGENES_DISCOS)
+
+	cp recursos/deb/* $(DEB-ROOT)/DEBIAN
+
+	chmod 755 $(DEB-PREFIX)/share/wiithon/*.py
+	chmod 755 $(DEB-PREFIX)/share/wiithon/*.sh
+	chmod 755 $(DEB-PREFIX)/share/wiithon/wiithon_wrapper
+
+	chmod 644 $(DEB-PREFIX)/share/wiithon/recursos/glade/*.ui
+	chmod 644 $(DEB-PREFIX)/share/wiithon/recursos/imagenes/*.png
+
+	chmod 777 $(DEB-PREFIX_RECURSOS_IMAGENES_CARATULAS)
+	chmod 777 $(DEB-PREFIX_RECURSOS_IMAGENES_DISCOS)
+
+	dpkg-deb --build $(DEB-ROOT)
+	rm -rf $(DEB-ROOT)
+
+	@echo "=================================================================="
+	@echo "Debian package created:	"$(DEB-ROOT)".deb"
+	@echo "=================================================================="
 

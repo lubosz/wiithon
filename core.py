@@ -230,12 +230,10 @@ class WiithonCORE:
         else:
             print _("***************** DESCARGAR DISCO %s ********************") % (IDGAME)
             try:
-                ancho = 160
-                alto = 160
                 origen = "http://www.wiiboxart.com/diskart/160/160/%.3s.png" % (IDGAME)
                 destino = self.getRutaDisco(IDGAME)
                 util.descargarImagen(origen, destino)
-                os.system("mogrify -resize %dx%d! %s" % (ancho, alto, destino))
+                os.system("mogrify -resize %dx%d! %s" % (config.WIDTH_DISCS, config.HEIGHT_DISCS, destino))
                 return True
             except util.ErrorDescargando:
                 return False
@@ -245,29 +243,18 @@ class WiithonCORE:
         if (self.existeCaratula(IDGAME)):
             return True
         else:
-            ancho = 160
-            alto = 224
-            origenes = []
-            origenes.append("http://www.wiiboxart.com/pal/%s.png" % IDGAME)
-            origenes.append("http://www.wiiboxart.com/ntsc/%s.png" % IDGAME)
-            origenes.append("http://www.wiiboxart.com/ntscj/%s.png" % IDGAME)
-            origenes.append("http://www.wiiboxart.com/3d/160/225/%s.png" % IDGAME)
-            origenes.append("http://www.wiiboxart.com/widescreen/pal/%s.png" % IDGAME)
-            origenes.append("http://www.wiiboxart.com/widescreen/ntsc/%s.png" % IDGAME)
-            origenes.append("http://www.wiiboxart.com/widescreen/ntscj/%s.png" % IDGAME)
-            origenes.append("http://www.wiiboxart.com/fullcover/%s.png" % IDGAME)
             destino = self.getRutaCaratula(IDGAME)
             descargada = False
-            i = 0
             print _("***************** DESCARGAR CARATULA %s ********************") % (IDGAME)
-            
-            while ( not descargada and i<len(origenes) ):
+            i = 0
+            while ( not descargada and i<len(config.PROVIDER_COVERS) ):
                 try:
-                    util.descargarImagen(origenes[i], destino)
-                    os.system("mogrify -resize %dx%d! %s" % (ancho, alto, destino))
-                    descargada = True
+                    util.descargarImagen(config.PROVIDER_COVERS[i] % IDGAME, destino)
+                    os.system("mogrify -resize %dx%d! %s" % (config.WIDTH_COVERS, config.HEIGHT_COVERS, destino))
                 except util.ErrorDescargando:
                     i += 1
+                if (self.existeCaratula(IDGAME)):
+                    descargada = True
             return descargada
 
     # borrar caratula
