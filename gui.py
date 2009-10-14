@@ -623,7 +623,7 @@ class WiithonGUI(GtkBuilderWrapper):
                     sql = util.decode('idgame=="%s" and idParticion=="%d"' % (nuevoIDGAME , self.sel_parti.obj.idParticion))
                     juego = session.query(Juego).filter(sql).first()
                     if juego == None:
-                        if ( self.question(_('Advertencia de seguridad de renombrar desde IDGAME = ') + ('%s -> %s') % (self.sel_juego.obj.idgame , nuevoIDGAME)) ):
+                        if ( self.question(_('Advertencia de seguridad de renombrar desde IDGAME = ') + ('%s -> %s?') % (self.sel_juego.obj.idgame , nuevoIDGAME)) ):
                             if self.core.renombrarIDGAME(self.sel_juego.obj , nuevoIDGAME):
                                 # modificamos el juego modificado de la BDD
                                 if self.sel_juego.obj != None:

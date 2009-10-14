@@ -137,6 +137,10 @@ msgstr ""
 msgid "Aniadir directorio"
 msgstr ""
 
+#, python-format
+msgid "Borrando juego %s"
+msgstr ""
+
 msgid "Borrar juego con IDGAME"
 msgstr ""
 
@@ -152,9 +156,6 @@ msgid "Buscando un Disco de Wii ..."
 msgstr ""
 
 msgid "Buscar:"
-msgstr ""
-
-msgid "Caratula descargada como"
 msgstr ""
 
 msgid "Caratula?"
@@ -227,6 +228,10 @@ msgid "Desea reemplazarla (S/N) : "
 msgstr ""
 
 msgid "Dispositivo"
+msgstr ""
+
+#, python-format
+msgid "Dumpeando desde %s a %s utilizando %s temporalmente"
 msgstr ""
 
 #, python-format
@@ -337,7 +342,8 @@ msgid ""
 "%s"
 msgstr ""
 
-msgid "Error al pasar la ISO al disco duro"
+#, python-format
+msgid "Error al pasar la ISO a la particion %s"
 msgstr ""
 
 msgid "Error borrando"
@@ -382,6 +388,10 @@ msgid "Extraer %s a la ruta %s"
 msgstr ""
 
 msgid "Extraer ISO de juego con IDGAME"
+msgstr ""
+
+#, python-format
+msgid "Extraer Juego %s a ISO"
 msgstr ""
 
 msgid "Extraer a ISO"
@@ -480,6 +490,13 @@ msgstr ""
 msgid "Juegos erroneos"
 msgstr ""
 
+msgid "Juegos originales, solo con lectores LG."
+msgstr ""
+
+#, python-format
+msgid "La particion %s no contiene juegos"
+msgstr ""
+
 #, python-format
 msgid "La particion %s: Ya no existe"
 msgstr ""
@@ -560,7 +577,7 @@ msgid "No puedes refrescar las particiones mientras hay tareas sin finalizar"
 msgstr ""
 
 #, python-format
-msgid "No se ha encontrado caratula para el juego %s"
+msgid "No se ha completado el formateo de %s"
 msgstr ""
 
 #, python-format
@@ -608,6 +625,10 @@ msgstr ""
 
 #, python-format
 msgid "OK, descargado %s.png"
+msgstr ""
+
+#, python-format
+msgid "OK, el juego se ha pasado a la particion %s"
 msgstr ""
 
 msgid "OK, todas las caratulas se han descargado"
@@ -662,6 +683,10 @@ msgid "Refrescar WBFS"
 msgstr ""
 
 msgid "Renombrar"
+msgstr ""
+
+#, python-format
+msgid "Renombrar el juego %s."
 msgstr ""
 
 msgid "Renombrar juego IDGAME"
@@ -761,9 +786,6 @@ msgstr ""
 msgid "a la particion"
 msgstr ""
 
-msgid "a un ISO temporal de 4.4GB en"
-msgstr ""
-
 msgid "caratulas a SD"
 msgstr ""
 
@@ -791,5 +813,6 @@ msgstr ""
 msgid "s"
 msgstr ""
 
-msgid "wiithon no borra la ISO temporal, puedes borrarla si no la necesitas"
+#, python-format
+msgid "wiithon no borra la ISO temporal: %s, puedes borrarla si no la necesitas"
 msgstr ""

@@ -140,6 +140,10 @@ msgstr "Ajouter RAR contenant une ISO"
 msgid "Aniadir directorio"
 msgstr "Ajouter dossier"
 
+#, python-format
+msgid "Borrando juego %s"
+msgstr ""
+
 msgid "Borrar juego con IDGAME"
 msgstr "Supprimer jeu IDGAME"
 
@@ -156,9 +160,6 @@ msgstr "Recherche disque Wii  ..."
 
 msgid "Buscar:"
 msgstr "Recherche:"
-
-msgid "Caratula descargada como"
-msgstr "Jaquette téléchargé en tant que"
 
 msgid "Caratula?"
 msgstr "Jaquette?"
@@ -231,6 +232,10 @@ msgstr "Souhaitez-vous remplacer ? (Y/N) :"
 
 msgid "Dispositivo"
 msgstr "Périphérique"
+
+#, python-format
+msgid "Dumpeando desde %s a %s utilizando %s temporalmente"
+msgstr ""
 
 #, python-format
 msgid "ERROR %s no es un ningun juego de Wii"
@@ -343,8 +348,9 @@ msgstr ""
 "\n"
 "%s"
 
-msgid "Error al pasar la ISO al disco duro"
-msgstr "Erreur lors du transfert de l'ISO vers le disque dur"
+#, python-format
+msgid "Error al pasar la ISO a la particion %s"
+msgstr ""
 
 msgid "Error borrando"
 msgstr "Erreur de suppression"
@@ -389,6 +395,10 @@ msgstr "Extraction %s vers %s"
 
 msgid "Extraer ISO de juego con IDGAME"
 msgstr "Extraire ISO du jeu avec IDGAME"
+
+#, python-format
+msgid "Extraer Juego %s a ISO"
+msgstr ""
 
 msgid "Extraer a ISO"
 msgstr "Extraire ISO"
@@ -486,6 +496,13 @@ msgstr "Bons jeux"
 msgid "Juegos erroneos"
 msgstr "Mauvais jeux"
 
+msgid "Juegos originales, solo con lectores LG."
+msgstr ""
+
+#, python-format
+msgid "La particion %s no contiene juegos"
+msgstr ""
+
 #, python-format
 msgid "La particion %s: Ya no existe"
 msgstr ""
@@ -573,8 +590,8 @@ msgid "No puedes refrescar las particiones mientras hay tareas sin finalizar"
 msgstr "Vous ne pouvez pas actualiser tant qu'il existe des tâches inachevées"
 
 #, python-format
-msgid "No se ha encontrado caratula para el juego %s"
-msgstr "Pas d'image ISO"
+msgid "No se ha completado el formateo de %s"
+msgstr ""
 
 #, python-format
 msgid "No se ha encontrado ningun ISO/RAR en el directorio %s"
@@ -625,6 +642,10 @@ msgstr "Dépassement"
 #, python-format
 msgid "OK, descargado %s.png"
 msgstr "OK, téléchargement de %s.png"
+
+#, python-format
+msgid "OK, el juego se ha pasado a la particion %s"
+msgstr ""
 
 msgid "OK, todas las caratulas se han descargado"
 msgstr "OK, toutes les jaquettes ont été téléchargées"
@@ -679,6 +700,10 @@ msgstr "Actualiser WBFS"
 
 msgid "Renombrar"
 msgstr "Renommer"
+
+#, python-format
+msgid "Renombrar el juego %s."
+msgstr ""
 
 msgid "Renombrar juego IDGAME"
 msgstr "Renommer le jeu IDGAME"
@@ -788,9 +813,6 @@ msgstr "Une ISO existe déjà dans : %s"
 msgid "a la particion"
 msgstr "vers la partition"
 
-msgid "a un ISO temporal de 4.4GB en"
-msgstr "vers une ISO temporaire de 4.4Go"
-
 msgid "caratulas a SD"
 msgstr "Copier sur carte SD"
 
@@ -818,8 +840,24 @@ msgstr "reste"
 msgid "s"
 msgstr ""
 
-msgid "wiithon no borra la ISO temporal, puedes borrarla si no la necesitas"
-msgstr "wiithon ne supprime pas l'ISO temporaire, vous pouvez le faire si vous n'en avez pas besoin"
+#, python-format
+msgid "wiithon no borra la ISO temporal: %s, puedes borrarla si no la necesitas"
+msgstr ""
+
+#~ msgid "Caratula descargada como"
+#~ msgstr "Jaquette téléchargé en tant que"
+
+#~ msgid "Error al pasar la ISO al disco duro"
+#~ msgstr "Erreur lors du transfert de l'ISO vers le disque dur"
+
+#~ msgid "No se ha encontrado caratula para el juego %s"
+#~ msgstr "Pas d'image ISO"
+
+#~ msgid "a un ISO temporal de 4.4GB en"
+#~ msgstr "vers une ISO temporaire de 4.4Go"
+
+#~ msgid "wiithon no borra la ISO temporal, puedes borrarla si no la necesitas"
+#~ msgstr "wiithon ne supprime pas l'ISO temporaire, vous pouvez le faire si vous n'en avez pas besoin"
 
 #~ msgid "gtk-ok"
 #~ msgstr "gtk-ok"
