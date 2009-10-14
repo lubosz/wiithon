@@ -31,7 +31,7 @@ class Preferencias:
         self.iniciarPreferencia('ruta_copiar_caratulas', defecto=os.getcwd())
         self.iniciarPreferencia('ruta_copiar_discos', defecto=os.getcwd())
         self.iniciarPreferencia('URL_ZIP_WIITDB', defecto='http://wiitdb.com/wiitdb.zip', mostrar=True, vbox=prefs_vbox)
-        self.iniciarPreferencia('FORMATO_FECHA_WIITDB', defecto='%%d-%%m-%%Y', mostrar=True, vbox=prefs_vbox)
+        self.iniciarPreferencia('FORMATO_FECHA_WIITDB', defecto='%d-%m-%Y', mostrar=True, vbox=prefs_vbox)
         self.iniciarPreferencia('WIDTH_COVERS', defecto=160, mostrar=True, vbox=prefs_vbox)
         self.iniciarPreferencia('HEIGHT_COVERS', defecto=224, mostrar=True, vbox=prefs_vbox)
 
@@ -52,6 +52,7 @@ class Preferencias:
             
             etiqueta = gtk.Label()
             etiqueta.set_text("<b>%s: </b>" % preferencia.campo)
+            etiqueta.set_use_markup(True)
             h1.pack_start(etiqueta, expand=True, fill=True, padding=10)
             
             # renderizar preferencia

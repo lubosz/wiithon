@@ -382,8 +382,11 @@ deb: compile
 
 	dpkg-deb --build $(DEB-ROOT)
 	rm -rf $(DEB-ROOT)
+	
+	# delete if dont need it
+	mv "$(DEB-ROOT).deb" "./wiithon-$(VERSION)_$(REVISION).deb"
 
 	@echo "=================================================================="
-	@echo "Debian package created:	"$(DEB-ROOT)".deb"
+	@echo "Debian package created:	wiithon-"$(VERSION)"_"$(REVISION)".deb"
 	@echo "=================================================================="
 

@@ -4,7 +4,7 @@ Section: misc
 Priority: optional
 Architecture: all
 Essential: no
-Depends: python (>= 2.5), python-sqlalchemy (>= 0.4), libgtk2.0-0 (>= 2.14), unzip, bash
+Depends: python (>= 2.5), python-sqlalchemy (>= 0.4), libgtk2.0-0 (>= 2.14), unzip, bash, mogrify
 Installed-Size: 2044
 Maintainer: Ricardo Marmolejo García <makiolo@gmail.com>
 Homepage: https://launchpad.net/wiithon
