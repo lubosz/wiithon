@@ -151,6 +151,7 @@ class WiithonCORE:
     # renombra el ISO de un IDGAME que esta en DEVICE
     def renombrarNOMBRE(self , juego, nuevoNombre):
         comando = '%s -p %s rename "%s" "%s"' % (config.WBFS_APP, juego.particion.device, juego.idgame, nuevoNombre)
+        print comando
         salida = util.call_out_screen(comando)
         return salida
 
@@ -314,13 +315,26 @@ class WiithonCORE:
         return os.path.exists(destino)
 
     # extrae el juego a un destino
-    def extraerJuego(self ,juego , destino):
-        trabajoActual = os.getcwd()
-        os.chdir( destino )
+    def extraerJuego(self ,juego , destino = ''):
+        if destino != '':
+            trabajoActual = os.getcwd()
+            os.chdir( destino )
+
         comando = "%s -p %s extract %s" % (config.WBFS_APP, juego.particion.device , juego.idgame)
         salida = util.call_out_file(comando)
-        os.chdir( trabajoActual )
+
+        if destino != '':
+            os.chdir( trabajoActual )
         return salida
+        
+    def getEspacioLibreUsado(self, particion):
+        comando = "%s -p %s df" % (config.WBFS_APP, particion.device)
+        salida = util.getSTDOUT(comando)
+        cachos = salida.split(config.SEPARADOR)
+        if(len(cachos) == 3):
+            return [float(cachos[0]), float(cachos[1]), float(cachos[2])]
+        else:
+            return [0.0, 0.0 ,0.0]
 
     def formatearWBFS(self, particion):
         if particion.tipo == "fat32":

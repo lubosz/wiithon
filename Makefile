@@ -335,6 +335,7 @@ deb: compilar
 	mkdir -p $(DEB-ROOT)/usr/lib
 	mkdir -p $(DEB-ROOT)/usr/share/applications
 	mkdir -p $(DEB-PREFIX)/bin
+	mkdir -p $(DEB-PREFIX)/lib
 	mkdir -p $(DEB-PREFIX)/share/wiithon/recursos/glade
 	mkdir -p $(DEB-PREFIX)/share/wiithon/recursos/imagenes
 	mkdir -p $(DEB-PREFIX_RECURSOS_IMAGENES_CARATULAS)

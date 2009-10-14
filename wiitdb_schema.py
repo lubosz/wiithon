@@ -441,7 +441,7 @@ class Juego(Base):
     def getJuegoWIITDB(self):
         sql = util.decode("juego_wiitdb.idgame=='%s'" % (self.idgame))
         return session.query(JuegoWIITDB).filter(sql).first()
-       
+
 class Particion(Base):
     __tablename__ = 'particion'
 
@@ -462,7 +462,7 @@ class Particion(Base):
             # nombre lógico unix (/dev/sda1)
             self.device = util.decode(cachos[0])
             
-            # tipo de particion "fat32|wbfs"
+            # tipo de particion "fat32|wbfs|dvd"
             self.tipo = util.decode(cachos[1])
             
             # Espacio en GB usados de la partición
@@ -503,15 +503,12 @@ class Particion(Base):
         else:
             return "red"
             
-    def refrescarEspacioLibreUsado(self):
-        comando = "%s -p %s df" % (config.WBFS_APP, self.device)
-        salida = util.getSTDOUT( comando )
-        cachos = salida.split(config.SEPARADOR)
-        if(len(cachos) == 3):
-            self.usado = float(cachos[0])
-            self.libre = float(cachos[1])
-            self.total = float(cachos[2])
-            session.commit()
+    def refrescarEspacioLibreUsado(self, core):
+        cachos = core.getEspacioLibreUsado(self)
+        self.usado = float(cachos[0])
+        self.libre = float(cachos[1])
+        self.total = float(cachos[2])
+        session.commit()
 
 try:        
     Index('idUnico_particion', Particion.device, unique=True)

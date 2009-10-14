@@ -37,7 +37,6 @@ except ImportError:
     sys.exit(1)
     
 def App():
-    
     try:
         util.configurarLenguaje()
 
@@ -45,48 +44,40 @@ def App():
             print _("Instala wiithon, no lo ejecutar desde ./wiithon.py")
             sys.exit(1)
 
-        options, arguments = getopt.getopt(sys.argv[1:], 'pch', ['trabajo=',
-                                 'work=',
-                                 'help',
-                                 'HELP',
-                                 'no-gui',
-                                 ])
+        options, arguments = getopt.getopt(sys.argv[1:],
+                                'pwhlferdi',
+                                [
+                                    'pause',
+                                    'work',
+                                    'help',
+                                    'ls',
+                                    'format',
+                                    'extract',
+                                    'rename',
+                                    'delete',
+                                    'install',
+                                ])
 
-        # Por defecto es GUI
-        glade_gui = True
-        # controla si se ha pasado el parametro "-p"
-        PAUSA = False
-        opciones_formateadas = {}
-
+        num_parms_cli = 0
         for option, value in options:
-            if option == '-p':
-                PAUSA = True
-                # si pausamos -> es CLI
-                glade_gui = False
-            elif option in ['--trabajo', '--work']:
-                if os.path.isdir(value):
-                    os.chdir(value)
-            elif option in ['--no-gui', '-c','-h']:
-                glade_gui = False
-            else:
-                opciones_formateadas[option] = value
-
+            if not (util.getExtension(option) == "iso"):
+                num_parms_cli += 1
+                    
+        GUI = num_parms_cli == 0
         core = WiithonCORE()
-
-        if glade_gui:
+        if GUI:
             interfaz = WiithonGUI(core)
         else:
             interfaz = WiithonCLI(core)
 
-        interfaz.main(opciones_formateadas, arguments)
+        interfaz.main(options, arguments)
 
     except getopt.GetoptError:
-        raise AssertionError, _("Programa ejecutado con las opciones incorrectas.")
+        print _("Programa ejecutado con las opciones incorrectas.")
     except AssertionError, mensaje:
         print str(mensaje)
-
-    if PAUSA:
-        raw_input(_("Pulse cualquier tecla para continuar ...\n"))
+    except KeyboardInterrupt:
+        print _("Interrumpido por el usuario")
 
     sys.exit(0)
 

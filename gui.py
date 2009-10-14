@@ -1325,7 +1325,7 @@ class WiithonGUI(GtkBuilderWrapper):
                         session.commit()
                         
                         # actualizar valores de usado/libre/total
-                        self.sel_parti.obj.refrescarEspacioLibreUsado()
+                        self.sel_parti.obj.refrescarEspacioLibreUsado(self.core)
                         
                         # Selecciona el primer juego
                         self.seleccionarFilaConValor(self.wb_tv_partitions, len(self.lParti) , 0 , self.sel_parti.obj.device)
@@ -1563,7 +1563,7 @@ class WiithonGUI(GtkBuilderWrapper):
         juegoNuevo = self.core.getInfoJuego(DEVICE, IDGAME)
         
         # refrescar su espacio uso/libre/total
-        juegoNuevo.particion.refrescarEspacioLibreUsado()
+        juegoNuevo.particion.refrescarEspacioLibreUsado(self.core)
 
         # seleccionamos la particion y la fila del juego añadido       
         self.seleccionarFilaConValor(self.wb_tv_partitions, len(self.lParti) , 0 , juegoNuevo.particion.device)
@@ -1588,7 +1588,7 @@ class WiithonGUI(GtkBuilderWrapper):
             print "--------------------"
             
         # refrescar su espacio uso/libre/total
-        particion.refrescarEspacioLibreUsado()
+        particion.refrescarEspacioLibreUsado(self.core)
         
         # seleccionamos la particion y la fila del juego añadido
         self.seleccionarFilaConValor(self.wb_tv_partitions, len(self.lParti) , 0 , juegoNuevo.particion.device)

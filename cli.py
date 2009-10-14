@@ -54,25 +54,139 @@ class WiithonCLI:
                         raise AssertionError, _("Valor incorrecto")
         else:
             return listaParticiones[0]
+            
+    def criterio_ordenacion_juegos(self, juego1, juego2):
+        if juego1.title.lower() > juego2.title.lower():
+            return 1
+        else:
+            if juego1.title.lower() < juego2.title.lower():
+                return -1
+            else:
+                return 0
 
     # No entiendo muy bien lo de opciones y argumentos, aunque no me lo he podido mirar mucho
     def main(self, opciones, argumentos):
+        
+        (NADA, LISTAR, EXTRAER, FORMATEAR, MOSTRAR_AYUDA, RENOMBRAR,
+        BORRAR, INSTALAR)=([ "%d" % i for i in range(8) ])
+        
+        accion = NADA
 
-        PARAMETROS = NonRepeatList()
-        PARAMETROS.extend(argumentos)
-        numParametros = len(PARAMETROS)
+        PAUSA = False
+        for option, value in opciones:
+            if config.DEBUG:
+                print "%s => %s" % (option, value)            
 
+            if   option in ['-p', '--pause']:
+                PAUSA = True
+            elif option in ['-w', '--work']:
+                if os.path.isdir(value):
+                    os.chdir(value)
+            elif option in ['-h', '--help']:
+                accion = MOSTRAR_AYUDA
+            elif option in ['-l', '--ls']:
+                accion = LISTAR
+            elif option in ['-f', '--format']:
+                accion = FORMATEAR
+            elif option in ['-e', '--extract']:
+                accion = EXTRAER
+            elif option in ['-r', '--rename']:
+                accion = RENOMBRAR
+            elif option in ['-d', '--delete']:
+                accion = BORRAR
+            elif option in ['-i', '--install']:
+                accion = INSTALAR
+        
+        # A = acciones que necesitan una particion WBFS
+        # OR
+        # B = acciones que necesitan una particion WBFS y un juego
+        if accion == LISTAR or accion == EXTRAER or accion == RENOMBRAR or accion == BORRAR or accion == INSTALAR:
+            listaParticiones = self.core.sincronizarParticiones()
+            self.sel_parti = self.get_elegir_particion(listaParticiones)
+            listaJuegos = self.core.syncronizarJuegos(self.sel_parti)
+            listaJuegos.sort( self.criterio_ordenacion_juegos )
+            hayJuegos = len(listaJuegos) > 0
+            if hayJuegos:
+                
+                # B = acciones que necesitan una particion WBFS y un juego
+                if accion == EXTRAER or accion == RENOMBRAR or accion == BORRAR:
+                    juego = self.getJuego(listaJuegos)
+                    if juego is not None:
+                        if accion == EXTRAER:
+                            print _("Extraer Juego %s a ISO") % juego
+                            if( self.core.extraerJuego(juego) ):
+                                print _("Juego %s extraido OK") % (juego)
+                            else:
+                                print _("ERROR extrayendo la ISO de %s") % (juego)                            
+                        elif accion == RENOMBRAR:
+                            print _("Renombrar el juego %s.") % (juego)
+                            NUEVO_NOMBRE = raw_input(_("Escriba el nuevo nombre : "))
+                            if ( self.core.renombrarNOMBRE( juego , NUEVO_NOMBRE ) ):
+                                print _("ISO renombrada correctamente a %s") % NUEVO_NOMBRE
+                            else:
+                                print _("ERROR al renombrar")
+                        elif accion == BORRAR:
+                            print _("Borrando juego %s") % juego
+                            if( self.core.borrarJuego(juego) ):
+                                print _("Juego %s borrado correctamente") % (juego)
+                            else:
+                                print _("ERROR borrando el juego")
+                    else:
+                        print _("No has seleccionado ningun juego")
+                        
+                # A = acciones que necesitan una particion WBFS
+                if accion == LISTAR or accion == INSTALAR:
+                    if accion == LISTAR:
+                        print _("Listando juegos de : %s") % self.sel_parti
+                        self.listarJuegos(listaJuegos)
+                        self.mostrarEspacioLibre(self.sel_parti)
+                    elif accion == INSTALAR:
+                        print _("Inserte un juego de la Wii en su lector de DVD ...")
+                        print _("Juegos originales, solo con lectores LG.")
+                        raw_input(_("Pulse cualquier tecla para continuar ... "))
+                        self.instalarJuego(self.sel_parti)
+
+            else:
+                print _("La particion %s no contiene juegos") % self.sel_parti
+                
+        # C = acciones que necesitan una particion FAT32
+        elif accion == FORMATEAR:                
+            listaParticiones = self.core.sincronizarParticiones(config.DETECTOR_WBFS_FAT32)
+            self.sel_parti = self.get_elegir_particion(listaParticiones)
+            try:
+                respuesta = raw_input(_(" Esta seguro de formatear %s (S/N)? ") % self.sel_parti)
+                if respuesta.lower() == _("s"):
+                    if self.core.formatearWBFS(self.sel_parti):
+                        print _("%s se ha formateado correctamente") % self.sel_parti
+                    else:
+                        print _("%s NO se ha podido formatear") % self.sel_parti
+                else:
+                    print _("No se ha formateado %s") % self.sel_parti
+            except KeyboardInterrupt:
+                print
+                print _("Interrumpido por el usuario.")
+                print _("No se ha completado el formateo de %s") % self.sel_parti
+
+        # D = acciones que no necesitan nada
+        if accion == MOSTRAR_AYUDA:
+            self.uso()
+
+        if PAUSA:
+            raw_input(_("Pulse cualquier tecla para continuar ...\n"))
+        sys.exit(0)
+
+        numParametros = len(argumentos)
         if numParametros > 0:
-            parm1 = PARAMETROS[0].lower()
+            parm1 = argumentos[0].lower()
             if numParametros > 1:
-                parm2 = PARAMETROS[1].lower()
+                parm2 = argumentos[1].lower()
                 parm2_sensible = PARAMETROS[1]
                 if numParametros > 2:
-                    parm3 = PARAMETROS[2].lower()
-                    parm3_sensible = PARAMETROS[2]
+                    parm3 = argumentos[2].lower()
+                    parm3_sensible = argumentos[2]
 
         if numParametros == 1 and (parm1 == "formatear" or parm1 == "format"):
-            listaParticiones = self.core.getListaParticiones(config.DETECTOR_WBFS_FAT32)
+            listaParticiones = self.core.sincronizarParticiones(config.DETECTOR_WBFS_FAT32)
             self.sel_parti = self.get_elegir_particion(listaParticiones)
             try:
                 respuesta = raw_input(_(" Esta seguro de formatear %s (S/N)? ") % self.sel_parti)
@@ -88,21 +202,22 @@ class WiithonCLI:
                 print _("Interrumpido por el usuario.")
                 print _("No se ha formateado %s") % self.sel_parti
         else:
-            listaParticiones = self.core.getListaParticiones()
+            listaParticiones = self.core.sincronizarParticiones()
             self.sel_parti = self.get_elegir_particion(listaParticiones)
             
             DEVICE = self.sel_parti.device
             FABRICANTE = self.sel_parti.fabricante
 
-            listaJuegos = self.core.getListaJuegos(self.sel_parti)
+            listaJuegos = self.core.syncronizarJuegos(self.sel_parti)
+            listaJuegos.sort( self.criterio_ordenacion_juegos )
             hayJuegos = len(listaJuegos) > 0
 
             # estamos dentro del if numParametros > 1:
             if numParametros == 0 or parm1 == "listar" or parm1 == "ls" :
                 if(hayJuegos):
                     print _("Listando juegos de : %s") % (DEVICE + " " + FABRICANTE)
-                    self.listarISOs(DEVICE , listaJuegos)
-                    self.mostrarEspacioLibre(DEVICE)
+                    self.listarJuegos(listaJuegos)
+                    self.mostrarEspacioLibre(self.sel_parti)
                 else:
                     print _("No tienes instalado ningun juego en %s") % (DEVICE)
             elif ( parm1 == "instalar" or parm1 == "install"):
@@ -121,7 +236,7 @@ class WiithonCLI:
                         else:
                             IDGAME = parametro
                     else:
-                        juego = self.getJuego(DEVICE , listaJuegos)
+                        juego = self.getJuego(listaJuegos)
                     print "%s = %s %s %s %s" % (_("Borrar juego con IDGAME") , juego.idgame , _("en particion"), DEVICE , FABRICANTE)
                     if( juego != None and self.core.borrarJuego(juego) ):
                         print _("Juego %s borrado correctamente" % (juego))
@@ -135,7 +250,7 @@ class WiithonCLI:
                     if(numParametros >= 2):
                         IDGAME = parm2_sensible
                     else:
-                        juego = self.getJuego(DEVICE , listaJuegos)
+                        juego = self.getJuego(listaJuegos)
                     if(self.core.descargarCaratula(juego.idgame)):
                         print _("OK, descargado %s.png") % juego.idgame
                     else:
@@ -157,7 +272,7 @@ class WiithonCLI:
                         IDGAME = parm2_sensible
                         NUEVO_NOMBRE = parm3_sensible
                     else:
-                        IDGAME = self.getJuego(DEVICE , listaJuegos)
+                        IDGAME = self.getJuego(listaJuegos)
                         NUEVO_NOMBRE = raw_input(_("Escriba el nuevo nombre : "))
                     print "%s = %s %s %s" % ( _("Renombrar juego IDGAME") , IDGAME , _("como") , NUEVO_NOMBRE)
                     if ( self.core.renombrarISO( DEVICE , IDGAME , NUEVO_NOMBRE ) ):
@@ -171,7 +286,7 @@ class WiithonCLI:
                     if(numParametros >= 2):
                         IDGAME = parm2_sensible
                     else:
-                        IDGAME = self.getJuego(DEVICE , listaJuegos)
+                        IDGAME = self.getJuego(listaJuegos)
                     print "%s = %s %s %s %s" % ( _("Extraer ISO de juego con IDGAME") ,IDGAME , _("en particion") , DEVICE , FABRICANTE)
                     if( self.core.extraerJuego(DEVICE , IDGAME) ):
                         print _("Juego %s extraido OK") % (IDGAME)
@@ -183,7 +298,7 @@ class WiithonCLI:
                 self.uso()
             else:
                 #Los parametros es una lista de ISOS explicita
-                for parametro in PARAMETROS:
+                for parametro in argumentos:
                     if ( os.path.isdir(parametro) or parametro.lower() == "buscar" or parametro.lower() == "meter" or parametro.lower() == "-r" or parametro.lower() == "metertodo" or parametro.lower() == "buscartodo" or parametro.lower() == "search" ):
                         if( not os.path.isdir(parametro) ):
                             archivo = "."
@@ -338,13 +453,12 @@ class WiithonCLI:
 
             print "}"
 
-
     # Dumpea la ISO de un BACKUP y lo mete a la partición WBFS
-    def instalarJuego(self , DEVICE):
+    def instalarJuego(self , particion):
         print _("Buscando un Disco de Wii ...")
 
         # Le quito el ultimo salto de linea y forma la lista cortando por saltos de linea
-        listaParticiones = self.core.getListaParticiones(config.DETECTOR_WBFS_LECTOR)
+        listaParticiones = self.core.sincronizarParticiones(config.DETECTOR_WBFS_LECTOR)
         numListaParticiones = len(listaParticiones)
 
         if(numListaParticiones<=0):
@@ -352,62 +466,45 @@ class WiithonCLI:
         elif(numListaParticiones > 1):
             print _("Hay mas de un juego de la Wii, deja solo 1 para eliminar la ambiguedad")
         else:# 1 juego de wii
-            try:
-                particion = listaParticiones[0]
-                LECTOR_DVD = particion.device
-                FABRICANTE_DVD = particion.fabricante
-                MAGIC_DVD = util.getMagicISO(LECTOR_DVD)
-                SALIDA = "%s/%s.iso" % (os.getcwd(), MAGIC_DVD)
-                reemplazada = False
-                if (os.path.exists(SALIDA)):
-                    print _("Ya hay una ISO en : %s") % (SALIDA)
-                    respuesta = raw_input(_("Desea reemplazarla (S/N) : "))
-                    if(respuesta.lower() == "s" or respuesta.lower() == "si"):
-                        reemplazada = False
-                    else:
-                        reemplazada = True
-                print "%s %s = %s.iso ..." % (FABRICANTE_DVD , _("a un ISO temporal de 4.4GB en") , MAGIC_DVD)
-                print _("Puede llevar mucho tiempo ...")
-
-                '''
-                dd if=/dev/source of=/target/name.img bs=40M conv=noerror,sync 2> /dev/null
-                '''
-
-                if( reemplazada or (os.system("dd if="+LECTOR_DVD+" of="+SALIDA+" bs=40M conv=noerror,sync 2> /dev/null")==0) ):
-                    if ( self.core.anadirISO(DEVICE , SALIDA)):
-                        if( self.core.descargarCaratula(MAGIC_DVD) ):
-                            print "%s %s/%s.png" % (_("Caratula descargada como") , os.getcwd() , MAGIC_DVD)
-                        else:
-                            print _("No se ha encontrado caratula para el juego %s") % (MAGIC_DVD)
-                    else:
-                        print _("Error al pasar la ISO al disco duro")
-                    print _("wiithon no borra la ISO temporal, puedes borrarla si no la necesitas")
+            lector = listaParticiones[0]
+            MAGIC_DVD = util.getMagicISO(lector.device)
+            SALIDA = "%s/%s.iso" % (os.getcwd(), MAGIC_DVD)
+            reemplazada = False
+            if (os.path.exists(SALIDA)):
+                print _("Ya hay una ISO en : %s") % (SALIDA)
+                respuesta = raw_input(_("Desea reemplazarla (S/N) : "))
+                if(respuesta.lower() == "s" or respuesta.lower() == "si"):
+                    reemplazada = False
                 else:
-                    print _("Error al dumpear la ISO")
-            except KeyboardInterrupt:
-                print _("Interrumpido por el usuario")
+                    reemplazada = True
+            print _("Dumpeando desde %s a %s utilizando %s temporalmente") % (lector, particion, SALIDA)
+            print _("Puede llevar mucho tiempo ...")
+            '''
+            dd if=/dev/source of=/target/name.img bs=40M conv=noerror,sync 2> /dev/null
+            '''
+            if( reemplazada or (os.system("dd if=%s of=%s bs=40M conv=noerror,sync 2> /dev/null" % (LECTOR_DVD, SALIDA))==0) ):
+                if ( self.core.anadirISO(particion , SALIDA)):
+                    print _("OK, el juego se ha pasado a la particion %s") % particion
+                else:
+                    print _("Error al pasar la ISO a la particion %s") % particion
+                print _("wiithon no borra la ISO temporal: %s, puedes borrarla si no la necesitas") % SALIDA
+            else:
+                print _("Error al dumpear la ISO")
 
     # Esta forma parte del GUI, es una forma del CLI de seleccionar 1 juego
-    def getJuego(self , DEVICE , listaJuegos):
+    def getJuego(self, listaJuegos):        
         numJuegos = len(listaJuegos)
         if(numJuegos > 0):
-            print "--------------------------------------------------------------------------------"
-            print "%3s\t%6s\t%-40s\t%7s\t%6s" % ("NUM","IDGAME",_("TITULO"),_("TAMANIO") , _("Caratula?"))
-            print "--------------------------------------------------------------------------------"
-            i = 1
-            for juego in listaJuegos:
-                if (self.core.existeCaratula(juego.idgame) and self.core.existeDisco(juego.idgame)):
-                    caratula = _("SI")
-                else:
-                    caratula = _("NO")
-                print "%3s\t%s\t%-40s\t%.2f GB\t%6s" % ( i , juego.idgame , juego.title , juego.size , caratula)
-                if ( (i % config.NUM_LINEAS_PAUSA) == 0 ):
-                    raw_input(_("Presiona cualquier tecla para mostrar %d lineas mas") % (config.NUM_LINEAS_PAUSA))
-                i = i + 1
-            print "--------------------------------------------------------------------------------"
-
+            self.listarJuegos(listaJuegos, True)
             try:
-                numJuego = int( raw_input(_("Indique el NUM del juego : ")) )
+                respuesta = ''
+                haEscritoAlgo = False
+                while not haEscritoAlgo:
+                    respuesta = raw_input(_("Indique el NUM del juego : "))
+                    if respuesta != '':
+                        haEscritoAlgo = True
+                
+                numJuego = int(respuesta)
                 # 1 <= numJuego <= numJuegos
                 if ((1 <= numJuego) and (numJuego <= numJuegos)):
                     try:
@@ -418,33 +515,37 @@ class WiithonCLI:
                 print _("El numero dado es incorrecto")
         return None
 
-    # dada la lista de juegos, esta se representa
-    # en GUI se refrescaría el TreeView
-    # en CLI se haría como se hace ahora
-    def listarISOs(self , DEVICE , listaJuegos):
+    def listarJuegos(self , listaJuegos, mostrarIndice = False):
         numJuegos = len(listaJuegos)
         if(numJuegos > 0):
             print "--------------------------------------------------------------------------------"
-            print "%6s\t%-55s\t%7s\t%6s" % ("IDGAME",_("TITULO"),_("TAMANIO") , _("Caratula?"))
+            if mostrarIndice:
+                print "%3s\t%6s\t%-40s\t%7s\t%6s" % ("NUM","IDGAME",_("TITULO"),_("TAMANIO") , _("Caratula?"))
+            else:
+                print "%6s\t%-55s\t%7s\t%6s" % ("IDGAME",_("TITULO"),_("TAMANIO") , _("Caratula?"))
             print "--------------------------------------------------------------------------------"
+
             i = 1
             for juego in listaJuegos:
                 if (self.core.existeCaratula(juego.idgame) and self.core.existeDisco(juego.idgame)):
                     caratula = _("SI")
                 else:
                     caratula = _("NO")
-                print "%s\t%-55s\t%.2f GB\t%6s" % (juego.idgame , juego.title , juego.size , caratula)
+
+                if mostrarIndice:
+                    print "%3s\t%s\t%-40s\t%.2f GB\t%6s" % ( i , juego.idgame , juego.title , juego.size , caratula)
+                else:
+                    print "%s\t%-55s\t%.2f GB\t%6s" % (juego.idgame , juego.title , juego.size , caratula)
+
                 if ( (i % config.NUM_LINEAS_PAUSA) == 0 ):
                     raw_input(_("Presiona cualquier tecla para mostrar %d lineas mas") % (config.NUM_LINEAS_PAUSA))
+
                 i = i + 1
             print "--------------------------------------------------------------------------------"
-            print "%s%d %s" % ( "\t\t\t\t\t\t\t" ,numJuegos , _("juegos de WII") )
-            return numJuegos
-        else:
-            return 0
+            print "%s%d %s" % ("\t\t\t\t\t\t\t" ,numJuegos , _("juegos de WII") )
 
-    def mostrarEspacioLibre(self , DEVICE):
-        info = self.core.getEspacioLibre(DEVICE)
+    def mostrarEspacioLibre(self , particion):
+        info = self.core.getEspacioLibreUsado(particion)
         print "\t\t\t\t\t\t\t%s : %.2f GB" % (_("Usado") , info[0])
         print "\t\t\t\t\t\t\t%s : %.2f GB" % (_("Libre") , info[1])
         print "\t\t\t\t\t\t\t%s : %.2f GB" % (_("Total") , info[2])

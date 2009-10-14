@@ -1,9 +1,6 @@
 #!/bin/sh
 
-rm /usr/lib/libwbfs.so
-if [ $(uname -m) =  "x86_64" ] 
-then
-	rm /lib32/libwbfs.so
-fi
-rm /usr/local/bin/wiithon
-rm /usr/local/bin/wiithon_wrapper
+test -L /usr/lib/libwbfs.so && rm /usr/lib/libwbfs.so
+test -L /lib32/libwbfs.so && rm /lib32/libwbfs.so
+test -L /usr/local/bin/wiithon && rm /usr/local/bin/wiithon
+test -L /usr/local/bin/wiithon_wrapper && rm /usr/local/bin/wiithon_wrapper
