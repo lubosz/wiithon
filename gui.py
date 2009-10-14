@@ -53,9 +53,6 @@ class WiithonGUI(GtkBuilderWrapper):
     sel_parti = FilaTreeview()
     sel_parti_1on1 = FilaTreeview()
     
-    # tiempo del ultimo click en tv_games
-    # ultimoClick = 0
-    
     # Hilo que actualiza wiitdb
     xmlWiiTDB = None
     
@@ -74,13 +71,6 @@ class WiithonGUI(GtkBuilderWrapper):
         # Cellrenderers que se modifican según cambia el modo
         self.renderEditableIDGAME = None
         self.renderEditableNombre = None
-
-        self.preferencia = session.query(Preferencia).first()
-        # Nunca se han creado preferencias
-        if self.preferencia == None:
-            self.preferencia = Preferencia()
-            session.save( self.preferencia )
-            session.commit()
 
         # Menu contextual
         self.uimgr = gtk.UIManager()
@@ -103,15 +93,6 @@ class WiithonGUI(GtkBuilderWrapper):
                 ('Borrar', gtk.STOCK_DELETE, None, None, '',
                  self.menu_contextual_borrar),
                 ])
-        
-        '''
-        * The name of the action. Must be specified.
-        * The stock id for the action. Optional with a default value of None if a label is specified.
-        * The label for the action. This field should typically be marked for translation, see the set_translation_domain() method. Optional with a default value of None if a stock id is specified.
-        * The accelerator for the action, in the format understood by the gtk.accelerator_parse() function. Optional with a default value of None.
-        * The tooltip for the action. This field should typically be marked for translation, see the set_translation_domain() method. Optional with a default value of None.
-        * The callback function invoked when the action is activated. Optional with a default value of None.
-        '''
 
         self.uimgr.insert_action_group(actiongroup)
 
@@ -126,27 +107,11 @@ class WiithonGUI(GtkBuilderWrapper):
         self.wb_principal.connect("drag_drop", self.drag_drop)
         self.wb_principal.connect("drag_data_received", self.drag_data_received_cb)
 
-        # verificar que las rutas existen
-        if(not os.path.exists(self.preferencia.ruta_anadir)):
-        	self.preferencia.ruta_anadir = os.getcwd()
+        # iniciar preferencias
+        self.core.prefs.cargarPreferenciasPorDefecto(self.wb_prefs_vbox)
 
-        if(not os.path.exists(self.preferencia.ruta_anadir_directorio)):
-        	self.preferencia.ruta_anadir_directorio = os.getcwd()
-
-        if(not os.path.exists(self.preferencia.ruta_extraer_iso)):
-        	self.preferencia.ruta_extraer_iso = os.getcwd()
-
-        if(not os.path.exists(self.preferencia.ruta_copiar_caratulas)):
-        	self.preferencia.ruta_copiar_caratulas = os.getcwd()
-
-        if(not os.path.exists(self.preferencia.ruta_copiar_discos)):
-        	self.preferencia.ruta_copiar_discos = os.getcwd()
-            
-        backup_preferencia_device = self.preferencia.device_seleccionado
-        backup_preferencia_idgame = self.preferencia.idgame_seleccionado
-        
-        # guardar preferencias
-        session.commit()
+        backup_preferencia_device = self.core.prefs.device_seleccionado
+        backup_preferencia_idgame = self.core.prefs.idgame_seleccionado
 
         # permite usar hilos con PyGTK http://faq.pygtk.org/index.py?req=show&file=faq20.006.htp
         # modo seguro con hilos
@@ -176,6 +141,7 @@ class WiithonGUI(GtkBuilderWrapper):
         self.wb_busqueda.show()
         self.wb_box_busqueda.pack_start(self.wb_busqueda)
         self.wb_busqueda.connect('changed' , self.on_busqueda_changed)
+        
         self.wb_principal.connect('destroy', self.salir)
 
         # carga la vista del TreeView de particiones
@@ -570,7 +536,7 @@ class WiithonGUI(GtkBuilderWrapper):
 
                 modelo.set_value(iterador,3, juegoWiiTDB.getTextPlayersWifi(True))
                 modelo.set_value(iterador,4, juegoWiiTDB.getTextPlayersLocal(True))
-                modelo.set_value(iterador,5, juegoWiiTDB.getTextFechaLanzamiento(True))
+                modelo.set_value(iterador,5, juegoWiiTDB.getTextFechaLanzamiento(self.core, True))
                 modelo.set_value(iterador,6, juegoWiiTDB.getTextRating(True))
                 modelo.set_value(iterador,10, _("+Info"))
                 modelo.set_value(iterador,11, "blue")
@@ -665,10 +631,9 @@ class WiithonGUI(GtkBuilderWrapper):
         
         # guardar particion y juego seleccionados
         if self.sel_juego.obj != None:
-            self.preferencia.idgame_seleccionado = self.sel_juego.obj.idgame
+            self.core.prefs.idgame_seleccionado = self.sel_juego.obj.idgame
         if self.sel_parti.obj != None:
-            self.preferencia.device_seleccionado = self.sel_parti.obj.device
-        session.commit()
+            self.core.prefs.device_seleccionado = self.sel_parti.obj.device
 
         # cerrar gui
         gtk.main_quit()
@@ -1182,7 +1147,7 @@ class WiithonGUI(GtkBuilderWrapper):
     </margin8>
 </xhtml>
                 """ % (util.parsear_a_XML(title), util.parsear_a_XML(generos),
-                util.parsear_a_XML(synopsis), juego.getTextFechaLanzamiento(),
+                util.parsear_a_XML(synopsis), juego.getTextFechaLanzamiento(self.core),
                 util.parsear_a_XML(juego.developer), util.parsear_a_XML(juego.publisher),
                 util.parsear_a_XML(juego.getTextPlayersLocal()), util.parsear_a_XML(juego.getTextPlayersWifi()),
                 util.parsear_a_XML(accesorios_obligatorios), util.parsear_a_XML(accesorios_opcionales),
@@ -1344,7 +1309,7 @@ class WiithonGUI(GtkBuilderWrapper):
                 fc_extraer = SelectorFicheros(
                     _('Elige un directorio donde extraer la ISO de %s') \
                         % (self.sel_juego.obj.idgame), gtk.FILE_CHOOSER_ACTION_SELECT_FOLDER)
-                fc_extraer.addFavorite( self.preferencia.ruta_extraer_iso )
+                fc_extraer.addFavorite( self.core.prefs.ruta_extraer_iso )
                 
                 res = fc_extraer.run()
                 if(res == gtk.RESPONSE_OK):
@@ -1358,8 +1323,7 @@ class WiithonGUI(GtkBuilderWrapper):
                         
                     if reemplazar:
                         # nueva ruta favorita
-                        self.preferencia.ruta_extraer_iso = fc_extraer.get_current_folder()
-                        session.commit()
+                        self.core.prefs.ruta_extraer_iso = fc_extraer.get_current_folder()
 
                         # extraer *juego* en la ruta seleccionada
                         self.poolTrabajo.nuevoTrabajoExtraer(self.sel_juego.obj , fc_extraer.get_filename())
@@ -1386,11 +1350,11 @@ class WiithonGUI(GtkBuilderWrapper):
                     fc_anadir = SelectorFicheros(_("Elige una imagen ISO valida para Wii"))
                     fc_anadir.set_select_multiple(True)
                     fc_anadir.crearFiltrosISOyRAR()
-                    fc_anadir.addFavorite( self.preferencia.ruta_anadir )
+                    fc_anadir.addFavorite( self.core.prefs.ruta_anadir )
 
                 elif(id_tb == self.wb_tb_anadir_directorio):
                     fc_anadir = SelectorFicheros(_("Elige un directorio"), gtk.FILE_CHOOSER_ACTION_SELECT_FOLDER)
-                    fc_anadir.addFavorite( self.preferencia.ruta_anadir_directorio )
+                    fc_anadir.addFavorite( self.core.prefs.ruta_anadir_directorio )
 
                 if fc_anadir.run() == gtk.RESPONSE_OK:
                     '''
@@ -1398,11 +1362,9 @@ class WiithonGUI(GtkBuilderWrapper):
                     '''
                     
                     if(id_tb == self.wb_tb_anadir):
-                        self.preferencia.ruta_anadir = fc_anadir.get_current_folder()
+                        self.core.prefs.ruta_anadir = fc_anadir.get_current_folder()
                     elif(id_tb == self.wb_tb_anadir_directorio):
-                        self.preferencia.ruta_anadir_directorio = fc_anadir.get_current_folder()
-                    # guardar nueva ruta anadir directorio
-                    session.commit()
+                        self.core.prefs.ruta_anadir_directorio = fc_anadir.get_current_folder()
 
                     listaISO = []
                     listaRAR = []
@@ -1422,7 +1384,7 @@ class WiithonGUI(GtkBuilderWrapper):
                                 if self.juegoNuevo == None:
 
                                     # vamos descargando info wiitdb
-                                    self.poolBash.nuevoTrabajoActualizarWiiTDB('%s?ID=%s' % (config.URL_ZIP_WIITDB, idgame))
+                                    self.poolBash.nuevoTrabajoActualizarWiiTDB('%s?ID=%s' % (self.core.prefs.URL_ZIP_WIITDB, idgame))
 
                                     # vamos descargando caratulas
                                     if not self.core.existeCaratula(idgame):
@@ -1460,16 +1422,15 @@ class WiithonGUI(GtkBuilderWrapper):
             if self.sel_juego.it != None:
 
                 fc_copiar_SD = SelectorFicheros(_('Paso 1 de 2: Elige un directorio para las CARATULAS'), gtk.FILE_CHOOSER_ACTION_SELECT_FOLDER)
-                fc_copiar_SD.addFavorite( self.preferencia.ruta_copiar_caratulas )
+                fc_copiar_SD.addFavorite( self.core.prefs.ruta_copiar_caratulas )
 
                 if ( fc_copiar_SD.run() == gtk.RESPONSE_OK ):
                     fc_copiar_discos_SD = SelectorFicheros(_('Paso 2 de 2: Elige un directorio para los DISCOS'), gtk.FILE_CHOOSER_ACTION_SELECT_FOLDER)
-                    fc_copiar_discos_SD.addFavorite(self.preferencia.ruta_copiar_discos)
+                    fc_copiar_discos_SD.addFavorite(self.core.prefs.ruta_copiar_discos)
 
                     if(fc_copiar_discos_SD.run() == gtk.RESPONSE_OK):
-                        self.preferencia.ruta_copiar_caratulas = fc_copiar_SD.get_current_folder()
-                        self.preferencia.ruta_copiar_discos = fc_copiar_discos_SD.get_current_folder()
-                        session.commit()
+                        self.core.prefs.ruta_copiar_caratulas = fc_copiar_SD.get_current_folder()
+                        self.core.prefs.ruta_copiar_discos = fc_copiar_discos_SD.get_current_folder()
 
                         # copiar toda la lista de juegos
                         self.poolBash.nuevoTrabajoCopiarCaratula(self.lJuegos , fc_copiar_SD.get_filename())
@@ -1483,14 +1444,15 @@ class WiithonGUI(GtkBuilderWrapper):
                 self.alert("warning" , _("No tienes ningun juego"))
                 
         elif(id_tb == self.wb_tb_preferencias):
-            pass
+            res = self.wb_prefs.run()
+            self.wb_prefs.hide()
 
                 
 ########## WIITDB ###########
                 
     def on_tb_actualizar_wiitdb_clicked(self, boton):
-        if (self.question(_('Seguro que deseas descargar informacion de los juegos de WiiTDB?\n\n%s') % (config.URL_ZIP_WIITDB)) ):
-            self.poolTrabajo.nuevoTrabajoActualizarWiiTDB(config.URL_ZIP_WIITDB)
+        if (self.question(_('Seguro que deseas descargar informacion de los juegos de WiiTDB?\n\n%s') % (self.core.prefs.URL_ZIP_WIITDB)) ):
+            self.poolTrabajo.nuevoTrabajoActualizarWiiTDB(self.core.prefs.URL_ZIP_WIITDB)
         
     def callback_empieza_importar(self, xml):
         self.juegos = 0

@@ -70,18 +70,18 @@ LANG_PRINCIPAL = "ES"
 LANG_SECUNDARIO = "EN"
 
 # URL por defecto
-URL_ZIP_WIITDB = 'http://wiitdb.com/wiitdb.zip'
+# URL_ZIP_WIITDB = 'http://wiitdb.com/wiitdb.zip'
 
 # CLI
 # Lineas de pantallazo en consola
 NUM_LINEAS_PAUSA = 21
 
 # Formato de la fecha cuando se muestra en WiiTDB
-FORMATO_FECHA_WIITDB = "%d-%m-%Y"
+# FORMATO_FECHA_WIITDB = "%d-%m-%Y"
 
 # dimension caratula
-WIDTH_COVERS = 160
-HEIGHT_COVERS = 224
+# WIDTH_COVERS = 160
+# HEIGHT_COVERS = 224
 
 # ciclo de proveedores de caratulas
 PROVIDER_COVERS = []

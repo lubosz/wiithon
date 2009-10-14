@@ -17,11 +17,14 @@ import util
 import config
 from util import NonRepeatList, SintaxisInvalida
 from wiitdb_schema import Juego, Particion
+from preferencias import Preferencias
 
 db =        util.getBDD()
 session =   util.getSesionBDD(db)
 
 class WiithonCORE:
+    
+    prefs = Preferencias()
 
     def syncronizarJuegos(self , particion):
         comando = "%s -p %s ls" % (config.WBFS_APP, particion.device)
@@ -251,7 +254,7 @@ class WiithonCORE:
             while ( not descargada and i<len(config.PROVIDER_COVERS) ):
                 try:
                     util.descargarImagen(config.PROVIDER_COVERS[i] % IDGAME, destino)
-                    os.system("mogrify -resize %dx%d! %s" % (config.WIDTH_COVERS, config.HEIGHT_COVERS, destino))
+                    os.system("mogrify -resize %dx%d! %s" % (self.prefs.WIDTH_COVERS, self.prefs.HEIGHT_COVERS, destino))
                 except util.ErrorDescargando:
                     i += 1
                 if (self.existeCaratula(IDGAME)):
