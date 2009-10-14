@@ -34,10 +34,10 @@ help:
 run: install
 	LANGUAGE=$(LANGUAGE) wiithon
 
-install_auto: dependencias install
+install_auto: dependencias compile install
 
 dependencias: permisos
-	$(INSTALL_PKG) libc6 libc6-dev intltool imagemagick python-gtk2 python-glade2 python-sexy python-sqlalchemy gnome-icon-theme
+	$(INSTALL_PKG) libc6 libc6-dev intltool imagemagick python-gtk2 python-glade2 python-sexy python-sqlalchemy gnome-icon-theme g++
 	-@$(INSTALL_PKG) libc6-dev-i386 libc6-i386
 	@echo "=================================================================="
 	@echo "Install depends OK"
