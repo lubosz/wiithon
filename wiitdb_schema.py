@@ -47,8 +47,8 @@ class Preferencia(Base):
     valor = Column('valor', VARCHAR(255))
 
     def __init__(self, campo = '', valor = ''):
-        self.campo = campo
-        self.valor = valor
+        self.campo = str(campo)
+        self.valor = str(valor)
 
     def __repr__(self):
         return "%s => %s" % (self.campo, self.valor)

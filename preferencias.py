@@ -5,6 +5,7 @@ import os
 import gtk
 
 import util
+import config
 from wiitdb_schema import Preferencia
 
 db =        util.getBDD()
@@ -33,14 +34,14 @@ class Preferencias:
         self.iniciarPreferencia('FORMATO_FECHA_WIITDB', defecto='%%d-%%m-%%Y', mostrar=True, vbox=prefs_vbox)
         self.iniciarPreferencia('WIDTH_COVERS', defecto=160, mostrar=True, vbox=prefs_vbox)
         self.iniciarPreferencia('HEIGHT_COVERS', defecto=224, mostrar=True, vbox=prefs_vbox)
-        
 
     # indicar el vbox que inicia la preferencia
     def iniciarPreferencia(self, name, defecto = '', mostrar = False, vbox = None):
         sql = util.decode("preferencias.campo=='%s'" % name)
         preferencia = session.query(Preferencia).filter(sql).first()
         if preferencia == None:
-            session.save( Preferencia(name, defecto) )
+            preferencia = Preferencia(name, defecto)
+            session.save( preferencia )
             session.commit()
         
         if config.DEBUG:
@@ -48,8 +49,10 @@ class Preferencias:
 
         if mostrar:
             h1 = gtk.HBox(homogeneous=False, spacing=10)
+            
             etiqueta = gtk.Label()
-            etiqueta.set_text("%s: " % preferencia.campo)
+            etiqueta.set_text("<b>%s: </b>" % preferencia.campo)
+            h1.pack_start(etiqueta, expand=True, fill=True, padding=10)
             
             # renderizar preferencia
             entry = EntryPreferencia(name)
@@ -57,12 +60,9 @@ class Preferencias:
             entry.set_max_length(255)
             entry.set_editable(True)
             entry.connect('changed' , self.entryModificado)
-            
-            h1.pack_start(etiqueta, expand=True, fill=True, padding=10)
             h1.pack_start(entry, expand=True, fill=True, padding=10)
 
             vbox.pack_start(h1)
-            
             vbox.show_all()
         
     def entryModificado(self, entry):
@@ -76,6 +76,8 @@ class Preferencias:
         preferencia = session.query(Preferencia).filter(sql).first()
 
         if preferencia != None:
+            if config.DEBUG:
+                print "guardando %s" % value
             preferencia.valor = value
             session.commit()
 
@@ -87,11 +89,7 @@ class Preferencias:
         sql = util.decode("preferencias.campo=='%s'" % name)
         preferencia = session.query(Preferencia).filter(sql).first()
 
-        if preferencia == None:
-            return None
-        else:
-            try:
-                num = int(preferencia.valor)
-                return num
-            except:
-                return preferencia.valor
+        if preferencia != None:
+            return preferencia.valor
+        
+        return None
