@@ -384,6 +384,7 @@ deb: compile
 	rm -rf $(DEB-ROOT)
 	
 	# delete if dont need it
+	-$(RM) wiithon-1.*_*.deb
 	mv "$(DEB-ROOT).deb" "./wiithon-$(VERSION)_$(REVISION).deb"
 
 	@echo "=================================================================="
