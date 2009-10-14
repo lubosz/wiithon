@@ -11,7 +11,7 @@ import sys
 
 import util
 
-DEBUG = True
+DEBUG = False
 
 WIITHON_PATH = os.path.dirname(sys.argv[0])
 WIITHON_FILES = os.path.dirname(__file__)

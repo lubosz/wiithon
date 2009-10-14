@@ -1,9 +1,9 @@
 #!/bin/sh
 
 ln -sf /usr/local/lib/libwbfs.so /usr/lib/
-if [ $(uname -m) =  "x86_64" ] 
+if [ $(uname -m) = "x86_64" ] 
 then
-	ln -sf /usr/local/lib/libwbfs.so /lib32/
+	ln -sf /usr/local/lib/libwbfs.so /usr/lib32/
 fi
 ln -sf /usr/local/share/wiithon/wiithon.py /usr/local/bin/wiithon
 ln -sf /usr/local/share/wiithon/wiithon_wrapper /usr/local/bin/wiithon_wrapper

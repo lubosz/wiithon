@@ -15,9 +15,7 @@ DEB-PREFIX=$(DEB-ROOT)$(PREFIX)
 DEB-PREFIX_RECURSOS_IMAGENES_CARATULAS=$(DEB-PREFIX)/share/wiithon/recursos/imagenes/caratulas
 DEB-PREFIX_RECURSOS_IMAGENES_DISCOS=$(DEB-PREFIX)/share/wiithon/recursos/imagenes/discos
 
-all: compilar
-
-ayuda: help
+all: compile
 
 help:
 	@echo ==================================================================
@@ -48,7 +46,7 @@ dependencias: permisos
 permisos:
 	gpasswd -a ${SUDO_USER} disk
 
-compilar: ./po/locale/da_DK/LC_MESSAGES/wiithon.mo ./po/locale/fi_FI/LC_MESSAGES/wiithon.mo ./po/locale/tr_TR/LC_MESSAGES/wiithon.mo ./po/locale/ru_RU/LC_MESSAGES/wiithon.mo ./po/locale/ko_KR/LC_MESSAGES/wiithon.mo ./po/locale/it/LC_MESSAGES/wiithon.mo ./po/locale/sv_SE/LC_MESSAGES/wiithon.mo ./po/locale/es/LC_MESSAGES/wiithon.mo ./po/locale/pt_PT/LC_MESSAGES/wiithon.mo ./po/locale/en/LC_MESSAGES/wiithon.mo ./po/locale/nl_NL/LC_MESSAGES/wiithon.mo ./po/locale/nb_NO/LC_MESSAGES/wiithon.mo ./po/locale/ja_JP/LC_MESSAGES/wiithon.mo ./po/locale/fr/LC_MESSAGES/wiithon.mo ./po/locale/pt_BR/LC_MESSAGES/wiithon.mo ./po/locale/de/LC_MESSAGES/wiithon.mo unrar-nonfree/unrar libwbfs_binding/wiithon_wrapper
+compile: ./po/locale/da_DK/LC_MESSAGES/wiithon.mo ./po/locale/fi_FI/LC_MESSAGES/wiithon.mo ./po/locale/tr_TR/LC_MESSAGES/wiithon.mo ./po/locale/ru_RU/LC_MESSAGES/wiithon.mo ./po/locale/ko_KR/LC_MESSAGES/wiithon.mo ./po/locale/it/LC_MESSAGES/wiithon.mo ./po/locale/sv_SE/LC_MESSAGES/wiithon.mo ./po/locale/es/LC_MESSAGES/wiithon.mo ./po/locale/pt_PT/LC_MESSAGES/wiithon.mo ./po/locale/en/LC_MESSAGES/wiithon.mo ./po/locale/nl_NL/LC_MESSAGES/wiithon.mo ./po/locale/nb_NO/LC_MESSAGES/wiithon.mo ./po/locale/ja_JP/LC_MESSAGES/wiithon.mo ./po/locale/fr/LC_MESSAGES/wiithon.mo ./po/locale/pt_BR/LC_MESSAGES/wiithon.mo ./po/locale/de/LC_MESSAGES/wiithon.mo unrar-nonfree/unrar libwbfs_binding/wiithon_wrapper
 	@echo "=================================================================="
 	@echo "Compile OK"
 	@echo "=================================================================="
@@ -56,6 +54,7 @@ compilar: ./po/locale/da_DK/LC_MESSAGES/wiithon.mo ./po/locale/fi_FI/LC_MESSAGES
 install: uninstall
 	mkdir -p $(PREFIX)/bin
 	mkdir -p $(PREFIX)/lib
+	mkdir -p $(PREFIX)/lib32
 	mkdir -p $(PREFIX)/share/wiithon
 	mkdir -p $(PREFIX)/share/wiithon/recursos/glade
 	mkdir -p $(PREFIX)/share/wiithon/recursos/imagenes
@@ -64,12 +63,12 @@ install: uninstall
 	cp unrar-nonfree/unrar $(PREFIX)/share/wiithon/
 	
 	cp wiithon.py $(PREFIX)/share/wiithon
-	cp libwbfs_binding/libwbfs/libwbfs.so /usr/lib/
+	cp libwbfs_binding/libwbfs/libwbfs.so $(PREFIX)/lib/
 
 ifeq ($(ARCH), x86_64)
-	ln -sf /usr/lib/libwbfs.so $(PREFIX)/lib32/
+	ln -sf $(PREFIX)/lib/libwbfs.so /usr/lib32
 else
-	ln -sf /usr/lib/libwbfs.so $(PREFIX)/lib/
+	ln -sf $(PREFIX)/lib/libwbfs.so /usr/lib
 endif
 	
 	cp wiithon_autodetectar.sh $(PREFIX)/share/wiithon
@@ -157,6 +156,7 @@ uninstall:
 	
 	-$(RM) $(PREFIX)/share/wiithon/wiithon_wrapper
 	-$(RM) /usr/lib/libwbfs.so
+	-$(RM) /usr/lib32/libwbfs.so
 	-$(RM) $(PREFIX)/lib/libwbfs.so
 
 	-$(RM) $(PREFIX)/share/wiithon/*.pyc
@@ -215,7 +215,6 @@ clean: clean_libwbfs_binding clean_gettext clean_unrar
 	$(RM) *.pyc
 	$(RM) *~
 	$(RM) po/*~
-	# touch po/*.pot
 	$(RM) po/plantilla.pot
 
 clean_gettext:
@@ -329,7 +328,7 @@ initPO: po/plantilla.pot
 	# turkish tr_TR
 	msginit -i po/plantilla.pot -o po/tr_TR.po --no-translator
 
-deb: compilar
+deb: compile
 	mkdir -p $(DEB-ROOT)/DEBIAN
 	mkdir -p $(DEB-ROOT)/usr/share/pixmaps
 	mkdir -p $(DEB-ROOT)/usr/lib
