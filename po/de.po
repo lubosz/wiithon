@@ -660,6 +660,9 @@ msgstr "Schritt 1 von 2: Wähle einen Ordner für TITELBILDER"
 msgid "Paso 2 de 2: Elige un directorio para los DISCOS"
 msgstr "Schritt 2 von 2: Wähle einen Ordner für DISKBILDER"
 
+msgid "Por defecto"
+msgstr ""
+
 msgid "Preferencias"
 msgstr "Einstellungen"
 
@@ -808,6 +811,9 @@ msgstr "In Partition"
 
 msgid "gtk-cancel"
 msgstr "gtk-cancel"
+
+msgid "gtk-close"
+msgstr ""
 
 msgid "https://launchpad.net/wiithon"
 msgstr "https://launchpad.net/wiithon"

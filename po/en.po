@@ -665,6 +665,9 @@ msgstr "Step 1 of 2: Choose a folder for COVERS"
 msgid "Paso 2 de 2: Elige un directorio para los DISCOS"
 msgstr "Step 2 of 2: Choose a folder for DISCS"
 
+msgid "Por defecto"
+msgstr ""
+
 msgid "Preferencias"
 msgstr "Preferences"
 
@@ -824,6 +827,9 @@ msgstr "in partition"
 
 msgid "gtk-cancel"
 msgstr "gtk-cancel"
+
+msgid "gtk-close"
+msgstr ""
 
 msgid "https://launchpad.net/wiithon"
 msgstr "https://launchpad.net/wiithon"

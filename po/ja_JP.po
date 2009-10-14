@@ -651,6 +651,9 @@ msgstr ""
 msgid "Paso 2 de 2: Elige un directorio para los DISCOS"
 msgstr ""
 
+msgid "Por defecto"
+msgstr ""
+
 msgid "Preferencias"
 msgstr ""
 
@@ -798,6 +801,9 @@ msgid "en particion"
 msgstr ""
 
 msgid "gtk-cancel"
+msgstr ""
+
+msgid "gtk-close"
 msgstr ""
 
 msgid "https://launchpad.net/wiithon"

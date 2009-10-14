@@ -706,6 +706,9 @@ msgstr "Passo 1 de 2: Escolha um diretório para as CAPAS"
 msgid "Paso 2 de 2: Elige un directorio para los DISCOS"
 msgstr "Passo 2 de 2: Escolha um diretório para os DISCOS"
 
+msgid "Por defecto"
+msgstr ""
+
 msgid "Preferencias"
 msgstr "Preferências"
 
@@ -865,6 +868,9 @@ msgstr "na partição"
 
 msgid "gtk-cancel"
 msgstr "gtk-cancel"
+
+msgid "gtk-close"
+msgstr ""
 
 msgid "https://launchpad.net/wiithon"
 msgstr "https://launchpad.net/wiithon"

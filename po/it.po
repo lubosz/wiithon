@@ -660,6 +660,9 @@ msgstr "Passo 1 di 2: seleziona una cartella per le COPERTINE"
 msgid "Paso 2 de 2: Elige un directorio para los DISCOS"
 msgstr "Passo 2 di 2: seleziona una cartella per le DISC-ART"
 
+msgid "Por defecto"
+msgstr ""
+
 msgid "Preferencias"
 msgstr "Preferenze"
 
@@ -823,6 +826,9 @@ msgstr "su partizione"
 msgid "gtk-cancel"
 msgstr "gtk-cancel"
 
+msgid "gtk-close"
+msgstr "gtk-close"
+
 msgid "https://launchpad.net/wiithon"
 msgstr "https://launchpad.net/wiithon"
 
@@ -859,9 +865,6 @@ msgstr ""
 
 #~ msgid "RXGB2"
 #~ msgstr "RXGB2"
-
-#~ msgid "gtk-close"
-#~ msgstr "gtk-close"
 
 #~ msgid "Accesorios:"
 #~ msgstr "Accessori:"
