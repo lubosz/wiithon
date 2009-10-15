@@ -21,13 +21,12 @@ import util
 from util import SintaxisInvalida
 
 ###### PARA EVITAR PROBLEMAS DE RECURRENCIA ##########
-'''
+
 from sqlalchemy import pool
 from sqlalchemy.databases.firebird import dialect
 
 # Force SA to use a single connection per thread
 dialect.poolclass = pool.SingletonThreadPool
-'''
 
 db =        util.getBDD()
 session =   util.getSesionBDD(db)
@@ -45,6 +44,8 @@ class Preferencia(Base):
     id = Column('id',Integer,primary_key=True)
     campo = Column('campo', VARCHAR(255))
     valor = Column('valor', VARCHAR(255))
+    #defecto = Column('valor', VARCHAR(255))
+    #Largo / Corto
 
     def __init__(self, campo = '', valor = ''):
         self.campo = str(campo)
@@ -357,21 +358,7 @@ class JuegoWIITDB(Base):
         buffer = ""
         if  self.fecha_lanzamiento != None:            
             if corto:
-                # Q1 --> 1 <= x <= 3
-                # Q2 --> 4 <= x <= 6
-                # Q3 --> 7 <= x <= 9
-                # Q4 --> 10 <= x <= 12
-                mes = self.fecha_lanzamiento.month
-                if 1 <= mes and mes <= 3:
-                    buffer = "%dQ1" % ( self.fecha_lanzamiento.year)
-                elif 4 <= mes and mes <= 6:
-                    buffer = "%dQ2" % ( self.fecha_lanzamiento.year)
-                elif 7 <= mes and mes <= 9:
-                    buffer = "%dQ3" % ( self.fecha_lanzamiento.year)
-                elif 10 <= mes and mes <= 12:
-                    buffer = "%dQ4" % ( self.fecha_lanzamiento.year)
-                else:
-                    buffer = _("??")
+                buffer = "%s" % ( self.fecha_lanzamiento.strftime(core.prefs.FORMATO_FECHA_CORTA_WIITDB) )
             else:
                 buffer = "%s" % ( self.fecha_lanzamiento.strftime(core.prefs.FORMATO_FECHA_WIITDB) )
         else:

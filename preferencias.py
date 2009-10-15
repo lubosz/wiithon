@@ -31,7 +31,8 @@ class Preferencias:
         self.iniciarPreferencia('ruta_copiar_caratulas', defecto=os.getcwd())
         self.iniciarPreferencia('ruta_copiar_discos', defecto=os.getcwd())
         self.iniciarPreferencia('URL_ZIP_WIITDB', defecto='http://wiitdb.com/wiitdb.zip', mostrar=True, vbox=prefs_vbox)
-        self.iniciarPreferencia('FORMATO_FECHA_WIITDB', defecto='%d-%m-%Y', mostrar=True, vbox=prefs_vbox)
+        self.iniciarPreferencia('FORMATO_FECHA_WIITDB', defecto='%d/%m/%Y', mostrar=True, vbox=prefs_vbox)
+        self.iniciarPreferencia('FORMATO_FECHA_CORTA_WIITDB', defecto='%Y/%m', mostrar=True, vbox=prefs_vbox)
         self.iniciarPreferencia('WIDTH_COVERS', defecto=160, mostrar=True, vbox=prefs_vbox)
         self.iniciarPreferencia('HEIGHT_COVERS', defecto=224, mostrar=True, vbox=prefs_vbox)
 
@@ -79,7 +80,7 @@ class Preferencias:
         if preferencia != None:
             if config.DEBUG:
                 print "guardando %s" % value
-            preferencia.valor = value
+            preferencia.valor = str(value)
             session.commit()
 
     # leer del textbox
@@ -91,6 +92,6 @@ class Preferencias:
         preferencia = session.query(Preferencia).filter(sql).first()
 
         if preferencia != None:
-            return preferencia.valor
+            return str(preferencia.valor)
         
         return None
