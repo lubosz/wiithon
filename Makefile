@@ -187,7 +187,7 @@ uninstall:
 	-$(RM) $(PREFIX)/share/wiithon/HOME.conf
 	-rmdir $(PREFIX)/share/wiithon/recursos/glade
 
-	#-$(RM) -R ~/.wiithon
+	-$(RM) -R ~/.wiithon
 	
 	@echo "=================================================================="
 	@echo "Wiithon Uninstall OK"

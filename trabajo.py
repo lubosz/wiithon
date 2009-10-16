@@ -57,8 +57,8 @@ class PoolTrabajo(Pool , Thread):
         Pool.__init__(self , numHilos)
         Thread.__init__(self)
         self.core = core
-        self.numHilos = numHilos
-        self.listaTrabajos = []
+        self.numHilos = int(numHilos)
+        #self.listaTrabajos = []
         self.callback_empieza_trabajo = callback_empieza_trabajo
         self.callback_termina_trabajo = callback_termina_trabajo
         self.callback_nuevo_trabajo = callback_nuevo_trabajo
@@ -348,7 +348,7 @@ class PoolTrabajo(Pool , Thread):
                 self.nuevoElemento(trabajo)
                 trabajos.append(trabajo)
                 
-            self.listaTrabajos.extend(trabajos)
+            #self.listaTrabajos.extend(trabajos)
             
             if self.callback_nuevo_trabajo:
                 self.callback_nuevo_trabajo(trabajos)
@@ -356,7 +356,7 @@ class PoolTrabajo(Pool , Thread):
             trabajo = Trabajo(tipo , origenes, destino)
             self.nuevoElemento(trabajo)
 
-            self.listaTrabajos.append(trabajo)
+            #self.listaTrabajos.append(trabajo)
             
             if self.callback_nuevo_trabajo:
                 self.callback_nuevo_trabajo(trabajo)

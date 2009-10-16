@@ -72,10 +72,6 @@ msgid "%s ya existe en %s\n"
 msgstr ""
 
 #, python-format
-msgid "***************** DESCARGAR CARATULA %s ********************"
-msgstr "***************** DOWNLOAD COVER %s ********************"
-
-#, python-format
 msgid "***************** DESCARGAR DISCO %s ********************"
 msgstr "***************** DOWNLOAD DISC %s ********************"
 
@@ -112,6 +108,12 @@ msgstr ""
 msgid "AYUDA_CLI"
 msgstr ""
 
+msgid "Accesorios obligatorios: "
+msgstr ""
+
+msgid "Accesorios opcionales: "
+msgstr ""
+
 msgid "Acerca de ..."
 msgstr "About ..."
 
@@ -127,9 +129,21 @@ msgid ""
 "\n"
 msgstr ""
 
+msgid "Altura imagen caratula"
+msgstr ""
+
+msgid "Altura imagen disc-art"
+msgstr ""
+
 #, python-format
 msgid "Anadir %s a la particion %s"
 msgstr "Add %s to partition %s"
+
+msgid "Ancho imagen caratula"
+msgstr ""
+
+msgid "Ancho imagen disc-art"
+msgstr ""
 
 msgid "Aniadir ISO"
 msgstr "Add ISO"
@@ -161,8 +175,14 @@ msgstr "Searching Wii disc ..."
 msgid "Buscar:"
 msgstr "Search:"
 
+msgid "Capacidad On-line: "
+msgstr ""
+
 msgid "Caratula?"
 msgstr "Cover?"
+
+msgid "Clasificacion parental: "
+msgstr ""
 
 msgid "Clasificar"
 msgstr "Sort"
@@ -197,7 +217,13 @@ msgstr "Copy selected game*"
 msgid "Copiar todos los juegos*"
 msgstr ""
 
+msgid "DESCRIPCION: "
+msgstr ""
+
 msgid "Debes tener al menos 2 particiones WBFS para hacer copias 1:1"
+msgstr ""
+
+msgid "Desarrolador/Editorial: "
 msgstr ""
 
 #, python-format
@@ -207,6 +233,10 @@ msgstr ""
 #, python-format
 msgid "Descargando caratula de %s"
 msgstr "Downloading disc %s"
+
+#, python-format
+msgid "Descargando caratula de %s desde %s ..."
+msgstr ""
 
 #, python-format
 msgid "Descargando disco de %s"
@@ -414,6 +444,9 @@ msgstr ""
 msgid "Fecha"
 msgstr ""
 
+msgid "Fecha de lanzamiento: "
+msgstr ""
+
 msgid "Finalizada satisfactoriamente la importacion de datos desde WiiTDB"
 msgstr ""
 
@@ -423,8 +456,17 @@ msgstr ""
 msgid "Formato desconocido"
 msgstr "Format Unknown"
 
+msgid "Formato fecha"
+msgstr ""
+
+msgid "Formato fecha corto"
+msgstr ""
+
 msgid "Fuera de rango"
 msgstr "Out of range"
+
+msgid "GENEROS: "
+msgstr ""
 
 msgid "GNU GENERAL PUBLIC LICENSE Version 3"
 msgstr "GNU GENERAL PUBLIC LICENSE Version 3"
@@ -636,6 +678,12 @@ msgstr "New"
 msgid "Nuevo nombre es demasiado largo, intente con un texto menor de %d caracteres"
 msgstr "New name is too long, try a text smaller than %d characters"
 
+msgid "Num. Hilos para tareas de fondo"
+msgstr ""
+
+msgid "Num. jugadores en off-line: "
+msgstr ""
+
 msgid "Numero fuera de rango"
 msgstr "Out of range"
 
@@ -677,6 +725,9 @@ msgstr "Press any key to show %d more lines"
 
 msgid "Programa ejecutado con las opciones incorrectas."
 msgstr "Program runs with incorrect settings"
+
+msgid "Proveedor de caratulas"
+msgstr ""
 
 msgid "Puede llevar mucho tiempo ..."
 msgstr ""
@@ -769,6 +820,9 @@ msgstr ""
 msgid "TITULO"
 msgstr "TITLE"
 
+msgid "TITULO: "
+msgstr ""
+
 msgid "TODOS"
 msgstr ""
 
@@ -787,6 +841,9 @@ msgstr "Everything has been put on the HD correctly."
 
 msgid "Total"
 msgstr "Total"
+
+msgid "URL Base de datos WiiTDB"
+msgstr ""
 
 msgid "Un gestor de particiones WBFS facil de usar"
 msgstr "Easy to use WBFS Partition Manager"
@@ -849,6 +906,9 @@ msgstr ""
 #, python-format
 msgid "wiithon no borra la ISO temporal: %s, puedes borrarla si no la necesitas"
 msgstr ""
+
+#~ msgid "***************** DESCARGAR CARATULA %s ********************"
+#~ msgstr "***************** DOWNLOAD COVER %s ********************"
 
 #~ msgid "Caratula descargada como"
 #~ msgstr "Cover downloaded as"

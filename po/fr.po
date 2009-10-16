@@ -72,10 +72,6 @@ msgid "%s ya existe en %s\n"
 msgstr ""
 
 #, python-format
-msgid "***************** DESCARGAR CARATULA %s ********************"
-msgstr "************** TELECHARGEMENT JAQUETTE %s *****************"
-
-#, python-format
 msgid "***************** DESCARGAR DISCO %s ********************"
 msgstr "************* TELECHARGEMENT DISQUE %s ****************"
 
@@ -112,6 +108,12 @@ msgstr ""
 msgid "AYUDA_CLI"
 msgstr "AYUDA_CLI"
 
+msgid "Accesorios obligatorios: "
+msgstr ""
+
+msgid "Accesorios opcionales: "
+msgstr ""
+
 msgid "Acerca de ..."
 msgstr "A propos ..."
 
@@ -127,9 +129,21 @@ msgid ""
 "\n"
 msgstr ""
 
+msgid "Altura imagen caratula"
+msgstr ""
+
+msgid "Altura imagen disc-art"
+msgstr ""
+
 #, python-format
 msgid "Anadir %s a la particion %s"
 msgstr "Ajouter %s à la partition %s"
+
+msgid "Ancho imagen caratula"
+msgstr ""
+
+msgid "Ancho imagen disc-art"
+msgstr ""
 
 msgid "Aniadir ISO"
 msgstr "Ajouter ISO"
@@ -161,8 +175,14 @@ msgstr "Recherche disque Wii  ..."
 msgid "Buscar:"
 msgstr "Recherche:"
 
+msgid "Capacidad On-line: "
+msgstr ""
+
 msgid "Caratula?"
 msgstr "Jaquette?"
+
+msgid "Clasificacion parental: "
+msgstr ""
 
 msgid "Clasificar"
 msgstr "Trier"
@@ -197,7 +217,13 @@ msgstr "Copie vers destination sélectionnée *"
 msgid "Copiar todos los juegos*"
 msgstr ""
 
+msgid "DESCRIPCION: "
+msgstr ""
+
 msgid "Debes tener al menos 2 particiones WBFS para hacer copias 1:1"
+msgstr ""
+
+msgid "Desarrolador/Editorial: "
 msgstr ""
 
 #, python-format
@@ -207,6 +233,10 @@ msgstr ""
 #, python-format
 msgid "Descargando caratula de %s"
 msgstr "Télécharge jaquette %s"
+
+#, python-format
+msgid "Descargando caratula de %s desde %s ..."
+msgstr ""
 
 #, python-format
 msgid "Descargando disco de %s"
@@ -414,6 +444,9 @@ msgstr ""
 msgid "Fecha"
 msgstr ""
 
+msgid "Fecha de lanzamiento: "
+msgstr ""
+
 msgid "Finalizada satisfactoriamente la importacion de datos desde WiiTDB"
 msgstr ""
 
@@ -423,8 +456,17 @@ msgstr ""
 msgid "Formato desconocido"
 msgstr "Format inconnu"
 
+msgid "Formato fecha"
+msgstr ""
+
+msgid "Formato fecha corto"
+msgstr ""
+
 msgid "Fuera de rango"
 msgstr "Dépassement de capacité"
+
+msgid "GENEROS: "
+msgstr ""
 
 msgid "GNU GENERAL PUBLIC LICENSE Version 3"
 msgstr "Licence publique générale GNU Version 3"
@@ -636,6 +678,12 @@ msgstr "Nouveau"
 msgid "Nuevo nombre es demasiado largo, intente con un texto menor de %d caracteres"
 msgstr "Le nouveau nom est trop long, essayez un texte de moins de %d caractères"
 
+msgid "Num. Hilos para tareas de fondo"
+msgstr ""
+
+msgid "Num. jugadores en off-line: "
+msgstr ""
+
 msgid "Numero fuera de rango"
 msgstr "Dépassement"
 
@@ -677,6 +725,9 @@ msgstr "Appuyez sur une touche pour afficher %d lignes supplémentaires"
 
 msgid "Programa ejecutado con las opciones incorrectas."
 msgstr "Programme lancé avec des paramètres incorrects."
+
+msgid "Proveedor de caratulas"
+msgstr ""
 
 msgid "Puede llevar mucho tiempo ..."
 msgstr ""
@@ -769,6 +820,9 @@ msgstr ""
 msgid "TITULO"
 msgstr "TITRE"
 
+msgid "TITULO: "
+msgstr ""
+
 msgid "TODOS"
 msgstr ""
 
@@ -787,6 +841,9 @@ msgstr "Tout est OK sur le disque dur"
 
 msgid "Total"
 msgstr "Total"
+
+msgid "URL Base de datos WiiTDB"
+msgstr ""
 
 msgid "Un gestor de particiones WBFS facil de usar"
 msgstr "Un Gestionnaire de partition WBFS facile"
@@ -849,6 +906,9 @@ msgstr ""
 #, python-format
 msgid "wiithon no borra la ISO temporal: %s, puedes borrarla si no la necesitas"
 msgstr ""
+
+#~ msgid "***************** DESCARGAR CARATULA %s ********************"
+#~ msgstr "************** TELECHARGEMENT JAQUETTE %s *****************"
 
 #~ msgid "Caratula descargada como"
 #~ msgstr "Jaquette téléchargé en tant que"

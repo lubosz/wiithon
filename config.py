@@ -11,7 +11,7 @@ import sys
 
 import util
 
-DEBUG = False
+DEBUG = True
 
 WIITHON_PATH = os.path.dirname(sys.argv[0])
 WIITHON_FILES = os.path.dirname(__file__)
@@ -58,10 +58,7 @@ SEPARADOR = ";@;"
 MAX_LISTA_COPIA_1on1 = 15
 
 # Num de descargas simultaneas
-NUM_HILOS = 15
-
-# Tipo caratula 3d|normal|panoramica|full
-TIPO_CARATULA = "normal"
+# NUM_HILOS = 15
 
 # idioma principal, se usa para el synopsys
 LANG_PRINCIPAL = "ES"
@@ -84,6 +81,7 @@ NUM_LINEAS_PAUSA = 21
 # HEIGHT_COVERS = 224
 
 # ciclo de proveedores de caratulas
+'''
 PROVIDER_COVERS = []
 a = PROVIDER_COVERS.append
 a("http://wiitdb.com/wiitdb/artwork/cover/ES/%s.png")
@@ -99,7 +97,8 @@ a("http://www.wiiboxart.com/widescreen/pal/%s.png")
 a("http://www.wiiboxart.com/widescreen/ntsc/%s.png")
 a("http://www.wiiboxart.com/widescreen/ntscj/%s.png")
 a("http://www.wiiboxart.com/fullcover/%s.png")
+'''
 
 # dimension disc-art
-WIDTH_DISCS = 160
-HEIGHT_DISCS = 160
+# WIDTH_DISCS = 160
+# HEIGHT_DISCS = 160

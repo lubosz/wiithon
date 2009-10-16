@@ -30,18 +30,6 @@ session =   util.getSesionBDD(db)
 
 class WiithonGUI(GtkBuilderWrapper):
 
-    ui_desc = '''
-<ui>
-    <popup action="GamePopup">
-      <menuitem action="Renombrar"/>
-      <menuitem action="Extraer"/>
-      <menuitem action="Copiar"/>
-      <separator/>
-      <menuitem action="Borrar"/>
-    </popup>
-</ui>
-'''
-
     # Lista de particiones
     lParti = None
     
@@ -96,12 +84,23 @@ class WiithonGUI(GtkBuilderWrapper):
 
         self.uimgr.insert_action_group(actiongroup)
 
-        self.uimgr.add_ui_from_string(self.ui_desc)
+        ui_desc = '''
+        <ui>
+            <popup action="GamePopup">
+                <menuitem action="Renombrar"/>
+                <menuitem action="Extraer"/>
+                <menuitem action="Copiar"/>
+                <separator/>
+                <menuitem action="Borrar"/>
+            </popup>
+        </ui>
+        '''
+
+        self.uimgr.add_ui_from_string(ui_desc)
         self.wb_tv_games.connect('button-press-event', self.on_tv_games_click_event)
 
-        self.wb_principal.drag_dest_set(0, [], 0)
-                                        #[('text/uri-list', gtk.TARGET_OTHER_APP, 25)],
-                                        #gtk.gdk.ACTION_DEFAULT)
+        # http://www.pygtk.org/pygtk2tutorial-es/sec-DNDMethods.html
+        self.wb_principal.drag_dest_set(0, [], gtk.gdk.ACTION_DEFAULT)
 
         self.wb_principal.connect("drag_motion", self.drop_motion)
         self.wb_principal.connect("drag_drop", self.drag_drop)
@@ -174,7 +173,7 @@ class WiithonGUI(GtkBuilderWrapper):
 
         # trabajos LIGEROS
         self.poolBash = PoolTrabajo(
-                                    self.core , config.NUM_HILOS ,
+                                    self.core , self.core.prefs.NUM_HILOS ,
                                     None ,
                                     None ,
                                     None ,
@@ -786,7 +785,6 @@ class WiithonGUI(GtkBuilderWrapper):
         self.buscar = widget.get_text()
         self.lJuegos = self.buscar_juego_bdd(self.buscar)
         self.refrescarModeloJuegos( self.lJuegos )
-        #self.info.arriba_num_juegos = len(self.lJuegos)
 
     def leer_juegos_de_las_particiones(self, particiones):
         
@@ -813,11 +811,11 @@ class WiithonGUI(GtkBuilderWrapper):
             subListaJuegos.append(juego)
         
         return subListaJuegos
-        
+
     def refrescarModeloJuegos(self, listaJuegos):
         if config.DEBUG:
             print "refrescarModeloJuegos"
-        
+
         # cargar la lista sobre el Treeview
         self.cargarJuegosModelo(self.tv_games_modelo , listaJuegos)
 
@@ -1057,7 +1055,7 @@ class WiithonGUI(GtkBuilderWrapper):
 
             juego = self.sel_juego.obj.getJuegoWIITDB()
             if juego != None:
-                
+
                 # titulo y synopsys
                 hayPrincipal = False
                 haySecundario = False
@@ -1069,7 +1067,7 @@ class WiithonGUI(GtkBuilderWrapper):
                         title = descripcion.title
                         synopsis = descripcion.synopsis
                     i += 1
-                
+
                 if not hayPrincipal:
                     haySecundario = False
                     i = 0
@@ -1080,7 +1078,7 @@ class WiithonGUI(GtkBuilderWrapper):
                             title = descripcion.title
                             synopsis = descripcion.synopsis
                         i += 1
-                        
+
                 if not hayPrincipal and not haySecundario:
                     title = juego.name
                     synopsis = ''
@@ -1089,13 +1087,12 @@ class WiithonGUI(GtkBuilderWrapper):
                 generos = ""
                 for genero in juego.genero:
                     generos += genero.nombre + ", "
-                    
-                
+
                 # accesorios obligatorios
                 accesorios_obligatorios = ""
                 for accesorio in juego.obligatorio:
                     accesorios_obligatorios += "%s, " % accesorio.nombre
-                    
+
                 # accesorios opcionales
                 accesorios_opcionales = ""
                 for accesorio in juego.opcional:
@@ -1106,7 +1103,7 @@ class WiithonGUI(GtkBuilderWrapper):
     <margin8>
         <big>
             <rojo>
-                <pr>TITULO: </pr>
+                <pr>%s</pr>
             </rojo>
         </big>
         <superbig>
@@ -1117,41 +1114,47 @@ class WiithonGUI(GtkBuilderWrapper):
         <br />
         <big>
             <azul>
-                <pr>GENEROS: </pr>
+                <pr>%s</pr>
             </azul>
         </big>
         <pr>%s</pr>
         <br />
         <big>
             <verde>
-                <pr>DESCRIPCIÓN: </pr>
+                <pr>%s</pr>
             </verde>
         </big>
         <justificar>
             <pr>%s</pr><br />
         </justificar>
-        <br />
-        <b><gris><pr>Fecha de lanzamiento: </pr></gris></b><i><pr>%s</pr></i>
-        <br />
-        <b><gris><pr>Desarrolador/Editorial: </pr></gris></b><i><pr>%s/%s</pr></i>
-        <br />
-        <b><gris><pr>Núm. jugadores en off-line: </pr></gris></b><i><pr>%s</pr></i>
-        <br />
-        <b><gris><pr>Capacidad On-line: </pr></gris></b><i><pr>%s</pr></i>
-        <br />
-        <b><gris><pr>Accesorios obligatorios: </pr></gris></b><i><pr>%s</pr></i>
-        <br />
-        <b><gris><pr>Accesorios opcionales: </pr></gris></b><i><pr>%s</pr></i>
-        <br />
-        <b><gris><pr>Clasificación parental: </pr></gris></b><i><pr>%s</pr></i>
     </margin8>
+    <margin12>
+        <b><gris><pr>%s</pr></gris></b><i><pr>%s</pr></i>
+        <br />
+        <b><gris><pr>%s</pr></gris></b><i><pr>%s/%s</pr></i>
+        <br />
+        <b><gris><pr>%s</pr></gris></b><i><pr>%s</pr></i>
+        <br />
+        <b><gris><pr>%s</pr></gris></b><i><pr>%s</pr></i>
+        <br />
+        <b><gris><pr>%s</pr></gris></b><i><pr>%s</pr></i>
+        <br />
+        <b><gris><pr>%s</pr></gris></b><i><pr>%s</pr></i>
+        <br />
+        <b><gris><pr>%s</pr></gris></b><i><pr>%s</pr></i>
+    </margin12>
 </xhtml>
-                """ % (util.parsear_a_XML(title), util.parsear_a_XML(generos),
-                util.parsear_a_XML(synopsis), juego.getTextFechaLanzamiento(self.core),
-                util.parsear_a_XML(juego.developer), util.parsear_a_XML(juego.publisher),
-                util.parsear_a_XML(juego.getTextPlayersLocal()), util.parsear_a_XML(juego.getTextPlayersWifi()),
-                util.parsear_a_XML(accesorios_obligatorios), util.parsear_a_XML(accesorios_opcionales),
-                util.parsear_a_XML(juego.getTextRating()))
+                """ % (
+                _("TITULO: "), util.parsear_a_XML(title),
+                _("GENEROS: "), util.parsear_a_XML(generos),
+                _("DESCRIPCION: "), util.parsear_a_XML(synopsis),
+                _("Fecha de lanzamiento: "), juego.getTextFechaLanzamiento(self.core),
+                _("Desarrolador/Editorial: "), util.parsear_a_XML(juego.developer), util.parsear_a_XML(juego.publisher),
+                _("Num. jugadores en off-line: "), util.parsear_a_XML(juego.getTextPlayersLocal()),
+                _("Capacidad On-line: "), util.parsear_a_XML(juego.getTextPlayersWifi()),
+                _("Accesorios obligatorios: "), util.parsear_a_XML(accesorios_obligatorios),
+                _("Accesorios opcionales: "), util.parsear_a_XML(accesorios_opcionales),
+                _("Clasificacion parental: "), util.parsear_a_XML(juego.getTextRating()))
 
             else:
                 xml_plantilla = """<?xml version="1.0" encoding="UTF-8"?>
@@ -1357,10 +1360,7 @@ class WiithonGUI(GtkBuilderWrapper):
                     fc_anadir.addFavorite( self.core.prefs.ruta_anadir_directorio )
 
                 if fc_anadir.run() == gtk.RESPONSE_OK:
-                    '''
-                    Tarea AÑADIR JUEGO
-                    '''
-                    
+
                     if(id_tb == self.wb_tb_anadir):
                         self.core.prefs.ruta_anadir = fc_anadir.get_current_folder()
                     elif(id_tb == self.wb_tb_anadir_directorio):
@@ -1442,9 +1442,10 @@ class WiithonGUI(GtkBuilderWrapper):
 
             else:
                 self.alert("warning" , _("No tienes ningun juego"))
-                
+
         elif(id_tb == self.wb_tb_preferencias):
-            res = self.wb_prefs.run()
+            self.wb_prefs.maximize()
+            self.wb_prefs.run()
             self.wb_prefs.hide()
 
                 
@@ -1494,21 +1495,29 @@ class WiithonGUI(GtkBuilderWrapper):
         self.companies += 1
 
     def callback_error_importando(self, xml, motivo):
-        self.alert("error" , _("Error importando %s: %s") % (xml, motivo))
+        self.mostrarError(_("Error importando %s: %s") % (xml, motivo))
         
     def callback_empieza_descarga(self, url):
         self.actualizarLabel(_("Descargando WiiTDB desde %s, espere unos minutos ...") % url)
         self.actualizarFraccion(0.01)
+        #self.actualizarOrientation(gtk.PROGRESS_RIGHT_TO_LEFT)
         
     def callback_empieza_descomprimir(self, zip):
         self.actualizarLabel(_("Empezando a descomprimir la informacion WiiTDB"))
         self.actualizarFraccion(0.99)
+        #self.actualizarOrientation(gtk.PROGRESS_LEFT_TO_RIGHT)
 
 ############# METODOS que modifican el GUI, si se llaman desde hilos, se hacen con gobject
 
     def ocultarHBoxProgreso(self):
         self.wb_box_progreso.hide()
         return False
+        
+    def mostrarError(self, mensaje):
+        self.alert('error' , mensaje)
+
+    def actualizarOrientation(self, orientation):
+        self.wb_progreso1.set_orientation(orientation) 
 
     def actualizarLabel( self, etiqueta ):
         self.wb_progreso1.set_text( etiqueta )
@@ -1532,22 +1541,8 @@ class WiithonGUI(GtkBuilderWrapper):
         self.seleccionarFilaConValor(self.wb_tv_games, len(self.lJuegos) , 0 , juegoNuevo.idgame)
         
     def termina_trabajo_copiar(self, juego , particion):
-        
-        if config.DEBUG:
-            print "--------- juego origen ---------"
-            print juego
-            print "--------------------"
-            
-            print "--------- particion destino ---------"
-            print particion
-            print "--------------------"
-            
-        juegoNuevo = self.core.getInfoJuego(particion.device, juego.idgame)        
-        
-        if config.DEBUG:
-            print "--------- juego destino ---------"
-            print juegoNuevo
-            print "--------------------"
+                   
+        juegoNuevo = self.core.getInfoJuego(particion.device, juego.idgame)
             
         # refrescar su espacio uso/libre/total
         particion.refrescarEspacioLibreUsado(self.core)
@@ -1637,7 +1632,7 @@ class WiithonGUI(GtkBuilderWrapper):
 
         # al final, por ser bloqueante
         if not trabajo.exito:
-            gobject.idle_add( self.alert , 'error' , trabajo.error )
+            gobject.idle_add( self.mostrarError , trabajo.error )
             
         print _("Termina: %s") % trabajo
 

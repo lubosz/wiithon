@@ -12,7 +12,6 @@ char *s = N_("GNU GENERAL PUBLIC LICENSE Version 3");
 char *s = N_("No cierre wiithon mientras esta animacion indique actividad");
 char *s = N_("Nota, la copia no sobreescribire nada, solo copia juegos que no tenga el destino");
 char *s = N_("Nuevo");
-char *s = N_("Por defecto");
 char *s = N_("Preferencias");
 char *s = N_("Refrescar WBFS");
 char *s = N_("Renombrar");

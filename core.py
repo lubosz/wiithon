@@ -237,7 +237,7 @@ class WiithonCORE:
                 origen = "http://www.wiiboxart.com/diskart/160/160/%.3s.png" % (IDGAME)
                 destino = self.getRutaDisco(IDGAME)
                 util.descargarImagen(origen, destino)
-                os.system("mogrify -resize %dx%d! %s" % (config.WIDTH_DISCS, config.HEIGHT_DISCS, destino))
+                os.system("mogrify -resize %dx%d! %s" % (self.prefs.WIDTH_DISCS, self.prefs.HEIGHT_DISCS, destino))
                 return True
             except util.ErrorDescargando:
                 return False
@@ -249,11 +249,11 @@ class WiithonCORE:
         else:
             destino = self.getRutaCaratula(IDGAME)
             descargada = False
-            print _("***************** DESCARGAR CARATULA %s ********************") % (IDGAME)
             i = 0
-            while ( not descargada and i<len(config.PROVIDER_COVERS) ):
+            while ( not descargada and i<len(self.prefs.PROVIDER_COVERS) ):
                 try:
-                    util.descargarImagen(config.PROVIDER_COVERS[i] % IDGAME, destino)
+                    print _("Descargando caratula de %s desde %s ...") % (IDGAME, self.prefs.PROVIDER_COVERS[i] % IDGAME)
+                    util.descargarImagen(self.prefs.PROVIDER_COVERS[i] % IDGAME, destino)
                     os.system("mogrify -resize %dx%d! %s" % (self.prefs.WIDTH_COVERS, self.prefs.HEIGHT_COVERS, destino))
                 except util.ErrorDescargando:
                     i += 1

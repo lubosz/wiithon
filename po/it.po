@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: wiithon 1.0\n"
 "Report-Msgid-Bugs-To: makiolo@gmail.com\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2009-10-12 09:44+0100\n"
+"PO-Revision-Date: 2009-10-15 11:30+0100\n"
 "Last-Translator: Carlo Mandelli <camandel@gmail.com>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -72,10 +72,6 @@ msgid "%s ya existe en %s\n"
 msgstr "%s esiste già in %s\n"
 
 #, python-format
-msgid "***************** DESCARGAR CARATULA %s ********************"
-msgstr "***************** DOWNLOAD COPERTINA %s ********************"
-
-#, python-format
 msgid "***************** DESCARGAR DISCO %s ********************"
 msgstr "***************** DOWNLOAD DISC-ART %s ********************"
 
@@ -112,6 +108,12 @@ msgstr "AUTENTICAZIONE:"
 msgid "AYUDA_CLI"
 msgstr "AYUDA_CLI"
 
+msgid "Accesorios obligatorios: "
+msgstr ""
+
+msgid "Accesorios opcionales: "
+msgstr ""
+
 msgid "Acerca de ..."
 msgstr "Crediti ..."
 
@@ -129,9 +131,21 @@ msgstr ""
 "Alcuni giochi non sono stati inseriti:\n"
 "\n"
 
+msgid "Altura imagen caratula"
+msgstr ""
+
+msgid "Altura imagen disc-art"
+msgstr ""
+
 #, python-format
 msgid "Anadir %s a la particion %s"
 msgstr "Aggiungo %s sulla partitizione %s"
+
+msgid "Ancho imagen caratula"
+msgstr ""
+
+msgid "Ancho imagen disc-art"
+msgstr ""
 
 msgid "Aniadir ISO"
 msgstr "Aggiungo ISO"
@@ -144,7 +158,7 @@ msgstr "Aggiungi cartella"
 
 #, python-format
 msgid "Borrando juego %s"
-msgstr ""
+msgstr "Sto cancellando il gioco %s"
 
 msgid "Borrar juego con IDGAME"
 msgstr "Cancella il gioco con IDGAME"
@@ -163,8 +177,14 @@ msgstr "Sto cercando un disco Wii ..."
 msgid "Buscar:"
 msgstr "Cerca:"
 
+msgid "Capacidad On-line: "
+msgstr ""
+
 msgid "Caratula?"
 msgstr "Copertina?"
+
+msgid "Clasificacion parental: "
+msgstr ""
 
 msgid "Clasificar"
 msgstr "Ordinare"
@@ -199,8 +219,14 @@ msgstr "Copia il gioco selezionato*"
 msgid "Copiar todos los juegos*"
 msgstr "Copia tutti i giochi*"
 
+msgid "DESCRIPCION: "
+msgstr ""
+
 msgid "Debes tener al menos 2 particiones WBFS para hacer copias 1:1"
 msgstr "Bisogna avere almeno 2 partizioni WBFS per lanciare la copia 1:1"
+
+msgid "Desarrolador/Editorial: "
+msgstr ""
 
 #, python-format
 msgid "Descargando WiiTDB desde %s, espere unos minutos ..."
@@ -209,6 +235,10 @@ msgstr "Sto scaricando WiiTDB da %s, attendere qualche istante ..."
 #, python-format
 msgid "Descargando caratula de %s"
 msgstr "Sto scaricando la copertina di %s"
+
+#, python-format
+msgid "Descargando caratula de %s desde %s ..."
+msgstr ""
 
 #, python-format
 msgid "Descargando disco de %s"
@@ -237,7 +267,7 @@ msgstr "Dispositivo"
 
 #, python-format
 msgid "Dumpeando desde %s a %s utilizando %s temporalmente"
-msgstr ""
+msgstr "Estrazione da %s a %s usando temporaneamente %s"
 
 #, python-format
 msgid "ERROR %s no es un ningun juego de Wii"
@@ -352,7 +382,7 @@ msgstr ""
 
 #, python-format
 msgid "Error al pasar la ISO a la particion %s"
-msgstr ""
+msgstr "Errore durante il trasferimento della ISO sulla partizione %s"
 
 msgid "Error borrando"
 msgstr "Errore durante la cancellazione"
@@ -400,7 +430,7 @@ msgstr "Estratta ISO dal gioco con IDGAME"
 
 #, python-format
 msgid "Extraer Juego %s a ISO"
-msgstr ""
+msgstr "Estrazione gioco %s su ISO"
 
 msgid "Extraer a ISO"
 msgstr "Estrai ISO"
@@ -416,6 +446,9 @@ msgstr "E' fallito il download della disc-art di %s"
 msgid "Fecha"
 msgstr "Data"
 
+msgid "Fecha de lanzamiento: "
+msgstr ""
+
 msgid "Finalizada satisfactoriamente la importacion de datos desde WiiTDB"
 msgstr "Importazione dei dati da WiiTDB conclusa correttamente"
 
@@ -425,8 +458,17 @@ msgstr "Sto finendo ..."
 msgid "Formato desconocido"
 msgstr "Formato sconosciuto"
 
+msgid "Formato fecha"
+msgstr ""
+
+msgid "Formato fecha corto"
+msgstr ""
+
 msgid "Fuera de rango"
 msgstr "Non consentito"
+
+msgid "GENEROS: "
+msgstr ""
 
 msgid "GNU GENERAL PUBLIC LICENSE Version 3"
 msgstr "Licenza Pubblica Generica GNU Versione 3"
@@ -499,11 +541,11 @@ msgid "Juegos erroneos"
 msgstr "Giochi errati"
 
 msgid "Juegos originales, solo con lectores LG."
-msgstr ""
+msgstr "Giochi originali, solo con lettori LG."
 
 #, python-format
 msgid "La particion %s no contiene juegos"
-msgstr ""
+msgstr "La partizione %s non contiene giochi"
 
 #, python-format
 msgid "La particion %s: Ya no existe"
@@ -586,7 +628,7 @@ msgstr "Non posso aggiornare le partizioni finchè le operazioni in corso non so
 
 #, python-format
 msgid "No se ha completado el formateo de %s"
-msgstr ""
+msgstr "Non è stata completata La formattazione di %s"
 
 #, python-format
 msgid "No se ha encontrado ningun ISO/RAR en el directorio %s"
@@ -631,6 +673,12 @@ msgstr "Nuovo"
 msgid "Nuevo nombre es demasiado largo, intente con un texto menor de %d caracteres"
 msgstr "Il nuovo nome è troppo lungo, prova con un testo con meno di %d caratteri"
 
+msgid "Num. Hilos para tareas de fondo"
+msgstr ""
+
+msgid "Num. jugadores en off-line: "
+msgstr ""
+
 msgid "Numero fuera de rango"
 msgstr "Valore non consentito"
 
@@ -640,7 +688,7 @@ msgstr "OK, scaricato %s.png"
 
 #, python-format
 msgid "OK, el juego se ha pasado a la particion %s"
-msgstr ""
+msgstr "OK, il gioco è stato trasferito sulla partizione %s"
 
 msgid "OK, todas las caratulas se han descargado"
 msgstr "OK, tutte le copertine sono state scaricate"
@@ -661,7 +709,7 @@ msgid "Paso 2 de 2: Elige un directorio para los DISCOS"
 msgstr "Passo 2 di 2: seleziona una cartella per le DISC-ART"
 
 msgid "Por defecto"
-msgstr ""
+msgstr "Salva"
 
 msgid "Preferencias"
 msgstr "Preferenze"
@@ -672,6 +720,9 @@ msgstr "Premi un tasto per visualizzare %d linee in più"
 
 msgid "Programa ejecutado con las opciones incorrectas."
 msgstr "Programma eseguito con parametri errati."
+
+msgid "Proveedor de caratulas"
+msgstr ""
 
 msgid "Puede llevar mucho tiempo ..."
 msgstr "Può richiedere molto tempo ..."
@@ -701,7 +752,7 @@ msgstr "Rinomina"
 
 #, python-format
 msgid "Renombrar el juego %s."
-msgstr ""
+msgstr "Rinomina il gioco %s."
 
 msgid "Renombrar juego IDGAME"
 msgstr "Rinomina gioco IDGAME"
@@ -767,6 +818,9 @@ msgstr ""
 msgid "TITULO"
 msgstr "TITOLO"
 
+msgid "TITULO: "
+msgstr ""
+
 msgid "TODOS"
 msgstr "TUTTI"
 
@@ -785,6 +839,9 @@ msgstr "Copiato tutto con successo sul disco fisso"
 
 msgid "Total"
 msgstr "Totale"
+
+msgid "URL Base de datos WiiTDB"
+msgstr ""
 
 msgid "Un gestor de particiones WBFS facil de usar"
 msgstr "Un gestore di partizioni WBFS facile da usare"
@@ -846,7 +903,10 @@ msgstr "s"
 
 #, python-format
 msgid "wiithon no borra la ISO temporal: %s, puedes borrarla si no la necesitas"
-msgstr ""
+msgstr "wiithon non rimuove automaticamente la ISO temporaneo: %s, se non serve puoi cancellarla"
+
+#~ msgid "***************** DESCARGAR CARATULA %s ********************"
+#~ msgstr "***************** DOWNLOAD COPERTINA %s ********************"
 
 #~ msgid "Caratula descargada como"
 #~ msgstr "Copertina scaricata come"
