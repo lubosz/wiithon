@@ -722,6 +722,7 @@ class WiithonGUI(GtkBuilderWrapper):
                     </big>
                 </azul>
             </margin8>
+            <br />
             <margin12>
                 <rojo>
                     <b>
@@ -1190,7 +1191,7 @@ class WiithonGUI(GtkBuilderWrapper):
         if config.DEBUG:
             print "on_tb_toolbar_clicked"
         
-        if(self.todo and id_tb != self.wb_tb_copiar_SD and id_tb != self.wb_tb_acerca_de and id_tb != self.wb_tb_borrar and id_tb != self.wb_tb_refrescar_wbfs):
+        if(self.todo and id_tb != self.wb_tb_copiar_SD and id_tb != self.wb_tb_acerca_de and id_tb != self.wb_tb_borrar and id_tb != self.wb_tb_refrescar_wbfs and id_tb != self.wb_tb_preferencias):
             self.alert("warning" , _("Tienes que seleccionar una particion WBFS para realizar esta accion"))
 
         elif(id_tb == self.wb_tb_acerca_de):
@@ -1444,7 +1445,7 @@ class WiithonGUI(GtkBuilderWrapper):
                 self.alert("warning" , _("No tienes ningun juego"))
 
         elif(id_tb == self.wb_tb_preferencias):
-            self.wb_prefs.maximize()
+            #self.wb_prefs.maximize()
             self.wb_prefs.run()
             self.wb_prefs.hide()
 

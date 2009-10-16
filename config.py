@@ -11,7 +11,7 @@ import sys
 
 import util
 
-DEBUG = True
+DEBUG = False
 
 WIITHON_PATH = os.path.dirname(sys.argv[0])
 WIITHON_FILES = os.path.dirname(__file__)
@@ -57,48 +57,12 @@ SEPARADOR = ";@;"
 # Maximos juegos que aparecerán en la lista de copia de disco duro completa
 MAX_LISTA_COPIA_1on1 = 15
 
-# Num de descargas simultaneas
-# NUM_HILOS = 15
-
 # idioma principal, se usa para el synopsys
 LANG_PRINCIPAL = "ES"
 
 # idioma auxiliar, se usa para el synopsys
 LANG_SECUNDARIO = "EN"
 
-# URL por defecto
-# URL_ZIP_WIITDB = 'http://wiitdb.com/wiitdb.zip'
-
 # CLI
 # Lineas de pantallazo en consola
 NUM_LINEAS_PAUSA = 21
-
-# Formato de la fecha cuando se muestra en WiiTDB
-# FORMATO_FECHA_WIITDB = "%d-%m-%Y"
-
-# dimension caratula
-# WIDTH_COVERS = 160
-# HEIGHT_COVERS = 224
-
-# ciclo de proveedores de caratulas
-'''
-PROVIDER_COVERS = []
-a = PROVIDER_COVERS.append
-a("http://wiitdb.com/wiitdb/artwork/cover/ES/%s.png")
-a("http://wiitdb.com/wiitdb/artwork/cover/EN/%s.png")
-a("http://wiitdb.com/wiitdb/artwork/cover3D/ES/%s.png")
-a("http://wiitdb.com/wiitdb/artwork/cover3D/EN/%s.png")
-a("http://wiitdb.com/wiitdb/artwork/coverfull/FR/%s.png")
-a("http://www.wiiboxart.com/pal/%s.png")
-a("http://www.wiiboxart.com/ntsc/%s.png")
-a("http://www.wiiboxart.com/ntscj/%s.png")
-a("http://www.wiiboxart.com/3d/160/225/%s.png")
-a("http://www.wiiboxart.com/widescreen/pal/%s.png")
-a("http://www.wiiboxart.com/widescreen/ntsc/%s.png")
-a("http://www.wiiboxart.com/widescreen/ntscj/%s.png")
-a("http://www.wiiboxart.com/fullcover/%s.png")
-'''
-
-# dimension disc-art
-# WIDTH_DISCS = 160
-# HEIGHT_DISCS = 160
