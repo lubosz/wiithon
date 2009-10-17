@@ -373,7 +373,7 @@ class JuegoWIITDB(Base):
             buffer = "%s (%s+): %s" % ( self.rating_type.tipo,  self.rating_value.valor , buffer)
         else:
             buffer = "%s(%s+)" % ( self.rating_type.tipo,  self.rating_value.valor)
-        return buffer
+        return util.remove_last_separator(buffer)
 
 try:
     Index('idUnico_juego_wiitdb', JuegoWIITDB.idgame, unique=True)

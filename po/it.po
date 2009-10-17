@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: wiithon 1.0\n"
 "Report-Msgid-Bugs-To: makiolo@gmail.com\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2009-10-17 10:39+0100\n"
+"PO-Revision-Date: 2009-10-17 11:02+0100\n"
 "Last-Translator: Carlo Mandelli <camandel@gmail.com>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -109,10 +109,10 @@ msgid "AYUDA_CLI"
 msgstr "AYUDA_CLI"
 
 msgid "Accesorios obligatorios: "
-msgstr "Accessori richiesti:"
+msgstr "Accessori richiesti: "
 
 msgid "Accesorios opcionales: "
-msgstr "Accessori opzionali:"
+msgstr "Accessori opzionali: "
 
 msgid "Acerca de ..."
 msgstr "Crediti ..."
@@ -178,13 +178,13 @@ msgid "Buscar:"
 msgstr "Cerca:"
 
 msgid "Capacidad On-line: "
-msgstr "Modalità On-line:"
+msgstr "Modalità On-line: "
 
 msgid "Caratula?"
 msgstr "Copertina?"
 
 msgid "Clasificacion parental: "
-msgstr "Controllo parentale:"
+msgstr "Controllo parentale: "
 
 msgid "Clasificar"
 msgstr "Ordinare"
@@ -220,13 +220,13 @@ msgid "Copiar todos los juegos*"
 msgstr "Copia tutti i giochi*"
 
 msgid "DESCRIPCION: "
-msgstr "DESCRIZIONE:"
+msgstr "DESCRIZIONE: "
 
 msgid "Debes tener al menos 2 particiones WBFS para hacer copias 1:1"
 msgstr "Bisogna avere almeno 2 partizioni WBFS per lanciare la copia 1:1"
 
 msgid "Desarrolador/Editorial: "
-msgstr "Sviluppatore/Editore:"
+msgstr "Sviluppatore/Editore: "
 
 #, python-format
 msgid "Descargando WiiTDB desde %s, espere unos minutos ..."
@@ -447,7 +447,7 @@ msgid "Fecha"
 msgstr "Data"
 
 msgid "Fecha de lanzamiento: "
-msgstr "Data d'uscita:"
+msgstr "Data d'uscita: "
 
 msgid "Finalizada satisfactoriamente la importacion de datos desde WiiTDB"
 msgstr "Importazione dei dati da WiiTDB conclusa correttamente"
@@ -468,7 +468,7 @@ msgid "Fuera de rango"
 msgstr "Non consentito"
 
 msgid "GENEROS: "
-msgstr "GENERI:"
+msgstr "GENERE: "
 
 msgid "GNU GENERAL PUBLIC LICENSE Version 3"
 msgstr "Licenza Pubblica Generica GNU Versione 3"
@@ -677,7 +677,7 @@ msgid "Num. Hilos para tareas de fondo"
 msgstr "Num. di thread per le operazioni in background"
 
 msgid "Num. jugadores en off-line: "
-msgstr "Num. giocatori off-line:"
+msgstr "Num. giocatori off-line: "
 
 msgid "Numero fuera de rango"
 msgstr "Valore non consentito"
@@ -819,7 +819,7 @@ msgid "TITULO"
 msgstr "TITOLO"
 
 msgid "TITULO: "
-msgstr "TITOLO:"
+msgstr "TITOLO: "
 
 msgid "TODOS"
 msgstr "TUTTI"

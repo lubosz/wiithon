@@ -1088,16 +1088,19 @@ class WiithonGUI(GtkBuilderWrapper):
                 generos = ""
                 for genero in juego.genero:
                     generos += genero.nombre + ", "
+		generos=util.remove_last_separator(generos)
 
                 # accesorios obligatorios
                 accesorios_obligatorios = ""
                 for accesorio in juego.obligatorio:
                     accesorios_obligatorios += "%s, " % accesorio.nombre
+		accesorios_obligatorios=util.remove_last_separator(accesorios_obligatorios)
 
                 # accesorios opcionales
                 accesorios_opcionales = ""
                 for accesorio in juego.opcional:
                     accesorios_opcionales += "%s (opcional), " % accesorio.nombre
+		accesorios_opcionales=util.remove_last_separator(accesorios_opcionales)
                 
                 xml_plantilla = """<?xml version="1.0" encoding="UTF-8"?>
 <xhtml>

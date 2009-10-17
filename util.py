@@ -405,3 +405,7 @@ def configurarLenguaje():
         module.textdomain(config.APP)
         
     setLanguage('default')
+
+def remove_last_separator(text):
+    text=text.rstrip(', ') 
+    return text.rstrip(': ')
