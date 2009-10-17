@@ -328,6 +328,7 @@ class JuegoWIITDB(Base):
             if not corto:
                 for feature_online in self.features:
                     buffer += "%s, " % feature_online.valor
+		buffer = util.remove_last_separator(buffer)
             if self.wifi_players == 1:
                 if corto:
                     buffer = _("SI, 1j.")
