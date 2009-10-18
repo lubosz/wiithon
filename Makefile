@@ -328,7 +328,7 @@ initPO: po/plantilla.pot
 	# turkish tr_TR
 	msginit -i po/plantilla.pot -o po/tr_TR.po --no-translator
 
-deb: compile
+deb: install
 	mkdir -p $(DEB-ROOT)/DEBIAN
 	mkdir -p $(DEB-ROOT)/usr/share/pixmaps
 	mkdir -p $(DEB-ROOT)/usr/lib

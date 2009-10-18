@@ -1,13 +1,15 @@
 #!/bin/sh
 
 # debconf
-. /usr/share/debconf/confmodule
-db_version 2.0
+#. /usr/share/debconf/confmodule
+#db_version 2.0
 
-db_input high wiithon/group-disk || true
-db_go || true
-addgroup --system disk
-echo $USER
+#db_input high wiithon/group-disk || true
+#db_go || true
+
+if [ ! `cat /etc/group | grep disk | grep $SUDO_USER | wc -l` = 1 ]; then
+	gpasswd -a $SUDO_USER disk;
+fi;
 
 ln -sf /usr/local/lib/libwbfs.so /usr/lib/
 if [ $(uname -m) = "x86_64" ] 

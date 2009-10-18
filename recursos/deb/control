@@ -10,4 +10,4 @@ Maintainer: Ricardo Marmolejo García <makiolo@gmail.com>
 Homepage: https://launchpad.net/wiithon
 Provides: wiithon
 Description: Wiithon is a software developed in python and bash, based on a C library (WBFS). It is used for easy management of Wii games on WBFS partitions. Wiithon provides a CLI and a GUI.
-
+Description-es: hola
