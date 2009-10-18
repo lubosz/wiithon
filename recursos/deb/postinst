@@ -1,5 +1,14 @@
 #!/bin/sh
 
+# debconf
+. /usr/share/debconf/confmodule
+db_version 2.0
+
+db_input high wiithon/group-disk || true
+db_go || true
+addgroup --system disk
+echo $USER
+
 ln -sf /usr/local/lib/libwbfs.so /usr/lib/
 if [ $(uname -m) = "x86_64" ] 
 then
@@ -7,3 +16,5 @@ then
 fi
 ln -sf /usr/local/share/wiithon/wiithon.py /usr/local/bin/wiithon
 ln -sf /usr/local/share/wiithon/wiithon_wrapper /usr/local/bin/wiithon_wrapper
+
+exit 0
