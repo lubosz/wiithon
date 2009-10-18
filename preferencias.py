@@ -39,6 +39,8 @@ class Preferencias:
         self.iniciarPreferencia('WIDTH_DISCS', defecto=160, mostrar=True, vbox=prefs_vbox, label=_('Ancho imagen disc-art'))
         self.iniciarPreferencia('HEIGHT_DISCS', defecto=160, mostrar=True, vbox=prefs_vbox, label=_('Altura imagen disc-art'))
         self.iniciarPreferencia('NUM_HILOS', defecto=15, mostrar=True, vbox=prefs_vbox, label=_('Num. Hilos para tareas de fondo'))
+        self.iniciarPreferencia('LANG_PRINCIPAL', defecto='ES', mostrar=True, vbox=prefs_vbox, label=_('Idioma principal para el synopsis'))
+        self.iniciarPreferencia('LANG_SECUNDARIO', defecto='EN', mostrar=True, vbox=prefs_vbox, label=_('Idioma auxiliar para el synopsis'))
         
         PROVIDER_COVERS = []
         a = PROVIDER_COVERS.append

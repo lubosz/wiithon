@@ -500,6 +500,12 @@ msgstr ""
 msgid "ISO renombrada correctamente a %s"
 msgstr ""
 
+msgid "Idioma auxiliar para el synopsis"
+msgstr ""
+
+msgid "Idioma principal para el synopsis"
+msgstr ""
+
 msgid "Imagen Wii (ISO o RAR)"
 msgstr ""
 

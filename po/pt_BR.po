@@ -551,6 +551,12 @@ msgstr "ISO %s descompactada e adicionada corretamente"
 msgid "ISO renombrada correctamente a %s"
 msgstr "ISO renomeada corretamente para %s"
 
+msgid "Idioma auxiliar para el synopsis"
+msgstr ""
+
+msgid "Idioma principal para el synopsis"
+msgstr ""
+
 msgid "Imagen Wii (ISO o RAR)"
 msgstr ""
 

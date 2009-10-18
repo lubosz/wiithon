@@ -1057,13 +1057,13 @@ class WiithonGUI(GtkBuilderWrapper):
             juego = self.sel_juego.obj.getJuegoWIITDB()
             if juego != None:
 
-                # titulo y synopsys
+                # titulo y synopsis
                 hayPrincipal = False
                 haySecundario = False
                 i = 0
                 while not hayPrincipal and i<len(juego.descripciones):
                     descripcion = juego.descripciones[i]
-                    hayPrincipal = descripcion.lang == config.LANG_PRINCIPAL
+                    hayPrincipal = descripcion.lang == self.core.prefs.LANG_PRINCIPAL
                     if hayPrincipal:
                         title = descripcion.title
                         synopsis = descripcion.synopsis
@@ -1074,7 +1074,7 @@ class WiithonGUI(GtkBuilderWrapper):
                     i = 0
                     while not haySecundario and i<len(juego.descripciones):
                         descripcion = juego.descripciones[i]
-                        haySecundario = descripcion.lang == config.LANG_SECUNDARIO
+                        haySecundario = descripcion.lang == self.core.prefs.LANG_SECUNDARIO
                         if haySecundario:
                             title = descripcion.title
                             synopsis = descripcion.synopsis

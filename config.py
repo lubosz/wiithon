@@ -58,10 +58,10 @@ SEPARADOR = ";@;"
 MAX_LISTA_COPIA_1on1 = 15
 
 # idioma principal, se usa para el synopsys
-LANG_PRINCIPAL = "ES"
+#LANG_PRINCIPAL = "ES"
 
 # idioma auxiliar, se usa para el synopsys
-LANG_SECUNDARIO = "EN"
+#LANG_SECUNDARIO = "EN"
 
 # CLI
 # Lineas de pantallazo en consola

@@ -506,6 +506,12 @@ msgstr "ISO %s extracted and added successfully"
 msgid "ISO renombrada correctamente a %s"
 msgstr "Game renamed successfully to %s"
 
+msgid "Idioma auxiliar para el synopsis"
+msgstr ""
+
+msgid "Idioma principal para el synopsis"
+msgstr ""
+
 msgid "Imagen Wii (ISO o RAR)"
 msgstr ""
 
