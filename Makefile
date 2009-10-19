@@ -115,7 +115,7 @@ uninstall:
 	-$(RM) /usr/bin/wiithon
 	-$(RM) /usr/bin/wiithon_autodetectar
 	-$(RM) /usr/bin/wiithon_autodetectar_lector
-	-$(RM) /usr/bin/wbfs
+	#-$(RM) /usr/bin/wbfs
 
 	-$(RM) $(PREFIX)/bin/wiithon_autodetectar
 	-$(RM) $(PREFIX)/bin/wiithon_autodetectar_lector
@@ -139,8 +139,8 @@ uninstall:
 	-$(RM) $(PREFIX)/share/wiithon/wiithon_autodetectar
 	-$(RM) $(PREFIX)/share/wiithon/wiithon_autodetectar_lector
 
-	-gconftool --recursive-unset /apps/nautilus-actions/configurations
-	-$(RM) /usr/share/gconf/schemas/wiithon*.schemas
+	#-gconftool --recursive-unset /apps/nautilus-actions/configurations
+	#-$(RM) /usr/share/gconf/schemas/wiithon*.schemas
 	-$(RM) /usr/share/applications/wiithon.desktop
 
 	@echo "Limpiando instalacion actual"
@@ -185,7 +185,6 @@ uninstall:
 	-$(RM) /usr/share/pixmaps/wiithon.svg
 	
 	-$(RM) $(PREFIX)/share/wiithon/HOME.conf
-	-rmdir $(PREFIX)/share/wiithon/recursos/glade
 
 	-$(RM) -R ~/.wiithon
 	
@@ -200,6 +199,7 @@ purge: uninstall
 	-rmdir $(PREFIX_RECURSOS_IMAGENES_CARATULAS)
 	-rmdir $(PREFIX_RECURSOS_IMAGENES_DISCOS)
 	-rmdir $(PREFIX)/share/wiithon/recursos/imagenes
+	-rmdir $(PREFIX)/share/wiithon/recursos/glade
 	-rmdir $(PREFIX)/share/wiithon/recursos
 	-rmdir $(PREFIX)/share/wiithon
 	@echo "=================================================================="
