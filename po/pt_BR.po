@@ -226,6 +226,12 @@ msgstr ""
 msgid "Caratula?"
 msgstr "Capa?"
 
+msgid "Chinese"
+msgstr ""
+
+msgid "Chinese-Taiwan"
+msgstr ""
+
 msgid "Clasificacion parental: "
 msgstr ""
 
@@ -310,6 +316,9 @@ msgstr "Dispositivo"
 
 #, python-format
 msgid "Dumpeando desde %s a %s utilizando %s temporalmente"
+msgstr ""
+
+msgid "Dutch"
 msgstr ""
 
 #, python-format
@@ -405,6 +414,9 @@ msgstr "Iniciar a cópia ?"
 #, python-format
 msgid "Empieza %s"
 msgstr "Iniciar %s"
+
+msgid "English"
+msgstr ""
 
 #, python-format
 msgid "Error al descomrpimir el RAR : %s"
@@ -507,6 +519,9 @@ msgstr ""
 msgid "Formato fecha corto"
 msgstr ""
 
+msgid "French"
+msgstr ""
+
 msgid "Fuera de rango"
 msgstr "Fora dos limites"
 
@@ -515,6 +530,9 @@ msgstr ""
 
 msgid "GNU GENERAL PUBLIC LICENSE Version 3"
 msgstr "GNU GENERAL PUBLIC LICENSE Version 3"
+
+msgid "German"
+msgstr ""
 
 msgid "Has conectado el disco duro? No se ha encontrado ninguna particion valida."
 msgstr "Você conectou um HD ? Não foi encontrada nenhuma partição válida."
@@ -575,6 +593,12 @@ msgstr "Interrompido pelo usuário"
 msgid "Interrumpido por el usuario."
 msgstr ""
 
+msgid "Italian"
+msgstr ""
+
+msgid "Japanese"
+msgstr ""
+
 #, python-format
 msgid "Juego %s borrado correctamente"
 msgstr "Jogo %s apagado corretamente"
@@ -590,6 +614,9 @@ msgid "Juegos erroneos"
 msgstr "Jogos errados"
 
 msgid "Juegos originales, solo con lectores LG."
+msgstr ""
+
+msgid "Korean"
 msgstr ""
 
 #, python-format
@@ -763,6 +790,9 @@ msgstr "Passo 2 de 2: Escolha um diretório para os DISCOS"
 msgid "Por defecto"
 msgstr ""
 
+msgid "Portuguese"
+msgstr ""
+
 msgid "Preferencias"
 msgstr "Preferências"
 
@@ -845,6 +875,9 @@ msgstr ""
 
 #, python-format
 msgid "Si, 1 jugador (%s)"
+msgstr ""
+
+msgid "Spanish"
 msgstr ""
 
 msgid "TAMANIO"

@@ -57,12 +57,6 @@ SEPARADOR = ";@;"
 # Maximos juegos que aparecerán en la lista de copia de disco duro completa
 MAX_LISTA_COPIA_1on1 = 15
 
-# idioma principal, se usa para el synopsys
-#LANG_PRINCIPAL = "ES"
-
-# idioma auxiliar, se usa para el synopsys
-#LANG_SECUNDARIO = "EN"
-
 # CLI
 # Lineas de pantallazo en consola
 NUM_LINEAS_PAUSA = 21

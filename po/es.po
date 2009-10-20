@@ -225,6 +225,12 @@ msgstr ""
 msgid "Caratula?"
 msgstr "¿Car.?"
 
+msgid "Chinese"
+msgstr ""
+
+msgid "Chinese-Taiwan"
+msgstr ""
+
 msgid "Clasificacion parental: "
 msgstr ""
 
@@ -309,6 +315,9 @@ msgstr ""
 
 #, python-format
 msgid "Dumpeando desde %s a %s utilizando %s temporalmente"
+msgstr ""
+
+msgid "Dutch"
 msgstr ""
 
 #, python-format
@@ -403,6 +412,9 @@ msgstr "¿Desea que empieze la copia?"
 
 #, python-format
 msgid "Empieza %s"
+msgstr ""
+
+msgid "English"
 msgstr ""
 
 #, python-format
@@ -503,6 +515,9 @@ msgstr ""
 msgid "Formato fecha corto"
 msgstr ""
 
+msgid "French"
+msgstr ""
+
 msgid "Fuera de rango"
 msgstr ""
 
@@ -510,6 +525,9 @@ msgid "GENEROS: "
 msgstr ""
 
 msgid "GNU GENERAL PUBLIC LICENSE Version 3"
+msgstr ""
+
+msgid "German"
 msgstr ""
 
 msgid "Has conectado el disco duro? No se ha encontrado ninguna particion valida."
@@ -571,6 +589,12 @@ msgstr ""
 msgid "Interrumpido por el usuario."
 msgstr ""
 
+msgid "Italian"
+msgstr ""
+
+msgid "Japanese"
+msgstr ""
+
 #, python-format
 msgid "Juego %s borrado correctamente"
 msgstr ""
@@ -586,6 +610,9 @@ msgid "Juegos erroneos"
 msgstr ""
 
 msgid "Juegos originales, solo con lectores LG."
+msgstr ""
+
+msgid "Korean"
 msgstr ""
 
 #, python-format
@@ -760,6 +787,9 @@ msgstr "Paso 2 de 2: Elige un directorio donde copiar los DISCOS"
 msgid "Por defecto"
 msgstr ""
 
+msgid "Portuguese"
+msgstr ""
+
 msgid "Preferencias"
 msgstr ""
 
@@ -842,6 +872,9 @@ msgstr ""
 
 #, python-format
 msgid "Si, 1 jugador (%s)"
+msgstr ""
+
+msgid "Spanish"
 msgstr ""
 
 msgid "TAMANIO"

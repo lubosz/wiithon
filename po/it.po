@@ -183,6 +183,12 @@ msgstr "Modalità On-line: "
 msgid "Caratula?"
 msgstr "Copertina?"
 
+msgid "Chinese"
+msgstr ""
+
+msgid "Chinese-Taiwan"
+msgstr ""
+
 msgid "Clasificacion parental: "
 msgstr "Controllo parentale: "
 
@@ -268,6 +274,9 @@ msgstr "Dispositivo"
 #, python-format
 msgid "Dumpeando desde %s a %s utilizando %s temporalmente"
 msgstr "Estrazione da %s a %s usando temporaneamente %s"
+
+msgid "Dutch"
+msgstr ""
 
 #, python-format
 msgid "ERROR %s no es un ningun juego de Wii"
@@ -362,6 +371,9 @@ msgstr "Iniziare la copia?"
 #, python-format
 msgid "Empieza %s"
 msgstr "Inizio: %s"
+
+msgid "English"
+msgstr ""
 
 #, python-format
 msgid "Error al descomrpimir el RAR : %s"
@@ -464,6 +476,9 @@ msgstr "Formato data"
 msgid "Formato fecha corto"
 msgstr "Formato data corta"
 
+msgid "French"
+msgstr ""
+
 msgid "Fuera de rango"
 msgstr "Non consentito"
 
@@ -472,6 +487,9 @@ msgstr "GENERE: "
 
 msgid "GNU GENERAL PUBLIC LICENSE Version 3"
 msgstr "Licenza Pubblica Generica GNU Versione 3"
+
+msgid "German"
+msgstr ""
 
 msgid "Has conectado el disco duro? No se ha encontrado ninguna particion valida."
 msgstr "Hai collegato il tuo disco fisso? Non è stata trovata nessuna partizione WBFS"
@@ -532,6 +550,12 @@ msgstr "Interrotto dall'utente"
 msgid "Interrumpido por el usuario."
 msgstr "Interrotto dall'utente"
 
+msgid "Italian"
+msgstr ""
+
+msgid "Japanese"
+msgstr ""
+
 #, python-format
 msgid "Juego %s borrado correctamente"
 msgstr "Gioco %s cancellato con successo"
@@ -548,6 +572,9 @@ msgstr "Giochi errati"
 
 msgid "Juegos originales, solo con lectores LG."
 msgstr "Giochi originali, solo con lettori LG."
+
+msgid "Korean"
+msgstr ""
 
 #, python-format
 msgid "La particion %s no contiene juegos"
@@ -717,6 +744,9 @@ msgstr "Passo 2 di 2: seleziona una cartella per le DISC-ART"
 msgid "Por defecto"
 msgstr "Default"
 
+msgid "Portuguese"
+msgstr ""
+
 msgid "Preferencias"
 msgstr "Preferenze"
 
@@ -803,6 +833,9 @@ msgstr "Si, %d giocatori (%s)"
 #, python-format
 msgid "Si, 1 jugador (%s)"
 msgstr "Si, 1 giocatore (%s)"
+
+msgid "Spanish"
+msgstr ""
 
 msgid "TAMANIO"
 msgstr "DIMENSIONE"

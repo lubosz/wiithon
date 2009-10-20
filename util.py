@@ -188,7 +188,7 @@ try:
 
             self.__clipboard.set_text(str(self.get_text()))
 
-except ImportError:
+except:
     #logging.warning("There is no python-sexy available. fallback to standard gtk.")
     import gtk
     class Entry(gtk.Entry):
@@ -343,17 +343,9 @@ def getSesionBDD(db):
     session = Session()
     return session
 
-def descomprimirZIP(file_in, file_out):
-    try:
-        import zipfile
-        zip = zipfile.ZipFile(file_in)
-        zip.extract(file_out)
-        zip.close()
-    except:
-        comando = "unzip %s" % (file_in)
-        subprocess.call( comando , shell=True , stdout=open("/dev/null" , "w"), stderr=subprocess.STDOUT )
-
 def call_out_file(comando):
+    if config.DEBUG:
+        print comando
     try:
         salida = subprocess.call( comando , shell=True , stderr=subprocess.STDOUT , stdout=open(config.HOME_WIITHON_LOGS_PROCESO , "w") )
         return salida == 0
@@ -363,6 +355,8 @@ def call_out_file(comando):
         return False
 
 def call_out_null(comando):
+    if config.DEBUG:
+        print comando
     try:
         salida = subprocess.call( comando , shell=True , stderr=subprocess.STDOUT , stdout=open("/dev/null" , "w") )
         return salida == 0
@@ -372,6 +366,8 @@ def call_out_null(comando):
         return False
 
 def call_out_screen(comando):
+    if config.DEBUG:
+        print comando
     try:
         salida = subprocess.call( comando , shell=True , stderr=subprocess.STDOUT)
         return salida == 0
@@ -379,6 +375,16 @@ def call_out_screen(comando):
         return False
     except TypeError:
         return False
+        
+def descomprimirZIP(file_in, file_out):
+    try:
+        import zipfile
+        zip = zipfile.ZipFile(file_in)
+        zip.extract(file_out)
+        zip.close()
+    except:
+        comando = "unzip %s" % (file_in)
+        call_out_null(comando)
 
 def parsear_a_XML(texto):
     texto = texto.replace("&" , "&amp;")
@@ -409,3 +415,21 @@ def configurarLenguaje():
 def remove_last_separator(text):
     text=text.rstrip(', ') 
     return text.rstrip(': ')
+
+def get_index_by_code(lista, code):
+    i = 0
+    for c, language in lista:
+        if c == code:
+            return i
+        else:
+            i += 1
+    return -1
+
+def get_code_by_index(lista, index):
+    i = 0
+    for code, language in lista:
+        if i == index:
+            return code
+        else:
+            i += 1
+    return None

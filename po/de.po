@@ -181,6 +181,12 @@ msgstr ""
 msgid "Caratula?"
 msgstr "Titelbild?"
 
+msgid "Chinese"
+msgstr ""
+
+msgid "Chinese-Taiwan"
+msgstr ""
+
 msgid "Clasificacion parental: "
 msgstr ""
 
@@ -265,6 +271,9 @@ msgstr "Gerät"
 
 #, python-format
 msgid "Dumpeando desde %s a %s utilizando %s temporalmente"
+msgstr ""
+
+msgid "Dutch"
 msgstr ""
 
 #, python-format
@@ -360,6 +369,9 @@ msgstr "Kopiervorgang starten?"
 #, python-format
 msgid "Empieza %s"
 msgstr "Start: %s"
+
+msgid "English"
+msgstr ""
 
 #, python-format
 msgid "Error al descomrpimir el RAR : %s"
@@ -462,6 +474,9 @@ msgstr ""
 msgid "Formato fecha corto"
 msgstr ""
 
+msgid "French"
+msgstr ""
+
 msgid "Fuera de rango"
 msgstr "Out of range"
 
@@ -470,6 +485,9 @@ msgstr ""
 
 msgid "GNU GENERAL PUBLIC LICENSE Version 3"
 msgstr "GNU GENERAL PUBLIC LICENSE Version 3"
+
+msgid "German"
+msgstr ""
 
 msgid "Has conectado el disco duro? No se ha encontrado ninguna particion valida."
 msgstr "Haben Sie die Festplatte mit einer WBFS Partition angeschlossen?"
@@ -530,6 +548,12 @@ msgstr "Abbruch durch Benutzer"
 msgid "Interrumpido por el usuario."
 msgstr ""
 
+msgid "Italian"
+msgstr ""
+
+msgid "Japanese"
+msgstr ""
+
 #, python-format
 msgid "Juego %s borrado correctamente"
 msgstr "ISO %s erfolgreich gelöscht"
@@ -545,6 +569,9 @@ msgid "Juegos erroneos"
 msgstr "Fehlerhafte Spiele"
 
 msgid "Juegos originales, solo con lectores LG."
+msgstr ""
+
+msgid "Korean"
 msgstr ""
 
 #, python-format
@@ -717,6 +744,9 @@ msgstr "Schritt 2 von 2: Wähle einen Ordner für DISKBILDER"
 msgid "Por defecto"
 msgstr ""
 
+msgid "Portuguese"
+msgstr ""
+
 msgid "Preferencias"
 msgstr "Einstellungen"
 
@@ -799,6 +829,9 @@ msgstr ""
 
 #, python-format
 msgid "Si, 1 jugador (%s)"
+msgstr ""
+
+msgid "Spanish"
 msgstr ""
 
 msgid "TAMANIO"

@@ -43,16 +43,16 @@ class Preferencia(Base):
     
     id = Column('id',Integer,primary_key=True)
     campo = Column('campo', VARCHAR(255))
-    valor = Column('valor', VARCHAR(255))
-    #defecto = Column('valor', VARCHAR(255))
-    #Largo / Corto
+    valor = Column('valor', Unicode(5000))
+    tipo = Column('tipo', VARCHAR(255))
 
-    def __init__(self, campo = '', valor = ''):
+    def __init__(self, tipo = '', campo = '', valor = ''):
+        self.tipo = str(tipo)
         self.campo = str(campo)
         self.valor = str(valor)
 
     def __repr__(self):
-        return "%s => %s" % (self.campo, self.valor)
+        return "%s(%s) => %s" % (self.campo, self.tipo, self.valor)
 
 try:
     Index('idUnico_preferencia', Preferencia.campo, unique=True)

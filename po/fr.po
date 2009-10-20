@@ -181,6 +181,12 @@ msgstr ""
 msgid "Caratula?"
 msgstr "Jaquette?"
 
+msgid "Chinese"
+msgstr ""
+
+msgid "Chinese-Taiwan"
+msgstr ""
+
 msgid "Clasificacion parental: "
 msgstr ""
 
@@ -265,6 +271,9 @@ msgstr "Périphérique"
 
 #, python-format
 msgid "Dumpeando desde %s a %s utilizando %s temporalmente"
+msgstr ""
+
+msgid "Dutch"
 msgstr ""
 
 #, python-format
@@ -360,6 +369,9 @@ msgstr "Démarrer la copie ?"
 #, python-format
 msgid "Empieza %s"
 msgstr "Démarrage : %s"
+
+msgid "English"
+msgstr ""
 
 #, python-format
 msgid "Error al descomrpimir el RAR : %s"
@@ -462,6 +474,9 @@ msgstr ""
 msgid "Formato fecha corto"
 msgstr ""
 
+msgid "French"
+msgstr ""
+
 msgid "Fuera de rango"
 msgstr "Dépassement de capacité"
 
@@ -470,6 +485,9 @@ msgstr ""
 
 msgid "GNU GENERAL PUBLIC LICENSE Version 3"
 msgstr "Licence publique générale GNU Version 3"
+
+msgid "German"
+msgstr ""
 
 msgid "Has conectado el disco duro? No se ha encontrado ninguna particion valida."
 msgstr " Aucune partition WBFS trouvée : avez vous connecté votre disque contenant la partition WBFS ?"
@@ -530,6 +548,12 @@ msgstr "Interrompu par l'utilisateur"
 msgid "Interrumpido por el usuario."
 msgstr ""
 
+msgid "Italian"
+msgstr ""
+
+msgid "Japanese"
+msgstr ""
+
 #, python-format
 msgid "Juego %s borrado correctamente"
 msgstr "ISO %s supprimé"
@@ -545,6 +569,9 @@ msgid "Juegos erroneos"
 msgstr "Mauvais jeux"
 
 msgid "Juegos originales, solo con lectores LG."
+msgstr ""
+
+msgid "Korean"
 msgstr ""
 
 #, python-format
@@ -722,6 +749,9 @@ msgstr "Étape 2 sur 2 : Choisissez un dossier pour les DISQUES"
 msgid "Por defecto"
 msgstr ""
 
+msgid "Portuguese"
+msgstr ""
+
 msgid "Preferencias"
 msgstr "Préférences"
 
@@ -804,6 +834,9 @@ msgstr ""
 
 #, python-format
 msgid "Si, 1 jugador (%s)"
+msgstr ""
+
+msgid "Spanish"
 msgstr ""
 
 msgid "TAMANIO"

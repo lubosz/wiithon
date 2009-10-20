@@ -111,6 +111,8 @@ class WiithonGUI(GtkBuilderWrapper):
 
         backup_preferencia_device = self.core.prefs.device_seleccionado
         backup_preferencia_idgame = self.core.prefs.idgame_seleccionado
+        
+        print self.core.prefs.PROVIDER_COVERS
 
         # permite usar hilos con PyGTK http://faq.pygtk.org/index.py?req=show&file=faq20.006.htp
         # modo seguro con hilos
@@ -298,6 +300,7 @@ class WiithonGUI(GtkBuilderWrapper):
             self.seleccionarPrimeraFila(self.wb_tv_partitions)
             #
             # descargar caratulas y discos
+
             for juego in session.query(Juego).order_by('idParticion, lower(title)'):
 
                 if not self.core.existeCaratula(juego.idgame):
@@ -305,6 +308,7 @@ class WiithonGUI(GtkBuilderWrapper):
 
                 if not self.core.existeDisco(juego.idgame):
                     self.poolBash.nuevoTrabajoDescargaDisco( juego.idgame )
+
             #
             ##################################################################################
             
@@ -922,7 +926,7 @@ class WiithonGUI(GtkBuilderWrapper):
             return listaJuegos[i]
         else:
             return None
-            
+
     def getBuscarParticion(self, listaParticiones, device):
         
         if config.DEBUG:
@@ -945,10 +949,10 @@ class WiithonGUI(GtkBuilderWrapper):
     # Click en juegos --> refresco la imagen de la caratula y disco
     # self.wb_tv_games
     def on_tv_games_cursor_changed(self , treeview):
-        
+
         if config.DEBUG:
             print "on_tv_games_cursor_changed"
-        
+
         if self.sel_juego != None:
             self.sel_juego.actualizar_columna(treeview)
             if self.sel_juego.it != None:
@@ -1036,18 +1040,20 @@ class WiithonGUI(GtkBuilderWrapper):
             self.sel_parti_1on1.obj = self.getBuscarParticion(self.lParti, self.sel_parti_1on1.clave)
 
     def ponerCaratula(self, IDGAME, widget_imagen):
-        destinoCaratula = os.path.join(config.HOME_WIITHON_CARATULAS , "%s.png" % (IDGAME))
-
-        if not os.path.exists(destinoCaratula):
+        if not self.core.existeCaratula(IDGAME):
             destinoCaratula = os.path.join(config.WIITHON_FILES_RECURSOS_IMAGENES , "caratula.png")
+            self.poolBash.nuevoTrabajoDescargaCaratula( IDGAME )
+        else:
+            destinoCaratula = self.core.getRutaCaratula(IDGAME)
         
         widget_imagen.set_from_file( destinoCaratula )
 
-    def ponerDisco(self, IDGAME, widget_imagen):
-        destinoDisco = os.path.join(config.HOME_WIITHON_DISCOS , "%s.png" % IDGAME)
-        
-        if not os.path.exists(destinoDisco):
+    def ponerDisco(self, IDGAME, widget_imagen):        
+        if not self.core.existeDisco(IDGAME):
             destinoDisco = os.path.join(config.WIITHON_FILES_RECURSOS_IMAGENES , "disco.png")
+            self.poolBash.nuevoTrabajoDescargaDisco( IDGAME )
+        else:
+            destinoDisco = self.core.getRutaDisco(IDGAME)
             
         widget_imagen.set_from_file( destinoDisco )
 
@@ -1088,20 +1094,20 @@ class WiithonGUI(GtkBuilderWrapper):
                 generos = ""
                 for genero in juego.genero:
                     generos += genero.nombre + ", "
-		generos=util.remove_last_separator(generos)
-
+                generos=util.remove_last_separator( generos )
+                
                 # accesorios obligatorios
                 accesorios_obligatorios = ""
                 for accesorio in juego.obligatorio:
                     accesorios_obligatorios += "%s, " % accesorio.nombre
-		accesorios_obligatorios=util.remove_last_separator(accesorios_obligatorios)
+                accesorios_obligatorios=util.remove_last_separator( accesorios_obligatorios )
 
                 # accesorios opcionales
                 accesorios_opcionales = ""
                 for accesorio in juego.opcional:
                     accesorios_opcionales += "%s (opcional), " % accesorio.nombre
-		accesorios_opcionales=util.remove_last_separator(accesorios_opcionales)
-                
+                accesorios_opcionales=util.remove_last_separator( accesorios_opcionales )
+
                 xml_plantilla = """<?xml version="1.0" encoding="UTF-8"?>
 <xhtml>
     <margin8>
@@ -1178,13 +1184,6 @@ class WiithonGUI(GtkBuilderWrapper):
 
 
     def on_tv_games_click_event(self, widget, event):
-        '''
-        if event.button == 1:
-            tiempo_entre_clicks = event.time - self.ultimoClick
-            self.ultimoClick = event.time
-            if tiempo_entre_clicks < 400:
-                print "click"
-        '''
         if event.button == 3:
             popup = self.uimgr.get_widget('/GamePopup')
             popup.popup(None, None, None, event.button, event.time)
@@ -1584,7 +1583,8 @@ class WiithonGUI(GtkBuilderWrapper):
                             ):
                             ruta = self.core.getRutaCaratula(self.sel_juego.obj.idgame)
                             shutil.copy(fichero, ruta)
-                            os.system('mogrify -resize 160x224! "%s"' % (ruta))
+                            comando = 'mogrify -resize %dx%d! "%s"' % (self.core.prefs.WIDTH_COVERS, self.core.prefs.HEIGHT_COVERS, ruta)
+                            util.call_out_null(comando)
                             self.ponerCaratula(self.sel_juego.obj.idgame, self.wb_img_caratula1)
             elif fichero.startswith("http://"):
                 # Arrastrar imagenes (png, jpg, gif) desde el navegador
@@ -1595,7 +1595,8 @@ class WiithonGUI(GtkBuilderWrapper):
                     ):
                     ruta = self.core.getRutaCaratula(self.sel_juego.obj.idgame)
                     util.descargar(fichero, ruta)
-                    os.system('mogrify -resize 160x224! "%s"' % (ruta))
+                    comando = 'mogrify -resize %dx%d! "%s"' % (self.core.prefs.WIDTH_COVERS, self.core.prefs.HEIGHT_COVERS, ruta)
+                    util.call_out_null(comando)
                     self.ponerCaratula(self.sel_juego.obj.idgame, self.wb_img_caratula1)
 
         listaArrastrados.sort()
@@ -1649,23 +1650,21 @@ class WiithonGUI(GtkBuilderWrapper):
     def callback_empieza_trabajo_copiar(self, trabajo):
         pass
 
-    def callback_termina_trabajo_descargar_caratula(self, trabajo, juego):
-        juego.tieneCaratula = trabajo.exito
-        if juego.tieneCaratula:
-            if juego.idgame == self.sel_juego.obj.idgame:
-                gobject.idle_add( self.ponerCaratula , juego.idgame , self.wb_img_caratula1)
+    def callback_termina_trabajo_descargar_caratula(self, trabajo, idgame):
+        if trabajo.exito:
+            if idgame == self.sel_juego.obj.idgame:
+                gobject.idle_add( self.ponerCaratula , idgame , self.wb_img_caratula1)
         else:
-            self.info.abajo_juegos_sin_caratula += 1
-            print _("Falla la descarga de la caratula de %s") % juego
+            #self.info.abajo_juegos_sin_caratula += 1
+            print _("Falla la descarga de la caratula de %s") % idgame
 
-    def callback_termina_trabajo_descargar_disco(self, trabajo, juego):
-        juego.tieneDiscArt = trabajo.exito
-        if juego.tieneDiscArt:
-            if juego.idgame == self.sel_juego.obj.idgame:
-                gobject.idle_add( self.ponerDisco , juego.idgame , self.wb_img_disco1)
+    def callback_termina_trabajo_descargar_disco(self, trabajo, idgame):
+        if trabajo.exito:
+            if idgame == self.sel_juego.obj.idgame:
+                gobject.idle_add( self.ponerDisco , idgame , self.wb_img_disco1)
         else:
-            self.info.abajo_juegos_sin_discart += 1
-            print _("Falla la descarga del disco de %s") % juego
+            #self.info.abajo_juegos_sin_discart += 1
+            print _("Falla la descarga del disco de %s") % idgame
 
 class HiloCalcularProgreso(Thread):
 

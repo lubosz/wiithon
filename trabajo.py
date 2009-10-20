@@ -130,18 +130,19 @@ class PoolTrabajo(Pool , Thread):
                 self.callback_termina_trabajo_copiar(trabajo, juego, particion)
 
         elif( trabajo.tipo == DESCARGA_CARATULA ):
+
             idgame = trabajo.origen
             trabajo.exito = self.descargarCaratula(core , idgame)
 
             if self.callback_termina_trabajo_descargar_caratula:
-                self.callback_termina_trabajo_descargar_caratula(trabajo, juego)
+                self.callback_termina_trabajo_descargar_caratula(trabajo, idgame)
 
         elif( trabajo.tipo == DESCARGA_DISCO ):
             idgame = trabajo.origen
             trabajo.exito = self.descargarDisco(core , idgame)
 
             if self.callback_termina_trabajo_descargar_disco:
-                self.callback_termina_trabajo_descargar_disco(trabajo, juego)
+                self.callback_termina_trabajo_descargar_disco(trabajo, idgame)
 
         elif( trabajo.tipo == COPIAR_CARATULA ):
             juego = trabajo.origen
