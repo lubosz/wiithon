@@ -223,10 +223,13 @@ class ErrorDescargando(Exception):
     pass
     
 def descargar(url, destino):
-    mysock = urllib.urlopen(url)
-    oFile = open(destino ,'wb')
-    oFile.write(mysock.read())
-    oFile.close()
+    try:
+        mysock = urllib.urlopen(url)
+        oFile = open(destino ,'wb')
+        oFile.write(mysock.read())
+        oFile.close()
+    except:
+        raise ErrorDescargando
 
 def descargarImagen(url, destino, type = "image/png", referer = "http://www.wiiboxart.com/pal.php"):
     try:
@@ -339,7 +342,7 @@ def crearBDD(metadatos):
 
 def getSesionBDD(db):
     # con scoped se resuelven todos los problemas de concurrencia!
-    Session = scoped_session(sessionmaker(bind=db, autoflush=True, transactional = True))
+    Session = scoped_session(sessionmaker(bind=db, autoflush=True, transactional=True))
     session = Session()
     return session
 

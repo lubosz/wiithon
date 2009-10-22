@@ -85,6 +85,10 @@ class PoolTrabajo(Pool , Thread):
         self.callback_empieza_importar = callback_empieza_importar
         self.callback_termina_importar = callback_termina_importar
 
+        self.PROVIDER_COVERS = self.core.prefs.PROVIDER_COVERS
+        self.WIDTH_COVERS = self.core.prefs.WIDTH_COVERS
+        self.HEIGHT_COVERS = self.core.prefs.HEIGHT_COVERS
+
     def run(self):
         self.empezar( args=(self.core,) )
 
@@ -228,7 +232,7 @@ class PoolTrabajo(Pool , Thread):
         return exito
 
     def descargarCaratula(self , core , idgame):
-        return core.descargarCaratula(idgame)
+        return core.descargarCaratula(idgame, self.PROVIDER_COVERS, self.WIDTH_COVERS, self.HEIGHT_COVERS)
 
     def descargarDisco(self , core , idgame):
         return core.descargarDisco(idgame)

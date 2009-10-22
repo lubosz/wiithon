@@ -738,14 +738,11 @@ Italian: Carlo Mandelli &lt;camandel@gmail.com&gt; [it.po]
         <property name="orientation">vertical</property>
         <property name="spacing">2</property>
         <child>
-          <object class="GtkScrolledWindow" id="prefs_scrolledwindow1">
+          <object class="GtkNotebook" id="notebook1">
             <property name="visible">True</property>
             <property name="can_focus">True</property>
-            <property name="hscrollbar_policy">automatic</property>
-            <property name="vscrollbar_policy">automatic</property>
-            <property name="shadow_type">out</property>
             <child>
-              <object class="GtkVBox" id="prefs_vbox">
+              <object class="GtkVBox" id="prefs_vbox_general">
                 <property name="visible">True</property>
                 <property name="orientation">vertical</property>
                 <child>
@@ -780,9 +777,116 @@ Italian: Carlo Mandelli &lt;camandel@gmail.com&gt; [it.po]
                 </child>
               </object>
             </child>
+            <child type="tab">
+              <object class="GtkLabel" id="prefs_label1">
+                <property name="visible">True</property>
+                <property name="label" translatable="yes">General</property>
+              </object>
+              <packing>
+                <property name="tab_fill">False</property>
+              </packing>
+            </child>
+            <child>
+              <object class="GtkVBox" id="prefs_vbox_caratulas">
+                <property name="visible">True</property>
+                <property name="orientation">vertical</property>
+                <child>
+                  <placeholder/>
+                </child>
+                <child>
+                  <placeholder/>
+                </child>
+                <child>
+                  <placeholder/>
+                </child>
+                <child>
+                  <placeholder/>
+                </child>
+                <child>
+                  <placeholder/>
+                </child>
+                <child>
+                  <placeholder/>
+                </child>
+                <child>
+                  <placeholder/>
+                </child>
+                <child>
+                  <placeholder/>
+                </child>
+                <child>
+                  <placeholder/>
+                </child>
+                <child>
+                  <placeholder/>
+                </child>
+              </object>
+              <packing>
+                <property name="position">1</property>
+              </packing>
+            </child>
+            <child type="tab">
+              <object class="GtkLabel" id="prefs_label2">
+                <property name="visible">True</property>
+                <property name="label" translatable="yes">Caratulas</property>
+              </object>
+              <packing>
+                <property name="position">1</property>
+                <property name="tab_fill">False</property>
+              </packing>
+            </child>
+            <child>
+              <object class="GtkVBox" id="prefs_vbox_wiitdb">
+                <property name="visible">True</property>
+                <property name="orientation">vertical</property>
+                <child>
+                  <placeholder/>
+                </child>
+                <child>
+                  <placeholder/>
+                </child>
+                <child>
+                  <placeholder/>
+                </child>
+                <child>
+                  <placeholder/>
+                </child>
+                <child>
+                  <placeholder/>
+                </child>
+                <child>
+                  <placeholder/>
+                </child>
+                <child>
+                  <placeholder/>
+                </child>
+                <child>
+                  <placeholder/>
+                </child>
+                <child>
+                  <placeholder/>
+                </child>
+                <child>
+                  <placeholder/>
+                </child>
+              </object>
+              <packing>
+                <property name="position">2</property>
+              </packing>
+            </child>
+            <child type="tab">
+              <object class="GtkLabel" id="prefs_label3">
+                <property name="visible">True</property>
+                <property name="label" translatable="yes">WiiTDB</property>
+              </object>
+              <packing>
+                <property name="position">2</property>
+                <property name="tab_fill">False</property>
+              </packing>
+            </child>
           </object>
           <packing>
-            <property name="position">1</property>
+            <property name="position">0</property>
           </packing>
         </child>
         <child internal-child="action_area">
@@ -807,7 +911,7 @@ Italian: Carlo Mandelli &lt;camandel@gmail.com&gt; [it.po]
           <packing>
             <property name="expand">False</property>
             <property name="pack_type">end</property>
-            <property name="position">0</property>
+            <property name="position">1</property>
           </packing>
         </child>
       </object>

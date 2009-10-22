@@ -10,8 +10,9 @@ import os
 import sys
 
 import util
+import logging
 
-DEBUG = False
+DEBUG = True
 
 WIITHON_PATH = os.path.dirname(sys.argv[0])
 WIITHON_FILES = os.path.dirname(__file__)
@@ -60,3 +61,8 @@ MAX_LISTA_COPIA_1on1 = 15
 # CLI
 # Lineas de pantallazo en consola
 NUM_LINEAS_PAUSA = 21
+
+if DEBUG:
+    logging.basicConfig()
+    logging.getLogger('sqlalchemy.engine').setLevel(logging.INFO)
+    logging.getLogger('sqlalchemy.orm.unitofwork').setLevel(logging.DEBUG)

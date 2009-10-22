@@ -39,7 +39,9 @@ class Preferencias:
     def __init__(self):
         pass
 
-    def cargarPreferenciasPorDefecto(self, prefs_vbox):
+    def cargarPreferenciasPorDefecto(self,  prefs_vbox_general,
+                                            prefs_vbox_caratulas,
+                                            prefs_vbox_wiitdb):
         
         # Data type: 'bool', 'int', 'float', 'string', 'memo', 'select'        
         self.iniciarPreferencia('string', 'device_seleccionado')
@@ -49,14 +51,14 @@ class Preferencias:
         self.iniciarPreferencia('string', 'ruta_extraer_iso', defecto=os.getcwd())
         self.iniciarPreferencia('string', 'ruta_copiar_caratulas', defecto=os.getcwd())
         self.iniciarPreferencia('string', 'ruta_copiar_discos', defecto=os.getcwd())
-        self.iniciarPreferencia('string', 'URL_ZIP_WIITDB', defecto='http://wiitdb.com/wiitdb.zip', mostrar=True, vbox=prefs_vbox, label=_('URL Base de datos WiiTDB'))
-        self.iniciarPreferencia('string', 'FORMATO_FECHA_WIITDB', defecto='%d/%m/%Y', mostrar=True, vbox=prefs_vbox, label=_('Formato fecha'))
-        self.iniciarPreferencia('string', 'FORMATO_FECHA_CORTA_WIITDB', defecto='%Y/%m', mostrar=True, vbox=prefs_vbox, label=_('Formato fecha corto'))
-        self.iniciarPreferencia('int', 'WIDTH_COVERS', defecto=160, mostrar=True, vbox=prefs_vbox, label=_('Ancho imagen caratula'))
-        self.iniciarPreferencia('int', 'HEIGHT_COVERS', defecto=224, mostrar=True, vbox=prefs_vbox, label=_('Altura imagen caratula'))
-        self.iniciarPreferencia('int', 'WIDTH_DISCS', defecto=160, mostrar=True, vbox=prefs_vbox, label=_('Ancho imagen disc-art'))
-        self.iniciarPreferencia('int', 'HEIGHT_DISCS', defecto=160, mostrar=True, vbox=prefs_vbox, label=_('Altura imagen disc-art'))
-        self.iniciarPreferencia('int', 'NUM_HILOS', defecto=15, mostrar=True, vbox=prefs_vbox, label=_('Num. Hilos para tareas de fondo'))
+        self.iniciarPreferencia('string', 'URL_ZIP_WIITDB', defecto='http://wiitdb.com/wiitdb.zip', mostrar=True, vbox=prefs_vbox_wiitdb, label=_('URL Base de datos WiiTDB'))
+        self.iniciarPreferencia('string', 'FORMATO_FECHA_WIITDB', defecto='%d/%m/%Y', mostrar=True, vbox=prefs_vbox_wiitdb, label=_('Formato fecha'))
+        self.iniciarPreferencia('string', 'FORMATO_FECHA_CORTA_WIITDB', defecto='%Y/%m', mostrar=True, vbox=prefs_vbox_wiitdb, label=_('Formato fecha corto'))
+        self.iniciarPreferencia('int', 'WIDTH_COVERS', defecto=160, mostrar=True, vbox=prefs_vbox_caratulas, label=_('Ancho imagen caratula'), relaunch_required = True)
+        self.iniciarPreferencia('int', 'HEIGHT_COVERS', defecto=224, mostrar=True, vbox=prefs_vbox_caratulas, label=_('Altura imagen caratula'), relaunch_required = True)
+        self.iniciarPreferencia('int', 'WIDTH_DISCS', defecto=160, mostrar=True, vbox=prefs_vbox_caratulas, label=_('Ancho imagen disc-art'))
+        self.iniciarPreferencia('int', 'HEIGHT_DISCS', defecto=160, mostrar=True, vbox=prefs_vbox_caratulas, label=_('Altura imagen disc-art'))
+        self.iniciarPreferencia('int', 'NUM_HILOS', defecto=8, mostrar=True, vbox=prefs_vbox_general, label=_('Num. Hilos para tareas de fondo'))
         
         # Listas de idiomas wiitdb
         WIITDB_LANGUAGE_LISTA =    [('EN', _('English')),
@@ -70,27 +72,37 @@ class Preferencias:
                                     ('ZHTW', _('Chinese-Taiwan')),
                                     ('ZHCN', _('Chinese')),
                                     ('KO', _('Korean'))]
-        self.iniciarPreferencia('select', 'LANG_PRINCIPAL', defecto='ES', mostrar=True, vbox=prefs_vbox, label=_('Idioma principal para el synopsis'), datos_lista = WIITDB_LANGUAGE_LISTA)
-        self.iniciarPreferencia('select', 'LANG_SECUNDARIO', defecto='EN', mostrar=True, vbox=prefs_vbox, label=_('Idioma auxiliar para el synopsis'), datos_lista = WIITDB_LANGUAGE_LISTA)
+        self.iniciarPreferencia('select', 'LANG_PRINCIPAL', defecto='ES', mostrar=True, vbox=prefs_vbox_caratulas, label=_('Idioma principal para el synopsis'), datos_lista = WIITDB_LANGUAGE_LISTA)
+        self.iniciarPreferencia('select', 'LANG_SECUNDARIO', defecto='EN', mostrar=True, vbox=prefs_vbox_caratulas, label=_('Idioma auxiliar para el synopsis'), datos_lista = WIITDB_LANGUAGE_LISTA)
         
         cycle_covers = ""
-        cycle_covers += "http://wiitdb.com/wiitdb/artwork/cover/ES/%s.png\n"
+        cycle_covers += "http://www.wiiboxart.com/pal/%s.png\n"
         cycle_covers += "http://wiitdb.com/wiitdb/artwork/cover/EN/%s.png\n"
+        cycle_covers += "http://www.wiiboxart.com/ntsc/%s.png\n"
+        cycle_covers += "http://www.wiiboxart.com/ntscj/%s.png\n"
+        cycle_covers += "http://wiitdb.com/wiitdb/artwork/cover/ES/%s.png\n"
         cycle_covers += "http://wiitdb.com/wiitdb/artwork/cover3D/ES/%s.png\n"
         cycle_covers += "http://wiitdb.com/wiitdb/artwork/cover3D/EN/%s.png\n"
         cycle_covers += "http://wiitdb.com/wiitdb/artwork/coverfull/FR/%s.png\n"
-        cycle_covers += "http://www.wiiboxart.com/pal/%s.png\n"
-        cycle_covers += "http://www.wiiboxart.com/ntsc/%s.png\n"
-        cycle_covers += "http://www.wiiboxart.com/ntscj/%s.png\n"
         cycle_covers += "http://www.wiiboxart.com/3d/160/225/%s.png\n"
         cycle_covers += "http://www.wiiboxart.com/widescreen/pal/%s.png\n"
         cycle_covers += "http://www.wiiboxart.com/widescreen/ntsc/%s.png\n"
         cycle_covers += "http://www.wiiboxart.com/widescreen/ntscj/%s.png\n"
         cycle_covers += "http://www.wiiboxart.com/fullcover/%s.png\n"
-        self.iniciarPreferencia('memo', 'PROVIDER_COVERS', defecto=cycle_covers, mostrar=True, vbox=prefs_vbox, label=_('Proveedor de caratulas'))
+        self.iniciarPreferencia('memo', 'PROVIDER_COVERS', defecto=cycle_covers, mostrar=True, vbox=prefs_vbox_caratulas, label=_('Proveedor de caratulas'), relaunch_required = True)
+        
+        # poner comentarios finales
+        etiqueta = gtk.Label()
+        etiqueta.set_text("<small><i>* = %s</i></small>" % _("requiere reiniciar la aplicacion"))
+        etiqueta.set_use_markup(True)
+        etiqueta.set_alignment(0.0 , -1)
+        etiqueta.set_padding(5, -1)
+        etiqueta.show()
+
+        prefs_vbox_caratulas.pack_start(etiqueta, expand=False, fill=False, padding=0)
 
     # indicar el vbox que inicia la preferencia
-    def iniciarPreferencia(self, tipo, name, defecto = '', mostrar = False, vbox = None, label = '', datos_lista = None):
+    def iniciarPreferencia(self, tipo, name, defecto = '', mostrar = False, vbox = None, label = '', datos_lista = None, relaunch_required = False):
         sql = util.decode("preferencias.campo=='%s'" % name)
         preferencia = session.query(Preferencia).filter(sql).first()
         if preferencia == None:
@@ -102,14 +114,25 @@ class Preferencias:
             h1 = gtk.HBox(homogeneous=False, spacing=0)
             
             etiqueta = gtk.Label()
-            etiqueta.set_text("<b>%s: </b>" % label)
+            if relaunch_required:
+                patron = "<b>%s: *</b>"
+            else:
+                patron = "<b>%s: </b>"
+            etiqueta.set_text(patron % label)
             etiqueta.set_use_markup(True)
-            etiqueta.set_justify(gtk.JUSTIFY_LEFT)
+            # 1 line
+            etiqueta.set_alignment(0.0 , 0.5)
+            etiqueta.set_padding(5, -1)
+            # > 1 linea
+            #etiqueta.set_justify(gtk.JUSTIFY_LEFT)
             etiqueta.show()
-            h1.pack_start(etiqueta, expand=False, fill=False, padding=5)
+
             
             # renderizar preferencia
             if tipo == 'memo':
+                
+                h2 = gtk.HBox(homogeneous=False, spacing=0)
+                v1 = gtk.VBox(homogeneous=False, spacing=5)
                 
                 textview = TextViewRelacionado(name, defecto)
                 buffer = gtk.TextBuffer()
@@ -123,16 +146,30 @@ class Preferencias:
                 sw1.set_shadow_type(gtk.SHADOW_IN)
                 sw1.add(textview)
                 sw1.show()
-                h1.pack_start(sw1, expand=True, fill=True, padding=5)
                 
                 boton = gtk.Button(_('Por defecto'))
                 boton.connect('clicked', self.click_por_defecto_textview, buffer, textview)
                 boton.show()
-                h1.pack_start(boton, expand=False, fill=False, padding=5)
+                
+                etiqueta.set_alignment(0.0 , 1.0)
+                
+                h2.show()
+                v1.show()
+                
+                h2.pack_start(etiqueta, expand=True, fill=True, padding=0)
+                h2.pack_start(boton, expand=False, fill=False, padding=0)
+                
+                v1.pack_start(h2, expand=True, fill=True, padding=0)
+                v1.pack_start(sw1, expand=True, fill=True, padding=0)
+                
+                h1.pack_start(v1, expand=True, fill=True, padding=0)
 
             elif tipo == 'select':
                 if config.DEBUG:
                     print "creando combobox"
+                
+                # ponemos la etiqueta en la izquierda    
+                h1.pack_start(etiqueta, expand=False, fill=False, padding=0)
 
                 liststore = gtk.ListStore(str)
                 combobox = ComboBoxRelacionado(liststore, name, defecto)
@@ -144,14 +181,18 @@ class Preferencias:
                 combobox.set_active(util.get_index_by_code(datos_lista, preferencia.valor))
                 combobox.connect('changed' , self.comboModificado, datos_lista)
                 combobox.show()
-                h1.pack_start(combobox, expand=False, fill=False, padding=5)
+                h1.pack_start(combobox, expand=False, fill=False, padding=0)
                 
                 boton = gtk.Button(_('Por defecto'))
                 boton.connect('clicked', self.click_por_defecto_combo, combobox, datos_lista)
                 boton.show()
-                h1.pack_start(boton, expand=False, fill=False, padding=5)
+                h1.pack_start(boton, expand=False, fill=False, padding=0)
 
             else:
+                
+                # ponemos la etiqueta en la izquierda    
+                h1.pack_start(etiqueta, expand=False, fill=False, padding=0)
+                
                 entry = EntryRelacionado(name, defecto)
                 entry.set_text(preferencia.valor)
                 entry.set_max_length(255)
@@ -159,27 +200,35 @@ class Preferencias:
                 entry.set_size_request(250, -1)
                 entry.connect('changed' , self.entryModificado)
                 entry.show()
-                h1.pack_start(entry, expand=True, fill=True, padding=5)
+                h1.pack_start(entry, expand=True, fill=True, padding=0)
                 
                 boton = gtk.Button(_('Por defecto'))
                 boton.connect('clicked', self.click_por_defecto_entry, entry)
                 boton.show()
-                h1.pack_start(boton, expand=False, fill=False, padding=5)
+                h1.pack_start(boton, expand=False, fill=False, padding=0)
             
             h1.show()
 
-            vbox.pack_start(h1, expand=False, fill=False, padding=5)
-            vbox.show()
+            vbox.pack_start(h1, expand=False, fill=False, padding=0)
         
     def entryModificado(self, entry):
-        self.__setattr__(entry.name_pref, entry.get_text())
+        try:
+            self.__setattr__(entry.name_pref, entry.get_text())
+        except AssertionError:
+            entry.set_text(str(self.__getattr__(entry.name_pref)))
         
     def comboModificado(self, combo, datos_lista):
-        self.__setattr__(combo.name_pref, util.get_code_by_index(datos_lista, combo.get_active()))
+        try:
+            self.__setattr__(combo.name_pref, util.get_code_by_index(datos_lista, combo.get_active()))
+        except AssertionError:
+            print "ERROR EN ENTRADA"
         
     def memoModificado(self, buffer, textview):
-        nuevoValor = buffer.get_text(buffer.get_start_iter(), buffer.get_end_iter())
-        self.__setattr__(textview.name_pref, nuevoValor)
+        try:
+            nuevoValor = buffer.get_text(buffer.get_start_iter(), buffer.get_end_iter())
+            self.__setattr__(textview.name_pref, nuevoValor)
+        except AssertionError:
+            print "ERROR EN ENTRADA"
 
     def click_por_defecto_entry(self, boton, entry):
         entry.set_text(entry.defecto)
@@ -201,23 +250,28 @@ class Preferencias:
             
             tipo = preferencia.tipo
             
-            # Data type: 'bool', 'int', 'float', 'string', 'memo', 'select'
-            if tipo == 'bool':
-                preferencia.valor = value.lower() == 'true'
-            elif tipo == 'int':
-                preferencia.valor = int(value)
-            elif tipo == 'float':
-                preferencia.valor = float(value)
-            elif tipo == 'string':
-                preferencia.valor = str(value)
-            elif tipo == 'memo':
-                preferencia.valor = str(value)
-            elif tipo == 'select':
-                preferencia.valor = str(value)
-            else:
-                preferencia.valor = value
+            try:
+            
+                # Data type: 'bool', 'int', 'float', 'string', 'memo', 'select'
+                if tipo == 'bool':
+                    preferencia.valor = value.lower() == 'true'
+                elif tipo == 'int':
+                    preferencia.valor = int(value)
+                elif tipo == 'float':
+                    preferencia.valor = float(value)
+                elif tipo == 'string':
+                    preferencia.valor = str(value)
+                elif tipo == 'memo':
+                    preferencia.valor = str(value)
+                elif tipo == 'select':
+                    preferencia.valor = str(value)
+                else:
+                    preferencia.valor = value
 
-            session.commit()
+                session.commit()
+            except:
+                session.rollback()
+                raise AssertionError
 
     # leer del textbox
     # self.__getattribute__(self, "name")

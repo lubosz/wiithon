@@ -251,6 +251,7 @@ class WiithonCLI:
                         IDGAME = parm2_sensible
                     else:
                         juego = self.getJuego(listaJuegos)
+                    # FIXME: parametros descarga
                     if(self.core.descargarCaratula(juego.idgame)):
                         print _("OK, descargado %s.png") % juego.idgame
                     else:

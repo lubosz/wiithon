@@ -107,12 +107,13 @@ class WiithonGUI(GtkBuilderWrapper):
         self.wb_principal.connect("drag_data_received", self.drag_data_received_cb)
 
         # iniciar preferencias
-        self.core.prefs.cargarPreferenciasPorDefecto(self.wb_prefs_vbox)
+        self.core.prefs.cargarPreferenciasPorDefecto(   self.wb_prefs_vbox_general,
+                                                        self.wb_prefs_vbox_caratulas,
+                                                        self.wb_prefs_vbox_wiitdb
+                                                        )
 
         backup_preferencia_device = self.core.prefs.device_seleccionado
         backup_preferencia_idgame = self.core.prefs.idgame_seleccionado
-        
-        print self.core.prefs.PROVIDER_COVERS
 
         # permite usar hilos con PyGTK http://faq.pygtk.org/index.py?req=show&file=faq20.006.htp
         # modo seguro con hilos
@@ -160,14 +161,13 @@ class WiithonGUI(GtkBuilderWrapper):
         
         sw1 = gtk.ScrolledWindow()
         sw1.set_policy(gtk.POLICY_AUTOMATIC, gtk.POLICY_AUTOMATIC)
-        sw1.set_size_request(400, 540)
+        sw1.set_size_request(-1, 540)
         sw1.set_shadow_type(gtk.SHADOW_IN)
         sw1.add(self.tvc_info_juego)
         
         self.tvc_info_juego.show()
         sw1.show()
         self.wb_hbox_hueco_info_juego.pack_start(sw1, expand=True, fill=True, padding=0)
-        #self.wb_ficha_vbox.pack_start(sw1, expand=True, fill=True, padding=0)
         ################## /FIN ##################################################
         
         # estilos

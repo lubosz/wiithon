@@ -227,7 +227,7 @@ class WiithonCORE:
             os.remove(ruta)
             existe = False
         return existe
-
+            
     def descargarDisco(self , IDGAME):
         if (self.existeDisco(IDGAME)):
             return True
@@ -244,25 +244,26 @@ class WiithonCORE:
                 return False
 
     # Descarga una caratula de "IDGAME"
-    def descargarCaratula(self , IDGAME):
+    def descargarCaratula(self , IDGAME, proveedores, ancho, alto):
         if (self.existeCaratula(IDGAME)):
             return True
         else:
+            #proveedores = self.prefs.PROVIDER_COVERS
+            #ancho = self.prefs.WIDTH_COVERS
+            #alto = self.prefs.HEIGHT_COVERS
             destino = self.getRutaCaratula(IDGAME)
             descargada = False
             i = 0
-            proveedores = self.prefs.PROVIDER_COVERS
-            print proveedores
             while ( not descargada and i<len(proveedores) ):
                 try:
                     print _("Descargando caratula de %s desde %s ...") % (IDGAME, proveedores[i] % IDGAME)
                     util.descargarImagen(proveedores[i] % IDGAME, destino)
-                    comando = 'mogrify -resize %dx%d! "%s"' % (self.prefs.WIDTH_COVERS, self.prefs.HEIGHT_COVERS, destino)
+                    descargada = True
+                    comando = 'mogrify -resize %dx%d! "%s"' % (ancho, alto, destino)
                     util.call_out_null(comando)
                 except util.ErrorDescargando:
                     i += 1
-                if (self.existeCaratula(IDGAME)):
-                    descargada = True
+                #descargada = self.existeCaratula(IDGAME)
             return descargada
 
     # borrar caratula
@@ -272,9 +273,10 @@ class WiithonCORE:
 
     # Descarga todos las caratulas de una lista de juegos
     def descargarTodasLasCaratulaYDiscos(self , listaJuegos):
+        proveedores = self.prefs.PROVIDER_COVERS
         ok = True
         for juego in listaJuegos:
-            if ( not self.descargarCaratula( juego.idgame ) ):
+            if ( not self.descargarCaratula( juego.idgame, proveedores ) ):
                 ok = False
             if ( not self.descargarDisco( juego.idgame ) ):
                 ok = False
