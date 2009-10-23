@@ -102,17 +102,14 @@ msgstr "??"
 msgid "A continuacion se listan los juego que NO van a ser copiados por ya estar en la particion de destino"
 msgstr "I seguenti giochi NON saranno copiati perché esistono già nella partizione di destinazione"
 
+msgid "ACCESORIOS: "
+msgstr ""
+
 msgid "AUTENTIFICACION:"
 msgstr "AUTENTICAZIONE:"
 
 msgid "AYUDA_CLI"
 msgstr "AYUDA_CLI"
-
-msgid "Accesorios obligatorios: "
-msgstr "Accessori richiesti: "
-
-msgid "Accesorios opcionales: "
-msgstr "Accessori opzionali: "
 
 msgid "Acerca de ..."
 msgstr "Crediti ..."
@@ -182,6 +179,9 @@ msgstr "Modalità On-line: "
 
 msgid "Caratula?"
 msgstr "Copertina?"
+
+msgid "Caratulas"
+msgstr ""
 
 msgid "Chinese"
 msgstr "Cinese"
@@ -256,10 +256,6 @@ msgstr "Decompresso con successo"
 #, python-format
 msgid "Descomprimir RAR %s"
 msgstr "Decompressione RAR %s"
-
-#, python-format
-msgid "Desea copiar el juego %s a la particion %s?"
-msgstr "Vuoi copiare il gioco %s sulla partizione %s?"
 
 #, python-format
 msgid "Desea reemplazar la iso del juego %s?"
@@ -455,6 +451,10 @@ msgstr "E' fallito il download della copertina di %s"
 msgid "Falla la descarga del disco de %s"
 msgstr "E' fallito il download della disc-art di %s"
 
+#, python-format
+msgid "Falta la imagen %s"
+msgstr ""
+
 msgid "Fecha"
 msgstr "Data"
 
@@ -482,11 +482,14 @@ msgstr "Francese"
 msgid "Fuera de rango"
 msgstr "Non consentito"
 
-msgid "GENEROS: "
-msgstr "GENERE: "
+msgid "GENERO: "
+msgstr ""
 
 msgid "GNU GENERAL PUBLIC LICENSE Version 3"
 msgstr "Licenza Pubblica Generica GNU Versione 3"
+
+msgid "General"
+msgstr ""
 
 msgid "German"
 msgstr "Tedesco"
@@ -639,8 +642,8 @@ msgstr "Non ci sono giochi da rinominare"
 msgid "No hay Juegos que borrar"
 msgstr "Non ci sono giochi da cancellare"
 
-msgid "No hay datos de este juego. Intente actualizar la base de datos."
-msgstr "Nessun dato per questo gioco. Prova ad aggiornare il database."
+msgid "No hay datos de este juego. Intente actualizar la base de datos de WiiTDB."
+msgstr ""
 
 #, python-format
 msgid "No hay nada que copiar a %s"
@@ -672,6 +675,9 @@ msgstr "Non è stato trovato nessun disco Wii"
 
 msgid "No se ha encontrado ninguna imagen ISO"
 msgstr "Non è stata trovata nessuna immagine ISO"
+
+msgid "No se ha encontrado synopsis"
+msgstr ""
 
 #, python-format
 msgid "No se ha formateado %s"
@@ -726,6 +732,9 @@ msgstr "OK, il gioco è stato trasferito sulla partizione %s"
 msgid "OK, todas las caratulas se han descargado"
 msgstr "OK, tutte le copertine sono state scaricate"
 
+msgid "OPCIONALES: "
+msgstr ""
+
 msgid "Online?"
 msgstr "Online?"
 
@@ -740,6 +749,12 @@ msgstr "Passo 1 di 2: seleziona una cartella per le COPERTINE"
 
 msgid "Paso 2 de 2: Elige un directorio para los DISCOS"
 msgstr "Passo 2 di 2: seleziona una cartella per le DISC-ART"
+
+msgid "Permitir Drag & Drop en imagenes arrastradas desde el navegador"
+msgstr ""
+
+msgid "Permitir Drag & Drop en imagenes arrastradas en local"
+msgstr ""
 
 msgid "Por defecto"
 msgstr "Default"
@@ -834,6 +849,9 @@ msgstr "Si, %d giocatori (%s)"
 msgid "Si, 1 jugador (%s)"
 msgstr "Si, 1 giocatore (%s)"
 
+msgid "Sin descripcion."
+msgstr ""
+
 msgid "Spanish"
 msgstr "Spagnolo"
 
@@ -856,9 +874,6 @@ msgstr ""
 
 msgid "TITULO"
 msgstr "TITOLO"
-
-msgid "TITULO: "
-msgstr "TITOLO: "
 
 msgid "TODOS"
 msgstr "TUTTI"
@@ -893,6 +908,9 @@ msgstr "Valore errato"
 
 msgid "WARNING:"
 msgstr "AVVISO:"
+
+msgid "WiiTDB"
+msgstr "WiiTDB"
 
 msgid "Wiithon 1.1"
 msgstr "Wiithon 1.1"
@@ -937,6 +955,9 @@ msgstr "più giochi"
 msgid "quedan"
 msgstr "mancano"
 
+msgid "requiere reiniciar la aplicacion"
+msgstr ""
+
 msgid "s"
 msgstr "s"
 
@@ -944,98 +965,159 @@ msgstr "s"
 msgid "wiithon no borra la ISO temporal: %s, puedes borrarla si no la necesitas"
 msgstr "wiithon non rimuove automaticamente la ISO temporaneo: %s, se non serve puoi cancellarla"
 
+#~ msgid "Accesorios obligatorios: "
+#~ msgstr "Accessori richiesti: "
+
+#~ msgid "Accesorios opcionales: "
+#~ msgstr "Accessori opzionali: "
+
+#~ msgid "Desea copiar el juego %s a la particion %s?"
+#~ msgstr "Vuoi copiare il gioco %s sulla partizione %s?"
+
+#~ msgid "GENEROS: "
+#~ msgstr "GENERE: "
+
+#~ msgid "No hay datos de este juego. Intente actualizar la base de datos."
+#~ msgstr "Nessun dato per questo gioco. Prova ad aggiornare il database."
+
+#~ msgid "TITULO: "
+#~ msgstr "TITOLO: "
+
 #~ msgid "***************** DESCARGAR CARATULA %s ********************"
 #~ msgstr "***************** DOWNLOAD COPERTINA %s ********************"
+
 #~ msgid "Caratula descargada como"
 #~ msgstr "Copertina scaricata come"
+
 #~ msgid "Error al pasar la ISO al disco duro"
 #~ msgstr "Errore durante il trasferimento della ISO sul disco fisso"
+
 #~ msgid "No se ha encontrado caratula para el juego %s"
 #~ msgstr "Non è stata trovata la copertina per il gioco %s"
+
 #~ msgid "a un ISO temporal de 4.4GB en"
 #~ msgstr "su ISO temporanea da 4.4GB in"
+
 #~ msgid "wiithon no borra la ISO temporal, puedes borrarla si no la necesitas"
 #~ msgstr "wiithon non rimuove la ISO temporanea, puoi cancellarla se non ne hai bisogno"
+
 #~ msgid "RXGB2"
 #~ msgstr "RXGB2"
+
 #~ msgid "Accesorios:"
 #~ msgstr "Accessori:"
+
 #~ msgid "Desarrollador:"
 #~ msgstr "Sviluppatore:"
+
 #~ msgid "Editor:"
 #~ msgstr "Editor:"
+
 #~ msgid "Fecha de lanzamiento:"
 #~ msgstr "Data di lancio:"
+
 #~ msgid "Genero:"
 #~ msgstr "Genere:"
+
 #~ msgid "Num de jugadores:"
 #~ msgstr "Numero di giocatori:"
+
 #~ msgid "Ranking:"
 #~ msgstr "Classificazione:"
+
 #~ msgid "Synopsis:"
 #~ msgstr "Riassunto:"
+
 #~ msgid "Tiene Online?:"
 #~ msgstr "Online?"
+
 #~ msgid "Titulo:"
 #~ msgstr "Titolo:"
+
 #~ msgid "gtk-ok"
 #~ msgstr "gtk-ok"
+
 #~ msgid "0 Tareas"
 #~ msgstr "0 Operazioni"
+
 #~ msgid "Se descargaran en 3D"
 #~ msgstr "Saranno scaricate in 3D"
+
 #~ msgid "Se descargaran en formato paronamico"
 #~ msgstr "Saranno scaricate in formato panoramico"
+
 #~ msgid "Advertencia de seguridad de renombrar desde IDGAME = %s a %s"
 #~ msgstr "Attenzione!!! Sei sicuro di rinominare questo IDGAME da %s a %s?"
+
 #~ msgid "Advertencia de borrar %s en modo ver"
 #~ msgstr "Attenzione verrà cancellato %s solo dal database"
+
 #~ msgid "ERROR al borrar la ISO : %s"
 #~ msgstr "ERRORE durante la cencellazione della ISO : %s"
+
 #~ msgid "La ISO %s temporal fue borrada"
 #~ msgstr "La ISO temporanea %s è stata rimossa"
+
 #~ msgid "No se ha borrado la ISO temporal"
 #~ msgstr "Non è stata cancellata la ISO tempranea"
+
 #~ msgid "Se va ha borrar la ISO descomprimida"
 #~ msgstr "La ISO non compressa verrà eliminata"
-#~ msgid "WiiTDB"
-#~ msgstr "WiiTDB"
+
 #~ msgid "Finalizando."
 #~ msgstr "Finito."
+
 #~ msgid "Cararuta?"
 #~ msgstr "Copertina?"
+
 #~ msgid "Copiar 1:1"
 #~ msgstr "Copia 1:1"
+
 #~ msgid "Copiar todo el disco*"
 #~ msgstr "Copia tutti i giochi*"
+
 #~ msgid "%d/%d juegos"
 #~ msgstr "%d/%d giochi"
+
 #~ msgid "Desea copiar el juego %s (%s) a la particion %s?"
 #~ msgstr "Vuoi copiare il gioco %s (%s) sulla partizione %s?"
+
 #~ msgid "El juego ya esta metido, como %s en %s\n"
 #~ msgstr "Il gioco è stato inserito come %s in %s\n"
+
 #~ msgid "No hay nada que copiar en %s"
 #~ msgstr "Niente da copiare su %s"
+
 #~ msgid "No hay particiones WBFS!"
 #~ msgstr "Non ci sono partizioni WBFS"
+
 #~ msgid "Base de datos ocupada."
 #~ msgstr "Base dati occupata."
+
 #~ msgid "Desconocido"
 #~ msgstr "Sconosciuto"
+
 #~ msgid "Error: El RAR %s no tenia ninguna ISO"
 #~ msgstr "Errore: il RAR %s non contiene nessuna ISO"
+
 #~ msgid "La ISO o la particion ya no no existen"
 #~ msgstr "La ISO o la partizione non esiste"
+
 #~ msgid "No se ha encontrado ningun ISO"
 #~ msgstr "Non è stata trovata nessuna ISO"
+
 #~ msgid "El juego ya esta metido, como %s"
 #~ msgstr "Il gioco è già stato inserito come %s"
+
 #~ msgid "Finalizado."
 #~ msgstr "Finito."
+
 #~ msgid "Imagen ISO para Wii"
 #~ msgstr "Immagine ISO per Wii"
+
 #~ msgid "Quieres borrar el juego con %s?"
 #~ msgstr "Vuoi cancellare il gioco %s?"
+
 #~ msgid ""
 #~ "Comprobando integridad ...\n"
 #~ "Descargando caratulas ...\n"
@@ -1044,38 +1126,52 @@ msgstr "wiithon non rimuove automaticamente la ISO temporaneo: %s, se non serve 
 #~ "Check integrity ...\n"
 #~ "Download covers ...\n"
 #~ "Download discs ...\n"
+
 #~ msgid "No hay un numero suficiente de particiones validas, para realizar esta accion."
 #~ msgstr "You must select a WBFS partition for use this action"
+
 #~ msgid "%s - Salir"
 #~ msgstr "%s - Exit"
+
 #~ msgid "Error obteniendo el Fabricando del HD"
 #~ msgstr "Error getting HDD manufacturer"
+
 #~ msgid "Fabricante"
 #~ msgstr "Manufacture"
+
 #~ msgid "Advertencia de borrar %s (%s) en modo ver"
 #~ msgstr ""
 #~ "Warning:\n"
 #~ "- The clearing of a game your video library without any partition selected\n"
 #~ "- This means delete (also delete the record) the cover and the disc downloaded\n"
 #~ "Are you sure to delete %s (%s)?"
+
 #~ msgid "Desea reemplazar la iso del juego %s (%s)?"
 #~ msgstr "Do you want to replace the game %s (%s)?"
+
 #~ msgid "El juego ya esta metido, como %s (%s)"
 #~ msgstr "The game is already in disc as %s (%s)"
+
 #~ msgid "Quieres borrar el juego con %s (%s)?"
 #~ msgstr "Do you want to remove the game %s (%s)?"
+
 #~ msgid "Ya tienes el disco-caratula %s"
 #~ msgstr "You have the cover-disc %s"
+
 #~ msgid "Ya tienes la caratula %s"
 #~ msgstr "You have the cover %s"
+
 #~ msgid "Vuelvelo a intentar o mira en : http://www.theotherzone.com/wii/"
 #~ msgstr "Try again or visit: http://www.theotherzone.com/wii/"
+
 #~ msgid "Consola"
 #~ msgstr "Console"
+
 #~ msgid "Mas informacion"
 #~ msgstr "Details"
+
 #~ msgid "Trabajos de fondo (0)"
 #~ msgstr "Batch work (0)"
+
 #~ msgid "Trabajos intensos (0)"
 #~ msgstr "Intense work (0)"
-

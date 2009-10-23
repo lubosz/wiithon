@@ -58,6 +58,10 @@ class Preferencias:
         self.iniciarPreferencia('int', 'HEIGHT_COVERS', defecto=224, mostrar=True, vbox=prefs_vbox_caratulas, label=_('Altura imagen caratula'), relaunch_required = True)
         self.iniciarPreferencia('int', 'WIDTH_DISCS', defecto=160, mostrar=True, vbox=prefs_vbox_caratulas, label=_('Ancho imagen disc-art'))
         self.iniciarPreferencia('int', 'HEIGHT_DISCS', defecto=160, mostrar=True, vbox=prefs_vbox_caratulas, label=_('Altura imagen disc-art'))
+        
+        self.iniciarPreferencia('bool', 'DRAG_AND_DROP_LOCAL', defecto=True, mostrar=True, vbox=prefs_vbox_caratulas, label=_('Permitir Drag & Drop en imagenes arrastradas en local'))
+        self.iniciarPreferencia('bool', 'DRAG_AND_DROP_HTTP', defecto=True, mostrar=True, vbox=prefs_vbox_caratulas, label=_('Permitir Drag & Drop en imagenes arrastradas desde el navegador'))
+        
         self.iniciarPreferencia('int', 'NUM_HILOS', defecto=8, mostrar=True, vbox=prefs_vbox_general, label=_('Num. Hilos para tareas de fondo'))
         
         # Listas de idiomas wiitdb
@@ -188,6 +192,14 @@ class Preferencias:
                 boton.show()
                 h1.pack_start(boton, expand=False, fill=False, padding=0)
 
+            elif tipo == 'bool':
+                
+                if config.DEBUG:
+                    print "creando checkbox"
+                    
+                # ponemos la etiqueta en la izquierda    
+                h1.pack_start(etiqueta, expand=False, fill=False, padding=0)
+
             else:
                 
                 # ponemos la etiqueta en la izquierda    
@@ -218,17 +230,11 @@ class Preferencias:
             entry.set_text(str(self.__getattr__(entry.name_pref)))
         
     def comboModificado(self, combo, datos_lista):
-        try:
-            self.__setattr__(combo.name_pref, util.get_code_by_index(datos_lista, combo.get_active()))
-        except AssertionError:
-            print "ERROR EN ENTRADA"
+        self.__setattr__(combo.name_pref, util.get_code_by_index(datos_lista, combo.get_active()))
         
     def memoModificado(self, buffer, textview):
-        try:
-            nuevoValor = buffer.get_text(buffer.get_start_iter(), buffer.get_end_iter())
-            self.__setattr__(textview.name_pref, nuevoValor)
-        except AssertionError:
-            print "ERROR EN ENTRADA"
+        nuevoValor = buffer.get_text(buffer.get_start_iter(), buffer.get_end_iter())
+        self.__setattr__(textview.name_pref, nuevoValor)
 
     def click_por_defecto_entry(self, boton, entry):
         entry.set_text(entry.defecto)
@@ -239,8 +245,6 @@ class Preferencias:
     def click_por_defecto_textview(self, boton, buffer, textview):
         buffer.set_text(textview.defecto)
 
-    # escribir en la BDD
-    # escribir en el texbox
     def __setattr__(self, name, value):
 
         sql = util.decode("preferencias.campo=='%s'" % name)

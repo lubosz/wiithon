@@ -38,15 +38,12 @@ class WiithonCORE:
             if juego == None:
                 try:
                     juego = Juego(cachos)
+                    juego.particion = particion
                     session.save(juego)
                 except SintaxisInvalida:
                     continue
-                '''
             else:
                 session.update(juego)
-                '''
-
-                juego.particion = particion
 
             salida.append(juego)
 
@@ -73,20 +70,18 @@ class WiithonCORE:
                         session.save(particion)
                     except SintaxisInvalida:
                         continue
-                    '''
                 else:
                     session.update(particion)
-                    '''
+
                 listaParticiones.append(particion)
 
         session.commit()
         
-        sql = "DELETE FROM juego WHERE "
+        query = session.query(Juego)
         for particion in listaParticiones:
-            sql += "idParticion <> %d AND " % particion.idParticion
-        sql += "1"
-        session.execute(sql)
-        
+            query = query.filter("idParticion <> %d" % particion.idParticion)
+        for juego in query:
+            session.delete(juego)
         session.commit()
 
         return listaParticiones

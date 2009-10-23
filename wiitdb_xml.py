@@ -269,31 +269,42 @@ class WiiTDBXML(Thread):
                                                             if nodo.name == "control":
                                                                 nombres = self.leerAtributo(nodo, 'type').split(",")
                                                                 obligatorio = self.leerAtributo(nodo, 'required')
-
-                                                                if nombres[0] == "wiimotenunchuk":
+                                                                '''
+                                                                wiimotenunchuk, wiimote:nunchuk
+                                                                '''
+                                                                if nombres[0] == "wiimotenunchuk" or nombres[0] == "wiimote:nunchuk":
                                                                     nombres = ['wiimote', 'nunchuck']
                                                                 for nombre in nombres:
                                                                     nombre = nombre.strip()
                                                                     '''
                                                                     wiimote = wimmote
                                                                     nunchuk = nunchuck
-                                                                    gamecube = gamegube
-                                                                    classiccontroller = calssiccontroller, classccontroller
-                                                                    balanceboard = wii balance board
-                                                                    motionplus = motion.plus
+                                                                    gamecube = gamegube, gamecube controller
+                                                                    classiccontroller = calssiccontroller, classccontroller, classic controller, classic
+                                                                    balanceboard = wii balance board, balance board
+                                                                    motionplus = motion.plus, wii motionplus
+                                                                    wheel = steering wheel
+                                                                    zapper = wii zapper
+                                                                    microphone = mic
                                                                     '''
                                                                     if nombre == "wimmote":
                                                                         nombre = "wiimote"
                                                                     elif nombre == "nunchuck":
                                                                         nombre = "nunchuk"
-                                                                    elif nombre == "gamegube":
+                                                                    elif nombre == "gamegube" or nombre == "gamecube controller":
                                                                         nombre = "gamecube"
-                                                                    elif nombre == "calssiccontroller" or nombre == "classccontroller":
+                                                                    elif nombre == "calssiccontroller" or nombre == "classccontroller" or nombre == "classic controller" or nombre == "classic":
                                                                         nombre = "classiccontroller"
-                                                                    elif nombre == "wii balance board":
+                                                                    elif nombre == "wii balance board" or nombre == "balance board":
                                                                         nombre = "balanceboard"
-                                                                    elif nombre == "motion.plus":
+                                                                    elif nombre == "motion.plus" or nombre == "wii motionplus":
                                                                         nombre = "motionplus"
+                                                                    elif nombre == "steering wheel":
+                                                                        nombre = "wheel"
+                                                                    elif nombre == "wii zapper":
+                                                                        nombre = "zapper"
+                                                                    elif nombre == "mic":
+                                                                        nombre = "microphone"
 
                                                                     sql = util.decode("nombre=='%s'" % (nombre))
                                                                     accesorio = session.query(Accesorio).filter(sql).first()

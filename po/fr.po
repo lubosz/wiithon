@@ -102,17 +102,14 @@ msgstr ""
 msgid "A continuacion se listan los juego que NO van a ser copiados por ya estar en la particion de destino"
 msgstr "Les jeux suivants ne seront PAS copiés car ils existent dans la partition cible"
 
+msgid "ACCESORIOS: "
+msgstr ""
+
 msgid "AUTENTIFICACION:"
 msgstr ""
 
 msgid "AYUDA_CLI"
 msgstr "AYUDA_CLI"
-
-msgid "Accesorios obligatorios: "
-msgstr ""
-
-msgid "Accesorios opcionales: "
-msgstr ""
 
 msgid "Acerca de ..."
 msgstr "A propos ..."
@@ -180,6 +177,9 @@ msgstr ""
 
 msgid "Caratula?"
 msgstr "Jaquette?"
+
+msgid "Caratulas"
+msgstr ""
 
 msgid "Chinese"
 msgstr ""
@@ -253,10 +253,6 @@ msgstr "Décompression réussie"
 
 #, python-format
 msgid "Descomprimir RAR %s"
-msgstr ""
-
-#, python-format
-msgid "Desea copiar el juego %s a la particion %s?"
 msgstr ""
 
 #, python-format
@@ -453,6 +449,10 @@ msgstr ""
 msgid "Falla la descarga del disco de %s"
 msgstr ""
 
+#, python-format
+msgid "Falta la imagen %s"
+msgstr ""
+
 msgid "Fecha"
 msgstr ""
 
@@ -480,11 +480,14 @@ msgstr ""
 msgid "Fuera de rango"
 msgstr "Dépassement de capacité"
 
-msgid "GENEROS: "
+msgid "GENERO: "
 msgstr ""
 
 msgid "GNU GENERAL PUBLIC LICENSE Version 3"
 msgstr "Licence publique générale GNU Version 3"
+
+msgid "General"
+msgstr ""
 
 msgid "German"
 msgstr ""
@@ -637,7 +640,7 @@ msgstr "Pas de jeu à renommer"
 msgid "No hay Juegos que borrar"
 msgstr "Pas de jeu à supprimer"
 
-msgid "No hay datos de este juego. Intente actualizar la base de datos."
+msgid "No hay datos de este juego. Intente actualizar la base de datos de WiiTDB."
 msgstr ""
 
 #, python-format
@@ -677,6 +680,9 @@ msgstr "Pas de disque Wii"
 
 msgid "No se ha encontrado ninguna imagen ISO"
 msgstr "Image ISO non trouvée"
+
+msgid "No se ha encontrado synopsis"
+msgstr ""
 
 #, python-format
 msgid "No se ha formateado %s"
@@ -731,6 +737,9 @@ msgstr ""
 msgid "OK, todas las caratulas se han descargado"
 msgstr "OK, toutes les jaquettes ont été téléchargées"
 
+msgid "OPCIONALES: "
+msgstr ""
+
 msgid "Online?"
 msgstr ""
 
@@ -745,6 +754,12 @@ msgstr "Étape 1 sur 2 : Choisissez un dossier pour les JAQUETTES"
 
 msgid "Paso 2 de 2: Elige un directorio para los DISCOS"
 msgstr "Étape 2 sur 2 : Choisissez un dossier pour les DISQUES"
+
+msgid "Permitir Drag & Drop en imagenes arrastradas desde el navegador"
+msgstr ""
+
+msgid "Permitir Drag & Drop en imagenes arrastradas en local"
+msgstr ""
 
 msgid "Por defecto"
 msgstr ""
@@ -836,6 +851,9 @@ msgstr ""
 msgid "Si, 1 jugador (%s)"
 msgstr ""
 
+msgid "Sin descripcion."
+msgstr ""
+
 msgid "Spanish"
 msgstr ""
 
@@ -858,9 +876,6 @@ msgstr ""
 
 msgid "TITULO"
 msgstr "TITRE"
-
-msgid "TITULO: "
-msgstr ""
 
 msgid "TODOS"
 msgstr ""
@@ -894,6 +909,9 @@ msgid "Valor incorrecto"
 msgstr "Valeur incorrecte"
 
 msgid "WARNING:"
+msgstr ""
+
+msgid "WiiTDB"
 msgstr ""
 
 msgid "Wiithon 1.1"
@@ -938,6 +956,9 @@ msgstr "jeux non affichés"
 
 msgid "quedan"
 msgstr "reste"
+
+msgid "requiere reiniciar la aplicacion"
+msgstr ""
 
 msgid "s"
 msgstr ""

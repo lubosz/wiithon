@@ -102,16 +102,13 @@ msgstr ""
 msgid "A continuacion se listan los juego que NO van a ser copiados por ya estar en la particion de destino"
 msgstr "The following games will NOT be copied because they exist on the destination partition"
 
+msgid "ACCESORIOS: "
+msgstr ""
+
 msgid "AUTENTIFICACION:"
 msgstr ""
 
 msgid "AYUDA_CLI"
-msgstr ""
-
-msgid "Accesorios obligatorios: "
-msgstr ""
-
-msgid "Accesorios opcionales: "
 msgstr ""
 
 msgid "Acerca de ..."
@@ -180,6 +177,9 @@ msgstr ""
 
 msgid "Caratula?"
 msgstr "Cover?"
+
+msgid "Caratulas"
+msgstr ""
 
 msgid "Chinese"
 msgstr ""
@@ -253,10 +253,6 @@ msgstr "Extracted successfully"
 
 #, python-format
 msgid "Descomprimir RAR %s"
-msgstr ""
-
-#, python-format
-msgid "Desea copiar el juego %s a la particion %s?"
 msgstr ""
 
 #, python-format
@@ -453,6 +449,10 @@ msgstr ""
 msgid "Falla la descarga del disco de %s"
 msgstr ""
 
+#, python-format
+msgid "Falta la imagen %s"
+msgstr ""
+
 msgid "Fecha"
 msgstr ""
 
@@ -480,11 +480,14 @@ msgstr ""
 msgid "Fuera de rango"
 msgstr "Out of range"
 
-msgid "GENEROS: "
+msgid "GENERO: "
 msgstr ""
 
 msgid "GNU GENERAL PUBLIC LICENSE Version 3"
 msgstr "GNU GENERAL PUBLIC LICENSE Version 3"
+
+msgid "General"
+msgstr ""
 
 msgid "German"
 msgstr ""
@@ -637,7 +640,7 @@ msgstr "There are no games to rename"
 msgid "No hay Juegos que borrar"
 msgstr "There are no games to delete"
 
-msgid "No hay datos de este juego. Intente actualizar la base de datos."
+msgid "No hay datos de este juego. Intente actualizar la base de datos de WiiTDB."
 msgstr ""
 
 #, python-format
@@ -677,6 +680,9 @@ msgstr "Wii disc not found"
 
 msgid "No se ha encontrado ninguna imagen ISO"
 msgstr "ISO image not found"
+
+msgid "No se ha encontrado synopsis"
+msgstr ""
 
 #, python-format
 msgid "No se ha formateado %s"
@@ -731,6 +737,9 @@ msgstr ""
 msgid "OK, todas las caratulas se han descargado"
 msgstr "OK, all covers downloaded"
 
+msgid "OPCIONALES: "
+msgstr ""
+
 msgid "Online?"
 msgstr ""
 
@@ -745,6 +754,12 @@ msgstr "Step 1 of 2: Choose a folder for COVERS"
 
 msgid "Paso 2 de 2: Elige un directorio para los DISCOS"
 msgstr "Step 2 of 2: Choose a folder for DISCS"
+
+msgid "Permitir Drag & Drop en imagenes arrastradas desde el navegador"
+msgstr ""
+
+msgid "Permitir Drag & Drop en imagenes arrastradas en local"
+msgstr ""
 
 msgid "Por defecto"
 msgstr ""
@@ -836,6 +851,9 @@ msgstr ""
 msgid "Si, 1 jugador (%s)"
 msgstr ""
 
+msgid "Sin descripcion."
+msgstr ""
+
 msgid "Spanish"
 msgstr ""
 
@@ -858,9 +876,6 @@ msgstr ""
 
 msgid "TITULO"
 msgstr "TITLE"
-
-msgid "TITULO: "
-msgstr ""
 
 msgid "TODOS"
 msgstr ""
@@ -894,6 +909,9 @@ msgid "Valor incorrecto"
 msgstr "Value error"
 
 msgid "WARNING:"
+msgstr ""
+
+msgid "WiiTDB"
 msgstr ""
 
 msgid "Wiithon 1.1"
@@ -938,6 +956,9 @@ msgstr "more games"
 
 msgid "quedan"
 msgstr "remaining"
+
+msgid "requiere reiniciar la aplicacion"
+msgstr ""
 
 msgid "s"
 msgstr ""

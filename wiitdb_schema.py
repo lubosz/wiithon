@@ -388,7 +388,7 @@ class Juego(Base):
     idgame = Column('idgame', VARCHAR(6))
     title = Column('title', Unicode(255))
     size = Column('size', Float)
-    idParticion = Column("idParticion", Integer , ForeignKey('particion.idParticion'))
+    idParticion = Column("idParticion", Integer , ForeignKey('particion.idParticion'), nullable=False)
     tieneCaratula = True
     tieneDiscArt = True
 

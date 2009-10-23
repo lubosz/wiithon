@@ -32,7 +32,7 @@ class WiithonGUI(GtkBuilderWrapper):
 
     # Lista de particiones
     lParti = None
-    
+
     # lista de juegos mostrados
     lJuegos = None
 
@@ -40,22 +40,22 @@ class WiithonGUI(GtkBuilderWrapper):
     sel_juego = FilaTreeview()
     sel_parti = FilaTreeview()
     sel_parti_1on1 = FilaTreeview()
-    
+
     # Hilo que actualiza wiitdb
     xmlWiiTDB = None
-    
+
     # valor busqueda
     buscar = ""
-    
+
     # informacion del gui
     info = None
 
     def __init__(self, core):
         GtkBuilderWrapper.__init__(self,
                                    os.path.join(config.WIITHON_FILES_RECURSOS_GLADE, '%s.ui' % config.APP))
-                                                
+
         self.core = core
-        
+
         # Cellrenderers que se modifican según cambia el modo
         self.renderEditableIDGAME = None
         self.renderEditableNombre = None
@@ -168,6 +168,20 @@ class WiithonGUI(GtkBuilderWrapper):
         self.tvc_info_juego.show()
         sw1.show()
         self.wb_hbox_hueco_info_juego.pack_start(sw1, expand=True, fill=True, padding=0)
+        ################### crear text view custom para descripcion wiitdb #########
+        
+        self.tvc_descripcion = TextViewCustom()
+        self.tvc_descripcion.cargar_tags_html()
+        
+        sw2 = gtk.ScrolledWindow()
+        sw2.set_policy(gtk.POLICY_AUTOMATIC, gtk.POLICY_AUTOMATIC)
+        sw2.set_size_request(-1, 540)
+        sw2.set_shadow_type(gtk.SHADOW_IN)
+        sw2.add(self.tvc_descripcion)
+        
+        self.tvc_descripcion.show()
+        sw2.show()
+        self.wb_hbox_hueco_descripcion.pack_start(sw2, expand=True, fill=True, padding=0)
         ################## /FIN ##################################################
         
         # estilos
@@ -709,7 +723,7 @@ class WiithonGUI(GtkBuilderWrapper):
         confirmar.set_icon(icon)
 
         h1 = gtk.HBox(homogeneous=False, spacing=10)
-        h1.pack_start(logo, expand=False, fill=False, padding=10)
+        h1.pack_start(logo, expand=True, fill=True, padding=10)
        
         ###############################
         view = TextViewCustom()
@@ -742,7 +756,7 @@ class WiithonGUI(GtkBuilderWrapper):
 
         sw1 = gtk.ScrolledWindow()
         sw1.set_policy(gtk.POLICY_AUTOMATIC, gtk.POLICY_AUTOMATIC)
-        sw1.set_size_request(600, 140)
+        sw1.set_size_request(600, -1)
         sw1.add(view)
 
         h1.pack_start(sw1, expand=True, fill=True, padding=10)
@@ -750,7 +764,7 @@ class WiithonGUI(GtkBuilderWrapper):
         ###############################
 
         # poner el hbox (columnas) en el vbox reservado del dialogo
-        confirmar.vbox.pack_start(h1, True, False, 10)
+        confirmar.vbox.pack_start(h1, True, True, 10)
 
         # calculos del pintado
         confirmar.show_all()
@@ -1088,7 +1102,7 @@ class WiithonGUI(GtkBuilderWrapper):
 
                 if not hayPrincipal and not haySecundario:
                     title = juego.name
-                    synopsis = ''
+                    synopsis = _('No se ha encontrado synopsis')
 
                 # generos
                 generos = ""
@@ -1097,28 +1111,33 @@ class WiithonGUI(GtkBuilderWrapper):
                 generos=util.remove_last_separator( generos )
                 
                 # accesorios obligatorios
-                accesorios_obligatorios = ""
+                xml_inject_accesorios_obligatorios = ""
                 for accesorio in juego.obligatorio:
-                    accesorios_obligatorios += "%s, " % accesorio.nombre
-                accesorios_obligatorios=util.remove_last_separator( accesorios_obligatorios )
+                    xml_inject_accesorios_obligatorios += "<img>%s</img>" % (os.path.join(config.WIITHON_FILES_RECURSOS_IMAGENES_ACCESORIO, "%s.jpg" % accesorio.nombre))
 
                 # accesorios opcionales
-                accesorios_opcionales = ""
+                xml_inject_accesorios_opcionales = ""
                 for accesorio in juego.opcional:
-                    accesorios_opcionales += "%s (opcional), " % accesorio.nombre
-                accesorios_opcionales=util.remove_last_separator( accesorios_opcionales )
+                    xml_inject_accesorios_opcionales += "<img>%s</img>" % (os.path.join(config.WIITHON_FILES_RECURSOS_IMAGENES_ACCESORIO, "%s.jpg" % accesorio.nombre))
+                
+                xml_inject = ""
+                if xml_inject_accesorios_obligatorios != "":
+                    xml_inject += "<b><big><azul><pr>%s</pr></azul></big></b><br />" % _("ACCESORIOS: ")
+                    xml_inject += "%s" % xml_inject_accesorios_obligatorios
+                    xml_inject += "<br />"
+                    
+                if xml_inject_accesorios_opcionales != "":
+                    xml_inject += "<b><big><verde><pr>%s</pr></verde></big></b><br />" % _("OPCIONALES: ")
+                    xml_inject += "%s" % xml_inject_accesorios_opcionales
+                    xml_inject += "<br />"
+                
 
                 xml_plantilla = """<?xml version="1.0" encoding="UTF-8"?>
 <xhtml>
     <margin8>
-        <big>
-            <rojo>
-                <pr>%s</pr>
-            </rojo>
-        </big>
         <superbig>
             <b>
-                <pr>%s</pr>
+                <verde><pr>%s</pr></verde>
             </b>
         </superbig>
         <br />
@@ -1129,6 +1148,38 @@ class WiithonGUI(GtkBuilderWrapper):
         </big>
         <pr>%s</pr>
         <br />
+        <b><i><pr>%s</pr></i></b>
+            <azul><i><pr>%s</pr></i></azul><br />
+        <b><i><pr>%s</pr></i></b>
+            <i><pr>%s/%s</pr></i>
+        <br />
+        <b><i><pr>%s</pr></i></b>
+            <i><pr>%s</pr></i>
+        <br />
+        <b><i><pr>%s</pr></i></b>
+            <i><pr>%s</pr></i>
+        <br />
+        <b><i><pr>%s</pr></i></b>
+            <i><pr>%s</pr></i>
+        <br />
+        %s
+        </margin8>
+</xhtml>
+                """ % (
+                util.parsear_a_XML(title),
+                #util.parsear_a_XML(repr(self.sel_juego.obj)),
+                _("GENERO: "), util.parsear_a_XML(generos),
+                _("Fecha de lanzamiento: "), juego.getTextFechaLanzamiento(self.core),
+                _("Desarrolador/Editorial: "), util.parsear_a_XML(juego.developer), util.parsear_a_XML(juego.publisher),
+                _("Num. jugadores en off-line: "), util.parsear_a_XML(juego.getTextPlayersLocal()),
+                _("Capacidad On-line: "), util.parsear_a_XML(juego.getTextPlayersWifi()),
+                _("Clasificacion parental: "), util.parsear_a_XML(juego.getTextRating()),
+                xml_inject
+                )
+                
+                xml_plantilla_descripcion = """<?xml version="1.0" encoding="UTF-8"?>
+<xhtml>                
+    <margin8>
         <big>
             <verde>
                 <pr>%s</pr>
@@ -1138,49 +1189,66 @@ class WiithonGUI(GtkBuilderWrapper):
             <pr>%s</pr><br />
         </justificar>
     </margin8>
-    <margin12>
-        <b><gris><pr>%s</pr></gris></b><i><pr>%s</pr></i>
-        <br />
-        <b><gris><pr>%s</pr></gris></b><i><pr>%s/%s</pr></i>
-        <br />
-        <b><gris><pr>%s</pr></gris></b><i><pr>%s</pr></i>
-        <br />
-        <b><gris><pr>%s</pr></gris></b><i><pr>%s</pr></i>
-        <br />
-        <b><gris><pr>%s</pr></gris></b><i><pr>%s</pr></i>
-        <br />
-        <b><gris><pr>%s</pr></gris></b><i><pr>%s</pr></i>
-        <br />
-        <b><gris><pr>%s</pr></gris></b><i><pr>%s</pr></i>
-    </margin12>
 </xhtml>
-                """ % (
-                _("TITULO: "), util.parsear_a_XML(title),
-                _("GENEROS: "), util.parsear_a_XML(generos),
-                _("DESCRIPCION: "), util.parsear_a_XML(synopsis),
-                _("Fecha de lanzamiento: "), juego.getTextFechaLanzamiento(self.core),
-                _("Desarrolador/Editorial: "), util.parsear_a_XML(juego.developer), util.parsear_a_XML(juego.publisher),
-                _("Num. jugadores en off-line: "), util.parsear_a_XML(juego.getTextPlayersLocal()),
-                _("Capacidad On-line: "), util.parsear_a_XML(juego.getTextPlayersWifi()),
-                _("Accesorios obligatorios: "), util.parsear_a_XML(accesorios_obligatorios),
-                _("Accesorios opcionales: "), util.parsear_a_XML(accesorios_opcionales),
-                _("Clasificacion parental: "), util.parsear_a_XML(juego.getTextRating()))
+                """ % (_("DESCRIPCION: "), util.parsear_a_XML(synopsis))
 
             else:
+                xml_plantilla_descripcion = """<?xml version="1.0" encoding="UTF-8"?>
+<xhtml>                
+    <margin8>
+        <big>
+            <verde>
+                <pr>%s</pr>
+            </verde>
+        </big>
+        <justificar>
+            <pr>%s</pr><br />
+        </justificar>
+    </margin8>
+</xhtml>
+                """ % (_("DESCRIPCION: "), _("Sin descripcion."))
                 xml_plantilla = """<?xml version="1.0" encoding="UTF-8"?>
 <xhtml>
-<h1>%s</h1>
+    <margin8>
+        <superbig>
+            <b>
+                <verde><pr>%s</pr></verde>
+            </b>
+        </superbig>
+        <br />
+        <h1><pr>%s</pr></h1>
+    </margin8>
 </xhtml>
-                """ % (_('No hay datos de este juego. Intente actualizar la base de datos.'))
+                """ % ( util.parsear_a_XML(self.sel_juego.obj.title),
+                        _('No hay datos de este juego. Intente actualizar la base de datos de WiiTDB.')
+                        )
 
         else:
+
+            xml_plantilla_descripcion = """<?xml version="1.0" encoding="UTF-8"?>
+<xhtml>                
+    <margin8>
+        <big>
+            <verde>
+                <pr>%s</pr>
+            </verde>
+        </big>
+        <justificar>
+            <pr>%s</pr><br />
+        </justificar>
+    </margin8>
+</xhtml>
+            """ % (_("DESCRIPCION: "), _("Sin descripcion."))
             xml_plantilla = """<?xml version="1.0" encoding="UTF-8"?>
 <xhtml>
-<h1>%s</h1>
+    <margin8>
+        <h1><pr>%s</pr></h1>
+    </margin8>
 </xhtml>
-            """ % (_("No has seleccionado ningun juego"))
+                """ % (_("No has seleccionado ningun juego"))
 
         self.tvc_info_juego.render_xml(xml_plantilla)
+        self.tvc_descripcion.render_xml(xml_plantilla_descripcion)
 
 
     def on_tv_games_click_event(self, widget, event):
@@ -1207,16 +1275,19 @@ class WiithonGUI(GtkBuilderWrapper):
             if len(self.lParti) > 1:                
                 res = self.wb_dialogo_copia_1on1.run()
                 self.wb_dialogo_copia_1on1.hide()
+                particion_actual = self.sel_parti.obj
                 device_destino = self.sel_parti_1on1.obj
 
                 # salir por Cancelar ---> 0
                 # salir por Escape ---> -4
+                
                 if(res > 0):
                     
                     juegosParaClonar = []
                     juegosExistentesEnDestino = []
 
                     if(res == 1):
+                        '''
                         if self.sel_juego.it != None:
                             juegosParaClonar.append( util.clonarOBJ(self.sel_juego.obj) )
                             
@@ -1224,14 +1295,18 @@ class WiithonGUI(GtkBuilderWrapper):
 
                         else:
                             self.alert("warning" , _("No has seleccionado ningun juego"))
+                        '''
+                        self.alert("warning" , "Not implemente yet!")
 
                     elif(res == 2):
-                        for juego in self.lJuegos:
-                            juegosParaClonar.append( util.clonarOBJ(juego) )
-                    
-                        self.seleccionarFilaConValor(self.wb_tv_partitions, len(self.lParti) , 0 , device_destino.device)
+                        
+                        for juego, particion in session.query(Juego, Particion):
+                            if particion.device == device_destino.device:
+                                juegosParaClonar.append( juego )
+                                
+                        print juegosParaClonar
 
-                        for juego in self.lJuegos:
+                        for juego in session.query(Juego).filter('idParticion <> %d' % particion_actual.idParticion):
                             encontrado = False
                             i = 0
                             while (not encontrado) and (i<len(juegosParaClonar)):
@@ -1263,7 +1338,8 @@ class WiithonGUI(GtkBuilderWrapper):
                         
                     if len(juegosParaClonar) > 0:
                         if((self.question(pregunta))):
-                            self.poolTrabajo.nuevoTrabajoClonar( juegosParaClonar, device_destino )
+                            self.alert("warning" , "Not implemente yet!")
+                            #self.poolTrabajo.nuevoTrabajoClonar( juegosParaClonar, device_destino )
                             '''
                     else:
                         self.alert('info', _('No hay nada que copiar al otro disco.'))

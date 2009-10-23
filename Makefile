@@ -14,6 +14,7 @@ DEB-ROOT=/tmp/wiithon-$(VERSION)
 DEB-PREFIX=$(DEB-ROOT)$(PREFIX)
 DEB-PREFIX_RECURSOS_IMAGENES_CARATULAS=$(DEB-PREFIX)/share/wiithon/recursos/imagenes/caratulas
 DEB-PREFIX_RECURSOS_IMAGENES_DISCOS=$(DEB-PREFIX)/share/wiithon/recursos/imagenes/discos
+DEB-PREFIX_RECURSOS_IMAGENES_ACCESORIOS=$(DEB-PREFIX)/share/wiithon/recursos/imagenes/accesorio
 
 all: compile
 
@@ -52,12 +53,15 @@ compile: ./po/locale/da_DK/LC_MESSAGES/wiithon.mo ./po/locale/fi_FI/LC_MESSAGES/
 	@echo "=================================================================="
 
 install: uninstall
+	@echo "Install ..."
+
 	mkdir -p $(PREFIX)/bin
 	mkdir -p $(PREFIX)/lib
 	mkdir -p $(PREFIX)/lib32
 	mkdir -p $(PREFIX)/share/wiithon
 	mkdir -p $(PREFIX)/share/wiithon/recursos/glade
 	mkdir -p $(PREFIX)/share/wiithon/recursos/imagenes
+	mkdir -p $(PREFIX)/share/wiithon/recursos/imagenes/accesorio
 	
 	cp libwbfs_binding/wiithon_wrapper $(PREFIX)/share/wiithon/
 	cp unrar-nonfree/unrar $(PREFIX)/share/wiithon/
@@ -86,6 +90,7 @@ endif
 
 	cp recursos/glade/*.ui $(PREFIX)/share/wiithon/recursos/glade
 	cp recursos/imagenes/*.png $(PREFIX)/share/wiithon/recursos/imagenes
+	cp recursos/imagenes/accesorio/*.jpg $(PREFIX)/share/wiithon/recursos/imagenes/accesorio
 	
 	mkdir -p $(PREFIX_RECURSOS_IMAGENES_CARATULAS)
 	mkdir -p $(PREFIX_RECURSOS_IMAGENES_DISCOS)
@@ -111,11 +116,12 @@ endif
 	@echo "=================================================================="
 
 uninstall:
-	@echo "Limpiando posibles instalaciones antiguas"
+	@echo "Uninstall ..."
+	
 	-$(RM) /usr/bin/wiithon
 	-$(RM) /usr/bin/wiithon_autodetectar
 	-$(RM) /usr/bin/wiithon_autodetectar_lector
-	#-$(RM) /usr/bin/wbfs
+	-@$(RM) /usr/bin/wbfs
 
 	-$(RM) $(PREFIX)/bin/wiithon_autodetectar
 	-$(RM) $(PREFIX)/bin/wiithon_autodetectar_lector
@@ -139,11 +145,9 @@ uninstall:
 	-$(RM) $(PREFIX)/share/wiithon/wiithon_autodetectar
 	-$(RM) $(PREFIX)/share/wiithon/wiithon_autodetectar_lector
 
-	#-gconftool --recursive-unset /apps/nautilus-actions/configurations
-	#-$(RM) /usr/share/gconf/schemas/wiithon*.schemas
+	-@gconftool --recursive-unset /apps/nautilus-actions/configurations
+	-@$(RM) /usr/share/gconf/schemas/wiithon*.schemas
 	-$(RM) /usr/share/applications/wiithon.desktop
-
-	@echo "Limpiando instalacion actual"
 
 	-$(RM) $(PREFIX)/bin/wiithon
 	-$(RM) $(PREFIX)/bin/wiithon_wrapper
@@ -153,6 +157,7 @@ uninstall:
 	-$(RM) $(PREFIX)/share/wiithon/*.sh
 	-$(RM) $(PREFIX)/share/wiithon/recursos/glade/*.ui
 	-$(RM) $(PREFIX)/share/wiithon/recursos/imagenes/*.png
+	-$(RM) $(PREFIX)/share/wiithon/recursos/imagenes/accesorio/*.jpg
 	
 	-$(RM) $(PREFIX)/share/wiithon/wiithon_wrapper
 	-$(RM) /usr/lib/libwbfs.so
@@ -185,14 +190,14 @@ uninstall:
 	-$(RM) /usr/share/pixmaps/wiithon.svg
 	
 	-$(RM) $(PREFIX)/share/wiithon/HOME.conf
-
-	-$(RM) -R ~/.wiithon
 	
 	@echo "=================================================================="
 	@echo "Wiithon Uninstall OK"
 	@echo "=================================================================="
 
 purge: uninstall
+
+	-$(RM) -R ~/.wiithon
 
 	-$(RM) $(PREFIX_RECURSOS_IMAGENES_CARATULAS)/*.png
 	-$(RM) $(PREFIX_RECURSOS_IMAGENES_DISCOS)/*.png
@@ -251,7 +256,7 @@ pull:
 	bzr pull
 	chown `whoami`\: * -R
 
-commit: clean
+commit: clean compile
 	bzr commit --file="COMMIT" && echo "" > COMMIT
 
 log:
@@ -367,6 +372,7 @@ deb: compile
 
 	cp recursos/caratulas_fix/*.png $(DEB-PREFIX_RECURSOS_IMAGENES_CARATULAS)
 	cp recursos/discos_fix/*.png $(DEB-PREFIX_RECURSOS_IMAGENES_DISCOS)
+	cp recursos/imagenes/accesorio/*.jpg $(DEB-PREFIX_RECURSOS_IMAGENES_ACCESORIOS)
 
 	cp recursos/deb/* $(DEB-ROOT)/DEBIAN
 

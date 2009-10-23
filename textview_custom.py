@@ -1,11 +1,13 @@
 #!/usr/bin/python
 # vim: set fileencoding=utf-8 :
 
+import os
 import gtk
 import pango
 import libxml2
 
 import util
+import config
 
 class TagCustom(gtk.TextTag):
     
@@ -62,6 +64,14 @@ class TextViewCustom(gtk.TextView):
         tag = self.tabla.lookup(name)
         if tag is not None:
             tag.desactivar()
+            
+    def imprimir_imagen(self, ruta):
+        if os.path.exists(ruta):
+            iter = self.buffer.get_end_iter()
+            pixbuf = gtk.gdk.pixbuf_new_from_file_at_size(ruta, -1, config.SIZE_IMAGE_ACCESORIOS)
+            self.buffer.insert_pixbuf( iter, pixbuf )
+        elif config.DEBUG:
+            print _("Falta la imagen %s") % ruta
 
     def render_xml(self, xml):
 
@@ -73,6 +83,8 @@ class TextViewCustom(gtk.TextView):
                         self.imprimir('\n')
                     elif nodo.name == 'pr':
                         self.imprimir(nodo.content)
+                    elif nodo.name == 'img':
+                        self.imprimir_imagen(nodo.content)
                     else:                    
                         self.activarTag(nodo.name)
                         recorrer_nodo(nodo.children)
@@ -138,3 +150,75 @@ class TextViewCustom(gtk.TextView):
         a("big_gap_before_line", pixels_above_lines=30)
         a("big_gap_after_line", pixels_below_lines=30)
         a("wide_margins", left_margin=10, right_margin=10)
+        
+        '''
+  insert_one_tag_into_buffer(buffer, "heading", "weight", pango.WEIGHT_BOLD,
+                     "size", 15 * PANGO_SCALE)
+  
+  insert_one_tag_into_buffer(buffer, "italic", "style", pango.STYLE_ITALIC)
+
+  insert_one_tag_into_buffer(buffer, "bold", "weight", pango.WEIGHT_BOLD)  
+  
+  insert_one_tag_into_buffer(buffer, "big", "size", 20 * PANGO_SCALE)
+  # points times the PANGO_SCALE factor
+  
+  insert_one_tag_into_buffer(buffer, "xx-small", "scale", pango.SCALE_XX_SMALL)
+
+  insert_one_tag_into_buffer(buffer, "x-large", "scale", pango.SCALE_X_LARGE)
+  
+  insert_one_tag_into_buffer(buffer, "monospace", "family", "monospace")
+  
+  insert_one_tag_into_buffer(buffer, "blue_foreground", "foreground", "blue")  
+
+  insert_one_tag_into_buffer(buffer, "red_background", "background", "red")
+
+  #stipple = gtk.gdk.Pixmap(None,
+  #                         gray50_bits, gray50_width,
+  #                         gray50_height)
+  
+  #insert_one_tag_into_buffer(buffer, "background_stipple", "background_stipple", stipple)
+
+  #insert_one_tag_into_buffer(buffer, "foreground_stipple", "foreground_stipple", stipple)
+
+  #stipple = None
+
+  insert_one_tag_into_buffer(buffer, "big_gap_before_line", "pixels_above_lines", 30)
+
+  insert_one_tag_into_buffer(buffer, "big_gap_after_line", "pixels_below_lines", 30)
+
+  insert_one_tag_into_buffer(buffer, "double_spaced_line", "pixels_inside_wrap", 10)
+
+  insert_one_tag_into_buffer(buffer, "not_editable", "editable", gtk.FALSE)
+  
+  insert_one_tag_into_buffer(buffer, "word_wrap", "wrap_mode", gtk.WRAP_WORD)
+
+  insert_one_tag_into_buffer(buffer, "char_wrap", "wrap_mode", gtk.WRAP_CHAR)
+
+  insert_one_tag_into_buffer(buffer, "no_wrap", "wrap_mode", gtk.WRAP_NONE)
+  
+  insert_one_tag_into_buffer(buffer, "center", "justification", gtk.JUSTIFY_CENTER)
+
+  insert_one_tag_into_buffer(buffer, "right_justify", "justification", gtk.JUSTIFY_RIGHT)
+
+  insert_one_tag_into_buffer(buffer, "wide_margins", "left_margin", 50, "right_margin", 50)
+  
+  insert_one_tag_into_buffer(buffer, "strikethrough", "strikethrough", gtk.TRUE)
+  
+  insert_one_tag_into_buffer(buffer, "underline", "underline", pango.UNDERLINE_SINGLE)
+
+  insert_one_tag_into_buffer(buffer, "double_underline", "underline", pango.UNDERLINE_DOUBLE)
+
+  insert_one_tag_into_buffer(buffer, "superscript", "rise", 10 * PANGO_SCALE, 
+			      "size", 8 * PANGO_SCALE)
+  
+  insert_one_tag_into_buffer(buffer, "subscript", "rise", -10 * PANGO_SCALE,
+			      "size", 8 * PANGO_SCALE)
+
+  insert_one_tag_into_buffer(buffer, "rtl_quote",
+                             "wrap_mode", gtk.WRAP_WORD,
+                             "direction", gtk.TEXT_DIR_RTL,
+                             "indent", 30,
+                             "left_margin", 20,
+                             "right_margin", 20)
+
+        '''

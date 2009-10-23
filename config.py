@@ -12,7 +12,7 @@ import sys
 import util
 import logging
 
-DEBUG = True
+DEBUG = False
 
 WIITHON_PATH = os.path.dirname(sys.argv[0])
 WIITHON_FILES = os.path.dirname(__file__)
@@ -61,6 +61,9 @@ MAX_LISTA_COPIA_1on1 = 15
 # CLI
 # Lineas de pantallazo en consola
 NUM_LINEAS_PAUSA = 21
+
+# ALTO de las imagenes de los accesorios
+SIZE_IMAGE_ACCESORIOS = 90
 
 if DEBUG:
     logging.basicConfig()

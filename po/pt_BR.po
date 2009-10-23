@@ -101,6 +101,9 @@ msgstr ""
 msgid "A continuacion se listan los juego que NO van a ser copiados por ya estar en la particion de destino"
 msgstr "A lista a seguir contém os jogos que NÃO serão copiados por já estarem na partição de destino"
 
+msgid "ACCESORIOS: "
+msgstr ""
+
 msgid "AUTENTIFICACION:"
 msgstr ""
 
@@ -152,12 +155,6 @@ msgstr ""
 "\t\t%s instalar\n"
 "\n"
 "Web : http://blogricardo.wordpress.com/2009/06/21/wiithon-1-0-liberado/"
-
-msgid "Accesorios obligatorios: "
-msgstr ""
-
-msgid "Accesorios opcionales: "
-msgstr ""
 
 msgid "Acerca de ..."
 msgstr "Sobre ..."
@@ -225,6 +222,9 @@ msgstr ""
 
 msgid "Caratula?"
 msgstr "Capa?"
+
+msgid "Caratulas"
+msgstr ""
 
 msgid "Chinese"
 msgstr ""
@@ -298,10 +298,6 @@ msgstr "Descompactado corretamente"
 
 #, python-format
 msgid "Descomprimir RAR %s"
-msgstr ""
-
-#, python-format
-msgid "Desea copiar el juego %s a la particion %s?"
 msgstr ""
 
 #, python-format
@@ -498,6 +494,10 @@ msgstr ""
 msgid "Falla la descarga del disco de %s"
 msgstr ""
 
+#, python-format
+msgid "Falta la imagen %s"
+msgstr ""
+
 msgid "Fecha"
 msgstr ""
 
@@ -525,11 +525,14 @@ msgstr ""
 msgid "Fuera de rango"
 msgstr "Fora dos limites"
 
-msgid "GENEROS: "
+msgid "GENERO: "
 msgstr ""
 
 msgid "GNU GENERAL PUBLIC LICENSE Version 3"
 msgstr "GNU GENERAL PUBLIC LICENSE Version 3"
+
+msgid "General"
+msgstr ""
 
 msgid "German"
 msgstr ""
@@ -682,7 +685,7 @@ msgstr "Não existem jogos para renomear"
 msgid "No hay Juegos que borrar"
 msgstr "Não existem jogos para apagar"
 
-msgid "No hay datos de este juego. Intente actualizar la base de datos."
+msgid "No hay datos de este juego. Intente actualizar la base de datos de WiiTDB."
 msgstr ""
 
 #, python-format
@@ -721,6 +724,9 @@ msgstr "Não foi encontrado nenhum disco do Wii"
 
 msgid "No se ha encontrado ninguna imagen ISO"
 msgstr "Não foi encontrada nenhuma imagem ISO"
+
+msgid "No se ha encontrado synopsis"
+msgstr ""
 
 #, python-format
 msgid "No se ha formateado %s"
@@ -772,6 +778,9 @@ msgstr ""
 msgid "OK, todas las caratulas se han descargado"
 msgstr "OK, todas as capas foram baixadas"
 
+msgid "OPCIONALES: "
+msgstr ""
+
 msgid "Online?"
 msgstr ""
 
@@ -786,6 +795,12 @@ msgstr "Passo 1 de 2: Escolha um diretório para as CAPAS"
 
 msgid "Paso 2 de 2: Elige un directorio para los DISCOS"
 msgstr "Passo 2 de 2: Escolha um diretório para os DISCOS"
+
+msgid "Permitir Drag & Drop en imagenes arrastradas desde el navegador"
+msgstr ""
+
+msgid "Permitir Drag & Drop en imagenes arrastradas en local"
+msgstr ""
 
 msgid "Por defecto"
 msgstr ""
@@ -877,6 +892,9 @@ msgstr ""
 msgid "Si, 1 jugador (%s)"
 msgstr ""
 
+msgid "Sin descripcion."
+msgstr ""
+
 msgid "Spanish"
 msgstr ""
 
@@ -899,9 +917,6 @@ msgstr ""
 
 msgid "TITULO"
 msgstr "TÍTULO"
-
-msgid "TITULO: "
-msgstr ""
 
 msgid "TODOS"
 msgstr ""
@@ -935,6 +950,9 @@ msgid "Valor incorrecto"
 msgstr "Valor incorreto"
 
 msgid "WARNING:"
+msgstr ""
+
+msgid "WiiTDB"
 msgstr ""
 
 msgid "Wiithon 1.1"
@@ -979,6 +997,9 @@ msgstr "mais jogos"
 
 msgid "quedan"
 msgstr "são"
+
+msgid "requiere reiniciar la aplicacion"
+msgstr ""
 
 msgid "s"
 msgstr ""

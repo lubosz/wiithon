@@ -101,16 +101,13 @@ msgstr ""
 msgid "A continuacion se listan los juego que NO van a ser copiados por ya estar en la particion de destino"
 msgstr ""
 
+msgid "ACCESORIOS: "
+msgstr ""
+
 msgid "AUTENTIFICACION:"
 msgstr ""
 
 msgid "AYUDA_CLI"
-msgstr ""
-
-msgid "Accesorios obligatorios: "
-msgstr ""
-
-msgid "Accesorios opcionales: "
 msgstr ""
 
 msgid "Acerca de ..."
@@ -178,6 +175,9 @@ msgid "Capacidad On-line: "
 msgstr ""
 
 msgid "Caratula?"
+msgstr ""
+
+msgid "Caratulas"
 msgstr ""
 
 msgid "Chinese"
@@ -252,10 +252,6 @@ msgstr ""
 
 #, python-format
 msgid "Descomprimir RAR %s"
-msgstr ""
-
-#, python-format
-msgid "Desea copiar el juego %s a la particion %s?"
 msgstr ""
 
 #, python-format
@@ -449,6 +445,10 @@ msgstr ""
 msgid "Falla la descarga del disco de %s"
 msgstr ""
 
+#, python-format
+msgid "Falta la imagen %s"
+msgstr ""
+
 msgid "Fecha"
 msgstr ""
 
@@ -476,10 +476,13 @@ msgstr ""
 msgid "Fuera de rango"
 msgstr ""
 
-msgid "GENEROS: "
+msgid "GENERO: "
 msgstr ""
 
 msgid "GNU GENERAL PUBLIC LICENSE Version 3"
+msgstr ""
+
+msgid "General"
 msgstr ""
 
 msgid "German"
@@ -633,7 +636,7 @@ msgstr ""
 msgid "No hay Juegos que borrar"
 msgstr ""
 
-msgid "No hay datos de este juego. Intente actualizar la base de datos."
+msgid "No hay datos de este juego. Intente actualizar la base de datos de WiiTDB."
 msgstr ""
 
 #, python-format
@@ -665,6 +668,9 @@ msgid "No se ha encontrado ningun disco de la Wii"
 msgstr ""
 
 msgid "No se ha encontrado ninguna imagen ISO"
+msgstr ""
+
+msgid "No se ha encontrado synopsis"
 msgstr ""
 
 #, python-format
@@ -717,6 +723,9 @@ msgstr ""
 msgid "OK, todas las caratulas se han descargado"
 msgstr ""
 
+msgid "OPCIONALES: "
+msgstr ""
+
 msgid "Online?"
 msgstr ""
 
@@ -730,6 +739,12 @@ msgid "Paso 1 de 2: Elige un directorio para las CARATULAS"
 msgstr ""
 
 msgid "Paso 2 de 2: Elige un directorio para los DISCOS"
+msgstr ""
+
+msgid "Permitir Drag & Drop en imagenes arrastradas desde el navegador"
+msgstr ""
+
+msgid "Permitir Drag & Drop en imagenes arrastradas en local"
 msgstr ""
 
 msgid "Por defecto"
@@ -822,6 +837,9 @@ msgstr ""
 msgid "Si, 1 jugador (%s)"
 msgstr ""
 
+msgid "Sin descripcion."
+msgstr ""
+
 msgid "Spanish"
 msgstr ""
 
@@ -832,9 +850,6 @@ msgid "TEXTO_LICENCIA"
 msgstr ""
 
 msgid "TITULO"
-msgstr ""
-
-msgid "TITULO: "
 msgstr ""
 
 msgid "TODOS"
@@ -869,6 +884,9 @@ msgid "Valor incorrecto"
 msgstr ""
 
 msgid "WARNING:"
+msgstr ""
+
+msgid "WiiTDB"
 msgstr ""
 
 msgid "Wiithon 1.1"
@@ -912,6 +930,9 @@ msgid "juegos mas"
 msgstr ""
 
 msgid "quedan"
+msgstr ""
+
+msgid "requiere reiniciar la aplicacion"
 msgstr ""
 
 msgid "s"
