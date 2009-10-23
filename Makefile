@@ -344,6 +344,7 @@ deb: compile
 	mkdir -p $(DEB-PREFIX)/share/wiithon/recursos/imagenes
 	mkdir -p $(DEB-PREFIX_RECURSOS_IMAGENES_CARATULAS)
 	mkdir -p $(DEB-PREFIX_RECURSOS_IMAGENES_DISCOS)
+	mkdir -p $(DEB-PREFIX_RECURSOS_IMAGENES_ACCESORIOS)
 
 	cp libwbfs_binding/wiithon_wrapper $(DEB-PREFIX)/share/wiithon/
 	cp unrar-nonfree/unrar $(DEB-PREFIX)/share/wiithon/
@@ -366,9 +367,6 @@ deb: compile
 
 	cp recursos/glade/*.ui $(DEB-PREFIX)/share/wiithon/recursos/glade
 	cp recursos/imagenes/*.png $(DEB-PREFIX)/share/wiithon/recursos/imagenes
-
-	mkdir -p $(DEB-PREFIX_RECURSOS_IMAGENES_CARATULAS)
-	mkdir -p $(DEB-PREFIX_RECURSOS_IMAGENES_DISCOS)
 
 	cp recursos/caratulas_fix/*.png $(DEB-PREFIX_RECURSOS_IMAGENES_CARATULAS)
 	cp recursos/discos_fix/*.png $(DEB-PREFIX_RECURSOS_IMAGENES_DISCOS)
