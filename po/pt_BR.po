@@ -301,6 +301,10 @@ msgid "Descomprimir RAR %s"
 msgstr ""
 
 #, python-format
+msgid "Desea copiar el juego %s a la particion %s?"
+msgstr ""
+
+#, python-format
 msgid "Desea reemplazar la iso del juego %s?"
 msgstr ""
 
@@ -435,8 +439,9 @@ msgstr ""
 msgid "Error al pasar la ISO a la particion %s"
 msgstr ""
 
-msgid "Error borrando"
-msgstr "Erro ao apagar"
+#, python-format
+msgid "Error borrando el juego %s"
+msgstr ""
 
 msgid "Error en progreso"
 msgstr ""
@@ -796,12 +801,6 @@ msgstr "Passo 1 de 2: Escolha um diretório para as CAPAS"
 msgid "Paso 2 de 2: Elige un directorio para los DISCOS"
 msgstr "Passo 2 de 2: Escolha um diretório para os DISCOS"
 
-msgid "Permitir Drag & Drop en imagenes arrastradas desde el navegador"
-msgstr ""
-
-msgid "Permitir Drag & Drop en imagenes arrastradas en local"
-msgstr ""
-
 msgid "Por defecto"
 msgstr ""
 
@@ -853,6 +852,9 @@ msgstr ""
 
 msgid "Renombrar juego IDGAME"
 msgstr "Renomear o jogo IDGAME"
+
+msgid "Ruta para extraer ficheros .rar"
+msgstr ""
 
 msgid "SI"
 msgstr "SIM"
@@ -1007,6 +1009,9 @@ msgstr ""
 #, python-format
 msgid "wiithon no borra la ISO temporal: %s, puedes borrarla si no la necesitas"
 msgstr ""
+
+#~ msgid "Error borrando"
+#~ msgstr "Erro ao apagar"
 
 #~ msgid "***************** DESCARGAR CARATULA %s ********************"
 #~ msgstr "***************** BAIXAR CAPA %s ********************"

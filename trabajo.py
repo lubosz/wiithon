@@ -88,6 +88,7 @@ class PoolTrabajo(Pool , Thread):
         self.PROVIDER_COVERS = self.core.prefs.PROVIDER_COVERS
         self.WIDTH_COVERS = self.core.prefs.WIDTH_COVERS
         self.HEIGHT_COVERS = self.core.prefs.HEIGHT_COVERS
+        self.ruta_extraer_rar = self.core.prefs.ruta_extraer_rar
 
     def run(self):
         self.empezar( args=(self.core,) )
@@ -287,7 +288,6 @@ class PoolTrabajo(Pool , Thread):
             trabajo.error = _("El archivo RAR %s: No existe") % archivoRAR
         
         elif( util.getExtension(archivoRAR) == "rar" ):
-            carpetaDescomprimido = os.join.abspath(archivoRAR)
             nombreISO = core.getNombreISOenRAR(archivoRAR)
             if (nombreISO != None):
                 if( not os.path.exists(nombreISO) ):
@@ -295,9 +295,9 @@ class PoolTrabajo(Pool , Thread):
                     if self.callback_empieza_progreso:
                         self.callback_empieza_progreso(trabajo)
                     
-                    if ( core.unpack(archivoRAR, carpetaDescomprimido, nombreISO) ):
+                    if ( core.unpack(archivoRAR, self.ruta_extraer_rar, nombreISO) ):
                         exito = True
-                        isoExtraida = os.path.join(carpetaDescomprimido, nombreISO)
+                        isoExtraida = os.path.join(self.ruta_extraer_rar, nombreISO)
                         self.nuevoTrabajoAnadir( isoExtraida , particion.device)
                     else:
                         trabajo.error = _("Error al descomrpimir el RAR : %s") % (archivoRAR)

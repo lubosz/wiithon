@@ -256,6 +256,10 @@ msgid "Descomprimir RAR %s"
 msgstr ""
 
 #, python-format
+msgid "Desea copiar el juego %s a la particion %s?"
+msgstr ""
+
+#, python-format
 msgid "Desea reemplazar la iso del juego %s?"
 msgstr ""
 
@@ -390,8 +394,9 @@ msgstr ""
 msgid "Error al pasar la ISO a la particion %s"
 msgstr ""
 
-msgid "Error borrando"
-msgstr "Erreur de suppression"
+#, python-format
+msgid "Error borrando el juego %s"
+msgstr ""
 
 msgid "Error en progreso"
 msgstr ""
@@ -755,12 +760,6 @@ msgstr "Étape 1 sur 2 : Choisissez un dossier pour les JAQUETTES"
 msgid "Paso 2 de 2: Elige un directorio para los DISCOS"
 msgstr "Étape 2 sur 2 : Choisissez un dossier pour les DISQUES"
 
-msgid "Permitir Drag & Drop en imagenes arrastradas desde el navegador"
-msgstr ""
-
-msgid "Permitir Drag & Drop en imagenes arrastradas en local"
-msgstr ""
-
 msgid "Por defecto"
 msgstr ""
 
@@ -812,6 +811,9 @@ msgstr ""
 
 msgid "Renombrar juego IDGAME"
 msgstr "Renommer le jeu IDGAME"
+
+msgid "Ruta para extraer ficheros .rar"
+msgstr ""
 
 msgid "SI"
 msgstr "OUI"
@@ -966,6 +968,9 @@ msgstr ""
 #, python-format
 msgid "wiithon no borra la ISO temporal: %s, puedes borrarla si no la necesitas"
 msgstr ""
+
+#~ msgid "Error borrando"
+#~ msgstr "Erreur de suppression"
 
 #~ msgid "***************** DESCARGAR CARATULA %s ********************"
 #~ msgstr "************** TELECHARGEMENT JAQUETTE %s *****************"

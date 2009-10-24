@@ -427,8 +427,6 @@ class Particion(Base):
     libre = Column('libre', Float)
     total = Column('total', Float)
     fabricante = Column('fabricante', Unicode(255))
-    color_foreground = "black"
-    color_background = "lightblue"
     
     juegos = relation(Juego, backref='particion')
     
@@ -463,20 +461,26 @@ class Particion(Base):
         return "%s (%.0f GB)" % (self.device, self.total)
         
     def getColorForeground(self):
-        if self.idParticion == 1:
+        
+        numColores = 3
+
+        if (((self.idParticion - 1) % numColores) == 0):
             return "black"
-        elif self.idParticion == 2:
+        elif (((self.idParticion - 1) % numColores) == 1):
             return "darkblue"
-        else:
-            return "black"
+        else:#if (((self.idParticion - 1) % numColores) == 2):
+            return "darkgreen"
 
     def getColorBackground(self):
-        if self.idParticion == 1:
+
+        numColores = 3
+
+        if (((self.idParticion - 1) % numColores) == 0):
             return "white"
-        elif self.idParticion == 2:
-            return "gray"
-        else:
-            return "red"
+        elif (((self.idParticion - 1) % numColores) == 1):
+            return "white"
+        else:#if (((self.idParticion - 1) % numColores) == 2):
+            return "white"
             
     def refrescarEspacioLibreUsado(self, core):
         cachos = core.getEspacioLibreUsado(self)

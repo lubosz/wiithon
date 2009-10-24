@@ -75,13 +75,21 @@ class WiithonCORE:
 
                 listaParticiones.append(particion)
 
-        session.commit()
-        
+        # borrar TODOS los juegos que no sean de las particiones encontradas
         query = session.query(Juego)
         for particion in listaParticiones:
             query = query.filter("idParticion <> %d" % particion.idParticion)
         for juego in query:
             session.delete(juego)
+        
+        # borrar TODAS las particiones que no sean de las particiones encontradas
+        query = session.query(Particion)
+        for particion in listaParticiones:
+            query = query.filter("idParticion <> %d" % particion.idParticion)
+        for particion in query:
+            session.delete(particion)
+        
+        # subimos cambios    
         session.commit()
 
         return listaParticiones
@@ -108,43 +116,13 @@ class WiithonCORE:
             comando = "%s -p %s ls %s" % (config.WBFS_APP, DEVICE, IDGAME)
             linea = util.getSTDOUT( comando )
             cachos = linea.strip().split(config.SEPARADOR)
-            print cachos
             juego = Juego(cachos)
             juego.particion = particion
             session.save(juego)
-            print session
-            print juego
             session.commit()
             return juego
         else:
             return None
-
-    '''
-    def getJuego(self, particion, IDGAME):
-        sql = util.decode("particion.idParticion='%d' and juego.idgame=='%s'" % (particion.idParticion, IDGAME))
-        juego = session.query(Juego,Particion).filter(sql).first()        
-        if juego != None:
-            juego = juego[0]
-        return juego
-    
-    def getInfoJuego(self, DEVICE, IDGAME):
-        particion = self.getParticion(DEVICE)
-        print particion
-        if particion != None:
-            #juego = self.getJuego(particion, IDGAME)
-            #print juego
-            #if juego == None:
-            comando = "%s -p %s ls %s" % (config.WBFS_APP, DEVICE, IDGAME)
-            linea = util.getSTDOUT(comando)
-            cachos = linea.split(config.SEPARADOR)
-            juego = Juego(cachos)
-            session.save(juego)
-            juego.particion = particion
-            session.commit()
-            return juego
-        else:
-            return None
-    '''
 
     # renombra el ISO de un IDGAME que esta en DEVICE
     def renombrarNOMBRE(self , juego, nuevoNombre):
@@ -243,9 +221,6 @@ class WiithonCORE:
         if (self.existeCaratula(IDGAME)):
             return True
         else:
-            #proveedores = self.prefs.PROVIDER_COVERS
-            #ancho = self.prefs.WIDTH_COVERS
-            #alto = self.prefs.HEIGHT_COVERS
             destino = self.getRutaCaratula(IDGAME)
             descargada = False
             i = 0
@@ -269,9 +244,11 @@ class WiithonCORE:
     # Descarga todos las caratulas de una lista de juegos
     def descargarTodasLasCaratulaYDiscos(self , listaJuegos):
         proveedores = self.prefs.PROVIDER_COVERS
+        ancho = self.prefs.WIDTH_COVERS
+        alto = self.prefs.HEIGHT_COVERS
         ok = True
         for juego in listaJuegos:
-            if ( not self.descargarCaratula( juego.idgame, proveedores ) ):
+            if ( not self.descargarCaratula( juego.idgame, proveedores, ancho, alto ) ):
                 ok = False
             if ( not self.descargarDisco( juego.idgame ) ):
                 ok = False
@@ -287,6 +264,12 @@ class WiithonCORE:
         return None
 
     def unpack(self , nombreRAR , destino, nombreISO):
+        print nombreRAR
+        print destino
+        print nombreISO
+        print "----------"
+        print os.path.isfile(nombreRAR)
+        print os.path.isdir(destino)
         if os.path.isfile(nombreRAR) and os.path.isdir(destino):
             rutaISO = os.path.join(destino, nombreISO)
             if os.path.exists(rutaISO):
@@ -294,6 +277,7 @@ class WiithonCORE:
             directorioActual = os.getcwd()
             os.chdir(destino)
             comando = '%s e "%s" "%s"' % (config.UNRAR_APP, nombreRAR , nombreISO)
+            print comando
             salida = util.call_out_file(comando)
             os.chdir(directorioActual)
             return salida
