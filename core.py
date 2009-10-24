@@ -74,6 +74,9 @@ class WiithonCORE:
                     session.update(particion)
 
                 listaParticiones.append(particion)
+        
+        # generate idParticion   
+        session.commit()
 
         # borrar TODOS los juegos que no sean de las particiones encontradas
         query = session.query(Juego)
@@ -82,7 +85,7 @@ class WiithonCORE:
         for juego in query:
             session.delete(juego)
         
-        # borrar TODAS las particiones que no sean de las particiones encontradas
+        # borrar TODAS las particiones que no sean de las particiones encontradas    
         query = session.query(Particion)
         for particion in listaParticiones:
             query = query.filter("idParticion <> %d" % particion.idParticion)
@@ -201,7 +204,7 @@ class WiithonCORE:
             existe = False
         return existe
             
-    def descargarDisco(self , IDGAME):
+    def descargarDisco(self , IDGAME, ancho, alto):
         if (self.existeDisco(IDGAME)):
             return True
         else:
@@ -209,8 +212,9 @@ class WiithonCORE:
             try:
                 origen = "http://www.wiiboxart.com/diskart/160/160/%.3s.png" % (IDGAME)
                 destino = self.getRutaDisco(IDGAME)
+                print _("Descargando caratula de %s desde %s ...") % (IDGAME, origen)
                 util.descargarImagen(origen, destino)
-                comando = 'mogrify -resize %dx%d! "%s"' % (self.prefs.WIDTH_DISCS, self.prefs.HEIGHT_DISCS, destino)
+                comando = 'mogrify -resize %dx%d! "%s"' % (ancho, alto, destino)
                 util.call_out_null(comando)
                 return True
             except util.ErrorDescargando:

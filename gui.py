@@ -1263,7 +1263,7 @@ class WiithonGUI(GtkBuilderWrapper):
         if config.DEBUG:
             print "on_tb_toolbar_clicked"
         
-        if(self.todo and id_tb != self.wb_tb_copiar_SD and id_tb != self.wb_tb_acerca_de and id_tb != self.wb_tb_borrar and id_tb != self.wb_tb_refrescar_wbfs and id_tb != self.wb_tb_preferencias):
+        if(self.todo and id_tb != self.wb_tb_copiar_SD and id_tb != self.wb_tb_acerca_de and id_tb != self.wb_tb_refrescar_wbfs and id_tb != self.wb_tb_preferencias):
             self.alert("warning" , _("Tienes que seleccionar una particion WBFS para realizar esta accion"))
 
         elif(id_tb == self.wb_tb_acerca_de):
@@ -1334,28 +1334,28 @@ class WiithonGUI(GtkBuilderWrapper):
                 self.alert("warning" , _("Debes tener al menos 2 particiones WBFS para hacer copias 1:1"))
 
         elif(id_tb == self.wb_tb_borrar):
-            if self.sel_juego.it != None:
+            if self.sel_parti.it != None:
                 
                 if( self.question(_('Quieres borrar el juego: %s?') % (self.sel_juego.obj)) ):
                     # borrar del HD
                     if self.core.borrarJuego( self.sel_juego.obj ):
-                        
-                        # borrar caratulas no usadas
-                        if session.query(Juego).filter('idgame=="%s"' % self.sel_juego.obj.idgame).count() == 1:
-
-                            # borrar disco
-                            self.core.borrarDisco( self.sel_juego.obj )
-                            print "disco borrado"
-
-                            # borrar caratula
-                            self.core.borrarCaratula( self.sel_juego.obj )
-                            print "caratula borrada"
                         
                         # borrar de la bdd
                         session.delete(self.sel_juego.obj)
                         
                         # go
                         session.commit()
+                        
+                        # borrar caratulas no usadas
+                        if session.query(Juego).filter('idgame=="%s"' % self.sel_juego.obj.idgame).count() == 0:
+
+                            # borrar disco
+                            self.core.borrarDisco( self.sel_juego.obj )
+                            print "disc-art borrado"
+
+                            # borrar caratula
+                            self.core.borrarCaratula( self.sel_juego.obj )
+                            print "caratula borrada"
                         
                         # actualizar valores de usado/libre/total
                         self.sel_parti.obj.refrescarEspacioLibreUsado(self.core)
@@ -1367,7 +1367,7 @@ class WiithonGUI(GtkBuilderWrapper):
                         self.alert("warning" , _("Error borrando el juego %s") % self.sel_juego.obj)
 
             else:
-                self.alert("warning" , _("No has seleccionado ningun juego"))
+                self.alert("warning" , _("No has seleccionado ninguna particion"))
 
         elif(id_tb == self.wb_tb_extraer):
             if self.sel_juego.it != None:
@@ -1399,7 +1399,7 @@ class WiithonGUI(GtkBuilderWrapper):
                 self.alert("warning" , _("No has seleccionado ningun juego"))
 
         elif(id_tb == self.wb_tb_renombrar):
-            if self.sel_juego.it != None:
+            if self.sel_parti.it != None:
                 # Obtiene el foco
                 self.wb_tv_games.grab_focus()
                 # Editar celda
@@ -1407,7 +1407,7 @@ class WiithonGUI(GtkBuilderWrapper):
                 self.wb_tv_games.set_cursor(path , self.columna2 , True)
 
             else:
-                self.alert("warning" , _("No has seleccionado ningun juego"))
+                self.alert("warning" , _("No has seleccionado ninguna particion"))
 
         elif(id_tb == self.wb_tb_anadir or id_tb == self.wb_tb_anadir_directorio):
             if self.sel_parti.it != None:
@@ -1447,14 +1447,18 @@ class WiithonGUI(GtkBuilderWrapper):
                                 if self.juegoNuevo == None:
 
                                     # vamos descargando info wiitdb
+                                    # no podemos usar objeto porque es None ...
                                     self.poolBash.nuevoTrabajoActualizarWiiTDB('%s?ID=%s' % (self.core.prefs.URL_ZIP_WIITDB, idgame))
+                                    print "descargar info wiitdb para %s" % idgame
 
                                     # vamos descargando caratulas
                                     if not self.core.existeCaratula(idgame):
                                         self.poolBash.nuevoTrabajoDescargaCaratula( idgame )
+                                        print "descargar caratula de %s" % idgame
 
                                     if not self.core.existeDisco(idgame):
                                         self.poolBash.nuevoTrabajoDescargaDisco( idgame )
+                                        print "descargar disc-art de %s" % idgame
 
                                     listaISO.append(fichero)
                                 else:
@@ -1717,7 +1721,7 @@ class WiithonGUI(GtkBuilderWrapper):
             if idgame == self.sel_juego.obj.idgame:
                 gobject.idle_add( self.ponerCaratula , idgame , self.wb_img_caratula1)
         else:
-            #self.info.abajo_juegos_sin_caratula += 1
+            self.info.abajo_juegos_sin_caratula += 1
             print _("Falla la descarga de la caratula de %s") % idgame
 
     def callback_termina_trabajo_descargar_disco(self, trabajo, idgame):
@@ -1725,7 +1729,7 @@ class WiithonGUI(GtkBuilderWrapper):
             if idgame == self.sel_juego.obj.idgame:
                 gobject.idle_add( self.ponerDisco , idgame , self.wb_img_disco1)
         else:
-            #self.info.abajo_juegos_sin_discart += 1
+            self.info.abajo_juegos_sin_discart += 1
             print _("Falla la descarga del disco de %s") % idgame
 
 class HiloCalcularProgreso(Thread):

@@ -89,6 +89,8 @@ class PoolTrabajo(Pool , Thread):
         self.WIDTH_COVERS = self.core.prefs.WIDTH_COVERS
         self.HEIGHT_COVERS = self.core.prefs.HEIGHT_COVERS
         self.ruta_extraer_rar = self.core.prefs.ruta_extraer_rar
+        self.WIDTH_DISCS = self.core.prefs.WIDTH_DISCS
+        self.HEIGHT_DISCS = self.core.prefs.HEIGHT_DISCS
 
     def run(self):
         self.empezar( args=(self.core,) )
@@ -236,7 +238,7 @@ class PoolTrabajo(Pool , Thread):
         return core.descargarCaratula(idgame, self.PROVIDER_COVERS, self.WIDTH_COVERS, self.HEIGHT_COVERS)
 
     def descargarDisco(self , core , idgame):
-        return core.descargarDisco(idgame)
+        return core.descargarDisco(idgame, self.WIDTH_DISCS, self.HEIGHT_DISCS)
 
     def copiarCaratula(self , core , juego, destino):
         return core.copiarCaratula(juego, destino)
