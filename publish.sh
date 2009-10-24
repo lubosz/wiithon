@@ -1,6 +1,6 @@
 #!/bin/sh
 
-VIM COMMIT
+vim COMMIT
 make commit
 bzr push
 make deb
