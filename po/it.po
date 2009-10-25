@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: wiithon 1.0\n"
 "Report-Msgid-Bugs-To: makiolo@gmail.com\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2009-10-25 12:36+0100\n"
+"PO-Revision-Date: 2009-10-25 14:25+0100\n"
 "Last-Translator: Carlo Mandelli <camandel@gmail.com>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -175,7 +175,7 @@ msgid "Buscar:"
 msgstr "Cerca:"
 
 msgid "Capacidad On-line: "
-msgstr "Modalità On-line: "
+msgstr "Modalità on-line: "
 
 msgid "Caratula?"
 msgstr "Copertina?"
@@ -244,7 +244,7 @@ msgstr "Sto scaricando la copertina di %s"
 
 #, python-format
 msgid "Descargando caratula de %s desde %s ..."
-msgstr "Sto scaricando la copertina da %s a %s ..."
+msgstr "Sto scaricando la copertina di %s da %s ..."
 
 #, python-format
 msgid "Descargando disco de %s"
@@ -354,7 +354,7 @@ msgid "Elige un directorio donde extraer la ISO de %s"
 msgstr "Seleziona una cartella per estrarre la ISO di %s"
 
 msgid "Elige una imagen ISO valida para Wii"
-msgstr "Seleziona una immagine ISO valida per la Wii"
+msgstr "Seleziona un'immagine ISO valida per la Wii"
 
 msgid "Empezando ..."
 msgstr "Avvio ..."
@@ -436,7 +436,7 @@ msgstr "Estrai"
 
 #, python-format
 msgid "Extraer %s a la ruta %s"
-msgstr "Estratto %s sul percorso %s"
+msgstr "Estrazione %s sul percorso %s"
 
 msgid "Extraer ISO de juego con IDGAME"
 msgstr "Estratta ISO dal gioco con IDGAME"
@@ -772,7 +772,7 @@ msgid "Programa ejecutado con las opciones incorrectas."
 msgstr "Programma eseguito con parametri errati."
 
 msgid "Proveedor de caratulas"
-msgstr "Fornitore delle copertine:"
+msgstr "Fornitore delle copertine"
 
 msgid "Puede llevar mucho tiempo ..."
 msgstr "Può richiedere molto tempo ..."
