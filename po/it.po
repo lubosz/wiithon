@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: wiithon 1.0\n"
 "Report-Msgid-Bugs-To: makiolo@gmail.com\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2009-10-25 14:25+0100\n"
+"PO-Revision-Date: 2009-10-25 16:49+0100\n"
 "Last-Translator: Carlo Mandelli <camandel@gmail.com>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -430,6 +430,9 @@ msgstr "Errore: si è verificato un problema durante l'inserimento delle informa
 
 msgid "Escriba el nuevo nombre : "
 msgstr "Inserisci il nuovo nome : "
+
+msgid "Espacio libre insuficiente para extraer la ISO"
+msgstr "Spazio libero insufficiente per estrarre la ISO"
 
 msgid "Extraer"
 msgstr "Estrai"

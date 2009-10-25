@@ -429,6 +429,9 @@ msgstr ""
 msgid "Escriba el nuevo nombre : "
 msgstr "Neuen Namen eingeben : "
 
+msgid "Espacio libre insuficiente para extraer la ISO"
+msgstr ""
+
 msgid "Extraer"
 msgstr "Entpacke"
 

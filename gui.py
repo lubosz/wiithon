@@ -5,6 +5,7 @@
 import os
 import time
 import sys
+import statvfs
 import re
 from threading import Thread
 
@@ -1386,7 +1387,12 @@ class WiithonGUI(GtkBuilderWrapper):
                         if( self.question(_('Desea reemplazar la iso del juego %s?') % (self.sel_juego.obj)) ):
                             reemplazar = True
                     else:
-                        reemplazar = True
+			## check for 4.4 GB of free space before to extract ISO
+                        fs = os.statvfs(str(fc_extraer.get_current_folder()))
+                        if ((fs[statvfs.F_BSIZE]*fs[statvfs.F_BAVAIL]/1024) < 4693504):
+                                self.alert("warning" , _("Espacio libre insuficiente para extraer la ISO"))
+                        else:
+                                reemplazar = True
                         
                     if reemplazar:
                         # nueva ruta favorita
