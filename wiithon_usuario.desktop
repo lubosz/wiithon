@@ -1,3 +1,4 @@
+#!/usr/bin/env xdg-open
 [Desktop Entry]
 # http://freedesktop.org/Standards/desktop-entry-spec/
 Version=1.0
@@ -6,7 +7,7 @@ TryExec=wiithon
 Exec=/usr/local/bin/wiithon
 Icon=/usr/share/pixmaps/wiithon.svg
 Type=Application
-Categories=QT;Application;Office;Database;
+#Categories=QT;Application;Office;Database;
 Categories=GNOME;GTK;System;
 StartupNotify=false
 Name=Wiithon

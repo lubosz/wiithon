@@ -1020,7 +1020,6 @@ class WiithonGUI(GtkBuilderWrapper):
             self.renderEditableNombre.set_property("editable", False)
             self.renderEditableNombre.set_property("attributes", self.getEstilo_grisGrande())
             
-            
             #ocultar algunas coasa
             self.wb_label_numParticionesWBFS.hide()
             self.wb_label_juegosConInfoWiiTDB.hide()
@@ -1051,7 +1050,9 @@ class WiithonGUI(GtkBuilderWrapper):
             print "on_tv_partitions2_cursor_changed"
         
         self.sel_parti_1on1.actualizar_columna(treeview)
+
         if self.sel_parti_1on1.it != None:
+            
             # le selecciono la particion actual al 1on1
             self.sel_parti_1on1.obj = self.getBuscarParticion(self.lParti, self.sel_parti_1on1.clave)
 

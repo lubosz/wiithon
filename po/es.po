@@ -25,7 +25,7 @@ msgstr ""
 
 #, python-format
 msgid "%d juegos sin caratula"
-msgstr ""
+msgstr "%d juegos sin carátula"
 
 #, python-format
 msgid "%d juegos sin disc-art"
@@ -82,7 +82,7 @@ msgid "+Info"
 msgstr ""
 
 msgid "1 juego sin caratula"
-msgstr ""
+msgstr "1 juego sin carátula"
 
 msgid "1 juego sin disc-art"
 msgstr ""
@@ -171,7 +171,7 @@ msgid ""
 msgstr ""
 
 msgid "Altura imagen caratula"
-msgstr ""
+msgstr "Altura imagen carátula"
 
 msgid "Altura imagen disc-art"
 msgstr ""
@@ -181,7 +181,7 @@ msgid "Anadir %s a la particion %s"
 msgstr "Añadir %s a la partición %s"
 
 msgid "Ancho imagen caratula"
-msgstr ""
+msgstr "Ancho imagen carátula"
 
 msgid "Ancho imagen disc-art"
 msgstr ""
@@ -223,16 +223,16 @@ msgid "Caratula?"
 msgstr "¿Car.?"
 
 msgid "Caratulas"
-msgstr ""
+msgstr "Carátulas"
 
 msgid "Chinese"
-msgstr ""
+msgstr "Chino"
 
 msgid "Chinese-Taiwan"
-msgstr ""
+msgstr "Taiwanes"
 
 msgid "Clasificacion parental: "
-msgstr ""
+msgstr "Clasificación parental: "
 
 msgid "Clasificar"
 msgstr ""
@@ -268,7 +268,7 @@ msgid "Copiar todos los juegos*"
 msgstr ""
 
 msgid "DESCRIPCION: "
-msgstr ""
+msgstr "DESCRIPCIÓN: "
 
 msgid "Debes tener al menos 2 particiones WBFS para hacer copias 1:1"
 msgstr ""
@@ -286,7 +286,7 @@ msgstr "Descargando carátula de %s"
 
 #, python-format
 msgid "Descargando caratula de %s desde %s ..."
-msgstr ""
+msgstr "Descargando carátula de %s desde %s ..."
 
 #, python-format
 msgid "Descargando disco de %s"
@@ -301,11 +301,11 @@ msgstr ""
 
 #, python-format
 msgid "Desea copiar el juego %s a la particion %s?"
-msgstr ""
+msgstr "¿Desea copiar el juego %s a la partición %s?"
 
 #, python-format
 msgid "Desea reemplazar la iso del juego %s?"
-msgstr ""
+msgstr "¿Desea reemplazar la iso del juego %s?"
 
 msgid "Desea reemplazarla (S/N) : "
 msgstr ""
