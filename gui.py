@@ -1392,7 +1392,7 @@ class WiithonGUI(GtkBuilderWrapper):
                     if self.core.existeExtraido(self.sel_juego.obj , ruta_selec):
                         extraer = self.question(_('Desea reemplazar la iso del juego %s?') % (self.sel_juego.obj))
                     else:
-                        if util.space_for_dvd_iso_wii(ruta_selec):
+                        if not util.space_for_dvd_iso_wii(ruta_selec):
                             self.alert("warning" , _("Espacio libre insuficiente para extraer la ISO"))
                         else:
                             extraer = True
