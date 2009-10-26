@@ -777,6 +777,9 @@ msgstr "Étape 2 sur 2 : Choisissez un dossier pour les DISQUES"
 msgid "Por defecto"
 msgstr ""
 
+msgid "Por favor. Informe a los desarrolladores de este error."
+msgstr ""
+
 msgid "Portuguese"
 msgstr ""
 

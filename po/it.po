@@ -772,6 +772,9 @@ msgstr "Passo 2 di 2: seleziona una cartella per le DISC-ART"
 msgid "Por defecto"
 msgstr "Default"
 
+msgid "Por favor. Informe a los desarrolladores de este error."
+msgstr ""
+
 msgid "Portuguese"
 msgstr "Portoghese"
 

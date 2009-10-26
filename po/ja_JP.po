@@ -763,6 +763,9 @@ msgstr ""
 msgid "Por defecto"
 msgstr ""
 
+msgid "Por favor. Informe a los desarrolladores de este error."
+msgstr ""
+
 msgid "Portuguese"
 msgstr ""
 

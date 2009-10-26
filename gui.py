@@ -6,6 +6,7 @@ import os
 import time
 import sys
 import re
+import traceback
 from threading import Thread
 
 import gtk
@@ -56,6 +57,9 @@ class WiithonGUI(GtkBuilderWrapper):
         # Cellrenderers que se modifican según cambia el modo
         self.renderEditableIDGAME = None
         self.renderEditableNombre = None
+        
+        # controlador hook de excepciones
+        sys.excepthook = self.excepthook
 
         # Menu contextual
         self.uimgr = gtk.UIManager()
@@ -342,6 +346,10 @@ class WiithonGUI(GtkBuilderWrapper):
                         self.alert("warning" , _("Formato desconocido"))
 
         gtk.main()
+        
+    def excepthook(self, exctype, excvalue, exctb):
+        tbtext = ''.join(traceback.format_exception(exctype, excvalue, exctb))
+        self.alert('error' , "%s\n%s" % (_("Por favor. Informe a los desarrolladores de este error."), tbtext), "%s" % (excvalue))
 
     # http://www.pygtk.org/pygtk2reference/class-pangoattribute.html
     def getEstilo_azulGrande(self):
@@ -765,7 +773,7 @@ class WiithonGUI(GtkBuilderWrapper):
                 </rojo>
             </margin12>
         </xhtml>
-        """ % (titulo, message)
+        """ % (util.parsear_a_XML(titulo), util.parsear_a_XML(message))
 
         view.render_xml(xml_plantilla)
         ###############################
@@ -1280,6 +1288,7 @@ class WiithonGUI(GtkBuilderWrapper):
             self.refrescarParticionesWBFS()
 
         elif(id_tb == self.wb_tb_copiar_1_1):
+            
             if len(self.lParti) > 1:                
                 res = self.wb_dialogo_copia_1on1.run()
                 self.wb_dialogo_copia_1on1.hide()
@@ -1376,6 +1385,7 @@ class WiithonGUI(GtkBuilderWrapper):
                 self.alert("warning" , _("No has seleccionado ninguna particion"))
 
         elif(id_tb == self.wb_tb_extraer):
+
             if self.sel_juego.it != None:
 
                 fc_extraer = SelectorFicheros(

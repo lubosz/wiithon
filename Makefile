@@ -398,11 +398,17 @@ deb: compile
 	@echo "generar deb"
 	@cp recursos/deb/* $(DEB-ROOT)/DEBIAN
 	@dpkg-deb --build $(DEB-ROOT)
+	#
+	# debuild -S -sa
+	# ¿Como hacer un PPA para wiithon? Carlo si me puedes ayudar ...
+	# https://help.launchpad.net/Packaging/PPA/BuildingASourcePackage
+	# https://help.launchpad.net/Packaging/PPA/Uploading#Next%20steps
+	#
 	@rm -rf $(DEB-ROOT)
 	
 	@echo "post generate deb"
-	-@$(RM) wiithon-1.*_*.deb
-	@mv "$(DEB-ROOT).deb" "./deb/wiithon-$(VERSION)_$(REVISION).deb"
+	-@$(RM) wiithon-*_*.deb
+	@mv "$(DEB-ROOT).deb" "./wiithon-$(VERSION)_$(REVISION).deb"
 
 	@echo "=================================================================="
 	@echo "Debian package created:	wiithon-"$(VERSION)"_"$(REVISION)".deb"

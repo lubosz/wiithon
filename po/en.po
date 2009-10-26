@@ -777,6 +777,9 @@ msgstr "Step 2 of 2: Choose a folder for DISCS"
 msgid "Por defecto"
 msgstr ""
 
+msgid "Por favor. Informe a los desarrolladores de este error."
+msgstr ""
+
 msgid "Portuguese"
 msgstr ""
 
