@@ -402,7 +402,7 @@ deb: compile
 	
 	@echo "post generate deb"
 	-@$(RM) wiithon-1.*_*.deb
-	@mv "$(DEB-ROOT).deb" "./wiithon-$(VERSION)_$(REVISION).deb"
+	@mv "$(DEB-ROOT).deb" "./deb/wiithon-$(VERSION)_$(REVISION).deb"
 
 	@echo "=================================================================="
 	@echo "Debian package created:	wiithon-"$(VERSION)"_"$(REVISION)".deb"
