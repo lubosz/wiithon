@@ -12,6 +12,7 @@ import urllib
 import re
 import locale
 import gettext
+import statvfs
 from gettext import gettext as _
 
 from sqlalchemy.orm import scoped_session, sessionmaker
@@ -436,3 +437,13 @@ def get_code_by_index(lista, index):
         else:
             i += 1
     return None
+
+# True ---> space OK
+# False --> full disk
+def space_for_dvd_iso_wii(path):
+    # check for 4.4 GB of free space before to extract ISO
+    fs = os.statvfs(path)
+    return ((fs[statvfs.F_BSIZE]*fs[statvfs.F_BAVAIL]/1024) >= 4693504)
+
+def esImagen(fichero):
+    return (getExtension(fichero)=="png") or (getExtension(fichero)=="jpg") or (getExtension(fichero)=="gif")

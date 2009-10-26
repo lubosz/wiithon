@@ -96,25 +96,20 @@ class WiithonCORE:
         session.commit()
 
         return listaParticiones
-        
-        
+
     def getParticion(self, DEVICE):
         sql = util.decode("device=='%s'" % (DEVICE))
         particion = session.query(Particion).filter(sql).first()
         return particion
-    
-    '''
+
     def getJuego(self, DEVICE, IDGAME):
         sql = util.decode("particion.device='%s' and juego.idgame=='%s'" % (DEVICE, IDGAME))
-        juego = session.query(Juego,Particion).filter(sql).first()        
-        if juego != None:
-            juego = juego[0]
-        return juego
-    '''
+        for juego, particion in session.query(Juego,Particion).filter(sql):
+            return juego
+        return None
 
     def getInfoJuego(self, DEVICE, IDGAME):
         particion = self.getParticion(DEVICE)
-        print particion
         if particion != None:
             comando = "%s -p %s ls %s" % (config.WBFS_APP, DEVICE, IDGAME)
             linea = util.getSTDOUT( comando )
@@ -130,7 +125,6 @@ class WiithonCORE:
     # renombra el ISO de un IDGAME que esta en DEVICE
     def renombrarNOMBRE(self , juego, nuevoNombre):
         comando = '%s -p %s rename "%s" "%s"' % (config.WBFS_APP, juego.particion.device, juego.idgame, nuevoNombre)
-        print comando
         salida = util.call_out_screen(comando)
         return salida
 
@@ -267,26 +261,29 @@ class WiithonCORE:
                 return linea
         return None
 
-    def unpack(self , nombreRAR , destino, nombreISO):
-        print nombreRAR
-        print destino
-        print nombreISO
-        print "----------"
-        print os.path.isfile(nombreRAR)
-        print os.path.isdir(destino)
-        if os.path.isfile(nombreRAR) and os.path.isdir(destino):
-            rutaISO = os.path.join(destino, nombreISO)
-            if os.path.exists(rutaISO):
-                os.remove(rutaISO)
-            directorioActual = os.getcwd()
-            os.chdir(destino)
-            comando = '%s e "%s" "%s"' % (config.UNRAR_APP, nombreRAR , nombreISO)
-            print comando
-            salida = util.call_out_file(comando)
-            os.chdir(directorioActual)
-            return salida
-        else:
+    def unpack(self , nombreRAR , destino, nombreISO, overwrite = True):
+        if not os.path.isfile(nombreRAR):
             return False
+            
+        if not os.path.isdir(destino):
+            return False
+        
+        rutaISO = os.path.join(destino, nombreISO)
+        if os.path.exists(rutaISO):
+            if overwrite:        
+                os.remove(rutaISO)
+            else:
+                return False
+                
+        if not util.space_for_dvd_iso_wii(destino):
+            return False
+
+        directorioActual = os.getcwd()
+        os.chdir(destino)
+        comando = '%s e "%s" "%s"' % (config.UNRAR_APP, nombreRAR , nombreISO)
+        salida = util.call_out_file(comando)
+        os.chdir(directorioActual)
+        return salida
 
     def anadirISO(self , DEVICE , ISO):
         

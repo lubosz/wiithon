@@ -58,7 +58,6 @@ class PoolTrabajo(Pool , Thread):
         Thread.__init__(self)
         self.core = core
         self.numHilos = int(numHilos)
-        #self.listaTrabajos = []
         self.callback_empieza_trabajo = callback_empieza_trabajo
         self.callback_termina_trabajo = callback_termina_trabajo
         self.callback_nuevo_trabajo = callback_nuevo_trabajo
@@ -91,6 +90,7 @@ class PoolTrabajo(Pool , Thread):
         self.ruta_extraer_rar = self.core.prefs.ruta_extraer_rar
         self.WIDTH_DISCS = self.core.prefs.WIDTH_DISCS
         self.HEIGHT_DISCS = self.core.prefs.HEIGHT_DISCS
+        self.rar_overwrite_iso = self.core.prefs.rar_overwrite_iso
 
     def run(self):
         self.empezar( args=(self.core,) )
@@ -164,7 +164,7 @@ class PoolTrabajo(Pool , Thread):
         elif( trabajo.tipo == RECORRER_DIRECTORIO ):
             directorio = trabajo.origen
             particion = trabajo.destino
-            trabajo.exito = self.recorrerDirectorioYAnadir(core , directorio, particion)
+            trabajo.exito = self.recorrerDirectorioYAnadir(core , trabajo, directorio, particion)
 
         elif( trabajo.tipo == DESCOMPRIMIR_RAR ):
             archivoRAR = trabajo.origen
@@ -246,7 +246,7 @@ class PoolTrabajo(Pool , Thread):
     def copiarDisco(self , core , juego, destino):
         return core.copiarDisco(juego, destino)
         
-    def recorrerDirectorioYAnadir(self , core , directorio, particion):
+    def recorrerDirectorioYAnadir(self, core, trabajo, directorio, particion):
 
         exito = False
 
@@ -262,13 +262,15 @@ class PoolTrabajo(Pool , Thread):
             hayRAR = len(encontrados) > 0
             if hayRAR:
                 for encontrado in encontrados:
-                    self.nuevoTrabajoAnadir( encontrado , particion.device)
+                    trabajoAnadir = self.nuevoTrabajoAnadir( encontrado , particion.device)
+                    trabajoAnadir.padre = trabajo
 
             encontrados =  util.rec_glob(directorio, "*.iso")
             hayISO = len(encontrados) > 0
             if hayISO:
                 for encontrado in encontrados:
-                    self.nuevoTrabajoAnadir( encontrado , particion.device)
+                    trabajoAnadir = self.nuevoTrabajoAnadir( encontrado , particion.device)
+                    trabajoAnadir.padre = trabajo
 
             if hayRAR or hayISO:
                 exito = True
@@ -281,39 +283,56 @@ class PoolTrabajo(Pool , Thread):
         return exito
 
     def descomprimirRARYAnadir(self , core , trabajo , archivoRAR, particion):
+        # presuponemos que hay error y no hay exito
         exito = False
-        
+        error = True
+
+        nombreISO = core.getNombreISOenRAR(archivoRAR)        
+        rutaISO = os.path.join(self.ruta_extraer_rar, nombreISO)
+
         if( not os.path.exists(particion.device) ):
             trabajo.error = _("La particion %s: Ya no existe") % particion.device
             
         elif (not os.path.exists(archivoRAR)):
             trabajo.error = _("El archivo RAR %s: No existe") % archivoRAR
-        
-        elif( util.getExtension(archivoRAR) == "rar" ):
-            nombreISO = core.getNombreISOenRAR(archivoRAR)
-            if (nombreISO != None):
-                if( not os.path.exists(nombreISO) ):
-                    
-                    if self.callback_empieza_progreso:
-                        self.callback_empieza_progreso(trabajo)
-                    
-                    if ( core.unpack(archivoRAR, self.ruta_extraer_rar, nombreISO) ):
-                        exito = True
-                        isoExtraida = os.path.join(self.ruta_extraer_rar, nombreISO)
-                        self.nuevoTrabajoAnadir( isoExtraida , particion.device)
-                    else:
-                        trabajo.error = _("Error al descomrpimir el RAR : %s") % (archivoRAR)
-                        
-                    if self.callback_termina_progreso:
-                        self.callback_termina_progreso(trabajo)
-                else:
-                    trabajo.error = _("Error: No se puede descomrpimir por que reemplazaria el ISO : %s") % (nombreISO)
+
+        elif os.path.exists(rutaISO):
+            if not self.rar_overwrite_iso:
+                trabajo.error = _("Error al descomprimrir. Ya existe %s. Si desea sobreescribirlo, modifique la opcion en preferencias.") % rutaISO
             else:
-                trabajo.error = _("Error: El archivo RAR %s no contiene ninguna ISO") % (archivoRAR)
+                if os.path.exists(rutaISO):
+                    os.remove(rutaISO)
+                    error = False
+
+        elif( util.getExtension(archivoRAR) != "rar" ):
+            trabajo.error = _("%s no es un archivo RAR") % archivoRAR
+
+        elif nombreISO is None:
+            trabajo.error = _("Error: El archivo RAR %s no contiene ninguna ISO") % (archivoRAR)
 
         else:
-            trabajo.error = _("%s no es un archivo RAR") % archivoRAR
+            error = False
+            
+        if not util.space_for_dvd_iso_wii(self.ruta_extraer_rar):
+            trabajo.error = _("No hay 4.4GB libres para descomprimir el fichero RAR: %s en la ruta %s. Puede cambiar la ruta en preferencias.") % (archivoRAR, self.ruta_extraer_rar)
+            error = True
+        
+        if not error:
+
+            if self.callback_empieza_progreso:
+                self.callback_empieza_progreso(trabajo)
+
+            if ( core.unpack(archivoRAR, self.ruta_extraer_rar, nombreISO, self.rar_overwrite_iso) ):
+                exito = True
                 
+                trabajoAnadir = self.nuevoTrabajoAnadir( rutaISO , particion.device)
+                trabajoAnadir.padre = trabajo
+            else:
+                trabajo.error = _("Error al descomrpimir el RAR : %s") % (archivoRAR)
+                
+            if self.callback_termina_progreso:
+                self.callback_termina_progreso(trabajo)
+
         return exito
 
     # TAREA UNICA EN COLA
@@ -354,49 +373,50 @@ class PoolTrabajo(Pool , Thread):
                 trabajo = Trabajo(tipo , origen, destino)
                 self.nuevoElemento(trabajo)
                 trabajos.append(trabajo)
-                
-            #self.listaTrabajos.extend(trabajos)
-            
+
             if self.callback_nuevo_trabajo:
                 self.callback_nuevo_trabajo(trabajos)
+            
+            return trabajos
+
         else:
             trabajo = Trabajo(tipo , origenes, destino)
             self.nuevoElemento(trabajo)
 
-            #self.listaTrabajos.append(trabajo)
-            
             if self.callback_nuevo_trabajo:
                 self.callback_nuevo_trabajo(trabajo)
+                
+            return trabajo
 
     def nuevoTrabajoAnadir(self , ficheros , DEVICE):
-        self.nuevoTrabajo( ANADIR , ficheros , DEVICE )
+        return self.nuevoTrabajo( ANADIR , ficheros , DEVICE )
 
     def nuevoTrabajoExtraer(self ,juegos ,destino):
-        self.nuevoTrabajo( EXTRAER , juegos, destino )
+        return self.nuevoTrabajo( EXTRAER , juegos, destino )
 
     def nuevoTrabajoClonar(self , juegos, DEVICE):
-        self.nuevoTrabajo( CLONAR , juegos, DEVICE )
+        return self.nuevoTrabajo( CLONAR , juegos, DEVICE )
 
     def nuevoTrabajoDescargaCaratula(self , juegos):
-        self.nuevoTrabajo( DESCARGA_CARATULA , juegos )
+        return self.nuevoTrabajo( DESCARGA_CARATULA , juegos )
 
     def nuevoTrabajoDescargaDisco(self , juegos):
-        self.nuevoTrabajo( DESCARGA_DISCO , juegos )
+        return self.nuevoTrabajo( DESCARGA_DISCO , juegos )
 
     def nuevoTrabajoCopiarCaratula(self , juegos, destino):
-        self.nuevoTrabajo( COPIAR_CARATULA , juegos, destino )
+        return self.nuevoTrabajo( COPIAR_CARATULA , juegos, destino )
 
     def nuevoTrabajoCopiarDisco(self , juegos, destino):
-        self.nuevoTrabajo( COPIAR_DISCO , juegos, destino )
+        return self.nuevoTrabajo( COPIAR_DISCO , juegos, destino )
         
     def nuevoTrabajoRecorrerDirectorio(self , directorio, particion):
-        self.nuevoTrabajo( RECORRER_DIRECTORIO , directorio, particion )
+        return self.nuevoTrabajo( RECORRER_DIRECTORIO , directorio, particion )
 
     def nuevoTrabajoDescomprimirRAR(self , archivoRAR, particion):
-        self.nuevoTrabajo( DESCOMPRIMIR_RAR , archivoRAR, particion )
+        return self.nuevoTrabajo( DESCOMPRIMIR_RAR , archivoRAR, particion )
 
     def nuevoTrabajoActualizarWiiTDB(self , url):
-        self.nuevoTrabajo( ACTUALIZAR_WIITDB , url )
+        return self.nuevoTrabajo( ACTUALIZAR_WIITDB , url )
 
 '''
 tipo:
@@ -410,6 +430,10 @@ terminado:
     Trabajo hecho o no
 exito:
     Exito al finalizar o no
+padre:
+    Trabajo que le ha generado, None para trabajos raices.
+error:
+    En caso fallido, mensaje de error
 '''
 
 class Trabajo:
@@ -419,6 +443,7 @@ class Trabajo:
         self.destino = destino
         self.terminado = False
         self.exito = False
+        self.padre = None
         self.error = _("Error al finalizar la siguiente tarea:\n\n%s") % (self.__repr__())
  
     def __repr__(self):

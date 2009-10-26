@@ -5,7 +5,6 @@
 import os
 import time
 import sys
-import statvfs
 import re
 from threading import Thread
 
@@ -31,31 +30,28 @@ session =   util.getSesionBDD(db)
 
 class WiithonGUI(GtkBuilderWrapper):
 
-    # Lista de particiones
-    lParti = None
-
-    # lista de juegos mostrados
-    lJuegos = None
-
-    # Representación de la fila seleccionada en los distintos treeviews
-    sel_juego = FilaTreeview()
-    sel_parti = FilaTreeview()
-    sel_parti_1on1 = FilaTreeview()
-
-    # Hilo que actualiza wiitdb
-    xmlWiiTDB = None
-
-    # valor busqueda
-    buscar = ""
-
-    # informacion del gui
-    info = None
-
     def __init__(self, core):
-        GtkBuilderWrapper.__init__(self,
-                                   os.path.join(config.WIITHON_FILES_RECURSOS_GLADE, '%s.ui' % config.APP))
+        GtkBuilderWrapper.__init__(self, os.path.join(config.WIITHON_FILES_RECURSOS_GLADE, '%s.ui' % config.APP))
 
+        # referencia al core
         self.core = core
+
+        # Lista de particiones
+        self.lParti = None
+
+        # lista de juegos mostrados
+        self.lJuegos = None
+
+        # Representación de la fila seleccionada en los distintos treeviews
+        self.sel_juego = FilaTreeview()
+        self.sel_parti = FilaTreeview()
+        self.sel_parti_1on1 = FilaTreeview()
+
+        # valor busqueda
+        self.buscar = ""
+
+        # informacion del gui
+        self.info = None
 
         # Cellrenderers que se modifican según cambia el modo
         self.renderEditableIDGAME = None
@@ -81,6 +77,9 @@ class WiithonGUI(GtkBuilderWrapper):
 
                 ('Borrar', gtk.STOCK_DELETE, None, None, '',
                  self.menu_contextual_borrar),
+                 
+                ('InfoWiiTDB', None, _('Descargar info'), None, '',
+                 self.menu_contextual_info_wiitdb),
                 ])
 
         self.uimgr.insert_action_group(actiongroup)
@@ -93,6 +92,8 @@ class WiithonGUI(GtkBuilderWrapper):
                 <menuitem action="Copiar"/>
                 <separator/>
                 <menuitem action="Borrar"/>
+                <separator/>
+                <menuitem action="InfoWiiTDB"/>
             </popup>
         </ui>
         '''
@@ -405,6 +406,9 @@ class WiithonGUI(GtkBuilderWrapper):
 
     def menu_contextual_borrar(self, action):
         self.on_tb_toolbar_clicked( self.wb_tb_borrar )
+        
+    def menu_contextual_info_wiitdb(self, action):
+        self.poolBash.nuevoTrabajoActualizarWiiTDB('%s?ID=%s' % (self.core.prefs.URL_ZIP_WIITDB, self.sel_juego.obj.idgame))
 
     def cargarParticionesVista(self, treeview, callback_cursor_changed):
         
@@ -1382,21 +1386,20 @@ class WiithonGUI(GtkBuilderWrapper):
                 res = fc_extraer.run()
                 if(res == gtk.RESPONSE_OK):
 
-                    reemplazar = False
-                    if self.core.existeExtraido(self.sel_juego.obj , fc_extraer.get_filename()):
-                        if( self.question(_('Desea reemplazar la iso del juego %s?') % (self.sel_juego.obj)) ):
-                            reemplazar = True
+                    ruta_selec = fc_extraer.get_current_folder()
+
+                    extraer = False
+                    if self.core.existeExtraido(self.sel_juego.obj , ruta_selec):
+                        extraer = self.question(_('Desea reemplazar la iso del juego %s?') % (self.sel_juego.obj))
                     else:
-			## check for 4.4 GB of free space before to extract ISO
-                        fs = os.statvfs(str(fc_extraer.get_current_folder()))
-                        if ((fs[statvfs.F_BSIZE]*fs[statvfs.F_BAVAIL]/1024) < 4693504):
-                                self.alert("warning" , _("Espacio libre insuficiente para extraer la ISO"))
+                        if util.space_for_dvd_iso_wii(ruta_selec):
+                            self.alert("warning" , _("Espacio libre insuficiente para extraer la ISO"))
                         else:
-                                reemplazar = True
+                            extraer = True
                         
-                    if reemplazar:
+                    if extraer:
                         # nueva ruta favorita
-                        self.core.prefs.ruta_extraer_iso = fc_extraer.get_current_folder()
+                        self.core.prefs.ruta_extraer_iso = ruta_selec
 
                         # extraer *juego* en la ruta seleccionada
                         self.poolTrabajo.nuevoTrabajoExtraer(self.sel_juego.obj , fc_extraer.get_filename())
@@ -1448,10 +1451,10 @@ class WiithonGUI(GtkBuilderWrapper):
                             listaRAR.append(fichero)
                         elif( util.getExtension(fichero) == "iso" ):
                             idgame = util.getMagicISO(fichero)
-                            if idgame != None:
+                            if idgame is not None:
                                 sql = util.decode("idgame=='%s' and idParticion=='%d'" % (idgame , self.sel_parti.obj.idParticion))
-                                self.juegoNuevo = session.query(Juego).filter(sql).first()
-                                if self.juegoNuevo == None:
+                                juego = session.query(Juego).filter(sql).first()
+                                if juego is None:
 
                                     # vamos descargando info wiitdb
                                     # no podemos usar objeto porque es None ...
@@ -1470,7 +1473,7 @@ class WiithonGUI(GtkBuilderWrapper):
                                     listaISO.append(fichero)
                                 else:
                                     hay_juegosYaMetidos = True
-                                    buffer_juegosYaMetidos += _("%s ya existe en %s\n") % (self.juegoNuevo.title, self.juegoNuevo.particion.device)
+                                    buffer_juegosYaMetidos += _("%s ya existe en %s\n") % (juego.title, juego.particion.device)
                     
                     if hay_juegosYaMetidos:
                         self.alert('warning',buffer_juegosYaMetidos)
@@ -1585,6 +1588,11 @@ class WiithonGUI(GtkBuilderWrapper):
 
 ############# METODOS que modifican el GUI, si se llaman desde hilos, se hacen con gobject
 
+    def borrar_archivo_preguntando(self, archivo):
+        if self.question(_('Deseas borrar el archivo %s?') % archivo):
+            if os.path.exists(archivo):
+                os.remove(archivo)
+
     def ocultarHBoxProgreso(self):
         self.wb_box_progreso.hide()
         return False
@@ -1649,11 +1657,7 @@ class WiithonGUI(GtkBuilderWrapper):
                         listaArrastrados.append(fichero)
                     if self.sel_juego.it != None:
                         # Arrastrar imagenes (png, jpg, gif) desde el escritorio
-                        if  (
-                                (util.getExtension(fichero)=="png") or
-                                (util.getExtension(fichero)=="jpg") or
-                                (util.getExtension(fichero)=="gif")
-                            ):
+                        if(util.esImagen(fichero)):
                             ruta = self.core.getRutaCaratula(self.sel_juego.obj.idgame)
                             shutil.copy(fichero, ruta)
                             comando = 'mogrify -resize %dx%d! "%s"' % (self.core.prefs.WIDTH_COVERS, self.core.prefs.HEIGHT_COVERS, ruta)
@@ -1661,11 +1665,7 @@ class WiithonGUI(GtkBuilderWrapper):
                             self.ponerCaratula(self.sel_juego.obj.idgame, self.wb_img_caratula1)
             elif fichero.startswith("http://"):
                 # Arrastrar imagenes (png, jpg, gif) desde el navegador
-                if  (
-                        (util.getExtension(fichero)=="png") or
-                        (util.getExtension(fichero)=="jpg") or
-                        (util.getExtension(fichero)=="gif")
-                    ):
+                if(util.esImagen(fichero)):
                     ruta = self.core.getRutaCaratula(self.sel_juego.obj.idgame)
                     util.descargar(fichero, ruta)
                     comando = 'mogrify -resize %dx%d! "%s"' % (self.core.prefs.WIDTH_COVERS, self.core.prefs.HEIGHT_COVERS, ruta)
@@ -1690,6 +1690,10 @@ class WiithonGUI(GtkBuilderWrapper):
     def callback_termina_trabajo_anadir(self, trabajo , fichero, device):
         if trabajo.exito:
             gobject.idle_add( self.termina_trabajo_anadir , fichero , device)
+            if trabajo.padre is not None: # viene de un rar
+                #if trabajo.padre.tipo == trabajo.DESCOMPRIMIR_RAR:
+                gobject.idle_add( self.borrar_archivo_preguntando , trabajo.padre.origen)
+                gobject.idle_add( self.borrar_archivo_preguntando , fichero)
 
     # Al terminar hay que seleccionar la partición destino y el juego copiado
     def callback_termina_trabajo_copiar(self, trabajo, juego, particion):

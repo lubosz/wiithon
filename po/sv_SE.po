@@ -245,6 +245,9 @@ msgstr ""
 msgid "Descargando disco de %s"
 msgstr ""
 
+msgid "Descargar info"
+msgstr ""
+
 msgid "Descomprimido correctamente"
 msgstr ""
 
@@ -261,6 +264,10 @@ msgid "Desea reemplazar la iso del juego %s?"
 msgstr ""
 
 msgid "Desea reemplazarla (S/N) : "
+msgstr ""
+
+#, python-format
+msgid "Deseas borrar el archivo %s?"
 msgstr ""
 
 msgid "Dispositivo"
@@ -371,6 +378,10 @@ msgid "English"
 msgstr ""
 
 #, python-format
+msgid "Error al descomprimrir. Ya existe %s. Si desea sobreescribirlo, modifique la opcion en preferencias."
+msgstr ""
+
+#, python-format
 msgid "Error al descomrpimir el RAR : %s"
 msgstr ""
 
@@ -411,10 +422,6 @@ msgid "Error: El archivo RAR %s no contiene ninguna ISO"
 msgstr ""
 
 msgid "Error: La longitud del IDGAME debe ser 6, y solo puede contener letras y numeros"
-msgstr ""
-
-#, python-format
-msgid "Error: No se puede descomrpimir por que reemplazaria el ISO : %s"
 msgstr ""
 
 msgid "Error: Ocurrio un error al introducir la informacion de juegos de WiiTDB"
@@ -625,6 +632,10 @@ msgid "No has seleccionado ningun juego"
 msgstr ""
 
 msgid "No has seleccionado ninguna particion"
+msgstr ""
+
+#, python-format
+msgid "No hay 4.4GB libres para descomprimir el fichero RAR: %s en la ruta %s. Puede cambiar la ruta en preferencias."
 msgstr ""
 
 msgid "No hay Juegos para descargar caratulas"

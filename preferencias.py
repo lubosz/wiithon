@@ -51,7 +51,7 @@ class Preferencias:
         self.iniciarPreferencia('string', 'ruta_extraer_iso', defecto=os.getcwd())
         self.iniciarPreferencia('string', 'ruta_copiar_caratulas', defecto=os.getcwd())
         self.iniciarPreferencia('string', 'ruta_copiar_discos', defecto=os.getcwd())
-        self.iniciarPreferencia('string', 'ruta_extraer_rar', defecto=os.getcwd(), mostrar=True, vbox=prefs_vbox_general, label=_('Ruta para extraer ficheros .rar'), relaunch_required = True)
+        self.iniciarPreferencia('string', 'ruta_extraer_rar', defecto='/tmp', mostrar=True, vbox=prefs_vbox_general, label=_('Ruta para extraer ficheros .rar'), relaunch_required = True)
         
         self.iniciarPreferencia('string', 'URL_ZIP_WIITDB', defecto='http://wiitdb.com/wiitdb.zip', mostrar=True, vbox=prefs_vbox_wiitdb, label=_('URL Base de datos WiiTDB'))
         self.iniciarPreferencia('string', 'FORMATO_FECHA_WIITDB', defecto='%d/%m/%Y', mostrar=True, vbox=prefs_vbox_wiitdb, label=_('Formato fecha'))
@@ -63,6 +63,7 @@ class Preferencias:
         
         #self.iniciarPreferencia('bool', 'DRAG_AND_DROP_LOCAL', defecto=True, mostrar=True, vbox=prefs_vbox_caratulas, label=_('Permitir Drag & Drop en imagenes arrastradas en local'))
         #self.iniciarPreferencia('bool', 'DRAG_AND_DROP_HTTP', defecto=True, mostrar=True, vbox=prefs_vbox_caratulas, label=_('Permitir Drag & Drop en imagenes arrastradas desde el navegador'))
+        self.iniciarPreferencia('bool', 'rar_overwrite_iso', defecto=True)
         
         self.iniciarPreferencia('int', 'NUM_HILOS', defecto=8, mostrar=True, vbox=prefs_vbox_general, label=_('Num. Hilos para tareas de fondo'))
         
