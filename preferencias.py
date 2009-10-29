@@ -97,16 +97,6 @@ class Preferencias:
         cycle_covers += "http://www.wiiboxart.com/widescreen/ntscj/%s.png\n"
         cycle_covers += "http://www.wiiboxart.com/fullcover/%s.png\n"
         self.iniciarPreferencia('memo', 'PROVIDER_COVERS', defecto=cycle_covers, mostrar=True, vbox=prefs_vbox_caratulas, label=_('Proveedor de caratulas'), relaunch_required = True)
-        
-        # poner comentarios finales
-        etiqueta = gtk.Label()
-        etiqueta.set_text("<small><i>* = %s</i></small>" % _("requiere reiniciar la aplicacion"))
-        etiqueta.set_use_markup(True)
-        etiqueta.set_alignment(0.0 , -1)
-        etiqueta.set_padding(5, -1)
-        etiqueta.show()
-
-        prefs_vbox_caratulas.pack_start(etiqueta, expand=False, fill=False, padding=0)
 
     # indicar el vbox que inicia la preferencia
     def iniciarPreferencia(self, tipo, name, defecto = '', mostrar = False, vbox = None, label = '', datos_lista = None, relaunch_required = False):

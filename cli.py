@@ -480,11 +480,9 @@ class WiithonCLI:
                     reemplazada = True
             print _("Dumpeando desde %s a %s utilizando %s temporalmente") % (lector, particion, SALIDA)
             print _("Puede llevar mucho tiempo ...")
-            '''
-            dd if=/dev/source of=/target/name.img bs=40M conv=noerror,sync 2> /dev/null
-            '''
-            if( reemplazada or (os.system("dd if=%s of=%s bs=40M conv=noerror,sync 2> /dev/null" % (LECTOR_DVD, SALIDA))==0) ):
-                if ( self.core.anadirISO(particion , SALIDA)):
+            comando = "dd if=%s of=%s bs=40M conv=noerror,sync"
+            if( reemplazada or util.call_out_null(comando % (LECTOR_DVD, SALIDA)) ):
+                if( self.core.anadirISO(particion , SALIDA) ):
                     print _("OK, el juego se ha pasado a la particion %s") % particion
                 else:
                     print _("Error al pasar la ISO a la particion %s") % particion

@@ -96,6 +96,12 @@ msgstr "1 partición WBFS"
 msgid "1j."
 msgstr ""
 
+msgid "<b>Herramientas y utilidades</b>"
+msgstr ""
+
+msgid "<small><i>* = requiere reiniciar la aplicacion</i></small>"
+msgstr ""
+
 msgid "??"
 msgstr ""
 
@@ -144,6 +150,18 @@ msgstr ""
 "\t\t%s -i|--install\n"
 "\n"
 "Web : http://blogricardo.wordpress.com/2009/06/21/wiithon-1-0-liberado/"
+
+msgid "Abre la carpeta donde se almacenan las caratulas descargadas"
+msgstr ""
+
+msgid "Abre la carpeta donde se almacenan las disc-art descargadas"
+msgstr ""
+
+msgid "Abrir carpeta de caratulas"
+msgstr ""
+
+msgid "Abrir carpeta de disc-art"
+msgstr ""
 
 msgid "Acerca de ..."
 msgstr ""
@@ -194,6 +212,9 @@ msgstr "Añadir RAR con ISO dentro"
 
 msgid "Aniadir directorio"
 msgstr "Añadir directorio"
+
+msgid "Asistente para particiones WBFS. Le aprarecera una lista de particiones, (solamente FAT32) de la cual, debera elegir una."
+msgstr ""
 
 #, python-format
 msgid "Borrando juego %s"
@@ -519,6 +540,9 @@ msgid "Finalizada satisfactoriamente la importacion de datos desde WiiTDB"
 msgstr ""
 
 msgid "Finalizando ..."
+msgstr ""
+
+msgid "Formatear a WBFS"
 msgstr ""
 
 msgid "Formato desconocido"
@@ -960,6 +984,9 @@ msgstr "Un gestor de particiones WBFS fácil de usar"
 msgid "Usado"
 msgstr ""
 
+msgid "Utitice la siguiente URL para el reporte de bugs:"
+msgstr ""
+
 msgid "Valor incorrecto"
 msgstr ""
 
@@ -1010,9 +1037,6 @@ msgid "juegos mas"
 msgstr ""
 
 msgid "quedan"
-msgstr ""
-
-msgid "requiere reiniciar la aplicacion"
 msgstr ""
 
 msgid "s"

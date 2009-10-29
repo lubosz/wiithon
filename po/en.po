@@ -96,6 +96,12 @@ msgstr ""
 msgid "1j."
 msgstr ""
 
+msgid "<b>Herramientas y utilidades</b>"
+msgstr ""
+
+msgid "<small><i>* = requiere reiniciar la aplicacion</i></small>"
+msgstr ""
+
 msgid "??"
 msgstr ""
 
@@ -109,6 +115,18 @@ msgid "AUTENTIFICACION:"
 msgstr ""
 
 msgid "AYUDA_CLI"
+msgstr ""
+
+msgid "Abre la carpeta donde se almacenan las caratulas descargadas"
+msgstr ""
+
+msgid "Abre la carpeta donde se almacenan las disc-art descargadas"
+msgstr ""
+
+msgid "Abrir carpeta de caratulas"
+msgstr ""
+
+msgid "Abrir carpeta de disc-art"
 msgstr ""
 
 msgid "Acerca de ..."
@@ -150,6 +168,9 @@ msgstr "Add RAR containing ISO"
 
 msgid "Aniadir directorio"
 msgstr "Add folder"
+
+msgid "Asistente para particiones WBFS. Le aprarecera una lista de particiones, (solamente FAT32) de la cual, debera elegir una."
+msgstr ""
 
 #, python-format
 msgid "Borrando juego %s"
@@ -478,6 +499,9 @@ msgid "Finalizada satisfactoriamente la importacion de datos desde WiiTDB"
 msgstr ""
 
 msgid "Finalizando ..."
+msgstr ""
+
+msgid "Formatear a WBFS"
 msgstr ""
 
 msgid "Formato desconocido"
@@ -924,6 +948,9 @@ msgstr "Easy to use WBFS Partition Manager"
 msgid "Usado"
 msgstr "Used"
 
+msgid "Utitice la siguiente URL para el reporte de bugs:"
+msgstr ""
+
 msgid "Valor incorrecto"
 msgstr "Value error"
 
@@ -975,9 +1002,6 @@ msgstr "more games"
 
 msgid "quedan"
 msgstr "remaining"
-
-msgid "requiere reiniciar la aplicacion"
-msgstr ""
 
 msgid "s"
 msgstr ""

@@ -387,7 +387,7 @@ def descomprimirZIP(file_in, file_out):
         zip.extract(file_out)
         zip.close()
     except:
-        comando = "unzip %s" % (file_in)
+        comando = 'unzip -o "%s" "%s"' % (file_in, file_out)
         call_out_null(comando)
 
 def parsear_a_XML(texto):

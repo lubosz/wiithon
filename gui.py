@@ -349,7 +349,17 @@ class WiithonGUI(GtkBuilderWrapper):
         
     def excepthook(self, exctype, excvalue, exctb):
         tbtext = ''.join(traceback.format_exception(exctype, excvalue, exctb))
-        self.alert('error' , "%s\n%s" % (_("Por favor. Informe a los desarrolladores de este error."), tbtext), "%s" % (excvalue))
+        mensaje_xml = """
+        <negro><pr>%s</pr></negro><br />
+        <br />
+        <rojo><pr>%s</pr></rojo><br />
+        <negro><pr>%s</pr></negro><br />
+        <u><azul><pr>%s</pr></azul></u><br />
+        """  % (    _("Por favor. Informe a los desarrolladores de este error."),
+                    tbtext,
+                    _('Utitice la siguiente URL para el reporte de bugs:'),
+                    config.URL_BUGS)
+        self.alert('error' , mensaje_xml, excvalue, xml=True)
 
     # http://www.pygtk.org/pygtk2reference/class-pangoattribute.html
     def getEstilo_azulGrande(self):
@@ -696,8 +706,10 @@ class WiithonGUI(GtkBuilderWrapper):
     info
     error
     '''
-    def alert(self, level, message, titulo = ''):
+    def alert(self, level, message, titulo = '', xml = False):
         
+        titulo = str(titulo)
+        message = str(message)
         if level == 'question':
             botones = (gtk.STOCK_YES, gtk.RESPONSE_ACCEPT, gtk.STOCK_NO, gtk.RESPONSE_REJECT)
             const_stock_icon = gtk.STOCK_DIALOG_QUESTION
@@ -753,6 +765,15 @@ class WiithonGUI(GtkBuilderWrapper):
         view = TextViewCustom()
         view.cargar_tags_html()
 
+        if not xml:
+            if level == 'warning':
+                color = "naranja"
+            elif level == 'error':
+                color = "rojo"
+            else: # question | auth
+                color = "negro"
+            message = "<%s><b><pr>%s</pr></b></%s>" % (color, util.parsear_a_XML(message), color)
+
         xml_plantilla = """<?xml version="1.0" encoding="UTF-8"?>
         <xhtml>
             <margin8>
@@ -766,14 +787,10 @@ class WiithonGUI(GtkBuilderWrapper):
             </margin8>
             <br />
             <margin12>
-                <rojo>
-                    <b>
-                        <pr>%s</pr><br />
-                    </b>
-                </rojo>
+                %s<br />
             </margin12>
         </xhtml>
-        """ % (util.parsear_a_XML(titulo), util.parsear_a_XML(message))
+        """ % (util.parsear_a_XML(titulo), message)
 
         view.render_xml(xml_plantilla)
         ###############################
@@ -1506,6 +1523,7 @@ class WiithonGUI(GtkBuilderWrapper):
                 self.alert("warning" , _("No has seleccionado ninguna particion"))
 
         elif(id_tb == self.wb_tb_copiar_SD):
+            qq
             if self.sel_juego.it != None:
 
                 fc_copiar_SD = SelectorFicheros(_('Paso 1 de 2: Elige un directorio para las CARATULAS'), gtk.FILE_CHOOSER_ACTION_SELECT_FOLDER)

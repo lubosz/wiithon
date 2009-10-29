@@ -65,6 +65,9 @@ NUM_LINEAS_PAUSA = 21
 # ALTO de las imagenes de los accesorios
 SIZE_IMAGE_ACCESORIOS = 90
 
+#URL BUGS
+URL_BUGS = "https://bugs.launchpad.net/wiithon"
+
 if DEBUG:
     logging.basicConfig()
     logging.getLogger('sqlalchemy.engine').setLevel(logging.INFO)

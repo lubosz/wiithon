@@ -105,7 +105,9 @@ class TextViewCustom(gtk.TextView):
     def cargar_tags_html(self):
         a = self.nuevoTag
         a("h1", underline=pango.UNDERLINE_SINGLE, size=17 * pango.SCALE, foreground='darkgray')
+        a("negro", foreground='black')
         a("rojo", foreground='red')
+        a("naranja", foreground='orange')
         a("verde", foreground='darkgreen')
         a("azul", foreground='blue')
         a("gris", foreground='darkgray')
