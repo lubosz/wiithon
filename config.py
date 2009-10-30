@@ -13,6 +13,7 @@ import util
 import logging
 
 DEBUG = False
+SUPERDEBUG = False
 
 WIITHON_PATH = os.path.dirname(sys.argv[0])
 WIITHON_FILES = os.path.dirname(__file__)
@@ -68,7 +69,7 @@ SIZE_IMAGE_ACCESORIOS = 90
 #URL BUGS
 URL_BUGS = "https://bugs.launchpad.net/wiithon"
 
-if DEBUG:
+if DEBUG and SUPERDEBUG:
     logging.basicConfig()
     logging.getLogger('sqlalchemy.engine').setLevel(logging.INFO)
     logging.getLogger('sqlalchemy.orm.unitofwork').setLevel(logging.DEBUG)

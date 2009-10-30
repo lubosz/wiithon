@@ -83,7 +83,11 @@ class PoolTrabajo(Pool , Thread):
         self.callback_empieza_descomprimir = callback_empieza_descomprimir
         self.callback_empieza_importar = callback_empieza_importar
         self.callback_termina_importar = callback_termina_importar
+        
+        self.actualizarPreferencias()
 
+
+    def actualizarPreferencias(self):
         self.PROVIDER_COVERS = self.core.prefs.PROVIDER_COVERS
         self.WIDTH_COVERS = self.core.prefs.WIDTH_COVERS
         self.HEIGHT_COVERS = self.core.prefs.HEIGHT_COVERS
@@ -91,6 +95,8 @@ class PoolTrabajo(Pool , Thread):
         self.WIDTH_DISCS = self.core.prefs.WIDTH_DISCS
         self.HEIGHT_DISCS = self.core.prefs.HEIGHT_DISCS
         self.rar_overwrite_iso = self.core.prefs.rar_overwrite_iso
+        self.rar_preguntar_borrar_iso = self.core.prefs.rar_preguntar_borrar_iso
+        self.rar_preguntar_borrar_rar = self.core.prefs.rar_preguntar_borrar_rar
 
     def run(self):
         self.empezar( args=(self.core,) )
@@ -110,7 +116,7 @@ class PoolTrabajo(Pool , Thread):
             trabajo.exito = self.anadir(core ,trabajo , fichero , DEVICE)
             
             if self.callback_termina_trabajo_anadir:
-                self.callback_termina_trabajo_anadir(trabajo, fichero, DEVICE)
+                self.callback_termina_trabajo_anadir(core, trabajo, fichero, DEVICE, self.rar_preguntar_borrar_iso, self.rar_preguntar_borrar_rar)
 
         elif( trabajo.tipo == EXTRAER):
 
@@ -258,19 +264,35 @@ class PoolTrabajo(Pool , Thread):
 
         elif( os.path.isdir( directorio ) ):
 
-            encontrados =  util.rec_glob(directorio, "*.rar")
-            hayRAR = len(encontrados) > 0
-            if hayRAR:
-                for encontrado in encontrados:
-                    trabajoAnadir = self.nuevoTrabajoAnadir( encontrado , particion.device)
-                    trabajoAnadir.padre = trabajo
+            encontradosRAR =  util.rec_glob(directorio, "*.rar")
+            hayRAR = len(encontradosRAR) > 0
 
-            encontrados =  util.rec_glob(directorio, "*.iso")
-            hayISO = len(encontrados) > 0
+            encontradosISO =  util.rec_glob(directorio, "*.iso")
+            hayISO = len(encontradosISO) > 0
+
+            ########## eliminar rar que tienen iso con el mismo nombre #######
+            for ficheroRAR in encontradosRAR:
+                nombre = util.getNombreFichero(ficheroRAR)
+                i = 0
+                encontrado = False
+                while not encontrado and i<len(encontradosISO):
+                    encontrado = encontradosISO[i].lower() == ("%s.iso" % nombre).lower()
+                    if not encontrado:
+                        i += 1
+                if encontrado:
+                    print "eliminar %s" % ficheroRAR
+                    encontradosRAR.remove(ficheroRAR)
+            ##################################################################
+
             if hayISO:
-                for encontrado in encontrados:
+                for encontrado in encontradosISO:
                     trabajoAnadir = self.nuevoTrabajoAnadir( encontrado , particion.device)
                     trabajoAnadir.padre = trabajo
+                    
+            if hayRAR:
+                for encontrado in encontradosRAR:
+                    trabajoDescomprimirRAR = self.nuevoTrabajoDescomprimirRAR( encontrado , particion)
+                    trabajoDescomprimirRAR.padre = trabajo
 
             if hayRAR or hayISO:
                 exito = True

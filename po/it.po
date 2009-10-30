@@ -52,6 +52,10 @@ msgid "%s NO se ha podido formatear"
 msgstr "%s NON è stato possibile formattare"
 
 #, python-format
+msgid "%s no es un ISO de Wii.\n"
+msgstr ""
+
+#, python-format
 msgid "%s no es un archivo RAR"
 msgstr "%s non è un archivio RAR"
 

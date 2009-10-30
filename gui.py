@@ -484,7 +484,7 @@ class WiithonGUI(GtkBuilderWrapper):
             # quiero reflejar los huecos. Esto permite un alineamiento con la lista del core
             i = i + 1
 
-        if not filtrarTodo and (len(listaParticiones) > 1):
+        if not filtrarTodo and (len(listaParticiones) != 1):
             # Añadir TODOS
             iterador = modelo.insert(0)
             modelo.set_value(iterador,0,        _("TODOS")          )
@@ -750,7 +750,6 @@ class WiithonGUI(GtkBuilderWrapper):
         confirmar.set_border_width(12)
         confirmar.vbox.set_spacing(6)
 
-
         # poner icono a la ventana
         # 2º parametro: http://www.pygtk.org/docs/pygtk/gtk-constants.html#gtk-icon-size-constants
         logo = gtk.Image()
@@ -924,7 +923,13 @@ class WiithonGUI(GtkBuilderWrapper):
             self.info.arriba_num_juegos = session.query(Juego).filter('idParticion = %d' % particion.idParticion).count()
             self.info.abajo_num_particiones = session.query(Particion).count()
             
-            #######################
+    def refrescarInfoWiiTDBNumCaratulas(self):
+
+        if config.DEBUG:
+            print "refrescarInfoWiiTDBNumCaratulas"
+        
+        particion = self.sel_parti.obj
+        if particion != None:
             
             sql = util.decode("idParticion=='%d'" % (particion.idParticion))
             numInfos = 0
@@ -1041,6 +1046,7 @@ class WiithonGUI(GtkBuilderWrapper):
                 
                 # refrescar espacio
                 self.refrescarEspacio()
+                self.refrescarInfoWiiTDBNumCaratulas()
 
     def toggle_todo_particion(self):
         if self.todo:
@@ -1092,7 +1098,7 @@ class WiithonGUI(GtkBuilderWrapper):
             self.poolBash.nuevoTrabajoDescargaCaratula( IDGAME )
         else:
             destinoCaratula = self.core.getRutaCaratula(IDGAME)
-        
+
         widget_imagen.set_from_file( destinoCaratula )
 
     def ponerDisco(self, IDGAME, widget_imagen):        
@@ -1101,7 +1107,7 @@ class WiithonGUI(GtkBuilderWrapper):
             self.poolBash.nuevoTrabajoDescargaDisco( IDGAME )
         else:
             destinoDisco = self.core.getRutaDisco(IDGAME)
-            
+
         widget_imagen.set_from_file( destinoDisco )
 
     def actualizar_textview_info_wiitdb(self):
@@ -1322,7 +1328,7 @@ class WiithonGUI(GtkBuilderWrapper):
                     if(res == 1):
                         if self.sel_juego.it != None:
                             juegosParaClonar.append( self.sel_juego.obj )
-                            
+
                             pregunta = _("Desea copiar el juego %s a la particion %s?") % (self.sel_juego.obj, parti_destino)
 
                         else:
@@ -1469,8 +1475,8 @@ class WiithonGUI(GtkBuilderWrapper):
                     listaISO = []
                     listaRAR = []
                     listaDirectorios = []
-                    buffer_juegosYaMetidos = _("Algunos juegos no se han introducido:\n\n")
-                    hay_juegosYaMetidos = False
+                    buffer_errorNoMetidos = _("Algunos juegos no se han introducido:\n\n")
+                    hayNoMetidos = False
                     for fichero in fc_anadir.get_filenames():
                         if( os.path.isdir( fichero ) ):
                             listaDirectorios.append(fichero)
@@ -1486,24 +1492,38 @@ class WiithonGUI(GtkBuilderWrapper):
                                     # vamos descargando info wiitdb
                                     # no podemos usar objeto porque es None ...
                                     self.poolBash.nuevoTrabajoActualizarWiiTDB('%s?ID=%s' % (self.core.prefs.URL_ZIP_WIITDB, idgame))
-                                    print "descargar info wiitdb para %s" % idgame
 
                                     # vamos descargando caratulas
                                     if not self.core.existeCaratula(idgame):
                                         self.poolBash.nuevoTrabajoDescargaCaratula( idgame )
-                                        print "descargar caratula de %s" % idgame
 
                                     if not self.core.existeDisco(idgame):
                                         self.poolBash.nuevoTrabajoDescargaDisco( idgame )
-                                        print "descargar disc-art de %s" % idgame
 
                                     listaISO.append(fichero)
                                 else:
-                                    hay_juegosYaMetidos = True
-                                    buffer_juegosYaMetidos += _("%s ya existe en %s\n") % (juego.title, juego.particion.device)
-                    
-                    if hay_juegosYaMetidos:
-                        self.alert('warning',buffer_juegosYaMetidos)
+                                    hayNoMetidos = True
+                                    buffer_errorNoMetidos += _("%s ya existe en %s\n") % (juego.title, juego.particion.device)
+                            else:
+                                hayNoMetidos = True
+                                buffer_errorNoMetidos += _("%s no es un ISO de Wii.\n") % (fichero)
+
+                    if hayNoMetidos:
+                        self.alert('warning', buffer_errorNoMetidos)
+
+                    ########## eliminar rar que tienen iso con el mismo nombre #######
+                    for ficheroRAR in listaRAR:
+                        nombre = util.getNombreFichero(ficheroRAR)
+                        i = 0
+                        encontrado = False
+                        while not encontrado and i<len(listaISO):
+                            encontrado = listaISO[i].lower() == ("%s.iso" % nombre).lower()
+                            if not encontrado:
+                                i += 1
+                        if encontrado:
+                            print "eliminar %s" % ficheroRAR
+                            listaRAR.remove(ficheroRAR)
+                    ##################################################################
 
                     if len(listaISO) > 0:
                         listaISO.sort()
@@ -1523,7 +1543,7 @@ class WiithonGUI(GtkBuilderWrapper):
                 self.alert("warning" , _("No has seleccionado ninguna particion"))
 
         elif(id_tb == self.wb_tb_copiar_SD):
-            qq
+
             if self.sel_juego.it != None:
 
                 fc_copiar_SD = SelectorFicheros(_('Paso 1 de 2: Elige un directorio para las CARATULAS'), gtk.FILE_CHOOSER_ACTION_SELECT_FOLDER)
@@ -1553,7 +1573,23 @@ class WiithonGUI(GtkBuilderWrapper):
         elif(id_tb == self.wb_tb_preferencias):
             #self.wb_prefs.maximize()
             self.wb_prefs.run()
+            self.poolTrabajo.actualizarPreferencias()
+            self.poolBash.actualizarPreferencias()
             self.wb_prefs.hide()
+            
+######### HERRAMIENTAS Y UTILIDADES #################
+
+    def on_button_formatear_wbfs_clicked(self, boton):
+        self.wb_prefs.hide()
+        self.alert("error" , "Sin implementar")
+        
+    def on_button_abrir_carpeta_caratulas_clicked(self, boton):
+        comando = 'gnome-open "%s"' % config.HOME_WIITHON_CARATULAS
+        util.call_out_null(comando)
+        
+    def on_button_abrir_carpeta_discart_clicked(self, boton):
+        comando = 'gnome-open "%s"' % config.HOME_WIITHON_DISCOS
+        util.call_out_null(comando)
 
                 
 ########## WIITDB ###########
@@ -1678,7 +1714,7 @@ class WiithonGUI(GtkBuilderWrapper):
         tuplaArrastrados = selection_data.get_uris()
         listaArrastrados = []
         for fichero in tuplaArrastrados:
-            if fichero.startswith("file://"):
+            if fichero.startswith("file://") and self.core.prefs.DRAG_AND_DROP_LOCAL:
                 fichero = fichero.replace("file://" , "")
                 if os.path.exists(fichero):
                     if(util.getExtension(fichero)=="iso"):
@@ -1691,7 +1727,7 @@ class WiithonGUI(GtkBuilderWrapper):
                             comando = 'mogrify -resize %dx%d! "%s"' % (self.core.prefs.WIDTH_COVERS, self.core.prefs.HEIGHT_COVERS, ruta)
                             util.call_out_null(comando)
                             self.ponerCaratula(self.sel_juego.obj.idgame, self.wb_img_caratula1)
-            elif fichero.startswith("http://"):
+            elif fichero.startswith("http://") and self.core.prefs.DRAG_AND_DROP_HTTP:
                 # Arrastrar imagenes (png, jpg, gif) desde el navegador
                 if(util.esImagen(fichero)):
                     ruta = self.core.getRutaCaratula(self.sel_juego.obj.idgame)
@@ -1700,6 +1736,7 @@ class WiithonGUI(GtkBuilderWrapper):
                     util.call_out_null(comando)
                     self.ponerCaratula(self.sel_juego.obj.idgame, self.wb_img_caratula1)
 
+        # FIXME, RAR y DIRECTORIOS ?
         listaArrastrados.sort()
         if self.poolTrabajo and len(listaArrastrados)>0:
             self.poolTrabajo.nuevoTrabajoAnadir(listaArrastrados, self.sel_parti.obj.device)
@@ -1715,13 +1752,16 @@ class WiithonGUI(GtkBuilderWrapper):
     def callback_empieza_trabajo_anadir(self, trabajo):
         pass
 
-    def callback_termina_trabajo_anadir(self, trabajo , fichero, device):
+    def callback_termina_trabajo_anadir(self, core, trabajo , fichero, device, rar_preguntar_borrar_iso = True, rar_preguntar_borrar_rar = False):
         if trabajo.exito:
             gobject.idle_add( self.termina_trabajo_anadir , fichero , device)
-            if trabajo.padre is not None: # viene de un rar
-                #if trabajo.padre.tipo == trabajo.DESCOMPRIMIR_RAR:
-                gobject.idle_add( self.borrar_archivo_preguntando , trabajo.padre.origen)
-                gobject.idle_add( self.borrar_archivo_preguntando , fichero)
+        if trabajo.padre is not None:
+            if trabajo.padre.tipo == str(8): # DESCOMPRIMIR_RAR = str(8)
+                if rar_preguntar_borrar_iso:
+                    gobject.idle_add( self.borrar_archivo_preguntando , fichero)
+                if rar_preguntar_borrar_rar:
+                    gobject.idle_add( self.borrar_archivo_preguntando , trabajo.padre.origen)
+                
 
     # Al terminar hay que seleccionar la partición destino y el juego copiado
     def callback_termina_trabajo_copiar(self, trabajo, juego, particion):
