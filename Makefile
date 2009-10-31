@@ -454,3 +454,6 @@ install4ppa:
 	@echo "=================================================================="
 	@echo "Wiithon Install for PPA OK"
 	@echo "=================================================================="
+
+ppa:
+	dpkg-buildpackage -rfakeroot
