@@ -478,8 +478,14 @@ class WiithonGUI(GtkBuilderWrapper):
         if not filtrarTodo and (len(listaParticiones) != 1):
             # Añadir TODOS
             iterador = modelo.insert(0)
-            modelo.set_value(iterador,0,        _("TODOS")          )
-            modelo.set_value(iterador,1,        ""                  )
+            if len(listaParticiones) == 0:
+                label_primera_linea = _("BDD")
+                tam_primera_linea = '%s%s' % (config.APP, config.VER)
+            else:
+                label_primera_linea = _("TODOS")
+                tam_primera_linea = ""
+            modelo.set_value(iterador,0,        label_primera_linea )
+            modelo.set_value(iterador,1,        tam_primera_linea   )
 
     def cargarJuegosVista(self):
         

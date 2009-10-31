@@ -178,6 +178,9 @@ msgstr "Neuer Ordner"
 msgid "Asistente para particiones WBFS. Le aprarecera una lista de particiones, (solamente FAT32) de la cual, debera elegir una."
 msgstr ""
 
+msgid "BDD"
+msgstr ""
+
 msgid "Borra el juego seleccionado."
 msgstr ""
 
