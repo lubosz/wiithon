@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <interface>
-  <requires lib="gtk+" version="2.14"/>
+  <requires lib="gtk+" version="2.16"/>
   <!-- interface-naming-policy project-wide -->
   <object class="GtkWindow" id="principal">
     <property name="visible">True</property>
@@ -8,14 +8,15 @@
     <child>
       <object class="GtkVBox" id="vbox_principal1">
         <property name="visible">True</property>
+        <property name="orientation">vertical</property>
         <child>
           <object class="GtkToolbar" id="toolbar1">
             <property name="visible">True</property>
             <property name="show_arrow">False</property>
-            <property name="icon_size">5</property>
             <child>
               <object class="GtkToolButton" id="tb_refrescar_wbfs">
                 <property name="visible">True</property>
+                <property name="tooltip_text" translatable="yes">Busca en todos los discos duros, particiones de tipo WBFS</property>
                 <property name="label" translatable="yes">Refrescar WBFS</property>
                 <property name="icon_name">view-refresh</property>
               </object>
@@ -37,6 +38,8 @@
               <object class="GtkToolButton" id="tb_anadir">
                 <property name="visible">True</property>
                 <property name="has_tooltip">True</property>
+                <property name="tooltip_text" translatable="yes">Aniade un nuevo juego de Wii, a partir de una imagen ISO, que opcionalmente puede estar comprimida en RAR.</property>
+                <property name="is_important">True</property>
                 <property name="label" translatable="yes">Nuevo</property>
                 <property name="icon_name">document-new</property>
               </object>
@@ -49,6 +52,7 @@
               <object class="GtkToolButton" id="tb_anadir_directorio">
                 <property name="visible">True</property>
                 <property name="has_tooltip">True</property>
+                <property name="tooltip_text" translatable="yes">Permite seleccionar un directorio del cual se aniadiran todos los juegos de Wii que se encuentren recursivamente.</property>
                 <property name="label" translatable="yes">Aniadir directorio</property>
                 <property name="icon_name">folder-new</property>
               </object>
@@ -60,6 +64,7 @@
             <child>
               <object class="GtkToolButton" id="tb_extraer">
                 <property name="visible">True</property>
+                <property name="tooltip_text" translatable="yes">Extrae de la particion WBFS el juego seleccionado a una imagen ISO.</property>
                 <property name="label" translatable="yes">Extraer a ISO</property>
                 <property name="icon_name">emblem-downloads</property>
               </object>
@@ -71,6 +76,7 @@
             <child>
               <object class="GtkToolButton" id="tb_copiar_1_1">
                 <property name="visible">True</property>
+                <property name="tooltip_text" translatable="yes">Hace copias directas de juegos entre particiones WBFS.</property>
                 <property name="label" translatable="yes">Copia disco a disco</property>
                 <property name="icon_name">media-tape</property>
               </object>
@@ -91,6 +97,7 @@
             <child>
               <object class="GtkToolButton" id="tb_renombrar">
                 <property name="visible">True</property>
+                <property name="tooltip_text" translatable="yes">Cambia el nombre del juego seleccionado. Este es el nombre con el que apareceran en los loaders.</property>
                 <property name="label" translatable="yes">Renombrar</property>
                 <property name="icon_name">edit-select-all</property>
               </object>
@@ -115,6 +122,7 @@
             <child>
               <object class="GtkToolButton" id="tb_borrar">
                 <property name="visible">True</property>
+                <property name="tooltip_text" translatable="yes">Borra el juego seleccionado.</property>
                 <property name="stock_id">gtk-delete</property>
               </object>
               <packing>
@@ -134,6 +142,7 @@
             <child>
               <object class="GtkToolButton" id="tb_copiar_SD">
                 <property name="visible">True</property>
+                <property name="tooltip_text" translatable="yes">Copia en 2 carpetas de destino, todo el conjunto de caratulas y de disc-art que esta siendo amacenado en los directorios de trabajo de wiithon.</property>
                 <property name="label" translatable="yes">caratulas a SD</property>
                 <property name="icon_name">media-flash</property>
               </object>
@@ -165,8 +174,9 @@
             <child>
               <object class="GtkToolButton" id="tb_actualizar_wiitdb">
                 <property name="visible">True</property>
+                <property name="tooltip_text" translatable="yes">Actualiza la informacion de los juegos con BDD de Internet.</property>
                 <property name="label" translatable="yes">+INFO</property>
-                <property name="icon_widget">icono_wiitdb</property>
+                <property name="icon_name">dialog-information</property>
                 <signal name="clicked" handler="on_tb_actualizar_wiitdb_clicked"/>
               </object>
               <packing>
@@ -177,6 +187,7 @@
             <child>
               <object class="GtkToolButton" id="tb_preferencias">
                 <property name="visible">True</property>
+                <property name="tooltip_text" translatable="yes">Configura las preferencias.</property>
                 <property name="label" translatable="yes">Preferencias</property>
                 <property name="icon_name">document-properties</property>
               </object>
@@ -188,6 +199,7 @@
             <child>
               <object class="GtkToolButton" id="tb_acerca_de">
                 <property name="visible">True</property>
+                <property name="tooltip_text" translatable="yes">Informacion sobre Wiithon</property>
                 <property name="label" translatable="yes">Acerca de ...</property>
                 <property name="icon_name">face-smirk</property>
               </object>
@@ -208,6 +220,7 @@
             <child>
               <object class="GtkLabel" id="estadoTrabajo">
                 <property name="visible">True</property>
+                <property name="tooltip_text" translatable="yes">Numero de tareas que esperan en la cola.</property>
                 <property name="xpad">8</property>
                 <property name="label">0 Tareas</property>
               </object>
@@ -219,6 +232,7 @@
             <child>
               <object class="GtkProgressBar" id="progreso1">
                 <property name="visible">True</property>
+                <property name="tooltip_text" translatable="yes">Progreso de la tarea actual.</property>
                 <property name="show_text">True</property>
               </object>
               <packing>
@@ -239,10 +253,12 @@
               <object class="GtkVBox" id="vbox2">
                 <property name="width_request">160</property>
                 <property name="visible">True</property>
+                <property name="orientation">vertical</property>
                 <child>
                   <object class="GtkScrolledWindow" id="scrolledwindow5">
                     <property name="visible">True</property>
                     <property name="can_focus">True</property>
+                    <property name="tooltip_text" translatable="yes">Particiones autodetectadas como de tipo WBFS</property>
                     <property name="hscrollbar_policy">automatic</property>
                     <property name="vscrollbar_policy">automatic</property>
                     <child>
@@ -262,6 +278,8 @@
                     <property name="width_request">160</property>
                     <property name="height_request">160</property>
                     <property name="visible">True</property>
+                    <property name="tooltip_text" translatable="yes">Caratula del disco.
+Por defecto: 160x160</property>
                     <property name="stock">gtk-cdrom</property>
                     <property name="icon-size">6</property>
                   </object>
@@ -284,6 +302,8 @@
                     <property name="width_request">160</property>
                     <property name="height_request">224</property>
                     <property name="visible">True</property>
+                    <property name="tooltip_text" translatable="yes">Caratula del juego.
+Por defecto: 160x224</property>
                     <property name="stock">gtk-new</property>
                     <property name="icon-size">6</property>
                   </object>
@@ -302,9 +322,11 @@
               <object class="GtkVBox" id="vbox_central">
                 <property name="width_request">620</property>
                 <property name="visible">True</property>
+                <property name="orientation">vertical</property>
                 <child>
                   <object class="GtkVBox" id="vbox7">
                     <property name="visible">True</property>
+                    <property name="orientation">vertical</property>
                     <child>
                       <object class="GtkHBox" id="hbox6">
                         <property name="visible">True</property>
@@ -343,6 +365,7 @@
                         <child>
                           <object class="GtkLabel" id="labelEspacio">
                             <property name="visible">True</property>
+                            <property name="tooltip_text" translatable="yes">Espacio usado / Espacio total</property>
                             <property name="xalign">0.89999997615814209</property>
                             <property name="xpad">8</property>
                             <property name="justify">right</property>
@@ -369,6 +392,7 @@
                             <child>
                               <object class="GtkProgressBar" id="progresoEspacio">
                                 <property name="visible">True</property>
+                                <property name="tooltip_text" translatable="yes">Numero de juegos.</property>
                               </object>
                               <packing>
                                 <property name="position">1</property>
@@ -458,6 +482,7 @@
                       <object class="GtkScrolledWindow" id="scrolledwindow4">
                         <property name="visible">True</property>
                         <property name="can_focus">True</property>
+                        <property name="tooltip_text" translatable="yes">Lista de juegos de la particion seleccionada.</property>
                         <property name="hscrollbar_policy">automatic</property>
                         <property name="vscrollbar_policy">automatic</property>
                         <child>
@@ -509,6 +534,7 @@
                 <child>
                   <object class="GtkLabel" id="label_numParticionesWBFS">
                     <property name="visible">True</property>
+                    <property name="tooltip_text" translatable="yes">Numero de particiones WBFS detectado</property>
                     <property name="xalign">0</property>
                   </object>
                   <packing>
@@ -518,6 +544,7 @@
                 <child>
                   <object class="GtkLabel" id="label_juegosConInfoWiiTDB">
                     <property name="visible">True</property>
+                    <property name="tooltip_text" translatable="yes">Numero de juegos con alguna informacion obtenida de internet</property>
                   </object>
                   <packing>
                     <property name="position">1</property>
@@ -526,6 +553,7 @@
                 <child>
                   <object class="GtkLabel" id="label_juegosSinCaratula">
                     <property name="visible">True</property>
+                    <property name="tooltip_text" translatable="yes">Numero de juegos que no tienen caratula.</property>
                   </object>
                   <packing>
                     <property name="position">2</property>
@@ -534,6 +562,7 @@
                 <child>
                   <object class="GtkLabel" id="label_juegosSinDiscArt">
                     <property name="visible">True</property>
+                    <property name="tooltip_text" translatable="yes">Numero de juegos sin caratula del disco.</property>
                   </object>
                   <packing>
                     <property name="position">3</property>
@@ -591,6 +620,7 @@ Italian: Carlo Mandelli &lt;camandel@gmail.com&gt; [it.po]
     <child internal-child="vbox">
       <object class="GtkVBox" id="dialog-vbox3">
         <property name="visible">True</property>
+        <property name="orientation">vertical</property>
         <property name="spacing">2</property>
         <child>
           <object class="GtkLabel" id="label234729478">
@@ -625,10 +655,12 @@ Italian: Carlo Mandelli &lt;camandel@gmail.com&gt; [it.po]
     <child internal-child="vbox">
       <object class="GtkVBox" id="c1on1_dialog-vbox2">
         <property name="visible">True</property>
+        <property name="orientation">vertical</property>
         <property name="spacing">2</property>
         <child>
           <object class="GtkVBox" id="c1on1_vbox1">
             <property name="visible">True</property>
+            <property name="orientation">vertical</property>
             <child>
               <object class="GtkLabel" id="c1on1_label1">
                 <property name="visible">True</property>
@@ -681,7 +713,7 @@ Italian: Carlo Mandelli &lt;camandel@gmail.com&gt; [it.po]
             <property name="layout_style">end</property>
             <child>
               <object class="GtkButton" id="c1on1_button2">
-                <property name="label" translatable="yes">gtk-cancel</property>
+                <property name="label">gtk-cancel</property>
                 <property name="visible">True</property>
                 <property name="can_focus">True</property>
                 <property name="receives_default">True</property>
@@ -985,7 +1017,7 @@ Italian: Carlo Mandelli &lt;camandel@gmail.com&gt; [it.po]
             <property name="layout_style">end</property>
             <child>
               <object class="GtkButton" id="prefs_button1">
-                <property name="label" translatable="yes">gtk-close</property>
+                <property name="label">gtk-close</property>
                 <property name="visible">True</property>
                 <property name="can_focus">True</property>
                 <property name="receives_default">True</property>

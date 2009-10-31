@@ -12,10 +12,6 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #, python-format
-msgid " Esta seguro de formatear %s (S/N)? "
-msgstr ""
-
-#, python-format
 msgid "%d - Salir"
 msgstr ""
 
@@ -136,6 +132,9 @@ msgstr ""
 msgid "Acerca de ..."
 msgstr "About ..."
 
+msgid "Actualiza la informacion de los juegos con BDD de Internet."
+msgstr ""
+
 #, python-format
 msgid "Actualizar WiiTDB desde %s"
 msgstr ""
@@ -164,6 +163,9 @@ msgstr ""
 msgid "Ancho imagen disc-art"
 msgstr ""
 
+msgid "Aniade un nuevo juego de Wii, a partir de una imagen ISO, que opcionalmente puede estar comprimida en RAR."
+msgstr ""
+
 msgid "Aniadir ISO"
 msgstr "Add ISO"
 
@@ -176,12 +178,18 @@ msgstr "Add folder"
 msgid "Asistente para particiones WBFS. Le aprarecera una lista de particiones, (solamente FAT32) de la cual, debera elegir una."
 msgstr ""
 
+msgid "Borra el juego seleccionado."
+msgstr ""
+
 #, python-format
 msgid "Borrando juego %s"
 msgstr ""
 
 msgid "Borrar juego con IDGAME"
 msgstr "Remove game with IDGAME"
+
+msgid "Busca en todos los discos duros, particiones de tipo WBFS"
+msgstr ""
 
 #, python-format
 msgid "Buscando en %s Imagenes ISO ... "
@@ -197,7 +205,20 @@ msgstr "Searching Wii disc ..."
 msgid "Buscar:"
 msgstr "Search:"
 
+msgid "Cambia el nombre del juego seleccionado. Este es el nombre con el que apareceran en los loaders."
+msgstr ""
+
 msgid "Capacidad On-line: "
+msgstr ""
+
+msgid ""
+"Caratula del disco.\n"
+"Por defecto: 160x160"
+msgstr ""
+
+msgid ""
+"Caratula del juego.\n"
+"Por defecto: 160x224"
 msgstr ""
 
 msgid "Caratula?"
@@ -218,10 +239,16 @@ msgstr ""
 msgid "Clasificar"
 msgstr "Sort"
 
+msgid "Configura las preferencias."
+msgstr ""
+
 msgid "Copia directa de particion a particion"
 msgstr "Direct copy of a partition to a partition"
 
 msgid "Copia disco a disco"
+msgstr ""
+
+msgid "Copia en 2 carpetas de destino, todo el conjunto de caratulas y de disc-art que esta siendo amacenado en los directorios de trabajo de wiithon."
 msgstr ""
 
 msgid "Copiando"
@@ -272,9 +299,6 @@ msgstr ""
 #, python-format
 msgid "Descargando disco de %s"
 msgstr "Downloading disc %s"
-
-msgid "Descargar info"
-msgstr ""
 
 msgid "Descomprimido correctamente"
 msgstr "Extracted successfully"
@@ -464,6 +488,12 @@ msgstr "Enter the new name : "
 msgid "Espacio libre insuficiente para extraer la ISO"
 msgstr ""
 
+msgid "Espacio usado / Espacio total"
+msgstr ""
+
+msgid "Extrae de la particion WBFS el juego seleccionado a una imagen ISO."
+msgstr ""
+
 msgid "Extraer"
 msgstr "Extract"
 
@@ -535,6 +565,9 @@ msgstr ""
 msgid "German"
 msgstr ""
 
+msgid "Hace copias directas de juegos entre particiones WBFS."
+msgstr ""
+
 msgid "Has conectado el disco duro? No se ha encontrado ninguna particion valida."
 msgstr "Is your hard disk connected and does it have a valid WBFS partition?"
 
@@ -582,10 +615,13 @@ msgstr ""
 msgid "Indique el NUM del juego : "
 msgstr "Number of game ? : "
 
+msgid "Informacion sobre Wiithon"
+msgstr ""
+
 msgid "Inserte un juego de la Wii en su lector de DVD ..."
 msgstr "Insert a Wii game in your DVD drive..."
 
-msgid "Instala wiithon, no lo ejecutar desde ./wiithon.py"
+msgid "Instala wiithon, no lo ejecute desde ./wiithon.py"
 msgstr ""
 
 msgid "Interrumpido por el usuario"
@@ -630,6 +666,9 @@ msgstr ""
 
 msgid "Libre"
 msgstr "Free"
+
+msgid "Lista de juegos de la particion seleccionada."
+msgstr ""
 
 msgid "Lista de particiones autodetectadas : "
 msgstr "Automatically detected partitions:"
@@ -697,19 +736,8 @@ msgstr ""
 msgid "No hay particiones WBFS"
 msgstr ""
 
-msgid "No hay particiones WBFS, conecte y refresque"
+msgid "No hay particiones WBFS, se muestran los juegos de la ultima sesion."
 msgstr ""
-"There are no WBFS partitions \n"
-"- Connect a WBFS partition and click Refresh."
-
-#, python-format
-msgid "No hay particiones WBFS, solo puede ver sus juegos acumuladas en %s"
-msgstr ""
-"There are no WBFS partitions connected, connect one and click Refresh WBFS.\n"
-"In this mode, you can only do the following tasks:\n"
-"- See all the games in the %s database.\n"
-"- Copy covers & disc images to a path. (Usually the SD, for USB Loader)\n"
-"- When you delete a game in this mode, the downloaded covers and the database record will be deleted. "
 
 msgid "No puedes refrescar las particiones mientras hay tareas sin finalizar"
 msgstr "Partitions can not be refreshed before tasks are finished"
@@ -735,15 +763,6 @@ msgstr ""
 msgid "No se ha formateado %s"
 msgstr ""
 
-msgid ""
-"No se han detectado particiones WBFS.\n"
-"Si has conectado una particion WBFS y no ha sido detectada, es debido a que no hay permisos de lectura y escritura.\n"
-"Para solucionarlo siga los pasos de la guia de instalacion."
-msgstr ""
-"No WBFS partitions detected.\n"
-"If you have connected a WBFS partition but can't find it, you must fix read and write permissions.\n"
-"Read the steps of the guide."
-
 #, python-format
 msgid "No tienes instalado ningun juego en %s"
 msgstr "No games installed in %s"
@@ -768,6 +787,24 @@ msgid "Num. Hilos para tareas de fondo"
 msgstr ""
 
 msgid "Num. jugadores en off-line: "
+msgstr ""
+
+msgid "Numero de juegos con alguna informacion obtenida de internet"
+msgstr ""
+
+msgid "Numero de juegos que no tienen caratula."
+msgstr ""
+
+msgid "Numero de juegos sin caratula del disco."
+msgstr ""
+
+msgid "Numero de juegos."
+msgstr ""
+
+msgid "Numero de particiones WBFS detectado"
+msgstr ""
+
+msgid "Numero de tareas que esperan en la cola."
 msgstr ""
 
 msgid "Numero fuera de rango"
@@ -796,11 +833,17 @@ msgstr ""
 msgid "Particion"
 msgstr "Partition"
 
+msgid "Particiones autodetectadas como de tipo WBFS"
+msgstr ""
+
 msgid "Paso 1 de 2: Elige un directorio para las CARATULAS"
 msgstr "Step 1 of 2: Choose a folder for COVERS"
 
 msgid "Paso 2 de 2: Elige un directorio para los DISCOS"
 msgstr "Step 2 of 2: Choose a folder for DISCS"
+
+msgid "Permite seleccionar un directorio del cual se aniadiran todos los juegos de Wii que se encuentren recursivamente."
+msgstr ""
 
 msgid "Por defecto"
 msgstr ""
@@ -821,6 +864,9 @@ msgstr "Press any key to show %d more lines"
 msgid "Programa ejecutado con las opciones incorrectas."
 msgstr "Program runs with incorrect settings"
 
+msgid "Progreso de la tarea actual."
+msgstr ""
+
 msgid "Proveedor de caratulas"
 msgstr ""
 
@@ -838,6 +884,10 @@ msgid "Quieres borrar el juego: %s?"
 msgstr ""
 
 msgid "Rating"
+msgstr ""
+
+#, python-format
+msgid "Realmente, desea formatear a WBFS la particion %s?"
 msgstr ""
 
 #, python-format
@@ -989,12 +1039,6 @@ msgstr "as"
 msgid "en particion"
 msgstr "in partition"
 
-msgid "gtk-cancel"
-msgstr "gtk-cancel"
-
-msgid "gtk-close"
-msgstr ""
-
 msgid "https://launchpad.net/wiithon"
 msgstr "https://launchpad.net/wiithon"
 
@@ -1013,6 +1057,31 @@ msgstr ""
 #, python-format
 msgid "wiithon no borra la ISO temporal: %s, puedes borrarla si no la necesitas"
 msgstr ""
+
+#~ msgid "No hay particiones WBFS, conecte y refresque"
+#~ msgstr ""
+#~ "There are no WBFS partitions \n"
+#~ "- Connect a WBFS partition and click Refresh."
+
+#~ msgid "No hay particiones WBFS, solo puede ver sus juegos acumuladas en %s"
+#~ msgstr ""
+#~ "There are no WBFS partitions connected, connect one and click Refresh WBFS.\n"
+#~ "In this mode, you can only do the following tasks:\n"
+#~ "- See all the games in the %s database.\n"
+#~ "- Copy covers & disc images to a path. (Usually the SD, for USB Loader)\n"
+#~ "- When you delete a game in this mode, the downloaded covers and the database record will be deleted. "
+
+#~ msgid ""
+#~ "No se han detectado particiones WBFS.\n"
+#~ "Si has conectado una particion WBFS y no ha sido detectada, es debido a que no hay permisos de lectura y escritura.\n"
+#~ "Para solucionarlo siga los pasos de la guia de instalacion."
+#~ msgstr ""
+#~ "No WBFS partitions detected.\n"
+#~ "If you have connected a WBFS partition but can't find it, you must fix read and write permissions.\n"
+#~ "Read the steps of the guide."
+
+#~ msgid "gtk-cancel"
+#~ msgstr "gtk-cancel"
 
 #~ msgid "Error borrando"
 #~ msgstr "Delete error"

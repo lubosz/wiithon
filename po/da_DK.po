@@ -9,10 +9,6 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #, python-format
-msgid " Esta seguro de formatear %s (S/N)? "
-msgstr ""
-
-#, python-format
 msgid "%d - Salir"
 msgstr ""
 
@@ -133,6 +129,9 @@ msgstr ""
 msgid "Acerca de ..."
 msgstr ""
 
+msgid "Actualiza la informacion de los juegos con BDD de Internet."
+msgstr ""
+
 #, python-format
 msgid "Actualizar WiiTDB desde %s"
 msgstr ""
@@ -161,6 +160,9 @@ msgstr ""
 msgid "Ancho imagen disc-art"
 msgstr ""
 
+msgid "Aniade un nuevo juego de Wii, a partir de una imagen ISO, que opcionalmente puede estar comprimida en RAR."
+msgstr ""
+
 msgid "Aniadir ISO"
 msgstr ""
 
@@ -173,11 +175,17 @@ msgstr ""
 msgid "Asistente para particiones WBFS. Le aprarecera una lista de particiones, (solamente FAT32) de la cual, debera elegir una."
 msgstr ""
 
+msgid "Borra el juego seleccionado."
+msgstr ""
+
 #, python-format
 msgid "Borrando juego %s"
 msgstr ""
 
 msgid "Borrar juego con IDGAME"
+msgstr ""
+
+msgid "Busca en todos los discos duros, particiones de tipo WBFS"
 msgstr ""
 
 #, python-format
@@ -194,7 +202,20 @@ msgstr ""
 msgid "Buscar:"
 msgstr ""
 
+msgid "Cambia el nombre del juego seleccionado. Este es el nombre con el que apareceran en los loaders."
+msgstr ""
+
 msgid "Capacidad On-line: "
+msgstr ""
+
+msgid ""
+"Caratula del disco.\n"
+"Por defecto: 160x160"
+msgstr ""
+
+msgid ""
+"Caratula del juego.\n"
+"Por defecto: 160x224"
 msgstr ""
 
 msgid "Caratula?"
@@ -215,10 +236,16 @@ msgstr ""
 msgid "Clasificar"
 msgstr ""
 
+msgid "Configura las preferencias."
+msgstr ""
+
 msgid "Copia directa de particion a particion"
 msgstr ""
 
 msgid "Copia disco a disco"
+msgstr ""
+
+msgid "Copia en 2 carpetas de destino, todo el conjunto de caratulas y de disc-art que esta siendo amacenado en los directorios de trabajo de wiithon."
 msgstr ""
 
 msgid "Copiando"
@@ -268,9 +295,6 @@ msgstr ""
 
 #, python-format
 msgid "Descargando disco de %s"
-msgstr ""
-
-msgid "Descargar info"
 msgstr ""
 
 msgid "Descomprimido correctamente"
@@ -458,6 +482,12 @@ msgstr ""
 msgid "Espacio libre insuficiente para extraer la ISO"
 msgstr ""
 
+msgid "Espacio usado / Espacio total"
+msgstr ""
+
+msgid "Extrae de la particion WBFS el juego seleccionado a una imagen ISO."
+msgstr ""
+
 msgid "Extraer"
 msgstr ""
 
@@ -529,6 +559,9 @@ msgstr ""
 msgid "German"
 msgstr ""
 
+msgid "Hace copias directas de juegos entre particiones WBFS."
+msgstr ""
+
 msgid "Has conectado el disco duro? No se ha encontrado ninguna particion valida."
 msgstr "SIN TRADUCIR: da_DK"
 
@@ -576,10 +609,13 @@ msgstr ""
 msgid "Indique el NUM del juego : "
 msgstr ""
 
+msgid "Informacion sobre Wiithon"
+msgstr ""
+
 msgid "Inserte un juego de la Wii en su lector de DVD ..."
 msgstr ""
 
-msgid "Instala wiithon, no lo ejecutar desde ./wiithon.py"
+msgid "Instala wiithon, no lo ejecute desde ./wiithon.py"
 msgstr ""
 
 msgid "Interrumpido por el usuario"
@@ -623,6 +659,9 @@ msgid "La particion %s: Ya no existe"
 msgstr ""
 
 msgid "Libre"
+msgstr ""
+
+msgid "Lista de juegos de la particion seleccionada."
 msgstr ""
 
 msgid "Lista de particiones autodetectadas : "
@@ -691,11 +730,7 @@ msgstr ""
 msgid "No hay particiones WBFS"
 msgstr ""
 
-msgid "No hay particiones WBFS, conecte y refresque"
-msgstr ""
-
-#, python-format
-msgid "No hay particiones WBFS, solo puede ver sus juegos acumuladas en %s"
+msgid "No hay particiones WBFS, se muestran los juegos de la ultima sesion."
 msgstr ""
 
 msgid "No puedes refrescar las particiones mientras hay tareas sin finalizar"
@@ -720,12 +755,6 @@ msgstr ""
 
 #, python-format
 msgid "No se ha formateado %s"
-msgstr ""
-
-msgid ""
-"No se han detectado particiones WBFS.\n"
-"Si has conectado una particion WBFS y no ha sido detectada, es debido a que no hay permisos de lectura y escritura.\n"
-"Para solucionarlo siga los pasos de la guia de instalacion."
 msgstr ""
 
 #, python-format
@@ -754,6 +783,24 @@ msgstr ""
 msgid "Num. jugadores en off-line: "
 msgstr ""
 
+msgid "Numero de juegos con alguna informacion obtenida de internet"
+msgstr ""
+
+msgid "Numero de juegos que no tienen caratula."
+msgstr ""
+
+msgid "Numero de juegos sin caratula del disco."
+msgstr ""
+
+msgid "Numero de juegos."
+msgstr ""
+
+msgid "Numero de particiones WBFS detectado"
+msgstr ""
+
+msgid "Numero de tareas que esperan en la cola."
+msgstr ""
+
 msgid "Numero fuera de rango"
 msgstr ""
 
@@ -780,10 +827,16 @@ msgstr ""
 msgid "Particion"
 msgstr ""
 
+msgid "Particiones autodetectadas como de tipo WBFS"
+msgstr ""
+
 msgid "Paso 1 de 2: Elige un directorio para las CARATULAS"
 msgstr ""
 
 msgid "Paso 2 de 2: Elige un directorio para los DISCOS"
+msgstr ""
+
+msgid "Permite seleccionar un directorio del cual se aniadiran todos los juegos de Wii que se encuentren recursivamente."
 msgstr ""
 
 msgid "Por defecto"
@@ -805,6 +858,9 @@ msgstr ""
 msgid "Programa ejecutado con las opciones incorrectas."
 msgstr ""
 
+msgid "Progreso de la tarea actual."
+msgstr ""
+
 msgid "Proveedor de caratulas"
 msgstr ""
 
@@ -822,6 +878,10 @@ msgid "Quieres borrar el juego: %s?"
 msgstr ""
 
 msgid "Rating"
+msgstr ""
+
+#, python-format
+msgid "Realmente, desea formatear a WBFS la particion %s?"
 msgstr ""
 
 #, python-format
@@ -960,12 +1020,6 @@ msgid "como"
 msgstr ""
 
 msgid "en particion"
-msgstr ""
-
-msgid "gtk-cancel"
-msgstr ""
-
-msgid "gtk-close"
 msgstr ""
 
 msgid "https://launchpad.net/wiithon"

@@ -77,23 +77,25 @@ class WiithonCORE:
         
         # generate idParticion   
         session.commit()
+        
+        if len(listaParticiones) > 0:
 
-        # borrar TODOS los juegos que no sean de las particiones encontradas
-        query = session.query(Juego)
-        for particion in listaParticiones:
-            query = query.filter("idParticion <> %d" % particion.idParticion)
-        for juego in query:
-            session.delete(juego)
-        
-        # borrar TODAS las particiones que no sean de las particiones encontradas    
-        query = session.query(Particion)
-        for particion in listaParticiones:
-            query = query.filter("idParticion <> %d" % particion.idParticion)
-        for particion in query:
-            session.delete(particion)
-        
-        # subimos cambios    
-        session.commit()
+            # borrar TODOS los juegos que no sean de las particiones encontradas
+            query = session.query(Juego)
+            for particion in listaParticiones:
+                query = query.filter("idParticion <> %d" % particion.idParticion)
+            for juego in query:
+                session.delete(juego)
+            
+            # borrar TODAS las particiones que no sean de las particiones encontradas    
+            query = session.query(Particion)
+            for particion in listaParticiones:
+                query = query.filter("idParticion <> %d" % particion.idParticion)
+            for particion in query:
+                session.delete(particion)
+            
+            # subimos cambios    
+            session.commit()
 
         return listaParticiones
 

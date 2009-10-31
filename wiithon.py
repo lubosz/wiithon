@@ -41,7 +41,7 @@ def App():
         util.configurarLenguaje()
 
         if os.path.exists(os.path.join(config.WIITHON_FILES , ".bzr")):
-            print _("Instala wiithon, no lo ejecutar desde ./wiithon.py")
+            print _("Instala wiithon, no lo ejecute desde ./wiithon.py")
             sys.exit(1)
 
         options, arguments = getopt.getopt(sys.argv[1:],

@@ -81,9 +81,7 @@ class WiithonGUI(GtkBuilderWrapper):
 
                 ('Borrar', gtk.STOCK_DELETE, None, None, '',
                  self.menu_contextual_borrar),
-                 
-                ('InfoWiiTDB', None, _('Descargar info'), None, '',
-                 self.menu_contextual_info_wiitdb),
+
                 ])
 
         self.uimgr.insert_action_group(actiongroup)
@@ -96,8 +94,6 @@ class WiithonGUI(GtkBuilderWrapper):
                 <menuitem action="Copiar"/>
                 <separator/>
                 <menuitem action="Borrar"/>
-                <separator/>
-                <menuitem action="InfoWiiTDB"/>
             </popup>
         </ui>
         '''
@@ -266,29 +262,27 @@ class WiithonGUI(GtkBuilderWrapper):
         self.animar = Animador( self.wb_estadoBatch , self.poolBash , self.poolTrabajo)
         self.animar.setDaemon(True)
         self.animar.start()
-            
+                   
         # reffresco inicial en busca de particiones wbfs
         self.refrescarParticionesWBFS()
         
-        # advertencia si no encuentra
-        if(len(self.lParti) == 0):
-            if (os.geteuid() != 0) and (len(self.lJuegos)==0):
-                self.alert("warning" , _("No se han detectado particiones WBFS.\nSi has conectado una particion WBFS y no ha sido detectada, es debido a que no hay permisos de lectura y escritura.\nPara solucionarlo siga los pasos de la guia de instalacion."))
-            else:
-                if(len(self.lJuegos)>0):
-                    self.alert("warning" , _("No hay particiones WBFS, solo puede ver sus juegos acumuladas en %s") % (config.APP))
-                else:
-                    self.alert("warning" , _("No hay particiones WBFS, conecte y refresque"))
-        else:
-            if backup_preferencia_device != "" and backup_preferencia_idgame != "":
-                self.seleccionarFilaConValor(self.wb_tv_partitions, 0 , backup_preferencia_device)
-                self.seleccionarFilaConValor(self.wb_tv_games, 0 , backup_preferencia_idgame)
+        # seleccionados preferidas.
+        if backup_preferencia_device != "":
+            self.seleccionarFilaConValor(self.wb_tv_partitions, 0 , backup_preferencia_device)
+        if backup_preferencia_idgame != "":
+            self.seleccionarFilaConValor(self.wb_tv_games, 0 , backup_preferencia_idgame)
 
         # pongo el foco en el buscador
         if( len(self.lJuegos)>0 ):
             self.wb_busqueda.grab_focus()
         else:
             self.wb_tb_refrescar_wbfs.grab_focus()
+            
+        # si no hay particion -> modal que da 2 opciones:
+        # 1º Ver base de datos
+        # 2º Salir
+        if(len(self.lParti) == 0):
+            self.alert("warning" , _("No hay particiones WBFS, se muestran los juegos de la ultima sesion."))
 
     def refrescarParticionesWBFS(self, verbose = True):
         
@@ -424,9 +418,6 @@ class WiithonGUI(GtkBuilderWrapper):
 
     def menu_contextual_borrar(self, action):
         self.on_tb_toolbar_clicked( self.wb_tb_borrar )
-        
-    def menu_contextual_info_wiitdb(self, action):
-        self.poolBash.nuevoTrabajoActualizarWiiTDB('%s?ID=%s' % (self.core.prefs.URL_ZIP_WIITDB, self.sel_juego.obj.idgame))
 
     def cargarParticionesVista(self, treeview, callback_cursor_changed):
         

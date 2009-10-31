@@ -12,10 +12,6 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #, python-format
-msgid " Esta seguro de formatear %s (S/N)? "
-msgstr ""
-
-#, python-format
 msgid "%d - Salir"
 msgstr ""
 
@@ -104,7 +100,7 @@ msgid "<b>Herramientas y utilidades</b>"
 msgstr ""
 
 msgid "<small><i>* = requiere reiniciar la aplicacion</i></small>"
-msgstr ""
+msgstr "<small><i>* = requiere reiniciar la aplicación</i></small>"
 
 msgid "??"
 msgstr ""
@@ -116,7 +112,7 @@ msgid "ACCESORIOS: "
 msgstr ""
 
 msgid "AUTENTIFICACION:"
-msgstr ""
+msgstr "AUTENTIFICACIÓN:"
 
 msgid "AYUDA_CLI"
 msgstr ""
@@ -156,10 +152,10 @@ msgstr ""
 "Web : http://blogricardo.wordpress.com/2009/06/21/wiithon-1-0-liberado/"
 
 msgid "Abre la carpeta donde se almacenan las caratulas descargadas"
-msgstr ""
+msgstr "Abrir la carpeta que contiene las caratulas descargadas"
 
 msgid "Abre la carpeta donde se almacenan las disc-art descargadas"
-msgstr ""
+msgstr "Abrir la carpeta que contiene las caratulas de disco descargadas"
 
 msgid "Abrir carpeta de caratulas"
 msgstr ""
@@ -169,6 +165,9 @@ msgstr ""
 
 msgid "Acerca de ..."
 msgstr ""
+
+msgid "Actualiza la informacion de los juegos con BDD de Internet."
+msgstr "Actualiza la información de los juegos con BDD de Internet."
 
 #, python-format
 msgid "Actualizar WiiTDB desde %s"
@@ -208,6 +207,9 @@ msgstr "Ancho imagen carátula"
 msgid "Ancho imagen disc-art"
 msgstr ""
 
+msgid "Aniade un nuevo juego de Wii, a partir de una imagen ISO, que opcionalmente puede estar comprimida en RAR."
+msgstr "Añade un nuevo juego de Wii, a partir de una imagen ISO, que opcionalmente puede estar comprimida en RAR."
+
 msgid "Aniadir ISO"
 msgstr "Añadir ISO"
 
@@ -220,11 +222,17 @@ msgstr "Añadir directorio"
 msgid "Asistente para particiones WBFS. Le aprarecera una lista de particiones, (solamente FAT32) de la cual, debera elegir una."
 msgstr ""
 
+msgid "Borra el juego seleccionado."
+msgstr ""
+
 #, python-format
 msgid "Borrando juego %s"
 msgstr ""
 
 msgid "Borrar juego con IDGAME"
+msgstr ""
+
+msgid "Busca en todos los discos duros, particiones de tipo WBFS"
 msgstr ""
 
 #, python-format
@@ -241,7 +249,20 @@ msgstr ""
 msgid "Buscar:"
 msgstr ""
 
+msgid "Cambia el nombre del juego seleccionado. Este es el nombre con el que apareceran en los loaders."
+msgstr ""
+
 msgid "Capacidad On-line: "
+msgstr ""
+
+msgid ""
+"Caratula del disco.\n"
+"Por defecto: 160x160"
+msgstr ""
+
+msgid ""
+"Caratula del juego.\n"
+"Por defecto: 160x224"
 msgstr ""
 
 msgid "Caratula?"
@@ -262,10 +283,16 @@ msgstr "Clasificación parental: "
 msgid "Clasificar"
 msgstr ""
 
+msgid "Configura las preferencias."
+msgstr ""
+
 msgid "Copia directa de particion a particion"
 msgstr "Copia directa de partición a partición"
 
 msgid "Copia disco a disco"
+msgstr ""
+
+msgid "Copia en 2 carpetas de destino, todo el conjunto de caratulas y de disc-art que esta siendo amacenado en los directorios de trabajo de wiithon."
 msgstr ""
 
 msgid "Copiando"
@@ -315,9 +342,6 @@ msgstr "Descargando carátula de %s desde %s ..."
 
 #, python-format
 msgid "Descargando disco de %s"
-msgstr ""
-
-msgid "Descargar info"
 msgstr ""
 
 msgid "Descomprimido correctamente"
@@ -428,7 +452,7 @@ msgid "Elige un directorio donde extraer la ISO de %s"
 msgstr ""
 
 msgid "Elige una imagen ISO valida para Wii"
-msgstr ""
+msgstr "Elige una imagen ISO válida para Wii"
 
 msgid "Empezando ..."
 msgstr ""
@@ -487,23 +511,29 @@ msgstr ""
 
 #, python-format
 msgid "Error: Al descargar la bdd wiitdb de: %s"
-msgstr ""
+msgstr "Error: Al descargar la BDD de Internet de: %s"
 
 #, python-format
 msgid "Error: El archivo RAR %s no contiene ninguna ISO"
 msgstr ""
 
 msgid "Error: La longitud del IDGAME debe ser 6, y solo puede contener letras y numeros"
-msgstr ""
+msgstr "Error: La longitud del IDGAME debe ser 6, y solo puede contener letras y números"
 
 msgid "Error: Ocurrio un error al introducir la informacion de juegos de WiiTDB"
-msgstr ""
+msgstr "Error: Ocurrió un error al introducir la información de juegos de WiiTDB"
 
 msgid "Escriba el nuevo nombre : "
 msgstr ""
 
 msgid "Espacio libre insuficiente para extraer la ISO"
 msgstr ""
+
+msgid "Espacio usado / Espacio total"
+msgstr ""
+
+msgid "Extrae de la particion WBFS el juego seleccionado a una imagen ISO."
+msgstr "Extrae de la partición WBFS el juego seleccionado a una imagen ISO."
 
 msgid "Extraer"
 msgstr ""
@@ -524,7 +554,7 @@ msgstr ""
 
 #, python-format
 msgid "Falla la descarga de la caratula de %s"
-msgstr ""
+msgstr "Falla la descarga de la carátula de %s"
 
 #, python-format
 msgid "Falla la descarga del disco de %s"
@@ -541,7 +571,7 @@ msgid "Fecha de lanzamiento: "
 msgstr ""
 
 msgid "Finalizada satisfactoriamente la importacion de datos desde WiiTDB"
-msgstr ""
+msgstr "Finalizada satisfactoriamente la importación de datos desde WiiTDB"
 
 msgid "Finalizando ..."
 msgstr ""
@@ -559,13 +589,13 @@ msgid "Formato fecha corto"
 msgstr ""
 
 msgid "French"
-msgstr ""
+msgstr "Francés"
 
 msgid "Fuera de rango"
 msgstr ""
 
 msgid "GENERO: "
-msgstr ""
+msgstr "GÉNERO: "
 
 msgid "GNU GENERAL PUBLIC LICENSE Version 3"
 msgstr ""
@@ -574,6 +604,9 @@ msgid "General"
 msgstr ""
 
 msgid "German"
+msgstr "Alemán"
+
+msgid "Hace copias directas de juegos entre particiones WBFS."
 msgstr ""
 
 msgid "Has conectado el disco duro? No se ha encontrado ninguna particion valida."
@@ -581,7 +614,7 @@ msgstr "¿Has conectado el disco duro? No se ha encontrado ninguna partición v�
 
 #, python-format
 msgid "Hay %d juegos con informacion WiiTDB"
-msgstr ""
+msgstr "%d juegos con información"
 
 #, python-format
 msgid "Hay %d tareas"
@@ -594,7 +627,7 @@ msgid "IDGAME"
 msgstr ""
 
 msgid "INFORMACION:"
-msgstr ""
+msgstr "INFORMACIÓN:"
 
 msgid "INFORME DE RESULTADOS"
 msgstr ""
@@ -623,10 +656,13 @@ msgstr ""
 msgid "Indique el NUM del juego : "
 msgstr ""
 
+msgid "Informacion sobre Wiithon"
+msgstr "Información sobre Wiithon"
+
 msgid "Inserte un juego de la Wii en su lector de DVD ..."
 msgstr ""
 
-msgid "Instala wiithon, no lo ejecutar desde ./wiithon.py"
+msgid "Instala wiithon, no lo ejecute desde ./wiithon.py"
 msgstr ""
 
 msgid "Interrumpido por el usuario"
@@ -636,10 +672,10 @@ msgid "Interrumpido por el usuario."
 msgstr ""
 
 msgid "Italian"
-msgstr ""
+msgstr "Italiano"
 
 msgid "Japanese"
-msgstr ""
+msgstr "Japonés"
 
 #, python-format
 msgid "Juego %s borrado correctamente"
@@ -659,7 +695,7 @@ msgid "Juegos originales, solo con lectores LG."
 msgstr ""
 
 msgid "Korean"
-msgstr ""
+msgstr "Koreano"
 
 #, python-format
 msgid "La particion %s no contiene juegos"
@@ -667,10 +703,13 @@ msgstr ""
 
 #, python-format
 msgid "La particion %s: Ya no existe"
-msgstr ""
+msgstr "La partición %s: Ya no existe"
 
 msgid "Libre"
 msgstr ""
+
+msgid "Lista de juegos de la particion seleccionada."
+msgstr "Lista de juegos de la partición seleccionada."
 
 msgid "Lista de particiones autodetectadas : "
 msgstr ""
@@ -714,10 +753,10 @@ msgid "No hay 4.4GB libres para descomprimir el fichero RAR: %s en la ruta %s. P
 msgstr ""
 
 msgid "No hay Juegos para descargar caratulas"
-msgstr "No hay Juegos para descargar carátulas"
+msgstr "No hay juegos para descargar carátulas"
 
 msgid "No hay Juegos para descargar una caratula"
-msgstr ""
+msgstr "No hay juegos para descargar una carátula"
 
 msgid "No hay Juegos para extraer"
 msgstr ""
@@ -738,19 +777,8 @@ msgstr ""
 msgid "No hay particiones WBFS"
 msgstr ""
 
-msgid "No hay particiones WBFS, conecte y refresque"
-msgstr ""
-"No hay particiones WBFS\n"
-"- Conecte una y pulse Refrescar WBFS."
-
-#, python-format
-msgid "No hay particiones WBFS, solo puede ver sus juegos acumuladas en %s"
-msgstr ""
-"No hay particiones WBFS, conecte una y pulse Refrescar WBFS.\n"
-"Mientras esté en este modo, solo puede realizar las siguientes tareas:\n"
-"- Ver toda la base de datos de juegos acumulada en %s por las distintas particiones.\n"
-"- Copiar caratulas y discos a una ruta concreta. (Normalmente a la SD, para su correcto funcionamiento con USB Loader)\n"
-"- Cuando borre un juego en este modo, borrara el registro y las caratula y disco descargadas."
+msgid "No hay particiones WBFS, se muestran los juegos de la ultima sesion."
+msgstr "No hay particiones WBFS, se muestran los juegos de la última sesión."
 
 msgid "No puedes refrescar las particiones mientras hay tareas sin finalizar"
 msgstr ""
@@ -761,10 +789,10 @@ msgstr ""
 
 #, python-format
 msgid "No se ha encontrado ningun ISO/RAR en el directorio %s"
-msgstr ""
+msgstr "No se ha encontrado ningún ISO/RAR en el directorio %s"
 
 msgid "No se ha encontrado ningun disco de la Wii"
-msgstr ""
+msgstr "No se ha encontrado ningún disco de la Wii"
 
 msgid "No se ha encontrado ninguna imagen ISO"
 msgstr ""
@@ -774,12 +802,6 @@ msgstr ""
 
 #, python-format
 msgid "No se ha formateado %s"
-msgstr ""
-
-msgid ""
-"No se han detectado particiones WBFS.\n"
-"Si has conectado una particion WBFS y no ha sido detectada, es debido a que no hay permisos de lectura y escritura.\n"
-"Para solucionarlo siga los pasos de la guia de instalacion."
 msgstr ""
 
 #, python-format
@@ -808,6 +830,24 @@ msgstr ""
 msgid "Num. jugadores en off-line: "
 msgstr ""
 
+msgid "Numero de juegos con alguna informacion obtenida de internet"
+msgstr "Numero de juegos con alguna información obtenida de internet"
+
+msgid "Numero de juegos que no tienen caratula."
+msgstr "Numero de juegos que no tienen carátula."
+
+msgid "Numero de juegos sin caratula del disco."
+msgstr "Numero de juegos sin carátula del disco."
+
+msgid "Numero de juegos."
+msgstr "Número de juegos."
+
+msgid "Numero de particiones WBFS detectado"
+msgstr "Número de particiones WBFS detectad"
+
+msgid "Numero de tareas que esperan en la cola."
+msgstr "Número de tareas que esperan en la cola."
+
 msgid "Numero fuera de rango"
 msgstr "Número fuera de rango"
 
@@ -817,7 +857,7 @@ msgstr ""
 
 #, python-format
 msgid "OK, el juego se ha pasado a la particion %s"
-msgstr ""
+msgstr "OK, el juego se ha pasado a la partición %s"
 
 msgid "OK, todas las caratulas se han descargado"
 msgstr "OK, todas las carátulas se han descargado"
@@ -834,11 +874,17 @@ msgstr ""
 msgid "Particion"
 msgstr "Partición"
 
+msgid "Particiones autodetectadas como de tipo WBFS"
+msgstr ""
+
 msgid "Paso 1 de 2: Elige un directorio para las CARATULAS"
 msgstr "Paso 1 de 2: Elige un directorio donde copiar las CARATULAS"
 
 msgid "Paso 2 de 2: Elige un directorio para los DISCOS"
 msgstr "Paso 2 de 2: Elige un directorio donde copiar los DISCOS"
+
+msgid "Permite seleccionar un directorio del cual se aniadiran todos los juegos de Wii que se encuentren recursivamente."
+msgstr ""
 
 msgid "Por defecto"
 msgstr ""
@@ -847,7 +893,7 @@ msgid "Por favor. Informe a los desarrolladores de este error."
 msgstr ""
 
 msgid "Portuguese"
-msgstr ""
+msgstr "Portugues"
 
 msgid "Preferencias"
 msgstr ""
@@ -859,8 +905,11 @@ msgstr "Presiona cualquier tecla para mostrar %d lineas más"
 msgid "Programa ejecutado con las opciones incorrectas."
 msgstr ""
 
-msgid "Proveedor de caratulas"
+msgid "Progreso de la tarea actual."
 msgstr ""
+
+msgid "Proveedor de caratulas"
+msgstr "Proveedor de carátulas"
 
 msgid "Puede llevar mucho tiempo ..."
 msgstr ""
@@ -873,10 +922,14 @@ msgstr ""
 
 #, python-format
 msgid "Quieres borrar el juego: %s?"
-msgstr ""
+msgstr "¿Borrar el juego: %s?"
 
 msgid "Rating"
 msgstr ""
+
+#, python-format
+msgid "Realmente, desea formatear a WBFS la particion %s?"
+msgstr "¿Desea formatear a WBFS la partición %s?"
 
 #, python-format
 msgid "Recorrer directorio %s"
@@ -924,6 +977,9 @@ msgid ""
 "\n"
 "%s"
 msgstr ""
+"¿Seguro que deseas descargar información de los juegos de WiiTDB?\n"
+"\n"
+"%s"
 
 msgid "Selecciona la particion de destino:"
 msgstr "Selecciona la partición de destino:"
@@ -940,7 +996,7 @@ msgid "Sin descripcion."
 msgstr ""
 
 msgid "Spanish"
-msgstr ""
+msgstr "Español"
 
 msgid "TAMANIO"
 msgstr "Tamaño"
@@ -1025,12 +1081,6 @@ msgstr ""
 msgid "en particion"
 msgstr "en partición"
 
-msgid "gtk-cancel"
-msgstr ""
-
-msgid "gtk-close"
-msgstr ""
-
 msgid "https://launchpad.net/wiithon"
 msgstr ""
 
@@ -1049,34 +1099,3 @@ msgstr ""
 #, python-format
 msgid "wiithon no borra la ISO temporal: %s, puedes borrarla si no la necesitas"
 msgstr ""
-
-#~ msgid "***************** DESCARGAR CARATULA %s ********************"
-#~ msgstr "***************** DESCARGAR CARÁTULA %s ********************"
-
-#~ msgid "Caratula descargada como"
-#~ msgstr "Carátula descargada como"
-
-#~ msgid "No se ha encontrado caratula para el juego %s"
-#~ msgstr "No se ha encontrado carátula para el juego %s"
-
-#~ msgid "Se descargaran en 3D"
-#~ msgstr "Se descargarán en 3D"
-
-#~ msgid "Se descargaran en formato paronamico"
-#~ msgstr "Se descargarán en formato paronámico"
-
-#~ msgid "Advertencia de seguridad de renombrar desde IDGAME = %s a %s"
-#~ msgstr ""
-#~ "!!!!ATENCIÓN¡¡¡¡\n"
-#~ "\n"
-#~ "Esto es una advertencia de seguridad, para advertirle de las consecuencias de renombrar el IDGAME\n"
-#~ "- Es bastante extraño que realmente necesite renombrar el IDGAME\n"
-#~ "- Si cambia el IDGAME posiblemente no se encuentre las caratulas y discos correctamente\n"
-#~ "- La propia indistria del videojuego identifica los juegos de forma única, y por tanto no debería haber colisión\n"
-#~ "- El ÚNICO motivo justificado de renombrar un IDGAME sería para poder tener la posibilidad de introducir \n"
-#~ "varias veces el mismo juego con distintos IDGAME. El mejor ejemplo es el de querar introducir el \n"
-#~ "Guitar Hero y customs de este.\n"
-#~ "¿Está seguro de renombrar el actual IDGAME %s como %s?"
-
-#~ msgid "%d sin caratula"
-#~ msgstr "%d sin carátula"
