@@ -23,14 +23,14 @@ clean:
 	dh_testroot
 	rm -f build-stamp install-stamp
  	# Add here commands to clean up after the build process.
-	-$(MAKE) clean
+	$(MAKE) clean
 	dh_clean
   
 install: install-stamp
 install-stamp: build-stamp
 	dh_testdir
 	dh_testroot
-	dh_clean -k
+	dh_prep
 	dh_installdirs
  
 	# Add here commands to install the package into debian/tmp.
@@ -41,20 +41,20 @@ install-stamp: build-stamp
 # Build architecture-independent files here.
 binary-indep: build install
 # We have nothing to do by default.
-  
+
 # Build architecture-dependent files here.
 binary-arch: build install
-   #	dh_testversion
+#	dh_testversion
 	dh_testdir
 	dh_testroot
 	dh_installdocs
 #	dh_installexamples
 #	dh_installmenu
-   #	dh_installemacsen
-   #	dh_installinit
-  #	dh_installcron
-  #	dh_installmanpages
-   #	dh_undocumented
+#	dh_installemacsen
+#	dh_installinit
+#	dh_installcron
+#	dh_installmanpages
+#	dh_undocumented
 	dh_installchangelogs
 	dh_strip
 	dh_compress
@@ -62,12 +62,9 @@ binary-arch: build install
 	dh_installdeb
 #	dh_shlibdeps
 	dh_gencontrol
-   #	dh_makeshlibs
+#	dh_makeshlibs
 	dh_md5sums
 	dh_builddeb
-  
-source diff:
-	@echo >&2 'source and diff are obsolete - use dpkg-source -b'; false
   
 binary: binary-indep binary-arch
 .PHONY: build clean binary-indep binary-arch binary
