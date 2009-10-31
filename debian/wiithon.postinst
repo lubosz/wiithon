@@ -8,7 +8,9 @@ fi
 ln -sf /usr/local/share/wiithon/wiithon.py /usr/local/bin/wiithon
 ln -sf /usr/local/share/wiithon/wiithon_wrapper /usr/local/bin/wiithon_wrapper
 
-echo "\nIf you want run witthon as normal user you must add it to 'disk' group."
-echo "Example: sudo gpasswd -a <user> disk\n"
+echo
+echo "If you want run witthon as normal user you must add it to 'disk' group."
+echo "Example: sudo gpasswd -a <user> disk"
+echo
 
 exit 0

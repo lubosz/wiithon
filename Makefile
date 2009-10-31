@@ -457,3 +457,5 @@ install4ppa:
 
 ppa:
 	dpkg-buildpackage -rfakeroot -I.bzr
+	#lintian -Ivi ../wiithon_1.1.dsc
+	lintian -Ivi ../wiithon_1.1_all.deb
