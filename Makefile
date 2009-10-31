@@ -456,4 +456,4 @@ install4ppa:
 	@echo "=================================================================="
 
 ppa:
-	dpkg-buildpackage -rfakeroot
+	dpkg-buildpackage -rfakeroot -I.bzr
