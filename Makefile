@@ -1,13 +1,8 @@
 PREFIX=/usr/local
-
 EMAIL="makiolo@gmail.com"
 VERSION=${shell cat doc/VERSION}
 REVISION=${shell bzr revno}
 ARCH=${shell uname -m}
-
-PREFIX_RECURSOS_IMAGENES_CARATULAS=$(PREFIX)/share/wiithon/recursos/imagenes/caratulas
-PREFIX_RECURSOS_IMAGENES_DISCOS=$(PREFIX)/share/wiithon/recursos/imagenes/discos
-
 INSTALL_PKG=apt-get install
 
 all: compile
@@ -31,15 +26,15 @@ run: install
 
 install_auto: dependencias compile install
 
+permisos:
+	gpasswd -a ${SUDO_USER} disk
+
 dependencias: permisos
 	$(INSTALL_PKG) libc6 libc6-dev intltool imagemagick python-gtk2 python-glade2 python-sexy python-sqlalchemy gnome-icon-theme g++
 	-@$(INSTALL_PKG) libc6-dev-i386 libc6-i386
 	@echo "=================================================================="
 	@echo "Install depends OK"
 	@echo "=================================================================="
-
-permisos:
-	gpasswd -a ${SUDO_USER} disk
 
 compile: ./po/locale/da_DK/LC_MESSAGES/wiithon.mo ./po/locale/fi_FI/LC_MESSAGES/wiithon.mo ./po/locale/tr_TR/LC_MESSAGES/wiithon.mo ./po/locale/ru_RU/LC_MESSAGES/wiithon.mo ./po/locale/ko_KR/LC_MESSAGES/wiithon.mo ./po/locale/it/LC_MESSAGES/wiithon.mo ./po/locale/sv_SE/LC_MESSAGES/wiithon.mo ./po/locale/es/LC_MESSAGES/wiithon.mo ./po/locale/pt_PT/LC_MESSAGES/wiithon.mo ./po/locale/en/LC_MESSAGES/wiithon.mo ./po/locale/nl_NL/LC_MESSAGES/wiithon.mo ./po/locale/nb_NO/LC_MESSAGES/wiithon.mo ./po/locale/ja_JP/LC_MESSAGES/wiithon.mo ./po/locale/fr/LC_MESSAGES/wiithon.mo ./po/locale/pt_BR/LC_MESSAGES/wiithon.mo ./po/locale/de/LC_MESSAGES/wiithon.mo unrar-nonfree/unrar libwbfs_binding/wiithon_wrapper
 	@echo "=================================================================="
@@ -57,12 +52,12 @@ making_directories:
 	@mkdir -p $(DESTDIR)$(PREFIX)/share/wiithon/recursos/glade
 	@mkdir -p $(DESTDIR)$(PREFIX)/share/wiithon/recursos/imagenes
 	@mkdir -p $(DESTDIR)$(PREFIX)/share/wiithon/recursos/imagenes/accesorio
-	@mkdir -p $(DESTDIR)$(PREFIX_RECURSOS_IMAGENES_CARATULAS)
-	@mkdir -p $(DESTDIR)$(PREFIX_RECURSOS_IMAGENES_DISCOS)
+	@mkdir -p $(DESTDIR)$(PREFIX)/share/wiithon/recursos/imagenes/caratulas
+	@mkdir -p $(DESTDIR)$(PREFIX)/share/wiithon/recursos/imagenes/discos
 	
 recicled_old_wiithon: making_directories
-	-@mv -f ~/.wiithon/caratulas/*.png $(PREFIX_RECURSOS_IMAGENES_CARATULAS)
-	-@mv -f ~/.wiithon/discos/*.png $(PREFIX_RECURSOS_IMAGENES_DISCOS)
+	-@mv -f ~/.wiithon/caratulas/*.png $(PREFIX)/share/wiithon/recursos/imagenes/caratulas
+	-@mv -f ~/.wiithon/discos/*.png $(PREFIX)/share/wiithon/recursos/imagenes/discos
 	
 copy_archives: making_directories
 	cp libwbfs_binding/wiithon_wrapper $(DESTDIR)$(PREFIX)/share/wiithon/
@@ -86,8 +81,8 @@ copy_archives: making_directories
 	cp recursos/imagenes/*.png $(DESTDIR)$(PREFIX)/share/wiithon/recursos/imagenes
 	cp recursos/imagenes/accesorio/*.jpg $(DESTDIR)$(PREFIX)/share/wiithon/recursos/imagenes/accesorio
 	
-	cp recursos/caratulas_fix/*.png $(DESTDIR)$(PREFIX_RECURSOS_IMAGENES_CARATULAS)
-	cp recursos/discos_fix/*.png $(DESTDIR)$(PREFIX_RECURSOS_IMAGENES_DISCOS)
+	cp recursos/caratulas_fix/*.png $(DESTDIR)$(PREFIX)/share/wiithon/recursos/imagenes/caratulas
+	cp recursos/discos_fix/*.png $(DESTDIR)$(PREFIX)/share/wiithon/recursos/imagenes/discos
 	
 set_permisses:
 	chmod 755 $(DESTDIR)$(PREFIX)/share/wiithon/*.py
@@ -98,8 +93,8 @@ set_permisses:
 	chmod 644 $(DESTDIR)$(PREFIX)/share/wiithon/recursos/glade/*.ui
 	chmod 644 $(DESTDIR)$(PREFIX)/share/wiithon/recursos/imagenes/*.png
 	 
-	chmod 777 $(DESTDIR)$(PREFIX_RECURSOS_IMAGENES_CARATULAS)
-	chmod 777 $(DESTDIR)$(PREFIX_RECURSOS_IMAGENES_DISCOS)
+	chmod 777 $(DESTDIR)$(PREFIX)/share/wiithon/recursos/imagenes/caratulas
+	chmod 777 $(DESTDIR)$(PREFIX)/share/wiithon/recursos/imagenes/discos
 
 postinst:
 ifeq ($(ARCH), x86_64)
@@ -147,10 +142,10 @@ deb:
 	
 
 ppa-new: generate_changelog
-	debuild -S -sa -k0xB8F0176A -I.bzr -I.bzrignore -I*.deb --lintian-opts -Ivi
+	debuild -S -sa -k0xB8F0176A -I.bzr/* -I.bzrignore -I*.deb --lintian-opts -Ivi
 
 ppa-inc: generate_changelog
-	debuild -S -sd -k0xB8F0176A -I.bzr -I.bzrignore -I*.deb --lintian-opts -Ivi
+	debuild -S -sd -k0xB8F0176A -I.bzr/* -I.bzrignore -I*.deb --lintian-opts -Ivi
 	
 ppa-upload:
 	dput ppa:wii.sceners.linux/wiithon $(CHANGES)
@@ -236,10 +231,10 @@ purge: uninstall
 
 	-$(RM) -R ~/.wiithon
 
-	-$(RM) $(PREFIX_RECURSOS_IMAGENES_CARATULAS)/*.png
-	-$(RM) $(PREFIX_RECURSOS_IMAGENES_DISCOS)/*.png
-	-rmdir $(PREFIX_RECURSOS_IMAGENES_CARATULAS)
-	-rmdir $(PREFIX_RECURSOS_IMAGENES_DISCOS)
+	-$(RM) $(PREFIX)/share/wiithon/recursos/imagenes/caratulas/*.png
+	-$(RM) $(PREFIX)/share/wiithon/recursos/imagenes/discos/*.png
+	-rmdir $(PREFIX)/share/wiithon/recursos/imagenes/caratulas
+	-rmdir $(PREFIX)/share/wiithon/recursos/imagenes/discos
 	-rmdir $(PREFIX)/share/wiithon/recursos/imagenes
 	-rmdir $(PREFIX)/share/wiithon/recursos/glade
 	-rmdir $(PREFIX)/share/wiithon/recursos
@@ -248,7 +243,7 @@ purge: uninstall
 	@echo "Uninstall OK & all clean (purge covers & disc-art ...)"
 	@echo "=================================================================="
 
-actualizar: uninstall pull install log
+update: pull install log
 	@echo "=================================================================="
 	@echo "Updated to $(VERSION) rev$(REVISION)"
 	@echo "=================================================================="
@@ -276,7 +271,7 @@ clean_gettext:
 	-$(RM) po/locale/pt_BR/LC_MESSAGES/wiithon.mo
 	-$(RM) po/locale/ru_RU/LC_MESSAGES/wiithon.mo
 	-$(RM) po/locale/tr_TR/LC_MESSAGES/wiithon.mo
-	
+
 clean_unrar:
 	$(MAKE) -C unrar-nonfree clean
 	

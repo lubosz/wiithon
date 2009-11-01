@@ -53,7 +53,7 @@ import bzrlib.log
 
 SPLIT_ON_BLANK_LINES = bool(int(os.environ.get('BZR_GNULOG_SPLIT_ON_BLANK_LINES', "1")))
 
-HEADER="wiithon (%s.%s) karmic; urgency=low"
+HEADER="wiithon (%s-%s) karmic; urgency=high"
 
 class GnuFormatter(bzrlib.log.LogFormatter):
 
