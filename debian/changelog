@@ -1,3 +1,26 @@
+wiithon (1.1.296) karmic; urgency=low
+
+  * recursos/bazaar-plugins,
+  * recursos/bazaar-plugins/gnulog.py: Added.
+
+  * bazaar-plugins,
+  * bazaar-plugins/gnulog.py: Removed.
+
+  * Makefile,
+  * debian/changelog: Modified.
+
+  [296] Mi changelog genera los días de la semana y nombre del mes en
+  Español. ¿Esto es válido?
+
+  He intentado ejecutandolo como LANGUAGE=en bzr log -v --log-format
+  'gnu' > debian/changelog
+
+  El repositorio parece que ya funciona, pero borraré el paquete y lo
+  volveré a subir con changelog, ... etc...
+
+
+ -- Ricardo Marmolejo García <makiolo@gmail.com> dom, 01 nov 2009 18:54:59 +0000
+
 wiithon (1.1.295) karmic; urgency=low
 
   * po/it.po: [295] updated italian translation
