@@ -1,6 +1,0 @@
-#!/bin/sh
-
-test -L /usr/lib/libwbfs.so && rm /usr/lib/libwbfs.so
-test -L /usr/lib32/libwbfs.so && rm /usr/lib32/libwbfs.so
-test -L /usr/local/bin/wiithon && rm /usr/local/bin/wiithon
-test -L /usr/local/bin/wiithon_wrapper && rm /usr/local/bin/wiithon_wrapper

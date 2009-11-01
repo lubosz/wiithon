@@ -10,12 +10,6 @@ PREFIX_RECURSOS_IMAGENES_DISCOS=$(PREFIX)/share/wiithon/recursos/imagenes/discos
 
 INSTALL_PKG=apt-get install
 
-DEB-ROOT=/tmp/wiithon-$(VERSION)
-DEB-PREFIX=$(DEB-ROOT)$(PREFIX)
-DEB-PREFIX_RECURSOS_IMAGENES_CARATULAS=$(DEB-PREFIX)/share/wiithon/recursos/imagenes/caratulas
-DEB-PREFIX_RECURSOS_IMAGENES_DISCOS=$(DEB-PREFIX)/share/wiithon/recursos/imagenes/discos
-DEB-PREFIX_RECURSOS_IMAGENES_ACCESORIOS=$(DEB-PREFIX)/share/wiithon/recursos/imagenes/accesorio
-
 all: compile
 
 help:
@@ -52,71 +46,120 @@ compile: ./po/locale/da_DK/LC_MESSAGES/wiithon.mo ./po/locale/fi_FI/LC_MESSAGES/
 	@echo "Compile OK"
 	@echo "=================================================================="
 
-install: uninstall
-	@echo "Install ..."
-
-	mkdir -p $(PREFIX)/bin
-	mkdir -p $(PREFIX)/lib
-	mkdir -p $(PREFIX)/lib32
-	mkdir -p $(PREFIX)/share/wiithon
-	mkdir -p $(PREFIX)/share/wiithon/recursos/glade
-	mkdir -p $(PREFIX)/share/wiithon/recursos/imagenes
-	mkdir -p $(PREFIX)/share/wiithon/recursos/imagenes/accesorio
+making_directories:
+	@mkdir -p $(DESTDIR)/usr/share/pixmaps
+	@mkdir -p $(DESTDIR)/usr/lib
+	@mkdir -p $(DESTDIR)/usr/share/applications
+	@mkdir -p $(DESTDIR)$(PREFIX)/bin
+	@mkdir -p $(DESTDIR)$(PREFIX)/lib
+	@mkdir -p $(DESTDIR)$(PREFIX)/lib32
+	@mkdir -p $(DESTDIR)$(PREFIX)/share/wiithon
+	@mkdir -p $(DESTDIR)$(PREFIX)/share/wiithon/recursos/glade
+	@mkdir -p $(DESTDIR)$(PREFIX)/share/wiithon/recursos/imagenes
+	@mkdir -p $(DESTDIR)$(PREFIX)/share/wiithon/recursos/imagenes/accesorio
+	@mkdir -p $(DESTDIR)$(PREFIX_RECURSOS_IMAGENES_CARATULAS)
+	@mkdir -p $(DESTDIR)$(PREFIX_RECURSOS_IMAGENES_DISCOS)
 	
-	cp libwbfs_binding/wiithon_wrapper $(PREFIX)/share/wiithon/
-	cp unrar-nonfree/unrar $(PREFIX)/share/wiithon/
+recicled_old_wiithon: making_directories
+	-@mv -f ~/.wiithon/caratulas/*.png $(PREFIX_RECURSOS_IMAGENES_CARATULAS)
+	-@mv -f ~/.wiithon/discos/*.png $(PREFIX_RECURSOS_IMAGENES_DISCOS)
 	
-	cp wiithon.py $(PREFIX)/share/wiithon
-	cp libwbfs_binding/libwbfs/libwbfs.so $(PREFIX)/lib/
+copy_archives: making_directories
+	cp libwbfs_binding/wiithon_wrapper $(DESTDIR)$(PREFIX)/share/wiithon/
+	cp unrar-nonfree/unrar $(DESTDIR)$(PREFIX)/share/wiithon/
+	
+	cp *.py $(DESTDIR)$(PREFIX)/share/wiithon
+	cp libwbfs_binding/libwbfs/libwbfs.so $(DESTDIR)$(PREFIX)/lib/
 
+	cp wiithon_autodetectar.sh $(DESTDIR)$(PREFIX)/share/wiithon
+	cp wiithon_autodetectar_lector.sh $(DESTDIR)$(PREFIX)/share/wiithon
+	cp wiithon_autodetectar_fat32.sh $(DESTDIR)$(PREFIX)/share/wiithon
+	
+	cp wiithon_usuario.desktop $(DESTDIR)/usr/share/applications/
+
+	cp recursos/icons/wiithon.png $(DESTDIR)/usr/share/pixmaps
+	cp recursos/icons/wiithon.svg $(DESTDIR)/usr/share/pixmaps
+
+	cp -R po/locale/ $(DESTDIR)/usr/share/
+
+	cp recursos/glade/*.ui $(DESTDIR)$(PREFIX)/share/wiithon/recursos/glade
+	cp recursos/imagenes/*.png $(DESTDIR)$(PREFIX)/share/wiithon/recursos/imagenes
+	cp recursos/imagenes/accesorio/*.jpg $(DESTDIR)$(PREFIX)/share/wiithon/recursos/imagenes/accesorio
+	
+	cp recursos/caratulas_fix/*.png $(DESTDIR)$(PREFIX_RECURSOS_IMAGENES_CARATULAS)
+	cp recursos/discos_fix/*.png $(DESTDIR)$(PREFIX_RECURSOS_IMAGENES_DISCOS)
+	
+set_permisses:
+	chmod 755 $(DESTDIR)$(PREFIX)/share/wiithon/*.py
+	chmod 755 $(DESTDIR)$(PREFIX)/share/wiithon/*.sh
+	chmod 755 $(DESTDIR)$(PREFIX)/share/wiithon/wiithon_wrapper
+	chmod 755 $(DESTDIR)$(PREFIX)/share/wiithon/unrar
+
+	chmod 644 $(DESTDIR)$(PREFIX)/share/wiithon/recursos/glade/*.ui
+	chmod 644 $(DESTDIR)$(PREFIX)/share/wiithon/recursos/imagenes/*.png
+	 
+	chmod 777 $(DESTDIR)$(PREFIX_RECURSOS_IMAGENES_CARATULAS)
+	chmod 777 $(DESTDIR)$(PREFIX_RECURSOS_IMAGENES_DISCOS)
+
+postinst:
 ifeq ($(ARCH), x86_64)
 	ln -sf $(PREFIX)/lib/libwbfs.so /usr/lib32
 else
 	ln -sf $(PREFIX)/lib/libwbfs.so /usr/lib
 endif
-	
-	cp wiithon_autodetectar.sh $(PREFIX)/share/wiithon
-	cp wiithon_autodetectar_lector.sh $(PREFIX)/share/wiithon
-	cp wiithon_autodetectar_fat32.sh $(PREFIX)/share/wiithon
-	
-	cp *.py $(PREFIX)/share/wiithon
-
-	cp wiithon_usuario.desktop /usr/share/applications/
-
-	cp recursos/icons/wiithon.png /usr/share/pixmaps
-	cp recursos/icons/wiithon.svg /usr/share/pixmaps
-
-	cp -R po/locale/ /usr/share/
-
-	cp recursos/glade/*.ui $(PREFIX)/share/wiithon/recursos/glade
-	cp recursos/imagenes/*.png $(PREFIX)/share/wiithon/recursos/imagenes
-	cp recursos/imagenes/accesorio/*.jpg $(PREFIX)/share/wiithon/recursos/imagenes/accesorio
-	
-	mkdir -p $(PREFIX_RECURSOS_IMAGENES_CARATULAS)
-	mkdir -p $(PREFIX_RECURSOS_IMAGENES_DISCOS)
-	
-	cp recursos/caratulas_fix/*.png $(PREFIX_RECURSOS_IMAGENES_CARATULAS)
-	cp recursos/discos_fix/*.png $(PREFIX_RECURSOS_IMAGENES_DISCOS)
-
-	chmod 755 $(PREFIX)/share/wiithon/*.py
-	chmod 755 $(PREFIX)/share/wiithon/*.sh
-	chmod 755 $(PREFIX)/share/wiithon/wiithon_wrapper
-
-	chmod 644 $(PREFIX)/share/wiithon/recursos/glade/*.ui
-	chmod 644 $(PREFIX)/share/wiithon/recursos/imagenes/*.png
-	 
-	chmod 777 $(PREFIX_RECURSOS_IMAGENES_CARATULAS)
-	chmod 777 $(PREFIX_RECURSOS_IMAGENES_DISCOS)
-
 	-ln -sf $(PREFIX)/share/wiithon/wiithon.py $(PREFIX)/bin/wiithon
 	-ln -sf $(PREFIX)/share/wiithon/wiithon_wrapper $(PREFIX)/bin/wiithon_wrapper
 
+install: uninstall recicled_old_wiithon copy_archives set_permisses postinst
 	@echo "=================================================================="
 	@echo "Wiithon Install OK"
 	@echo "=================================================================="
 
+install4ppa: copy_archives set_permisses
+	@echo "=================================================================="
+	@echo "Wiithon Install for PPA OK"
+	@echo "=================================================================="
+
+making_directories_deb:
+	@mkdir -p $(DESTDIR)/DEBIAN
+	
+create_deb: compile making_directories_deb copy_archives set_permisses
+
+	@cp --dereference --preserve=all debian/only-deb/* $(DESTDIR)/DEBIAN
+	@dpkg-deb --build $(DESTDIR)
+	@rm -rf $(DESTDIR)
+	
+	-@$(RM) wiithon-*_*.deb
+	@mv "$(DESTDIR).deb" "./wiithon-$(VERSION)_$(REVISION).deb"
+
+	@echo "=================================================================="
+	@echo "Debian package created:	wiithon-"$(VERSION)"_"$(REVISION)".deb"
+	@echo "=================================================================="
+
+deb:
+	$(MAKE) -C . create_deb DESTDIR=/tmp/wiithon-$(VERSION)
+	
+
+ppa-new:
+	debuild -S -sa -k0xB8F0176A -I.bzr -I.bzrignore -I*.deb --lintian-opts -Ivi
+	@#dpkg-buildpackage -rfakeroot -I.bzr
+	@#lintian -Ivi ../wiithon_1.1.dsc
+	@#lintian -Ivi ../wiithon_1.1_all.deb
+
+ppa-inc:
+	debuild -S -sd -k0xB8F0176A -I.bzr -I.bzrignore -I*.deb --lintian-opts -Ivi
+	
+ppa-upload:
+	dput ppa:wii.sceners.linux/wiithon ../wiithon_1.1_source.changes
+
 uninstall:
 	@echo "Uninstall ..."
+	
+	-$(RM) -R ~/.wiithon/caratulas/
+	-$(RM) -R ~/.wiithon/discos/
+	-$(RM) ~/.wiithon/bdd/juegos.db
+	-$(RM) ~/.wiithon_acuerdo
+	-$(RM) $(PREFIX)/share/wiithon/.acuerdo
 	
 	-$(RM) /usr/bin/wiithon
 	-$(RM) /usr/bin/wiithon_autodetectar
@@ -132,14 +175,6 @@ uninstall:
 
 	-$(RM) $(PREFIX)/share/wiithon/recursos/glade/*.xml
 	-$(RM) $(PREFIX)/share/wiithon/recursos/glade/*.glade
-	
-	-$(RM) $(PREFIX_RECURSOS_IMAGENES_CARATULAS)/index.html*
-	-$(RM) $(PREFIX_RECURSOS_IMAGENES_DISCOS)/index.html*
-	-$(RM) $(PREFIX_RECURSOS_IMAGENES_CARATULAS)/*.png.1
-	-$(RM) $(PREFIX_RECURSOS_IMAGENES_DISCOS)/*.png.1
-
-	-$(RM) $(PREFIX)/share/wiithon/.acuerdo
-	-$(RM) ~/.wiithon_acuerdo
 
 	-$(RM) $(PREFIX)/share/wiithon/wiithon
 	-$(RM) $(PREFIX)/share/wiithon/wiithon_autodetectar
@@ -147,7 +182,6 @@ uninstall:
 
 	-@gconftool --recursive-unset /apps/nautilus-actions/configurations
 	-@$(RM) /usr/share/gconf/schemas/wiithon*.schemas
-	-$(RM) /usr/share/applications/wiithon.desktop
 
 	-$(RM) $(PREFIX)/bin/wiithon
 	-$(RM) $(PREFIX)/bin/wiithon_wrapper
@@ -333,129 +367,3 @@ initPO: po/plantilla.pot
 	# turkish tr_TR
 	msginit -i po/plantilla.pot -o po/tr_TR.po --no-translator
 
-deb: compile
-	@echo "crear directorios"
-	@mkdir -p $(DEB-ROOT)/DEBIAN
-	@mkdir -p $(DEB-ROOT)/usr/share/pixmaps
-	@mkdir -p $(DEB-ROOT)/usr/lib
-	@mkdir -p $(DEB-ROOT)/usr/share/applications
-	@mkdir -p $(DEB-PREFIX)/bin
-	@mkdir -p $(DEB-PREFIX)/lib
-	@mkdir -p $(DEB-PREFIX)/share/wiithon/recursos/glade
-	@mkdir -p $(DEB-PREFIX)/share/wiithon/recursos/imagenes
-	@mkdir -p $(DEB-PREFIX_RECURSOS_IMAGENES_CARATULAS)
-	@mkdir -p $(DEB-PREFIX_RECURSOS_IMAGENES_DISCOS)
-	@mkdir -p $(DEB-PREFIX_RECURSOS_IMAGENES_ACCESORIOS)
-
-	@echo "copiar a ./share/wiithon/"
-	@cp libwbfs_binding/wiithon_wrapper $(DEB-PREFIX)/share/wiithon/
-	@cp unrar-nonfree/unrar $(DEB-PREFIX)/share/wiithon/
-	@cp *.py $(DEB-PREFIX)/share/wiithon
-	@cp wiithon_autodetectar.sh $(DEB-PREFIX)/share/wiithon
-	@cp wiithon_autodetectar_lector.sh $(DEB-PREFIX)/share/wiithon
-	@cp wiithon_autodetectar_fat32.sh $(DEB-PREFIX)/share/wiithon
-
-	@echo "copiar a ./share/wiithon/recursos/glade"
-	@cp recursos/glade/*.ui $(DEB-PREFIX)/share/wiithon/recursos/glade
-
-	@echo "copiar a ./share/wiithon/recursos/imagenes"
-	@cp recursos/imagenes/*.png $(DEB-PREFIX)/share/wiithon/recursos/imagenes
-	
-	@echo "copiar a ./share/wiithon/recursos/imagenes/caratula"
-	@cp recursos/caratulas_fix/*.png $(DEB-PREFIX_RECURSOS_IMAGENES_CARATULAS)
-	
-	@echo "copiar a ./share/wiithon/recursos/imagenes/discos"
-	@cp recursos/discos_fix/*.png $(DEB-PREFIX_RECURSOS_IMAGENES_DISCOS)
-	
-	@echo "copiar a ./share/wiithon/recursos/imagenes/accesorio"
-	@cp recursos/imagenes/accesorio/*.jpg $(DEB-PREFIX_RECURSOS_IMAGENES_ACCESORIOS)	
-	
-	@echo "copiar a ./lib"
-	@cp libwbfs_binding/libwbfs/libwbfs.so $(DEB-PREFIX)/lib
-	
-	@echo "copiar ./share/applications"
-	@cp wiithon_usuario.desktop $(DEB-ROOT)/usr/share/applications
-
-	@echo "copiar ./share/pixmaps"
-	@cp recursos/icons/wiithon.png $(DEB-ROOT)/usr/share/pixmaps
-	@cp recursos/icons/wiithon.svg $(DEB-ROOT)/usr/share/pixmaps
-
-	@echo "copiar ./share/po/locale"
-	@cp -R po/locale/ $(DEB-ROOT)/usr/share/
-	
-	@echo "permisos para ejecución"
-	@chmod 755 $(DEB-PREFIX)/share/wiithon/wiithon.py
-	@chmod 755 $(DEB-PREFIX)/share/wiithon/wiithon_autodetectar.sh
-	@chmod 755 $(DEB-PREFIX)/share/wiithon/wiithon_autodetectar_lector.sh
-	@chmod 755 $(DEB-PREFIX)/share/wiithon/wiithon_autodetectar_fat32.sh
-	@chmod 755 $(DEB-PREFIX)/share/wiithon/wiithon_wrapper
-	@chmod 755 $(DEB-PREFIX)/share/wiithon/unrar
-
-	@echo "permisos espacio de sistema compartido"
-	@chmod 777 $(DEB-PREFIX_RECURSOS_IMAGENES_CARATULAS)
-	@chmod 777 $(DEB-PREFIX_RECURSOS_IMAGENES_DISCOS)
-	
-	@echo "generar deb"
-	@cp recursos/deb/* $(DEB-ROOT)/DEBIAN
-	@dpkg-deb --build $(DEB-ROOT)
-	#
-	# debuild -S -sa
-	# ¿Como hacer un PPA para wiithon? Carlo si me puedes ayudar ...
-	# https://help.launchpad.net/Packaging/PPA/BuildingASourcePackage
-	# https://help.launchpad.net/Packaging/PPA/Uploading#Next%20steps
-	#
-	@rm -rf $(DEB-ROOT)
-	
-	@echo "post generate deb"
-	-@$(RM) wiithon-*_*.deb
-	@mv "$(DEB-ROOT).deb" "./wiithon-$(VERSION)_$(REVISION).deb"
-
-	@echo "=================================================================="
-	@echo "Debian package created:	wiithon-"$(VERSION)"_"$(REVISION)".deb"
-	@echo "=================================================================="
-
-install4ppa:
-	@echo "Install for PPA..."
-
-	cp libwbfs_binding/wiithon_wrapper $(DESTDIR)$(PREFIX)/share/wiithon/
-	cp unrar-nonfree/unrar $(DESTDIR)$(PREFIX)/share/wiithon/
-	
-	cp *.py $(DESTDIR)$(PREFIX)/share/wiithon
-	cp libwbfs_binding/libwbfs/libwbfs.so $(DESTDIR)$(PREFIX)/lib/
-
-	cp wiithon_autodetectar.sh $(DESTDIR)$(PREFIX)/share/wiithon
-	cp wiithon_autodetectar_lector.sh $(DESTDIR)$(PREFIX)/share/wiithon
-	cp wiithon_autodetectar_fat32.sh $(DESTDIR)$(PREFIX)/share/wiithon
-	
-	cp wiithon_usuario.desktop $(DESTDIR)/usr/share/applications/
-
-	cp recursos/icons/wiithon.png $(DESTDIR)/usr/share/pixmaps
-	cp recursos/icons/wiithon.svg $(DESTDIR)/usr/share/pixmaps
-
-	cp -R po/locale/ $(DESTDIR)/usr/share/
-
-	cp recursos/glade/*.ui $(DESTDIR)$(PREFIX)/share/wiithon/recursos/glade
-	cp recursos/imagenes/*.png $(DESTDIR)$(PREFIX)/share/wiithon/recursos/imagenes
-	cp recursos/imagenes/accesorio/*.jpg $(DESTDIR)$(PREFIX)/share/wiithon/recursos/imagenes/accesorio
-	
-	cp recursos/caratulas_fix/*.png $(DESTDIR)$(PREFIX_RECURSOS_IMAGENES_CARATULAS)
-	cp recursos/discos_fix/*.png $(DESTDIR)$(PREFIX_RECURSOS_IMAGENES_DISCOS)
-
-	chmod 755 $(DESTDIR)$(PREFIX)/share/wiithon/*.py
-	chmod 755 $(DESTDIR)$(PREFIX)/share/wiithon/*.sh
-	chmod 755 $(DESTDIR)$(PREFIX)/share/wiithon/wiithon_wrapper
-
-	chmod 644 $(DESTDIR)$(PREFIX)/share/wiithon/recursos/glade/*.ui
-	chmod 644 $(DESTDIR)$(PREFIX)/share/wiithon/recursos/imagenes/*.png
-	
-	chmod 777 $(DESTDIR)$(PREFIX_RECURSOS_IMAGENES_CARATULAS)
-	chmod 777 $(DESTDIR)$(PREFIX_RECURSOS_IMAGENES_DISCOS)
-
-	@echo "=================================================================="
-	@echo "Wiithon Install for PPA OK"
-	@echo "=================================================================="
-
-ppa:
-	dpkg-buildpackage -rfakeroot -I.bzr
-	#lintian -Ivi ../wiithon_1.1.dsc
-	lintian -Ivi ../wiithon_1.1_all.deb
