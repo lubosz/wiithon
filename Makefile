@@ -144,7 +144,7 @@ deb:
 	#debuild clean
 
 ppa-new: generate_changelog
-	debuild --no-tgz-check -S -sa -k0xB8F0176A -I.bzr* -Idoc/Análisis* -Idoc/Diseño* --lintian-opts -Ivi
+	debuild --no-tgz-check -S -sa -k0xB8F0176A -I.bzr* -Idoc/Análisis* -Idoc/Diseño* -I*.deb --lintian-opts -Ivi
 	mv ../wiithon_$(VERSION)-$(REVISION).tar.gz ../wiithon_$(VERSION).orig.tar.gz
 	mv ../wiithon_$(VERSION)-$(REVISION).dsc ../wiithon_$(VERSION).orig.dsc
 	mv ../wiithon_$(VERSION)-$(REVISION)_source.build ../wiithon_$(VERSION)_source.orig.build
