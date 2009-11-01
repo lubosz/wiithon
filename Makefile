@@ -142,8 +142,6 @@ deb:
 
 ppa-new:
 	debuild -S -sa -k0xB8F0176A -I.bzr -I.bzrignore -I*.deb --lintian-opts -Ivi
-	@#dpkg-buildpackage -rfakeroot -I.bzr
-	@#lintian -Ivi ../wiithon_1.1.dsc
 	@#lintian -Ivi ../wiithon_1.1_all.deb
 
 ppa-inc:
