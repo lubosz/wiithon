@@ -148,6 +148,7 @@ ppa-new:
 
 ppa-inc:
 	debuild -S -sd -k0xB8F0176A -I.bzr -I.bzrignore -I*.deb --lintian-opts -Ivi
+	#bzr log -v --log-format 'gnu' > debian/changelog
 	
 ppa-upload:
 	dput ppa:wii.sceners.linux/wiithon ../wiithon_1.1_source.changes
