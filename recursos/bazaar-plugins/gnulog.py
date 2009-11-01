@@ -53,7 +53,7 @@ import bzrlib.log
 
 SPLIT_ON_BLANK_LINES = bool(int(os.environ.get('BZR_GNULOG_SPLIT_ON_BLANK_LINES', "1")))
 
-HEADER="\nwiithon (1.1) karmic; urgency=low"
+HEADER="wiithon (%s.%s) karmic; urgency=low"
 
 class GnuFormatter(bzrlib.log.LogFormatter):
 
@@ -67,22 +67,51 @@ class GnuFormatter(bzrlib.log.LogFormatter):
 
     def log_revision(self, lr):
         self.show(lr.revno, lr.rev, lr.delta, lr.tags)
+
+    def decode(self, s, code = 'utf-8'):
+        try:
+            return s.decode(code)
+        except UnicodeDecodeError:
+            return s
     
     def show(self, revno, rev, delta, tags=None):
         to_file = self.to_file
         #if tags is not None:
         #    self._flush()
         #    print >> to_file, u"=== %s ===" % ', '.join(tags)
-        date_str = time.strftime("%a, %d %b %Y %T %z", time.localtime(rev.timestamp))
+        date_str = self.decode(time.strftime("%a, %d %b %Y %T %z", time.localtime(rev.timestamp)))
         if hasattr(rev, "get_apparent_authors"):
             author = "  ".join(rev.get_apparent_authors())
         else:
             author = rev.get_apparent_author().strip()
-        date_line = " -- " + author + " " + date_str
+        date_line = " -- " + author + " " + date_str + "\n"
         if date_line != self._date_line:
             self._flush()
             self._date_line = date_line
-	print >> to_file, u"%s" % HEADER
+        # 0.95 ---> [1,2]
+        # 0.96 ---> [3,4]
+        # 0.97 ---> [5]
+        # 0.98 ---> [6]
+        # 1.0 ----> [7,197]
+        # 1.1 ----> [198, inf.)
+        try:
+            revno_int = int(revno)
+        except ValueError:
+            revno_int = int(revno.split(".")[0])
+        if   1<=revno_int and revno_int<=2:
+            version = "0.95"
+        elif 3<=revno_int and revno_int<=4:
+            version = "0.96"
+        elif revno_int==5:
+            version = "0.97"
+        elif revno_int==6:
+            version = "0.99"
+        elif 7<=revno_int and revno_int<=197:
+            version = "1.0"
+        elif revno_int>=198:
+            version = "1.1"
+            
+        print >> to_file, u"%s" % (HEADER % (version, revno))
         self._show_changes(revno, rev, delta)
 	#print >> to_file, u"%s" % date_line
 

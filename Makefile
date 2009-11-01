@@ -122,8 +122,13 @@ install4ppa: copy_archives set_permisses
 
 making_directories_deb:
 	@mkdir -p $(DESTDIR)/DEBIAN
-	
-create_deb: compile making_directories_deb copy_archives set_permisses
+
+generate_changelog:
+	@ln -sf $(shell pwd)/recursos/bazaar-plugins/gnulog.py ~/.bazaar/plugins/gnulog.py
+	bzr log -v --log-format 'gnu' > debian/changelog
+	@$(RM) ~/.bazaar/plugins/gnulog.py
+
+create_deb: generate_changelog compile making_directories_deb copy_archives set_permisses 
 
 	@cp --dereference --preserve=all debian/only-deb/* $(DESTDIR)/DEBIAN
 	@dpkg-deb --build $(DESTDIR)
@@ -140,11 +145,11 @@ deb:
 	$(MAKE) -C . create_deb DESTDIR=/tmp/wiithon-$(VERSION)
 	
 
-ppa-new:
+ppa-new: generate_changelog
 	debuild -S -sa -k0xB8F0176A -I.bzr -I.bzrignore -I*.deb --lintian-opts -Ivi
 	@#lintian -Ivi ../wiithon_1.1_all.deb
 
-ppa-inc:
+ppa-inc: generate_changelog
 	debuild -S -sd -k0xB8F0176A -I.bzr -I.bzrignore -I*.deb --lintian-opts -Ivi
 	#bzr log -v --log-format 'gnu' > debian/changelog
 	

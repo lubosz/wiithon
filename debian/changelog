@@ -1,5 +1,5307 @@
-wiithon (1.1) karmic; urgency=low
+wiithon (1.1.295) karmic; urgency=low
 
-  * Testing Release.
+  * po/it.po: [295] updated italian translation
 
- -- Ricardo Marmolejo García <makiolo@gmail.com>  Fri, 30 Oct 2009 20:11:48 +0100
+ -- Carlo Mandelli <camandel@gmail.com> dom, 01 nov 2009 15:57:40 +0000
+
+wiithon (1.1.294) karmic; urgency=low
+
+  * Makefile,
+  * debian/control: [294] removed last lintian warning from sources
+
+ -- Carlo Mandelli <camandel@gmail.com> dom, 01 nov 2009 14:47:48 +0000
+
+wiithon (1.1.293) karmic; urgency=low
+
+  * bazaar-plugins,
+  * bazaar-plugins/gnulog.py: Added.
+
+  * Makefile: Modified.
+
+  [293] added modified bazaar plugin to generate changelog file (draft)
+
+ -- Carlo Mandelli <camandel@gmail.com> dom, 01 nov 2009 14:10:46 +0000
+
+wiithon (1.1.292) karmic; urgency=low
+
+  * libwbfs_binding/wiithon_wrapper.sh,
+  * po/es.po: [292] mini-fixed
+
+
+ -- Ricardo Marmolejo García <makiolo@gmail.com> dom, 01 nov 2009 06:29:38 +0000
+
+wiithon (1.1.291) karmic; urgency=low
+
+  * debian/only-deb,
+  * debian/only-deb/control,
+  * debian/only-deb/postinst,
+  * debian/only-deb/postrm: Added.
+
+  * recursos/deb,
+  * recursos/deb/control,
+  * recursos/deb/postinst,
+  * recursos/deb/postrm,
+  * recursos/deb/templates: Removed.
+
+  * Makefile,
+  * debian/changelog,
+  * debian/control,
+  * debian/wiithon.postinst,
+  * debian/wiithon.postrm: Modified.
+
+  [291] Thx Carlo!
+
+  cleaning ... I subi el deb, pero pone que tardara 10 horas ..., mira
+  esto: https://launchpad.net/~wii.sceners.linux/+archive/wiithon
+
+  La primera subida será full. Y las siguientes son incrementos de la
+  full. Corrigeme si me equivico.
+
+  Tambien hay que averiguar alguna forma de generar el debian/changelog
+  a partir de la salida del bzr log.
+
+
+ -- Ricardo Marmolejo García <makiolo@gmail.com> dom, 01 nov 2009 03:40:15 +0000
+
+wiithon (1.1.290) karmic; urgency=low
+
+  * Makefile,
+  * debian/control,
+  * debian/wiithon.postinst: [290] cleanup lintian errors from .deb
+
+ -- Carlo Mandelli <camandel@gmail.com> sáb, 31 oct 2009 20:10:38 +0000
+
+wiithon (1.1.289) karmic; urgency=low
+
+  * debian/control,
+  * debian/rules: [289] cleanup lintian errors
+
+ -- Carlo Mandelli <camandel@gmail.com> sáb, 31 oct 2009 19:47:48 +0000
+
+wiithon (1.1.288) karmic; urgency=low
+
+  * Makefile,
+  * debian/copyright: [288] removed directory .bzr from source file
+
+ -- Carlo Mandelli <camandel@gmail.com> sáb, 31 oct 2009 18:42:15 +0000
+
+wiithon (1.1.287) karmic; urgency=low
+
+  * debian/control: Added.
+
+  * Makefile: Modified.
+
+  [287] added rule and control file
+
+ -- Carlo Mandelli <camandel@gmail.com> sáb, 31 oct 2009 18:17:11 +0000
+
+wiithon (1.1.286) karmic; urgency=low
+
+  * debian/wiithon.postinst,
+  * debian/wiithon.postrm: Added.
+
+  * Makefile,
+  * debian/changelog,
+  * debian/copyright,
+  * debian/rules: Modified.
+
+  [286] added "make ppa" to create source and binary for PPA
+
+ -- Carlo Mandelli <camandel@gmail.com> sáb, 31 oct 2009 18:05:14 +0000
+
+wiithon (1.1.285) karmic; urgency=low
+
+  * debian,
+  * debian/changelog,
+  * debian/compat,
+  * debian/copyright,
+  * debian/rules,
+  * debian/wiithon.dirs: Added.
+
+  * Makefile,
+  * doc/LINKS: Modified.
+
+  [285] first draft to create PPA
+
+ -- Carlo Mandelli <camandel@gmail.com> sáb, 31 oct 2009 09:19:46 +0000
+
+wiithon (1.1.284) karmic; urgency=low
+
+  * gui.py,
+  * po/da_DK.po,
+  * po/de.po,
+  * po/en.po,
+  * po/es.po,
+  * po/fi_FI.po,
+  * po/fr.po,
+  * po/it.po,
+  * po/ja_JP.po,
+  * po/ko_KR.po,
+  * po/nb_NO.po,
+  * po/nl_NL.po,
+  * po/pt_BR.po,
+  * po/pt_PT.po,
+  * po/ru_RU.po,
+  * po/sv_SE.po,
+  * po/tr_TR.po: [284] Ahora podemos ver los juegos de la ultima sesion
+  sin el disco wbfs.
+
+
+ -- Ricardo Marmolejo García <makiolo@gmail.com> sáb, 31 oct 2009 06:27:26 +0000
+
+wiithon (1.1.283) karmic; urgency=low
+
+  * recursos/deb/control: [283] control in 2.16!
+
+ -- Ricardo Marmolejo García <makiolo@gmail.com> sáb, 31 oct 2009 06:20:34 +0000
+
+wiithon (1.1.282) karmic; urgency=low
+
+  * cli.py,
+  * core.py,
+  * gui.py,
+  * po/da_DK.po,
+  * po/de.po,
+  * po/en.po,
+  * po/es.po,
+  * po/fi_FI.po,
+  * po/fr.po,
+  * po/it.po,
+  * po/ja_JP.po,
+  * po/ko_KR.po,
+  * po/nb_NO.po,
+  * po/nl_NL.po,
+  * po/pt_BR.po,
+  * po/pt_PT.po,
+  * po/ru_RU.po,
+  * po/sv_SE.po,
+  * po/tr_TR.po,
+  * recursos/glade/wiithon.ui,
+  * recursos/glade/wiithon.ui.h,
+  * wiithon.py: [282] Pequeños cambios, entre ellos adaptarlo para
+  ubuntu 9.10
+
+  Ahora GTK vuelve a ser 2.16+
+
+ -- Ricardo Marmolejo García <makiolo@gmail.com> sáb, 31 oct 2009 06:19:19 +0000
+
+wiithon (1.1.281) karmic; urgency=low
+
+  * recursos/glade/wiithon.ui: [281] small fix (label duplicated)
+
+ -- Carlo Mandelli <camandel@gmail.com> vie, 30 oct 2009 19:27:10 +0000
+
+wiithon (1.1.280) karmic; urgency=low
+
+  * config.py,
+  * gui.py,
+  * po/da_DK.po,
+  * po/de.po,
+  * po/en.po,
+  * po/es.po,
+  * po/fi_FI.po,
+  * po/fr.po,
+  * po/it.po,
+  * po/ja_JP.po,
+  * po/ko_KR.po,
+  * po/nb_NO.po,
+  * po/nl_NL.po,
+  * po/pt_BR.po,
+  * po/pt_PT.po,
+  * po/ru_RU.po,
+  * po/sv_SE.po,
+  * po/tr_TR.po,
+  * preferencias.py,
+  * recursos/glade/wiithon.ui,
+  * trabajo.py: [280] Aumentando la calidad del desarrollo
+
+
+ -- Ricardo Marmolejo García <makiolo@gmail.com> vie, 30 oct 2009 04:55:22 +0000
+
+wiithon (1.1.279) karmic; urgency=low
+
+  * TODO,
+  * cli.py,
+  * config.py,
+  * gui.py,
+  * po/da_DK.po,
+  * po/de.po,
+  * po/en.po,
+  * po/es.po,
+  * po/fi_FI.po,
+  * po/fr.po,
+  * po/it.po,
+  * po/ja_JP.po,
+  * po/ko_KR.po,
+  * po/nb_NO.po,
+  * po/nl_NL.po,
+  * po/pt_BR.po,
+  * po/pt_PT.po,
+  * po/ru_RU.po,
+  * po/sv_SE.po,
+  * po/tr_TR.po,
+  * preferencias.py,
+  * recursos/glade/wiithon.ui,
+  * recursos/glade/wiithon.ui.h,
+  * textview_custom.py,
+  * util.py: [279] mejor comando de unzip
+
+  nuevos tags pseudo-html preparando la seccion herramientas y
+  utilidades ahora se puede enviar mensajes en xml al alert() como
+  consecuencia el excepthook, hace referencia a la web de bugs del
+  proyecto wiithon algun otro cambio sin importancia.
+
+
+ -- Ricardo Marmolejo García <makiolo@gmail.com> jue, 29 oct 2009 20:02:15 +0000
+
+wiithon (1.1.278) karmic; urgency=low
+
+  * TODO,
+  * po/it.po: [278] updated italian translation
+
+ -- Carlo Mandelli <camandel@gmail.com> lun, 26 oct 2009 19:23:57 +0000
+
+wiithon (1.1.277) karmic; urgency=low
+
+  * deb,
+  * deb/wiithon-1.1_275.deb: Removed.
+
+  * Makefile,
+  * doc/LINKS,
+  * gui.py,
+  * po/da_DK.po,
+  * po/de.po,
+  * po/en.po,
+  * po/es.po,
+  * po/fi_FI.po,
+  * po/fr.po,
+  * po/it.po,
+  * po/ja_JP.po,
+  * po/ko_KR.po,
+  * po/nb_NO.po,
+  * po/nl_NL.po,
+  * po/pt_BR.po,
+  * po/pt_PT.po,
+  * po/ru_RU.po,
+  * po/sv_SE.po,
+  * po/tr_TR.po: Modified.
+
+  [277] implementado un sistema "excepthook" para aumentar la robusted.
+
+
+ -- Ricardo Marmolejo García <makiolo@gmail.com> lun, 26 oct 2009 05:07:11 +0000
+
+wiithon (1.1.276) karmic; urgency=low
+
+  * deb,
+  * deb/wiithon-1.1_275.deb: Added.
+
+  * Makefile: Modified.
+
+  [276] Probando que ocurre si subo un DEB
+
+
+ -- Ricardo Marmolejo García <makiolo@gmail.com> lun, 26 oct 2009 04:07:21 +0000
+
+wiithon (1.1.275) karmic; urgency=low
+
+  * gui.py: [275] fix bug
+
+
+ -- Ricardo Marmolejo García <makiolo@gmail.com> lun, 26 oct 2009 04:04:24 +0000
+
+wiithon (1.1.274) karmic; urgency=low
+
+  * .bzrignore,
+  * core.py,
+  * gui.py,
+  * po/da_DK.po,
+  * po/de.po,
+  * po/en.po,
+  * po/es.po,
+  * po/fi_FI.po,
+  * po/fr.po,
+  * po/it.po,
+  * po/ja_JP.po,
+  * po/ko_KR.po,
+  * po/nb_NO.po,
+  * po/nl_NL.po,
+  * po/pt_BR.po,
+  * po/pt_PT.po,
+  * po/ru_RU.po,
+  * po/sv_SE.po,
+  * po/tr_TR.po,
+  * preferencias.py,
+  * trabajo.py,
+  * util.py: [274] Implementada la funcion de Carlo (check 4.4gb free) a
+  la hora de descomprimir .rar
+
+ -- Ricardo Marmolejo García <makiolo@gmail.com> lun, 26 oct 2009 03:34:02 +0000
+
+wiithon (1.1.273) karmic; urgency=low
+
+  * gui.py,
+  * po/da_DK.po,
+  * po/de.po,
+  * po/en.po,
+  * po/es.po,
+  * po/fi_FI.po,
+  * po/fr.po,
+  * po/it.po,
+  * po/ja_JP.po,
+  * po/ko_KR.po,
+  * po/nb_NO.po,
+  * po/nl_NL.po,
+  * po/pt_BR.po,
+  * po/pt_PT.po,
+  * po/ru_RU.po,
+  * po/sv_SE.po,
+  * po/tr_TR.po: [273] check for 4.4 GB of free space before to extract
+  ISO
+
+ -- Carlo Mandelli <camandel@gmail.com> dom, 25 oct 2009 16:53:32 +0000
+
+wiithon (1.1.272) karmic; urgency=low
+
+  * po/it.po: [272] updated italian translation
+
+ -- Carlo Mandelli <camandel@gmail.com> dom, 25 oct 2009 14:25:42 +0000
+
+wiithon (1.1.271) karmic; urgency=low
+
+  * po/it.po: [271] updated italian translation
+
+ -- Carlo Mandelli <camandel@gmail.com> dom, 25 oct 2009 12:46:44 +0000
+
+wiithon (1.1.270) karmic; urgency=low
+
+  * Makefile: [270] Documentando el generar deb
+
+
+ -- Ricardo Marmolejo García <makiolo@gmail.com> dom, 25 oct 2009 07:04:07 +0000
+
+wiithon (1.1.269) karmic; urgency=low
+
+  * gui.py,
+  * po/es.po,
+  * wiithon_usuario.desktop: [269] Traduciendo es
+
+
+ -- Ricardo Marmolejo García <makiolo@gmail.com> dom, 25 oct 2009 06:49:01 +0000
+
+wiithon (1.1.268) karmic; urgency=low
+
+  * publish.sh: [268] i wrote VIM ... :D
+
+
+ -- Ricardo Marmolejo García <makiolo@gmail.com> sáb, 24 oct 2009 18:27:09 +0000
+
+wiithon (1.1.267) karmic; urgency=low
+
+  * publish.sh: Added.
+
+  * .bzrignore: Modified.
+
+  [267] bug fixed (thx carlo)
+
+  I uncommit your 266 sorry, i had conflicts.
+
+
+ -- Ricardo Marmolejo García <makiolo@gmail.com> sáb, 24 oct 2009 18:25:45 +0000
+
+wiithon (1.1.266) karmic; urgency=low
+
+  * TODO,
+  * core.py,
+  * gui.py,
+  * preferencias.py,
+  * trabajo.py: [266] bug fixed (thx carlo)
+
+
+ -- Ricardo Marmolejo García <makiolo@gmail.com> sáb, 24 oct 2009 18:19:39 +0000
+
+wiithon (1.1.265) karmic; urgency=low
+
+  * TODO,
+  * core.py,
+  * gui.py,
+  * po/da_DK.po,
+  * po/de.po,
+  * po/en.po,
+  * po/es.po,
+  * po/fi_FI.po,
+  * po/fr.po,
+  * po/it.po,
+  * po/ja_JP.po,
+  * po/ko_KR.po,
+  * po/nb_NO.po,
+  * po/nl_NL.po,
+  * po/pt_BR.po,
+  * po/pt_PT.po,
+  * po/ru_RU.po,
+  * po/sv_SE.po,
+  * po/tr_TR.po,
+  * preferencias.py,
+  * trabajo.py,
+  * wiitdb_schema.py: [265] Arreglado muchos bugs pequeños,
+  especialmente el de al finalizar de añadir iso o finalizar una
+  clonación.
+
+
+ -- Ricardo Marmolejo García <makiolo@gmail.com> sáb, 24 oct 2009 08:35:28 +0000
+
+wiithon (1.1.264) karmic; urgency=low
+
+  * Makefile: [264] Pequeño fix para generar el DEB
+
+ -- Ricardo Marmolejo García <makiolo@gmail.com> vie, 23 oct 2009 05:47:50 +0000
+
+wiithon (1.1.263) karmic; urgency=low
+
+  * recursos/imagenes/accesorio/keyboard.jpg: Added.
+
+  * Makefile,
+  * config.py,
+  * core.py,
+  * gui.py,
+  * po/da_DK.po,
+  * po/de.po,
+  * po/en.po,
+  * po/es.po,
+  * po/fi_FI.po,
+  * po/fr.po,
+  * po/it.po,
+  * po/ja_JP.po,
+  * po/ko_KR.po,
+  * po/nb_NO.po,
+  * po/nl_NL.po,
+  * po/pt_BR.po,
+  * po/pt_PT.po,
+  * po/ru_RU.po,
+  * po/sv_SE.po,
+  * po/tr_TR.po,
+  * preferencias.py,
+  * recursos/glade/wiithon.ui,
+  * recursos/glade/wiithon.ui.h,
+  * recursos/imagenes/accesorio/classiccontroller.jpg,
+  * recursos/imagenes/accesorio/motionplus.jpg,
+  * textview_custom.py,
+  * wiitdb_schema.py,
+  * wiitdb_xml.py: Modified.
+
+  [263] Accesorios en jpg ..
+
+  Muchos cambios internos Me queda pendiente con la copia 1:1
+
+
+ -- Ricardo Marmolejo García <makiolo@gmail.com> vie, 23 oct 2009 05:43:26 +0000
+
+wiithon (1.1.262) karmic; urgency=low
+
+  * cli.py,
+  * config.py,
+  * core.py,
+  * gui.py,
+  * preferencias.py,
+  * recursos/glade/wiithon.ui,
+  * trabajo.py,
+  * util.py: [262] BIG BUG fixed!!
+
+
+ -- Ricardo Marmolejo García <makiolo@gmail.com> jue, 22 oct 2009 23:39:00 +0000
+
+wiithon (1.1.261) karmic; urgency=low
+
+  * po/it.po: [261] - updated italian translation
+
+ -- Carlo Mandelli <camandel@gmail.com> jue, 22 oct 2009 22:07:52 +0000
+
+wiithon (1.1.260) karmic; urgency=low
+
+  * config.py,
+  * core.py,
+  * gui.py,
+  * po/da_DK.po,
+  * po/de.po,
+  * po/en.po,
+  * po/es.po,
+  * po/fi_FI.po,
+  * po/fr.po,
+  * po/it.po,
+  * po/ja_JP.po,
+  * po/ko_KR.po,
+  * po/nb_NO.po,
+  * po/nl_NL.po,
+  * po/pt_BR.po,
+  * po/pt_PT.po,
+  * po/ru_RU.po,
+  * po/sv_SE.po,
+  * po/tr_TR.po,
+  * preferencias.py,
+  * trabajo.py,
+  * util.py,
+  * wiitdb_schema.py: [260] upload with bugs known
+
+ -- Ricardo Marmolejo García <makiolo@gmail.com> mar, 20 oct 2009 05:28:00 +0000
+
+wiithon (1.1.259) karmic; urgency=low
+
+  * Makefile,
+  * recursos/deb/postinst: [259] - display instructions after install
+  deb package
+
+  - fixes in Makefile
+
+ -- Carlo Mandelli <camandel@gmail.com> lun, 19 oct 2009 19:26:01 +0000
+
+wiithon (1.1.258) karmic; urgency=low
+
+  * config.py,
+  * gui.py,
+  * po/da_DK.po,
+  * po/de.po,
+  * po/en.po,
+  * po/es.po,
+  * po/fi_FI.po,
+  * po/fr.po,
+  * po/it.po,
+  * po/ja_JP.po,
+  * po/ko_KR.po,
+  * po/nb_NO.po,
+  * po/nl_NL.po,
+  * po/pt_BR.po,
+  * po/pt_PT.po,
+  * po/ru_RU.po,
+  * po/sv_SE.po,
+  * po/tr_TR.po,
+  * preferencias.py: [258] - added primary and secondary language for
+  synopsis in preferences
+
+ -- Carlo Mandelli <camandel@gmail.com> dom, 18 oct 2009 19:39:40 +0000
+
+wiithon (1.1.257) karmic; urgency=low
+
+  * Makefile,
+  * recursos/deb/control: [257] Ok Carlo ;P, i am testing ...
+
+
+ -- Ricardo Marmolejo García <makiolo@gmail.com> dom, 18 oct 2009 17:55:51 +0000
+
+wiithon (1.1.256) karmic; urgency=low
+
+  * Makefile,
+  * recursos/deb/control,
+  * recursos/deb/postinst,
+  * recursos/deb/postrm: [256] Agregando usuario al grupo disk
+
+ -- Ricardo Marmolejo García <makiolo@gmail.com> dom, 18 oct 2009 06:37:02 +0000
+
+wiithon (1.1.255) karmic; urgency=low
+
+  * recursos/deb/templates: Added.
+
+  * .bzrignore,
+  * doc/LINKS,
+  * recursos/deb/postinst: Modified.
+
+  [255] Probando debconf
+
+
+ -- Ricardo Marmolejo García <makiolo@gmail.com> dom, 18 oct 2009 05:43:17 +0000
+
+wiithon (1.1.254) karmic; urgency=low
+
+  * wiitdb_schema.py: [254] - fix in online feature description
+
+ -- Carlo Mandelli <camandel@gmail.com> sáb, 17 oct 2009 19:48:15 +0000
+
+wiithon (1.1.253) karmic; urgency=low
+
+  * gui.py,
+  * po/it.po,
+  * util.py,
+  * wiitdb_schema.py: [253] - removed last comma and colon at the end of
+  the line (wiitdb informations)
+
+  - updated italian translation
+
+ -- Carlo Mandelli <camandel@gmail.com> sáb, 17 oct 2009 12:30:35 +0000
+
+wiithon (1.1.252) karmic; urgency=low
+
+  * po/it.po,
+  * recursos/glade/wiithon.ui: [252] - updated italian translation
+
+  - small fix on credits
+
+ -- Carlo Mandelli <camandel@gmail.com> sáb, 17 oct 2009 10:42:13 +0000
+
+wiithon (1.1.251) karmic; urgency=low
+
+  * po/it.po: [251] updated it.po
+
+ -- Carlo Mandelli <camandel@gmail.com> vie, 16 oct 2009 19:59:43 +0000
+
+wiithon (1.1.250) karmic; urgency=low
+
+  * .bzrignore,
+  * config.py,
+  * gui.py,
+  * recursos/glade/wiithon.ui: [250] - Pequeños detalles
+
+ -- Ricardo Marmolejo García <makiolo@gmail.com> vie, 16 oct 2009 04:16:10 +0000
+
+wiithon (1.1.249) karmic; urgency=low
+
+  * Makefile,
+  * TODO,
+  * config.py,
+  * core.py,
+  * doc/LINKS,
+  * gui.py,
+  * po/da_DK.po,
+  * po/de.po,
+  * po/en.po,
+  * po/es.po,
+  * po/fi_FI.po,
+  * po/fr.po,
+  * po/it.po,
+  * po/ja_JP.po,
+  * po/ko_KR.po,
+  * po/nb_NO.po,
+  * po/nl_NL.po,
+  * po/pt_BR.po,
+  * po/pt_PT.po,
+  * po/ru_RU.po,
+  * po/sv_SE.po,
+  * po/tr_TR.po,
+  * preferencias.py,
+  * recursos/glade/wiithon.ui,
+  * recursos/glade/wiithon.ui.h,
+  * trabajo.py: [249] - continuo con las preferencias
+
+  - actualizado it.po
+
+ -- Ricardo Marmolejo García <makiolo@gmail.com> vie, 16 oct 2009 04:05:19 +0000
+
+wiithon (1.1.248) karmic; urgency=low
+
+  * Makefile,
+  * preferencias.py,
+  * wiitdb_schema.py: [248] - Solucionado importante bug de concurrencia
+  en 2.5
+
+  - Un bug al mostrar la fecha - Ahora se puede modificar la fecha corta
+  y la fecha larga por preferencias
+
+ -- Ricardo Marmolejo García <makiolo@gmail.com> jue, 15 oct 2009 02:24:46 +0000
+
+wiithon (1.1.247) karmic; urgency=low
+
+  * Makefile,
+  * recursos/deb/control,
+  * recursos/glade/wiithon.ui: [247] Fallo en la dependencia del mogrify
+
+ -- Ricardo Marmolejo García <makiolo@gmail.com> jue, 15 oct 2009 01:39:30 +0000
+
+wiithon (1.1.246) karmic; urgency=low
+
+  * .bzrignore,
+  * Makefile,
+  * preferencias.py,
+  * recursos/deb/control,
+  * recursos/glade/wiithon.ui: [246] Pequeños arreglos
+
+ -- Ricardo Marmolejo García <makiolo@gmail.com> jue, 15 oct 2009 01:31:17 +0000
+
+wiithon (1.1.245) karmic; urgency=low
+
+  * wiithon-1.1.deb: Removed.
+
+  * .bzrignore,
+  * Makefile,
+  * recursos/deb/control: Modified.
+
+  [245] Intentando bajar los requisitos a gtk 2.14 para que funcione en
+  ubuntu 8.10
+
+ -- Ricardo Marmolejo García <makiolo@gmail.com> jue, 15 oct 2009 00:29:44 +0000
+
+wiithon (1.1.244) karmic; urgency=low
+
+  * Makefile,
+  * config.py,
+  * recursos/deb/postinst,
+  * recursos/deb/postrm: [244] Fix DEB, (dont tested in x64)
+
+
+ -- Ricardo Marmolejo García <makiolo@gmail.com> mié, 14 oct 2009 23:39:45 +0000
+
+wiithon (1.1.243) karmic; urgency=low
+
+  * config.py,
+  * preferencias.py,
+  * wiitdb_schema.py: [243] No ejecutaba.
+
+ -- Ricardo Marmolejo García <makiolo@gmail.com> mié, 14 oct 2009 22:41:15 +0000
+
+wiithon (1.1.242) karmic; urgency=low
+
+  * Makefile: [242] Ignoramos warnings de momento ...
+
+ -- Ricardo Marmolejo García <makiolo@gmail.com> mié, 14 oct 2009 21:11:49 +0000
+
+wiithon (1.1.241) karmic; urgency=low
+
+  * Makefile,
+  * po/da_DK.po,
+  * po/de.po,
+  * po/en.po,
+  * po/es.po,
+  * po/fi_FI.po,
+  * po/fr.po,
+  * po/it.po,
+  * po/ja_JP.po,
+  * po/ko_KR.po,
+  * po/nb_NO.po,
+  * po/nl_NL.po,
+  * po/pt_BR.po,
+  * po/pt_PT.po,
+  * po/ru_RU.po,
+  * po/sv_SE.po,
+  * po/tr_TR.po,
+  * recursos/glade/wiithon.ui.h: [241] deb broken ...
+
+ -- Ricardo Marmolejo García <makiolo@gmail.com> mié, 14 oct 2009 21:07:02 +0000
+
+wiithon (1.1.240) karmic; urgency=low
+
+  * preferencias.py,
+  * wiithon-1.1.deb: Added.
+
+  * .bzrignore,
+  * config.py,
+  * core.py,
+  * gui.py,
+  * recursos/glade/wiithon.ui,
+  * wiitdb_schema.py: Modified.
+
+  [240] - Preferencias 30%
+
+  - CLI 70% - Testing 0%
+
+ -- Ricardo Marmolejo García <makiolo@gmail.com> mié, 14 oct 2009 20:51:19 +0000
+
+wiithon (1.1.239) karmic; urgency=low
+
+  * gui.py,
+  * po/da_DK.po,
+  * po/de.po,
+  * po/en.po,
+  * po/es.po,
+  * po/fi_FI.po,
+  * po/fr.po,
+  * po/it.po,
+  * po/ja_JP.po,
+  * po/ko_KR.po,
+  * po/nb_NO.po,
+  * po/nl_NL.po,
+  * po/pt_BR.po,
+  * po/pt_PT.po,
+  * po/ru_RU.po,
+  * po/sv_SE.po,
+  * po/tr_TR.po,
+  * recursos/deb/postinst: [239] - mini-fix al crear un deb
+
+ -- Ricardo Marmolejo García <makiolo@gmail.com> mié, 14 oct 2009 04:45:39 +0000
+
+wiithon (1.1.238) karmic; urgency=low
+
+  * Makefile,
+  * cli.py,
+  * core.py,
+  * gui.py,
+  * recursos/deb/control,
+  * recursos/deb/postrm,
+  * wiitdb_schema.py,
+  * wiithon.py: [238] - Patches for generate deb.
+
+  - Fix for wiithon CLI (wiithon -c) (70%)
+
+
+ -- Ricardo Marmolejo García <makiolo@gmail.com> mié, 14 oct 2009 04:33:16 +0000
+
+wiithon (1.1.237) karmic; urgency=low
+
+  * recursos/deb,
+  * recursos/deb/control,
+  * recursos/deb/postinst,
+  * recursos/deb/postrm: Added.
+
+  * .bzrignore,
+  * Makefile,
+  * config.py,
+  * core.py,
+  * gui.py,
+  * po/it.po,
+  * util.py,
+  * wiithon.py: Modified.
+
+  [237] - Create deb by debian style (by Carlo Mantelli)
+
+  - Estudiando la posibilidad de cambiar el idioma "on fly" - Preparando
+  la preferencia de ciclo de proveedores de caratulas
+
+ -- Ricardo Marmolejo García <makiolo@gmail.com> lun, 12 oct 2009 18:07:21 +0000
+
+wiithon (1.1.236) karmic; urgency=low
+
+  * TODO,
+  * config.py,
+  * gui.py,
+  * po/da_DK.po,
+  * po/de.po,
+  * po/en.po,
+  * po/es.po,
+  * po/fi_FI.po,
+  * po/fr.po,
+  * po/it.po,
+  * po/ja_JP.po,
+  * po/ko_KR.po,
+  * po/nb_NO.po,
+  * po/nl_NL.po,
+  * po/pt_BR.po,
+  * po/pt_PT.po,
+  * po/ru_RU.po,
+  * po/sv_SE.po,
+  * po/tr_TR.po,
+  * recursos/glade/wiithon.ui,
+  * recursos/glade/wiithon.ui.h,
+  * util.py,
+  * wiitdb_schema.py: [236] Empiezo a ponerme con las preferencias.
+
+  Una vez acabadas, haré pruebas y lanzaré 1.1
+
+
+ -- Ricardo Marmolejo García <makiolo@gmail.com> sáb, 10 oct 2009 19:52:39 +0000
+
+wiithon (1.1.235) karmic; urgency=low
+
+  * gui.py,
+  * recursos/glade/wiithon.ui,
+  * selector_ficheros.py,
+  * textview_custom.py,
+  * util.py: [235] 100% !!! nice update ;P
+
+
+ -- Ricardo Marmolejo García <makiolo@gmail.com> sáb, 10 oct 2009 18:46:55 +0000
+
+wiithon (1.1.234) karmic; urgency=low
+
+  * gui.py,
+  * po/da_DK.po,
+  * po/de.po,
+  * po/en.po,
+  * po/es.po,
+  * po/fi_FI.po,
+  * po/fr.po,
+  * po/it.po,
+  * po/ja_JP.po,
+  * po/ko_KR.po,
+  * po/nb_NO.po,
+  * po/nl_NL.po,
+  * po/pt_BR.po,
+  * po/pt_PT.po,
+  * po/ru_RU.po,
+  * po/sv_SE.po,
+  * po/tr_TR.po,
+  * recursos/glade/wiithon.ui.h,
+  * textview_custom.py: [234] Plantillas acabando al 80%
+
+
+ -- Ricardo Marmolejo García <makiolo@gmail.com> sáb, 10 oct 2009 17:29:13 +0000
+
+wiithon (1.1.233) karmic; urgency=low
+
+  * Makefile,
+  * gui.py,
+  * recursos/glade/wiithon.ui,
+  * test.py,
+  * textview_custom.py,
+  * wiitdb_xml.py: [233] AWESOME render de gtk+xml+pango.
+
+  Muchas posibilidades como pseudo render html sistema de alertas 100%
+  Trabajando en la plantilla de mostrar info de juegos 30%
+
+ -- Ricardo Marmolejo García <makiolo@gmail.com> sáb, 10 oct 2009 06:16:58 +0000
+
+wiithon (1.1.232) karmic; urgency=low
+
+  * textview_custom.py: Added.
+
+  [232]
+
+ -- Ricardo Marmolejo García <makiolo@gmail.com> vie, 09 oct 2009 22:08:46 +0000
+
+wiithon (1.1.231) karmic; urgency=low
+
+  * recursos/glade/alerta.ui,
+  * recursos/glade/alerta.ui.h: Removed.
+
+  * TODO,
+  * builder_wrapper.py,
+  * config.py,
+  * gui.py,
+  * po/da_DK.po,
+  * po/de.po,
+  * po/en.po,
+  * po/es.po,
+  * po/fi_FI.po,
+  * po/fr.po,
+  * po/it.po,
+  * po/ja_JP.po,
+  * po/ko_KR.po,
+  * po/nb_NO.po,
+  * po/nl_NL.po,
+  * po/pt_BR.po,
+  * po/pt_PT.po,
+  * po/ru_RU.po,
+  * po/sv_SE.po,
+  * po/tr_TR.po,
+  * selector_ficheros.py,
+  * test.py: Modified.
+
+  [231] Nuevo sistema de alertas! (90%)
+
+
+ -- Ricardo Marmolejo García <makiolo@gmail.com> vie, 09 oct 2009 22:07:56 +0000
+
+wiithon (1.1.230) karmic; urgency=low
+
+  * Makefile,
+  * cli.py,
+  * doc/TRANSLATORS,
+  * gui.py,
+  * po/it.po,
+  * recursos/glade/wiithon.ui,
+  * util.py: [230] patch by Calo Mantelli
+
+ -- Ricardo Marmolejo García <makiolo@gmail.com> vie, 09 oct 2009 16:28:43 +0000
+
+wiithon (1.1.229) karmic; urgency=low
+
+  * cli.py,
+  * core.py,
+  * gui.py,
+  * po/da_DK.po,
+  * po/de.po,
+  * po/en.po,
+  * po/es.po,
+  * po/fi_FI.po,
+  * po/fr.po,
+  * po/it.po,
+  * po/ja_JP.po,
+  * po/ko_KR.po,
+  * po/nb_NO.po,
+  * po/nl_NL.po,
+  * po/pt_BR.po,
+  * po/pt_PT.po,
+  * po/ru_RU.po,
+  * po/sv_SE.po,
+  * po/tr_TR.po,
+  * recursos/glade/wiithon.ui,
+  * recursos/glade/wiithon.ui.h,
+  * trabajo.py,
+  * util.py,
+  * wiitdb_xml.py: [229] Actualizado it.po
+
+  En python 2.5 se usa la llamada al sistema "unzip" en lugar del modulo
+  zipfile Limpiando mucho código fuente Cambios menores que seguramente
+  introduzcan algún bug sin importancia
+
+ -- Ricardo Marmolejo García <makiolo@gmail.com> vie, 09 oct 2009 05:25:28 +0000
+
+wiithon (1.1.228) karmic; urgency=low
+
+  * gui.py,
+  * recursos/glade/wiithon.ui,
+  * wiitdb_schema.py: [228] Parche de Carlo Mandelli modificado para
+  sqlalchemy 0.4.x & 0.5.x
+
+ -- Ricardo Marmolejo García <makiolo@gmail.com> jue, 08 oct 2009 02:55:16 +0000
+
+wiithon (1.1.227) karmic; urgency=low
+
+  * informacion_gui.py,
+  * selector_ficheros.py: Added.
+
+  * config.py,
+  * core.py,
+  * fila_treeview.py,
+  * gui.py,
+  * po/da_DK.po,
+  * po/de.po,
+  * po/en.po,
+  * po/es.po,
+  * po/fi_FI.po,
+  * po/fr.po,
+  * po/it.po,
+  * po/ja_JP.po,
+  * po/ko_KR.po,
+  * po/nb_NO.po,
+  * po/nl_NL.po,
+  * po/pt_BR.po,
+  * po/pt_PT.po,
+  * po/ru_RU.po,
+  * po/sv_SE.po,
+  * po/tr_TR.po,
+  * recursos/glade/wiithon.ui.h,
+  * wiitdb_schema.py,
+  * wiitdb_xml.py,
+  * wiithon.py: Modified.
+
+  [227] Corregidos los bugs de bdd locked.
+
+  Creada clase SelectorFicheros y una abstracción de la info del GUI
+
+ -- Ricardo Marmolejo García <makiolo@gmail.com> jue, 08 oct 2009 00:04:25 +0000
+
+wiithon (1.1.226) karmic; urgency=low
+
+  * cli.py,
+  * config.py,
+  * core.py,
+  * gui.py,
+  * recursos/glade/wiithon.ui,
+  * trabajo.py,
+  * util.py,
+  * wiitdb_schema.py,
+  * wiitdb_xml.py,
+  * wiithon_usuario.desktop: [226] Mas cambios.
+
+  Corregido problema con la concurrencia
+
+
+ -- Ricardo Marmolejo García <makiolo@gmail.com> sáb, 03 oct 2009 05:05:49 +0000
+
+wiithon (1.1.225) karmic; urgency=low
+
+  * gui.py: [225] Bug corregido al actualizar de wiitdb
+
+ -- Ricardo Marmolejo García <makiolo@gmail.com> vie, 02 oct 2009 04:31:02 +0000
+
+wiithon (1.1.224) karmic; urgency=low
+
+  * recursos/imagenes/wiithon.png: Added.
+
+  * cli.py,
+  * config.py,
+  * core.py,
+  * gui.py,
+  * po/da_DK.po,
+  * po/de.po,
+  * po/en.po,
+  * po/es.po,
+  * po/fi_FI.po,
+  * po/fr.po,
+  * po/it.po,
+  * po/ja_JP.po,
+  * po/ko_KR.po,
+  * po/nb_NO.po,
+  * po/nl_NL.po,
+  * po/pt_BR.po,
+  * po/pt_PT.po,
+  * po/ru_RU.po,
+  * po/sv_SE.po,
+  * po/tr_TR.po,
+  * recursos/glade/wiithon.ui,
+  * recursos/glade/wiithon.ui.h,
+  * wiitdb_schema.py: Modified.
+
+  [224] Siguo corrigiendo bugs
+
+
+ -- Ricardo Marmolejo García <makiolo@gmail.com> vie, 02 oct 2009 04:19:24 +0000
+
+wiithon (1.1.223) karmic; urgency=low
+
+  * gui.py,
+  * po/da_DK.po,
+  * po/de.po,
+  * po/en.po,
+  * po/es.po,
+  * po/fi_FI.po,
+  * po/fr.po,
+  * po/it.po,
+  * po/ja_JP.po,
+  * po/ko_KR.po,
+  * po/nb_NO.po,
+  * po/nl_NL.po,
+  * po/pt_BR.po,
+  * po/pt_PT.po,
+  * po/ru_RU.po,
+  * po/sv_SE.po,
+  * po/tr_TR.po,
+  * recursos/glade/wiithon.ui: [223] Depurando codigo
+
+
+ -- Ricardo Marmolejo García <makiolo@gmail.com> dom, 27 sep 2009 05:02:15 +0000
+
+wiithon (1.1.222) karmic; urgency=low
+
+  * Makefile,
+  * doc/LINKS,
+  * gui.py: [222] Algunos cambios
+
+
+ -- Ricardo Marmolejo García <makiolo@gmail.com> vie, 25 sep 2009 21:26:22 +0000
+
+wiithon (1.1.221) karmic; urgency=low
+
+  * recursos/caratulas_fix,
+  * recursos/caratulas_fix/R5TP69.png,
+  * recursos/caratulas_fix/RD6PNP.png,
+  * recursos/caratulas_fix/RDSPAF.png,
+  * recursos/caratulas_fix/RQ9S69.png,
+  * recursos/caratulas_fix/RSNX69.png,
+  * recursos/discos_fix,
+  * recursos/discos_fix/R5TP69.png: Added.
+
+  * caratulas_fix,
+  * caratulas_fix/R5TP69.png,
+  * caratulas_fix/RD6PNP.png,
+  * caratulas_fix/RDSPAF.png,
+  * caratulas_fix/RQ9S69.png,
+  * caratulas_fix/RSNX69.png,
+  * discos_fix,
+  * discos_fix/R5TP69.png: Removed.
+
+  * .bzrignore,
+  * Makefile,
+  * core.py,
+  * gui.py,
+  * libwbfs_binding/wiithon_wrapper.c,
+  * po/it.po,
+  * trabajo.py,
+  * util.py,
+  * wiitdb_schema.py: Modified.
+
+  [221] - Update Translate IT
+
+  - Listar juegos mezclando particiones - Corrigiendo un bug en el
+  sinner, al clonar
+
+ -- Ricardo Marmolejo García <makiolo@gmail.com> vie, 25 sep 2009 05:12:03 +0000
+
+wiithon (1.1.220) karmic; urgency=low
+
+  * TODO: Added.
+
+  * doc/TODO: Removed.
+
+  * Makefile,
+  * config.py,
+  * core.py,
+  * gui.py,
+  * po/da_DK.po,
+  * po/de.po,
+  * po/en.po,
+  * po/es.po,
+  * po/fi_FI.po,
+  * po/fr.po,
+  * po/it.po,
+  * po/ja_JP.po,
+  * po/ko_KR.po,
+  * po/nb_NO.po,
+  * po/nl_NL.po,
+  * po/pt_BR.po,
+  * po/pt_PT.po,
+  * po/ru_RU.po,
+  * po/sv_SE.po,
+  * po/tr_TR.po,
+  * recursos/glade/wiithon.ui,
+  * test.py,
+  * trabajo.py,
+  * wiitdb_schema.py,
+  * wiitdb_xml.py: Modified.
+
+  [220] - Update italian translate
+
+  - Muchos cambios: Tengo un bug al finalizar de descargar de WiiTDB En
+  el TODO he apuntado un par de prioridades a corto plazo
+
+ -- Ricardo Marmolejo García <makiolo@gmail.com> mar, 22 sep 2009 19:11:00 +0000
+
+wiithon (1.1.219) karmic; urgency=low
+
+  * recursos/imagenes/wiitdb.png: Added.
+
+  * doc/Analisis,
+  * doc/Diseño,
+  * doc/Diseño/esquema.mwb,
+  * doc/Diseño/esquema.mwb.bak,
+  * doc/Diseño/esquema.pdf,
+  * doc/Diseño/esquema_wiithon.sql,
+  * doc/Diseño/juegos (copia).sql,
+  * doc/Diseño/juegos.sql,
+  * doc/Diseño/juegos_fix.sql,
+  * doc/Diseño/sqllite2mysql.pl,
+  * preferencias.py,
+  * wiithon_cargar_wiitdb.py: Removed.
+
+  * .bzrignore,
+  * animar.py,
+  * config.py,
+  * core.py,
+  * doc/CARACTERISTICAS,
+  * gui.py,
+  * po/da_DK.po,
+  * po/de.po,
+  * po/en.po,
+  * po/es.po,
+  * po/fi_FI.po,
+  * po/fr.po,
+  * po/it.po,
+  * po/ja_JP.po,
+  * po/ko_KR.po,
+  * po/nb_NO.po,
+  * po/nl_NL.po,
+  * po/pt_BR.po,
+  * po/pt_PT.po,
+  * po/ru_RU.po,
+  * po/sv_SE.po,
+  * po/tr_TR.po,
+  * recursos/glade/wiithon.ui,
+  * recursos/glade/wiithon.ui.h,
+  * trabajo.py,
+  * util.py,
+  * wiitdb_schema.py,
+  * wiitdb_xml.py: Modified.
+
+  [219] - Importante actualización: RAR, WiiTDB, etc...
+
+ -- Ricardo Marmolejo García <makiolo@gmail.com> lun, 21 sep 2009 04:21:15 +0000
+
+wiithon (1.1.218) karmic; urgency=low
+
+  * doc/Analisis,
+  * doc/CARACTERISTICAS,
+  * doc/CHANGELOG,
+  * doc/Diseño,
+  * doc/Diseño/esquema.mwb,
+  * doc/Diseño/esquema.mwb.bak,
+  * doc/Diseño/esquema.pdf,
+  * doc/Diseño/esquema_wiithon.sql,
+  * doc/Diseño/juegos (copia).sql,
+  * doc/Diseño/juegos.sql,
+  * doc/Diseño/juegos_fix.sql,
+  * doc/Diseño/sqllite2mysql.pl,
+  * doc/INSTALAR,
+  * doc/LEEME,
+  * doc/LICENCIA,
+  * doc/LINKS,
+  * doc/MANUAL,
+  * doc/NOTAS,
+  * doc/TODO,
+  * doc/TRANSLATORS,
+  * doc/VERSION: Added.
+
+  * CARACTERISTICAS,
+  * CHANGELOG,
+  * INSTALAR,
+  * LEEME,
+  * LICENCIA,
+  * LINKS,
+  * MANUAL,
+  * NOTAS,
+  * TODO,
+  * TRANSLATORS,
+  * VERSION,
+  * doc/esquema.mwb,
+  * doc/esquema.pdf,
+  * wiithon_cargar_wiitdb.sh: Removed.
+
+  * core.py,
+  * recursos/glade/alerta.ui,
+  * recursos/glade/wiithon.ui: Modified.
+
+  [218] - Restructurando algunos archivos
+
+  - Corregido un problema al refrescar - 2 bugs conocidos, al renombrar
+  IDGAME y necesario un repack en el alert (hacer una pila de mensajes)
+
+
+ -- Ricardo Marmolejo García <makiolo@gmail.com> sáb, 19 sep 2009 19:19:45 +0000
+
+wiithon (1.1.217) karmic; urgency=low
+
+  * TRANSLATORS,
+  * wiithon_cargar_wiitdb.py,
+  * wiithon_cargar_wiitdb.sh: Added.
+
+  * recursos/wiitdb,
+  * update_wiitdb.sh: Removed.
+
+  * LEEME,
+  * Makefile,
+  * core.py,
+  * gui.py,
+  * libwbfs_binding/wiithon_wrapper.c,
+  * test.py,
+  * util.py,
+  * wiitdb_xml.py: Modified.
+
+  [217] - Añadir y Extraer funcionan perfectamente
+
+  - Aún quedn muchos casos de uso bugeados - Empezando a hacer la
+  ventana para actualizacion de wiitdb
+
+
+ -- Ricardo Marmolejo García <makiolo@gmail.com> sáb, 19 sep 2009 04:32:07 +0000
+
+wiithon (1.1.216) karmic; urgency=low
+
+  * Makefile,
+  * core.py,
+  * gui.py,
+  * po/da_DK.po,
+  * po/de.po,
+  * po/en.po,
+  * po/es.po,
+  * po/fi_FI.po,
+  * po/fr.po,
+  * po/it.po,
+  * po/ja_JP.po,
+  * po/ko_KR.po,
+  * po/nb_NO.po,
+  * po/nl_NL.po,
+  * po/pt_BR.po,
+  * po/pt_PT.po,
+  * po/ru_RU.po,
+  * po/sv_SE.po,
+  * po/tr_TR.po,
+  * wiitdb_schema.py: [216] -Traducción a italiano por Carlo Mandelli
+  <camandel@gmail.com>
+
+  Gracias!, pero esto esta en desarrollo y puede cambiar. (No creo que
+  mucho)
+
+  - Corregidos problemas de recurrencia por instanciar más de un
+  "session"
+
+
+ -- Ricardo Marmolejo García <makiolo@gmail.com> vie, 18 sep 2009 23:11:18 +0000
+
+wiithon (1.1.215) karmic; urgency=low
+
+  * .bzrignore,
+  * Makefile,
+  * core.py,
+  * gui.py,
+  * libwbfs_binding/Makefile,
+  * libwbfs_binding/libwbfs/Makefile,
+  * libwbfs_binding/libwbfs/libwbfs.c,
+  * libwbfs_binding/wiithon_wrapper.c,
+  * po/da_DK.po,
+  * po/de.po,
+  * po/en.po,
+  * po/es.po,
+  * po/fi_FI.po,
+  * po/fr.po,
+  * po/it.po,
+  * po/ja_JP.po,
+  * po/ko_KR.po,
+  * po/nb_NO.po,
+  * po/nl_NL.po,
+  * po/pt_BR.po,
+  * po/pt_PT.po,
+  * po/ru_RU.po,
+  * po/sv_SE.po,
+  * po/tr_TR.po,
+  * test.py,
+  * trabajo.py,
+  * wiitdb_schema.py,
+  * wiithon_autodetectar.sh: [215] Rehecho de 0 el spinner, espero con
+  esto que se calculen mejor los tiempo estimados para las tareas.
+
+  borrada def redimensionarParticionWBFS(self , DEVICE):
+
+
+ -- Ricardo Marmolejo García <makiolo@gmail.com> vie, 18 sep 2009 07:56:31 +0000
+
+wiithon (1.1.214) karmic; urgency=low
+
+  * NOTAS,
+  * unrar-nonfree,
+  * unrar-nonfree/Makefile,
+  * unrar-nonfree/arccmt.cpp,
+  * unrar-nonfree/archive.cpp,
+  * unrar-nonfree/archive.hpp,
+  * unrar-nonfree/arcread.cpp,
+  * unrar-nonfree/array.hpp,
+  * unrar-nonfree/beosea.cpp,
+  * unrar-nonfree/cmddata.cpp,
+  * unrar-nonfree/cmddata.hpp,
+  * unrar-nonfree/coder.cpp,
+  * unrar-nonfree/coder.hpp,
+  * unrar-nonfree/compress.hpp,
+  * unrar-nonfree/consio.cpp,
+  * unrar-nonfree/consio.hpp,
+  * unrar-nonfree/crc.cpp,
+  * unrar-nonfree/crc.hpp,
+  * unrar-nonfree/crypt.cpp,
+  * unrar-nonfree/crypt.hpp,
+  * unrar-nonfree/dll.cpp,
+  * unrar-nonfree/dll.def,
+  * unrar-nonfree/dll.hpp,
+  * unrar-nonfree/encname.cpp,
+  * unrar-nonfree/encname.hpp,
+  * unrar-nonfree/errhnd.cpp,
+  * unrar-nonfree/errhnd.hpp,
+  * unrar-nonfree/extinfo.cpp,
+  * unrar-nonfree/extinfo.hpp,
+  * unrar-nonfree/extract.cpp,
+  * unrar-nonfree/extract.hpp,
+  * unrar-nonfree/filcreat.cpp,
+  * unrar-nonfree/filcreat.hpp,
+  * unrar-nonfree/file.cpp,
+  * unrar-nonfree/file.hpp,
+  * unrar-nonfree/filefn.cpp,
+  * unrar-nonfree/filefn.hpp,
+  * unrar-nonfree/filestr.cpp,
+  * unrar-nonfree/filestr.hpp,
+  * unrar-nonfree/find.cpp,
+  * unrar-nonfree/find.hpp,
+  * unrar-nonfree/getbits.cpp,
+  * unrar-nonfree/getbits.hpp,
+  * unrar-nonfree/global.cpp,
+  * unrar-nonfree/global.hpp,
+  * unrar-nonfree/headers.hpp,
+  * unrar-nonfree/isnt.cpp,
+  * unrar-nonfree/isnt.hpp,
+  * unrar-nonfree/license.txt,
+  * unrar-nonfree/list.cpp,
+  * unrar-nonfree/list.hpp,
+  * unrar-nonfree/loclang.hpp,
+  * unrar-nonfree/log.cpp,
+  * unrar-nonfree/log.hpp,
+  * unrar-nonfree/match.cpp,
+  * unrar-nonfree/match.hpp,
+  * unrar-nonfree/model.cpp,
+  * unrar-nonfree/model.hpp,
+  * unrar-nonfree/msc.dep,
+  * unrar-nonfree/options.cpp,
+  * unrar-nonfree/options.hpp,
+  * unrar-nonfree/os.hpp,
+  * unrar-nonfree/os2ea.cpp,
+  * unrar-nonfree/pathfn.cpp,
+  * unrar-nonfree/pathfn.hpp,
+  * unrar-nonfree/rar.cpp,
+  * unrar-nonfree/rar.hpp,
+  * unrar-nonfree/rardefs.hpp,
+  * unrar-nonfree/rarlang.hpp,
+  * unrar-nonfree/raros.hpp,
+  * unrar-nonfree/rartypes.hpp,
+  * unrar-nonfree/rarvm.cpp,
+  * unrar-nonfree/rarvm.hpp,
+  * unrar-nonfree/rarvmtbl.cpp,
+  * unrar-nonfree/rawread.cpp,
+  * unrar-nonfree/rawread.hpp,
+  * unrar-nonfree/rdwrfn.cpp,
+  * unrar-nonfree/rdwrfn.hpp,
+  * unrar-nonfree/readme.txt,
+  * unrar-nonfree/recvol.cpp,
+  * unrar-nonfree/recvol.hpp,
+  * unrar-nonfree/resource.cpp,
+  * unrar-nonfree/resource.hpp,
+  * unrar-nonfree/rijndael.cpp,
+  * unrar-nonfree/rijndael.hpp,
+  * unrar-nonfree/rs.cpp,
+  * unrar-nonfree/rs.hpp,
+  * unrar-nonfree/savepos.cpp,
+  * unrar-nonfree/savepos.hpp,
+  * unrar-nonfree/scantree.cpp,
+  * unrar-nonfree/scantree.hpp,
+  * unrar-nonfree/sha1.cpp,
+  * unrar-nonfree/sha1.hpp,
+  * unrar-nonfree/smallfn.cpp,
+  * unrar-nonfree/smallfn.hpp,
+  * unrar-nonfree/strfn.cpp,
+  * unrar-nonfree/strfn.hpp,
+  * unrar-nonfree/strlist.cpp,
+  * unrar-nonfree/strlist.hpp,
+  * unrar-nonfree/suballoc.cpp,
+  * unrar-nonfree/suballoc.hpp,
+  * unrar-nonfree/system.cpp,
+  * unrar-nonfree/system.hpp,
+  * unrar-nonfree/timefn.cpp,
+  * unrar-nonfree/timefn.hpp,
+  * unrar-nonfree/ulinks.cpp,
+  * unrar-nonfree/ulinks.hpp,
+  * unrar-nonfree/unicode.cpp,
+  * unrar-nonfree/unicode.hpp,
+  * unrar-nonfree/unios2.cpp,
+  * unrar-nonfree/unpack.cpp,
+  * unrar-nonfree/unpack.hpp,
+  * unrar-nonfree/unpack15.cpp,
+  * unrar-nonfree/unpack20.cpp,
+  * unrar-nonfree/uowners.cpp,
+  * unrar-nonfree/version.hpp,
+  * unrar-nonfree/volume.cpp,
+  * unrar-nonfree/volume.hpp,
+  * unrar-nonfree/win32acl.cpp,
+  * unrar-nonfree/win32stm.cpp: Added.
+
+  * Makefile,
+  * cli.py,
+  * config.py,
+  * core.py,
+  * test.py,
+  * trabajo.py: Modified.
+
+  [214] Añadiendo unrar-nonfree, para integrarlo en wiithon de mejor
+  forma.
+
+
+ -- Ricardo Marmolejo García <makiolo@gmail.com> mar, 08 sep 2009 02:44:20 +0000
+
+wiithon (1.1.213) karmic; urgency=low
+
+  * LEEME,
+  * Makefile,
+  * cli.py,
+  * config.py,
+  * core.py,
+  * gui.py,
+  * po/da_DK.po,
+  * po/de.po,
+  * po/en.po,
+  * po/es.po,
+  * po/fi_FI.po,
+  * po/fr.po,
+  * po/it.po,
+  * po/ja_JP.po,
+  * po/ko_KR.po,
+  * po/nb_NO.po,
+  * po/nl_NL.po,
+  * po/pt_BR.po,
+  * po/pt_PT.po,
+  * po/ru_RU.po,
+  * po/sv_SE.po,
+  * po/tr_TR.po,
+  * recursos/glade/wiithon.ui,
+  * recursos/glade/wiithon.ui.h,
+  * test.py,
+  * trabajo.py,
+  * util.py,
+  * wiitdb_schema.py,
+  * wiitdb_xml.py,
+  * wiithon.py: [213] Tras el parón del verano:
+
+  Muchos cambios, digamos que ahora al menos ejecuta xD Se esta
+  rediseñando wiithon muy seriamente para obtener un diseño mucho más
+  mantenible.
+
+
+ -- Ricardo Marmolejo García <makiolo@gmail.com> lun, 07 sep 2009 05:56:25 +0000
+
+wiithon (1.1.212) karmic; urgency=low
+
+  * juego.py,
+  * particion.py: Removed.
+
+  * .bzrignore,
+  * cli.py,
+  * config.py,
+  * core.py,
+  * gui.py,
+  * po/da_DK.po,
+  * po/de.po,
+  * po/en.po,
+  * po/es.po,
+  * po/fi_FI.po,
+  * po/fr.po,
+  * po/it.po,
+  * po/ja_JP.po,
+  * po/ko_KR.po,
+  * po/nb_NO.po,
+  * po/nl_NL.po,
+  * po/pt_BR.po,
+  * po/pt_PT.po,
+  * po/ru_RU.po,
+  * po/sv_SE.po,
+  * po/tr_TR.po,
+  * recursos/glade/wiithon.ui,
+  * recursos/glade/wiithon.ui.h,
+  * test.py,
+  * trabajo.py,
+  * wiitdb_schema.py,
+  * wiitdb_xml.py: Modified.
+
+  [212] Lo subo petado.
+
+  Rediseñando la relación N:M entre juegos y particiones
+
+
+ -- Ricardo Marmolejo García <makiolo@gmail.com> mar, 28 jul 2009 03:32:19 +0000
+
+wiithon (1.1.211) karmic; urgency=low
+
+  * recursos/imagenes/accesorio,
+  * recursos/imagenes/accesorio/balanceboard.jpg,
+  * recursos/imagenes/accesorio/classiccontroller.jpg,
+  * recursos/imagenes/accesorio/dancepad.jpg,
+  * recursos/imagenes/accesorio/drums.jpg,
+  * recursos/imagenes/accesorio/gamecube.jpg,
+  * recursos/imagenes/accesorio/guitar.jpg,
+  * recursos/imagenes/accesorio/microphone.jpg,
+  * recursos/imagenes/accesorio/motionplus.jpg,
+  * recursos/imagenes/accesorio/nintendods.jpg,
+  * recursos/imagenes/accesorio/nunchuk.jpg,
+  * recursos/imagenes/accesorio/wheel.jpg,
+  * recursos/imagenes/accesorio/wiimote.jpg,
+  * recursos/imagenes/accesorio/wiispeak.jpg,
+  * recursos/imagenes/accesorio/zapper.jpg,
+  * recursos/imagenes/ranking,
+  * recursos/imagenes/ranking/pegi.gif: Added.
+
+  * recursos/pegi,
+  * recursos/pegi/pegi.gif: Removed.
+
+  * .bzrignore,
+  * Makefile,
+  * gui.py,
+  * po/da_DK.po,
+  * po/de.po,
+  * po/en.po,
+  * po/es.po,
+  * po/fi_FI.po,
+  * po/fr.po,
+  * po/it.po,
+  * po/ja_JP.po,
+  * po/ko_KR.po,
+  * po/nb_NO.po,
+  * po/nl_NL.po,
+  * po/pt_BR.po,
+  * po/pt_PT.po,
+  * po/ru_RU.po,
+  * po/sv_SE.po,
+  * po/tr_TR.po,
+  * recursos/glade/wiithon.ui,
+  * recursos/glade/wiithon.ui.h,
+  * test.py,
+  * wiitdb_schema.py,
+  * wiitdb_xml.py: Modified.
+
+  [211] Importador WIITDB acabado, empezamos con la capa de presentación
+  de datos.
+
+
+ -- Ricardo Marmolejo García <makiolo@gmail.com> lun, 27 jul 2009 08:00:18 +0000
+
+wiithon (1.1.210) karmic; urgency=low
+
+  * update_wiitdb.sh: Added.
+
+  * recursos/wiitdb/update_wiitdb.sh: Removed.
+
+  * .bzrignore,
+  * Makefile,
+  * recursos/glade/wiithon.ui,
+  * test.py,
+  * wiitdb_schema.py,
+  * wiitdb_xml.py,
+  * wiithon.py: Modified.
+
+  [210] Ya esta casí acabado el núcleo del importador de WiiTDB, solo
+  faltan los géneros.
+
+ -- Ricardo Marmolejo García <makiolo@gmail.com> vie, 24 jul 2009 06:31:36 +0000
+
+wiithon (1.1.209) karmic; urgency=low
+
+  * Makefile,
+  * gui.py,
+  * recursos/glade/wiithon.ui,
+  * recursos/wiitdb/update_wiitdb.sh,
+  * wiitdb_schema.py: [209] Actualizando la ficha de un juego
+
+
+ -- Ricardo Marmolejo García <makiolo@gmail.com> mié, 22 jul 2009 02:59:10 +0000
+
+wiithon (1.1.208) karmic; urgency=low
+
+  * doc,
+  * doc/esquema.mwb,
+  * doc/esquema.pdf,
+  * wiitdb_schema.py: Added.
+
+  * wiitdb_companies.py,
+  * wiitdb_juego.py: Removed.
+
+  * .bzrignore,
+  * gui.py,
+  * juego.py,
+  * wiitdb_xml.py,
+  * wiithon.py: Modified.
+
+  [208] implementado esquema (diagrama de entidad relación)
+  doc/esquema.pdf
+
+
+ -- Ricardo Marmolejo García <makiolo@gmail.com> mar, 21 jul 2009 04:47:35 +0000
+
+wiithon (1.1.207) karmic; urgency=low
+
+  * gui.py,
+  * po/da_DK.po,
+  * po/de.po,
+  * po/en.po,
+  * po/es.po,
+  * po/fi_FI.po,
+  * po/fr.po,
+  * po/it.po,
+  * po/ja_JP.po,
+  * po/ko_KR.po,
+  * po/nb_NO.po,
+  * po/nl_NL.po,
+  * po/pt_BR.po,
+  * po/pt_PT.po,
+  * po/ru_RU.po,
+  * po/sv_SE.po,
+  * po/tr_TR.po,
+  * test.py,
+  * util.py,
+  * wiitdb_juego.py,
+  * wiitdb_xml.py: [207] Continuo depurando
+
+
+ -- Ricardo Marmolejo García <makiolo@gmail.com> dom, 19 jul 2009 15:13:28 +0000
+
+wiithon (1.1.206) karmic; urgency=low
+
+  * CHANGELOG,
+  * juego.py,
+  * recursos/wiitdb/update_wiitdb.sh,
+  * test.py,
+  * util.py,
+  * wiitdb_companies.py,
+  * wiitdb_juego.py,
+  * wiitdb_xml.py: [206] Toda la noche con el sqlalchemy.
+
+  Relaciones 1:N Relaciones N:M
+
+
+ -- Ricardo Marmolejo García <makiolo@gmail.com> dom, 19 jul 2009 12:45:40 +0000
+
+wiithon (1.1.205) karmic; urgency=low
+
+  * recursos/imagenes/busy-icon0.png,
+  * recursos/imagenes/busy-icon1.png,
+  * recursos/imagenes/busy-icon10.png,
+  * recursos/imagenes/busy-icon11.png,
+  * recursos/imagenes/busy-icon12.png,
+  * recursos/imagenes/busy-icon13.png,
+  * recursos/imagenes/busy-icon14.png,
+  * recursos/imagenes/busy-icon2.png,
+  * recursos/imagenes/busy-icon3.png,
+  * recursos/imagenes/busy-icon4.png,
+  * recursos/imagenes/busy-icon5.png,
+  * recursos/imagenes/busy-icon6.png,
+  * recursos/imagenes/busy-icon7.png,
+  * recursos/imagenes/busy-icon8.png,
+  * recursos/imagenes/busy-icon9.png,
+  * recursos/imagenes/caratulas,
+  * recursos/imagenes/discos,
+  * recursos/imagenes/idle-icon.png: Added.
+
+  * recursos/imagenes/cargando,
+  * recursos/imagenes/cargando/busy-icon0.png,
+  * recursos/imagenes/cargando/busy-icon1.png,
+  * recursos/imagenes/cargando/busy-icon10.png,
+  * recursos/imagenes/cargando/busy-icon11.png,
+  * recursos/imagenes/cargando/busy-icon12.png,
+  * recursos/imagenes/cargando/busy-icon13.png,
+  * recursos/imagenes/cargando/busy-icon14.png,
+  * recursos/imagenes/cargando/busy-icon2.png,
+  * recursos/imagenes/cargando/busy-icon3.png,
+  * recursos/imagenes/cargando/busy-icon4.png,
+  * recursos/imagenes/cargando/busy-icon5.png,
+  * recursos/imagenes/cargando/busy-icon6.png,
+  * recursos/imagenes/cargando/busy-icon7.png,
+  * recursos/imagenes/cargando/busy-icon8.png,
+  * recursos/imagenes/cargando/busy-icon9.png,
+  * recursos/imagenes/cargando/idle-icon.png,
+  * wiithon_root.desktop: Removed.
+
+  * Makefile,
+  * cli.py,
+  * config.py,
+  * core.py,
+  * gui.py,
+  * juego.py,
+  * particion.py,
+  * po/da_DK.po,
+  * po/de.po,
+  * po/en.po,
+  * po/es.po,
+  * po/fi_FI.po,
+  * po/fr.po,
+  * po/it.po,
+  * po/ja_JP.po,
+  * po/ko_KR.po,
+  * po/nb_NO.po,
+  * po/nl_NL.po,
+  * po/pt_BR.po,
+  * po/pt_PT.po,
+  * po/ru_RU.po,
+  * po/sv_SE.po,
+  * po/tr_TR.po,
+  * recursos/glade/wiithon.ui,
+  * recursos/glade/wiithon.ui.h,
+  * recursos/wiitdb/update_wiitdb.sh,
+  * trabajo.py,
+  * wiitdb_juego.py,
+  * wiithon_autodetectar.sh,
+  * wiithon_autodetectar_fat32.sh,
+  * wiithon_autodetectar_lector.sh: Modified.
+
+  [205] Extinguiendo HOME.conf
+
+  Limpiando código Evitando join con la tabla de juegos de wiitdb
+  Preparando el perfil al doble click
+
+
+ -- Ricardo Marmolejo García <makiolo@gmail.com> jue, 16 jul 2009 06:24:41 +0000
+
+wiithon (1.1.204) karmic; urgency=low
+
+  * fila_treeview.py,
+  * gui.py: [204] Solucionado problema con el path / renombrando
+
+ -- Ricardo Marmolejo García <makiolo@gmail.com> dom, 12 jul 2009 08:13:48 +0000
+
+wiithon (1.1.203) karmic; urgency=low
+
+  * fila_treeview.py,
+  * particion.py,
+  * wiitdb_xml.py: Added.
+
+  * Makefile,
+  * cli.py,
+  * config.py,
+  * core.py,
+  * gui.py,
+  * juego.py,
+  * po/da_DK.po,
+  * po/de.po,
+  * po/en.po,
+  * po/es.po,
+  * po/fi_FI.po,
+  * po/fr.po,
+  * po/it.po,
+  * po/ja_JP.po,
+  * po/ko_KR.po,
+  * po/nb_NO.po,
+  * po/nl_NL.po,
+  * po/pt_BR.po,
+  * po/pt_PT.po,
+  * po/ru_RU.po,
+  * po/sv_SE.po,
+  * po/tr_TR.po,
+  * test.py,
+  * util.py,
+  * wiitdb_juego.py,
+  * wiithon_autodetectar.sh,
+  * wiithon_autodetectar_fat32.sh,
+  * wiithon_autodetectar_lector.sh: Modified.
+
+  [203] Commit muy serio, rediseño importante, aparecen las clases:
+  Particion y Fila_TreeView.
+
+  Paralelamente obtengo los primeros resultados de leer información del
+  XML de wiitdb (por consola de momento)
+
+
+ -- Ricardo Marmolejo García <makiolo@gmail.com> dom, 12 jul 2009 07:58:45 +0000
+
+wiithon (1.1.202) karmic; urgency=low
+
+  * wiitdb_companies.py,
+  * wiitdb_juego.py: Added.
+
+  * companies.py,
+  * juego_wiitdb.py: Removed.
+
+  * juego.py,
+  * test.py: Modified.
+
+  [202] Toda la noche peleandome con el alquemy, lo subo con algún bug
+  conocido
+
+ -- Ricardo Marmolejo García <makiolo@gmail.com> vie, 10 jul 2009 08:28:23 +0000
+
+wiithon (1.1.201) karmic; urgency=low
+
+  * Makefile: [201] Probanco COMMIT, des otro PC
+
+ -- Susana <susana@Susana-Ubuntu> vie, 10 jul 2009 03:02:37 +0000
+
+wiithon (1.1.200) karmic; urgency=low
+
+  * caratulas_fix/RD6PNP.png,
+  * companies.py,
+  * juego_wiitdb.py,
+  * recursos/pegi,
+  * recursos/pegi/pegi.gif,
+  * recursos/wiitdb,
+  * recursos/wiitdb/update_wiitdb.sh: Added.
+
+  * .bzrignore,
+  * discos_fix/R5TP69.png,
+  * gui.py,
+  * juego.py,
+  * po/da_DK.po,
+  * po/de.po,
+  * po/en.po,
+  * po/es.po,
+  * po/fi_FI.po,
+  * po/fr.po,
+  * po/it.po,
+  * po/ja_JP.po,
+  * po/ko_KR.po,
+  * po/nb_NO.po,
+  * po/nl_NL.po,
+  * po/pt_BR.po,
+  * po/pt_PT.po,
+  * po/ru_RU.po,
+  * po/sv_SE.po,
+  * po/tr_TR.po,
+  * test.py,
+  * util.py,
+  * wiithon_autodetectar_fat32.sh: Modified.
+
+  [200] Implementando XML (para exportar WIITDB)
+
+
+ -- Ricardo Marmolejo García <makiolo@gmail.com> vie, 10 jul 2009 02:32:52 +0000
+
+wiithon (1.1.199) karmic; urgency=low
+
+  * wiithon_wrapper,
+  * wiithon_wrapper/Makefile,
+  * wiithon_wrapper/libwbfs,
+  * wiithon_wrapper/libwbfs/libwbfs.c,
+  * wiithon_wrapper/libwbfs/libwbfs.h,
+  * wiithon_wrapper/libwbfs/libwbfs_linux.c,
+  * wiithon_wrapper/libwbfs/rijndael.c,
+  * wiithon_wrapper/libwbfs/wiidisc.c,
+  * wiithon_wrapper/libwbfs/wiidisc.h,
+  * wiithon_wrapper/libwbfs_os.h,
+  * wiithon_wrapper/wiithon_wrapper.c: Removed.
+
+  * Makefile,
+  * cli.py,
+  * config.py,
+  * core.py,
+  * gui.py,
+  * po/da_DK.po,
+  * po/de.po,
+  * po/en.po,
+  * po/es.po,
+  * po/fi_FI.po,
+  * po/fr.po,
+  * po/it.po,
+  * po/ja_JP.po,
+  * po/ko_KR.po,
+  * po/nb_NO.po,
+  * po/nl_NL.po,
+  * po/pt_BR.po,
+  * po/pt_PT.po,
+  * po/ru_RU.po,
+  * po/sv_SE.po,
+  * po/tr_TR.po,
+  * recursos/glade/wiithon.ui,
+  * recursos/glade/wiithon.ui.h,
+  * test.py,
+  * util.py: Modified.
+
+  [199] Descarga caratulas en orden
+
+  Bug corregido: parpadeo durante el scrool
+
+
+ -- Ricardo Marmolejo García <makiolo@gmail.com> mar, 07 jul 2009 04:24:34 +0000
+
+wiithon (1.1.198) karmic; urgency=low
+
+  * libwbfs_binding/wiithon_wrapper.sh,
+  * wiithon_autodetectar_fat32.sh: Added.
+
+  * libwbfs_binding/build_wiithon_wrapper,
+  * libwbfs_binding/build_wiithon_wrapper/lib,
+  * libwbfs_binding/build_wiithon_wrapper/lib/libwbfs.so,
+  * libwbfs_binding/build_wiithon_wrapper/wiithon_wrapper.sh: Removed.
+
+  * .bzrignore,
+  * Makefile,
+  * cli.py,
+  * config.py,
+  * libwbfs_binding/Makefile,
+  * libwbfs_binding/libwbfs/Makefile,
+  * po/da_DK.po,
+  * po/de.po,
+  * po/en.po,
+  * po/es.po,
+  * po/fi_FI.po,
+  * po/fr.po,
+  * po/it.po,
+  * po/ja_JP.po,
+  * po/ko_KR.po,
+  * po/nb_NO.po,
+  * po/nl_NL.po,
+  * po/pt_BR.po,
+  * po/pt_PT.po,
+  * po/ru_RU.po,
+  * po/sv_SE.po,
+  * po/tr_TR.po,
+  * recursos/glade/wiithon.ui,
+  * recursos/glade/wiithon.ui.h,
+  * wiithon_wrapper/libwbfs/libwbfs.c,
+  * wiithon_wrapper/libwbfs/libwbfs.h,
+  * wiithon_wrapper/libwbfs/libwbfs_linux.c,
+  * wiithon_wrapper/wiithon_wrapper.c: Modified.
+
+  [198] Empezando a implementar libwbfs_binding, instala en
+  /usr/lib/libwbfs.so
+
+  Antes de formatear en WBFS, formatea a FAT32 Barra de estado en el
+  glade para informar de variadas cosas Necesitamos preferencias para
+  configurar en un futuro los proveedores de caratulas Haciendo pruebas
+  con dumpeo desde DVD cambios menores
+
+
+ -- Ricardo Marmolejo García <makiolo@gmail.com> lun, 06 jul 2009 19:37:09 +0000
+
+wiithon (1.0.197) karmic; urgency=low
+
+  * caratulas_fix,
+  * caratulas_fix/R5TP69.png,
+  * caratulas_fix/RDSPAF.png,
+  * caratulas_fix/RQ9S69.png,
+  * caratulas_fix/RSNX69.png,
+  * discos_fix,
+  * discos_fix/R5TP69.png: Added.
+
+  * INSTALAR,
+  * Makefile,
+  * config.py,
+  * core.py,
+  * gui.py,
+  * po/da_DK.po,
+  * po/de.po,
+  * po/en.po,
+  * po/es.po,
+  * po/fi_FI.po,
+  * po/fr.po,
+  * po/it.po,
+  * po/ja_JP.po,
+  * po/ko_KR.po,
+  * po/nb_NO.po,
+  * po/nl_NL.po,
+  * po/pt_BR.po,
+  * po/pt_PT.po,
+  * po/ru_RU.po,
+  * po/sv_SE.po,
+  * po/tr_TR.po,
+  * recursos/glade/wiithon.ui,
+  * recursos/glade/wiithon.ui.h,
+  * trabajo.py,
+  * util.py: Modified.
+
+  [197] Imprescindible actualización, había dejado de funcionar la
+  descarga de discos y caratulas debido a que la web proveedora a
+  cambiado de hosting e incluso de formato.
+
+  La url nueva es : http://www.wiiboxart.com/pal.php Parece ser que
+  ahora, para el disco solo hay que dar las 3 primeras letras, antes las
+  6. Otro cambio importante es que han modificado la programación,
+  obligando a que supuestamente vengas de
+  "http://www.wiiboxart.com/pal.php", si vienes de cualquier otro sitio
+  o no facilitas un "Referer", los mamones te meten banner de google al
+  canto. Por tanto he metido funciones que comprueba los mimes e
+  integridad del png. wget deja de ser dependencia, ahora lo hago con
+  httplib, mucho más potente. Gracias a esta librería he metido las
+  cabezeras Referer:"http://www.wiiboxart.com/pal.php" que permiten
+  saltarse su mini-seguridad. Por último, despues de hablar sobre la
+  versión de GTK de wiithon, hemos decidido usar GTK 2.14+, irnos a
+  versiones inferiores nos limitan el desarrollo.
+
+  NUEVA FUNCIÓN / CARACTERÍSTICA ------------------------------
+  Actualmente si arrastramos un "iso" dentro de la ventana este es
+  puesto en cola para ser añadido. Además ahora si arrastramos un "jpg",
+  "png", o "gif" este es guardado en ~/.wiithon/caratulas realizando
+  conversiones y redimensiones automáticamente. Y por supuesto se
+  muestra la nueva caratula arrastrada.
+
+
+ -- Ricardo Marmolejo García <makiolo@gmail.com> mié, 01 jul 2009 04:14:43 +0000
+
+wiithon (1.0.196) karmic; urgency=low
+
+  * gui.py,
+  * po/es.po,
+  * recursos/glade/wiithon.ui: [196] - Reducida dependencia de GTK de
+  2.14 a 2.12
+
+
+ -- Ricardo Marmolejo García <makiolo@gmail.com> mar, 30 jun 2009 00:04:30 +0000
+
+wiithon (1.0.195) karmic; urgency=low
+
+  * Makefile,
+  * libwbfs_binding/Makefile,
+  * libwbfs_binding/libwbfs/Makefile,
+  * po/en.po,
+  * po/es.po: [195] Cambio para que compile en 64bits
+
+  Cambios menores de traducción
+
+
+ -- Ricardo Marmolejo García <makiolo@gmail.com> lun, 29 jun 2009 06:19:46 +0000
+
+wiithon (1.0.194) karmic; urgency=low
+
+  * libwbfs_binding/Makefile,
+  * libwbfs_binding/libwbfs/Makefile,
+  * libwbfs_binding/wiithon_wrapper.c: [194] Makefile bien hecho
+
+ -- Ricardo Marmolejo García <makiolo@gmail.com> lun, 29 jun 2009 02:49:07 +0000
+
+wiithon (1.0.193) karmic; urgency=low
+
+  * libwbfs_binding/Makefile,
+  * libwbfs_binding/build_wiithon_wrapper,
+  * libwbfs_binding/build_wiithon_wrapper/lib,
+  * libwbfs_binding/build_wiithon_wrapper/lib/libwbfs.so,
+  * libwbfs_binding/build_wiithon_wrapper/wiithon_wrapper.sh,
+  * libwbfs_binding/wiithon_wrapper.c: Added.
+
+  * .bzrignore,
+  * config.py,
+  * libwbfs_binding/libwbfs/Makefile: Modified.
+
+  [193] He creado un wiithon_wrapper que enlaza con libwbfs.so
+
+  Cuando ejecutamos wiithon en local, sin instalar, (./wiithon.py)
+  utiliza el wrapper de libwbfs_binding
+
+ -- Ricardo Marmolejo García <makiolo@gmail.com> lun, 29 jun 2009 01:38:57 +0000
+
+wiithon (1.0.192) karmic; urgency=low
+
+  * Makefile,
+  * po/da_DK.po,
+  * po/de.po,
+  * po/en.po,
+  * po/es.po,
+  * po/fi_FI.po,
+  * po/fr.po,
+  * po/it.po,
+  * po/ja_JP.po,
+  * po/ko_KR.po,
+  * po/nb_NO.po,
+  * po/nl_NL.po,
+  * po/pt_BR.po,
+  * po/pt_PT.po,
+  * po/ru_RU.po,
+  * po/sv_SE.po,
+  * po/tr_TR.po: [192] Bug corregido en dependencias
+
+ -- Ricardo Marmolejo García <makiolo@gmail.com> dom, 28 jun 2009 21:45:38 +0000
+
+wiithon (1.0.191) karmic; urgency=low
+
+  * Makefile: [191] Elimina cualquier diferencia entre instalar
+  compilando o no. Lo estoy complicando demasiado por evitar la
+  dependencia de intltool
+
+
+ -- Ricardo Marmolejo García <makiolo@gmail.com> dom, 28 jun 2009 21:38:29 +0000
+
+wiithon (1.0.190) karmic; urgency=low
+
+  * Makefile: [190] Haciendo casos de prueba con maquinas virtuales
+
+
+ -- Ricardo Marmolejo García <makiolo@gmail.com> dom, 28 jun 2009 21:25:07 +0000
+
+wiithon (1.0.189) karmic; urgency=low
+
+  * Makefile,
+  * core.py: [189] Más mejores en el makefile
+
+
+ -- Ricardo Marmolejo García <makiolo@gmail.com> dom, 28 jun 2009 20:41:49 +0000
+
+wiithon (1.0.188) karmic; urgency=low
+
+  * Makefile: [188] El makefile aún instalaba el recien borrado fichero
+  "mensaje.py"
+
+ -- Ricardo Marmolejo García <makiolo@gmail.com> dom, 28 jun 2009 19:09:49 +0000
+
+wiithon (1.0.187) karmic; urgency=low
+
+  * mensaje.py: Removed.
+
+  * Makefile,
+  * config.py,
+  * core.py,
+  * gui.py,
+  * trabajo.py: Modified.
+
+  [187] Copiar Juego a veces no se mostraba en algunas versiones de GTK
+  debido al uso innecesario de show()
+
+  Evitada la dependencia de glib
+
+
+ -- Ricardo Marmolejo García <makiolo@gmail.com> dom, 28 jun 2009 19:06:34 +0000
+
+wiithon (1.0.186) karmic; urgency=low
+
+  * Makefile,
+  * po/es.po,
+  * po/ja_JP.po: [186] Mejoras en el makefile
+
+
+ -- Ricardo Marmolejo García <makiolo@gmail.com> dom, 28 jun 2009 17:11:19 +0000
+
+wiithon (1.0.185) karmic; urgency=low
+
+  * Makefile,
+  * VERSION: [185] Cambios menores
+
+
+ -- Ricardo Marmolejo García <makiolo@gmail.com> dom, 28 jun 2009 16:59:18 +0000
+
+wiithon (1.0.184) karmic; urgency=low
+
+  * Makefile,
+  * po/es.po,
+  * po/ja_JP.po,
+  * po/pt_BR.po: [184] Pequeños variaciones.
+
+  Añadidas 2 frases para traducir (pendientes.)
+
+ -- Ricardo Marmolejo García <makiolo@gmail.com> dom, 28 jun 2009 05:22:37 +0000
+
+wiithon (1.0.183) karmic; urgency=low
+
+  * Makefile,
+  * VERSION,
+  * gui.py,
+  * po/da_DK.po,
+  * po/de.po,
+  * po/en.po,
+  * po/es.po,
+  * po/fi_FI.po,
+  * po/fr.po,
+  * po/it.po,
+  * po/ja_JP.po,
+  * po/ko_KR.po,
+  * po/nb_NO.po,
+  * po/nl_NL.po,
+  * po/pt_BR.po,
+  * po/pt_PT.po,
+  * po/ru_RU.po,
+  * po/sv_SE.po,
+  * po/tr_TR.po: [183] Muchos cambios en el Makefile, para intentar
+  tener el mismo Makefile en trunk y en stable
+
+ -- Ricardo Marmolejo García <makiolo@gmail.com> dom, 28 jun 2009 05:06:33 +0000
+
+wiithon (1.0.182) karmic; urgency=low
+
+  * Makefile: [182] Cambiado adduser por gpasswd
+
+ -- Ricardo Marmolejo García <makiolo@gmail.com> vie, 26 jun 2009 23:09:04 +0000
+
+wiithon (1.0.181) karmic; urgency=low
+
+  * po/en.po,
+  * po/pt_BR.po: [181] Pequeños fixes en la traducción pt_BR
+
+ -- Ricardo Marmolejo García <makiolo@gmail.com> jue, 25 jun 2009 17:21:32 +0000
+
+wiithon (1.0.180) karmic; urgency=low
+
+  * .bzrignore,
+  * po/pt_BR.po: [180] - Traducido a: Portugues-Brasileño
+
+
+ -- Ricardo Marmolejo García <makiolo@gmail.com> jue, 25 jun 2009 15:47:09 +0000
+
+wiithon (1.0.179) karmic; urgency=low
+
+  * Makefile: [179] Cambiado Makefile un poco más
+
+
+ -- Ricardo Marmolejo García <makiolo@gmail.com> jue, 25 jun 2009 15:40:38 +0000
+
+wiithon (1.0.178) karmic; urgency=low
+
+  * po/da_DK.po,
+  * po/de.po,
+  * po/en.po,
+  * po/es.po,
+  * po/fi_FI.po,
+  * po/fr.po,
+  * po/it.po,
+  * po/ja_JP.po,
+  * po/ko_KR.po,
+  * po/nb_NO.po,
+  * po/nl_NL.po,
+  * po/pt_BR.po,
+  * po/pt_PT.po,
+  * po/ru_RU.po,
+  * po/sv_SE.po,
+  * po/tr_TR.po: [178] Borrados comentarios en los PO
+
+
+ -- Ricardo Marmolejo García <makiolo@gmail.com> jue, 25 jun 2009 15:31:22 +0000
+
+wiithon (1.0.177) karmic; urgency=low
+
+  * Makefile,
+  * cli.py,
+  * config.py,
+  * po/da_DK.po,
+  * po/de.po,
+  * po/en.po,
+  * po/es.po,
+  * po/fi_FI.po,
+  * po/fr.po,
+  * po/it.po,
+  * po/ja_JP.po,
+  * po/ko_KR.po,
+  * po/nb_NO.po,
+  * po/nl_NL.po,
+  * po/pt_BR.po,
+  * po/pt_PT.po,
+  * po/ru_RU.po,
+  * po/sv_SE.po,
+  * po/tr_TR.po,
+  * wiithon.py: [177] Extraida ayuda del CLI
+
+  Cambios menores
+
+
+ -- Ricardo Marmolejo García <makiolo@gmail.com> jue, 25 jun 2009 15:29:02 +0000
+
+wiithon (1.0.176) karmic; urgency=low
+
+  * wiithon_wrapper/wiithon_wrapper.c: [176] Pequeños cambios en el
+  wrapper: cammbiado wbfs_try_open por wbfs_try_open_partition, excepto
+  para autodetección.
+
+ -- Ricardo Marmolejo García <makiolo@gmail.com> jue, 25 jun 2009 14:37:33 +0000
+
+wiithon (1.0.175) karmic; urgency=low
+
+  * po/da_DK.po,
+  * po/de.po,
+  * po/fi_FI.po,
+  * po/fr.po,
+  * po/it.po,
+  * po/ja_JP.po,
+  * po/ko_KR.po,
+  * po/locale,
+  * po/locale/da_DK,
+  * po/locale/da_DK/LC_MESSAGES,
+  * po/locale/de,
+  * po/locale/de/LC_MESSAGES,
+  * po/locale/en,
+  * po/locale/en/LC_MESSAGES,
+  * po/locale/es,
+  * po/locale/es/LC_MESSAGES,
+  * po/locale/fi_FI,
+  * po/locale/fi_FI/LC_MESSAGES,
+  * po/locale/fr,
+  * po/locale/fr/LC_MESSAGES,
+  * po/locale/it,
+  * po/locale/it/LC_MESSAGES,
+  * po/locale/ja_JP,
+  * po/locale/ja_JP/LC_MESSAGES,
+  * po/locale/ko_KR,
+  * po/locale/ko_KR/LC_MESSAGES,
+  * po/locale/nb_NO,
+  * po/locale/nb_NO/LC_MESSAGES,
+  * po/locale/nl_NL,
+  * po/locale/nl_NL/LC_MESSAGES,
+  * po/locale/pt_BR,
+  * po/locale/pt_BR/LC_MESSAGES,
+  * po/locale/pt_PT,
+  * po/locale/pt_PT/LC_MESSAGES,
+  * po/locale/ru_RU,
+  * po/locale/ru_RU/LC_MESSAGES,
+  * po/locale/sv_SE,
+  * po/locale/sv_SE/LC_MESSAGES,
+  * po/locale/tr_TR,
+  * po/locale/tr_TR/LC_MESSAGES,
+  * po/nb_NO.po,
+  * po/nl_NL.po,
+  * po/pt_BR.po,
+  * po/pt_PT.po,
+  * po/ru_RU.po,
+  * po/sv_SE.po,
+  * po/tr_TR.po: Added.
+
+  * po/en,
+  * po/en/LC_MESSAGES,
+  * po/es,
+  * po/es/LC_MESSAGES: Removed.
+
+  * .bzrignore,
+  * Makefile,
+  * VERSION,
+  * config.py,
+  * core.py,
+  * gui.py,
+  * po/en.po,
+  * po/es.po,
+  * wiithon_wrapper/Makefile,
+  * wiithon_wrapper/libwbfs/libwbfs.c,
+  * wiithon_wrapper/libwbfs_os.h,
+  * wiithon_wrapper/wiithon_wrapper.c: Modified.
+
+  [175] Preparando wiithon para ser traducido en 16 idiomas
+
+  Adaptado para para ser ejecutado en local (./wiithon.py) Eliminada una
+  ordenación redundante en getListaJuegos()
+
+
+ -- Ricardo Marmolejo García <makiolo@gmail.com> jue, 25 jun 2009 06:41:04 +0000
+
+wiithon (1.0.174) karmic; urgency=low
+
+  * libwbfs_binding/libwbfs/libwbfs.c,
+  * libwbfs_binding/libwbfs/libwbfs.h,
+  * libwbfs_binding/libwbfs/libwbfs_linux.c,
+  * libwbfs_binding/libwbfs/libwbfs_os.h,
+  * libwbfs_binding/libwbfs/rijndael.c,
+  * libwbfs_binding/libwbfs/wiidisc.c,
+  * libwbfs_binding/libwbfs/wiidisc.h: Added.
+
+  * libwbfs_binding/libwbfs/Makefile: Modified.
+
+  [174] Creado lo necesario para compilar la librería para usarla de
+  forma dinámica y así reutilizarla (así lo necesita un binding para C
+  en Python)
+
+ -- José-Luis Segura Lucas <josel.segura@gmail.com> mié, 24 jun 2009 10:39:43 +0000
+
+wiithon (1.0.173) karmic; urgency=low
+
+  * libwbfs_binding/libwbfs,
+  * libwbfs_binding/libwbfs/Makefile: Added.
+
+  [173] Subido Makefile que deberá tener similar un libwbfs limpito
+
+ -- José Luis Segura Lucas <josel.segura@gmail.com> lun, 22 jun 2009 15:14:46 +0000
+
+wiithon (1.0.172) karmic; urgency=low
+
+  * libwbfs_binding: Added.
+
+  [172] Commit inicial de binding de libwbfs
+
+ -- José-Luis Segura Lucas <josel.segura@gmail.com> lun, 22 jun 2009 14:49:56 +0000
+
+wiithon (1.0.171) karmic; urgency=low
+
+  * gui.py,
+  * po/en.po,
+  * po/es.po,
+  * recursos/icons/wiithon.svg,
+  * trabajo.py: [171] Wiithon 1.0
+
+  - Actualizado el icono Wiithon a fondo blanco - Cambios menores
+
+
+ -- Ricardo Marmolejo García <makiolo@gmail.com> sáb, 20 jun 2009 23:28:57 +0000
+
+wiithon (1.0.170) karmic; urgency=low
+
+  * CARACTERISTICAS,
+  * CHANGELOG,
+  * INSTALAR,
+  * LEEME,
+  * LICENCIA,
+  * MANUAL,
+  * VERSION: Added.
+
+  * doc,
+  * doc/CARACTERISTICAS,
+  * doc/CHANGELOG,
+  * doc/INSTALAR,
+  * doc/LEEME,
+  * doc/LICENCIA,
+  * doc/MANUAL,
+  * doc/VERSION: Removed.
+
+  * core.py,
+  * po/en.po,
+  * po/es.po,
+  * wiithon_wrapper/libwbfs/libwbfs.c: Modified.
+
+  [170] Preparando el merge a stable
+
+  Actualizada documentación Modificada versión de función copia 1:1,
+  basado en wbfsGUI v14.1 antes v12
+
+
+ -- Ricardo Marmolejo García <makiolo@gmail.com> sáb, 20 jun 2009 22:02:54 +0000
+
+wiithon (1.0.169) karmic; urgency=low
+
+  * recursos/icons/wiithon.png: Added.
+
+  * Makefile,
+  * config.py,
+  * core.py,
+  * gui.py,
+  * po/en.po,
+  * po/es.po,
+  * trabajo.py,
+  * wiithon_wrapper/libwbfs/libwbfs.c,
+  * wiithon_wrapper/wiithon_wrapper.c: Modified.
+
+  [169] Iba quitado una seguridad de wiithon_wrapper en que se permitian
+  copiar juego 1on1 en discos de distinto tamaño de sactor.
+
+  Ahora la he vuelto a poner, ya que por lo visto puede producir
+  colisión.
+
+
+
+
+ -- Ricardo Marmolejo García <makiolo@gmail.com> sáb, 20 jun 2009 07:56:53 +0000
+
+wiithon (1.0.168) karmic; urgency=low
+
+  * gui.py,
+  * po/en.po,
+  * po/es.po,
+  * recursos/glade/wiithon.ui,
+  * recursos/glade/wiithon.ui.h: [168] Traducido al 100% como buenamente
+  he podido xD
+
+
+ -- Ricardo Marmolejo García <makiolo@gmail.com> vie, 19 jun 2009 19:02:59 +0000
+
+wiithon (1.0.167) karmic; urgency=low
+
+  * wiithon_wrapper/libwbfs/libwbfs.c,
+  * wiithon_wrapper/wiithon_wrapper.c: [167] bugfix en
+  wiithon_wrapper... ¡
+
+
+
+
+ -- José-Luis Segura Lucas <josel.segura@gmail.com> vie, 19 jun 2009 10:20:41 +0000
+
+wiithon (1.0.166) karmic; urgency=low
+
+  * LINKS,
+  * TODO,
+  * config.py,
+  * core.py,
+  * gui.py,
+  * juego.py,
+  * po/en.po,
+  * po/es.po,
+  * pool.py,
+  * recursos/glade/wiithon.ui,
+  * trabajo.py,
+  * util.py,
+  * wiithon_wrapper/wiithon_wrapper.c: [166] Versión final -> fase de
+  pruebas
+
+  Mirate lo del buscador, linea 447 del gui.py Como detalle final,
+  estaría bien poner el entry del buscador amarillo(o destacado de
+  alguna forma) cuando hay algo escrito
+
+
+ -- Ricardo Marmolejo García <makiolo@gmail.com> vie, 19 jun 2009 05:39:28 +0000
+
+wiithon (1.0.165) karmic; urgency=low
+
+  * animar.py,
+  * gui.py,
+  * po/en.po,
+  * po/es.po,
+  * pool.py,
+  * recursos/glade/wiithon.ui,
+  * recursos/glade/wiithon.ui.h,
+  * trabajo.py,
+  * wiithon_wrapper/libwbfs/libwbfs.c,
+  * wiithon_wrapper/libwbfs/libwbfs.h,
+  * wiithon_wrapper/libwbfs/libwbfs_linux.c,
+  * wiithon_wrapper/libwbfs/rijndael.c,
+  * wiithon_wrapper/libwbfs/wiidisc.c,
+  * wiithon_wrapper/libwbfs/wiidisc.h,
+  * wiithon_wrapper/libwbfs_os.h,
+  * wiithon_wrapper/wiithon_wrapper.c: [165] Modificado libwbfs
+
+  Bastante arreglos Muestras errores en forma de alert (no se acumulan
+  los alert)
+
+
+ -- Ricardo Marmolejo García <makiolo@gmail.com> jue, 18 jun 2009 21:27:54 +0000
+
+wiithon (1.0.164) karmic; urgency=low
+
+  * animar.py,
+  * cli.py,
+  * core.py,
+  * gui.py,
+  * po/en.po,
+  * po/es.po,
+  * recursos/glade/wiithon.ui,
+  * recursos/glade/wiithon.ui.h,
+  * trabajo.py: [164] Terminado boton para refresco de particiones en
+  caliente
+
+
+ -- Ricardo Marmolejo García <makiolo@gmail.com> jue, 18 jun 2009 05:23:12 +0000
+
+wiithon (1.0.163) karmic; urgency=low
+
+  * core.py,
+  * gui.py,
+  * po/en.po,
+  * po/es.po,
+  * trabajo.py,
+  * wiithon_wrapper/libwbfs/libwbfs.c,
+  * wiithon_wrapper/libwbfs/wiidisc.c,
+  * wiithon_wrapper/wiithon_wrapper.c: [163] algunos arreglos
+
+  implementado copia 1on1 de todo el disco
+
+ -- Ricardo Marmolejo García <makiolo@gmail.com> mié, 17 jun 2009 20:20:18 +0000
+
+wiithon (1.0.162) karmic; urgency=low
+
+  * gui.py,
+  * po/en.po,
+  * po/es.po: [162] Commit para mantenernos sincronizados
+
+
+ -- Ricardo Marmolejo García <makiolo@gmail.com> mié, 17 jun 2009 18:49:00 +0000
+
+wiithon (1.0.161) karmic; urgency=low
+
+  * gui.py,
+  * po/en.po,
+  * po/es.po,
+  * preferencias.py: [161] Eliminados IDGAME preferido y partición
+  preferida de preferencias.
+
+
+ -- Ricardo Marmolejo García <makiolo@gmail.com> mié, 17 jun 2009 18:22:01 +0000
+
+wiithon (1.0.160) karmic; urgency=low
+
+  * gui.py: [160] Bug en el gui.py
+
+ -- José-Luis Segura Lucas <josel.segura@gmail.com> mié, 17 jun 2009 10:57:22 +0000
+
+wiithon (1.0.159) karmic; urgency=low
+
+  * core.py,
+  * gui.py,
+  * po/en.po,
+  * po/es.po,
+  * trabajo.py,
+  * wiithon_wrapper/wiithon_wrapper.c: [159] Rediseño muy serio de
+  Threads, ahora lo hago por callbacks ya que el invento de la cola se
+  estaba volviendo dificil de mantener.
+
+  trabajo, gui y core cambiados. Algún mini bug en wiithon_wrapper
+  solucionado con "fflush" para obligar a volcar a stdout
+
+ -- Ricardo Marmolejo García <makiolo@gmail.com> mié, 17 jun 2009 06:56:39 +0000
+
+wiithon (1.0.158) karmic; urgency=low
+
+  * Makefile,
+  * gui.py,
+  * po/en.po,
+  * po/es.po,
+  * trabajo.py: [158] Esta de puta madre el drag&drop, prácticamente no
+  funcionaba muy bien debido a que los archivos vienen como
+  file:///home/user/file.iso
+
+  He arreglado la señal para que se comporte como hablamos.
+
+
+ -- Ricardo Marmolejo García <makiolo@gmail.com> lun, 15 jun 2009 22:37:40 +0000
+
+wiithon (1.0.157) karmic; urgency=low
+
+  * gui.py,
+  * juego.py,
+  * po/en.po,
+  * po/es.po,
+  * trabajo.py: [157] Ya tenemos DnD en la interfaz. Quien añada  los
+  ficheros (lo suyo sería en core.py) debe comprobar que son ISOs y que
+  son válidas
+
+ -- José-Luis Segura Lucas <josel.segura@gmail.com> lun, 15 jun 2009 17:31:04 +0000
+
+wiithon (1.0.156) karmic; urgency=low
+
+  * Makefile,
+  * po/en.po,
+  * po/es.po,
+  * recursos/glade/wiithon.ui.h: [156] Arreglado lo de los enlaces
+  simbolicos
+
+  Pequeños arreglos en la traducción (hay que traducir todo lo nuevo)
+  Para subir los cambios hazlo con "make commit", si hay en algún fuzzy
+  en algún po NO TE DEJA, esto lo hago así porque es una buena forma de
+  ahorrarnos conflictos.
+
+
+ -- Ricardo Marmolejo García <makiolo@gmail.com> lun, 15 jun 2009 16:50:19 +0000
+
+wiithon (1.0.155) karmic; urgency=low
+
+  * config.py: [155] Conseguido 9.19 en config.py :D
+
+ -- José-Luis Segura Lucas <josel.segura@gmail.com> lun, 15 jun 2009 09:40:49 +0000
+
+wiithon (1.0.154) karmic; urgency=low
+
+  * builder_wrapper.py: [154] Tonteando para subir el builder_wrapper a
+  un 10 en pylint :D y así de paso pruebo los commits
+
+ -- José-Luis Segura Lucas <josel.segura@gmail.com> lun, 15 jun 2009 09:35:04 +0000
+
+wiithon (1.0.153) karmic; urgency=low
+
+  * gui.py: [153] Algunos cambios en comentarios y en algunas líneas en
+  blanco para mejrorar legibilidad
+
+ -- José-Luis Segura Lucas <josel.segura@gmail.com> lun, 15 jun 2009 09:09:12 +0000
+
+wiithon (1.0.152) karmic; urgency=low
+
+  * config.py,
+  * core.py,
+  * gui.py,
+  * po/en.po,
+  * po/es.po,
+  * recursos/glade/wiithon.ui,
+  * recursos/glade/wiithon.ui.h: [152] Terminada algunas comprobaciones
+  en renombrar IDGAME que le dan total robuztez a esa parte.
+
+  Más cambios menores
+
+
+ -- Ricardo Marmolejo García <makiolo@gmail.com> lun, 15 jun 2009 06:56:52 +0000
+
+wiithon (1.0.151) karmic; urgency=low
+
+  * TODO,
+  * core.py,
+  * gui.py,
+  * po/en.po,
+  * po/es.po,
+  * recursos/glade/wiithon.ui,
+  * recursos/glade/wiithon.ui.h,
+  * trabajo.py: [151] Copia 1on1 acabado, a falta de alguna comprobación
+
+  He integrado el menu contextual, queda de pm, hay que añadir una
+  opción más fácil para la copia 1on1, en lugar de lo que te comenté,
+  por ejemplo "Copiar a otra partición" Solo queda como funcionalidad
+  princiapl, el drag&drop, no descartes que te diga otro drag&drop para
+  el 1on1: El drag&drop sería para copiar juegos a otras particiones, y
+  tendría que detectar el arrastrar una fila desde juegos hacía una fila
+  de particiones. Investiga el drag&drop con código de pruebas fuera del
+  gui, ya que voy hacer una limpia de código y renombrar muchas
+  variables que no tienen sentido.
+
+  Por cierto por último, he visto el conflicto que has tenido con los
+  po, para evitarlo en el futuro, antes de subir un commit (y metiendo
+  frases nuevas o modificando las existentes) comprueba que el en.po y
+  el es.po no tenga frases en fuzzy.
+
+  Un saludo, ya queda poco xD
+
+
+ -- Ricardo Marmolejo García <makiolo@gmail.com> dom, 14 jun 2009 18:59:15 +0000
+
+wiithon (1.0.150) karmic; urgency=low
+
+  * wiithon_wrapper,
+  * wiithon_wrapper/Makefile,
+  * wiithon_wrapper/libwbfs,
+  * wiithon_wrapper/libwbfs/libwbfs.c,
+  * wiithon_wrapper/libwbfs/libwbfs.h,
+  * wiithon_wrapper/libwbfs/libwbfs_linux.c,
+  * wiithon_wrapper/libwbfs/rijndael.c,
+  * wiithon_wrapper/libwbfs/wiidisc.c,
+  * wiithon_wrapper/libwbfs/wiidisc.h,
+  * wiithon_wrapper/libwbfs_os.h,
+  * wiithon_wrapper/wiithon_wrapper.c: Added.
+
+  * wbfs_src,
+  * wbfs_src/Makefile,
+  * wbfs_src/libwbfs,
+  * wbfs_src/libwbfs/libwbfs.c,
+  * wbfs_src/libwbfs/libwbfs.h,
+  * wbfs_src/libwbfs/libwbfs_linux.c,
+  * wbfs_src/libwbfs/rijndael.c,
+  * wbfs_src/libwbfs/wiidisc.c,
+  * wbfs_src/libwbfs/wiidisc.h,
+  * wbfs_src/libwbfs_os.h,
+  * wbfs_src/wiithon_wrapper.c: Removed.
+
+  * .bzrignore,
+  * Makefile,
+  * cli.py,
+  * gui.py,
+  * po/en.po,
+  * po/es.po,
+  * recursos/glade/wiithon.ui,
+  * recursos/glade/wiithon.ui.h: Modified.
+
+  [150] Finalmente voy a implementar la copia 1on1 para la versión
+  inmediata.
+
+  Es necesario el menú contextual. Renombrado la carpeta wbfs_src a
+  "wiithon_wrapper" Ya funciona la copia 1on1 con el wrapper, he tenido
+  que modificar partes de la labrería libwbfs. Muchos cambios menores
+  que he olvidado documentar,
+
+
+ -- Ricardo Marmolejo García <makiolo@gmail.com> dom, 14 jun 2009 07:07:35 +0000
+
+wiithon (1.0.149) karmic; urgency=low
+
+  * wbfs_src/wiithon_wrapper.c: Added.
+
+  * wbfs_src/bn.c,
+  * wbfs_src/disc_usage_table.c,
+  * wbfs_src/ec.c,
+  * wbfs_src/negentig.c,
+  * wbfs_src/readme.txt,
+  * wbfs_src/scrub.c,
+  * wbfs_src/tools.c,
+  * wbfs_src/tools.h,
+  * wbfs_src/wbfs.c: Removed.
+
+  * .bzrignore,
+  * Makefile,
+  * config.py,
+  * core.py,
+  * doc/INSTALAR,
+  * gui.py,
+  * po/en.po,
+  * po/es.po,
+  * wbfs_src/Makefile,
+  * wbfs_src/libwbfs/libwbfs.c,
+  * wbfs_src/libwbfs/libwbfs.h,
+  * wbfs_src/libwbfs/libwbfs_linux.c,
+  * wbfs_src/libwbfs/wiidisc.c,
+  * wbfs_src/libwbfs_os.h: Modified.
+
+  [149] Nuevo Wrapper entre Wiithon y libwbfs llamado "wiithon_wrapper"
+
+  Con este wrapper es más fácil añadir funcionalidades, ya que el código
+  de Kibrikk se me hacía inteligible He añadido una primera
+  funcionalidad:         - Renombrar IDGAME (para custum games del
+  guitar hero principalmente)         - Funciona bien, pero esto puede
+  traer algún bug
+
+
+
+
+ -- Ricardo Marmolejo García <makiolo@gmail.com> sáb, 13 jun 2009 07:43:17 +0000
+
+wiithon (1.0.148) karmic; urgency=low
+
+  * Makefile,
+  * po/en.po,
+  * po/es.po,
+  * util.py: [148] Corregido fallo en un import
+
+ -- Ricardo Marmolejo García <makiolo@gmail.com> vie, 12 jun 2009 21:08:34 +0000
+
+wiithon (1.0.147) karmic; urgency=low
+
+  * animar.py,
+  * builder_wrapper.py,
+  * cli.py,
+  * config.py,
+  * core.py,
+  * gui.py,
+  * juego.py,
+  * preferencias.py,
+  * test.py,
+  * trabajo.py,
+  * util.py,
+  * wiithon.py: [147] Modificados los import más acordes con la guía de
+  estilo de Python
+
+ -- José Luis Segura Lucas <josel.segura@gmail.com> vie, 12 jun 2009 08:25:07 +0000
+
+wiithon (1.0.146) karmic; urgency=low
+
+  * LINKS,
+  * doc/CARACTERISTICAS,
+  * doc/CHANGELOG,
+  * doc/LICENCIA,
+  * doc/MANUAL: Added.
+
+  * doc/INSTALL,
+  * doc/LICENSE,
+  * doc/README,
+  * doc/python,
+  * doc/python/diveintopython-es.pdf.gz,
+  * doc/python/links.txt,
+  * doc/wiithon,
+  * doc/wiithon/API,
+  * doc/wiithon/Manual_de_Usuario: Removed.
+
+  * Makefile,
+  * doc/INSTALAR,
+  * doc/LEEME: Modified.
+
+  [146] - uninstall no es dependencia de install (ver doc/INSTALAR)
+
+  - archivos movidos y/o eliminados
+
+ -- Ricardo Marmolejo García <makiolo@gmail.com> jue, 11 jun 2009 20:04:28 +0000
+
+wiithon (1.0.145) karmic; urgency=low
+
+  * .bzrignore,
+  * Makefile,
+  * gui.py,
+  * po/en.po,
+  * po/es.po: [145] Pequeños cambios acumulados
+
+
+ -- Ricardo Marmolejo García <makiolo@gmail.com> jue, 11 jun 2009 19:21:45 +0000
+
+wiithon (1.0.144) karmic; urgency=low
+
+  * Makefile: [144] Cambiado 'permisos' en el Makefile
+
+ -- José-Luis Segura Lucas <josel.segura@gmail.com> jue, 11 jun 2009 17:17:35 +0000
+
+wiithon (1.0.143) karmic; urgency=low
+
+  * Makefile: [143] Cambios en el Makefile (en pruebas)
+
+ -- José-Luis Segura Lucas <josel.segura@gmail.com> jue, 11 jun 2009 17:01:42 +0000
+
+wiithon (1.0.142) karmic; urgency=low
+
+  * Makefile: [142] Generalizando reglas del Makefile
+
+ -- José Luis Segura Lucas <josel.segura@gmail.com> jue, 11 jun 2009 08:54:11 +0000
+
+wiithon (1.0.141) karmic; urgency=low
+
+  * Makefile,
+  * cli.py,
+  * core.py,
+  * gui.py,
+  * po/en.po,
+  * po/es.po,
+  * recursos/glade/wiithon.ui,
+  * recursos/glade/wiithon.ui.h,
+  * wbfs_src/libwbfs/libwbfs.c,
+  * wbfs_src/libwbfs/libwbfs.h,
+  * wbfs_src/wbfs.c: [141] - Eliminado el chekeo de juegos, del wbfs ,
+  del core y del cli
+
+
+ -- Ricardo Marmolejo García <makiolo@gmail.com> jue, 11 jun 2009 04:14:14 +0000
+
+wiithon (1.0.140) karmic; urgency=low
+
+  * po/en.po: [140] * Finalizada la traducción al inglés
+
+ -- Sergio Padrino <sergio@sergio-desktop> jue, 11 jun 2009 00:10:16 +0000
+
+wiithon (1.0.139) karmic; urgency=low
+
+  * .bzrignore,
+  * TODO,
+  * doc/INSTALAR,
+  * doc/INSTALL,
+  * doc/LEEME,
+  * doc/LICENSE,
+  * doc/README,
+  * doc/VERSION: Added.
+
+  * .bzrignore,
+  * INSTALAR.txt,
+  * LEEME.txt,
+  * LICENCIA.txt,
+  * TODO.txt,
+  * TRADUCCION.txt,
+  * VERSION.txt: Removed.
+
+  * Makefile,
+  * gui.py,
+  * po/en.po,
+  * po/es.po: Modified.
+
+  [139] Ordenados muchos ficheros, bastantes movidos a doc/
+
+
+ -- Ricardo Marmolejo García <makiolo@gmail.com> mié, 10 jun 2009 23:18:55 +0000
+
+wiithon (1.0.138) karmic; urgency=low
+
+  * wiithon_usuario.desktop: [138] Pequeño arreglo para KDE
+
+
+ -- Ricardo Marmolejo García <makiolo@gmail.com> mié, 10 jun 2009 21:34:03 +0000
+
+wiithon (1.0.137) karmic; urgency=low
+
+  * INSTALAR.txt,
+  * Makefile,
+  * util.py: [137] - Para que rule en KDE he hecho python-sexy
+  obligatorio
+
+
+ -- Ricardo Marmolejo García <makiolo@gmail.com> mié, 10 jun 2009 21:23:00 +0000
+
+wiithon (1.0.136) karmic; urgency=low
+
+  * wiithon_root.desktop,
+  * wiithon_usuario.desktop: Added.
+
+  * wiithon.desktop: Removed.
+
+  * INSTALAR.txt,
+  * Makefile,
+  * cli.py,
+  * gui.py,
+  * po/en.po,
+  * po/es.po: Modified.
+
+  [136] Wiithon ya no necesita ser root
+
+
+ -- Ricardo Marmolejo García <makiolo@gmail.com> mié, 10 jun 2009 20:56:02 +0000
+
+wiithon (1.0.135) karmic; urgency=low
+
+  * po/en.po,
+  * po/es.po: [135] El problema esta resuelto, el problema fue el quitar
+  la cabezera totalmente, he dejado la codificación, nombre de proyecto
+  y poco más y problema resuelto.
+
+ -- Ricardo Marmolejo García <makiolo@gmail.com> mié, 10 jun 2009 05:09:01 +0000
+
+wiithon (1.0.134) karmic; urgency=low
+
+  * Makefile,
+  * cli.py,
+  * gui.py,
+  * po/en.po: [134] - Añadido y funcionando bien, la tarea "purge" al
+  Makefile
+
+  - Cuando se ejcuta wiithon en modo cli, ahora se le avisa al usuario
+  si no lo ejecuta como root - he detectado un problemas con caracteres
+  NO ASCII, (en la corrección de castellano) - Cambios menores
+
+ -- Ricardo Marmolejo García <makiolo@gmail.com> mié, 10 jun 2009 05:03:37 +0000
+
+wiithon (1.0.133) karmic; urgency=low
+
+  * Makefile,
+  * cli.py,
+  * gui.py,
+  * po/en.po,
+  * po/es.po,
+  * trabajo.py: [133] - en.po lo he dejado listo para ser traducido
+
+  - He resuelto todos los warning que daba el xgettext al extraer
+  strings - Para evitar conflictos de versiones, he quitado el header
+  con "--omit-header", tambien se pueden quitar los comentarios, aunque
+  en principio los vamos a dejar.
+
+
+ -- Ricardo Marmolejo García <makiolo@gmail.com> mié, 10 jun 2009 04:29:13 +0000
+
+wiithon (1.0.132) karmic; urgency=low
+
+  * gui.py,
+  * po/en.po,
+  * po/es.po: [132] Quito que el nombre renombrado sea decodificado a
+  iso-8859-1
+
+ -- Ricardo Marmolejo García <makiolo@gmail.com> mié, 10 jun 2009 03:03:58 +0000
+
+wiithon (1.0.131) karmic; urgency=low
+
+  * .bzrignore,
+  * animar.py,
+  * cli.py,
+  * config.py,
+  * gui.py,
+  * po/en.po,
+  * po/es.po,
+  * pool.py,
+  * util.py,
+  * wbfs_src/wbfs.c,
+  * wiithon.py: [131] Algunos bugs pequeños
+
+  He quitado el acuerdo -> discutir sobre ello He evitado todo warning.
+  --> Necesitamos un icono Cambios menores
+
+
+ -- Ricardo Marmolejo García <makiolo@gmail.com> mié, 10 jun 2009 02:44:18 +0000
+
+wiithon (1.0.130) karmic; urgency=low
+
+  * wbfs_src/wbfs.c: [130] Hay excepciones feas en la pool, no se porque
+  algunas veces los hilos no pueden ejecutar "time.sleep", he probado
+  quitando que sean threads daemon, pero creo que sigue igual.
+
+  He corregido una linea del wbfs.c en el que reservaba 6 bytes
+  estaticamente para el idgame, deberian ser 7 para el nulo \0
+
+
+ -- Ricardo Marmolejo García <makiolo@gmail.com> mar, 09 jun 2009 21:39:52 +0000
+
+wiithon (1.0.129) karmic; urgency=low
+
+  * wbfs_src/libwbfs_os.h: Added.
+
+  [129] Se me olvido añadir un archivo movido al repo
+
+
+ -- Ricardo Marmolejo García <makiolo@gmail.com> mar, 09 jun 2009 21:32:27 +0000
+
+wiithon (1.0.128) karmic; urgency=low
+
+  * wbfs_src/libwbfs/libwbfs_os.h: Removed.
+
+  * INSTALAR.txt,
+  * po/en.po,
+  * po/es.po,
+  * pool.py,
+  * recursos/glade/wiithon.ui,
+  * trabajo.py,
+  * wbfs_src/libwbfs/libwbfs.c,
+  * wbfs_src/tools.c,
+  * wbfs_src/tools.h,
+  * wbfs_src/wbfs.c: Modified.
+
+  [128] Todos los WBFS Manager basados en las primeras versiones de
+  libwbfs tienen fallos calculando el espacio ocupado por un juego, y el
+  espacio ocupado y libre del total.
+
+  He modificado el "wbfs.c" y alguno más para solucionar esto.
+
+
+ -- Ricardo Marmolejo García <makiolo@gmail.com> mar, 09 jun 2009 21:31:23 +0000
+
+wiithon (1.0.127) karmic; urgency=low
+
+  * gui.py,
+  * po/en.po,
+  * po/es.po: [127] No funcionaba el acerca de: -En código llamabas a
+  "aboutdialog1" y en el glade se llamaba "aboutdialog" , He editado el
+  código
+
+
+ -- Ricardo Marmolejo García <makiolo@gmail.com> mar, 09 jun 2009 19:58:33 +0000
+
+wiithon (1.0.126) karmic; urgency=low
+
+  * gui.py,
+  * po/en.po,
+  * po/es.po: [126] Añadida señal "changed" el entry de busqueda
+
+ -- Ricardo Marmolejo García <makiolo@gmail.com> mar, 09 jun 2009 19:49:19 +0000
+
+wiithon (1.0.125) karmic; urgency=low
+
+  * INSTALAR.txt: [125] modificado instalar.txt
+
+ -- José-Luis Segura Lucas <josel.segura@gmail.com> mar, 09 jun 2009 13:44:16 +0000
+
+wiithon (1.0.124) karmic; urgency=low
+
+  * recursos/glade/acercade.ui.h: Removed.
+
+  * gui.py,
+  * po/en.po,
+  * po/es.po,
+  * recursos/glade/wiithon.ui: Modified.
+
+  [124] * Borrado acercade.ui.h (se había olvidado).
+
+  * Recuperado el soporte para usar sexy si está instalado * El Entry de
+  búsqeuda debe añadirse ahroa en código directamente
+
+ -- José-Luis Segura Lucas <josel.segura@gmail.com> mar, 09 jun 2009 13:41:57 +0000
+
+wiithon (1.0.123) karmic; urgency=low
+
+  * util.py: [123] Arreglado un IndentationError
+
+ -- José-Luis Segura Lucas <josel.segura@gmail.com> mar, 09 jun 2009 13:29:46 +0000
+
+wiithon (1.0.122) karmic; urgency=low
+
+  * animar.py,
+  * builder_wrapper.py,
+  * cli.py,
+  * config.py,
+  * core.py,
+  * gui.py,
+  * juego.py,
+  * mensaje.py,
+  * po/en.po,
+  * po/es.po,
+  * pool.py,
+  * preferencias.py,
+  * test.py,
+  * trabajo.py,
+  * util.py,
+  * wiithon.py: [122] * sustituidos en todos los .py los \t por "    ".
+  He hecho make run y funciona
+
+  * Añadidos los coding: utf-8 donde faltaba * Se suben los .po
+  "actualizados". Hay que buscar la forma de que no cambien solo por
+  generarlos
+
+ -- José-Luis Segura Lucas <josel.segura@gmail.com> mar, 09 jun 2009 13:07:16 +0000
+
+wiithon (1.0.121) karmic; urgency=low
+
+  * wbfs_src/libwbfs/libwbfs_os.h: Added.
+
+  * wbfs_src/libwbfs_os.h,
+  * wbfs_src/libwbfslite,
+  * wbfs_src/libwbfslite/libwbfs.c,
+  * wbfs_src/libwbfslite/libwbfs.h: Removed.
+
+  * .bzrignore,
+  * Makefile,
+  * gui.py,
+  * po/en.po,
+  * po/es.po,
+  * wbfs_src/Makefile,
+  * wbfs_src/libwbfs/libwbfs.c,
+  * wbfs_src/libwbfs/libwbfs.h,
+  * wbfs_src/libwbfs/wiidisc.c,
+  * wbfs_src/wbfs.c: Modified.
+
+  [121] Merge
+
+ -- José-Luis Segura Lucas <josel.segura@gmail.com> mar, 09 jun 2009 12:58:37 +0000
+
+wiithon (1.0.118.1.1) karmic; urgency=low
+
+  * wbfs_src/libwbfs/libwbfs_os.h: Added.
+
+  * wbfs_src/libwbfs_os.h,
+  * wbfs_src/libwbfslite,
+  * wbfs_src/libwbfslite/libwbfs.c,
+  * wbfs_src/libwbfslite/libwbfs.h: Removed.
+
+  * .bzrignore,
+  * Makefile,
+  * gui.py,
+  * po/en.po,
+  * po/es.po,
+  * wbfs_src/Makefile,
+  * wbfs_src/libwbfs/libwbfs.c,
+  * wbfs_src/libwbfs/libwbfs.h,
+  * wbfs_src/libwbfs/wiidisc.c,
+  * wbfs_src/wbfs.c: Modified.
+
+  [118.1.1] Nuevo LIBWBFS! commit peligroso
+
+
+ -- Ricardo Marmolejo García <makiolo@gmail.com> mar, 09 jun 2009 04:52:02 +0000
+
+wiithon (1.0.120) karmic; urgency=low
+
+  * Makefile,
+  * po/en.po,
+  * po/es.po: [120] Modificado el Makefile y los .po
+
+ -- José-Luis Segura Lucas <josel.segura@gmail.com> mar, 09 jun 2009 12:47:41 +0000
+
+wiithon (1.0.119) karmic; urgency=low
+
+  * recursos/glade/acercade.ui: Removed.
+
+  * gui.py,
+  * po/en.po,
+  * po/es.po,
+  * recursos/glade/wiithon.ui,
+  * recursos/glade/wiithon.ui.h: Modified.
+
+  [119] * Cambios en los .po (número de línea de dónde saca algunas
+  msgid)
+
+  * Cambios en gui.py para usar el "acercade" sacado directamente del
+  GUI principal * Eliminado acercade.ui, ya que se mete en el wiithon.ui
+  * Lo anterior en wiithon.ui y wiithon.ui.h
+
+ -- José-Luis Segura Lucas <josel.segura@gmail.com> lun, 08 jun 2009 17:19:53 +0000
+
+wiithon (1.0.118) karmic; urgency=low
+
+  * animar.py,
+  * recursos/glade/acercade.ui,
+  * recursos/glade/acercade.ui.h: Added.
+
+  * Makefile,
+  * core.py,
+  * gui.py,
+  * po/en.po,
+  * po/es.po,
+  * pool.py,
+  * recursos/glade/wiithon.ui,
+  * recursos/glade/wiithon.ui.h,
+  * trabajo.py,
+  * util.py: Modified.
+
+  [118] Icono animado que representa que esta ocupado
+
+  Corregido un bug cuando al renombrar metiamos algún caracter extraño
+  Ahora muestra las tareas pendientes
+
+
+ -- Ricardo Marmolejo García <makiolo@gmail.com> lun, 08 jun 2009 02:47:08 +0000
+
+wiithon (1.0.117) karmic; urgency=low
+
+  * .bzrignore,
+  * Makefile,
+  * core.py,
+  * gui.py,
+  * po/en.po,
+  * po/es.po,
+  * pool.py,
+  * recursos/glade/wiithon.ui,
+  * recursos/glade/wiithon.ui.h: [117] Hecha barra de progreso para
+  calcular espacio ocupado en disco
+
+
+ -- Ricardo Marmolejo García <makiolo@gmail.com> dom, 07 jun 2009 20:25:36 +0000
+
+wiithon (1.0.116) karmic; urgency=low
+
+  * Makefile,
+  * gui.py,
+  * wiithon.py: [116] * Añadidas líneas estándares para la condificación
+  de los ficheros
+
+ -- José Luis Segura Lucas <josel.segura@gmail.com> dom, 07 jun 2009 13:08:36 +0000
+
+wiithon (1.0.115) karmic; urgency=low
+
+  * LEEME.txt,
+  * Makefile,
+  * VERSION.txt,
+  * cli.py,
+  * core.py,
+  * gui.py,
+  * po/en.po,
+  * po/es.po,
+  * trabajo.py,
+  * util.py,
+  * wiithon.py: [115] - Aligerando el core.
+
+  - Metiendo casi todas las frases a traducir.
+
+
+ -- Ricardo Marmolejo García <makiolo@gmail.com> dom, 07 jun 2009 07:31:16 +0000
+
+wiithon (1.0.114) karmic; urgency=low
+
+  * TODO.txt,
+  * core.py,
+  * gui.py,
+  * juego.py,
+  * po/en.po,
+  * po/es.po,
+  * recursos/glade/wiithon.ui,
+  * trabajo.py: [114] Buscador terminado.
+
+  Tengo que modificar la pool para preferentemente utilizar objetos
+  "Juego" en lugar del IDGAME Solo quedan 2 funcionalidades para sacar
+  una release:         - Mostrar el total de juegos         - Mostrar
+  espacio libre / ocupado en la partición (mediante barras de progreso
+  estáticas)
+
+ -- Ricardo Marmolejo García <makiolo@gmail.com> vie, 05 jun 2009 02:57:55 +0000
+
+wiithon (1.0.113) karmic; urgency=low
+
+  * caratula.py: Removed.
+
+  * Makefile,
+  * core.py,
+  * gui.py,
+  * juego.py,
+  * po/en.po,
+  * po/es.po,
+  * pool.py,
+  * preferencias.py,
+  * recursos/glade/wiithon.ui,
+  * recursos/glade/wiithon.ui.h: Modified.
+
+  [113] Buscador y base de datos xD asi en un momento
+
+  Tiene bugs pero esta bastante avanzado
+
+
+ -- Ricardo Marmolejo García <makiolo@gmail.com> jue, 04 jun 2009 21:15:30 +0000
+
+wiithon (1.0.112) karmic; urgency=low
+
+  * preferencias.py: Added.
+
+  * almacen.py: Removed.
+
+  * INSTALAR.txt,
+  * Makefile,
+  * core.py,
+  * gui.py,
+  * po/en.po,
+  * po/es.po,
+  * pool.py,
+  * trabajo.py: Modified.
+
+  [112] Preferencias persistentes, todas las rutas de los FileChooser,
+  juego y partición seleccionado.
+
+  Cambiado todo el protocolo entre el pool de trabajo y el GUI. (hay que
+  mejorarlo más)
+
+
+ -- Ricardo Marmolejo García <makiolo@gmail.com> jue, 04 jun 2009 04:54:38 +0000
+
+wiithon (1.0.111) karmic; urgency=low
+
+  * TODO.txt,
+  * gui.py,
+  * po/en.po,
+  * po/es.po,
+  * recursos/glade/alerta.ui,
+  * recursos/glade/alerta.ui.h,
+  * recursos/icons/wiithon.svg,
+  * wiithon.desktop: [111] Actualizado icono Wiithon, hay que hacer más
+  de diferentes tamaños
+
+
+ -- Ricardo Marmolejo García <makiolo@gmail.com> mié, 03 jun 2009 13:14:25 +0000
+
+wiithon (1.0.110) karmic; urgency=low
+
+  * Makefile,
+  * TODO.txt,
+  * cli.py,
+  * gui.py,
+  * po/en.po,
+  * po/es.po,
+  * wiithon.py: [110] Añadido parametro -c, equivalente a --no-gui
+
+  Añadidas bastantes frases del cli para traducir, aun quedan bastantes.
+  El hilo que calcula el progreso no se interrumpia bien Añadidos
+  filtros a Nuevo: *.iso y *.rar Antes de cerrar, se espera a que
+  terminen los procesos de bash (sin interrumpir)
+
+ -- Ricardo Marmolejo García <makiolo@gmail.com> mié, 03 jun 2009 12:33:26 +0000
+
+wiithon (1.0.109) karmic; urgency=low
+
+  * Makefile,
+  * cli.py,
+  * config.py,
+  * core.py,
+  * gui.py,
+  * po/en.po,
+  * po/es.po,
+  * trabajo.py,
+  * util.py,
+  * wiithon.py: [109] Muchos detalles:
+
+  Hay que ser root o cerrara previo error. Descarga caratulas y discos
+  de juegos recien añadidos Ahora pregunta en que carpeta extraer, antes
+  se iba a HOME. Corregido un bug en el que iba dejado sin arrancar la
+  revisión anterior. Nuevas frases metidas a i18n Las caratulas pueden
+  ser descargas de 3 tipos : normal|panoramica|3d Antes estaba normal
+  por defecto, ahora he puesto normal Otros cambios menores
+
+ -- Ricardo Marmolejo García <makiolo@gmail.com> mié, 03 jun 2009 06:25:05 +0000
+
+wiithon (1.0.108) karmic; urgency=low
+
+  * po/plantilla.pot: Removed.
+
+  * .bzrignore,
+  * INSTALAR.txt,
+  * Makefile,
+  * TODO.txt,
+  * core.py,
+  * gui.py,
+  * po/en.po,
+  * po/es.po,
+  * trabajo.py: Modified.
+
+  [108] Redimensionar caratulas a 160x225 por 160x224, si no, no
+  funciona en el loader GX
+
+  Además se resuelve un problema con un parametro de mogrify, parece ser
+  que -resize 160x224 mantiene el aspect ratio, pero me interesar
+  ignorar el aspect ya que de otra forma no funciona en el usb loader,
+  sin documentar (o no lo vi) di con la solución en google, hay que
+  poner una puta admiración: -resize 160x224! Ahora solo instala las
+  dependencias con apt-get mediante "sudo make install_auto". La tarea
+  "sudo make install" funciona igual que antes, de forma que no se
+  detecta la falta de alguna dependencia. Cambios para copiar a SD no
+  solo caratulas, sino también discos
+
+
+ -- Ricardo Marmolejo García <makiolo@gmail.com> mar, 02 jun 2009 21:39:46 +0000
+
+wiithon (1.0.107) karmic; urgency=low
+
+  * INSTALAR.txt,
+  * Makefile,
+  * po/plantilla.pot: [107] intltool vuelve como dependencia ya que de
+  otra forma tendríamos que subir los MOO al repositorio, lo que
+  generaría continuos conflictos, por los cambios de fecha.
+
+  He añadido "make dependencias" que a su vez depende de install. En
+  principio con 1 paso "sudo make install" hace todo
+
+
+ -- Ricardo Marmolejo García <makiolo@gmail.com> mar, 02 jun 2009 02:33:25 +0000
+
+wiithon (1.0.106) karmic; urgency=low
+
+  * gui.py,
+  * po/en.po,
+  * po/es.po,
+  * po/plantilla.pot: [106] Ocultando barra "Más información", es
+  posible que la consola, etc ... lo deje para otra fase, y así sacar
+  una versión funcional y estable lo antes posible.
+
+ -- makiolo <makiolo@makiolo-virtual> mar, 02 jun 2009 02:15:19 +0000
+
+wiithon (1.0.105) karmic; urgency=low
+
+  * INSTALAR.txt,
+  * po/plantilla.pot,
+  * recursos/glade/wiithon.ui: [105] Adaptando para que se vea bien a
+  800x600
+
+  Cambiadas dependencias
+
+
+ -- Ricardo Marmolejo García <makiolo@gmail.com> mar, 02 jun 2009 02:09:27 +0000
+
+wiithon (1.0.104) karmic; urgency=low
+
+  * Makefile,
+  * po/plantilla.pot,
+  * wiithon.desktop: [104] Pequeños detalles.
+
+  Ya se muestra un acceso directo en:
+
+          Aplicaiones -> Oficina -> Wiithon
+
+  Comprobado y funcionando en GNOME y KDE
+
+
+ -- makiolo <makiolo@makiolo-virtual> mar, 02 jun 2009 02:02:27 +0000
+
+wiithon (1.0.103) karmic; urgency=low
+
+  * Makefile,
+  * po/plantilla.pot,
+  * wiithon.desktop: [103] modificado desktop desde KDE
+
+  Eliminada dependencia con intltool, solo regenero lenguajes en un run
+  (pero no en un install)
+
+ -- makiolo <makiolo@makiolo-virtual> mar, 02 jun 2009 01:54:31 +0000
+
+wiithon (1.0.102) karmic; urgency=low
+
+  * recursos/icons,
+  * recursos/icons/wiithon.svg,
+  * wiithon.desktop: Added.
+
+  * Makefile,
+  * po/plantilla.pot: Modified.
+
+  [102] Poniendo icono en barra de inicio
+
+
+ -- Ricardo Marmolejo García <makiolo@gmail.com> mar, 02 jun 2009 00:57:30 +0000
+
+wiithon (1.0.101) karmic; urgency=low
+
+  * .bzrignore,
+  * Makefile,
+  * TODO.txt,
+  * almacen.py,
+  * caratula.py,
+  * gui.py,
+  * juego.py,
+  * po/en.po,
+  * po/es.po,
+  * po/plantilla.pot,
+  * test.py: [101] Detalles en la traducción, y me tomo un descanso con
+  wiithon, que debería estar estudiando ;D
+
+
+ -- Ricardo Marmolejo García <makiolo@gmail.com> lun, 01 jun 2009 02:41:16 +0000
+
+wiithon (1.0.100) karmic; urgency=low
+
+  * Makefile,
+  * config.py,
+  * po/plantilla.pot: [100] Ya funciona el lenguaje en KDE (en GNOME ya
+  rulaba)
+
+
+ -- makiolo <makiolo@makiolo-virtual> lun, 01 jun 2009 00:51:15 +0000
+
+wiithon (1.0.99) karmic; urgency=low
+
+  * doc/wiithon,
+  * doc/wiithon/API,
+  * doc/wiithon/Manual_de_Usuario: Added.
+
+  * INSTALAR.txt,
+  * core.py,
+  * po/en.po,
+  * po/es.po,
+  * po/plantilla.pot: Modified.
+
+  [99] Traducido a ingles (muchos fallos, hay que ir actualizando ...)
+
+  Editado el texto INSTALAR.txt
+
+
+ -- Ricardo Marmolejo García <makiolo@gmail.com> lun, 01 jun 2009 00:27:02 +0000
+
+wiithon (1.0.98) karmic; urgency=low
+
+  * config.py,
+  * core.py,
+  * gui.py,
+  * po/en.po,
+  * po/es.po,
+  * po/plantilla.pot: [98] Más pruebas, algún bug corregido
+
+ -- Ricardo Marmolejo García <makiolo@gmail.com> dom, 31 may 2009 22:30:35 +0000
+
+wiithon (1.0.97) karmic; urgency=low
+
+  * Makefile,
+  * po/en.po,
+  * po/es.po,
+  * po/plantilla.pot: [97] Commiteando desde KDE
+
+
+ -- makiolo <makiolo@makiolo-virtual> dom, 31 may 2009 22:08:31 +0000
+
+wiithon (1.0.96) karmic; urgency=low
+
+  * Makefile,
+  * po/en.po,
+  * po/plantilla.pot,
+  * wiithon.py: [96] El "make commit" me estaba regenerando los PO
+
+
+ -- Ricardo Marmolejo García <makiolo@gmail.com> dom, 31 may 2009 21:37:09 +0000
+
+wiithon (1.0.95) karmic; urgency=low
+
+  * po/en/LC_MESSAGES/wiithon.mo,
+  * po/es/LC_MESSAGES/wiithon.mo: Removed.
+
+  * .bzrignore,
+  * INSTALAR.txt,
+  * Makefile,
+  * config.py,
+  * po/en.po,
+  * po/es.po,
+  * po/plantilla.pot: Modified.
+
+  [95] Pruebas de traducción
+
+
+ -- Ricardo Marmolejo García <makiolo@gmail.com> dom, 31 may 2009 21:30:22 +0000
+
+wiithon (1.0.94) karmic; urgency=low
+
+  * TRADUCCION.txt: Added.
+
+  * .bzrignore,
+  * Makefile,
+  * gui.py,
+  * po/en.po,
+  * po/en/LC_MESSAGES/wiithon.mo,
+  * po/es.po,
+  * po/es/LC_MESSAGES/wiithon.mo,
+  * po/plantilla.pot,
+  * recursos/glade/wiithon.ui,
+  * recursos/glade/wiithon.ui.h,
+  * trabajo.py,
+  * wiithon.py: Modified.
+
+  [94] Ya traduce GLADE, en principio todos los problemas de traducción
+  los tengo asimilados y solucionados.
+
+  Otros cambios Ver TRADUCCION.txt (sobre como traducir)
+
+
+ -- Ricardo Marmolejo García <makiolo@gmail.com> dom, 31 may 2009 18:57:33 +0000
+
+wiithon (1.0.93) karmic; urgency=low
+
+  * recursos/glade/alerta.ui.h: Added.
+
+  * Makefile,
+  * TODO.txt,
+  * core.py,
+  * gui.py,
+  * po/en.po,
+  * po/en/LC_MESSAGES/wiithon.mo,
+  * po/es.po,
+  * po/es/LC_MESSAGES/wiithon.mo,
+  * po/plantilla.pot,
+  * recursos/glade/wiithon.ui,
+  * recursos/glade/wiithon.ui.h,
+  * trabajo.py: Modified.
+
+  [93] - Implementado Copiar caratulas a SD
+
+  - Implementado el Renombrar - Todos los botones de las toolbars
+  funcionan a falta de algunos bugs - Otros cambios ...
+
+
+ -- Ricardo Marmolejo García <makiolo@gmail.com> dom, 31 may 2009 14:41:53 +0000
+
+wiithon (1.0.92) karmic; urgency=low
+
+  * doc,
+  * doc/python,
+  * doc/python/diveintopython-es.pdf.gz,
+  * doc/python/links.txt,
+  * recursos/glade/wiithon.ui.h: Added.
+
+  * TODO.txt,
+  * core.py,
+  * gui.py,
+  * mensaje.py,
+  * pool.py,
+  * test.py,
+  * trabajo.py: Modified.
+
+  [92] Mejorando el pool, 2 hilos:
+
+  1 hilo de tareas principales (añadir, extraer ...) 2 hilo bash tareas
+  secundarias (descarga caratulas ...) Reordenando el código
+
+
+ -- Ricardo Marmolejo García <makiolo@gmail.com> dom, 31 may 2009 04:17:11 +0000
+
+wiithon (1.0.91) karmic; urgency=low
+
+  * gui.py: [91]
+
+ -- Ricardo Marmolejo García <makiolo@gmail.com> sáb, 30 may 2009 19:13:09 +0000
+
+wiithon (1.0.90) karmic; urgency=low
+
+  * Makefile,
+  * core.py,
+  * util.py: [90] Error en algunos distribuciones de linux detectando
+  particiones
+
+
+ -- Ricardo Marmolejo García <makiolo@gmail.com> sáb, 30 may 2009 19:04:04 +0000
+
+wiithon (1.0.89) karmic; urgency=low
+
+  * wiithon_autodetectar.sh: [89] Las particiones aceptan /dev/loop0,
+  /dev/loop1 ... /dev/loopN
+
+ -- Ricardo Marmolejo García <makiolo@gmail.com> sáb, 30 may 2009 18:50:35 +0000
+
+wiithon (1.0.88) karmic; urgency=low
+
+  * VERSION.txt,
+  * po/en.po,
+  * po/en/LC_MESSAGES/wiithon.mo,
+  * po/es.po,
+  * po/es/LC_MESSAGES/wiithon.mo,
+  * po/plantilla.pot: [88] Cambiando versión
+
+ -- Ricardo Marmolejo García <makiolo@gmail.com> sáb, 30 may 2009 17:42:21 +0000
+
+wiithon (1.0.87) karmic; urgency=low
+
+  * TODO.txt: [87] esto es una prueba para empezar a trastear con bazaar
+  XDD
+
+ -- Sergio Padrino <sergio@sergio-desktop> sáb, 30 may 2009 17:34:58 +0000
+
+wiithon (1.0.86) karmic; urgency=low
+
+  * mensaje.py,
+  * recursos/glade/alerta.ui,
+  * recursos/glade/wiithon.ui,
+  * trabajo.py: Added.
+
+  * recursos/glade/wiithon.xml,
+  * recursos/glade/wiithon.xml.h,
+  * recursos/glade/wiithonANTES.xml: Removed.
+
+  * Makefile,
+  * core.py,
+  * gui.py,
+  * po/en.po,
+  * po/en/LC_MESSAGES/wiithon.mo,
+  * po/es.po,
+  * po/es/LC_MESSAGES/wiithon.mo,
+  * po/plantilla.pot: Modified.
+
+  [86] Otra vez renombrado wiithon.xml a wiithon.ui (creo k es la
+  extensión que recomienda el team GTK)
+
+  Muchos cambios ... Ya tengo mejor definida una "pool de trabajos
+  genericos"
+
+
+ -- Ricardo Marmolejo García <makiolo@gmail.com> vie, 29 may 2009 06:09:30 +0000
+
+wiithon (1.0.85) karmic; urgency=low
+
+  * recursos/imagenes/cargando,
+  * recursos/imagenes/cargando/busy-icon0.png,
+  * recursos/imagenes/cargando/busy-icon1.png,
+  * recursos/imagenes/cargando/busy-icon10.png,
+  * recursos/imagenes/cargando/busy-icon11.png,
+  * recursos/imagenes/cargando/busy-icon12.png,
+  * recursos/imagenes/cargando/busy-icon13.png,
+  * recursos/imagenes/cargando/busy-icon14.png,
+  * recursos/imagenes/cargando/busy-icon2.png,
+  * recursos/imagenes/cargando/busy-icon3.png,
+  * recursos/imagenes/cargando/busy-icon4.png,
+  * recursos/imagenes/cargando/busy-icon5.png,
+  * recursos/imagenes/cargando/busy-icon6.png,
+  * recursos/imagenes/cargando/busy-icon7.png,
+  * recursos/imagenes/cargando/busy-icon8.png,
+  * recursos/imagenes/cargando/busy-icon9.png,
+  * recursos/imagenes/cargando/idle-icon.png: Added.
+
+  * gui.py,
+  * util.py: Modified.
+
+  [85] Investigando ordenación con :
+  http://www.pygtk.org/pygtk2reference/class-gtktreesortable.html
+  #method-gtktreesortable--set-sort-column-id
+
+  Se pueden reordenar las columnas (arrastrando) Solo se expande la
+  columna titulo Ya se como se muestran las flechitas para indicar al
+  usuario como esta ordenado. (columna1.set_sort_indicator(True))
+
+
+
+
+ -- Ricardo Marmolejo García <makiolo@gmail.com> mar, 26 may 2009 02:42:38 +0000
+
+wiithon (1.0.84) karmic; urgency=low
+
+  * recursos/glade/wiithonANTES.xml: Added.
+
+  * TODO.txt,
+  * builder_wrapper.py,
+  * gui.py,
+  * recursos/glade/wiithon.xml: Modified.
+
+  [84] Rediseñado gui, lo de los tags no lo veo buena forma, por eso te
+  preguntaba,
+
+  si no se puede o es demasiado complejo metemos 2 treeviews como antes
+  ....
+
+  Ver el TODO o el dashboard
+
+
+ -- Ricardo Marmolejo García <makiolo@gmail.com> jue, 21 may 2009 02:04:10 +0000
+
+wiithon (1.0.83) karmic; urgency=low
+
+  * wiithon.py: [83] _ = gettext.gettext -> from gettext import gettext
+  as _
+
+ -- José Luis Segura Lucas <josel.segura@gmail.com> mié, 20 may 2009 07:58:05 +0000
+
+wiithon (1.0.82) karmic; urgency=low
+
+  * recursos/imagenes/disco.png: [82] - Nuevo caratula de disco
+  desconocido, más acorde con la caratula
+
+
+ -- Ricardo Marmolejo García <makiolo@gmail.com> mar, 19 may 2009 17:30:36 +0000
+
+wiithon (1.0.81) karmic; urgency=low
+
+  * recursos/glade/wiithon.xml,
+  * recursos/glade/wiithon.xml.h: Added.
+
+  * recursos/glade/wiithon.glade,
+  * recursos/glade/wiithon.glade.h,
+  * recursos/glade/wiithonGLADEVIEJO.glade: Removed.
+
+  * Makefile,
+  * gui.py,
+  * po/en.po,
+  * po/en/LC_MESSAGES/wiithon.mo,
+  * po/es.po,
+  * po/es/LC_MESSAGES/wiithon.mo,
+  * po/plantilla.pot: Modified.
+
+  [81] - Mi 8.10 solo tiene GTK 2.14 en los repositorios, por tanto, he
+  puesto el xml (builder) en 2.14, por tanto con ayuda de un "except
+  TypeError:" detecto la excepción y aviso al usuario de que para
+  visualizarlo necesita GTK 2.16 o superior
+
+  - He vuelto a cambiar los iconos - He renombrado el wiithon.glade a
+  wiithon.xml (asocia esa extension a glade-3 si no te importa) - Hay
+  que traducir wiithon a ingles editando po/en.po
+
+ -- Ricardo Marmolejo García <makiolo@gmail.com> mar, 19 may 2009 17:19:16 +0000
+
+wiithon (1.0.80) karmic; urgency=low
+
+  * gui.py,
+  * recursos/glade/wiithon.glade,
+  * util.py: Modified.
+
+  * glade_wrapper.py: Renamed to builder_wrapper.py and modified.
+
+  [80] Usando GTKBuilder, cambio de cadenas y más
+
+ -- José-Luis Segura Lucas <josel.segura@gmail.com> mar, 19 may 2009 13:47:02 +0000
+
+wiithon (1.0.79) karmic; urgency=low
+
+  * gui.py,
+  * recursos/glade/wiithon.glade,
+  * util.py: [79] Usando python-sexy, si está instalado
+
+ -- José-Luis Segura Lucas <josel.segura@gmail.com> mar, 19 may 2009 12:41:03 +0000
+
+wiithon (1.0.78) karmic; urgency=low
+
+  * Makefile,
+  * config.py,
+  * gui.py,
+  * recursos/glade/wiithon.glade,
+  * wiithon.py: [78] Más cambios con el gettext, solucionado el problema
+  de definir _() en todo el proyecto.
+
+  Más cambios de glade e hilos ...
+
+
+ -- Ricardo Marmolejo García <makiolo@gmail.com> mar, 19 may 2009 07:33:17 +0000
+
+wiithon (1.0.77) karmic; urgency=low
+
+  * recursos/glade/wiithonGLADEVIEJO.glade: Added.
+
+  * Makefile,
+  * config.py,
+  * core.py,
+  * glade_wrapper.py,
+  * gui.py,
+  * po/en.po,
+  * po/en/LC_MESSAGES/wiithon.mo,
+  * po/es.po,
+  * po/es/LC_MESSAGES/wiithon.mo,
+  * po/plantilla.pot,
+  * recursos/glade/wiithon.glade,
+  * recursos/glade/wiithon.glade.h,
+  * wiithon.py: Modified.
+
+  [77] Cambio importante para el desarrollo:
+
+  Bajate la última versión de glade-3 (svn), para trabajar con la el gui
+  nuevo basado en gtk.Builder, que es el sustituto de glade. He hecho
+  más cambios con lo de traducir wiithon
+
+
+ -- Ricardo Marmolejo García <makiolo@gmail.com> mar, 19 may 2009 07:04:10 +0000
+
+wiithon (1.0.76) karmic; urgency=low
+
+  * po/plantilla.pot: Added.
+
+  * po/mensajes.pot: Removed.
+
+  * Makefile,
+  * TODO.txt,
+  * gui.py,
+  * po/en.po,
+  * po/en/LC_MESSAGES/wiithon.mo,
+  * po/es.po,
+  * po/es/LC_MESSAGES/wiithon.mo,
+  * recursos/glade/wiithon.glade,
+  * recursos/glade/wiithon.glade.h,
+  * wiithon.py: Modified.
+
+  [76] Cambio el glade
+
+  Bastantes cambios en Makefile
+
+
+ -- Ricardo Marmolejo García <makiolo@gmail.com> mar, 19 may 2009 03:46:07 +0000
+
+wiithon (1.0.75) karmic; urgency=low
+
+  * po/en,
+  * po/en.po,
+  * po/en/LC_MESSAGES,
+  * po/en/LC_MESSAGES/wiithon.mo,
+  * po/es,
+  * po/es.po,
+  * po/es/LC_MESSAGES,
+  * po/es/LC_MESSAGES/wiithon.mo: Added.
+
+  [75] Se me olvidaban unos archivos
+
+
+ -- Ricardo Marmolejo García <makiolo@gmail.com> lun, 18 may 2009 06:35:38 +0000
+
+wiithon (1.0.74) karmic; urgency=low
+
+  * po/en_US,
+  * po/en_US/LC_MESSAGES,
+  * po/en_US/LC_MESSAGES/en_US.po,
+  * po/en_US/LC_MESSAGES/wiithon.mo,
+  * po/es_ES,
+  * po/es_ES/LC_MESSAGES,
+  * po/es_ES/LC_MESSAGES/es_ES.po,
+  * po/es_ES/LC_MESSAGES/wiithon.mo: Removed.
+
+  * Makefile,
+  * gui.py,
+  * po/mensajes.pot,
+  * wiithon.py: Modified.
+
+  [74] Cambiadas las rutas de las traducciones.
+
+  Traduce todo excepto glade
+
+
+ -- Ricardo Marmolejo García <makiolo@gmail.com> lun, 18 may 2009 06:34:35 +0000
+
+wiithon (1.0.73) karmic; urgency=low
+
+  * po,
+  * po/en_US,
+  * po/en_US/LC_MESSAGES,
+  * po/en_US/LC_MESSAGES/en_US.po,
+  * po/en_US/LC_MESSAGES/wiithon.mo,
+  * po/es_ES,
+  * po/es_ES/LC_MESSAGES,
+  * po/es_ES/LC_MESSAGES/es_ES.po,
+  * po/es_ES/LC_MESSAGES/wiithon.mo,
+  * po/mensajes.pot,
+  * recursos/glade/wiithon.glade,
+  * recursos/glade/wiithon.glade.h: Added.
+
+  * recursos/glade/gui.glade,
+  * wiithon1.schemas,
+  * wiithon2.schemas,
+  * wiithon3.schemas,
+  * wiithon4.schemas,
+  * wiithon5.schemas,
+  * wiithon6.schemas,
+  * wiithon7.schemas,
+  * wiithon8.schemas: Removed.
+
+  * Makefile,
+  * almacen.py,
+  * caratula.py,
+  * cli.py,
+  * config.py,
+  * core.py,
+  * glade_wrapper.py,
+  * gui.py,
+  * juego.py,
+  * pool.py,
+  * test.py,
+  * util.py,
+  * wiithon.py: Modified.
+
+  [73] - primeros intentos para implementar gettext
+
+ -- Ricardo Marmolejo García <makiolo@gmail.com> lun, 18 may 2009 05:46:55 +0000
+
+wiithon (1.0.72) karmic; urgency=low
+
+  * recursos/imagenes/caratula.png,
+  * recursos/imagenes/disco.png: Added.
+
+  * recursos/imagenes/re4.png,
+  * recursos/imagenes/rock2.png: Removed.
+
+  * .bzrignore,
+  * cli.py,
+  * config.py,
+  * core.py,
+  * gui.py,
+  * pool.py,
+  * recursos/glade/gui.glade,
+  * util.py,
+  * wbfs_src/libwbfs/libwbfs.c,
+  * wbfs_src/tools.c,
+  * wiithon.py: Modified.
+
+  [72] Muchos cambios, funciona bien el añadir, con barra de progreso
+  gestionada por hilos, las hilos se comunican mediante un productor-
+  consumidor
+
+  cambiada función extract de wbfs
+
+
+ -- Ricardo Marmolejo García <makiolo@gmail.com> dom, 17 may 2009 22:08:07 +0000
+
+wiithon (1.0.71) karmic; urgency=low
+
+  * .bzrignore,
+  * Makefile,
+  * cli.py,
+  * core.py,
+  * gui.py,
+  * pool.py,
+  * recursos/glade/gui.glade,
+  * util.py: [71] - Primeras pruebas de implantación de concurrencia en
+  wiithon
+
+  - Comunicación entre wiithon y wbfs mediante un fichero temporal
+
+
+ -- Ricardo Marmolejo García <makiolo@gmail.com> jue, 14 may 2009 06:46:13 +0000
+
+wiithon (1.0.70) karmic; urgency=low
+
+  * pool.py: [70] Modificación: la cola la inicializa el constructor
+  (objeto propio del objeto, no de la clase)
+
+ -- José-Luis Segura Lucas <josel.segura@gmail.com> mié, 13 may 2009 11:29:35 +0000
+
+wiithon (1.0.69) karmic; urgency=low
+
+  * pool.py: Added.
+
+  * gui.py,
+  * test.py: Modified.
+
+  [69] - He hecho la clase Pool (piscina de trabajadores)
+
+  - Además he testeado a implementarla en un hilo, de forma que sabemos
+  si el pool ha finalizado consultando la vida del hilo (isAlive() o
+  is_alive()) - Todas las llamadas a subprocesos a partir de ahora se
+  harán con subprocess.Popen o subprocess.call
+
+
+ -- Ricardo Marmolejo García <makiolo@gmail.com> mié, 13 may 2009 05:28:01 +0000
+
+wiithon (1.0.68) karmic; urgency=low
+
+  * Makefile,
+  * cli.py,
+  * core.py,
+  * gui.py,
+  * recursos/glade/gui.glade,
+  * wiithon.py: [68] - buscarParticiones es trabajo del CORE, no de
+  ningún GUI o CLI, por tanto debe hacerse en el propio constructor, y
+  tal vez cancelar la construcción del core en caso de que no se
+  encuentren particiones.
+
+
+ -- Ricardo Marmolejo García <makiolo@gmail.com> lun, 11 may 2009 22:45:20 +0000
+
+wiithon (1.0.67) karmic; urgency=low
+
+  * core.py,
+  * gui.py,
+  * wiithon.py: [67] Cambios (un poco de todo)
+
+ -- José-Luis Segura Lucas <josel.segura@gmail.com> lun, 11 may 2009 17:12:50 +0000
+
+wiithon (1.0.66) karmic; urgency=low
+
+  * core.py,
+  * recursos/glade/gui.glade: [66] Mini cambio en el core (una variable
+  que no existe) y cambio en la interfaz para usar paned que mola más
+
+ -- José-Luis Segura Lucas <josel.segura@gmail.com> lun, 11 may 2009 11:52:26 +0000
+
+wiithon (1.0.65) karmic; urgency=low
+
+  * cli.py,
+  * wiithon1.schemas,
+  * wiithon2.schemas,
+  * wiithon3.schemas,
+  * wiithon4.schemas,
+  * wiithon5.schemas,
+  * wiithon6.schemas,
+  * wiithon7.schemas,
+  * wiithon8.schemas: Added.
+
+  * Makefile,
+  * config.py,
+  * core.py,
+  * gui.py,
+  * recursos/glade/gui.glade,
+  * util.py,
+  * wiithon.py,
+  * wiithon_autodetectar.sh,
+  * wiithon_autodetectar_lector.sh: Modified.
+
+  [65] - Bastantes cambios.
+
+  - El GUI ya lista juegos y particiones en GTK - Se muestran a la
+  izquierda la caratula y disco guardadas en .wiithon/.../ - Descarga
+  CARATULAS Y DISCOS al arrancar (hay que separarlo en un hilo que no
+  bloquee) - Nueva clase WiithonCLI y actualizado el Makefile - He
+  tratado de dejar el CLI igual que antes (pasando el parametro -p o
+  --no-gui) - Hay que ir definiendo que va a CLI o GUI o CORE - He
+  eliminado muchas variables supuestamente globales del CORE - He
+  documentado todo mucho más - Definitivamente desaparece zenity - Las
+  cargas de TreeView las hagas en 2 pasos , vista y modelo, siguiendo un
+  poco MVC - He rediseñado bastantes cosillas (mirar el wiithon.py) -
+  Aunque esta claro que ibamos dicho de olvidar los schemas, he creado
+  unos schemas que me estan funcionando perfectamente en 8.10, (aún no
+  he actualizado por falta de tiempo xD) - Más cosillas de menor
+  importancía
+
+
+ -- Ricardo Marmolejo García <makiolo@gmail.com> lun, 11 may 2009 05:05:21 +0000
+
+wiithon (1.0.64) karmic; urgency=low
+
+  * core.py,
+  * util.py,
+  * wiithon.py: [64] - repasando los ultimos COMMIT's
+
+ -- Ricardo Marmolejo García <makiolo@gmail.com> sáb, 09 may 2009 20:03:40 +0000
+
+wiithon (1.0.63) karmic; urgency=low
+
+  * core.py,
+  * gui.py,
+  * wiithon.py: [63] Más cambios:
+
+  * Ahora la comprobación del acuerdo la hace el "programa" y no el
+  "core".   Hay que aligerar el "core" lo más posible para que se
+  encargue solo de   su deber: toquetear en WBFS, como abstracció del
+  programa wbfs que es
+
+  * La interfaz gráfica ahora tiene un método "question" que llama a
+  "alert"   para hacer preguntas y devuelve el resultado
+
+  * El constructor de "core" ahora no hace apenas nada, solo inicializar
+  el Observable y poco más. Las cosas que tenía antes ahora están en
+  core.main
+
+ -- José Luis Segura Lucas <josel.segura@gmail.com> sáb, 09 may 2009 13:11:01 +0000
+
+wiithon (1.0.62) karmic; urgency=low
+
+  * core.py,
+  * gui.py,
+  * wiithon.py: [62] Algunos cambios:
+
+  * Ahora la interfaz se suscribe a si misma al core (en un futuro el
+  core no conocerá a su interfaz/interfaces) * Eliminado método
+  comprobarExistencia y usado en su lugar os.path.exist directamente
+  (evitamos una llamada de más) * El método uso ahora es del "programa"
+  y no del core. No hará falta instanciar el core (y comprobar si se
+  está de acuerdo con todo) para poder mostrar la ayuda * Modificada la
+  forma de recoger opciones. Ahora al core solo se le pasarán las que
+  realmente le incumban (por ejemplo, no -h, no --no-gui...)
+
+ -- José Luis Segura Lucas <josel.segura@gmail.com> sáb, 09 may 2009 12:36:33 +0000
+
+wiithon (1.0.61) karmic; urgency=low
+
+  * util.py: [61] Pequeño error en el observer
+
+ -- José Luis Segura Lucas <josel.segura@gmail.com> sáb, 09 may 2009 12:01:27 +0000
+
+wiithon (1.0.60) karmic; urgency=low
+
+  * core.py: [60] Quitado algún AttributeError más. He quitado los
+  cambios de modo de los archivos del home de whiithon porque causaban
+  problemas con permisos/propietarios
+
+ -- José-Luis Segura Lucas <josel.segura@gmail.com> vie, 08 may 2009 09:47:00 +0000
+
+wiithon (1.0.59) karmic; urgency=low
+
+  * core.py,
+  * util.py,
+  * wiithon.py: [59] Modificados algunos errores y quitando de dónde veo
+  la AttributeError si es menester
+
+ -- José-Luis Segura Lucas <josel.segura@gmail.com> vie, 08 may 2009 09:42:04 +0000
+
+wiithon (1.0.58) karmic; urgency=low
+
+  * almacen.py,
+  * caratula.py,
+  * juego.py: Added.
+
+  * .bzrignore,
+  * config.py,
+  * core.py,
+  * test.py,
+  * wiithon.py: Modified.
+
+  [58] - Primeras pruebas para integrar SQLAlchemy, un ORM basado en
+  sqllite
+
+
+ -- Ricardo Marmolejo García <makiolo@gmail.com> vie, 08 may 2009 04:56:07 +0000
+
+wiithon (1.0.57) karmic; urgency=low
+
+  * Makefile,
+  * wiithon.py: [57] - Elimino stacktrace, buscaba una forma e imprimir
+  la traza a pesar de capturar la excepción
+
+ -- Ricardo Marmolejo García <makiolo@gmail.com> jue, 07 may 2009 19:47:31 +0000
+
+wiithon (1.0.56) karmic; urgency=low
+
+  * Makefile,
+  * core.py,
+  * gui.py,
+  * util.py,
+  * wiithon.py: [56] - Pqueños cambios
+
+  - util.py peta
+
+
+ -- Ricardo Marmolejo García <makiolo@gmail.com> jue, 07 may 2009 19:44:24 +0000
+
+wiithon (1.0.55) karmic; urgency=low
+
+  * config.py,
+  * core.py,
+  * util.py: [55] uso del observer
+
+ -- José Luis Segura Lucas <josel.segura@gmail.com> jue, 07 may 2009 15:33:25 +0000
+
+wiithon (1.0.54) karmic; urgency=low
+
+  * core.py,
+  * util.py: [54] Añadida clase Observable para heredar de ella cuando
+  queramos. Ahora el core hereda de Observable (todo está en pruebas
+  para eso)
+
+ -- José-Luis Segura Lucas <josel.segura@gmail.com> jue, 07 may 2009 13:07:30 +0000
+
+wiithon (1.0.53) karmic; urgency=low
+
+  * config.py,
+  * core.py: [53] - Añadida la ruta de wbfs al config.py
+
+  - Ahora se usa gksudo para lanzar wbfs - Ejemplo de como recuperar si
+  hemos ejecutado o no como sudo en getListaJuegos
+
+ -- José Luis Segura Lucas <josel.segura@gmail.com> jue, 07 may 2009 08:22:54 +0000
+
+wiithon (1.0.52) karmic; urgency=low
+
+  * wiithon_autodetectar.sh,
+  * wiithon_autodetectar_lector.sh: Added.
+
+  * wiithon_autodetectar,
+  * wiithon_autodetectar_lector: Removed.
+
+  * .bzrignore,
+  * Makefile,
+  * config.py,
+  * core.py,
+  * gui.py,
+  * recursos/glade/gui.glade,
+  * wbfs_src/libwbfs/libwbfs.c,
+  * wiithon.py: Modified.
+
+  [52] - Actualizado Makefile para poner config
+
+  - Desintala el acuerdo viejo - Añadido log al makefile - Los scripts
+  de bash les he puesto extension ".sh" - He encontrado mas funciones
+  sin self - He repasado lo que has hecho en los ultimos commits (esta
+  de pm) - Estoy trasteando con la barra de progreso - En el acuerdo se
+  crea ~/.wiithon/ PERO pertenece a root (FIXME)
+
+ -- Ricardo Marmolejo García <makiolo@gmail.com> jue, 07 may 2009 07:25:51 +0000
+
+wiithon (1.0.51) karmic; urgency=low
+
+  * gui.py: [51] Pequeño cambio
+
+ -- José-Luis Segura Lucas <joseluis@colisseum> jue, 07 may 2009 00:10:39 +0000
+
+wiithon (1.0.50) karmic; urgency=low
+
+  * config.py,
+  * core.py,
+  * gui.py,
+  * wiithon.py: [50] Mejoras en la configuración de las rutas del
+  programa
+
+ -- José-Luis Segura Lucas <joseluis@colisseum> jue, 07 may 2009 00:01:44 +0000
+
+wiithon (1.0.49) karmic; urgency=low
+
+  * core.py,
+  * wiithon.py: [49] Cambios. Hay que cambiar algunas variables en
+  Core.main()
+
+ -- José-Luis Segura Lucas <josel.segura@gmail.com> mié, 06 may 2009 19:51:46 +0000
+
+wiithon (1.0.48) karmic; urgency=low
+
+  * config.py,
+  * core.py: [48] Más cambios
+
+ -- José-Luis Segura Lucas <josel.segura@gmail.com> mié, 06 may 2009 17:48:19 +0000
+
+wiithon (1.0.47) karmic; urgency=low
+
+  * config.py: Added.
+
+  * core.py: Modified.
+
+  [47] Archivod e configuración. Reordenando cosas en el core
+
+ -- José-Luis Segura Lucas <josel.segura@gmail.com> mié, 06 may 2009 17:28:20 +0000
+
+wiithon (1.0.46) karmic; urgency=low
+
+  * core.py: [46] algunas llamadas a comprobarExistencia no llevan
+  delante el self y podían fallar. Además, para un método con una línea
+  mejor lo hacemos a pelo
+
+ -- José-Luis Segura Lucas <josel.segura@gmail.com> mié, 06 may 2009 17:04:18 +0000
+
+wiithon (1.0.45) karmic; urgency=low
+
+  * core.py,
+  * wiithon.py: [45] Sustituido algún if con raise detrás por assert,
+  que va muy freshco ;)
+
+ -- José-Luis Segura Lucas <josel.segura@gmail.com> mié, 06 may 2009 17:02:02 +0000
+
+wiithon (1.0.44) karmic; urgency=low
+
+  * core.py: [44] Me faltaban un par de self.
+
+ -- Ricardo Marmolejo García <makiolo@gmail.com> mié, 06 may 2009 01:58:40 +0000
+
+wiithon (1.0.43) karmic; urgency=low
+
+  * recursos/glade/gui.glade: [43] - He hecho el glade más liquido, lo
+  ibas fijado a 1024x768
+
+
+ -- Ricardo Marmolejo García <makiolo@gmail.com> mar, 05 may 2009 22:29:34 +0000
+
+wiithon (1.0.42) karmic; urgency=low
+
+  * gui.py,
+  * recursos/glade/gui.glade: [42] Cambiado nombre de la ventana
+  principal (set_title) y algunos cambios incompletos en el glade
+
+ -- José-Luis Segura Lucas <josel.segura@gmail.com> mar, 05 may 2009 12:30:42 +0000
+
+wiithon (1.0.41) karmic; urgency=low
+
+  * recursos/glade/gui.glade: [41] Se ve la búsqueda
+
+ -- José-Luis Segura Lucas <josel.segura@gmail.com> mar, 05 may 2009 12:03:41 +0000
+
+wiithon (1.0.40) karmic; urgency=low
+
+  * gui.py,
+  * recursos/glade/gui.glade,
+  * test.py: [40] Algunos cambios más en el glade. En gui.py el emacs ha
+  hecho limpieza de espacios en blacno y demás, pero realmente no hay
+  cambios. Cambios en el test.py para hacer unas pruebas, nada grave
+
+ -- José-Luis Segura Lucas <josel.segura@gmail.com> mar, 05 may 2009 11:52:04 +0000
+
+wiithon (1.0.39) karmic; urgency=low
+
+  * core.py,
+  * wiithon.py: Added.
+
+  * wiithon: Removed.
+
+  * Makefile,
+  * gui.py: Modified.
+
+  [39] - Cambio de paradigma a POO
+
+  - Hay que modularizar más, pero es un buen paso - He programado los
+  callbacks de Añadir archivos y Añadir carpetas, pero hay que programar
+  la barra de progreso y meter filtros a los archivos para solo sean
+  *.iso y *.rar - Es un commit gordo, he podido meter muchos bugs con
+  tanto self
+
+
+ -- Ricardo Marmolejo García <makiolo@gmail.com> mar, 05 may 2009 04:19:09 +0000
+
+wiithon (1.0.38) karmic; urgency=low
+
+  * glade_wrapper.py,
+  * gui.py,
+  * recursos/glade/gui.glade,
+  * wiithon: [38] probando el wrapper de GTK, es fácil de cojones xD
+  aunque tienes muchas cosillas para pelearse :O
+
+ -- Ricardo Marmolejo García <makiolo@gmail.com> lun, 04 may 2009 21:26:29 +0000
+
+wiithon (1.0.37) karmic; urgency=low
+
+  * recursos/glade/me_gusta_tipo_rythimbox.glade,
+  * recursos/glade/test1_gui.glade: Removed.
+
+  * gui.py,
+  * wiithon,
+  * wiithon_autodetectar,
+  * wiithon_autodetectar_lector: Modified.
+
+  [37] Eliminados sudos, wiithon necesita sudo para ser ejecutado
+
+  Saltos de linea en el acuerdo (y cambiado de ruta)
+
+ -- Ricardo Marmolejo García <makiolo@gmail.com> lun, 04 may 2009 19:59:37 +0000
+
+wiithon (1.0.36) karmic; urgency=low
+
+  * wiithon: [36] - arreglada una tabulación
+
+
+ -- Ricardo Marmolejo García <makiolo@gmail.com> lun, 04 may 2009 18:53:28 +0000
+
+wiithon (1.0.35) karmic; urgency=low
+
+  * wbfs_src/libwbfs/libwbfs.c,
+  * wbfs_src/libwbfs/libwbfs.h,
+  * wiithon: [35] - Añadido el código al wbfs que permite copiar de
+  partición a partición
+
+  - Ahora no borra el ISO temporal generado por descomprimir un rar,
+  habría que dar la opción en el GUI de borrar la ISO descomprimida o
+  no.
+
+ -- Ricardo Marmolejo García <makiolo@gmail.com> lun, 04 may 2009 18:48:25 +0000
+
+wiithon (1.0.34) karmic; urgency=low
+
+  * gui.py,
+  * recursos/glade/gui.glade,
+  * test.py,
+  * wiithon: [34] Se deja de usar Zenity (al fin) excepto para listar
+
+ -- José-Luis Segura Lucas <josel.segura@gmail.com> lun, 04 may 2009 17:36:35 +0000
+
+wiithon (1.0.33) karmic; urgency=low
+
+  * gui.py,
+  * recursos/glade/gui.glade,
+  * test.py: [33] algunos cambios más
+
+ -- José-Luis Segura Lucas <josel.segura@gmail.com> lun, 04 may 2009 12:51:17 +0000
+
+wiithon (1.0.32) karmic; urgency=low
+
+  * recursos/glade/gui.glade: [32] Cambio en la interfaz para no mostrar
+  la parte de filtros hasta tener la BD
+
+ -- José-Luis Segura Lucas <josel.segura@gmail.com> lun, 04 may 2009 11:42:47 +0000
+
+wiithon (1.0.31) karmic; urgency=low
+
+  * gui.py,
+  * recursos/glade/gui.glade,
+  * wiithon: [31] Cambios en el glade GUI, en gui.py (para cargar ese
+  glade) y el cambio de la redimensión en Wiithon
+
+ -- José-Luis Segura Lucas <josel.segura@gmail.com> lun, 04 may 2009 11:27:21 +0000
+
+wiithon (1.0.30) karmic; urgency=low
+
+  * recursos/imagenes/re4.png,
+  * recursos/imagenes/rock2.png: Added.
+
+  * .bzrignore,
+  * Makefile,
+  * gui.py,
+  * recursos/glade/gui.glade,
+  * recursos/glade/me_gusta_tipo_rythimbox.glade,
+  * recursos/glade/test1_gui.glade,
+  * test.py,
+  * wiithon: Modified.
+
+  [30] Hay pausas en los listados
+
+  Corregido "Meter todo masivamente" no funcionaba correctamente He
+  cambiado trabajo como --trabajo corregidos permisos Otros cambios
+  menores
+
+ -- Ricardo Marmolejo García <makiolo@gmail.com> lun, 04 may 2009 04:03:22 +0000
+
+wiithon (1.0.29) karmic; urgency=low
+
+  * recursos,
+  * recursos/glade,
+  * recursos/glade/gui.glade,
+  * recursos/glade/me_gusta_tipo_rythimbox.glade,
+  * recursos/glade/test1_gui.glade,
+  * recursos/imagenes: Added.
+
+  * glade,
+  * glade/gui.glade,
+  * glade/images,
+  * glade/images/rock2.jpg,
+  * glade/me_gusta_tipo_rythimbox.glade,
+  * glade/test1_gui.glade,
+  * schemas,
+  * schemas/wiithon1.schemas,
+  * schemas/wiithon2.schemas,
+  * schemas/wiithon3.schemas,
+  * schemas/wiithon4.schemas,
+  * schemas/wiithon5.schemas,
+  * schemas/wiithon6.schemas,
+  * schemas/wiithon7.schemas,
+  * schemas/wiithon8.schemas: Removed.
+
+  * Makefile,
+  * gui.py,
+  * wiithon: Modified.
+
+  [29] Maquetado para instalar en /usr/local/share/wiithon
+
+ -- Ricardo Marmolejo García <makiolo@gmail.com> dom, 03 may 2009 07:41:52 +0000
+
+wiithon (1.0.28) karmic; urgency=low
+
+  * glade/gui.glade: Added.
+
+  [28] Añadido otro archivo de interfaz en glade. Algunas cosillas ya
+  pensadas para hacer "truqueles" de los míos...
+
+ -- José-Luis Segura Lucas <josel.segura@gmail.com> lun, 27 abr 2009 19:48:42 +0000
+
+wiithon (1.0.27) karmic; urgency=low
+
+  * glade/me_gusta_tipo_rythimbox.glade,
+  * gui.py,
+  * test.py: [27] Pruebas para mostrar las alertas con GTK en vez de
+  usar llamadas a zenity
+
+ -- José-Luis Segura Lucas <josel.segura@gmail.com> lun, 27 abr 2009 11:54:14 +0000
+
+wiithon (1.0.26) karmic; urgency=low
+
+  * wiithon: [26] Añadida opción para poder arrancar sin GUI (--no-gui).
+  Hay que hacer que los "popups" con zenity estén en la interfaz del
+  programa para no sobrecargar el sistema con más aplicaciones
+
+ -- José-Luis Segura Lucas <josel.segura@gmail.com> jue, 23 abr 2009 19:44:18 +0000
+
+wiithon (1.0.25) karmic; urgency=low
+
+  * wiithon: [25] Más cambios en wiithon con las opciones
+
+ -- José-Luis Segura Lucas <josel.segura@gmail.com> jue, 23 abr 2009 18:53:20 +0000
+
+wiithon (1.0.24) karmic; urgency=low
+
+  * util.py: Added.
+
+  * wiithon: Modified.
+
+  [24] Añadido el archivo util donde meter todas las clases que puedan
+  venir bien (como una clase lista sin repeticiones). Modificado Wiithon
+  para usar getopt e imprimir la ayuda de una forma menos desorganizada
+
+ -- José-Luis Segura Lucas <josel.segura@gmail.com> jue, 23 abr 2009 10:15:31 +0000
+
+wiithon (1.0.23) karmic; urgency=low
+
+  * glade/me_gusta_tipo_rythimbox.glade: [23] Subida la interfaz con la
+  flecha clickeable
+
+ -- José-Luis Segura Lucas <josel.segura@gmail.com> jue, 23 abr 2009 09:31:36 +0000
+
+wiithon (1.0.22) karmic; urgency=low
+
+  * glade_wrapper.py,
+  * gui.py,
+  * test.py: Added.
+
+  * glade/test.py: Removed.
+
+  [22] Añadido glade_wrapper para facilitar el acceso a los widgets en
+  un .glade. Creada la interfaz aparte para usarla en siguiente
+  modificación de wiithon. Traído el test.py para probar la interfaz de
+  la clase WiithonGUI sin cargar el programa
+
+ -- José-Luis Segura Lucas <josel.segura@gmail.com> jue, 23 abr 2009 09:28:50 +0000
+
+wiithon (1.0.21) karmic; urgency=low
+
+  * wiithon: [21] - Los parametros desconocidos se esperan que sea ISO,
+  RAR o carpeta
+
+  - listaJuegos la voy pasando por referencia, de manera que solo es
+  llamada 1 vez en una sesión - Añadidas funciones útiles de zenity -
+  Preparado codigo para comunicar la barra de progreso mientras se añade
+  / extrae un juego
+
+
+ -- Ricardo Marmolejo García <makiolo@gmail.com> jue, 23 abr 2009 00:23:39 +0000
+
+wiithon (1.0.20) karmic; urgency=low
+
+  * wbfs_src/tools.c,
+  * wiithon,
+  * wiithon_autodetectar,
+  * wiithon_autodetectar_lector: [20] - Continuo investigando para
+  redimensionar particiones WBFS
+
+  - Corregido un bug. which en archlinux cuando no encuentra su
+  parametro pasa el error a consola. Es necesario redireccionarlo a null
+
+ -- Ricardo Marmolejo García <makiolo@gmail.com> mié, 22 abr 2009 21:01:19 +0000
+
+wiithon (1.0.19) karmic; urgency=low
+
+  * Makefile,
+  * schemas/wiithon8.schemas: [19] - Corregido un schema
+
+  - make install depende construir wbfs
+
+ -- Ricardo Marmolejo García <makiolo@gmail.com> mié, 22 abr 2009 03:43:12 +0000
+
+wiithon (1.0.18) karmic; urgency=low
+
+  * .bzrignore,
+  * Makefile,
+  * glade/me_gusta_tipo_rythimbox.glade,
+  * wiithon: [18] - He puesto en el Makefile como dependencia de
+  instalar, desinstalar. Es discutible. He corregido los schemas y su
+  ruta. Debe ser en /usr/share/gconf/schemas
+
+  - He implementado en el glade, lo que aprendi de tu test.py, pero
+  siguelo tu, yo esta semana tengo que programar en java pal mobigame xD
+
+ -- Ricardo Marmolejo García <makiolo@gmail.com> mié, 22 abr 2009 03:31:48 +0000
+
+wiithon (1.0.17) karmic; urgency=low
+
+  * wbfs,
+  * wbfs_src/bn.o,
+  * wbfs_src/disc_usage_table.o,
+  * wbfs_src/ec.o,
+  * wbfs_src/libwbfs.o,
+  * wbfs_src/libwbfs_linux.o,
+  * wbfs_src/negentig,
+  * wbfs_src/negentig.o,
+  * wbfs_src/rijndael.o,
+  * wbfs_src/scrub,
+  * wbfs_src/scrub.o,
+  * wbfs_src/tools.o,
+  * wbfs_src/wbfs,
+  * wbfs_src/wbfs.o,
+  * wbfs_src/wiidisc.o: Removed.
+
+  * .bzrignore,
+  * Makefile: Modified.
+
+  [17] Creo que es mejor quitar todo binario del repositorio trunk, si
+  acaso tenerlos en "stable" para que la gente se lo baje precompilado,
+  pero para desarrollo es muy incomodo porque continuamente nos pasamos
+  los binarios el uno al otro y los "push" y "pull" son muy lentos.
+
+  Me mola como has dejado el Makefile, lo he tocado un poco. wiithon
+  tiene mas dependencias, no de compilación pero si de ejecucion: -
+  nautilus-actions (cuando tengamos el GUI, la intención es extinguirlo)
+  - imagemagick - wget (es estandar de unix ?) - rar
+
+  Estaría bien evitar el "make install" si le falta alguna dependencia.
+
+
+ -- Ricardo Marmolejo García <makiolo@gmail.com> mié, 22 abr 2009 02:03:58 +0000
+
+wiithon (1.0.16) karmic; urgency=low
+
+  * glade,
+  * glade/images,
+  * glade/images/rock2.jpg,
+  * glade/me_gusta_tipo_rythimbox.glade,
+  * glade/test.py,
+  * glade/test1_gui.glade: Added.
+
+  * images,
+  * images/rock2.jpg,
+  * rock2.jpg,
+  * test.py,
+  * test1_gui.glade: Removed.
+
+  * .bzrignore,
+  * wiithon: Modified.
+
+  [16] He visto tu test, funciona bien
+
+  Mirate el glade que he hecho, es una primera version de como tenía yo
+  pensada la interfaz, parecido al rhythmbox, lo que pasa es que tengo
+  poca idea de como rellenar los TreeView ni como conectar los
+  callbacks. Mirate El TreeView de abajo sería una tabla con al menos 5
+  columnas (ordenables), ID , Titulo y Tamaño , Tipo de Juego y Año. El
+  TreeView de la izquierda sería un listado de todos los tipos de juegos
+  siendo el primero "Todos los tipos de juegos" El TreeView de la
+  derecha son todos los distintos años La base de datos la podemos hacer
+  en sqllite, pero primero quiero ver como se comporta gtk.
+
+ -- Ricardo Marmolejo García <makiolo@gmail.com> mié, 22 abr 2009 00:42:18 +0000
+
+wiithon (1.0.15) karmic; urgency=low
+
+  * images,
+  * images/rock2.jpg,
+  * rock2.jpg,
+  * test.py: Added.
+
+  * test1_gui.glade: Modified.
+
+  [15] Prueba real de interfaz
+
+ -- José Luis Segura Lucas <josel.segura@gmail.com> mar, 21 abr 2009 20:56:15 +0000
+
+wiithon (1.0.14) karmic; urgency=low
+
+  * test1_gui.glade: Added.
+
+  * wbfs,
+  * wbfs_src/bn.o,
+  * wbfs_src/disc_usage_table.o,
+  * wbfs_src/ec.o,
+  * wbfs_src/libwbfs.o,
+  * wbfs_src/libwbfs_linux.o,
+  * wbfs_src/negentig,
+  * wbfs_src/negentig.o,
+  * wbfs_src/rijndael.o,
+  * wbfs_src/scrub,
+  * wbfs_src/scrub.o,
+  * wbfs_src/tools.o,
+  * wbfs_src/wbfs,
+  * wbfs_src/wbfs.o,
+  * wbfs_src/wiidisc.o: Modified.
+
+  [14] Primerísima versión del GUI (ver con "glade-3")
+
+ -- José Luis Segura Lucas <josel.segura@gmail.com> mar, 21 abr 2009 16:47:51 +0000
+
+wiithon (1.0.13) karmic; urgency=low
+
+  * Makefile: [13] Cambios en Makefile para la rama principal
+
+ -- José Luis Segura Lucas <josel.segura@gmail.com> mar, 21 abr 2009 14:15:28 +0000
+
+wiithon (1.0.12) karmic; urgency=low
+
+  * Makefile,
+  * TODO.txt,
+  * wbfs,
+  * wbfs_src/libwbfs.o,
+  * wbfs_src/libwbfs/libwbfs.c,
+  * wbfs_src/libwbfs/libwbfs.h,
+  * wbfs_src/negentig,
+  * wbfs_src/scrub,
+  * wbfs_src/wbfs: [12] Actualizados permisos
+
+  Empiezo a investigar codigo para redimensionar particiones WBFS
+
+ -- Ricardo Marmolejo García <makiolo@gmail.com> mar, 21 abr 2009 01:51:21 +0000
+
+wiithon (1.0.11) karmic; urgency=low
+
+  * TODO.txt,
+  * schemas,
+  * schemas/wiithon1.schemas,
+  * schemas/wiithon2.schemas,
+  * schemas/wiithon3.schemas,
+  * schemas/wiithon4.schemas,
+  * schemas/wiithon5.schemas,
+  * schemas/wiithon6.schemas,
+  * schemas/wiithon7.schemas,
+  * schemas/wiithon8.schemas: Added.
+
+  * CHANGELOG.txt,
+  * wiithon1.schemas,
+  * wiithon2.schemas,
+  * wiithon3.schemas,
+  * wiithon4.schemas,
+  * wiithon5.schemas,
+  * wiithon6.schemas,
+  * wiithon7.schemas,
+  * wiithon8.schemas: Removed.
+
+  * Makefile,
+  * wiithon: Modified.
+
+  [11] movimiento de carpetas
+
+  añadida una lista de tareas cambios menores
+
+ -- Ricardo Marmolejo García <makiolo@gmail.com> lun, 20 abr 2009 20:07:31 +0000
+
+wiithon (1.0.10) karmic; urgency=low
+
+  * wbfs_src/bn.o,
+  * wbfs_src/disc_usage_table.o,
+  * wbfs_src/ec.o,
+  * wbfs_src/libwbfs.o,
+  * wbfs_src/libwbfs_linux.o,
+  * wbfs_src/negentig,
+  * wbfs_src/negentig.o,
+  * wbfs_src/rijndael.o,
+  * wbfs_src/scrub,
+  * wbfs_src/scrub.o,
+  * wbfs_src/tools.o,
+  * wbfs_src/wbfs,
+  * wbfs_src/wbfs.o,
+  * wbfs_src/wiidisc.o: Added.
+
+  * COMMIT.txt: Removed.
+
+  * .bzrignore,
+  * Makefile,
+  * wbfs,
+  * wiithon1.schemas: Modified.
+
+  [10] - Pequeños arreglos
+
+  - Guardados precompilados en el repositorio
+
+ -- Ricardo Marmolejo García <makiolo@gmail.com> lun, 20 abr 2009 19:30:36 +0000
+
+wiithon (1.0.9) karmic; urgency=low
+
+  * INSTALAR.txt: Added.
+
+  * COMMIT.txt,
+  * LEEME.txt,
+  * LICENCIA.txt,
+  * wiithon: Modified.
+
+  [9] - Creando un proyecto en launchpad
+
+  - Corregido un problema al ordenar listas por titulo del juego -
+  LEEME.txt dividido en LEEME.txt e INSTALAR.txt - Cambiada la licencia
+  de Creative Commons con reconocimiento a GPLv3
+
+ -- Ricardo Marmolejo García <makiolo@gmail.com> lun, 20 abr 2009 17:27:42 +0000
+
+wiithon (1.0.8) karmic; urgency=low
+
+  * CHANGELOG.txt,
+  * COMMIT.txt,
+  * Makefile,
+  * wiithon: [8] - Cambiado el algoritmo de descarga de caratulas
+
+  - Cambiados permisos
+
+ -- Ricardo Marmolejo García <makiolo@gmail.com> lun, 20 abr 2009 04:56:11 +0000
+
+wiithon (1.0.7) karmic; urgency=low
+
+  * Makefile: Added.
+
+  * CHANGELOG.txt,
+  * COMMIT.txt,
+  * LEEME.txt,
+  * VERSION.txt,
+  * wiithon: Modified.
+
+  [7] NOVEDADES
+
+  ------------------------------------ - Ahora cuando descomprimimos el
+  ISO de un RAR , el ISO es borrado, pudiendo descomprimir infinitos
+  RARs con solo 4,5 GB libres. - Juegos ordenados alfabeticamente
+
+  BUGS CORREGIDOS ------------------------------------ - Arreglos
+  menores
+
+ -- Ricardo Marmolejo García <makiolo@gmail.com> lun, 20 abr 2009 03:30:19 +0000
+
+wiithon (0.99.6) karmic; urgency=low
+
+  * CHANGELOG.txt,
+  * COMMIT.txt,
+  * VERSION.txt,
+  * wiithon7.schemas,
+  * wiithon8.schemas,
+  * wiithon_autodetectar_lector: Added.
+
+  * VERSION,
+  * makefile: Removed.
+
+  * LEEME.txt,
+  * wbfs,
+  * wbfs_src/bn.c,
+  * wbfs_src/disc_usage_table.c,
+  * wbfs_src/ec.c,
+  * wbfs_src/libwbfs/libwbfs.c,
+  * wbfs_src/libwbfs/libwbfs.h,
+  * wbfs_src/libwbfs/libwbfs_linux.c,
+  * wbfs_src/libwbfs/wiidisc.c,
+  * wbfs_src/negentig.c,
+  * wbfs_src/readme.txt,
+  * wbfs_src/scrub.c,
+  * wbfs_src/tools.c,
+  * wbfs_src/tools.h,
+  * wbfs_src/wbfs.c,
+  * wiithon,
+  * wiithon1.schemas,
+  * wiithon2.schemas,
+  * wiithon3.schemas,
+  * wiithon4.schemas,
+  * wiithon5.schemas,
+  * wiithon6.schemas,
+  * wiithon_autodetectar: Modified.
+
+  [6] NOVEDADES
+
+  ---------------------------------- - Instar juegos desde el DVD, al
+  estilo del usb loader, pero algo más lento porque dumpea a ISO y
+  cuando termina mete la ISO. - Comprobar Integridad de los juegos.
+  Muchos de nuestros juegos pueden estar corruptos sin aún saberlo
+  debido a el bug de borrado de las primeras versiones de WBFS - Por
+  tanto surgen 2 nuevos comandos:         wiithon instalar
+  wiithon comprobar
+
+  BUGS CORREGIDOS ---------------------------------- - Ahora busca
+  particiones WBFS en todo tipo de particiones, antes solo en discos
+  USB. - Corregido un problema detectando la partición en algunas
+  distribuciones de GNU/Linux. En discos de 1 partición no asignan
+  numero tipo /dev/sdaX llamandola /dev/sda, por tanto no cumplen el
+  patrón y no eran detectados. - Añadida la comprobación de Hermes
+  (modificada por mi) para verificar qué juegos instalados se han visto
+  afectados por el bug de borrado en libwbfs. Gracias kraff por el aviso
+  - Ahora muestra el nombre de la partición y el fabricante cuando no
+  tengas juegos.
+
+  CAMBIOS INTERNOS ---------------------------------- - He hecho unos
+  primeros cambios en el Makefile segun consejos de Lk2 - He rediseñado
+  el código del check de Hermes (goto para los errores , flags sin
+  enumerados y "for" donde hay k poner "while")
+
+ -- Ricardo Marmolejo García <makiolo@gmail.com> dom, 19 abr 2009 17:26:27 +0000
+
+wiithon (0.97.5) karmic; urgency=low
+
+  * wbfs_src/icon.png,
+  * wbfs_src/negentig,
+  * wbfs_src/scrub,
+  * wbfs_src/wbfs: Removed.
+
+  * LEEME.txt,
+  * makefile,
+  * wiithon,
+  * wiithon1.schemas,
+  * wiithon2.schemas,
+  * wiithon3.schemas,
+  * wiithon4.schemas,
+  * wiithon5.schemas,
+  * wiithon6.schemas: Modified.
+
+  [5] BUGS CORREGIDOS
+
+  ----------------------------------------------- - Arreglado un fallo
+  de representación, ahora estan mejor tabulados los resultados -
+  Arreglado el mostrar el fabricante del disco duro. - Arreglado un
+  problema con caracteres raros en expresiones regulares - Ahora wbfs ha
+  dejado de ser un enlace simbólico, esto permite que wiithon pueda ser
+  instalado desde cualquier tipo de partición. (no necesariamente
+  ext2/3) - Hecho limpeza de binarios de wbfs innecesarios para wiithon
+  - Mejor presentados al usuario los casos en el que sin tener ningún
+  juego, se intenta realizar alguna de las siguientes acciones: "listar
+  , renombrar , extraer , borrar o descargar" - La busqueda revursiva
+  ahora no diferencia mayusculas de minusculas, antes no encontraba
+  imagenes con extensiones como ".isO"
+
+ -- Ricardo Marmolejo García <makiolo@gmail.com> vie, 17 abr 2009 05:13:18 +0000
+
+wiithon (0.96.4) karmic; urgency=low
+
+  * .bzrignore,
+  * wiithon4.schemas,
+  * wiithon5.schemas,
+  * wiithon6.schemas: Added.
+
+  * LEEME.txt,
+  * VERSION,
+  * makefile,
+  * wiithon,
+  * wiithon_autodetectar: Modified.
+
+  [4] BUGS CORREGIDOS
+
+  ----------------------------------------------- - Ahora wiithon
+  detecta bien las particiones WBFS para linux que no disponen de
+  "udevinfo" - Corregido un problema en el que asignaba mal el
+  directorio de trabajo, cuando se usaba por nautilus, y las caratulas
+  eran descargadas en /home/usuario
+
+ -- Ricardo Marmolejo García <makiolo@gmail.com> vie, 17 abr 2009 01:28:48 +0000
+
+wiithon (0.96.3) karmic; urgency=low
+
+  * VERSION: Added.
+
+  * description-pak: Removed.
+
+  * LEEME.txt,
+  * makefile,
+  * wbfs_src/libwbfs/libwbfs.c,
+  * wbfs_src/negentig,
+  * wbfs_src/scrub,
+  * wbfs_src/wbfs,
+  * wbfs_src/wbfs.c,
+  * wiithon,
+  * wiithon1.schemas,
+  * wiithon2.schemas,
+  * wiithon3.schemas,
+  * wiithon_autodetectar: Modified.
+
+  [3] Versión 0.96
+
+  miércoles, 15 de abril de 2009 ---------------------------------------
+  -----------------------------------------------------------------
+  NUEVA FUNCIONALIDAD - Descarga de caratulas facilmente y
+  automaticamente - Cuando detecta más de una partición WBFS ahora
+  aparece al lado el nombre del disco duro - A partir de esta versión si
+  un parametro no se le pasa el engorroso IDGAME, se pregunta el ID del
+  juego (autonumeración hecha por wiithon) - En Nautilus ahora hay 5
+  acciones, 5 de ellas siempre disponibles
+  (listar,renombrar,extraer,borrar,descargar caratulas) y 1 (añadir ISO)
+  solo cuando estamos sobre una imagen ISO. - Al final he quitado que
+  renombre al nombre del ISO cuando añades un ISO, el juego se metera
+  con el nombre que propone el ISO y después se puede renombrar muy
+  fácil desde el script de nautilus
+
+  BUGS CORREGIDOS - Corregido el bug de wbfs del borrado. Gracias Pedja
+  - Ahora instala en KDE sin problemas - Mejorada autodetección de
+  particiones. Detectaba como una partición el error del sudo si
+  introducías mal la contraseña. - Corregido en algunos puntos donde
+  ponía WDFS en lugar de WBFS - Existía un problema al añadir una ISO si
+  en la ruta hay alguno de esto 2 caracteres : "[" o "]"
+
+  CAMBIOS INTERNOS - Muchas variables globales convertidas en locales -
+  Modificado el WBFS para que muestro los resultados en CSV y crear un
+  interfaz entre withon y la librería WBFS modificada
+
+ -- Ricardo Marmolejo García <makiolo@gmail.com> mié, 15 abr 2009 03:33:27 +0000
+
+wiithon (0.95.2) karmic; urgency=low
+
+  * wbfs_src/negentig,
+  * wbfs_src/scrub,
+  * wbfs_src/wbfs: Added.
+
+  * makefile,
+  * wbfs_src/Makefile,
+  * wiithon_autodetectar: Modified.
+
+  [2] - Añadidos precompilados de 32 bits para ejecutar como código
+  cruzado en procesadores de 64 bits.
+
+  - Eliminado un warning al detectar particiones en la version de 64
+  bits
+
+ -- Ricardo Marmolejo García <makiolo@gmail.com> vie, 10 abr 2009 01:41:52 +0000
+
+wiithon (0.95.1) karmic; urgency=low
+
+  * LEEME.txt,
+  * LICENCIA.txt,
+  * description-pak,
+  * makefile,
+  * wbfs,
+  * wbfs_src,
+  * wbfs_src/Makefile,
+  * wbfs_src/bn.c,
+  * wbfs_src/disc_usage_table.c,
+  * wbfs_src/ec.c,
+  * wbfs_src/icon.png,
+  * wbfs_src/libwbfs,
+  * wbfs_src/libwbfs/libwbfs.c,
+  * wbfs_src/libwbfs/libwbfs.h,
+  * wbfs_src/libwbfs/libwbfs_linux.c,
+  * wbfs_src/libwbfs/rijndael.c,
+  * wbfs_src/libwbfs/wiidisc.c,
+  * wbfs_src/libwbfs/wiidisc.h,
+  * wbfs_src/libwbfs_os.h,
+  * wbfs_src/libwbfslite,
+  * wbfs_src/libwbfslite/libwbfs.c,
+  * wbfs_src/libwbfslite/libwbfs.h,
+  * wbfs_src/negentig.c,
+  * wbfs_src/readme.txt,
+  * wbfs_src/scrub.c,
+  * wbfs_src/tools.c,
+  * wbfs_src/tools.h,
+  * wbfs_src/wbfs.c,
+  * wiithon,
+  * wiithon1.schemas,
+  * wiithon2.schemas,
+  * wiithon3.schemas,
+  * wiithon_autodetectar: Added.
+
+  [1] version inicial
+
+  0.95 rev1
+
+ -- Ricardo Marmolejo García <makiolo@gmail.com> vie, 10 abr 2009 01:22:27 +0000
+
