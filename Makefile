@@ -142,7 +142,8 @@ create_deb: generate_changelog compile making_directories_deb copy_archives set_
 	@echo "=================================================================="
 
 deb:
-	$(MAKE) -C . create_deb DESTDIR=/tmp/wiithon-$(VERSION)
+	#$(MAKE) -C . create_deb DESTDIR=/tmp/wiithon-$(VERSION)
+	debuild -b -uc -us
 	
 
 ppa-new: generate_changelog
