@@ -123,25 +123,25 @@ generate_changelog:
 	bzr log -v --log-format 'gnu' > debian/changelog
 	@$(RM) ~/.bazaar/plugins/gnulog.py
 
-
-create_deb: generate_changelog compile making_directories_deb copy_archives set_permisses 
-
-	@cp --dereference --preserve=all debian/only-deb/* $(DESTDIR)/DEBIAN
-	@dpkg-deb --build $(DESTDIR)
-	@rm -rf $(DESTDIR)
-	
-	-@$(RM) wiithon-*_*.deb
-	@mv "$(DESTDIR).deb" "./wiithon-$(VERSION)_$(REVISION).deb"
-
-	@echo "=================================================================="
-	@echo "Debian package created:	wiithon-"$(VERSION)"_"$(REVISION)".deb"
-	@echo "=================================================================="
-
+#
+#create_deb: generate_changelog compile making_directories_deb copy_archives set_permisses 
+#
+#	@cp --dereference --preserve=all debian/only-deb/* $(DESTDIR)/DEBIAN
+#	@dpkg-deb --build $(DESTDIR)
+#	@rm -rf $(DESTDIR)
+#	
+#	-@$(RM) wiithon-*_*.deb
+#	@mv "$(DESTDIR).deb" "./wiithon-$(VERSION)_$(REVISION).deb"
+#
+#	@echo "=================================================================="
+#	@echo "Debian package created:	wiithon-"$(VERSION)"_"$(REVISION)".deb"
+#	@echo "=================================================================="
+#
 
 deb:
-	$(MAKE) -C . create_deb DESTDIR=/tmp/wiithon-$(VERSION)
-	#debuild -b -uc -us
-	#debuild clean
+	#$(MAKE) -C . create_deb DESTDIR=/tmp/wiithon-$(VERSION)
+	debuild -b -uc -us
+	debuild clean
 
 ppa-new: generate_changelog
 	debuild --no-tgz-check -S -sa -k0xB8F0176A -I.bzr* -Idoc/Análisis* -Idoc/Diseño* -I*.deb --lintian-opts -Ivi
@@ -150,8 +150,8 @@ ppa-new: generate_changelog
 	mv ../wiithon_$(VERSION)-$(REVISION)_source.build ../wiithon_$(VERSION)_source.orig.build
 	mv ../wiithon_$(VERSION)-$(REVISION)_source.changes ../wiithon_$(VERSION)_source.orig.changes
 
-ppa-inc: generate_changelog
-	debuild -S -sd -k0xB8F0176A -I.bzr* -Idoc/Análisis* -Idoc/Diseño* --lintian-opts -Ivi
+ppa-inc: clean generate_changelog
+	debuild -S -sd -k0xB8F0176A -i.bzr* --lintian-opts -Ivi
 	
 ppa-upload:
 	dput ppa:wii.sceners.linux/wiithon $(CHANGES)

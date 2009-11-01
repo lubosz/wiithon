@@ -3,5 +3,6 @@
 vim COMMIT
 make commit
 bzr push
-make deb
+#make deb
+make ppa-inc
 
