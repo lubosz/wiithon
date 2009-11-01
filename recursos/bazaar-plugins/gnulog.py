@@ -73,18 +73,49 @@ class GnuFormatter(bzrlib.log.LogFormatter):
             return s.decode(code)
         except UnicodeDecodeError:
             return s
-    
+            
+    def parsearSpainToEnglish(self, s):
+        
+        s = self.decode(s)
+        
+        #week day
+        s = s.replace('<w>1</w>','Mon')
+        s = s.replace('<w>2</w>','Tue')
+        s = s.replace('<w>3</w>','Wed')
+        s = s.replace('<w>4</w>','Thu')
+        s = s.replace('<w>5</w>','Fri')
+        s = s.replace('<w>6</w>','Sat')
+        s = s.replace('<w>0</w>','Sun')
+
+        #month day
+        s = s.replace('<m>01</m>','Jan')
+        s = s.replace('<m>02</m>','Feb')
+        s = s.replace('<m>03</m>','Mar')
+        s = s.replace('<m>04</m>','Apr')
+        s = s.replace('<m>05</m>','May')
+        s = s.replace('<m>06</m>','Jun')
+        s = s.replace('<m>07</m>','Jul')
+        s = s.replace('<m>08</m>','Aug')
+        s = s.replace('<m>09</m>','Sep')
+        s = s.replace('<m>10</m>','Oct')
+        s = s.replace('<m>11</m>','Nov')
+        s = s.replace('<m>12</m>','Dec')
+        return s
+
     def show(self, revno, rev, delta, tags=None):
         to_file = self.to_file
         #if tags is not None:
         #    self._flush()
         #    print >> to_file, u"=== %s ===" % ', '.join(tags)
-        date_str = self.decode(time.strftime("%a, %d %b %Y %T %z", time.localtime(rev.timestamp)))
+        date_str = time.strftime("<w>%w</w>, %d <m>%m</m> %Y %T %z", time.localtime(rev.timestamp))
+        date_str = self.parsearSpainToEnglish(date_str)
+
         if hasattr(rev, "get_apparent_authors"):
             author = "  ".join(rev.get_apparent_authors())
         else:
             author = rev.get_apparent_author().strip()
-        date_line = " -- " + author + " " + date_str + "\n"
+        # OJO: 2 spaces autor__date
+        date_line = " -- " + author + "  " + date_str + "\n"
         if date_line != self._date_line:
             self._flush()
             self._date_line = date_line
@@ -111,7 +142,7 @@ class GnuFormatter(bzrlib.log.LogFormatter):
         elif revno_int>=198:
             version = "1.1"
             
-        print >> to_file, u"%s" % (HEADER % (version, revno))
+        print >> to_file, u"%s\n" % (HEADER % (version, revno))
         self._show_changes(revno, rev, delta)
 	#print >> to_file, u"%s" % date_line
 

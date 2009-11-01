@@ -123,6 +123,7 @@ generate_changelog:
 	bzr log -v --log-format 'gnu' > debian/changelog
 	@$(RM) ~/.bazaar/plugins/gnulog.py
 
+
 create_deb: generate_changelog compile making_directories_deb copy_archives set_permisses 
 
 	@cp --dereference --preserve=all debian/only-deb/* $(DESTDIR)/DEBIAN
@@ -136,16 +137,21 @@ create_deb: generate_changelog compile making_directories_deb copy_archives set_
 	@echo "Debian package created:	wiithon-"$(VERSION)"_"$(REVISION)".deb"
 	@echo "=================================================================="
 
+
 deb:
-	#$(MAKE) -C . create_deb DESTDIR=/tmp/wiithon-$(VERSION)
-	debuild -b -uc -us
-	
+	$(MAKE) -C . create_deb DESTDIR=/tmp/wiithon-$(VERSION)
+	#debuild -b -uc -us
+	#debuild clean
 
 ppa-new: generate_changelog
-	debuild -S -sa -k0xB8F0176A -I.bzr/* -I.bzrignore -I*.deb --lintian-opts -Ivi
+	debuild --no-tgz-check -S -sa -k0xB8F0176A -I.bzr* -Idoc/Análisis* -Idoc/Diseño* --lintian-opts -Ivi
+	mv ../wiithon_$(VERSION)-$(REVISION).tar.gz ../wiithon_$(VERSION).orig.tar.gz
+	mv ../wiithon_$(VERSION)-$(REVISION).dsc ../wiithon_$(VERSION).orig.dsc
+	mv ../wiithon_$(VERSION)-$(REVISION)_source.build ../wiithon_$(VERSION)_source.orig.build
+	mv ../wiithon_$(VERSION)-$(REVISION)_source.changes ../wiithon_$(VERSION)_source.orig.changes
 
 ppa-inc: generate_changelog
-	debuild -S -sd -k0xB8F0176A -I.bzr/* -I.bzrignore -I*.deb --lintian-opts -Ivi
+	debuild -S -sd -k0xB8F0176A -I.bzr* -Idoc/Análisis* -Idoc/Diseño* --lintian-opts -Ivi
 	
 ppa-upload:
 	dput ppa:wii.sceners.linux/wiithon $(CHANGES)
