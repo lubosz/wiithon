@@ -377,7 +377,7 @@ msgid "Dumpeando desde %s a %s utilizando %s temporalmente"
 msgstr ""
 
 msgid "Dutch"
-msgstr ""
+msgstr "Holandés"
 
 #, python-format
 msgid "ERROR %s no es un ningun juego de Wii"
@@ -474,7 +474,7 @@ msgid "Empieza %s"
 msgstr ""
 
 msgid "English"
-msgstr ""
+msgstr "Inglés"
 
 #, python-format
 msgid "Error al descomprimrir. Ya existe %s. Si desea sobreescribirlo, modifique la opcion en preferencias."
