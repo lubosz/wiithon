@@ -36,7 +36,7 @@ dependencias: permisos
 	@echo "Install depends OK"
 	@echo "=================================================================="
 
-compile: ./po/locale/da_DK/LC_MESSAGES/wiithon.mo ./po/locale/fi_FI/LC_MESSAGES/wiithon.mo ./po/locale/tr_TR/LC_MESSAGES/wiithon.mo ./po/locale/ru_RU/LC_MESSAGES/wiithon.mo ./po/locale/ko_KR/LC_MESSAGES/wiithon.mo ./po/locale/it/LC_MESSAGES/wiithon.mo ./po/locale/sv_SE/LC_MESSAGES/wiithon.mo ./po/locale/es/LC_MESSAGES/wiithon.mo ./po/locale/pt_PT/LC_MESSAGES/wiithon.mo ./po/locale/en/LC_MESSAGES/wiithon.mo ./po/locale/nl_NL/LC_MESSAGES/wiithon.mo ./po/locale/nb_NO/LC_MESSAGES/wiithon.mo ./po/locale/ja_JP/LC_MESSAGES/wiithon.mo ./po/locale/fr/LC_MESSAGES/wiithon.mo ./po/locale/pt_BR/LC_MESSAGES/wiithon.mo ./po/locale/de/LC_MESSAGES/wiithon.mo unrar-nonfree/unrar libwbfs_binding/wiithon_wrapper
+compile: ./po/locale/da_DK/LC_MESSAGES/wiithon.mo ./po/locale/fi_FI/LC_MESSAGES/wiithon.mo ./po/locale/tr_TR/LC_MESSAGES/wiithon.mo ./po/locale/ru_RU/LC_MESSAGES/wiithon.mo ./po/locale/ko_KR/LC_MESSAGES/wiithon.mo ./po/locale/it/LC_MESSAGES/wiithon.mo ./po/locale/sv_SE/LC_MESSAGES/wiithon.mo ./po/locale/es/LC_MESSAGES/wiithon.mo ./po/locale/pt_PT/LC_MESSAGES/wiithon.mo ./po/locale/en/LC_MESSAGES/wiithon.mo ./po/locale/nl_NL/LC_MESSAGES/wiithon.mo ./po/locale/nb_NO/LC_MESSAGES/wiithon.mo ./po/locale/ja_JP/LC_MESSAGES/wiithon.mo ./po/locale/fr/LC_MESSAGES/wiithon.mo ./po/locale/pt_BR/LC_MESSAGES/wiithon.mo ./po/locale/de/LC_MESSAGES/wiithon.mo ./po/locale/es_CA/LC_MESSAGES/wiithon.mo unrar-nonfree/unrar libwbfs_binding/wiithon_wrapper
 	@echo "=================================================================="
 	@echo "Compile OK"
 	@echo "=================================================================="
@@ -136,7 +136,7 @@ ppa-inc: generate_changelog
 	debuild -S -sd -k0xB8F0176A -I -i --lintian-opts -Ivi
 	
 ppa-upload: ppa-inc
-	dput ppa:wii.sceners.linux/wiithon ../wiithon_$(VERSION)-$(REVISION)_source.changes
+	dput ppa:wii.sceners.linux/wiithon ../wiithon_$(VERSION)_source.changes
 
 uninstall:
 	@echo "Uninstall ..."
@@ -202,6 +202,7 @@ uninstall:
 	-$(RM) /usr/share/locale/pt_BR/LC_MESSAGES/wiithon.mo
 	-$(RM) /usr/share/locale/ru_RU/LC_MESSAGES/wiithon.mo
 	-$(RM) /usr/share/locale/tr_TR/LC_MESSAGES/wiithon.mo
+	-$(RM) /usr/share/locale/es_CA/LC_MESSAGES/wiithon.mo
 
 	-$(RM) /usr/share/applications/wiithon_usuario.desktop
 	-$(RM) /usr/share/applications/wiithon_root.desktop
@@ -233,7 +234,7 @@ purge: uninstall
 
 update: pull install log
 	@echo "=================================================================="
-	@echo "Updated to $(VERSION) rev$(REVISION)"
+	@echo "Updated to $(VERSION)
 	@echo "=================================================================="
 
 clean: clean_libwbfs_binding clean_gettext clean_unrar
@@ -259,6 +260,7 @@ clean_gettext:
 	-$(RM) po/locale/pt_BR/LC_MESSAGES/wiithon.mo
 	-$(RM) po/locale/ru_RU/LC_MESSAGES/wiithon.mo
 	-$(RM) po/locale/tr_TR/LC_MESSAGES/wiithon.mo
+	-$(RM) po/locale/es_CA/LC_MESSAGES/wiithon.mo
 
 clean_unrar:
 	$(MAKE) -C unrar-nonfree clean
@@ -274,7 +276,6 @@ unrar-nonfree/unrar: unrar-nonfree/*.cpp unrar-nonfree/*.hpp
 
 pull:
 	bzr pull
-	chown `whoami`\: * -R
 
 commit: clean compile
 	bzr commit --file="COMMIT" && echo "" > COMMIT
@@ -332,6 +333,8 @@ initPO: po/plantilla.pot
 	#msginit -i po/plantilla.pot -o po/fr.po --no-translator
 	# italiano
 	#msginit -i po/plantilla.pot -o po/it.po --no-translator
+	# catalan es_CA
+	#msginit -i po/plantilla.pot -o po/es_CA.po --no-translator
 	# portugues
 	msginit -i po/plantilla.pot -o po/pt_PT.po --no-translator
 	# danish da_DK
@@ -352,5 +355,4 @@ initPO: po/plantilla.pot
 	msginit -i po/plantilla.pot -o po/sv_SE.po --no-translator
 	# turkish tr_TR
 	msginit -i po/plantilla.pot -o po/tr_TR.po --no-translator
-
 
