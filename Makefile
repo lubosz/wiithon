@@ -131,8 +131,8 @@ ppa-new: generate_changelog
 ppa-inc: generate_changelog
 	debuild -S -sd -k0xB8F0176A -I -i --lintian-opts -Ivi
 	
-ppa-upload:
-	dput ppa:wii.sceners.linux/wiithon $(CHANGES)
+ppa-upload: ppa-inc
+	dput ppa:wii.sceners.linux/wiithon ../wiithon_$(VERSION)-$(REVISION)_source.changes
 
 uninstall:
 	@echo "Uninstall ..."
