@@ -120,7 +120,7 @@ generate_changelog:
 	bzr log -v --log-format 'gnu' > debian/changelog
 	@$(RM) ~/.bazaar/plugins/gnulog.py
 
-deb:
+deb: generate_changelog
 	debuild -b -uc -us -tc
 
 ppa-new: generate_changelog
