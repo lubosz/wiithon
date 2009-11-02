@@ -127,8 +127,6 @@ class GnuFormatter(bzrlib.log.LogFormatter):
         # 1.0 ----> [7,197]
         # 1.1 ----> [198, inf.)
         
-        rev_init = 303
-        
         try:
             revno_int = int(revno)
         except ValueError:
@@ -150,12 +148,14 @@ class GnuFormatter(bzrlib.log.LogFormatter):
         elif 7<=revno_int and revno_int<=197:
             version = "1.0"
             isRelease = revno_int == 7
-        elif 198<=revno_int and revno_int<=302:
+        elif 198<=revno_int and revno_int<=304:
             version = "1.1"
             isRelease = revno_int == 198
-        elif revno_int>=303:
+        elif revno_int>=305:
             version = "1.15"
-            isRelease = revno_int == 303
+            isRelease = revno_int == 305
+        else:
+            version = "?"
             
         if not isRelease:
             print >> to_file, u"%s\n" % (HEADER_VER_REV % (version, revno))
