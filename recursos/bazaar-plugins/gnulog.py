@@ -53,7 +53,8 @@ import bzrlib.log
 
 SPLIT_ON_BLANK_LINES = bool(int(os.environ.get('BZR_GNULOG_SPLIT_ON_BLANK_LINES', "1")))
 
-HEADER="wiithon (%s-%s) karmic; urgency=high"
+HEADER_VER="wiithon (%s) karmic; urgency=high"
+HEADER_VER_REV="wiithon (%s-%s) karmic; urgency=high"
 
 class GnuFormatter(bzrlib.log.LogFormatter):
 
@@ -125,32 +126,49 @@ class GnuFormatter(bzrlib.log.LogFormatter):
         # 0.98 ---> [6]
         # 1.0 ----> [7,197]
         # 1.1 ----> [198, inf.)
+        
+        rev_init = 303
+        
         try:
             revno_int = int(revno)
         except ValueError:
             revno_int = int(revno.split(".")[0])
+        
+        isRelease = False
         if   1<=revno_int and revno_int<=2:
             version = "0.95"
+            isRelease = revno_int == 1
         elif 3<=revno_int and revno_int<=4:
             version = "0.96"
+            isRelease = revno_int == 3
         elif revno_int==5:
             version = "0.97"
+            isRelease = True
         elif revno_int==6:
             version = "0.99"
+            isRelease = True
         elif 7<=revno_int and revno_int<=197:
             version = "1.0"
-        elif revno_int>=198:
+            isRelease = revno_int == 7
+        elif 198<=revno_int and revno_int<=302:
             version = "1.1"
+            isRelease = revno_int == 198
+        elif revno_int>=303:
+            version = "1.15"
+            isRelease = revno_int == 303
             
-        print >> to_file, u"%s\n" % (HEADER % (version, revno))
+        if not isRelease:
+            print >> to_file, u"%s\n" % (HEADER_VER_REV % (version, revno))
+        else:
+            print >> to_file, u"%s\n" % (HEADER_VER % (version))
         self._show_changes(revno, rev, delta)
-	#print >> to_file, u"%s" % date_line
+        #print >> to_file, u"%s" % date_line
 
     def _flush(self):
-	if self._date_line is None or not self._changes_buffer.getvalue():
+        if self._date_line is None or not self._changes_buffer.getvalue():
             return
         to_file = self.to_file
-	### riga autore
+        ### riga autore
         #print >> to_file, self._date_line
         print >> to_file
         s = self._changes_buffer.getvalue()

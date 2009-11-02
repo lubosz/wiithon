@@ -31,7 +31,7 @@ ICONO = "/usr/share/pixmaps/wiithon.png"
 UNRAR_APP = os.path.join(WIITHON_FILES , "unrar")
 
 APP = "wiithon"
-VER = "1.1"
+VER = "1.15"
 HOME = os.environ['HOME']
 HOME_WIITHON = os.path.join(HOME , '.%s' % APP)
 HOME_WIITHON_BDD = os.path.join(HOME_WIITHON , 'bdd')

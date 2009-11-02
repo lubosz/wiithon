@@ -115,38 +115,19 @@ install4ppa: copy_archives set_permisses
 	@echo "Wiithon Install for PPA OK"
 	@echo "=================================================================="
 
-making_directories_deb:
-	@mkdir -p $(DESTDIR)/DEBIAN
-
 generate_changelog:
 	@ln -sf $(shell pwd)/recursos/bazaar-plugins/gnulog.py ~/.bazaar/plugins/gnulog.py
 	bzr log -v --log-format 'gnu' > debian/changelog
 	@$(RM) ~/.bazaar/plugins/gnulog.py
 
-#
-#create_deb: generate_changelog compile making_directories_deb copy_archives set_permisses 
-#
-#	@cp --dereference --preserve=all debian/only-deb/* $(DESTDIR)/DEBIAN
-#	@dpkg-deb --build $(DESTDIR)
-#	@rm -rf $(DESTDIR)
-#	
-#	-@$(RM) wiithon-*_*.deb
-#	@mv "$(DESTDIR).deb" "./wiithon-$(VERSION)_$(REVISION).deb"
-#
-#	@echo "=================================================================="
-#	@echo "Debian package created:	wiithon-"$(VERSION)"_"$(REVISION)".deb"
-#	@echo "=================================================================="
-#
-
 deb:
-	#$(MAKE) -C . create_deb DESTDIR=/tmp/wiithon-$(VERSION)
 	debuild -b -uc -us
 	debuild clean
 
 ppa-new: generate_changelog
-	debuild --no-tgz-check -S -sa -k0xB8F0176A -I.bzr* -Idoc/Análisis* -Idoc/Diseño* -I*.deb --lintian-opts -Ivi
+	debuild -S -sa -k0xB8F0176A -I.bzr* -Idoc/Análisis* -Idoc/Diseño* -I*.deb --lintian-opts -Ivi
 
-ppa-inc: clean generate_changelog
+ppa-inc: generate_changelog
 	debuild -S -sd -k0xB8F0176A -i.bzr* --lintian-opts -Ivi
 	
 ppa-upload:
