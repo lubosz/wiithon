@@ -3,7 +3,7 @@ Section: misc
 Priority: optional
 Maintainer: Ricardo Marmolejo García <makiolo@gmail.com>
 Standards-Version: 3.8.3
-Build-Depends: debhelper (>= 7)
+Build-Depends: debhelper (>= 7), libc6-dev-i386 [amd64]
 Homepage: https://launchpad.net/wiithon
 
 Package: wiithon
