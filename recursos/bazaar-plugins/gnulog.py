@@ -152,7 +152,7 @@ class GnuFormatter(bzrlib.log.LogFormatter):
             version = "1.1"
             isRelease = revno_int == 198
         elif revno_int>=305:
-            version = "1.15"
+            version = "1.11"
             isRelease = revno_int == 305
         else:
             version = "?"
