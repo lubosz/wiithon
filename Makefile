@@ -121,14 +121,15 @@ generate_changelog:
 	@$(RM) ~/.bazaar/plugins/gnulog.py
 
 deb:
-	debuild -b -uc -us
-	debuild clean
+	debuild -b -uc -us -tc
 
 ppa-new: generate_changelog
-	debuild -S -sa -k0xB8F0176A -I.bzr* -Idoc/Análisis* -Idoc/Diseño* -I*.deb --lintian-opts -Ivi
+	debuild -S -sa -k0xB8F0176A -I -i --lintian-opts -Ivi
+	mv ../wiithon_$(VERSION).tar.gz ../wiithon_$(VERSION).orig.tar.gz
+	debuild -S -sk -k0xB8F0176A -I -i --lintian-opts -Ivi
 
 ppa-inc: generate_changelog
-	debuild -S -sd -k0xB8F0176A -i.bzr* --lintian-opts -Ivi
+	debuild -S -sd -k0xB8F0176A -I -i --lintian-opts -Ivi
 	
 ppa-upload:
 	dput ppa:wii.sceners.linux/wiithon $(CHANGES)
