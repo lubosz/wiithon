@@ -1,1 +1,48 @@
-1.12
+#!/usr/bin/python -W ignore::DeprecationWarning
+# -*- coding: utf-8 -*-
+# vim: set fileencoding=utf-8 :
+
+import sys
+
+# HERE DEFINE TAGS RELATION: VERSION <----> FIRST REVISION
+versiones = [
+                ("0.95", 1),
+                ("0.96", 3),
+                ("0.97", 5),
+                ("0.98", 6),
+                ("1.0",  7),
+                ("1.1", 198),
+                ("1.12", 307),
+            ]
+
+def getSTDOUT(comando):
+    import subprocess
+    p = subprocess.Popen(comando , shell=True , stdout=subprocess.PIPE , stderr=open("/dev/null" , "w"))
+    out = p.stdout.readlines()
+    salida = ""
+    for linea in out:
+        salida = salida + linea.strip()
+    return salida
+
+def getVersion(rev):
+    i = 0
+    version = "?.?"
+    while i<len(versiones):
+        if versiones[i][1] < rev:
+            version = "%s-%s" % (versiones[i][0], rev)
+        elif versiones[i][1] == rev:
+            version = versiones[i][0]
+        i += 1
+    return version
+
+if __name__ == '__main__':
+    try:
+        rev = int(sys.argv[1])
+    except ValueError:
+        rev = int(getSTDOUT("bzr revno"))
+    except IndexError:
+        rev = int(getSTDOUT("bzr revno"))
+    except:
+        rev = 0
+
+    print getVersion(rev)

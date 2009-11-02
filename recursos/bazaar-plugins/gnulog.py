@@ -102,6 +102,15 @@ class GnuFormatter(bzrlib.log.LogFormatter):
         s = s.replace('<m>11</m>','Nov')
         s = s.replace('<m>12</m>','Dec')
         return s
+        
+    def getSTDOUT(self, comando):
+        import subprocess
+        p = subprocess.Popen(comando , shell=True , stdout=subprocess.PIPE , stderr=open("/dev/null" , "w"))
+        out = p.stdout.readlines()
+        salida = ""
+        for linea in out:
+            salida = salida + linea.strip()
+        return salida
 
     def show(self, revno, rev, delta, tags=None):
         to_file = self.to_file
@@ -120,49 +129,11 @@ class GnuFormatter(bzrlib.log.LogFormatter):
         if date_line != self._date_line:
             self._flush()
             self._date_line = date_line
-        # 0.95 ---> [1,2]
-        # 0.96 ---> [3,4]
-        # 0.97 ---> [5]
-        # 0.98 ---> [6]
-        # 1.0 ----> [7,197]
-        # 1.1 ----> [198, inf.)
         
-        try:
-            revno_int = int(revno)
-        except ValueError:
-            revno_int = int(revno.split(".")[0])
-        
-        isRelease = False
-        if   1<=revno_int and revno_int<=2:
-            version = "0.95"
-            isRelease = revno_int == 1
-        elif 3<=revno_int and revno_int<=4:
-            version = "0.96"
-            isRelease = revno_int == 3
-        elif revno_int==5:
-            version = "0.97"
-            isRelease = True
-        elif revno_int==6:
-            version = "0.99"
-            isRelease = True
-        elif 7<=revno_int and revno_int<=197:
-            version = "1.0"
-            isRelease = revno_int == 7
-        elif 198<=revno_int and revno_int<=306:
-            version = "1.1"
-            isRelease = revno_int == 198
-        elif revno_int>=307:
-            version = "1.12"
-            isRelease = revno_int == 307
-        else:
-            version = "?"
-            
-        if not isRelease:
-            print >> to_file, u"%s\n" % (HEADER_VER_REV % (version, revno))
-        else:
-            print >> to_file, u"%s\n" % (HEADER_VER % (version))
+        version = self.getSTDOUT("./doc/VERSION %s" % revno)
+
+        print >> to_file, u"%s\n" % (HEADER_VER % (version))
         self._show_changes(revno, rev, delta)
-        #print >> to_file, u"%s" % date_line
 
     def _flush(self):
         if self._date_line is None or not self._changes_buffer.getvalue():

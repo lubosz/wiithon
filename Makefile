@@ -1,6 +1,6 @@
 PREFIX=/usr/local
 EMAIL="makiolo@gmail.com"
-VERSION=${shell cat doc/VERSION}
+VERSION=${shell ./doc/VERSION}
 REVISION=${shell bzr revno}
 ARCH=${shell uname -m}
 INSTALL_PKG=apt-get install
@@ -123,10 +123,14 @@ generate_changelog:
 deb: generate_changelog
 	debuild -b -uc -us -tc
 
-ppa-new: generate_changelog
-	debuild -S -sa -k0xB8F0176A -I -i --lintian-opts -Ivi
-	mv ../wiithon_$(VERSION).tar.gz ../wiithon_$(VERSION).orig.tar.gz
-	debuild -S -sk -k0xB8F0176A -I -i --lintian-opts -Ivi
+#
+# Only need first time
+#
+#ppa-new: generate_changelog
+#	debuild -S -sa -k0xB8F0176A -I -i --lintian-opts -Ivi
+#	mv ../wiithon_$(VERSION).tar.gz ../wiithon_$(VERSION).orig.tar.gz
+#	debuild -S -sk -k0xB8F0176A -I -i --lintian-opts -Ivi
+#
 
 ppa-inc: generate_changelog
 	debuild -S -sd -k0xB8F0176A -I -i --lintian-opts -Ivi
