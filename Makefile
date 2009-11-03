@@ -236,7 +236,8 @@ purge: uninstall
 	@echo "Uninstall OK & all clean (purge covers & disc-art ...)"
 	@echo "=================================================================="
 
-update: pull install log
+# pull + log :D
+pullog: pull log
 	@echo "=================================================================="
 	@echo "Updated to $(VERSION)
 	@echo "=================================================================="
