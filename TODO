@@ -1,3 +1,7 @@
-limpiar bdd wiitdb
-borrar caratulas y disc-art
-PPA para wiithon
+ - limpiar bdd wiitdb
+ - formatear WBFS
+ - proponer actualizar juegos wiitdb
+ - repasar contadores de barra de estado
+ - poner ciclo tambien para el disc-art
+ - permitir cambiar preferencias como checkbox
+

@@ -1,16 +1,14 @@
-#!/usr/bin/env xdg-open
 [Desktop Entry]
-# http://freedesktop.org/Standards/desktop-entry-spec/
 Version=1.0
+Encoding=UTF-8
+Name=Wiithon
 Terminal=false
 TryExec=wiithon
 Exec=/usr/local/bin/wiithon
 Icon=/usr/share/pixmaps/wiithon.svg
 Type=Application
-#Categories=QT;Application;Office;Database;
 Categories=GNOME;GTK;System;
 StartupNotify=false
-Name=Wiithon
 Path=
 MimeType=application/x-iso9660-image;
 InitialPreference=9
@@ -18,8 +16,6 @@ GenericName=WBFS Partition Manager
 GenericName[es]=Gestor de particiones WBFS
 Comment=WBFS Partition Manager
 Comment[es]=Gestor de particiones WBFS
-
-# Para cuando lo traduzcamos
 GenericName[af]=WBFS Partition Manager
 GenericName[az]=WBFS Partition Manager
 GenericName[bg]=WBFS Partition Manager

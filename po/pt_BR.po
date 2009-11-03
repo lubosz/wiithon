@@ -1059,6 +1059,9 @@ msgstr "Valor incorreto"
 msgid "WARNING:"
 msgstr ""
 
+msgid "WBFS?"
+msgstr ""
+
 msgid "WiiTDB"
 msgstr ""
 

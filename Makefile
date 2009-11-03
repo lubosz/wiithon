@@ -92,6 +92,7 @@ set_permisses:
 
 	chmod 644 $(DESTDIR)$(PREFIX)/share/wiithon/recursos/glade/*.ui
 	chmod 644 $(DESTDIR)$(PREFIX)/share/wiithon/recursos/imagenes/*.png
+	chmod 644 $(DESTDIR)/usr/share/applications/wiithon_usuario.desktop
 	 
 	chmod 777 $(DESTDIR)$(PREFIX)/share/wiithon/recursos/imagenes/caratulas
 	chmod 777 $(DESTDIR)$(PREFIX)/share/wiithon/recursos/imagenes/discos
@@ -105,7 +106,7 @@ endif
 	-ln -sf $(PREFIX)/share/wiithon/wiithon.py $(PREFIX)/bin/wiithon
 	-ln -sf $(PREFIX)/share/wiithon/wiithon_wrapper $(PREFIX)/bin/wiithon_wrapper
 
-install: uninstall recicled_old_wiithon copy_archives set_permisses postinst
+install: recicled_old_wiithon copy_archives set_permisses postinst
 	@echo "=================================================================="
 	@echo "Wiithon Install OK"
 	@echo "=================================================================="
@@ -122,6 +123,9 @@ generate_changelog:
 
 deb: generate_changelog
 	debuild -b -uc -us -tc
+
+deb_sign: deb
+	gpg --armor --sign --detach-sig ../wiithon_$(VERSION)_i386.deb
 
 #
 # Only need first time

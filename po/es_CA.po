@@ -33,9 +33,7 @@ msgid "%d particiones WBFS"
 msgstr ""
 
 #, python-format
-msgid ""
-"%d%% - %d/%d games - %d descriptions - %d genre - %d accesories - %d "
-"companies - %d online features"
+msgid "%d%% - %d/%d games - %d descriptions - %d genre - %d accesories - %d companies - %d online features"
 msgstr ""
 
 #, python-format
@@ -104,9 +102,7 @@ msgstr ""
 msgid "??"
 msgstr ""
 
-msgid ""
-"A continuacion se listan los juego que NO van a ser copiados por ya estar en "
-"la particion de destino"
+msgid "A continuacion se listan los juego que NO van a ser copiados por ya estar en la particion de destino"
 msgstr ""
 
 msgid "ACCESORIOS: "
@@ -164,9 +160,7 @@ msgstr ""
 msgid "Ancho imagen disc-art"
 msgstr ""
 
-msgid ""
-"Aniade un nuevo juego de Wii, a partir de una imagen ISO, que opcionalmente "
-"puede estar comprimida en RAR."
+msgid "Aniade un nuevo juego de Wii, a partir de una imagen ISO, que opcionalmente puede estar comprimida en RAR."
 msgstr ""
 
 msgid "Aniadir ISO"
@@ -178,9 +172,7 @@ msgstr ""
 msgid "Aniadir directorio"
 msgstr ""
 
-msgid ""
-"Asistente para particiones WBFS. Le aprarecera una lista de particiones, "
-"(solamente FAT32) de la cual, debera elegir una."
+msgid "Asistente para particiones WBFS. Le aprarecera una lista de particiones, (solamente FAT32) de la cual, debera elegir una."
 msgstr ""
 
 msgid "BDD"
@@ -213,9 +205,7 @@ msgstr ""
 msgid "Buscar:"
 msgstr ""
 
-msgid ""
-"Cambia el nombre del juego seleccionado. Este es el nombre con el que "
-"apareceran en los loaders."
+msgid "Cambia el nombre del juego seleccionado. Este es el nombre con el que apareceran en los loaders."
 msgstr ""
 
 msgid "Capacidad On-line: "
@@ -258,9 +248,7 @@ msgstr ""
 msgid "Copia disco a disco"
 msgstr ""
 
-msgid ""
-"Copia en 2 carpetas de destino, todo el conjunto de caratulas y de disc-art "
-"que esta siendo amacenado en los directorios de trabajo de wiithon."
+msgid "Copia en 2 carpetas de destino, todo el conjunto de caratulas y de disc-art que esta siendo amacenado en los directorios de trabajo de wiithon."
 msgstr ""
 
 msgid "Copiando"
@@ -442,9 +430,7 @@ msgid "English"
 msgstr ""
 
 #, python-format
-msgid ""
-"Error al descomprimrir. Ya existe %s. Si desea sobreescribirlo, modifique la "
-"opcion en preferencias."
+msgid "Error al descomprimrir. Ya existe %s. Si desea sobreescribirlo, modifique la opcion en preferencias."
 msgstr ""
 
 #, python-format
@@ -487,13 +473,10 @@ msgstr ""
 msgid "Error: El archivo RAR %s no contiene ninguna ISO"
 msgstr ""
 
-msgid ""
-"Error: La longitud del IDGAME debe ser 6, y solo puede contener letras y "
-"numeros"
+msgid "Error: La longitud del IDGAME debe ser 6, y solo puede contener letras y numeros"
 msgstr ""
 
-msgid ""
-"Error: Ocurrio un error al introducir la informacion de juegos de WiiTDB"
+msgid "Error: Ocurrio un error al introducir la informacion de juegos de WiiTDB"
 msgstr ""
 
 msgid "Escriba el nuevo nombre : "
@@ -582,8 +565,7 @@ msgstr ""
 msgid "Hace copias directas de juegos entre particiones WBFS."
 msgstr ""
 
-msgid ""
-"Has conectado el disco duro? No se ha encontrado ninguna particion valida."
+msgid "Has conectado el disco duro? No se ha encontrado ninguna particion valida."
 msgstr ""
 
 #, python-format
@@ -723,9 +705,7 @@ msgid "No has seleccionado ninguna particion"
 msgstr ""
 
 #, python-format
-msgid ""
-"No hay 4.4GB libres para descomprimir el fichero RAR: %s en la ruta %s. "
-"Puede cambiar la ruta en preferencias."
+msgid "No hay 4.4GB libres para descomprimir el fichero RAR: %s en la ruta %s. Puede cambiar la ruta en preferencias."
 msgstr ""
 
 msgid "No hay Juegos para descargar caratulas"
@@ -743,8 +723,7 @@ msgstr ""
 msgid "No hay Juegos que borrar"
 msgstr ""
 
-msgid ""
-"No hay datos de este juego. Intente actualizar la base de datos de WiiTDB."
+msgid "No hay datos de este juego. Intente actualizar la base de datos de WiiTDB."
 msgstr ""
 
 #, python-format
@@ -791,17 +770,14 @@ msgstr ""
 msgid "Nombre"
 msgstr ""
 
-msgid ""
-"Nota, la copia no sobreescribire nada, solo copia juegos que no tenga el "
-"destino"
+msgid "Nota, la copia no sobreescribire nada, solo copia juegos que no tenga el destino"
 msgstr ""
 
 msgid "Nuevo"
 msgstr ""
 
 #, python-format
-msgid ""
-"Nuevo nombre es demasiado largo, intente con un texto menor de %d caracteres"
+msgid "Nuevo nombre es demasiado largo, intente con un texto menor de %d caracteres"
 msgstr ""
 
 msgid "Num. Hilos para tareas de fondo"
@@ -863,9 +839,7 @@ msgstr ""
 msgid "Paso 2 de 2: Elige un directorio para los DISCOS"
 msgstr ""
 
-msgid ""
-"Permite seleccionar un directorio del cual se aniadiran todos los juegos de "
-"Wii que se encuentren recursivamente."
+msgid "Permite seleccionar un directorio del cual se aniadiran todos los juegos de Wii que se encuentren recursivamente."
 msgstr ""
 
 msgid "Por defecto"
@@ -1023,6 +997,9 @@ msgstr ""
 msgid "WARNING:"
 msgstr ""
 
+msgid "WBFS?"
+msgstr ""
+
 msgid "WiiTDB"
 msgstr ""
 
@@ -1067,6 +1044,5 @@ msgid "s"
 msgstr ""
 
 #, python-format
-msgid ""
-"wiithon no borra la ISO temporal: %s, puedes borrarla si no la necesitas"
+msgid "wiithon no borra la ISO temporal: %s, puedes borrarla si no la necesitas"
 msgstr ""

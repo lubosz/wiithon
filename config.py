@@ -31,14 +31,13 @@ ICONO = "/usr/share/pixmaps/wiithon.png"
 UNRAR_APP = os.path.join(WIITHON_FILES , "unrar")
 
 APP = "wiithon"
-VER = "1.15"
 HOME = os.environ['HOME']
 HOME_WIITHON = os.path.join(HOME , '.%s' % APP)
 HOME_WIITHON_BDD = os.path.join(HOME_WIITHON , 'bdd')
 HOME_WIITHON_LOGS = os.path.join(HOME_WIITHON , 'logs')
 HOME_WIITHON_LOGS_PROCESO = os.path.join(HOME_WIITHON_LOGS , "proceso.log")
 
-URI_ENGINE = 'sqlite:///%s' % os.path.join(HOME_WIITHON_BDD, '%s%s.db' % (APP, VER))
+URI_ENGINE = 'sqlite:///%s' % os.path.join(HOME_WIITHON_BDD, '%s.db' % (APP))
 
 # crear directorios si no existen
 util.try_mkdir( HOME_WIITHON )

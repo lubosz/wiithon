@@ -126,6 +126,7 @@ class WiithonGUI(GtkBuilderWrapper):
 
         self.wb_principal.set_icon_from_file(config.ICONO)
         #self.wb_principal.maximize()
+        self.wb_principal.set_size_request(1000, -1)
         self.wb_principal.show()
 
         # conexion señales de la toolbar
@@ -480,7 +481,7 @@ class WiithonGUI(GtkBuilderWrapper):
             iterador = modelo.insert(0)
             if len(listaParticiones) == 0:
                 label_primera_linea = _("BDD")
-                tam_primera_linea = '%s%s' % (config.APP, config.VER)
+                tam_primera_linea = _("WBFS?")
             else:
                 label_primera_linea = _("TODOS")
                 tam_primera_linea = ""
@@ -515,7 +516,7 @@ class WiithonGUI(GtkBuilderWrapper):
         #self.columna10 = columna8 = gtk.TreeViewColumn(_('Particion'), render , text=7, foreground=8, background=9)
 
         columna1.set_expand(False)
-        columna1.set_min_width(80)
+        columna1.set_min_width(79)
         columna1.set_reorderable(True)
         columna1.set_sort_order(gtk.SORT_DESCENDING)
         columna1.set_sort_column_id(0)
@@ -527,37 +528,37 @@ class WiithonGUI(GtkBuilderWrapper):
         columna2.set_sort_column_id(1)
 
         columna3.set_expand(False)
-        columna3.set_min_width(80)
+        columna3.set_min_width(59)
         columna3.set_reorderable(True)
         columna3.set_sort_order(gtk.SORT_DESCENDING)
         columna3.set_sort_column_id(2)
         
         columna4.set_expand(False)
-        columna4.set_min_width(90)
+        columna4.set_min_width(80)
         columna4.set_reorderable(True)
         columna4.set_sort_order(gtk.SORT_ASCENDING)
         columna4.set_sort_column_id(3)
         
         columna5.set_expand(False)
-        columna5.set_min_width(60)
+        columna5.set_min_width(53)
         columna5.set_reorderable(True)
         columna5.set_sort_order(gtk.SORT_ASCENDING)
         columna5.set_sort_column_id(4)
         
         columna6.set_expand(False)
-        columna6.set_min_width(70)
+        columna6.set_min_width(66)
         columna6.set_reorderable(True)
         columna6.set_sort_order(gtk.SORT_ASCENDING)
         columna6.set_sort_column_id(5)
         
         columna7.set_expand(False)
-        columna7.set_min_width(100)
+        columna7.set_min_width(99)
         columna7.set_reorderable(True)
         columna7.set_sort_order(gtk.SORT_ASCENDING)
         columna7.set_sort_column_id(6)
         
         columna8.set_expand(False)
-        columna8.set_min_width(85)
+        columna8.set_min_width(84)
         columna8.set_reorderable(True)
         columna8.set_sort_order(gtk.SORT_ASCENDING)
         columna8.set_sort_column_id(7)
@@ -1649,6 +1650,8 @@ class WiithonGUI(GtkBuilderWrapper):
 
 ############# METODOS que modifican el GUI, si se llaman desde hilos, se hacen con gobject
 
+
+
     def borrar_archivo_preguntando(self, archivo):
         if self.question(_('Deseas borrar el archivo %s?') % archivo):
             if os.path.exists(archivo):
@@ -1797,7 +1800,7 @@ class WiithonGUI(GtkBuilderWrapper):
             if idgame == self.sel_juego.obj.idgame:
                 gobject.idle_add( self.ponerCaratula , idgame , self.wb_img_caratula1)
         else:
-            self.info.abajo_juegos_sin_caratula += 1
+            gobject.idle_add( self.refrescarInfoWiiTDBNumCaratulas )
             print _("Falla la descarga de la caratula de %s") % idgame
 
     def callback_termina_trabajo_descargar_disco(self, trabajo, idgame):
@@ -1805,7 +1808,7 @@ class WiithonGUI(GtkBuilderWrapper):
             if idgame == self.sel_juego.obj.idgame:
                 gobject.idle_add( self.ponerDisco , idgame , self.wb_img_disco1)
         else:
-            self.info.abajo_juegos_sin_discart += 1
+            gobject.idle_add( self.refrescarInfoWiiTDBNumCaratulas )
             print _("Falla la descarga del disco de %s") % idgame
 
 class HiloCalcularProgreso(Thread):

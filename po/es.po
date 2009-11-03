@@ -1056,6 +1056,9 @@ msgstr ""
 msgid "WARNING:"
 msgstr "ADVERTENCIA:"
 
+msgid "WBFS?"
+msgstr ""
+
 msgid "WiiTDB"
 msgstr ""
 
