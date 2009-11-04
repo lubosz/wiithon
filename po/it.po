@@ -479,6 +479,10 @@ msgstr "Errore durante il trasferimento della ISO sulla partizione %s"
 msgid "Error borrando el juego %s"
 msgstr "Errore durante la cancellazione del gioco %s"
 
+#, python-format
+msgid "Error descargando la informacion WiiTDB desde %s"
+msgstr ""
+
 msgid "Error en progreso"
 msgstr "Errore in corso"
 

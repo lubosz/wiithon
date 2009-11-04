@@ -12,6 +12,7 @@ import config
 import util
 import wiitdb_schema
 from wiitdb_schema import *
+from util import ErrorDescargando
 
 '''
     * name : returns the node name
@@ -87,10 +88,16 @@ class WiiTDBXML(Thread):
     def run(self):
         self.limpiarTemporales()
         
-        self.descargarZIP()
-        self.descomprimirZIP()
+        descargado_y_ok = False
+        try:
+            self.descargarZIP()
+            self.descomprimirZIP()
+            descargado_y_ok = True
+        except ErrorDescargando:
+            self.error_importando(_("Error descargando la informacion WiiTDB desde %s") % self.url)
+            
 
-        if os.path.exists(self.fichXML):
+        if os.path.exists(self.fichXML) and descargado_y_ok:
             xmldoc = libxml2.parseFile(self.fichXML)
             ctxt = xmldoc.xpathNewContext()
             nodo = ctxt.xpathEval("//*[name() = 'datafile']")[0]

@@ -469,6 +469,10 @@ msgstr ""
 msgid "Error borrando el juego %s"
 msgstr ""
 
+#, python-format
+msgid "Error descargando la informacion WiiTDB desde %s"
+msgstr ""
+
 msgid "Error en progreso"
 msgstr ""
 

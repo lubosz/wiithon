@@ -3,7 +3,7 @@ Section: games
 Priority: optional
 Maintainer: Ricardo Marmolejo García <makiolo@gmail.com>
 Standards-Version: 3.8.3
-Build-Depends: debhelper (>= 7), libc6-dev-i386 [amd64], libc6-i386 [amd64], intltool, gcc, g++
+Build-Depends: debhelper (>= 7), libc6-dev-i386 [amd64], intltool, g++
 Homepage: https://launchpad.net/wiithon
 
 Package: wiithon

@@ -1132,7 +1132,7 @@ class WiithonGUI(GtkBuilderWrapper):
         widget_imagen.set_from_file( destinoDisco )
 
     def actualizar_textview_info_wiitdb(self):
-        if self.sel_juego.obj != None:
+        if self.sel_juego.obj != None and not self.prefs_lock:
 
             juego = self.sel_juego.obj.getJuegoWIITDB()
             if juego != None:
