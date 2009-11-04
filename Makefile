@@ -68,13 +68,9 @@ copy_archives: making_directories
 	cp wiithon_autodetectar.sh $(DESTDIR)$(PREFIX)/share/wiithon
 	cp wiithon_autodetectar_lector.sh $(DESTDIR)$(PREFIX)/share/wiithon
 	cp wiithon_autodetectar_fat32.sh $(DESTDIR)$(PREFIX)/share/wiithon
-	
-	cp wiithon_usuario.desktop $(DESTDIR)/usr/share/applications/
 
 	cp recursos/icons/wiithon.png $(DESTDIR)/usr/share/pixmaps
 	cp recursos/icons/wiithon.svg $(DESTDIR)/usr/share/pixmaps
-
-	cp -R po/locale/ $(DESTDIR)/usr/share/
 
 	cp recursos/glade/*.ui $(DESTDIR)$(PREFIX)/share/wiithon/recursos/glade
 	cp recursos/imagenes/*.png $(DESTDIR)$(PREFIX)/share/wiithon/recursos/imagenes
@@ -82,6 +78,13 @@ copy_archives: making_directories
 	
 	cp recursos/caratulas_fix/*.png $(DESTDIR)$(PREFIX)/share/wiithon/recursos/imagenes/caratulas
 	cp recursos/discos_fix/*.png $(DESTDIR)$(PREFIX)/share/wiithon/recursos/imagenes/discos
+	
+	cp wiithon_usuario.desktop $(DESTDIR)/usr/share/applications/
+	cp -R po/locale/ $(DESTDIR)/usr/share/
+	
+	@echo "=================================================================="
+	@echo "Copy archives OK"
+	@echo "=================================================================="
 	
 set_permisses:
 	chmod 755 $(DESTDIR)$(PREFIX)/share/wiithon/*.py
@@ -95,15 +98,24 @@ set_permisses:
 	 
 	chmod 777 $(DESTDIR)$(PREFIX)/share/wiithon/recursos/imagenes/caratulas
 	chmod 777 $(DESTDIR)$(PREFIX)/share/wiithon/recursos/imagenes/discos
+	
+	@echo "=================================================================="
+	@echo "Permisses OK"
+	@echo "=================================================================="
 
 postinst:
 ifeq ($(ARCH), x86_64)
-	ln -sf $(PREFIX)/lib/libwbfs.so /usr/lib32
+	ln -sf $(DESTDIR)$(PREFIX)/lib/libwbfs.so $(DESTDIR)/usr/lib32
 else
-	ln -sf $(PREFIX)/lib/libwbfs.so /usr/lib
+	ln -sf $(DESTDIR)$(PREFIX)/lib/libwbfs.so $(DESTDIR)/usr/lib
 endif
-	-ln -sf $(PREFIX)/share/wiithon/wiithon.py $(PREFIX)/bin/wiithon
-	-ln -sf $(PREFIX)/share/wiithon/wiithon_wrapper $(PREFIX)/bin/wiithon_wrapper
+	-ln -sf $(DESTDIR)$(PREFIX)/share/wiithon/wiithon.py $(DESTDIR)$(PREFIX)/bin/wiithon
+	-ln -sf $(DESTDIR)$(PREFIX)/share/wiithon/wiithon_wrapper $(DESTDIR)$(PREFIX)/bin/wiithon_wrapper
+	
+	@echo "=================================================================="
+	@echo "If you want run witthon as normal user you must add it to 'disk' group."
+	@echo "Type it: \"sudo gpasswd -a \$USER disk\" and reboot your GNOME/KDE session."
+	@echo "=================================================================="
 
 install: clean_old_wiithon copy_archives set_permisses postinst
 	@echo "=================================================================="
@@ -121,7 +133,7 @@ generate_changelog:
 	@$(RM) ~/.bazaar/plugins/gnulog.py
 
 deb: generate_changelog
-	debuild -b -uc -us -tc
+	debuild -b -uc -us -tc --lintian-opts -Ivi
 
 deb_sign: deb
 	gpg --armor --sign --detach-sig ../wiithon_$(VERSION)_i386.deb
@@ -142,11 +154,11 @@ ppa-upload: ppa-inc
 	dput ppa:wii.sceners.linux/wiithon ../wiithon_$(VERSION)_source.changes
 
 clean_old_wiithon: recicled_old_wiithon
-	-$(RM) -R ~/.wiithon/caratulas/
-	-$(RM) -R ~/.wiithon/discos/
-	-$(RM) ~/.wiithon/bdd/juegos.db
-	-$(RM) ~/.wiithon_acuerdo
-	-$(RM) $(PREFIX)/share/wiithon/.acuerdo
+	-@$(RM) -R ~/.wiithon/caratulas/
+	-@$(RM) -R ~/.wiithon/discos/
+	-@$(RM) ~/.wiithon/bdd/juegos.db
+	-@$(RM) ~/.wiithon_acuerdo
+	-@$(RM) $(PREFIX)/share/wiithon/.acuerdo
 	
 	-$(RM) /usr/bin/wiithon
 	-$(RM) /usr/bin/wiithon_autodetectar
@@ -170,26 +182,24 @@ clean_old_wiithon: recicled_old_wiithon
 	-@gconftool --recursive-unset /apps/nautilus-actions/configurations
 	-@$(RM) /usr/share/gconf/schemas/wiithon*.schemas
 	
+	-$(RM) /usr/share/applications/wiithon.desktop
 	-$(RM) /usr/share/applications/wiithon_root.desktop
 	
 	-$(RM) $(PREFIX)/share/wiithon/HOME.conf
-
-uninstall: clean_old_wiithon
-
-	-$(RM) $(PREFIX)/bin/wiithon
-	-$(RM) $(PREFIX)/bin/wiithon_wrapper
 	
-	-$(RM) $(PREFIX)/share/wiithon/unrar
+	@echo "=================================================================="
+	@echo "Clean old installs"
+	@echo "=================================================================="
+
+delete_archives_installation:
 	-$(RM) $(PREFIX)/share/wiithon/*.py
+	-$(RM) $(PREFIX)/share/wiithon/wiithon_wrapper
+	-$(RM) $(PREFIX)/lib/libwbfs.so
+	-$(RM) $(PREFIX)/share/wiithon/unrar
 	-$(RM) $(PREFIX)/share/wiithon/*.sh
 	-$(RM) $(PREFIX)/share/wiithon/recursos/glade/*.ui
 	-$(RM) $(PREFIX)/share/wiithon/recursos/imagenes/*.png
 	-$(RM) $(PREFIX)/share/wiithon/recursos/imagenes/accesorio/*.jpg
-	
-	-$(RM) $(PREFIX)/share/wiithon/wiithon_wrapper
-	-$(RM) /usr/lib/libwbfs.so
-	-$(RM) /usr/lib32/libwbfs.so
-	-$(RM) $(PREFIX)/lib/libwbfs.so
 
 	-$(RM) $(PREFIX)/share/wiithon/*.pyc
 	
@@ -216,6 +226,13 @@ uninstall: clean_old_wiithon
 	-$(RM) /usr/share/pixmaps/wiithon.png
 	-$(RM) /usr/share/pixmaps/wiithon.svg
 	
+postrm:
+	-$(RM) /usr/lib/libwbfs.so
+	-$(RM) /usr/lib32/libwbfs.so
+	-$(RM) $(PREFIX)/bin/wiithon
+	-$(RM) $(PREFIX)/bin/wiithon_wrapper
+	
+uninstall: clean_old_wiithon delete_archives_installation postrm
 	@echo "=================================================================="
 	@echo "Wiithon Uninstall OK"
 	@echo "=================================================================="

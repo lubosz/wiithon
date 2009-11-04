@@ -65,7 +65,7 @@
               <object class="GtkToolButton" id="tb_borrar">
                 <property name="visible">True</property>
                 <property name="tooltip_text" translatable="yes">Borra el juego seleccionado.</property>
-                <property name="stock_id">gtk-delete</property>
+                <property name="icon_name">edit-delete</property>
               </object>
               <packing>
                 <property name="expand">False</property>

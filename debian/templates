@@ -1,0 +1,18 @@
+Template: wiithon/group-disk
+Type: note
+Description: Warning WBFS partitions permises
+ Wiithon need extra permissions to full read / write partitions WBFS.
+ This is because the partitions are not supported WBFS in kernel level.
+ So the usual user must add the group 'disk'.
+ 
+ Type the following in a terminal:
+  sudo gpasswd-a $ USER disk
+
+Description-es: Advertencia sobre permisos sobre parctiones WBFS
+ Wiithon necesita permisos extra para plena lectura y escritura en particiones WBFS.
+ Esto es debido a que las particiones de tipo WBFS no son soportadas a nivel de kernel.
+ Por ello debe añadir su habitual usuario el grupo 'disk'.
+ 
+ Escriba lo siguiente en un terminal:
+  sudo gpasswd -a $USER disk
+

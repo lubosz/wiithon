@@ -3,12 +3,13 @@ Section: games
 Priority: optional
 Maintainer: Ricardo Marmolejo García <makiolo@gmail.com>
 Standards-Version: 3.8.3
-Build-Depends: debhelper (>= 7), libc6-dev-i386 [amd64], intltool, g++
+Build-Depends: debhelper (>= 7), gcc-multilib (>= 4.4) [amd64], g++ (>= 4.4), intltool
 Homepage: https://launchpad.net/wiithon
 
 Package: wiithon
 Architecture: any
-Depends: python-sqlalchemy (>= 0.4), imagemagick, gnome-icon-theme, python-gtk2 (>= 2.16), python-glade2 (>= 2.16), unzip
-Pre-Depends: ${shlibs:Depends}, python (>= 2.5), libgtk2.0-0 (>= 2.16)
+Depends: libc6 (>= 2.4), python (>= 2.5), libgtk2.0-0 (>= 2.16), python-sqlalchemy (>= 0.4), imagemagick, gnome-icon-theme, python-gtk2 (>= 2.16), python-glade2 (>= 2.16), unzip
 Description: Wiithon is a WBFS partition manager
-  Wiithon is a software developed in python, c, c++ and bash. It is used for easy management of Wii games on WBFS partitions. Wiithon provides a CLI and a GUI with a use very easy.
+  Wiithon is a software developed in python, c, c++ and bash.
+  It is used for easy management of Wii games on WBFS partitions.
+  Wiithon provides a CLI and a GUI with a use very easy.
