@@ -33,6 +33,13 @@ class TextViewRelacionado(gtk.TextView):
         gtk.TextView.__init__(self)
         self.name_pref = str(name_pref)
         self.defecto = str(defecto)
+        
+class CheckRelacionado(gtk.CheckButton):
+
+    def __init__(self, name_pref, defecto, label):
+        gtk.CheckButton.__init__(self, label)
+        self.name_pref = str(name_pref)
+        self.defecto = defecto    
 
 class Preferencias:
     
@@ -61,13 +68,20 @@ class Preferencias:
         self.iniciarPreferencia('int', 'WIDTH_DISCS', defecto=160, mostrar=True, vbox=prefs_vbox_caratulas, label=_('Ancho imagen disc-art'))
         self.iniciarPreferencia('int', 'HEIGHT_DISCS', defecto=160, mostrar=True, vbox=prefs_vbox_caratulas, label=_('Altura imagen disc-art'))
         
-        self.iniciarPreferencia('bool', 'DRAG_AND_DROP_LOCAL', defecto=True)
-        self.iniciarPreferencia('bool', 'DRAG_AND_DROP_HTTP', defecto=True)
-        self.iniciarPreferencia('bool', 'rar_overwrite_iso', defecto=True)
-        self.iniciarPreferencia('bool', 'rar_preguntar_borrar_iso', defecto=True)
-        self.iniciarPreferencia('bool', 'rar_preguntar_borrar_rar', defecto=False)
+        self.iniciarPreferencia('int', 'NUM_HILOS', defecto=8, mostrar=True, vbox=prefs_vbox_general, label=_('Num. Hilos para tareas de fondo'))
         
-        self.iniciarPreferencia('int', 'NUM_HILOS', defecto=8, mostrar=True, vbox=prefs_vbox_general, label=_('Num. Hilos para tareas de fondo'), relaunch_required = True)
+        self.iniciarPreferencia('bool', 'ADVERTENCIA_ACTUALIZAR_WIITDB', defecto=True, mostrar=True, vbox=prefs_vbox_general, label=_('Mostrar una advertencia cuando no hay ninguna informacion WiiTDB'))
+        self.iniciarPreferencia('bool', 'ADVERTENCIA_NO_WBFS', defecto=True, mostrar=True, vbox=prefs_vbox_general, label=_('Mostrar una advertencia cuando no hay particiones WBFS'))
+        self.iniciarPreferencia('bool', 'DRAG_AND_DROP_LOCAL', defecto=True, mostrar=True, vbox=prefs_vbox_general, label=_('Permitir establecer caratulas locales por arrastre'))
+        self.iniciarPreferencia('bool', 'DRAG_AND_DROP_HTTP', defecto=True, mostrar=True, vbox=prefs_vbox_general, label=_('Permitir establecer caratulas desde http por arrastre'))
+        self.iniciarPreferencia('bool', 'DRAG_AND_DROP_JUEGOS', defecto=True, mostrar=True, vbox=prefs_vbox_general, label=_('Permitir arrastrar juegos en ISO, RAR o directorios.'))
+        self.iniciarPreferencia('bool', 'rar_overwrite_iso', defecto=True, mostrar=True, vbox=prefs_vbox_general, label=_('Los isos descomprimidos desde el rar remplaza imagenes iso sin preguntar.'))
+        self.iniciarPreferencia('bool', 'rar_preguntar_borrar_iso', defecto=True, mostrar=True, vbox=prefs_vbox_general, label=_('Pregunta borrar el .iso (cuando aniamos un rar)'))
+        self.iniciarPreferencia('bool', 'rar_preguntar_borrar_rar', defecto=False, mostrar=True, vbox=prefs_vbox_general, label=_('Pregunta borrar el .rar (cuando aniamos un rar)'))
+        DESTINO_DRAG_AND_DROP =    [('C', _('Caratula')),
+                                    ('D', _('Disc-art'))]
+        self.iniciarPreferencia('select', 'DESTINO_ARRASTRE', defecto='C', mostrar=True, vbox=prefs_vbox_general, label=_('Destino del arrastre de una imagen'), datos_lista = DESTINO_DRAG_AND_DROP)
+        self.iniciarPreferencia('string', 'COMANDO_ABRIR_CARPETA', defecto='gnome-open', mostrar=True, vbox=prefs_vbox_general, label=_('Comando para abrir carpetas.'))
         
         # Listas de idiomas wiitdb
         WIITDB_LANGUAGE_LISTA =    [('EN', _('English')),
@@ -101,7 +115,7 @@ class Preferencias:
         self.iniciarPreferencia('memo', 'PROVIDER_COVERS', defecto=cycle_covers, mostrar=True, vbox=prefs_vbox_caratulas, label=_('Proveedor de caratulas'))
 
     # indicar el vbox que inicia la preferencia
-    def iniciarPreferencia(self, tipo, name, defecto = '', mostrar = False, vbox = None, label = '', datos_lista = None, relaunch_required = False):
+    def iniciarPreferencia(self, tipo, name, defecto = '', mostrar = False, vbox = None, label = '', datos_lista = None):
         sql = util.decode("preferencias.campo=='%s'" % name)
         preferencia = session.query(Preferencia).filter(sql).first()
         if preferencia == None:
@@ -113,11 +127,7 @@ class Preferencias:
             h1 = gtk.HBox(homogeneous=False, spacing=0)
             
             etiqueta = gtk.Label()
-            if relaunch_required:
-                patron = "<b>%s: *</b>"
-            else:
-                patron = "<b>%s: </b>"
-            etiqueta.set_text(patron % label)
+            etiqueta.set_text("%s : " % label)
             etiqueta.set_use_markup(True)
             # 1 line
             etiqueta.set_alignment(0.0 , 0.5)
@@ -125,7 +135,6 @@ class Preferencias:
             # > 1 linea
             #etiqueta.set_justify(gtk.JUSTIFY_LEFT)
             etiqueta.show()
-
             
             # renderizar preferencia
             if tipo == 'memo':
@@ -190,10 +199,20 @@ class Preferencias:
             elif tipo == 'bool':
                 
                 if config.DEBUG:
-                    print "creando checkbox"
-                    
+                    print "creando check"
+
+                check_button = CheckRelacionado(name, defecto, label)
+                check_button.set_active(preferencia.valor == "True")
+                check_button.connect("toggled", self.checkModificado)
+                check_button.show()
+                
                 # ponemos la etiqueta en la izquierda    
-                h1.pack_start(etiqueta, expand=False, fill=False, padding=0)
+                h1.pack_start(check_button, expand=False, fill=False, padding=0)
+                
+                boton = gtk.Button(_('Por defecto'))
+                boton.connect('clicked', self.click_por_defecto_check, check_button)
+                boton.show()
+                h1.pack_start(boton, expand=False, fill=False, padding=0)
 
             else:
                 
@@ -230,6 +249,9 @@ class Preferencias:
     def memoModificado(self, buffer, textview):
         nuevoValor = buffer.get_text(buffer.get_start_iter(), buffer.get_end_iter())
         self.__setattr__(textview.name_pref, nuevoValor)
+        
+    def checkModificado(self, check):
+        self.__setattr__(check.name_pref, check.get_active())
 
     def click_por_defecto_entry(self, boton, entry):
         entry.set_text(entry.defecto)
@@ -239,6 +261,9 @@ class Preferencias:
 
     def click_por_defecto_textview(self, boton, buffer, textview):
         buffer.set_text(textview.defecto)
+        
+    def click_por_defecto_check(self, boton, check):
+        check.set_active(check.defecto)
 
     def __setattr__(self, name, value):
 
@@ -252,13 +277,11 @@ class Preferencias:
             try:
             
                 # Data type: 'bool', 'int', 'float', 'string', 'memo', 'select'
-                if tipo == 'bool':
-                    preferencia.valor = value.lower() == 'true'
-                elif tipo == 'int':
+                if tipo == 'int':
                     preferencia.valor = int(value)
                 elif tipo == 'float':
                     preferencia.valor = float(value)
-                else:# string | memo | select
+                else:# string | memo | select | bool
                     preferencia.valor = str(value)
 
                 session.commit()
@@ -283,14 +306,14 @@ class Preferencias:
 
             # Data type: 'bool', 'int', 'float', 'string', 'memo', 'select'
             if tipo == 'bool':
-                retorno = valor.lower() == 'true'
+                retorno = valor == "True"
             elif tipo == 'int':
                 retorno = int(valor)
             elif tipo == 'float':
                 retorno = float(valor)
             elif tipo == 'memo':
                 retorno = valor.strip().split('\n')
-            else:# string | select
+            else:# string | select | bool
                 retorno = str(valor)
 
         return retorno

@@ -1,7 +1,5 @@
  - limpiar bdd wiitdb
  - formatear WBFS
- - proponer actualizar juegos wiitdb
- - repasar contadores de barra de estado
- - poner ciclo tambien para el disc-art
- - permitir cambiar preferencias como checkbox
+<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< - poner ciclo tambien para el disc-art
+- compilarlo en amd64: http://launchpadlibrarian.net/35050121/buildlog_ubuntu-karmic-amd64.wiithon_1.12-315_FAILEDTOBUILD.txt.gz
 

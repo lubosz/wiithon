@@ -1,7 +1,6 @@
-PREFIX=/usr/local
 EMAIL="makiolo@gmail.com"
-VERSION=${shell ./doc/VERSION}
-REVISION=${shell bzr revno}
+PREFIX=/usr/local
+VERSION=${shell python doc/VERSION}
 ARCH=${shell uname -m}
 INSTALL_PKG=apt-get install
 
@@ -106,7 +105,7 @@ endif
 	-ln -sf $(PREFIX)/share/wiithon/wiithon.py $(PREFIX)/bin/wiithon
 	-ln -sf $(PREFIX)/share/wiithon/wiithon_wrapper $(PREFIX)/bin/wiithon_wrapper
 
-install: recicled_old_wiithon copy_archives set_permisses postinst
+install: clean_old_wiithon copy_archives set_permisses postinst
 	@echo "=================================================================="
 	@echo "Wiithon Install OK"
 	@echo "=================================================================="
@@ -142,9 +141,7 @@ ppa-inc: generate_changelog
 ppa-upload: ppa-inc
 	dput ppa:wii.sceners.linux/wiithon ../wiithon_$(VERSION)_source.changes
 
-uninstall:
-	@echo "Uninstall ..."
-	
+clean_old_wiithon: recicled_old_wiithon
 	-$(RM) -R ~/.wiithon/caratulas/
 	-$(RM) -R ~/.wiithon/discos/
 	-$(RM) ~/.wiithon/bdd/juegos.db
@@ -155,23 +152,29 @@ uninstall:
 	-$(RM) /usr/bin/wiithon_autodetectar
 	-$(RM) /usr/bin/wiithon_autodetectar_lector
 	-@$(RM) /usr/bin/wbfs
-
+	
 	-$(RM) $(PREFIX)/bin/wiithon_autodetectar
 	-$(RM) $(PREFIX)/bin/wiithon_autodetectar_lector
 	-$(RM) $(PREFIX)/bin/wbfs
 	-$(RM) $(PREFIX)/share/wiithon/wbfs
-
+	
 	-$(RM) $(PREFIX)/share/wiithon/glade_wrapper.py
 
 	-$(RM) $(PREFIX)/share/wiithon/recursos/glade/*.xml
 	-$(RM) $(PREFIX)/share/wiithon/recursos/glade/*.glade
-
+	
 	-$(RM) $(PREFIX)/share/wiithon/wiithon
 	-$(RM) $(PREFIX)/share/wiithon/wiithon_autodetectar
 	-$(RM) $(PREFIX)/share/wiithon/wiithon_autodetectar_lector
 
 	-@gconftool --recursive-unset /apps/nautilus-actions/configurations
 	-@$(RM) /usr/share/gconf/schemas/wiithon*.schemas
+	
+	-$(RM) /usr/share/applications/wiithon_root.desktop
+	
+	-$(RM) $(PREFIX)/share/wiithon/HOME.conf
+
+uninstall: clean_old_wiithon
 
 	-$(RM) $(PREFIX)/bin/wiithon
 	-$(RM) $(PREFIX)/bin/wiithon_wrapper
@@ -209,12 +212,9 @@ uninstall:
 	-$(RM) /usr/share/locale/es_CA/LC_MESSAGES/wiithon.mo
 
 	-$(RM) /usr/share/applications/wiithon_usuario.desktop
-	-$(RM) /usr/share/applications/wiithon_root.desktop
 	
 	-$(RM) /usr/share/pixmaps/wiithon.png
 	-$(RM) /usr/share/pixmaps/wiithon.svg
-	
-	-$(RM) $(PREFIX)/share/wiithon/HOME.conf
 	
 	@echo "=================================================================="
 	@echo "Wiithon Uninstall OK"
@@ -298,7 +298,7 @@ diff:
 # Generar plantilla POT
 po/plantilla.pot: recursos/glade/*.ui.h *.py
 	@echo "*** GETTEXT *** Extrayendo strings del código"
-	xgettext --language=Python --no-wrap --no-location --sort-output --omit-header --keyword=_ --keyword=N_ --from-code=utf-8 --package-name="wiithon" --package-version="$(VERSION)" --msgid-bugs-address=$(EMAIL) -o po/plantilla.pot $^ 2> /dev/null
+	xgettext --language=Python --no-wrap --no-location --sort-output --omit-header --keyword=_ --keyword=N_ --from-code=utf-8 --package-name="wiithon" --msgid-bugs-address=$(EMAIL) -o po/plantilla.pot $^ 2> /dev/null
 
 # extraer strings del glade
 recursos/glade/%.ui.h: recursos/glade/%.ui

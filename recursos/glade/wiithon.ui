@@ -62,23 +62,10 @@
               </packing>
             </child>
             <child>
-              <object class="GtkToolButton" id="tb_extraer">
+              <object class="GtkToolButton" id="tb_borrar">
                 <property name="visible">True</property>
-                <property name="tooltip_text" translatable="yes">Extrae de la particion WBFS el juego seleccionado a una imagen ISO.</property>
-                <property name="label" translatable="yes">Extraer a ISO</property>
-                <property name="icon_name">emblem-downloads</property>
-              </object>
-              <packing>
-                <property name="expand">False</property>
-                <property name="homogeneous">True</property>
-              </packing>
-            </child>
-            <child>
-              <object class="GtkToolButton" id="tb_copiar_1_1">
-                <property name="visible">True</property>
-                <property name="tooltip_text" translatable="yes">Hace copias directas de juegos entre particiones WBFS.</property>
-                <property name="label" translatable="yes">Copia disco a disco</property>
-                <property name="icon_name">media-tape</property>
+                <property name="tooltip_text" translatable="yes">Borra el juego seleccionado.</property>
+                <property name="stock_id">gtk-delete</property>
               </object>
               <packing>
                 <property name="expand">False</property>
@@ -88,6 +75,19 @@
             <child>
               <object class="GtkSeparatorToolItem" id="toolbutton3">
                 <property name="visible">True</property>
+              </object>
+              <packing>
+                <property name="expand">False</property>
+                <property name="homogeneous">True</property>
+              </packing>
+            </child>
+            <child>
+              <object class="GtkToolButton" id="tb_extraer">
+                <property name="visible">True</property>
+                <property name="tooltip_text" translatable="yes">Extrae de la particion WBFS el juego seleccionado a una imagen ISO.</property>
+                <property name="is_important">True</property>
+                <property name="label" translatable="yes">Extraer</property>
+                <property name="icon_name">edit-redo</property>
               </object>
               <packing>
                 <property name="expand">False</property>
@@ -107,32 +107,24 @@
               </packing>
             </child>
             <child>
+              <object class="GtkToolButton" id="tb_copiar_1_1">
+                <property name="visible">True</property>
+                <property name="tooltip_text" translatable="yes">Hace copias directas de juegos entre particiones WBFS.</property>
+                <property name="label" translatable="yes">Copia disco a disco</property>
+                <property name="icon_name">media-tape</property>
+              </object>
+              <packing>
+                <property name="expand">False</property>
+                <property name="homogeneous">True</property>
+              </packing>
+            </child>
+            <child>
               <object class="GtkToolButton" id="tb_clasificar1">
                 <property name="visible">True</property>
                 <property name="visible_horizontal">False</property>
                 <property name="visible_vertical">False</property>
                 <property name="label" translatable="yes">Clasificar</property>
                 <property name="icon_name">emblem-documents</property>
-              </object>
-              <packing>
-                <property name="expand">False</property>
-                <property name="homogeneous">True</property>
-              </packing>
-            </child>
-            <child>
-              <object class="GtkToolButton" id="tb_borrar">
-                <property name="visible">True</property>
-                <property name="tooltip_text" translatable="yes">Borra el juego seleccionado.</property>
-                <property name="stock_id">gtk-delete</property>
-              </object>
-              <packing>
-                <property name="expand">False</property>
-                <property name="homogeneous">True</property>
-              </packing>
-            </child>
-            <child>
-              <object class="GtkSeparatorToolItem" id="toolbutton1">
-                <property name="visible">True</property>
               </object>
               <packing>
                 <property name="expand">False</property>
@@ -583,7 +575,6 @@ Por defecto: 160x224</property>
       </object>
     </child>
   </object>
-  <object class="GtkTextBuffer" id="ficha_synopsis_buffer"/>
   <object class="GtkAboutDialog" id="aboutdialog">
     <property name="border_width">5</property>
     <property name="modal">True</property>
@@ -812,18 +803,124 @@ Italian: Carlo Mandelli &lt;camandel@gmail.com&gt; [it.po]
                   </packing>
                 </child>
                 <child>
-                  <object class="GtkLabel" id="label1A">
+                  <object class="GtkLabel" id="prefs_label1323">
                     <property name="visible">True</property>
                     <property name="xalign">0</property>
                     <property name="xpad">5</property>
-                    <property name="label" translatable="yes">&lt;b&gt;Herramientas y utilidades&lt;/b&gt;</property>
+                    <property name="label" translatable="yes">&lt;small&gt;&lt;i&gt;* = algunas opciones requieren reiniciar.&lt;/i&gt;&lt;/small&gt;</property>
                     <property name="use_markup">True</property>
                   </object>
                   <packing>
                     <property name="expand">False</property>
+                    <property name="padding">5</property>
                     <property name="position">1</property>
                   </packing>
                 </child>
+              </object>
+            </child>
+            <child type="tab">
+              <object class="GtkLabel" id="prefs_label1">
+                <property name="visible">True</property>
+                <property name="label" translatable="yes">General</property>
+              </object>
+              <packing>
+                <property name="tab_fill">False</property>
+              </packing>
+            </child>
+            <child>
+              <object class="GtkVBox" id="prefs_vbox2">
+                <property name="visible">True</property>
+                <property name="orientation">vertical</property>
+                <child>
+                  <object class="GtkVBox" id="prefs_vbox_caratulas">
+                    <property name="visible">True</property>
+                    <property name="orientation">vertical</property>
+                    <child>
+                      <placeholder/>
+                    </child>
+                  </object>
+                  <packing>
+                    <property name="position">0</property>
+                  </packing>
+                </child>
+                <child>
+                  <object class="GtkLabel" id="prefs_label4">
+                    <property name="visible">True</property>
+                    <property name="xalign">0</property>
+                    <property name="xpad">5</property>
+                    <property name="label" translatable="yes">&lt;small&gt;&lt;i&gt;* = algunas opciones requieren reiniciar.&lt;/i&gt;&lt;/small&gt;</property>
+                    <property name="use_markup">True</property>
+                  </object>
+                  <packing>
+                    <property name="expand">False</property>
+                    <property name="padding">5</property>
+                    <property name="position">1</property>
+                  </packing>
+                </child>
+              </object>
+              <packing>
+                <property name="position">1</property>
+              </packing>
+            </child>
+            <child type="tab">
+              <object class="GtkLabel" id="prefs_label2">
+                <property name="visible">True</property>
+                <property name="label" translatable="yes">Caratulas</property>
+              </object>
+              <packing>
+                <property name="position">1</property>
+                <property name="tab_fill">False</property>
+              </packing>
+            </child>
+            <child>
+              <object class="GtkVBox" id="prefs_vbox3">
+                <property name="visible">True</property>
+                <property name="orientation">vertical</property>
+                <child>
+                  <object class="GtkVBox" id="prefs_vbox_wiitdb">
+                    <property name="visible">True</property>
+                    <property name="orientation">vertical</property>
+                    <child>
+                      <placeholder/>
+                    </child>
+                  </object>
+                  <packing>
+                    <property name="position">0</property>
+                  </packing>
+                </child>
+                <child>
+                  <object class="GtkLabel" id="prefs_label5">
+                    <property name="visible">True</property>
+                    <property name="xalign">0</property>
+                    <property name="xpad">5</property>
+                    <property name="label" translatable="yes">&lt;small&gt;&lt;i&gt;* = algunas opciones requieren reiniciar.&lt;/i&gt;&lt;/small&gt;</property>
+                    <property name="use_markup">True</property>
+                  </object>
+                  <packing>
+                    <property name="expand">False</property>
+                    <property name="padding">5</property>
+                    <property name="position">1</property>
+                  </packing>
+                </child>
+              </object>
+              <packing>
+                <property name="position">2</property>
+              </packing>
+            </child>
+            <child type="tab">
+              <object class="GtkLabel" id="prefs_label3">
+                <property name="visible">True</property>
+                <property name="label" translatable="yes">WiiTDB</property>
+              </object>
+              <packing>
+                <property name="position">2</property>
+                <property name="tab_fill">False</property>
+              </packing>
+            </child>
+            <child>
+              <object class="GtkVBox" id="vbox1">
+                <property name="visible">True</property>
+                <property name="orientation">vertical</property>
                 <child>
                   <object class="GtkTable" id="table1">
                     <property name="visible">True</property>
@@ -875,7 +972,7 @@ Italian: Carlo Mandelli &lt;camandel@gmail.com&gt; [it.po]
                       </packing>
                     </child>
                     <child>
-                      <object class="GtkLabel" id="label2">
+                      <object class="GtkLabel" id="label3">
                         <property name="visible">True</property>
                         <property name="xalign">0</property>
                         <property name="xpad">5</property>
@@ -885,7 +982,7 @@ Italian: Carlo Mandelli &lt;camandel@gmail.com&gt; [it.po]
                       </object>
                     </child>
                     <child>
-                      <object class="GtkLabel" id="label3">
+                      <object class="GtkLabel" id="label4">
                         <property name="visible">True</property>
                         <property name="xalign">0</property>
                         <property name="xpad">5</property>
@@ -898,7 +995,7 @@ Italian: Carlo Mandelli &lt;camandel@gmail.com&gt; [it.po]
                       </packing>
                     </child>
                     <child>
-                      <object class="GtkLabel" id="label4">
+                      <object class="GtkLabel" id="label6">
                         <property name="visible">True</property>
                         <property name="xalign">0</property>
                         <property name="xpad">5</property>
@@ -914,93 +1011,21 @@ Italian: Carlo Mandelli &lt;camandel@gmail.com&gt; [it.po]
                   <packing>
                     <property name="expand">False</property>
                     <property name="padding">10</property>
-                    <property name="position">2</property>
-                  </packing>
-                </child>
-                <child>
-                  <object class="GtkLabel" id="prefs_label1323">
-                    <property name="visible">True</property>
-                    <property name="xalign">0</property>
-                    <property name="xpad">5</property>
-                    <property name="label" translatable="yes">&lt;small&gt;&lt;i&gt;* = requiere reiniciar la aplicacion&lt;/i&gt;&lt;/small&gt;</property>
-                    <property name="use_markup">True</property>
-                  </object>
-                  <packing>
-                    <property name="expand">False</property>
-                    <property name="padding">5</property>
-                    <property name="position">4</property>
-                  </packing>
-                </child>
-              </object>
-            </child>
-            <child type="tab">
-              <object class="GtkLabel" id="prefs_label1">
-                <property name="visible">True</property>
-                <property name="label" translatable="yes">General</property>
-              </object>
-              <packing>
-                <property name="tab_fill">False</property>
-              </packing>
-            </child>
-            <child>
-              <object class="GtkVBox" id="prefs_vbox2">
-                <property name="visible">True</property>
-                <property name="orientation">vertical</property>
-                <child>
-                  <object class="GtkVBox" id="prefs_vbox_caratulas">
-                    <property name="visible">True</property>
-                    <property name="orientation">vertical</property>
-                    <child>
-                      <placeholder/>
-                    </child>
-                  </object>
-                  <packing>
                     <property name="position">0</property>
                   </packing>
                 </child>
               </object>
               <packing>
-                <property name="position">1</property>
+                <property name="position">3</property>
               </packing>
             </child>
             <child type="tab">
-              <object class="GtkLabel" id="prefs_label2">
+              <object class="GtkLabel" id="label2">
                 <property name="visible">True</property>
-                <property name="label" translatable="yes">Caratulas</property>
+                <property name="label" translatable="yes">Herramientas y utilidades</property>
               </object>
               <packing>
-                <property name="position">1</property>
-                <property name="tab_fill">False</property>
-              </packing>
-            </child>
-            <child>
-              <object class="GtkVBox" id="prefs_vbox3">
-                <property name="visible">True</property>
-                <property name="orientation">vertical</property>
-                <child>
-                  <object class="GtkVBox" id="prefs_vbox_wiitdb">
-                    <property name="visible">True</property>
-                    <property name="orientation">vertical</property>
-                    <child>
-                      <placeholder/>
-                    </child>
-                  </object>
-                  <packing>
-                    <property name="position">0</property>
-                  </packing>
-                </child>
-              </object>
-              <packing>
-                <property name="position">2</property>
-              </packing>
-            </child>
-            <child type="tab">
-              <object class="GtkLabel" id="prefs_label3">
-                <property name="visible">True</property>
-                <property name="label" translatable="yes">WiiTDB</property>
-              </object>
-              <packing>
-                <property name="position">2</property>
+                <property name="position">3</property>
                 <property name="tab_fill">False</property>
               </packing>
             </child>
@@ -1039,5 +1064,38 @@ Italian: Carlo Mandelli &lt;camandel@gmail.com&gt; [it.po]
     <action-widgets>
       <action-widget response="0">prefs_button1</action-widget>
     </action-widgets>
+  </object>
+  <object class="GtkDialog" id="format">
+    <property name="border_width">5</property>
+    <property name="modal">True</property>
+    <property name="type_hint">normal</property>
+    <property name="has_separator">False</property>
+    <child internal-child="vbox">
+      <object class="GtkVBox" id="format_vbox">
+        <property name="visible">True</property>
+        <property name="orientation">vertical</property>
+        <property name="spacing">2</property>
+        <child>
+          <placeholder/>
+        </child>
+        <child internal-child="action_area">
+          <object class="GtkHButtonBox" id="format_dialog-action_area">
+            <property name="visible">True</property>
+            <property name="layout_style">end</property>
+            <child>
+              <placeholder/>
+            </child>
+            <child>
+              <placeholder/>
+            </child>
+          </object>
+          <packing>
+            <property name="expand">False</property>
+            <property name="pack_type">end</property>
+            <property name="position">0</property>
+          </packing>
+        </child>
+      </object>
+    </child>
   </object>
 </interface>

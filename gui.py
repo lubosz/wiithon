@@ -42,6 +42,10 @@ class WiithonGUI(GtkBuilderWrapper):
 
         # lista de juegos mostrados
         self.lJuegos = None
+        
+        # mutex de seguridad para preferencias
+        # evita problemas de concurrencia en la bdd
+        self.prefs_lock = False
 
         # Representación de la fila seleccionada en los distintos treeviews
         self.sel_juego = FilaTreeview()
@@ -278,12 +282,6 @@ class WiithonGUI(GtkBuilderWrapper):
             self.wb_busqueda.grab_focus()
         else:
             self.wb_tb_refrescar_wbfs.grab_focus()
-            
-        # si no hay particion -> modal que da 2 opciones:
-        # 1º Ver base de datos
-        # 2º Salir
-        if(len(self.lParti) == 0):
-            self.alert("warning" , _("No hay particiones WBFS, se muestran los juegos de la ultima sesion."))
 
     def refrescarParticionesWBFS(self, verbose = True):
         
@@ -325,6 +323,31 @@ class WiithonGUI(GtkBuilderWrapper):
                     self.poolBash.nuevoTrabajoDescargaDisco(juego.idgame)
             #
             ##################################################################################
+            
+            # si no hay particion -> modal que da 2 opciones:
+            # 1º Ver base de datos
+            # 2º Salir
+            if (self.core.prefs.ADVERTENCIA_NO_WBFS and len(self.lParti) == 0):
+                self.alert("warning" , _("No hay particiones WBFS, se muestran los juegos de la ultima sesion."))
+            elif (self.core.prefs.ADVERTENCIA_ACTUALIZAR_WIITDB and (len(self.lJuegos) > 0) and self.info.abajo_num_juegos_wiitdb == 0):
+                if (self.question("""
+            <b>
+                <pr>%s</pr>
+                <br />
+                <br />
+                <pr>%s</pr>
+                <br />
+                <br />
+                <azul><pr>%s</pr></azul>
+            </b>
+                """ % (
+                            _("Se ha detectado que ninguno de tus juegos disponen de informacion extra, descargada de Internet."),
+                            _("Deseas descargar informacion de los juegos desde WiiTDB?"),
+                            self.core.prefs.URL_ZIP_WIITDB
+                            ),
+                            xml = True) ):
+                    self.poolTrabajo.nuevoTrabajoActualizarWiiTDB(self.core.prefs.URL_ZIP_WIITDB)
+                
             
         else:
             if verbose:
@@ -815,8 +838,8 @@ class WiithonGUI(GtkBuilderWrapper):
             
         return respuesta == gtk.RESPONSE_ACCEPT
 
-    def question(self, pregunta):
-        return self.alert('question', pregunta)
+    def question(self, pregunta, titulo = '', xml = False):
+        return self.alert('question', pregunta, titulo, xml)
 
     # callback de la señal "changed" del buscador
     # Refresca de la base de datos y filtra según lo escrito.
@@ -1569,11 +1592,13 @@ class WiithonGUI(GtkBuilderWrapper):
                 self.alert("warning" , _("No tienes ningun juego"))
 
         elif(id_tb == self.wb_tb_preferencias):
-            #self.wb_prefs.maximize()
-            self.wb_prefs.run()
-            self.poolTrabajo.actualizarPreferencias()
-            self.poolBash.actualizarPreferencias()
-            self.wb_prefs.hide()
+            if not self.prefs_lock:
+                self.wb_prefs.run()
+                self.poolTrabajo.actualizarPreferencias()
+                self.poolBash.actualizarPreferencias()
+                self.wb_prefs.hide()
+            else:
+                self.alert("error" , _("Hay una tarea que esta bloqueando las preferencias.\n\nEspere a que finalize."))
             
 ######### HERRAMIENTAS Y UTILIDADES #################
 
@@ -1582,19 +1607,36 @@ class WiithonGUI(GtkBuilderWrapper):
         self.alert("error" , "Sin implementar")
         
     def on_button_abrir_carpeta_caratulas_clicked(self, boton):
-        comando = 'gnome-open "%s"' % config.HOME_WIITHON_CARATULAS
+        comando = '%s "%s"' % (self.core.prefs.COMANDO_ABRIR_CARPETA, config.HOME_WIITHON_CARATULAS)
         util.call_out_null(comando)
         
     def on_button_abrir_carpeta_discart_clicked(self, boton):
-        comando = 'gnome-open "%s"' % config.HOME_WIITHON_DISCOS
+        comando = '%s "%s"' % (self.core.prefs.COMANDO_ABRIR_CARPETA, config.HOME_WIITHON_DISCOS)
         util.call_out_null(comando)
 
                 
 ########## WIITDB ###########
                 
     def on_tb_actualizar_wiitdb_clicked(self, boton):
-        if (self.question(_('Seguro que deseas descargar informacion de los juegos de WiiTDB?\n\n%s') % (self.core.prefs.URL_ZIP_WIITDB)) ):
-            self.poolTrabajo.nuevoTrabajoActualizarWiiTDB(self.core.prefs.URL_ZIP_WIITDB)
+        
+        if not self.prefs_lock:
+            
+            if (self.question("""
+        <b>
+            <pr>%s</pr>
+            <br />
+            <br />
+            <azul><pr>%s</pr></azul>
+        </b>
+            """ % (
+                        _("Seguro que deseas descargar informacion de los juegos de WiiTDB?"),
+                        self.core.prefs.URL_ZIP_WIITDB
+                        ),
+                        xml = True) ):
+                self.prefs_lock = True
+                self.poolTrabajo.nuevoTrabajoActualizarWiiTDB(self.core.prefs.URL_ZIP_WIITDB)
+        else:
+            self.alert("warning" , _("Ya estas descargando la informacion WiiTDB ..."))
         
     def callback_empieza_importar(self, xml):
         self.juegos = 0
@@ -1605,11 +1647,6 @@ class WiithonGUI(GtkBuilderWrapper):
         self.companies = 0
         self.actualizarLabel(_("Empezando a obtener datos de juegos desde WiiTDB"))
         self.actualizarFraccion(0.0)
-        
-    def callback_termina_importar(self, xml, todos):
-        self.actualizarLabel(_("Finalizada satisfactoriamente la importacion de datos desde WiiTDB"))
-        self.actualizarFraccion(1.0)
-        gobject.idle_add(self.refrescarModeloJuegos, self.lJuegos)
 
     def callback_spinner(self, cont, total):
         porcentaje = (cont * 100.0 / total)
@@ -1636,6 +1673,7 @@ class WiithonGUI(GtkBuilderWrapper):
         self.companies += 1
 
     def callback_error_importando(self, xml, motivo):
+        self.prefs_lock = False
         self.mostrarError(_("Error importando %s: %s") % (xml, motivo))
         
     def callback_empieza_descarga(self, url):
@@ -1647,10 +1685,15 @@ class WiithonGUI(GtkBuilderWrapper):
         self.actualizarLabel(_("Empezando a descomprimir la informacion WiiTDB"))
         self.actualizarFraccion(0.99)
         #self.actualizarOrientation(gtk.PROGRESS_LEFT_TO_RIGHT)
+        
+        
+    def callback_termina_importar(self, xml, todos):
+        self.prefs_lock = False
+        self.actualizarLabel(_("Finalizada satisfactoriamente la importacion de datos desde WiiTDB"))
+        self.actualizarFraccion(1.0)
+        gobject.idle_add(self.refrescarModeloJuegos, self.lJuegos)
 
 ############# METODOS que modifican el GUI, si se llaman desde hilos, se hacen con gobject
-
-
 
     def borrar_archivo_preguntando(self, archivo):
         if self.question(_('Deseas borrar el archivo %s?') % archivo):
@@ -1712,34 +1755,63 @@ class WiithonGUI(GtkBuilderWrapper):
     def drag_data_received_cb(self, widget, drag_context, x, y, selection_data, info, timestamp):
         'Callback invoked when the DnD data is received'        
         tuplaArrastrados = selection_data.get_uris()
-        listaArrastrados = []
+        listaISO = []
+        listaRAR = []
+        listaDirectorios = []
         for fichero in tuplaArrastrados:
-            if fichero.startswith("file://") and self.core.prefs.DRAG_AND_DROP_LOCAL:
+            if fichero.startswith("file://"):
                 fichero = fichero.replace("file://" , "")
                 if os.path.exists(fichero):
-                    if(util.getExtension(fichero)=="iso"):
-                        listaArrastrados.append(fichero)
+                    if(util.getExtension(fichero)=="iso") and self.core.prefs.DRAG_AND_DROP_JUEGOS:
+                        listaISO.append(fichero)
+                    elif(util.getExtension(fichero)=="rar") and self.core.prefs.DRAG_AND_DROP_JUEGOS:
+                        listaRAR.append(fichero)
+                    elif( os.path.isdir( fichero ) ) and self.core.prefs.DRAG_AND_DROP_JUEGOS:
+                        listaDirectorios.append(fichero)
+                    elif(util.esImagen(fichero) and self.core.prefs.DRAG_AND_DROP_LOCAL): # Arrastrar imagenes (png, jpg, gif) desde el escritorio
+                        if self.sel_juego.it != None:
+
+                            if self.core.prefs.DESTINO_ARRASTRE == 'C':
+                                ruta = self.core.getRutaCaratula(self.sel_juego.obj.idgame)
+                                shutil.copy(fichero, ruta)
+                                comando = 'mogrify -resize %dx%d! "%s"' % (self.core.prefs.WIDTH_COVERS, self.core.prefs.HEIGHT_COVERS, ruta)
+                                util.call_out_null(comando)
+                                self.ponerCaratula(self.sel_juego.obj.idgame, self.wb_img_caratula1)
+                            elif self.core.prefs.DESTINO_ARRASTRE == 'D':
+                                ruta = self.core.getRutaDisco(self.sel_juego.obj.idgame)
+                                shutil.copy(fichero, ruta)
+                                comando = 'mogrify -resize %dx%d! "%s"' % (self.core.prefs.WIDTH_DISCS, self.core.prefs.HEIGHT_DISCS, ruta)
+                                util.call_out_null(comando)
+                                self.ponerDisco(self.sel_juego.obj.idgame, self.wb_img_disco1)
+
+            elif fichero.startswith("http://"):
+                # Arrastrar imagenes (png, jpg, gif) desde el navegador
+                if(util.esImagen(fichero) and self.core.prefs.DRAG_AND_DROP_HTTP):
                     if self.sel_juego.it != None:
-                        # Arrastrar imagenes (png, jpg, gif) desde el escritorio
-                        if(util.esImagen(fichero)):
+                        if self.core.prefs.DESTINO_ARRASTRE == 'C':
                             ruta = self.core.getRutaCaratula(self.sel_juego.obj.idgame)
-                            shutil.copy(fichero, ruta)
+                            util.descargar(fichero, ruta)
                             comando = 'mogrify -resize %dx%d! "%s"' % (self.core.prefs.WIDTH_COVERS, self.core.prefs.HEIGHT_COVERS, ruta)
                             util.call_out_null(comando)
                             self.ponerCaratula(self.sel_juego.obj.idgame, self.wb_img_caratula1)
-            elif fichero.startswith("http://") and self.core.prefs.DRAG_AND_DROP_HTTP:
-                # Arrastrar imagenes (png, jpg, gif) desde el navegador
-                if(util.esImagen(fichero)):
-                    ruta = self.core.getRutaCaratula(self.sel_juego.obj.idgame)
-                    util.descargar(fichero, ruta)
-                    comando = 'mogrify -resize %dx%d! "%s"' % (self.core.prefs.WIDTH_COVERS, self.core.prefs.HEIGHT_COVERS, ruta)
-                    util.call_out_null(comando)
-                    self.ponerCaratula(self.sel_juego.obj.idgame, self.wb_img_caratula1)
+                        elif self.core.prefs.DESTINO_ARRASTRE == 'D':
+                            ruta = self.core.getRutaDisco(self.sel_juego.obj.idgame)
+                            util.descargar(fichero, ruta)
+                            comando = 'mogrify -resize %dx%d! "%s"' % (self.core.prefs.WIDTH_DISCS, self.core.prefs.HEIGHT_DISCS, ruta)
+                            util.call_out_null(comando)
+                            self.ponerDisco(self.sel_juego.obj.idgame, self.wb_img_disco1)
 
-        # FIXME, RAR y DIRECTORIOS ?
-        listaArrastrados.sort()
-        if self.poolTrabajo and len(listaArrastrados)>0:
-            self.poolTrabajo.nuevoTrabajoAnadir(listaArrastrados, self.sel_parti.obj.device)
+        if len(listaISO) > 0:
+            listaISO.sort()
+            self.poolTrabajo.nuevoTrabajoAnadir( listaISO , self.sel_parti.obj.device)
+            
+        if len(listaRAR) > 0:
+            listaRAR.sort()
+            self.poolTrabajo.nuevoTrabajoDescomprimirRAR( listaRAR , self.sel_parti.obj)
+            
+        if len(listaDirectorios) > 0:
+            listaDirectorios.sort()
+            self.poolTrabajo.nuevoTrabajoRecorrerDirectorio( listaDirectorios , self.sel_parti.obj)
 
     def callback_empieza_progreso(self, trabajo):
         self.hiloCalcularProgreso = HiloCalcularProgreso( trabajo, self.actualizarLabel , self.actualizarFraccion )

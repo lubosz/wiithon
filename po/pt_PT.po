@@ -93,10 +93,7 @@ msgstr ""
 msgid "1j."
 msgstr ""
 
-msgid "<b>Herramientas y utilidades</b>"
-msgstr ""
-
-msgid "<small><i>* = requiere reiniciar la aplicacion</i></small>"
+msgid "<small><i>* = algunas opciones requieren reiniciar.</i></small>"
 msgstr ""
 
 msgid "??"
@@ -211,6 +208,9 @@ msgstr ""
 msgid "Capacidad On-line: "
 msgstr ""
 
+msgid "Caratula"
+msgstr ""
+
 msgid ""
 "Caratula del disco.\n"
 "Por defecto: 160x160"
@@ -237,6 +237,9 @@ msgid "Clasificacion parental: "
 msgstr ""
 
 msgid "Clasificar"
+msgstr ""
+
+msgid "Comando para abrir carpetas."
 msgstr ""
 
 msgid "Configura las preferencias."
@@ -320,6 +323,15 @@ msgstr ""
 
 #, python-format
 msgid "Deseas borrar el archivo %s?"
+msgstr ""
+
+msgid "Deseas descargar informacion de los juegos desde WiiTDB?"
+msgstr ""
+
+msgid "Destino del arrastre de una imagen"
+msgstr ""
+
+msgid "Disc-art"
 msgstr ""
 
 msgid "Dispositivo"
@@ -505,9 +517,6 @@ msgstr ""
 msgid "Extraer Juego %s a ISO"
 msgstr ""
 
-msgid "Extraer a ISO"
-msgstr ""
-
 #, python-format
 msgid "Falla la descarga de la caratula de %s"
 msgstr ""
@@ -577,6 +586,15 @@ msgid "Hay %d tareas"
 msgstr ""
 
 msgid "Hay mas de un juego de la Wii, deja solo 1 para eliminar la ambiguedad"
+msgstr ""
+
+msgid ""
+"Hay una tarea que esta bloqueando las preferencias.\n"
+"\n"
+"Espere a que finalize."
+msgstr ""
+
+msgid "Herramientas y utilidades"
 msgstr ""
 
 msgid "IDGAME"
@@ -675,6 +693,15 @@ msgid "Listando juegos de : %s"
 msgstr ""
 
 msgid "Local"
+msgstr ""
+
+msgid "Los isos descomprimidos desde el rar remplaza imagenes iso sin preguntar."
+msgstr ""
+
+msgid "Mostrar una advertencia cuando no hay ninguna informacion WiiTDB"
+msgstr ""
+
+msgid "Mostrar una advertencia cuando no hay particiones WBFS"
 msgstr ""
 
 msgid "NO"
@@ -842,6 +869,15 @@ msgstr ""
 msgid "Permite seleccionar un directorio del cual se aniadiran todos los juegos de Wii que se encuentren recursivamente."
 msgstr ""
 
+msgid "Permitir arrastrar juegos en ISO, RAR o directorios."
+msgstr ""
+
+msgid "Permitir establecer caratulas desde http por arrastre"
+msgstr ""
+
+msgid "Permitir establecer caratulas locales por arrastre"
+msgstr ""
+
 msgid "Por defecto"
 msgstr ""
 
@@ -852,6 +888,12 @@ msgid "Portuguese"
 msgstr ""
 
 msgid "Preferencias"
+msgstr ""
+
+msgid "Pregunta borrar el .iso (cuando aniamos un rar)"
+msgstr ""
+
+msgid "Pregunta borrar el .rar (cuando aniamos un rar)"
 msgstr ""
 
 #, python-format
@@ -920,6 +962,9 @@ msgstr ""
 msgid "Saliendo por peticion del usuario."
 msgstr ""
 
+msgid "Se ha detectado que ninguno de tus juegos disponen de informacion extra, descargada de Internet."
+msgstr ""
+
 #, python-format
 msgid "Se han detectado caracteres no validos: %s"
 msgstr ""
@@ -927,11 +972,7 @@ msgstr ""
 msgid "Se van a copiar los siguientes juegos a"
 msgstr ""
 
-#, python-format
-msgid ""
-"Seguro que deseas descargar informacion de los juegos de WiiTDB?\n"
-"\n"
-"%s"
+msgid "Seguro que deseas descargar informacion de los juegos de WiiTDB?"
 msgstr ""
 
 msgid "Selecciona la particion de destino:"
@@ -1007,6 +1048,9 @@ msgid "Wiithon 1.1"
 msgstr ""
 
 msgid "XML invalido"
+msgstr ""
+
+msgid "Ya estas descargando la informacion WiiTDB ..."
 msgstr ""
 
 msgid "Ya hay un juego con ese IDGAME"
