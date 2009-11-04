@@ -12,8 +12,7 @@ Upstream Author(s):
 
 Copyright:
 
-    <Copyright (C) YYYY Firstname Lastname>
-    <likewise for another author>
+    (C) 2009 Ricardo Marmolejo García
 
 License:
 
@@ -38,6 +37,3 @@ The Debian packaging is:
     Copyright (C) 2009 Carlo Mandelli <camandel@gmail.com>
 
 and is licensed under the GPL version 3, see above.
-
-# Please also look if there are files or directories which have a
-# different copyright/license attached and list them here.
