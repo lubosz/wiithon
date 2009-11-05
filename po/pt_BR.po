@@ -230,6 +230,9 @@ msgstr ""
 msgid "Borrando juego %s"
 msgstr ""
 
+msgid "Borrar"
+msgstr ""
+
 msgid "Borrar juego con IDGAME"
 msgstr "Apagar jogo com IDGAME"
 

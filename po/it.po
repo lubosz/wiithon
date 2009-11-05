@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: wiithon 1.0\n"
 "Report-Msgid-Bugs-To: makiolo@gmail.com\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2009-11-05 21:16+0100\n"
+"PO-Revision-Date: 2009-11-05 21:39+0100\n"
 "Last-Translator: Carlo Mandelli <camandel@gmail.com>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -186,6 +186,9 @@ msgstr "Elimina il gioco selezionato."
 #, python-format
 msgid "Borrando juego %s"
 msgstr "Sto cancellando il gioco %s"
+
+msgid "Borrar"
+msgstr "Elimina"
 
 msgid "Borrar juego con IDGAME"
 msgstr "Cancella il gioco con IDGAME"

@@ -8,6 +8,7 @@ char *s = N_("Acerca de ...");
 char *s = N_("Actualiza la informacion de los juegos con BDD de Internet.");
 char *s = N_("Aniade un nuevo juego de Wii, a partir de una imagen ISO, que opcionalmente puede estar comprimida en RAR.");
 char *s = N_("Aniadir directorio");
+char *s = N_("Borrar");
 char *s = N_("Asistente para particiones WBFS. Le aprarecera una lista de particiones, (solamente FAT32) de la cual, debera elegir una.");
 char *s = N_("Borra el juego seleccionado.");
 char *s = N_("Busca en todos los discos duros, particiones de tipo WBFS");
