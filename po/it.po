@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: wiithon 1.0\n"
 "Report-Msgid-Bugs-To: makiolo@gmail.com\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2009-11-04 20:07+0100\n"
+"PO-Revision-Date: 2009-11-05 21:16+0100\n"
 "Last-Translator: Carlo Mandelli <camandel@gmail.com>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -147,7 +147,7 @@ msgstr ""
 "\n"
 
 msgid "Altura imagen caratula"
-msgstr "Altezza immagine copertina:"
+msgstr "Altezza immagine copertina"
 
 msgid "Altura imagen disc-art"
 msgstr "Altezza immagine disc-art"
@@ -338,7 +338,7 @@ msgid "Deseas descargar informacion de los juegos desde WiiTDB?"
 msgstr "Vuoi scaricare le informazioni dei giochi da WiiTDB?"
 
 msgid "Destino del arrastre de una imagen"
-msgstr ""
+msgstr "Destinazione immagine trascinata"
 
 msgid "Disc-art"
 msgstr "Disc-art"
@@ -889,13 +889,13 @@ msgid "Permite seleccionar un directorio del cual se aniadiran todos los juegos 
 msgstr "Consente di selezionare una directory da cui verranno aggiunti tutti i giochi Wii trovati in modo ricorsivo."
 
 msgid "Permitir arrastrar juegos en ISO, RAR o directorios."
-msgstr ""
+msgstr "Permette il trascinamento dei giochi in ISO, RAR o cartelle."
 
 msgid "Permitir establecer caratulas desde http por arrastre"
-msgstr ""
+msgstr "Permette di impostarre le copertine da http tramite trascinamento"
 
 msgid "Permitir establecer caratulas locales por arrastre"
-msgstr ""
+msgstr "Permette di impostare le copertine locali tramite trascinamento"
 
 msgid "Por defecto"
 msgstr "Default"
@@ -910,10 +910,10 @@ msgid "Preferencias"
 msgstr "Preferenze"
 
 msgid "Pregunta borrar el .iso (cuando aniamos un rar)"
-msgstr ""
+msgstr "Richiede conferma cancellazione ISO"
 
 msgid "Pregunta borrar el .rar (cuando aniamos un rar)"
-msgstr ""
+msgstr "Richiede conferma cancellazione RAR"
 
 #, python-format
 msgid "Presiona cualquier tecla para mostrar %d lineas mas"
