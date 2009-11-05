@@ -66,7 +66,7 @@
                 <property name="visible">True</property>
 		<property name="has_tooltip">True</property>
                 <property name="tooltip_text" translatable="yes">Borra el juego seleccionado.</property>
-		<property name="tooltip_text" translatable="yes">Borra el juego seleccionado.</property>
+		<property name="label" translatable="yes">Borrar</property>
                 <property name="icon_name">edit-delete</property>
               </object>
               <packing>
