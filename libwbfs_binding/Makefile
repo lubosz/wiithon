@@ -1,12 +1,6 @@
 # -*- coding: utf-8 -*-
 CC = gcc
-ARCH=${shell uname -m}
-ifeq ($(ARCH), x86_64)
-	CFLAGS_MACH = -mtune=k8
-else
-	CFLAGS_MACH = -mtune=generic
-endif
-CFLAGS = -O2 -Wall -m32 $(CFLAGS_MACH)
+CFLAGS = -O2 -Wall -m32
 DEFINES = -DLARGE_FILES -D_FILE_OFFSET_BITS=64
 LDFLAGS = 
 INCLUDE = -Ilibwbfs
