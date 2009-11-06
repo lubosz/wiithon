@@ -291,10 +291,7 @@ clean_libwbfs_binding:
 	$(MAKE) -C libwbfs_binding clean
 
 libwbfs_binding/wiithon_wrapper: libwbfs_binding/*.c libwbfs_binding/libwbfs/*.c libwbfs_binding/libwbfs/*.h 
-	$(MAKE) -C libwbfs_binding
-	-./libwbfs_binding/wiithon_wrapper -h
-	-file ./libwbfs_binding/wiithon_wrapper
-	
+	$(MAKE) -C libwbfs_binding	
 
 unrar-nonfree/unrar: unrar-nonfree/*.cpp unrar-nonfree/*.hpp
 	$(MAKE) -C unrar-nonfree
