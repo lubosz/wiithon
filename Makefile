@@ -79,7 +79,6 @@ copy_archives: making_directories
 	cp unrar-nonfree/unrar $(DESTDIR)$(PREFIX)/share/wiithon/
 	
 	cp *.py $(DESTDIR)$(PREFIX)/share/wiithon
-	cp libwbfs_binding/libwbfs/libwbfs.so $(DESTDIR)$(PREFIX)/lib/
 
 	cp wiithon_autodetectar.sh $(DESTDIR)$(PREFIX)/share/wiithon
 	cp wiithon_autodetectar_lector.sh $(DESTDIR)$(PREFIX)/share/wiithon
@@ -120,11 +119,6 @@ set_permisses:
 	@echo "=================================================================="
 
 postinst:
-ifeq ($(ARCH), x86_64)
-	ln -sf $(DESTDIR)$(PREFIX)/lib/libwbfs.so $(DESTDIR)/usr/lib32
-else
-	ln -sf $(DESTDIR)$(PREFIX)/lib/libwbfs.so $(DESTDIR)/usr/lib
-endif
 	-ln -sf $(DESTDIR)$(PREFIX)/share/wiithon/wiithon.py $(DESTDIR)$(PREFIX)/bin/wiithon
 	-ln -sf $(DESTDIR)$(PREFIX)/share/wiithon/wiithon_wrapper $(DESTDIR)$(PREFIX)/bin/wiithon_wrapper
 	
@@ -199,6 +193,10 @@ clean_old_wiithon: recicled_old_wiithon
 	-$(RM) /usr/share/applications/wiithon_root.desktop
 	
 	-$(RM) $(PREFIX)/share/wiithon/HOME.conf
+
+	-$(RM) $(PREFIX)/lib/libwbfs.so
+	-$(RM) /usr/lib/libwbfs.so
+	-$(RM) /usr/lib32/libwbfs.so
 	
 	@echo "=================================================================="
 	@echo "Clean old installs"
@@ -207,7 +205,6 @@ clean_old_wiithon: recicled_old_wiithon
 delete_archives_installation:
 	-$(RM) $(PREFIX)/share/wiithon/*.py
 	-$(RM) $(PREFIX)/share/wiithon/wiithon_wrapper
-	-$(RM) $(PREFIX)/lib/libwbfs.so
 	-$(RM) $(PREFIX)/share/wiithon/unrar
 	-$(RM) $(PREFIX)/share/wiithon/*.sh
 	-$(RM) $(PREFIX)/share/wiithon/recursos/glade/*.ui
@@ -240,8 +237,6 @@ delete_archives_installation:
 	-$(RM) /usr/share/pixmaps/wiithon.svg
 	
 postrm:
-	-$(RM) /usr/lib/libwbfs.so
-	-$(RM) /usr/lib32/libwbfs.so
 	-$(RM) $(PREFIX)/bin/wiithon
 	-$(RM) $(PREFIX)/bin/wiithon_wrapper
 	
@@ -297,9 +292,8 @@ clean_libwbfs_binding:
 
 libwbfs_binding/wiithon_wrapper: libwbfs_binding/*.c libwbfs_binding/libwbfs/*.c libwbfs_binding/libwbfs/*.h 
 	$(MAKE) -C libwbfs_binding
-	-./libwbfs_binding/wiithon_wrapper.sh -h
+	-./libwbfs_binding/wiithon_wrapper -h
 	-file ./libwbfs_binding/wiithon_wrapper
-	-file ./libwbfs_binding/libwbfs/libwbfs.so
 	
 
 unrar-nonfree/unrar: unrar-nonfree/*.cpp unrar-nonfree/*.hpp
