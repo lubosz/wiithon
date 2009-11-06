@@ -1470,15 +1470,3 @@ msgstr ""
 #: wiithon.py:80
 msgid "Interrumpido por el usuario"
 msgstr ""
-
-#~ msgid "<small><i>* = requiere reiniciar la aplicacion</i></small>"
-#~ msgstr "<small><i>* = requiere reiniciar la aplicacin</i></small>"
-
-#~ msgid ""
-#~ "Seguro que deseas descargar informacion de los juegos de WiiTDB?\n"
-#~ "\n"
-#~ "%s"
-#~ msgstr ""
-#~ "Seguro que deseas descargar informacin de los juegos de WiiTDB?\n"
-#~ "\n"
-#~ "%s"
