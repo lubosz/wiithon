@@ -6,36 +6,52 @@ INSTALL_PKG=apt-get install
 
 all: compile
 
+ayuda: help
 help:
 	@echo ==================================================================
-	@echo "Escribe \"make\" para compilar todo"
+	@echo "step 1: \"make\""
+	@echo "step 2: \"sudo make install\""
 	@echo ""
-	@echo "Escribe \"sudo make install\" solo instala"
-	@echo "Escribe \"sudo make install_auto\" para instalar Wiithon y sus dependencias (con apt-get)"
+	@echo "Other options:"
 	@echo ""
-	@echo "Escribe \"sudo make uninstall\" para desinstalar wiithon"
-	@echo "Escribe \"sudo make purge\" para desinstalar wiithon completamente"
-	@echo "Escribe \"sudo make dependencias\" para instalar las dependencias con apt-get"
+	@echo "Type: \"sudo make install_auto\" for install automatically"
 	@echo ""
-	@echo "Escribe \"make run LANGUAGE=XX\" para instalar & autoejecutar en un idioma como es, en, pt_BR ..."
+	@echo "Type: \"sudo make uninstall\" for uninstall"
+	@echo "Type: \"sudo make purge\" for full uninstall (covers, disc-art ...)"
 	@echo ==================================================================
 
-run: install
-	LANGUAGE=$(LANGUAGE) wiithon
+install_auto: dependencias compile install permisos
 
-install_auto: dependencias compile install
-
-permisos:
-	gpasswd -a ${SUDO_USER} disk
-
-dependencias: permisos
+dependencias:
 	$(INSTALL_PKG) libc6 libc6-dev intltool imagemagick python-gtk2 python-glade2 python-sexy python-sqlalchemy gnome-icon-theme g++
 	-@$(INSTALL_PKG) libc6-dev-i386 libc6-i386
 	@echo "=================================================================="
 	@echo "Install depends OK"
 	@echo "=================================================================="
 
-compile: ./po/locale/da_DK/LC_MESSAGES/wiithon.mo ./po/locale/fi_FI/LC_MESSAGES/wiithon.mo ./po/locale/tr_TR/LC_MESSAGES/wiithon.mo ./po/locale/ru_RU/LC_MESSAGES/wiithon.mo ./po/locale/ko_KR/LC_MESSAGES/wiithon.mo ./po/locale/it/LC_MESSAGES/wiithon.mo ./po/locale/sv_SE/LC_MESSAGES/wiithon.mo ./po/locale/es/LC_MESSAGES/wiithon.mo ./po/locale/pt_PT/LC_MESSAGES/wiithon.mo ./po/locale/en/LC_MESSAGES/wiithon.mo ./po/locale/nl_NL/LC_MESSAGES/wiithon.mo ./po/locale/nb_NO/LC_MESSAGES/wiithon.mo ./po/locale/ja_JP/LC_MESSAGES/wiithon.mo ./po/locale/fr/LC_MESSAGES/wiithon.mo ./po/locale/pt_BR/LC_MESSAGES/wiithon.mo ./po/locale/de/LC_MESSAGES/wiithon.mo ./po/locale/es_CA/LC_MESSAGES/wiithon.mo unrar-nonfree/unrar libwbfs_binding/wiithon_wrapper
+da_DK: po/locale/da_DK/LC_MESSAGES/wiithon.mo
+fi_FI: po/locale/fi_FI/LC_MESSAGES/wiithon.mo
+tr_TR: po/locale/tr_TR/LC_MESSAGES/wiithon.mo
+ru_RU: po/locale/ru_RU/LC_MESSAGES/wiithon.mo
+ko_KR: po/locale/ko_KR/LC_MESSAGES/wiithon.mo
+it: po/locale/it/LC_MESSAGES/wiithon.mo
+sv_SE: po/locale/sv_SE/LC_MESSAGES/wiithon.mo
+es: po/locale/es/LC_MESSAGES/wiithon.mo
+pt_PT: po/locale/pt_PT/LC_MESSAGES/wiithon.mo
+da_DK: po/locale/en/LC_MESSAGES/wiithon.mo
+en: po/locale/nl_NL/LC_MESSAGES/wiithon.mo
+nb_NO: po/locale/nb_NO/LC_MESSAGES/wiithon.mo
+ja_JP: po/locale/ja_JP/LC_MESSAGES/wiithon.mo
+fr: po/locale/fr/LC_MESSAGES/wiithon.mo
+de: po/locale/de/LC_MESSAGES/wiithon.mo
+pt_BR: po/locale/pt_BR/LC_MESSAGES/wiithon.mo
+es_CA: po/locale/es_CA/LC_MESSAGES/wiithon.mo
+
+lang: lang_enable lang_disable
+lang_enable: it es en fr de pt_BR
+lang_disable: da_DK fi_FI tr_TR ru_RU ko_KR sv_SE pt_PT da_DK nb_NO ja_JP es_CA
+
+compile: lang unrar-nonfree/unrar libwbfs_binding/wiithon_wrapper
 	@echo "=================================================================="
 	@echo "Compile OK"
 	@echo "=================================================================="
@@ -114,12 +130,18 @@ endif
 	
 	@echo "=================================================================="
 	@echo "If you want run witthon as normal user you must add it to 'disk' group."
-	@echo "Type it: \"sudo gpasswd -a \$USER disk\" and reboot your GNOME/KDE session."
+	@echo "Type it: \"sudo gpasswd -a <user> disk\" and reboot your GNOME/KDE session."
 	@echo "=================================================================="
 
 install: clean_old_wiithon copy_archives set_permisses postinst
 	@echo "=================================================================="
 	@echo "Wiithon Install OK"
+	@echo "=================================================================="
+	
+permisos:
+	gpasswd -a ${SUDO_USER} disk
+	@echo "=================================================================="
+	@echo "Restart GNOME / KDE for it has effect."
 	@echo "=================================================================="
 
 install4ppa: copy_archives set_permisses
@@ -137,15 +159,6 @@ deb: generate_changelog
 
 deb_sign: deb
 	gpg --armor --sign --detach-sig ../wiithon_$(VERSION)_i386.deb
-
-#
-# Only need first time
-#
-#ppa-new: generate_changelog
-#	debuild -S -sa -k0xB8F0176A -I -i --lintian-opts -Ivi
-#	mv ../wiithon_$(VERSION).tar.gz ../wiithon_$(VERSION).orig.tar.gz
-#	debuild -S -sk -k0xB8F0176A -I -i --lintian-opts -Ivi
-#
 
 ppa-inc: generate_changelog
 	debuild -S -sd -k0xB8F0176A -I -i --lintian-opts -Ivi
@@ -238,9 +251,7 @@ uninstall: clean_old_wiithon delete_archives_installation postrm
 	@echo "=================================================================="
 
 purge: uninstall
-
 	-$(RM) -R ~/.wiithon
-
 	-$(RM) $(PREFIX)/share/wiithon/recursos/imagenes/caratulas/*.png
 	-$(RM) $(PREFIX)/share/wiithon/recursos/imagenes/discos/*.png
 	-rmdir $(PREFIX)/share/wiithon/recursos/imagenes/caratulas
@@ -251,12 +262,6 @@ purge: uninstall
 	-rmdir $(PREFIX)/share/wiithon
 	@echo "=================================================================="
 	@echo "Uninstall OK & all clean (purge covers & disc-art ...)"
-	@echo "=================================================================="
-
-# pull + log :D
-pullog: pull log
-	@echo "=================================================================="
-	@echo "Updated to $(VERSION)
 	@echo "=================================================================="
 
 clean: clean_libwbfs_binding clean_gettext clean_unrar
@@ -286,18 +291,19 @@ clean_gettext:
 
 clean_unrar:
 	$(MAKE) -C unrar-nonfree clean
-	
+
 clean_libwbfs_binding:
 	$(MAKE) -C libwbfs_binding clean
 
 libwbfs_binding/wiithon_wrapper: libwbfs_binding/*.c libwbfs_binding/libwbfs/*.c libwbfs_binding/libwbfs/*.h 
 	$(MAKE) -C libwbfs_binding
+	-./libwbfs_binding/wiithon_wrapper.sh -h
+	-file ./libwbfs_binding/wiithon_wrapper
+	-file ./libwbfs_binding/libwbfs/libwbfs.so
+	
 
 unrar-nonfree/unrar: unrar-nonfree/*.cpp unrar-nonfree/*.hpp
 	$(MAKE) -C unrar-nonfree
-
-pull:
-	bzr pull
 
 commit: clean compile
 	bzr commit --file="COMMIT" && echo "" > COMMIT
@@ -305,17 +311,16 @@ commit: clean compile
 log:
 	bzr log --forward --short
 
-diff:
-	-@bzr diff
-
 # TRADUCCION
 # http://faq.pygtk.org/index.py?req=show&file=faq22.002.htp
 # http://misdocumentos.net/wiki/linux/locales
-
 # Generar plantilla POT
+# --no-location
+# --omit-header
+# --sort-output
 po/plantilla.pot: recursos/glade/*.ui.h *.py
-	@echo "*** GETTEXT *** Extrayendo strings del código"
-	xgettext --language=Python --no-wrap --no-location --sort-output --omit-header --keyword=_ --keyword=N_ --from-code=utf-8 --package-name="wiithon" --msgid-bugs-address=$(EMAIL) -o po/plantilla.pot $^ 2> /dev/null
+	@echo "*** GETTEXT *** Extract strings from code"
+	xgettext --omit-header --language=Python --debug --no-wrap --sort-by-file --keyword=_ --keyword=N_ --from-code=utf-8 --package-name="wiithon" --package-version="$(VERSION)" --msgid-bugs-address=$(EMAIL) -o po/plantilla.pot $^ 2> /dev/null
 
 # extraer strings del glade
 recursos/glade/%.ui.h: recursos/glade/%.ui
@@ -324,8 +329,9 @@ recursos/glade/%.ui.h: recursos/glade/%.ui
 # generar PO, si ya existe, mezcla o sincroniza
 # He desactivado fuzzy con -N
 # tambien he quitado los comentarios con --no-location
+# --no-location
 po/%.po: po/plantilla.pot
-	msgmerge -U -N --no-wrap --no-location $@ $(filter %.pot, $^)
+	msgmerge -U -N --no-wrap --sort-by-file $@ $(filter %.pot, $^)
 	@touch $@
 
 # generar MO
@@ -337,10 +343,22 @@ po/locale/%/LC_MESSAGES/wiithon.mo: po/%.po
 	msgfmt $< -o $@
 	@rmdir $(basename $@)
 
+first_time:
+	@echo ""
+#
+# Only need first time
+#
+#ppa-new: generate_changelog
+#	debuild -S -sa -k0xB8F0176A -I -i --lintian-opts -Ivi
+#	mv ../wiithon_$(VERSION).tar.gz ../wiithon_$(VERSION).orig.tar.gz
+#	debuild -S -sk -k0xB8F0176A -I -i --lintian-opts -Ivi
+#
+
+#
+# Only for new languages
 # generar PO VACIO a partir de plantilla POT
-initPO: po/plantilla.pot
-	@echo "*** GETTEXT *** Creando PO"
-	
+#initPO: po/plantilla.pot
+#	@echo "*** GETTEXT *** Creando PO"
 	# Vamos comentando los idiomas que se pretende traducir para evitar borrados
 	
 	# Castellano
@@ -358,23 +376,22 @@ initPO: po/plantilla.pot
 	# catalan es_CA
 	#msginit -i po/plantilla.pot -o po/es_CA.po --no-translator
 	# portugues
-	msginit -i po/plantilla.pot -o po/pt_PT.po --no-translator
+	#msginit -i po/plantilla.pot -o po/pt_PT.po --no-translator
 	# danish da_DK
-	msginit -i po/plantilla.pot -o po/da_DK.po --no-translator
+	#msginit -i po/plantilla.pot -o po/da_DK.po --no-translator
 	# dutch nl_NL
-	msginit -i po/plantilla.pot -o po/nl_NL.po --no-translator
+	#msginit -i po/plantilla.pot -o po/nl_NL.po --no-translator
 	# finnish fi_FI
-	msginit -i po/plantilla.pot -o po/fi_FI.po --no-translator
+	#msginit -i po/plantilla.pot -o po/fi_FI.po --no-translator
 	# japanese ja_JP
-	msginit -i po/plantilla.pot -o po/ja_JP.po --no-translator
+	#msginit -i po/plantilla.pot -o po/ja_JP.po --no-translator
 	# korean ko_KR
-	msginit -i po/plantilla.pot -o po/ko_KR.po --no-translator
+	#msginit -i po/plantilla.pot -o po/ko_KR.po --no-translator
 	# norwegian nb_NO
-	msginit -i po/plantilla.pot -o po/nb_NO.po --no-translator
+	#msginit -i po/plantilla.pot -o po/nb_NO.po --no-translator
 	# russian ru_RU
-	msginit -i po/plantilla.pot -o po/ru_RU.po --no-translator
+	#msginit -i po/plantilla.pot -o po/ru_RU.po --no-translator
 	# swedish sv_SE
-	msginit -i po/plantilla.pot -o po/sv_SE.po --no-translator
+	#msginit -i po/plantilla.pot -o po/sv_SE.po --no-translator
 	# turkish tr_TR
-	msginit -i po/plantilla.pot -o po/tr_TR.po --no-translator
-
+	#msginit -i po/plantilla.pot -o po/tr_TR.po --no-translator
