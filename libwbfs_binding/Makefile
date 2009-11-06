@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
 CC = gcc
-CFLAGS = -O2 -Wall -m32
+CFLAGS = -O2 -Wall
 DEFINES = -DLARGE_FILES -D_FILE_OFFSET_BITS=64
-LDFLAGS = 
+LDFLAGS = -m32
 INCLUDE = -Ilibwbfs
 OBJETIVOS = wiithon_wrapper
 DEPENDENCIAS = libwbfs/libwbfs.o libwbfs/libwbfs_linux.o libwbfs/wiidisc.o libwbfs/rijndael.o wiithon_wrapper.o
