@@ -9,4 +9,5 @@ zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz- bloquear leer wiitdb durante su escritura
 - icono borrar no se ve bien en el tema de 9.10
 - poner info wiitdb bloqueada en lugar de "No has seleccionado ningún juego"
 - si hay 0 particiones -> comprobar si el usuario pertenece al grupo "disk".
-
+- display correct "version-revision" in window's title and credits
+- cleanup code to remove lintian errors from deb package
