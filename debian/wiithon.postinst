@@ -8,7 +8,7 @@ ln -sf /usr/local/share/wiithon/wiithon_wrapper /usr/local/bin/wiithon_wrapper
 
 echo
 echo "If you want run witthon as normal user you must add it to 'disk' group."
-echo "Type it: \"sudo gpasswd -a \$USER disk\" and reboot your GNOME/KDE session."
+echo "Type: \"sudo gpasswd -a \$USER disk\" and restart your GNOME/KDE session."
 
 #db_input high wiithon/group-disk || true
 #db_go || true
