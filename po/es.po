@@ -1484,6 +1484,9 @@ msgstr ""
 msgid "Interrumpido por el usuario"
 msgstr ""
 
+#~ msgid "<small><i>* = requiere reiniciar la aplicacion</i></small>"
+#~ msgstr "<small><i>* = requiere reiniciar la aplicación</i></small>"
+
 #~ msgid ""
 #~ "Seguro que deseas descargar informacion de los juegos de WiiTDB?\n"
 #~ "\n"
@@ -1492,6 +1495,3 @@ msgstr ""
 #~ "¿Seguro que deseas descargar información de los juegos de WiiTDB?\n"
 #~ "\n"
 #~ "%s"
-
-#~ msgid "<small><i>* = requiere reiniciar la aplicacion</i></small>"
-#~ msgstr "<small><i>* = requiere reiniciar la aplicación</i></small>"
