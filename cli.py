@@ -11,6 +11,8 @@ from util import NonRepeatList
 from wiitdb_schema import Particion
 import config
 
+(AUTOMATICO, EXPLICITO)=([ "%d" % i for i in range(2) ])
+
 class WiithonCLI:
 
     # Lista de ficheros pendientes de añadir, estos pueden ser:
@@ -27,33 +29,49 @@ class WiithonCLI:
         self.core = core
 
     # Define una única partición
-    def get_elegir_particion(self, listaParticiones):
-        # Del error SI se dan cuenta el GUI o CLI
-        if(len(listaParticiones) <= 0):
-            raise AssertionError, _("Has conectado el disco duro? No se ha encontrado ninguna particion valida.")
-        elif(len(listaParticiones) > 1):
-            haElegido = False
-            print _("Lista de particiones autodetectadas : ")
-            haElegido = False
-            while( not haElegido ):
-                i = 1
-                for dispositivo in listaParticiones:
-                    print "%d - %s" % (i , dispositivo)
-                    i = i + 1
-                print _("%d - Salir") % (i)
-                iElegido = raw_input(_("Elige la particion WBFS con la que va ha trabajar : "))
-                if( iElegido == i ):
-                    raise AssertionError, _("Saliendo por peticion del usuario.")
-                    haElegido = True
-                else:
-                    try:
-                        return listaParticiones[int(iElegido) - 1]
-                    except IndexError:
-                        raise AssertionError, _("Fuera de rango")
-                    except ValueError:
-                        raise AssertionError, _("Valor incorrecto")
-        else:
-            return listaParticiones[0]
+    def get_elegir_particion(self, listaParticiones, modo_particion = AUTOMATICO, device_explicito = ''):
+        
+        if modo_particion == EXPLICITO:
+            i = 0
+            encontrado = False
+            while not encontrado and i<len(listaParticiones):
+                encontrado = listaParticiones[i].device == device_explicito
+                if not encontrado:
+                    i += 1
+            if encontrado:
+                return listaParticiones[i]
+            else:
+                print _("No se ha encontrado la particion: %s") % device_explicito
+                raise AssertionError, _("Has conectado el disco duro? No se ha encontrado ninguna particion valida.")
+
+        else: # AUTOMATICO
+            # Del error SI se dan cuenta el GUI o CLI
+            if(len(listaParticiones) <= 0):
+                raise AssertionError, _("Has conectado el disco duro? No se ha encontrado ninguna particion valida.")
+            elif(len(listaParticiones) > 1):
+                haElegido = False
+                print _("Lista de particiones autodetectadas : ")
+                haElegido = False
+                while( not haElegido ):
+                    i = 1
+                    for dispositivo in listaParticiones:
+                        print "%d - %s" % (i , dispositivo)
+                        i = i + 1
+                    print _("%d - Salir") % (i)
+                    iElegido = raw_input(_("Elige la particion WBFS con la que va ha trabajar : "))
+                    if( iElegido == i ):
+                        raise AssertionError, _("Saliendo por peticion del usuario.")
+                        haElegido = True
+                    else:
+                        try:
+                            return listaParticiones[int(iElegido) - 1]
+                        except IndexError:
+                            raise AssertionError, _("Fuera de rango")
+                        except ValueError:
+                            raise AssertionError, _("Valor incorrecto")
+            else:
+                return listaParticiones[0]
+            
             
     def criterio_ordenacion_juegos(self, juego1, juego2):
         if juego1.title.lower() > juego2.title.lower():
@@ -67,18 +85,28 @@ class WiithonCLI:
     # No entiendo muy bien lo de opciones y argumentos, aunque no me lo he podido mirar mucho
     def main(self, opciones, argumentos):
         
-        (NADA, LISTAR, EXTRAER, FORMATEAR, MOSTRAR_AYUDA, RENOMBRAR,
-        BORRAR, INSTALAR)=([ "%d" % i for i in range(8) ])
+        (NADA, LISTAR, ANADIR, ANADIR_ALL, EXTRAER, FORMATEAR, MOSTRAR_AYUDA, RENOMBRAR,
+        BORRAR, INSTALAR, CARATULAS, DISCOS)=([ "%d" % i for i in range(12) ])
         
         accion = NADA
+        modo_game = AUTOMATICO
+        modo_particion = AUTOMATICO
+        device_explicito = ''
+        game_explicito = ''
 
         PAUSA = False
         for option, value in opciones:
             if config.DEBUG:
                 print "%s => %s" % (option, value)            
 
-            if   option in ['-p', '--pause']:
+            if   option in ['--pause']:
                 PAUSA = True
+            elif option in ['-p', '--partition']:
+                modo_particion = EXPLICITO
+                device_explicito = value
+            elif option in ['-g', '--game']:
+                modo_game = EXPLICITO
+                game_explicito = value
             elif option in ['-w', '--work']:
                 if os.path.isdir(value):
                     os.chdir(value)
@@ -88,6 +116,10 @@ class WiithonCLI:
                 accion = LISTAR
             elif option in ['-f', '--format']:
                 accion = FORMATEAR
+            elif option in ['-m','--massive']:
+                accion = ANADIR_ALL
+            elif option in ['-a', '--add']:
+                accion = ANADIR
             elif option in ['-e', '--extract']:
                 accion = EXTRAER
             elif option in ['-r', '--rename']:
@@ -96,21 +128,26 @@ class WiithonCLI:
                 accion = BORRAR
             elif option in ['-i', '--install']:
                 accion = INSTALAR
+            elif option in ['--covers']:
+                accion = CARATULAS
+            elif option in ['--discs']:
+                accion = DISCOS
         
         # A = acciones que necesitan una particion WBFS
         # OR
         # B = acciones que necesitan una particion WBFS y un juego
-        if accion == LISTAR or accion == EXTRAER or accion == RENOMBRAR or accion == BORRAR or accion == INSTALAR:
+        if accion == LISTAR or accion == ANADIR or accion == ANADIR_ALL or accion == EXTRAER or accion == RENOMBRAR or accion == BORRAR or accion == INSTALAR or accion == CARATULAS or accion == DISCOS:
             listaParticiones = self.core.sincronizarParticiones()
-            self.sel_parti = self.get_elegir_particion(listaParticiones)
+            self.sel_parti = self.get_elegir_particion(listaParticiones, modo_particion, device_explicito)
             listaJuegos = self.core.syncronizarJuegos(self.sel_parti)
             listaJuegos.sort( self.criterio_ordenacion_juegos )
             hayJuegos = len(listaJuegos) > 0
-            if hayJuegos:
-                
-                # B = acciones que necesitan una particion WBFS y un juego
-                if accion == EXTRAER or accion == RENOMBRAR or accion == BORRAR:
-                    juego = self.getJuego(listaJuegos)
+
+            
+            # B = acciones que necesitan una particion WBFS y un juego
+            if accion == EXTRAER or accion == RENOMBRAR or accion == BORRAR:
+                if hayJuegos:
+                    juego = self.getJuego(listaJuegos, modo_game, game_explicito)
                     if juego is not None:
                         if accion == EXTRAER:
                             print _("Extraer Juego %s a ISO") % juego
@@ -133,21 +170,68 @@ class WiithonCLI:
                                 print _("ERROR borrando el juego")
                     else:
                         print _("No has seleccionado ningun juego")
+                else:
+                    print _("La particion %s no contiene juegos") % self.sel_parti
+                    
+            # A = acciones que necesitan una particion WBFS
+            if accion == ANADIR or accion == ANADIR_ALL or accion == LISTAR or accion == INSTALAR or accion == CARATULAS or accion == DISCOS:
+                if accion == ANADIR_ALL or accion == ANADIR:
+                
+                    if accion == ANADIR_ALL:
+                        # directorio actual
+                        archivo = "."
                         
-                # A = acciones que necesitan una particion WBFS
-                if accion == LISTAR or accion == INSTALAR:
-                    if accion == LISTAR:
-                        print _("Listando juegos de : %s") % self.sel_parti
-                        self.listarJuegos(listaJuegos)
-                        self.mostrarEspacioLibre(self.sel_parti)
-                    elif accion == INSTALAR:
-                        print _("Inserte un juego de la Wii en su lector de DVD ...")
-                        print _("Juegos originales, solo con lectores LG.")
-                        raw_input(_("Pulse cualquier tecla para continuar ... "))
-                        self.instalarJuego(self.sel_parti)
+                        print _("Buscando ficheros RAR recursivamente ... ")
+                        self.encolar( util.rec_glob(archivo, "*.rar") )
 
-            else:
-                print _("La particion %s no contiene juegos") % self.sel_parti
+                        print _("Buscando imagenes ISO recursivamente ... ")
+                        self.encolar( util.rec_glob(archivo, "*.iso") )
+                        
+                        
+                    elif accion == ANADIR:
+                        for parametro in argumentos:
+                            if(os.path.isfile(parametro) and (util.getExtension(parametro) == "iso" or util.getExtension(parametro) == "rar")):
+                                parametro = os.path.abspath( parametro )
+                                self.encolar( parametro )
+                            elif( not util.tieneCaracteresRaros(parametro) ):
+                                self.encolar( glob.glob(parametro) )
+                            else:
+                                self.encolar( parametro )
+
+                    # comun a ANADIR y ANADIR_ALL
+                    if (len(self.listaFicheros) == 0):
+                        print _("No se ha encontrado ninguna imagen ISO o RAR")
+                    else:
+                        self.procesar(self.sel_parti)
+
+                elif accion == LISTAR:
+                    print _("Listando juegos de : %s") % self.sel_parti
+                    self.listarJuegos(listaJuegos)
+                    self.mostrarEspacioLibre(self.sel_parti)
+                elif accion == INSTALAR:
+                    print _("Inserte un juego de la Wii en su lector de DVD ...")
+                    print _("Juegos originales, solo con lectores LG.")
+                    raw_input(_("Pulse cualquier tecla para continuar ... "))
+                    self.instalarJuego(self.sel_parti)
+                elif accion == CARATULAS or accion == DISCOS:
+                    
+                    # descargo todas las caratulas y discos
+                    if(self.core.descargarTodasLasCaratulaYDiscos(listaJuegos)):
+                        print _("OK, todas las caratulas se han descargado")
+                    else:
+                        print _("ERROR, descargando alguna caratula")
+                    
+                    # defino el destino
+                    destino = os.getcwd()
+                    
+                    # copia al directorio de trabajo                            
+                    for juego in listaJuegos:
+                        if accion == CARATULAS:
+                            self.core.copiarCaratula(juego, destino)
+                        elif accion == DISCOS:
+                            self.core.copiarDisco(juego, destino)
+                        
+                    print _("Tarea finalizada")
                 
         # C = acciones que necesitan una particion FAT32
         elif accion == FORMATEAR:                
@@ -159,7 +243,7 @@ class WiithonCLI:
                     if self.core.formatearWBFS(self.sel_parti):
                         print _("%s se ha formateado correctamente") % self.sel_parti
                     else:
-                        print _("%s NO se ha podido formatear") % self.sel_parti
+                        print _("Error al formatear %s") % self.sel_parti
                 else:
                     print _("No se ha formateado %s") % self.sel_parti
             except KeyboardInterrupt:
@@ -175,166 +259,63 @@ class WiithonCLI:
             raw_input(_("Pulse cualquier tecla para continuar ...\n"))
         sys.exit(0)
 
-        numParametros = len(argumentos)
-        if numParametros > 0:
-            parm1 = argumentos[0].lower()
-            if numParametros > 1:
-                parm2 = argumentos[1].lower()
-                parm2_sensible = PARAMETROS[1]
-                if numParametros > 2:
-                    parm3 = argumentos[2].lower()
-                    parm3_sensible = argumentos[2]
 
-        if numParametros == 1 and (parm1 == "formatear" or parm1 == "format"):
-            listaParticiones = self.core.sincronizarParticiones(config.DETECTOR_WBFS_FAT32)
-            self.sel_parti = self.get_elegir_particion(listaParticiones)
-            try:
-                respuesta = raw_input(" Esta seguro de formatear %s (S/N)? " % self.sel_parti)
-                if respuesta.lower() == _("s"):
-                    if self.core.formatearWBFS(self.sel_parti):
-                        print _("%s se ha formateado correctamente") % self.sel_parti
-                    else:
-                        print _("%s NO se ha podido formatear") % self.sel_parti
-                else:
-                    print _("No se ha formateado %s") % self.sel_parti
-            except KeyboardInterrupt:
-                print
-                print _("Interrumpido por el usuario.")
-                print _("No se ha formateado %s") % self.sel_parti
-        else:
-            listaParticiones = self.core.sincronizarParticiones()
-            self.sel_parti = self.get_elegir_particion(listaParticiones)
-            
-            DEVICE = self.sel_parti.device
-            FABRICANTE = self.sel_parti.fabricante
+    def procesar_rar(self, particion, archivoRAR, correctos, erroneos):
+        # presuponemos que hay error y no hay exito
+        exito = False
+        error = True
 
-            listaJuegos = self.core.syncronizarJuegos(self.sel_parti)
-            listaJuegos.sort( self.criterio_ordenacion_juegos )
-            hayJuegos = len(listaJuegos) > 0
+        nombreISO = self.core.getNombreISOenRAR(archivoRAR)        
+        rutaISO = os.path.join(self.core.prefs.ruta_extraer_rar, nombreISO)
+           
+        if (not os.path.exists(archivoRAR)):
+            erroneos.append(_("El archivo RAR %s: No existe") % archivoRAR)
 
-            # estamos dentro del if numParametros > 1:
-            if numParametros == 0 or parm1 == "listar" or parm1 == "ls" :
-                if(hayJuegos):
-                    print _("Listando juegos de : %s") % (DEVICE + " " + FABRICANTE)
-                    self.listarJuegos(listaJuegos)
-                    self.mostrarEspacioLibre(self.sel_parti)
-                else:
-                    print _("No tienes instalado ningun juego en %s") % (DEVICE)
-            elif ( parm1 == "instalar" or parm1 == "install"):
-                try:
-                    print _("Inserte un juego de la Wii en su lector de DVD ...")
-                    raw_input(_("Pulse cualquier tecla para continuar ... "))
-                    self.instalarJuego(DEVICE)
-                except KeyboardInterrupt:
-                    print
-            elif ( parm1 == "desinstalar" or parm1 == "borrar" or parm1 == "rm" or parm1 == "quitar" or parm1 == "remove"):
-                if(hayJuegos):
-                    if(numParametros >= 2):
-                        parametro = parm2_sensible
-                        if (util.getExtension(parametro) == "iso"):
-                            IDGAME = util.getMagicISO(parametro)
-                        else:
-                            IDGAME = parametro
-                    else:
-                        juego = self.getJuego(listaJuegos)
-                    print "%s = %s %s %s %s" % (_("Borrar juego con IDGAME") , juego.idgame , _("en particion"), DEVICE , FABRICANTE)
-                    if( juego != None and self.core.borrarJuego(juego) ):
-                        print _("Juego %s borrado correctamente" % (juego))
-                    else:
-                        print _("ERROR borrando el juego")
-                else:
-                    print _("No hay Juegos que borrar")
-
-            elif ( parm1 == "caratula" or parm1 == "cover"):
-                if(hayJuegos):
-                    if(numParametros >= 2):
-                        IDGAME = parm2_sensible
-                    else:
-                        juego = self.getJuego(listaJuegos)
-                    # FIXME: parametros descarga
-                    if(self.core.descargarCaratula(juego.idgame)):
-                        print _("OK, descargado %s.png") % juego.idgame
-                    else:
-                        print _("ERROR, descargando %s.png") % juego.idgame
-                else:
-                    print _("No hay Juegos para descargar una caratula")
-            elif ( parm1 == "caratulas" or parm1 == "covers"):
-                if(hayJuegos):
-                    if(numParametros >= 1): # 2 parametros
-                        if(self.core.descargarTodasLasCaratulaYDiscos(listaJuegos)):
-                            print _("OK, todas las caratulas se han descargado")
-                        else:
-                            print _("ERROR, descargando alguna caratula")
-                else:
-                    print _("No hay Juegos para descargar caratulas")
-            elif ( parm1 == "renombrar" or parm1 == "rename" or parm1 == "r"):
-                if(hayJuegos):
-                    if(numParametros >= 3):
-                        IDGAME = parm2_sensible
-                        NUEVO_NOMBRE = parm3_sensible
-                    else:
-                        IDGAME = self.getJuego(listaJuegos)
-                        NUEVO_NOMBRE = raw_input(_("Escriba el nuevo nombre : "))
-                    print "%s = %s %s %s" % ( _("Renombrar juego IDGAME") , IDGAME , _("como") , NUEVO_NOMBRE)
-                    if ( self.core.renombrarISO( DEVICE , IDGAME , NUEVO_NOMBRE ) ):
-                        print _("ISO renombrada correctamente a %s") % NUEVO_NOMBRE
-                    else:
-                        print _("ERROR al renombrar")
-                else:
-                    print _("No hay Juegos para renombrar")
-            elif ( parm1 == "extraer" or parm1 == "extract" or parm1 == "x"):
-                if(hayJuegos):
-                    if(numParametros >= 2):
-                        IDGAME = parm2_sensible
-                    else:
-                        IDGAME = self.getJuego(listaJuegos)
-                    print "%s = %s %s %s %s" % ( _("Extraer ISO de juego con IDGAME") ,IDGAME , _("en particion") , DEVICE , FABRICANTE)
-                    if( self.core.extraerJuego(DEVICE , IDGAME) ):
-                        print _("Juego %s extraido OK") % (IDGAME)
-                    else:
-                        print _("ERROR extrayendo la ISO de %s") % (IDGAME)
-                else:
-                    print _("No hay Juegos para extraer")
-            elif ( parm1 == "ayuda" or parm1 == "h" or parm1 == "help" or parm1 == "-h" or parm1 == "--help" ):
-                self.uso()
+        elif os.path.exists(rutaISO):
+            if not self.core.prefs.rar_overwrite_iso:
+                erroneos.append(_("Error al descomprimrir. Ya existe %s. Si desea sobreescribirlo, modifique la opcion en preferencias.") % rutaISO)
             else:
-                #Los parametros es una lista de ISOS explicita
-                for parametro in argumentos:
-                    if ( os.path.isdir(parametro) or parametro.lower() == "buscar" or parametro.lower() == "meter" or parametro.lower() == "-r" or parametro.lower() == "metertodo" or parametro.lower() == "buscartodo" or parametro.lower() == "search" ):
-                        if( not os.path.isdir(parametro) ):
-                            archivo = "."
+                if os.path.exists(rutaISO):
+                    os.remove(rutaISO)
+                    error = False
 
-                        print _("Buscando en %s ficheros RAR ... ") % os.path.dirname(archivo)
-                        self.encolar( util.rec_glob(archivo, "*.rar") )
+        elif nombreISO is None:
+            erroneos.append(_("Error: El archivo RAR %s no contiene ninguna ISO") % (archivoRAR))
 
-                        print _("Buscando en %s Imagenes ISO ... ") % os.path.dirname(archivo)
-                        self.encolar( util.rec_glob(archivo, "*.iso") )
+        else:
+            error = False
+            
+        if not util.space_for_dvd_iso_wii(self.core.prefs.ruta_extraer_rar):
+            erroneos.append(_("No hay 4.4GB libres para descomprimir el fichero RAR: %s en la ruta %s. Puede cambiar la ruta en preferencias.") % (archivoRAR, self.ruta_extraer_rar))
+            error = True
+        
+        if not error:
 
-                    elif    (
-                            os.path.isfile(parametro) and
-                            (
-                                util.getExtension(parametro) == "iso" or
-                                util.getExtension(parametro) == "rar"
-                            )
-                        ):
-                        parametro = os.path.abspath( parametro )
-                        self.encolar( parametro )
+            if ( self.core.unpack(archivoRAR, self.core.prefs.ruta_extraer_rar, nombreISO, self.core.prefs.rar_overwrite_iso) ):
 
-                    # si tiene caracteres raros -> no es expresión regular
-                    # porque de otro forma, peta la expresion regular.
-                    elif( not util.tieneCaracteresRaros(parametro) ):
-                        self.encolar( glob.glob(parametro) )
-                    else:
-                        self.encolar( parametro )
+                correctos, erroneos, exito = self.procesar_iso(particion, rutaISO, correctos, erroneos)
+                
+                if self.core.prefs.rar_preguntar_borrar_iso:
+                    os.remove(rutaISO)
 
-                if (len(self.listaFicheros) == 0):
-                    print _("No se ha encontrado ninguna imagen ISO")
+                if self.core.prefs.rar_preguntar_borrar_rar:
+                    os.remove(archivoRAR)
+            else:
+                erroneos.append(_("Error al descomrpimir el RAR : %s") % (archivoRAR))
 
-            self.procesar(DEVICE, FABRICANTE)
+        return correctos, erroneos, exito
+        
+    def procesar_iso(self, particion, fichero, correctos, erroneos):
+        ok = self.core.anadirISO(particion , fichero )
+        if ( ok ):
+            correctos.append(_("ISO %s aniadida correctamente") % fichero)
+        else:
+            erroneos.append(_("ERROR aniadiendo la ISO : %s (comprueba que sea una ISO de WII)") % fichero)
 
+        return correctos, erroneos, ok
 
     # Trabajo toda la "listaFicheros", añadiendo todo a la partición WBFS
-    def procesar(self, DEVICE, FABRICANTE):
+    def procesar(self, particion):
         correctos = []
         erroneos = []
 
@@ -343,92 +324,29 @@ class WiithonCLI:
         numFicheros = len(listaFicheros)
         if(numFicheros>0):
 
-            #Expandir directorios
-            # ...
-
             numFicherosProcesados = 0
             for fichero in listaFicheros:
                 numFicherosProcesados = numFicherosProcesados + 1
                 print "===================== "+os.path.basename(fichero)+" ("+str(numFicherosProcesados)+"/"+str(numFicheros)+") ===================="
                 print "{"
-                if( os.path.exists(DEVICE) and os.path.exists(fichero) ):
-                    if( util.getExtension(fichero) == "rar" ):
-                        print "%s : %s %s %s %s" % (_("Aniadir RAR con ISO dentro") , os.path.basename(fichero), _("a la particion") , DEVICE, FABRICANTE)
-                        nombreRAR = fichero
-                        nombreISO = self.core.getNombreISOenRAR(nombreRAR)
-                        if (nombreISO != ""):
-                            if( not os.path.exists(nombreISO) ):
-                                # Paso 1 : Descomprimir
-                                if ( self.core.unpack(nombreRAR) ):
-                                    print _("Descomprimido correctamente")
-                                    # Paso 2 : Añadir la ISO
-                                    if ( self.core.anadirISO(DEVICE , nombreISO ) ):
-                                            mensaje = _("ISO %s descomprimida y anadida correctamente") % (nombreISO)
-                                            print "OK"
-                                            correctos.append(mensaje)
-                                    else:
-                                        mensaje = _("ERROR anadiendo la ISO : %s (comprueba que sea una ISO de WII)") % (nombreISO)
-                                        print "ERROR"
-                                        erroneos.append(mensaje)
-
-                                        '''
-                                    if config.borrarISODescomprimida:
-                                        # Paso 3 : Borrar la iso descomprimida
-                                        try:
-                                            print _("Se va ha borrar la ISO descomprimida")
-                                            os.remove(nombreISO)
-                                            print _("La ISO %s temporal fue borrada") % (nombreISO)
-                                        except:
-                                            print _("ERROR al borrar la ISO : %s") % (nombreISO)
-                                        print "}"
-                                        print
-                                    else:
-                                        print _("No se ha borrado la ISO temporal")
-                                        '''
-                                else:
-                                    mensaje = _("ERROR al descomrpimir el RAR : %s") % (nombreRAR)
-                                    print "ERROR"
-                                    print "}"
-                                    print
-                                    erroneos.append(mensaje)
-                            else:
-                                mensaje = _("ERROR no se puede descomrpimir por que reemplazaria el ISO : %s") % (nombreISO)
-                                print "ERROR"
-                                print "}"
-                                print
-                                erroneos.append(mensaje)
-                        else:
-                            mensaje = _("ERROR el RAR %s no tenia ninguna ISO") % (nombreRAR)
-                            print "ERROR"
-                            print "}"
-                            print
-                            erroneos.append(mensaje)
-                    elif( util.getExtension(fichero) == "iso" ):
-                        print "%s : %s %s %s %s" % (_("Aniadir ISO") , os.path.basename(fichero) , _("a la particion") , DEVICE , FABRICANTE)
-                        if ( self.core.anadirISO(DEVICE , fichero ) ):
-                            mensaje = _("ISO %s aniadida correctamente") % fichero
-                            print "OK"
-                            print "}"
-                            print
-                            correctos.append(mensaje)
-                        else:
-                            mensaje = _("ERROR aniadiendo la ISO : %s (comprueba que sea una ISO de WII)") % fichero
-                            print "ERROR"
-                            print "}"
-                            print
-                            erroneos.append(mensaje)
-                    else:
-                        mensaje = _("ERROR %s no es un ningun juego de Wii") % (fichero)
-                        print "ERROR"
-                        print "}"
-                        print
-                        erroneos.append(mensaje)
+                print _("Copiar .%s: %s a la particion %s") % (util.getExtension(fichero).upper(), os.path.basename(fichero), particion)
+                
+                ok = False
+                if( util.getExtension(fichero) == "rar" ):
+                    correctos, erroneos, ok = self.procesar_rar(particion, fichero, correctos, erroneos)
+                elif( util.getExtension(fichero) == "iso" ):
+                    correctos, erroneos, ok = self.procesar_iso(particion, fichero, correctos, erroneos)
                 else:
-                    mensaje = _("ERROR la ISO o la particion no existe")
+                    erroneos.append(_("ERROR %s no es un ningun juego de Wii") % (fichero))
+                    
+                if ok:
+                    print "OK"
+                else:
                     print "ERROR"
-                    print "}"
-                    print
-                    erroneos.append(mensaje)
+
+                print "}"
+                print
+                    
 
             print "================= %s =========================" % (_("INFORME DE RESULTADOS"))
             print "{"
@@ -491,37 +409,50 @@ class WiithonCLI:
                 print _("Error al dumpear la ISO")
 
     # Esta forma parte del GUI, es una forma del CLI de seleccionar 1 juego
-    def getJuego(self, listaJuegos):        
-        numJuegos = len(listaJuegos)
-        if(numJuegos > 0):
-            self.listarJuegos(listaJuegos, True)
-            try:
-                respuesta = ''
-                haEscritoAlgo = False
-                while not haEscritoAlgo:
-                    respuesta = raw_input(_("Indique el NUM del juego : "))
-                    if respuesta != '':
-                        haEscritoAlgo = True
-                
-                numJuego = int(respuesta)
-                # 1 <= numJuego <= numJuegos
-                if ((1 <= numJuego) and (numJuego <= numJuegos)):
-                    try:
-                        return listaJuegos[numJuego-1]
-                    except IndexError:
-                        print _("Numero fuera de rango")
-            except ValueError:
-                print _("El numero dado es incorrecto")
-        return None
+    def getJuego(self, listaJuegos, modo_game = AUTOMATICO, game_explicito = ''):        
+        if modo_game == EXPLICITO:
+            i = 0
+            encontrado = False
+            while not encontrado and i<len(listaJuegos):
+                encontrado = listaJuegos[i].idgame == game_explicito
+                if not encontrado:
+                    i += 1
+            if encontrado:
+                return listaJuegos[i]
+            else:
+                print _("No se ha encontrado el juego: %s") % game_explicito
+
+        else: # AUTOMATICO
+            numJuegos = len(listaJuegos)
+            if(numJuegos > 0):
+                self.listarJuegos(listaJuegos, True)
+                try:
+                    respuesta = ''
+                    haEscritoAlgo = False
+                    while not haEscritoAlgo:
+                        respuesta = raw_input(_("Indique el NUM del juego : "))
+                        if respuesta != '':
+                            haEscritoAlgo = True
+                    
+                    numJuego = int(respuesta)
+                    # 1 <= numJuego <= numJuegos
+                    if ((1 <= numJuego) and (numJuego <= numJuegos)):
+                        try:
+                            return listaJuegos[numJuego-1]
+                        except IndexError:
+                            print _("Numero fuera de rango")
+                except ValueError:
+                    print _("El numero dado es incorrecto")
+            return None
 
     def listarJuegos(self , listaJuegos, mostrarIndice = False):
         numJuegos = len(listaJuegos)
         if(numJuegos > 0):
             print "--------------------------------------------------------------------------------"
             if mostrarIndice:
-                print "%3s\t%6s\t%-40s\t%7s\t%6s" % ("NUM","IDGAME",_("TITULO"),_("TAMANIO") , _("Caratula?"))
+                print "%3s\t%6s\t%-40s\t%7s\t%6s" % ("NUM","IDGAME",_("TITULO"),_("SIZE") , _("Caratula?"))
             else:
-                print "%6s\t%-55s\t%7s\t%6s" % ("IDGAME",_("TITULO"),_("TAMANIO") , _("Caratula?"))
+                print "%6s\t%-55s\t%7s\t%6s" % ("IDGAME",_("TITULO"),_("SIZE") , _("Caratula?"))
             print "--------------------------------------------------------------------------------"
 
             i = 1
@@ -550,24 +481,8 @@ class WiithonCLI:
         print "\t\t\t\t\t\t\t%s : %.2f GB" % (_("Total") , info[2])
 
     def uso(self):
-        wiithon = os.path.basename(sys.argv[0])
-        print _("AYUDA_CLI") % (
-                                wiithon,
-                                wiithon, sys.argv[0],
-                                wiithon,
-                                wiithon,
-                                wiithon,
-                                wiithon,
-                                wiithon, sys.argv[0],
-                                wiithon,
-                                wiithon,
-                                wiithon,
-                                wiithon,
-                                wiithon,
-                                wiithon,
-                                wiithon,
-                                wiithon
-                                  )
+        # long text in translated po
+        print _("AYUDA_CLI")
 
     def encolar(self , juegos):
         if type(juegos) == list:

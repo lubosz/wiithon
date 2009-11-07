@@ -1,398 +1,340 @@
-#: cli.py:33
+#: cli.py:44
+#, python-format
+msgid "No se ha encontrado la particion: %s"
+msgstr ""
+
+#: cli.py:45 cli.py:50
 msgid "Has conectado el disco duro? No se ha encontrado ninguna particion valida."
 msgstr "Haben Sie die Festplatte mit einer WBFS Partition angeschlossen?"
 
-#: cli.py:36
+#: cli.py:53
 msgid "Lista de particiones autodetectadas : "
 msgstr "Automatisch gefundene Partitionen:"
 
-#: cli.py:43
+#: cli.py:60
 #, python-format
 msgid "%d - Salir"
 msgstr ""
 
-#: cli.py:44
+#: cli.py:61
 msgid "Elige la particion WBFS con la que va ha trabajar : "
 msgstr "Whlen Sie die WBFS Partition aus :"
 
-#: cli.py:46
+#: cli.py:63
 msgid "Saliendo por peticion del usuario."
 msgstr "Abbruch durch Benutzer."
 
-#: cli.py:52
+#: cli.py:69
 msgid "Fuera de rango"
 msgstr "Out of range"
 
-#: cli.py:54
+#: cli.py:71
 msgid "Valor incorrecto"
 msgstr "Falscher Wert"
 
-#: cli.py:116
+#: cli.py:153
 #, python-format
 msgid "Extraer Juego %s a ISO"
 msgstr ""
 
-#: cli.py:118 cli.py:293
+#: cli.py:155
 #, python-format
 msgid "Juego %s extraido OK"
 msgstr "Spiel %s entpackt"
 
-#: cli.py:120 cli.py:295
+#: cli.py:157
 #, python-format
 msgid "ERROR extrayendo la ISO de %s"
 msgstr "FEHLER beim entpacken der ISO Datei %s"
 
-#: cli.py:122
+#: cli.py:159
 #, python-format
 msgid "Renombrar el juego %s."
 msgstr ""
 
-#: cli.py:123 cli.py:277
+#: cli.py:160
 msgid "Escriba el nuevo nombre : "
 msgstr "Neuen Namen eingeben : "
 
-#: cli.py:125 cli.py:280
+#: cli.py:162
 #, python-format
 msgid "ISO renombrada correctamente a %s"
 msgstr "Spiel erfolgreich in  %s umbenannt"
 
-#: cli.py:127 cli.py:282
+#: cli.py:164
 msgid "ERROR al renombrar"
 msgstr "FEHLER beim umbenennen"
 
-#: cli.py:129
+#: cli.py:166
 #, python-format
 msgid "Borrando juego %s"
 msgstr ""
 
-#: cli.py:131 cli.py:242
+#: cli.py:168
 #, python-format
 msgid "Juego %s borrado correctamente"
 msgstr "ISO %s erfolgreich gelscht"
 
-#: cli.py:133 cli.py:244
+#: cli.py:170
 msgid "ERROR borrando el juego"
 msgstr "FEHLER beim lschen des Spiels"
 
-#: cli.py:135 gui.py:1308 gui.py:1356 gui.py:1463
+#: cli.py:172 gui.py:1308 gui.py:1356 gui.py:1463
 msgid "No has seleccionado ningun juego"
 msgstr "Kein Spiel ausgewhlt"
 
-#: cli.py:140 cli.py:218
-#, python-format
-msgid "Listando juegos de : %s"
-msgstr "Liste der Spiele : %s"
-
-#: cli.py:144 cli.py:225
-msgid "Inserte un juego de la Wii en su lector de DVD ..."
-msgstr "Lege ein Wii Spiel ins DVD Laufwerk ein ..."
-
-#: cli.py:145
-msgid "Juegos originales, solo con lectores LG."
-msgstr ""
-
-#: cli.py:146 cli.py:226
-msgid "Pulse cualquier tecla para continuar ... "
-msgstr "Taste drcken zum fortfahren ..."
-
-#: cli.py:150
+#: cli.py:174
 #, python-format
 msgid "La particion %s no contiene juegos"
 msgstr ""
 
-#: cli.py:157
+#: cli.py:184
+msgid "Buscando ficheros RAR recursivamente ... "
+msgstr ""
+
+#: cli.py:187
+msgid "Buscando imagenes ISO recursivamente ... "
+msgstr ""
+
+#: cli.py:203
+msgid "No se ha encontrado ninguna imagen ISO o RAR"
+msgstr ""
+
+#: cli.py:208
+#, python-format
+msgid "Listando juegos de : %s"
+msgstr "Liste der Spiele : %s"
+
+#: cli.py:212
+msgid "Inserte un juego de la Wii en su lector de DVD ..."
+msgstr "Lege ein Wii Spiel ins DVD Laufwerk ein ..."
+
+#: cli.py:213
+msgid "Juegos originales, solo con lectores LG."
+msgstr ""
+
+#: cli.py:214
+msgid "Pulse cualquier tecla para continuar ... "
+msgstr "Taste drcken zum fortfahren ..."
+
+#: cli.py:220
+msgid "OK, todas las caratulas se han descargado"
+msgstr "OK, alle Titelbilder runtergeladen"
+
+#: cli.py:222
+msgid "ERROR, descargando alguna caratula"
+msgstr "Fehler beim herunterladen von Titelbildern"
+
+#: cli.py:234
+msgid "Tarea finalizada"
+msgstr ""
+
+#: cli.py:241
 #, python-format
 msgid "Realmente, desea formatear a WBFS la particion %s?"
 msgstr ""
 
-#: cli.py:158 cli.py:193
+#: cli.py:242
 msgid "s"
 msgstr ""
 
-#: cli.py:160 cli.py:195
+#: cli.py:244
 #, python-format
 msgid "%s se ha formateado correctamente"
 msgstr ""
 
-#: cli.py:162 cli.py:197
+#: cli.py:246
 #, python-format
-msgid "%s NO se ha podido formatear"
+msgid "Error al formatear %s"
 msgstr ""
 
-#: cli.py:164 cli.py:199 cli.py:203
+#: cli.py:248
 #, python-format
 msgid "No se ha formateado %s"
 msgstr ""
 
-#: cli.py:167 cli.py:202
+#: cli.py:251
 msgid "Interrumpido por el usuario."
 msgstr ""
 
-#: cli.py:168
+#: cli.py:252
 #, python-format
 msgid "No se ha completado el formateo de %s"
 msgstr ""
 
-#: cli.py:175
+#: cli.py:259
 msgid "Pulse cualquier tecla para continuar ...\n"
 msgstr "Taste drcken zum fortfahren ... \n"
 
-#: cli.py:222
+#: cli.py:272 trabajo.py:319
 #, python-format
-msgid "No tienes instalado ningun juego en %s"
-msgstr "Kein Spiel installiert in %s"
+msgid "El archivo RAR %s: No existe"
+msgstr ""
 
-#: cli.py:240
-msgid "Borrar juego con IDGAME"
-msgstr "Lsche Spiel mit IDGAME"
-
-#: cli.py:240 cli.py:291
-msgid "en particion"
-msgstr "In Partition"
-
-#: cli.py:246
-msgid "No hay Juegos que borrar"
-msgstr "Keine Spiele zum lschen vorhanden"
-
-#: cli.py:256
+#: cli.py:276 trabajo.py:323
 #, python-format
-msgid "OK, descargado %s.png"
-msgstr "OK,  %s.png runtergeladen"
+msgid "Error al descomprimrir. Ya existe %s. Si desea sobreescribirlo, modifique la opcion en preferencias."
+msgstr ""
 
-#: cli.py:258
+#: cli.py:283 trabajo.py:333
 #, python-format
-msgid "ERROR, descargando %s.png"
-msgstr "FEHLER beim herunterladen von %s.png"
+msgid "Error: El archivo RAR %s no contiene ninguna ISO"
+msgstr ""
 
-#: cli.py:260
-msgid "No hay Juegos para descargar una caratula"
-msgstr "Kein Spiel um Titelbild runterzuladen"
-
-#: cli.py:265
-msgid "OK, todas las caratulas se han descargado"
-msgstr "OK, alle Titelbilder runtergeladen"
-
-#: cli.py:267
-msgid "ERROR, descargando alguna caratula"
-msgstr "Fehler beim herunterladen von Titelbildern"
-
-#: cli.py:269
-msgid "No hay Juegos para descargar caratulas"
-msgstr "Keine Spiele um Titelbilder herunterzuladen"
-
-#: cli.py:278
-msgid "Renombrar juego IDGAME"
-msgstr "IDGAME umbenennen"
-
-#: cli.py:278
-msgid "como"
-msgstr "als"
-
-#: cli.py:284
-msgid "No hay Juegos para renombrar"
-msgstr "Kein Spiel zum umbenennen vorhanden"
-
-#: cli.py:291
-msgid "Extraer ISO de juego con IDGAME"
-msgstr "Entpacke ISO mit der IDGAME"
-
-#: cli.py:297
-msgid "No hay Juegos para extraer"
-msgstr "Kein Spiel zum entpacken vorhanden"
-
-#: cli.py:307
+#: cli.py:289 trabajo.py:339
 #, python-format
-msgid "Buscando en %s ficheros RAR ... "
-msgstr "Suche %s RAR Dateien ..."
+msgid "No hay 4.4GB libres para descomprimir el fichero RAR: %s en la ruta %s. Puede cambiar la ruta en preferencias."
+msgstr ""
 
-#: cli.py:310
+#: cli.py:304 trabajo.py:353
 #, python-format
-msgid "Buscando en %s Imagenes ISO ... "
-msgstr "Suche %s ISO Abbild ..."
+msgid "Error al descomrpimir el RAR : %s"
+msgstr ""
 
-#: cli.py:331
-msgid "No se ha encontrado ninguna imagen ISO"
-msgstr "Kein ISO Abbild vorhanden"
-
-#: cli.py:356
-msgid "Aniadir RAR con ISO dentro"
-msgstr "RAR Archiv mit ISO Datei hinzufgen"
-
-#: cli.py:356 cli.py:407
-msgid "a la particion"
-msgstr "zur Partition"
-
-#: cli.py:363
-msgid "Descomprimido correctamente"
-msgstr "Entpacken erfolgreich"
-
-#: cli.py:366
-#, python-format
-msgid "ISO %s descomprimida y anadida correctamente"
-msgstr "ISO %s entpackt und erfolgreich hinzugefgt"
-
-#: cli.py:370
-#, python-format
-msgid "ERROR anadiendo la ISO : %s (comprueba que sea una ISO de WII)"
-msgstr "FEHLER beim hinzufgen der ISO Datei : %s (berprfe ob es eine WII ISO ist)"
-
-#: cli.py:389
-#, python-format
-msgid "ERROR al descomrpimir el RAR : %s"
-msgstr "FEHLER beim entpacken der RAR Datei : %s"
-
-#: cli.py:395
-#, python-format
-msgid "ERROR no se puede descomrpimir por que reemplazaria el ISO : %s"
-msgstr "Fehler, kann die ISO Datei nicht ersetzen : %s"
-
-#: cli.py:401
-#, python-format
-msgid "ERROR el RAR %s no tenia ninguna ISO"
-msgstr "FEHLER RAR Archiv %s enthlt keine ISO Datei"
-
-#: cli.py:407
-msgid "Aniadir ISO"
-msgstr "ISO hinzufgen"
-
-#: cli.py:409
+#: cli.py:311
 #, python-format
 msgid "ISO %s aniadida correctamente"
 msgstr "ISO %s erfolgreich hinzugefgt"
 
-#: cli.py:415
+#: cli.py:313
 #, python-format
 msgid "ERROR aniadiendo la ISO : %s (comprueba que sea una ISO de WII)"
 msgstr "FEHLER beim hinzufgen der ISO Datei : %s (berprfe ob es eine WII ISO ist)"
 
-#: cli.py:421
+#: cli.py:332
+#, python-format
+msgid "Copiar .%s: %s a la particion %s"
+msgstr ""
+
+#: cli.py:340
 #, python-format
 msgid "ERROR %s no es un ningun juego de Wii"
 msgstr "%s ist kein WII Spiel"
 
-#: cli.py:427
-msgid "ERROR la ISO o la particion no existe"
-msgstr "ISO Datei oder Partition nicht vorhanden"
-
-#: cli.py:433
+#: cli.py:351
 msgid "INFORME DE RESULTADOS"
 msgstr "Ergebniss Report"
 
-#: cli.py:438
+#: cli.py:356
 msgid "Todo metido en el HD correctamente"
 msgstr "Erfolgreich auf Festplatte geschrieben"
 
-#: cli.py:442
+#: cli.py:360
 msgid "Juegos correctos"
 msgstr "Fehlerfreie Spiele"
 
-#: cli.py:449
+#: cli.py:367
 msgid "Juegos erroneos"
 msgstr "Fehlerhafte Spiele"
 
-#: cli.py:459
+#: cli.py:377
 msgid "Buscando un Disco de Wii ..."
 msgstr "Suche Wii Disk ..."
 
-#: cli.py:466
+#: cli.py:384
 msgid "No se ha encontrado ningun disco de la Wii"
 msgstr "keine Wii Disk"
 
-#: cli.py:468
+#: cli.py:386
 msgid "Hay mas de un juego de la Wii, deja solo 1 para eliminar la ambiguedad"
 msgstr "Es ist mehr als ein Spiel ausgewhlt"
 
-#: cli.py:475
+#: cli.py:393
 #, python-format
 msgid "Ya hay una ISO en : %s"
 msgstr "Es ist schon eine ISO in : %s"
 
-#: cli.py:476
+#: cli.py:394
 msgid "Desea reemplazarla (S/N) : "
 msgstr "Mchten Sie es ersetzen? (J/N) :"
 
-#: cli.py:481
+#: cli.py:399
 #, python-format
 msgid "Dumpeando desde %s a %s utilizando %s temporalmente"
 msgstr ""
 
-#: cli.py:482
+#: cli.py:400
 msgid "Puede llevar mucho tiempo ..."
 msgstr ""
 
-#: cli.py:486
+#: cli.py:404
 #, python-format
 msgid "OK, el juego se ha pasado a la particion %s"
 msgstr ""
 
-#: cli.py:488
+#: cli.py:406
 #, python-format
 msgid "Error al pasar la ISO a la particion %s"
 msgstr ""
 
-#: cli.py:489
+#: cli.py:407
 #, python-format
 msgid "wiithon no borra la ISO temporal: %s, puedes borrarla si no la necesitas"
 msgstr ""
 
-#: cli.py:491
+#: cli.py:409
 msgid "Error al dumpear la ISO"
 msgstr "Fehler beim ISO dump"
 
-#: cli.py:502
+#: cli.py:423
+#, python-format
+msgid "No se ha encontrado el juego: %s"
+msgstr ""
+
+#: cli.py:433
 msgid "Indique el NUM del juego : "
 msgstr "Spielenummer ? : "
 
-#: cli.py:512
+#: cli.py:443
 msgid "Numero fuera de rango"
 msgstr "Out of range"
 
-#: cli.py:514
+#: cli.py:445
 msgid "El numero dado es incorrecto"
 msgstr "Falsche Nummer"
 
-#: cli.py:522 cli.py:524
+#: cli.py:453 cli.py:455
 msgid "Caratula?"
 msgstr "Titelbild?"
 
-#: cli.py:522 cli.py:524
-msgid "TAMANIO"
-msgstr "Gre"
+#: cli.py:453 cli.py:455
+msgid "SIZE"
+msgstr ""
 
-#: cli.py:522 cli.py:524
+#: cli.py:453 cli.py:455
 msgid "TITULO"
 msgstr "TITEL"
 
-#: cli.py:530
+#: cli.py:461
 msgid "SI"
 msgstr "JA"
 
-#: cli.py:532 wiitdb_schema.py:324
+#: cli.py:463 wiitdb_schema.py:324
 msgid "NO"
 msgstr "Nein"
 
-#: cli.py:540
+#: cli.py:471
 #, python-format
 msgid "Presiona cualquier tecla para mostrar %d lineas mas"
 msgstr "Taste drcken um %d mehr Zeilen anzuzeigen"
 
-#: cli.py:544
+#: cli.py:475
 msgid "juegos de WII"
 msgstr "WII Spiele"
 
-#: cli.py:548
+#: cli.py:479
 msgid "Usado"
 msgstr "benutzt"
 
-#: cli.py:549
+#: cli.py:480
 msgid "Libre"
 msgstr "Leer"
 
-#: cli.py:550 gui.py:456
+#: cli.py:481 gui.py:456
 msgid "Total"
 msgstr "Gesamt"
 
-#: cli.py:554
+#: cli.py:485
 msgid "AYUDA_CLI"
 msgstr "Hilfe_CLI"
 
@@ -402,8 +344,8 @@ msgstr "Kopiere"
 
 #: core.py:207
 #, python-format
-msgid "***************** DESCARGAR DISCO %s ********************"
-msgstr "***************** DISKBILD RUNTERLADEN %s ********************"
+msgid "Descargando disco de %s ..."
+msgstr ""
 
 #: core.py:211 core.py:229
 #, python-format
@@ -475,8 +417,8 @@ msgid "Nombre"
 msgstr "Name"
 
 #: gui.py:532
-msgid "Tamanio"
-msgstr "Gre"
+msgid "Size"
+msgstr ""
 
 #: gui.py:533
 msgid "Online?"
@@ -507,7 +449,7 @@ msgid "??"
 msgstr ""
 
 #: gui.py:664
-msgid "Advertencia de seguridad de renombrar desde IDGAME = "
+msgid "TRADUCIR_ADVERTENCIA_SEGURIDAD_RENAME_IDGAME"
 msgstr ""
 
 #: gui.py:675 gui.py:696
@@ -840,7 +782,7 @@ msgid "Hay %d tareas"
 msgstr "Es sind %d Aufgaben"
 
 #: preferencias.py:61
-msgid "Ruta para extraer ficheros .rar"
+msgid "Ruta para extraer ficheros .rar. Para descomprimir junto al .rar escriba ."
 msgstr ""
 
 #: preferencias.py:63
@@ -1251,34 +1193,9 @@ msgstr ""
 msgid "%s no es un directorio"
 msgstr ""
 
-#: trabajo.py:319
-#, python-format
-msgid "El archivo RAR %s: No existe"
-msgstr ""
-
-#: trabajo.py:323
-#, python-format
-msgid "Error al descomprimrir. Ya existe %s. Si desea sobreescribirlo, modifique la opcion en preferencias."
-msgstr ""
-
 #: trabajo.py:330
 #, python-format
 msgid "%s no es un archivo RAR"
-msgstr ""
-
-#: trabajo.py:333
-#, python-format
-msgid "Error: El archivo RAR %s no contiene ninguna ISO"
-msgstr ""
-
-#: trabajo.py:339
-#, python-format
-msgid "No hay 4.4GB libres para descomprimir el fichero RAR: %s en la ruta %s. Puede cambiar la ruta en preferencias."
-msgstr ""
-
-#: trabajo.py:353
-#, python-format
-msgid "Error al descomrpimir el RAR : %s"
 msgstr ""
 
 #: trabajo.py:383
@@ -1413,10 +1330,97 @@ msgstr "pyGTK oder GTKv2 bentigt"
 msgid "Instala wiithon, no lo ejecute desde ./wiithon.py"
 msgstr ""
 
-#: wiithon.py:76
+#: wiithon.py:82
 msgid "Programa ejecutado con las opciones incorrectas."
 msgstr "Programm luft mit den falschen Einstellungen"
 
-#: wiithon.py:80
+#: wiithon.py:86
 msgid "Interrumpido por el usuario"
 msgstr "Abbruch durch Benutzer"
+
+#~ msgid "Buscando en %s ficheros RAR ... "
+#~ msgstr "Suche %s RAR Dateien ..."
+
+#~ msgid "Buscando en %s Imagenes ISO ... "
+#~ msgstr "Suche %s ISO Abbild ..."
+
+#~ msgid "No se ha encontrado ninguna imagen ISO"
+#~ msgstr "Kein ISO Abbild vorhanden"
+
+#~ msgid "No hay Juegos para descargar caratulas"
+#~ msgstr "Keine Spiele um Titelbilder herunterzuladen"
+
+#~ msgid "Renombrar juego IDGAME"
+#~ msgstr "IDGAME umbenennen"
+
+#~ msgid "como"
+#~ msgstr "als"
+
+#~ msgid "No hay Juegos para renombrar"
+#~ msgstr "Kein Spiel zum umbenennen vorhanden"
+
+#~ msgid "Extraer ISO de juego con IDGAME"
+#~ msgstr "Entpacke ISO mit der IDGAME"
+
+#~ msgid "en particion"
+#~ msgstr "In Partition"
+
+#~ msgid "No hay Juegos para extraer"
+#~ msgstr "Kein Spiel zum entpacken vorhanden"
+
+#~ msgid "Aniadir RAR con ISO dentro"
+#~ msgstr "RAR Archiv mit ISO Datei hinzufgen"
+
+#~ msgid "a la particion"
+#~ msgstr "zur Partition"
+
+#~ msgid "Descomprimido correctamente"
+#~ msgstr "Entpacken erfolgreich"
+
+#~ msgid "ISO %s descomprimida y anadida correctamente"
+#~ msgstr "ISO %s entpackt und erfolgreich hinzugefgt"
+
+#~ msgid "ERROR anadiendo la ISO : %s (comprueba que sea una ISO de WII)"
+#~ msgstr "FEHLER beim hinzufgen der ISO Datei : %s (berprfe ob es eine WII ISO ist)"
+
+#~ msgid "ERROR al descomrpimir el RAR : %s"
+#~ msgstr "FEHLER beim entpacken der RAR Datei : %s"
+
+#~ msgid "ERROR no se puede descomrpimir por que reemplazaria el ISO : %s"
+#~ msgstr "Fehler, kann die ISO Datei nicht ersetzen : %s"
+
+#~ msgid "ERROR el RAR %s no tenia ninguna ISO"
+#~ msgstr "FEHLER RAR Archiv %s enthlt keine ISO Datei"
+
+#~ msgid "Aniadir ISO"
+#~ msgstr "ISO hinzufgen"
+
+#~ msgid "ERROR la ISO o la particion no existe"
+#~ msgstr "ISO Datei oder Partition nicht vorhanden"
+
+#~ msgid "***************** DESCARGAR DISCO %s ********************"
+#~ msgstr "***************** DISKBILD RUNTERLADEN %s ********************"
+
+#~ msgid "No tienes instalado ningun juego en %s"
+#~ msgstr "Kein Spiel installiert in %s"
+
+#~ msgid "Borrar juego con IDGAME"
+#~ msgstr "Lsche Spiel mit IDGAME"
+
+#~ msgid "No hay Juegos que borrar"
+#~ msgstr "Keine Spiele zum lschen vorhanden"
+
+#~ msgid "OK, descargado %s.png"
+#~ msgstr "OK,  %s.png runtergeladen"
+
+#~ msgid "ERROR, descargando %s.png"
+#~ msgstr "FEHLER beim herunterladen von %s.png"
+
+#~ msgid "No hay Juegos para descargar una caratula"
+#~ msgstr "Kein Spiel um Titelbild runterzuladen"
+
+#~ msgid "Tamanio"
+#~ msgstr "Gre"
+
+#~ msgid "TAMANIO"
+#~ msgstr "Gre"

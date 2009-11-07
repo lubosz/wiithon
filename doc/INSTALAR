@@ -2,6 +2,8 @@
 + Instalación
 ===================================================================================
 
+echo deb http://ppa.launchpad.net/wii.sceners.linux/wiithon/ubuntu karmic main | sudo tee -a /etc/apt/sources.list && sudo apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 1F882273 && sudo apt-get update && sudo apt-get install wiithon && sudo gpasswd -a $USER disk
+
 Hay 2 opciones, en función de si vuestra distribución usa apt-get o no:
 
 ++++++++++++++++++++++++++++

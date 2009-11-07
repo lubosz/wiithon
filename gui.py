@@ -529,7 +529,7 @@ class WiithonGUI(GtkBuilderWrapper):
         # http://www.pygtk.org/docs/pygtk/class-gtkcellrenderertext.html
         self.columna1 = columna1 = gtk.TreeViewColumn(_('IDGAME'), self.renderEditableIDGAME , text=0, foreground=8, background=9)
         self.columna2 = columna2 = gtk.TreeViewColumn(_('Nombre'), self.renderEditableNombre , text=1, foreground=8, background=9)
-        self.columna3 = columna3 = gtk.TreeViewColumn(_('Tamanio'), render , text=2, foreground=8, background=9)
+        self.columna3 = columna3 = gtk.TreeViewColumn(_('Size'), render , text=2, foreground=8, background=9)
         self.columna4 = columna4 = gtk.TreeViewColumn(_('Online?'), render , text=3, foreground=8, background=9)
         self.columna5 = columna5 = gtk.TreeViewColumn(_('Local'), render , text=4, foreground=8, background=9)
         self.columna6 = columna6 = gtk.TreeViewColumn(_('Fecha'), render , text=5, foreground=8, background=9)
@@ -657,11 +657,11 @@ class WiithonGUI(GtkBuilderWrapper):
             nuevoIDGAME = nuevoIDGAME.upper()
             if(self.sel_juego.obj.idgame != nuevoIDGAME):
                 exp_reg = "[A-Z0-9]{6}"
-                if re.match(exp_reg,nuevoIDGAME):
+                if (len(nuevoIDGAME) == 6) and re.match(exp_reg,nuevoIDGAME):
                     sql = util.decode('idgame=="%s" and idParticion=="%d"' % (nuevoIDGAME , self.sel_parti.obj.idParticion))
                     juego = session.query(Juego).filter(sql).first()
                     if juego == None:
-                        if ( self.question(_('Advertencia de seguridad de renombrar desde IDGAME = ') + ('%s -> %s?') % (self.sel_juego.obj.idgame , nuevoIDGAME)) ):
+                        if ( self.question(_('TRADUCIR_ADVERTENCIA_SEGURIDAD_RENAME_IDGAME') , ('\n%s -> %s') % (self.sel_juego.obj.idgame , nuevoIDGAME)) ):
                             if self.core.renombrarIDGAME(self.sel_juego.obj , nuevoIDGAME):
                                 # modificamos el juego modificado de la BDD
                                 if self.sel_juego.obj != None:

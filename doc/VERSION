@@ -43,6 +43,6 @@ if __name__ == '__main__':
     except IndexError:
         rev = int(getSTDOUT("bzr revno"))
     except:
-        rev = 0
+        rev = versiones[len(versiones)-1][1]
 
     print getVersion(rev)

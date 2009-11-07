@@ -45,17 +45,23 @@ def App():
             sys.exit(1)
 
         options, arguments = getopt.getopt(sys.argv[1:],
-                                'pwhlferdi',
+                                'hlferdimp:g:a:w:',
                                 [
                                     'pause',
                                     'work',
                                     'help',
                                     'ls',
                                     'format',
+                                    'add',
                                     'extract',
                                     'rename',
                                     'delete',
                                     'install',
+                                    'covers',
+                                    'discs',
+                                    'massive',
+                                    'partition',
+                                    'game'
                                 ])
 
         num_parms_cli = 0

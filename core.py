@@ -204,7 +204,7 @@ class WiithonCORE:
         if (self.existeDisco(IDGAME)):
             return True
         else:
-            print _("***************** DESCARGAR DISCO %s ********************") % (IDGAME)
+            print _("Descargando disco de %s ...") % (IDGAME)
             try:
                 origen = "http://www.wiiboxart.com/diskart/160/160/%.3s.png" % (IDGAME)
                 destino = self.getRutaDisco(IDGAME)
@@ -243,14 +243,16 @@ class WiithonCORE:
 
     # Descarga todos las caratulas de una lista de juegos
     def descargarTodasLasCaratulaYDiscos(self , listaJuegos):
-        proveedores = self.prefs.PROVIDER_COVERS
-        ancho = self.prefs.WIDTH_COVERS
-        alto = self.prefs.HEIGHT_COVERS
+        proveedores_covers = self.prefs.PROVIDER_COVERS
+        width_covers = self.prefs.WIDTH_COVERS
+        height_covers = self.prefs.HEIGHT_COVERS
+        width_discs = self.prefs.WIDTH_DISCS
+        height_discs = self.prefs.HEIGHT_DISCS
         ok = True
         for juego in listaJuegos:
-            if ( not self.descargarCaratula( juego.idgame, proveedores, ancho, alto ) ):
+            if ( not self.descargarCaratula( juego.idgame, proveedores_covers, width_covers, height_covers ) ):
                 ok = False
-            if ( not self.descargarDisco( juego.idgame ) ):
+            if ( not self.descargarDisco( juego.idgame, width_discs, height_discs) ):
                 ok = False
         return ok
 
@@ -264,27 +266,33 @@ class WiithonCORE:
         return None
 
     def unpack(self , nombreRAR , destino, nombreISO, overwrite = True):
+
         if not os.path.isfile(nombreRAR):
             return False
-            
+ 
         if not os.path.isdir(destino):
             return False
-        
+
         rutaISO = os.path.join(destino, nombreISO)
         if os.path.exists(rutaISO):
             if overwrite:        
                 os.remove(rutaISO)
             else:
                 return False
-                
+
         if not util.space_for_dvd_iso_wii(destino):
             return False
 
-        directorioActual = os.getcwd()
-        os.chdir(destino)
+        if destino != ".":
+            directorioActual = os.getcwd()
+            os.chdir(destino)
+
         comando = '%s e "%s" "%s"' % (config.UNRAR_APP, nombreRAR , nombreISO)
         salida = util.call_out_file(comando)
-        os.chdir(directorioActual)
+
+        if destino != ".":
+            os.chdir(directorioActual)
+
         return salida
 
     def anadirISO(self , DEVICE , ISO):
