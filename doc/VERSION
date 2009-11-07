@@ -2,7 +2,9 @@
 # -*- coding: utf-8 -*-
 # vim: set fileencoding=utf-8 :
 
+import os
 import sys
+import subprocess
 
 # HERE DEFINE TAGS RELATION: VERSION <----> FIRST REVISION
 versiones = [
@@ -16,7 +18,6 @@ versiones = [
             ]
 
 def getSTDOUT(comando):
-    import subprocess
     p = subprocess.Popen(comando , shell=True , stdout=subprocess.PIPE , stderr=open("/dev/null" , "w"))
     out = p.stdout.readlines()
     salida = ""
@@ -36,13 +37,25 @@ def getVersion(rev):
     return version
 
 if __name__ == '__main__':
+    
     try:
         rev = int(sys.argv[1])
-    except ValueError:
-        rev = int(getSTDOUT("bzr revno"))
-    except IndexError:
-        rev = int(getSTDOUT("bzr revno"))
     except:
-        rev = versiones[len(versiones)-1][1]
+        try:
+            # esta en la instalacion
+            if not os.path.exists(".bzr"): 
+                f = open("REVISION", "r")
+                rev = int(f.read())
+                f.close()
+            else:
+                if os.path.exists("wiithon.py"): 
+                    subprocess.call("bzr revno > doc/REVISION", shell=True)
+                    f = open("doc/REVISION", "r")
+                    rev = int(f.read())
+                    f.close()
+                else:
+                    raise Error
+        except:
+            rev = versiones[len(versiones)-1][1]
 
     print getVersion(rev)

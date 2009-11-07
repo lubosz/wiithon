@@ -340,6 +340,10 @@ def getBDD():
 def crearBDD(metadatos):
     db = getBDD()
     metadatos.create_all(db)
+    
+def borrarBDD(metadatos):
+    db = getBDD()
+    metadatos.drop_all(db)    
 
 def getSesionBDD(db):
     # con scoped se resuelven todos los problemas de concurrencia!

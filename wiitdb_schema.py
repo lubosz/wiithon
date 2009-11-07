@@ -206,7 +206,10 @@ class Rom(Base):
     def __init__(self, version, name, size, crc, md5, sha1):
         self.version = util.decode(version)
         self.name = util.decode(name)
-        self.size = int(size)
+        try:
+            self.size = int(size)
+        except ValueError:
+            self.size = 0
         self.crc = util.decode(crc)
         self.md5 = util.decode(md5)
         self.sha1 = util.decode(sha1)

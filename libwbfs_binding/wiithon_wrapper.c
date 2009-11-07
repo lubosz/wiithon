@@ -428,17 +428,23 @@ int main(int argc, char *argv[])
 
     if( noFormatear == FALSE )
     {
-        char comando[100] = "mkdosfs -n WiithonDEV -v -s 8 -F 32 "; // 100: se reserva espacio extra
-        strcat (comando, partition);
-        int ret = system(comando);
-        if(ret != 0)
+        char comando1[100] = "umount ";
+        strcat (comando1, partition);
+        printf("%s\n", comando1);
+        system(comando1);
+
+        char comando2[100] = "mkdosfs -n WiithonDEV -v -s 8 -F 32 "; // 100: se reserva espacio extra
+        strcat (comando2, partition);
+        printf("%s\n", comando2);
+        int ret2 = system(comando2);
+        if(ret2 == 0)
         {
-            printf("Don't format. Error %d\n" , ret);
-            noFormatear = TRUE;
+            printf("First fotmated %s as FAT32\n" , partition);
         }
         else
         {
-            printf("First fotmat %s as FAT32\n" , partition);
+            printf("Don't format. Error %d\n" , ret2);
+            noFormatear = TRUE;
         }
     }
 

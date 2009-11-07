@@ -16,6 +16,7 @@ import shutil
 
 import config
 import util
+import wiitdb_schema
 from util import NonRepeatList
 from builder_wrapper import GtkBuilderWrapper
 from trabajo import PoolTrabajo
@@ -132,6 +133,13 @@ class WiithonGUI(GtkBuilderWrapper):
         #self.wb_principal.maximize()
         self.wb_principal.set_size_request(1000, -1)
         self.wb_principal.show()
+        
+        if config.REV != '':
+            self.wb_principal.set_title('Wiithon %s (rev %s)' % (config.VER, config.REV))
+            self.wb_aboutdialog.set_version("%s (rev %s)" % (config.VER, config.REV))
+        else:
+            self.wb_principal.set_title('Wiithon %s' % (config.VER))
+            self.wb_aboutdialog.set_version("%s" % (config.VER))
 
         # conexion señales de la toolbar
         self.wb_tb_refrescar_wbfs.connect('clicked' , self.on_tb_toolbar_clicked)
@@ -327,6 +335,7 @@ class WiithonGUI(GtkBuilderWrapper):
             # si no hay particion -> modal que da 2 opciones:
             # 1º Ver base de datos
             # 2º Salir
+            '''
             if (self.core.prefs.ADVERTENCIA_NO_WBFS and len(self.lParti) == 0):
                 self.alert("warning" , _("No hay particiones WBFS, se muestran los juegos de la ultima sesion."))
             elif (self.core.prefs.ADVERTENCIA_ACTUALIZAR_WIITDB and (len(self.lJuegos) > 0) and self.info.abajo_num_juegos_wiitdb == 0):
@@ -347,6 +356,7 @@ class WiithonGUI(GtkBuilderWrapper):
                             ),
                             xml = True) ):
                     self.poolTrabajo.nuevoTrabajoActualizarWiiTDB(self.core.prefs.URL_ZIP_WIITDB)
+            '''
                 
             
         else:
@@ -1602,9 +1612,25 @@ class WiithonGUI(GtkBuilderWrapper):
             
 ######### HERRAMIENTAS Y UTILIDADES #################
 
+    def on_formatear_bdd_clicked(self, boton):
+        
+        if self.question(_('Estas seguro de querer formatear la BDD? Se borraran tus preferencias y la informacion de los juegos')):
+            util.borrarBDD(wiitdb_schema.Base.metadata)
+            util.crearBDD(wiitdb_schema.Base.metadata)
+            self.core.prefs.cargarPreferenciasPorDefecto(   self.wb_prefs_vbox_general,
+                                                            self.wb_prefs_vbox_caratulas,
+                                                            self.wb_prefs_vbox_wiitdb,
+                                                            False
+                                                            )
+            self.poolTrabajo.actualizarPreferencias()
+            self.poolBash.actualizarPreferencias()
+            self.alert("warning" , _("La BDD ha sido formateada.") + '\n' + _("Es recomendable que reinicie la aplicacion"))
+            self.refrescarParticionesWBFS()
+
     def on_button_formatear_wbfs_clicked(self, boton):
-        self.wb_prefs.hide()
-        self.alert("error" , "Sin implementar")
+        #comando = 'xterm -geometry 80x24 -T "%s" -n "%s" -bg black -fg white -fn 12x24 -e "wiithon -f --pause"' % (_("Formatear particion FAT"), _("Formateador WBFS"))
+        comando = '%s -e "wiithon -f --pause"' % (self.core.prefs.COMANDO_TERMINAL)
+        salida = util.call_out_null(comando)
         
     def on_button_abrir_carpeta_caratulas_clicked(self, boton):
         comando = '%s "%s"' % (self.core.prefs.COMANDO_ABRIR_CARPETA, config.HOME_WIITHON_CARATULAS)

@@ -48,7 +48,8 @@ class Preferencias:
 
     def cargarPreferenciasPorDefecto(self,  prefs_vbox_general,
                                             prefs_vbox_caratulas,
-                                            prefs_vbox_wiitdb):
+                                            prefs_vbox_wiitdb,
+                                            cargarWidget = True):
         
         # Data type: 'bool', 'int', 'float', 'string', 'memo', 'select'        
         self.iniciarPreferencia('string', 'device_seleccionado')
@@ -58,30 +59,31 @@ class Preferencias:
         self.iniciarPreferencia('string', 'ruta_extraer_iso', defecto=os.getcwd())
         self.iniciarPreferencia('string', 'ruta_copiar_caratulas', defecto=os.getcwd())
         self.iniciarPreferencia('string', 'ruta_copiar_discos', defecto=os.getcwd())
-        self.iniciarPreferencia('string', 'ruta_extraer_rar', defecto='/tmp', mostrar=True, vbox=prefs_vbox_general, label=_('Ruta para extraer ficheros .rar. Para descomprimir junto al .rar escriba .'))
+        self.iniciarPreferencia('string', 'ruta_extraer_rar', defecto='/tmp', mostrar=cargarWidget, vbox=prefs_vbox_general, label=_('Ruta para extraer ficheros .rar. Para descomprimir junto al .rar escriba .'))
         
-        self.iniciarPreferencia('string', 'URL_ZIP_WIITDB', defecto='http://wiitdb.com/wiitdb.zip', mostrar=True, vbox=prefs_vbox_wiitdb, label=_('URL Base de datos WiiTDB'))
-        self.iniciarPreferencia('string', 'FORMATO_FECHA_WIITDB', defecto='%d/%m/%Y', mostrar=True, vbox=prefs_vbox_wiitdb, label=_('Formato fecha'))
-        self.iniciarPreferencia('string', 'FORMATO_FECHA_CORTA_WIITDB', defecto='%Y/%m', mostrar=True, vbox=prefs_vbox_wiitdb, label=_('Formato fecha corto'))
-        self.iniciarPreferencia('int', 'WIDTH_COVERS', defecto=160, mostrar=True, vbox=prefs_vbox_caratulas, label=_('Ancho imagen caratula'))
-        self.iniciarPreferencia('int', 'HEIGHT_COVERS', defecto=224, mostrar=True, vbox=prefs_vbox_caratulas, label=_('Altura imagen caratula'))
-        self.iniciarPreferencia('int', 'WIDTH_DISCS', defecto=160, mostrar=True, vbox=prefs_vbox_caratulas, label=_('Ancho imagen disc-art'))
-        self.iniciarPreferencia('int', 'HEIGHT_DISCS', defecto=160, mostrar=True, vbox=prefs_vbox_caratulas, label=_('Altura imagen disc-art'))
+        self.iniciarPreferencia('string', 'URL_ZIP_WIITDB', defecto='http://wiitdb.com/wiitdb.zip', mostrar=cargarWidget, vbox=prefs_vbox_wiitdb, label=_('URL Base de datos WiiTDB'))
+        self.iniciarPreferencia('string', 'FORMATO_FECHA_WIITDB', defecto='%d/%m/%Y', mostrar=cargarWidget, vbox=prefs_vbox_wiitdb, label=_('Formato fecha'))
+        self.iniciarPreferencia('string', 'FORMATO_FECHA_CORTA_WIITDB', defecto='%Y/%m', mostrar=cargarWidget, vbox=prefs_vbox_wiitdb, label=_('Formato fecha corto'))
+        self.iniciarPreferencia('int', 'WIDTH_COVERS', defecto=160, mostrar=cargarWidget, vbox=prefs_vbox_caratulas, label=_('Ancho imagen caratula'))
+        self.iniciarPreferencia('int', 'HEIGHT_COVERS', defecto=224, mostrar=cargarWidget, vbox=prefs_vbox_caratulas, label=_('Altura imagen caratula'))
+        self.iniciarPreferencia('int', 'WIDTH_DISCS', defecto=160, mostrar=cargarWidget, vbox=prefs_vbox_caratulas, label=_('Ancho imagen disc-art'))
+        self.iniciarPreferencia('int', 'HEIGHT_DISCS', defecto=160, mostrar=cargarWidget, vbox=prefs_vbox_caratulas, label=_('Altura imagen disc-art'))
         
-        self.iniciarPreferencia('int', 'NUM_HILOS', defecto=8, mostrar=True, vbox=prefs_vbox_general, label=_('Num. Hilos para tareas de fondo'))
+        self.iniciarPreferencia('int', 'NUM_HILOS', defecto=8, mostrar=cargarWidget, vbox=prefs_vbox_general, label=_('Num. Hilos para tareas de fondo'))
         
-        self.iniciarPreferencia('bool', 'ADVERTENCIA_ACTUALIZAR_WIITDB', defecto=True, mostrar=True, vbox=prefs_vbox_general, label=_('Mostrar una advertencia cuando no hay ninguna informacion WiiTDB'))
-        self.iniciarPreferencia('bool', 'ADVERTENCIA_NO_WBFS', defecto=True, mostrar=True, vbox=prefs_vbox_general, label=_('Mostrar una advertencia cuando no hay particiones WBFS'))
-        self.iniciarPreferencia('bool', 'DRAG_AND_DROP_LOCAL', defecto=True, mostrar=True, vbox=prefs_vbox_general, label=_('Permitir establecer caratulas locales por arrastre'))
-        self.iniciarPreferencia('bool', 'DRAG_AND_DROP_HTTP', defecto=True, mostrar=True, vbox=prefs_vbox_general, label=_('Permitir establecer caratulas desde http por arrastre'))
-        self.iniciarPreferencia('bool', 'DRAG_AND_DROP_JUEGOS', defecto=True, mostrar=True, vbox=prefs_vbox_general, label=_('Permitir arrastrar juegos en ISO, RAR o directorios.'))
-        self.iniciarPreferencia('bool', 'rar_overwrite_iso', defecto=True, mostrar=True, vbox=prefs_vbox_general, label=_('Los isos descomprimidos desde el rar remplaza imagenes iso sin preguntar.'))
-        self.iniciarPreferencia('bool', 'rar_preguntar_borrar_iso', defecto=True, mostrar=True, vbox=prefs_vbox_general, label=_('Pregunta borrar el .iso (cuando aniamos un rar)'))
-        self.iniciarPreferencia('bool', 'rar_preguntar_borrar_rar', defecto=False, mostrar=True, vbox=prefs_vbox_general, label=_('Pregunta borrar el .rar (cuando aniamos un rar)'))
+        self.iniciarPreferencia('bool', 'ADVERTENCIA_ACTUALIZAR_WIITDB', defecto=True, mostrar=cargarWidget, vbox=prefs_vbox_general, label=_('Mostrar una advertencia cuando no hay ninguna informacion WiiTDB'))
+        self.iniciarPreferencia('bool', 'ADVERTENCIA_NO_WBFS', defecto=True, mostrar=cargarWidget, vbox=prefs_vbox_general, label=_('Mostrar una advertencia cuando no hay particiones WBFS'))
+        self.iniciarPreferencia('bool', 'DRAG_AND_DROP_LOCAL', defecto=True, mostrar=cargarWidget, vbox=prefs_vbox_general, label=_('Permitir establecer caratulas locales por arrastre'))
+        self.iniciarPreferencia('bool', 'DRAG_AND_DROP_HTTP', defecto=True, mostrar=cargarWidget, vbox=prefs_vbox_general, label=_('Permitir establecer caratulas desde http por arrastre'))
+        self.iniciarPreferencia('bool', 'DRAG_AND_DROP_JUEGOS', defecto=True, mostrar=cargarWidget, vbox=prefs_vbox_general, label=_('Permitir arrastrar juegos en ISO, RAR o directorios.'))
+        self.iniciarPreferencia('bool', 'rar_overwrite_iso', defecto=True, mostrar=cargarWidget, vbox=prefs_vbox_general, label=_('Los isos descomprimidos desde el rar remplaza imagenes iso sin preguntar.'))
+        self.iniciarPreferencia('bool', 'rar_preguntar_borrar_iso', defecto=True, mostrar=cargarWidget, vbox=prefs_vbox_general, label=_('Pregunta borrar el .iso (cuando aniamos un rar)'))
+        self.iniciarPreferencia('bool', 'rar_preguntar_borrar_rar', defecto=False, mostrar=cargarWidget, vbox=prefs_vbox_general, label=_('Pregunta borrar el .rar (cuando aniamos un rar)'))
         DESTINO_DRAG_AND_DROP =    [('C', _('Caratula')),
                                     ('D', _('Disc-art'))]
-        self.iniciarPreferencia('select', 'DESTINO_ARRASTRE', defecto='C', mostrar=True, vbox=prefs_vbox_general, label=_('Destino del arrastre de una imagen'), datos_lista = DESTINO_DRAG_AND_DROP)
-        self.iniciarPreferencia('string', 'COMANDO_ABRIR_CARPETA', defecto='gnome-open', mostrar=True, vbox=prefs_vbox_general, label=_('Comando para abrir carpetas.'))
+        self.iniciarPreferencia('select', 'DESTINO_ARRASTRE', defecto='C', mostrar=cargarWidget, vbox=prefs_vbox_general, label=_('Destino del arrastre de una imagen'), datos_lista = DESTINO_DRAG_AND_DROP)
+        self.iniciarPreferencia('string', 'COMANDO_ABRIR_CARPETA', defecto='gnome-open', mostrar=cargarWidget, vbox=prefs_vbox_general, label=_('Comando para abrir carpetas'))
+        self.iniciarPreferencia('string', 'COMANDO_TERMINAL', defecto='gnome-terminal', mostrar=cargarWidget, vbox=prefs_vbox_general, label=_('Comando para abrir terminal'))
         
         # Listas de idiomas wiitdb
         WIITDB_LANGUAGE_LISTA =    [('EN', _('English')),
@@ -95,8 +97,8 @@ class Preferencias:
                                     ('ZHTW', _('Chinese-Taiwan')),
                                     ('ZHCN', _('Chinese')),
                                     ('KO', _('Korean'))]
-        self.iniciarPreferencia('select', 'LANG_PRINCIPAL', defecto='ES', mostrar=True, vbox=prefs_vbox_caratulas, label=_('Idioma principal para el synopsis'), datos_lista = WIITDB_LANGUAGE_LISTA)
-        self.iniciarPreferencia('select', 'LANG_SECUNDARIO', defecto='EN', mostrar=True, vbox=prefs_vbox_caratulas, label=_('Idioma auxiliar para el synopsis'), datos_lista = WIITDB_LANGUAGE_LISTA)
+        self.iniciarPreferencia('select', 'LANG_PRINCIPAL', defecto='ES', mostrar=cargarWidget, vbox=prefs_vbox_caratulas, label=_('Idioma principal para el synopsis'), datos_lista = WIITDB_LANGUAGE_LISTA)
+        self.iniciarPreferencia('select', 'LANG_SECUNDARIO', defecto='EN', mostrar=cargarWidget, vbox=prefs_vbox_caratulas, label=_('Idioma auxiliar para el synopsis'), datos_lista = WIITDB_LANGUAGE_LISTA)
         
         cycle_covers = ""
         cycle_covers += "http://www.wiiboxart.com/pal/%s.png\n"
@@ -112,7 +114,7 @@ class Preferencias:
         cycle_covers += "http://www.wiiboxart.com/widescreen/ntsc/%s.png\n"
         cycle_covers += "http://www.wiiboxart.com/widescreen/ntscj/%s.png\n"
         cycle_covers += "http://www.wiiboxart.com/fullcover/%s.png\n"
-        self.iniciarPreferencia('memo', 'PROVIDER_COVERS', defecto=cycle_covers, mostrar=True, vbox=prefs_vbox_caratulas, label=_('Proveedor de caratulas'))
+        self.iniciarPreferencia('memo', 'PROVIDER_COVERS', defecto=cycle_covers, mostrar=cargarWidget, vbox=prefs_vbox_caratulas, label=_('Proveedor de caratulas'))
 
     # indicar el vbox que inicia la preferencia
     def iniciarPreferencia(self, tipo, name, defecto = '', mostrar = False, vbox = None, label = '', datos_lista = None):

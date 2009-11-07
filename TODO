@@ -1,13 +1,7 @@
- - limpiar bdd wiitdb
- - formatear WBFS
-<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< - poner ciclo tambien para el disc-art
-zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz- compilarlo en amd64: http://launchpadlibrarian.net/35050121/buildlog_ubuntu-karmic-amd64.wiithon_1.12-315_FAILEDTOBUILD.txt.gz
-<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<- excepcion descarga xml
+  - poner ciclo tambien para el disc-art
 zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz- bloquear leer wiitdb durante su escritura
 - barra de estado no funciona bien
-<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<- corregir build depends
 - icono borrar no se ve bien en el tema de 9.10
 - poner info wiitdb bloqueada en lugar de "No has seleccionado ningún juego"
 - si hay 0 particiones -> comprobar si el usuario pertenece al grupo "disk".
-- display correct "version-revision" in window's title and credits
 - cleanup code to remove lintian errors from deb package

@@ -14,12 +14,12 @@ hayUDEV=$?
 
 for i in $(cat /proc/partitions | grep -v name | sed '/^$/d' | awk '{print "/dev/" $4}' | egrep '(sd|hd|loop)([a-z])*([0-9]){1,}');
 do
-	PARTICION=`fdisk -l | grep "W95 FAT32" | grep "$(echo -n $i)" | awk '{print $1}'`;
+	PARTICION=`fdisk -l | grep "FAT" | grep "$(echo -n $i)" | awk '{print $1}'`;
 	NUM_LINEAS=`echo $PARTICION | wc -c`;
 	if [ $NUM_LINEAS -gt 1 ]; then
 		MAGICO=`head --bytes=4 $PARTICION 2> /dev/null`;
 		if [ $MAGICO != "WBFS" ]; then
-			USADO_LIBRE_TOTAL=`df -H $PARTICION | grep $PARTICION | awk '{print $3";@;"$4";@;"$2}' 2> /dev/null`
+			USADO_LIBRE_TOTAL=`df -P $PARTICION | grep $PARTICION | awk '{print $3/1048576";@;"$4/1048576";@;"$2/1048576}' 2> /dev/null`
 			if [ $hayUDEV -eq 1 ]; then
 				NOMBRE=`udevinfo -a -p $(udevinfo -q path -n $i) | egrep 'ATTRS{vendor}|ATTRS{model}' | awk -F== '{print $2}' | sed '3,$d' | sed 's/\"//g' | xargs`;
 			else

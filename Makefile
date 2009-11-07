@@ -69,12 +69,19 @@ making_directories:
 	@mkdir -p $(DESTDIR)$(PREFIX)/share/wiithon/recursos/imagenes/accesorio
 	@mkdir -p $(DESTDIR)$(PREFIX)/share/wiithon/recursos/imagenes/caratulas
 	@mkdir -p $(DESTDIR)$(PREFIX)/share/wiithon/recursos/imagenes/discos
+	@mkdir -p $(DESTDIR)/usr/share/doc/wiithon
 	
 recicled_old_wiithon: making_directories
 	-@mv -f ~/.wiithon/caratulas/*.png $(PREFIX)/share/wiithon/recursos/imagenes/caratulas
 	-@mv -f ~/.wiithon/discos/*.png $(PREFIX)/share/wiithon/recursos/imagenes/discos
 	
-copy_archives: making_directories
+update_revision:
+	@echo "=================================================================="
+	@echo "Install version 	$(VERSION)"
+	@echo "=================================================================="
+	
+copy_archives: making_directories update_revision
+
 	cp libwbfs_binding/wiithon_wrapper $(DESTDIR)$(PREFIX)/share/wiithon/
 	cp unrar-nonfree/unrar $(DESTDIR)$(PREFIX)/share/wiithon/
 	
@@ -93,6 +100,11 @@ copy_archives: making_directories
 	
 	cp recursos/caratulas_fix/*.png $(DESTDIR)$(PREFIX)/share/wiithon/recursos/imagenes/caratulas
 	cp recursos/discos_fix/*.png $(DESTDIR)$(PREFIX)/share/wiithon/recursos/imagenes/discos
+	
+	cp doc/LICENCIA $(DESTDIR)/usr/share/doc/wiithon
+	cp doc/VERSION $(DESTDIR)/usr/share/doc/wiithon
+	cp doc/REVISION $(DESTDIR)/usr/share/doc/wiithon
+	cp doc/TRANSLATORS $(DESTDIR)/usr/share/doc/wiithon
 	
 	cp wiithon_usuario.desktop $(DESTDIR)/usr/share/applications/
 	cp -R po/locale/ $(DESTDIR)/usr/share/
@@ -232,6 +244,12 @@ delete_archives_installation:
 	-$(RM) /usr/share/locale/es_CA/LC_MESSAGES/wiithon.mo
 
 	-$(RM) /usr/share/applications/wiithon_usuario.desktop
+	
+	-$(RM) /usr/share/doc/wiithon/LICENCIA
+	-$(RM) /usr/share/doc/wiithon/VERSION
+	-$(RM) /usr/share/doc/wiithon/REVISION
+	-$(RM) /usr/share/doc/wiithon/TRANSLATORS
+	-rmdir /usr/share/doc/wiithon
 	
 	-$(RM) /usr/share/pixmaps/wiithon.png
 	-$(RM) /usr/share/pixmaps/wiithon.svg

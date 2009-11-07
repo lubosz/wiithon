@@ -12,6 +12,17 @@ import sys
 import util
 import logging
 
+def getVersionRevision():
+    version = util.getSTDOUT("python /usr/share/doc/wiithon/VERSION")
+    cachos = version.split("-")
+    if len(cachos) > 1:
+        version = cachos[0]
+        revision = cachos[1]
+    else:
+        version = cachos[0]
+        revision = ''
+    return version, revision
+
 DEBUG = False
 SUPERDEBUG = False
 
@@ -31,13 +42,15 @@ ICONO = "/usr/share/pixmaps/wiithon.png"
 UNRAR_APP = os.path.join(WIITHON_FILES , "unrar")
 
 APP = "wiithon"
+VER, REV = getVersionRevision()
 HOME = os.environ['HOME']
 HOME_WIITHON = os.path.join(HOME , '.%s' % APP)
 HOME_WIITHON_BDD = os.path.join(HOME_WIITHON , 'bdd')
 HOME_WIITHON_LOGS = os.path.join(HOME_WIITHON , 'logs')
 HOME_WIITHON_LOGS_PROCESO = os.path.join(HOME_WIITHON_LOGS , "proceso.log")
+HOME_WIITHON_BDD_BDD = os.path.join(HOME_WIITHON_BDD, '%s%s.db' % (APP, VER))
 
-URI_ENGINE = 'sqlite:///%s' % os.path.join(HOME_WIITHON_BDD, '%s.db' % (APP))
+URI_ENGINE = 'sqlite:///%s' % HOME_WIITHON_BDD_BDD
 
 # crear directorios si no existen
 util.try_mkdir( HOME_WIITHON )
