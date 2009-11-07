@@ -44,11 +44,11 @@ if __name__ == '__main__':
         try:
             # esta en la instalacion
             if not os.path.exists(".bzr"): 
-                f = open("REVISION", "r")
+                f = open("/usr/share/doc/wiithon/REVISION", "r")
                 rev = int(f.read())
                 f.close()
             else:
-                if os.path.exists("wiithon.py"): 
+                if os.path.exists("doc/REVISION"): 
                     subprocess.call("bzr revno > doc/REVISION", shell=True)
                     f = open("doc/REVISION", "r")
                     rev = int(f.read())

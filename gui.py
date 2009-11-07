@@ -335,7 +335,7 @@ class WiithonGUI(GtkBuilderWrapper):
             # si no hay particion -> modal que da 2 opciones:
             # 1º Ver base de datos
             # 2º Salir
-            '''
+
             if (self.core.prefs.ADVERTENCIA_NO_WBFS and len(self.lParti) == 0):
                 self.alert("warning" , _("No hay particiones WBFS, se muestran los juegos de la ultima sesion."))
             elif (self.core.prefs.ADVERTENCIA_ACTUALIZAR_WIITDB and (len(self.lJuegos) > 0) and self.info.abajo_num_juegos_wiitdb == 0):
@@ -355,9 +355,8 @@ class WiithonGUI(GtkBuilderWrapper):
                             self.core.prefs.URL_ZIP_WIITDB
                             ),
                             xml = True) ):
-                    self.poolTrabajo.nuevoTrabajoActualizarWiiTDB(self.core.prefs.URL_ZIP_WIITDB)
-            '''
-                
+                    self.core.prefs.ADVERTENCIA_ACTUALIZAR_WIITDB = False
+                    self.poolTrabajo.nuevoTrabajoActualizarWiiTDB(self.core.prefs.URL_ZIP_WIITDB)                
             
         else:
             if verbose:
@@ -960,12 +959,12 @@ class WiithonGUI(GtkBuilderWrapper):
             print "refrescarInfoWiiTDBNumCaratulas"
         
         particion = self.sel_parti.obj
+        numInfos = 0
+        sinCaratulas = 0
+        sinDiscArt = 0
         if particion != None:
             
             sql = util.decode("idParticion=='%d'" % (particion.idParticion))
-            numInfos = 0
-            sinCaratulas = 0
-            sinDiscArt = 0
             for juego in session.query(Juego).filter(sql):
                 if juego.getJuegoWIITDB() is not None:
                     numInfos += 1
@@ -974,9 +973,9 @@ class WiithonGUI(GtkBuilderWrapper):
                 if not juego.tieneDiscArt:
                     sinDiscArt += 1
                     
-            self.info.abajo_num_juegos_wiitdb = numInfos
-            self.info.abajo_juegos_sin_caratula = sinCaratulas
-            self.info.abajo_juegos_sin_discart = sinDiscArt
+        self.info.abajo_num_juegos_wiitdb = numInfos
+        self.info.abajo_juegos_sin_caratula = sinCaratulas
+        self.info.abajo_juegos_sin_discart = sinDiscArt
 
     def refrescarTareasPendientes(self):
         
