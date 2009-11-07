@@ -4,15 +4,13 @@ SEPARADOR=";@;"
 
 # = 1 --> SI tienes udevinfo
 # = 0 --> NO tienes udevinfo
-comprobarTienesUDEV()
+function comprobarTienesUDEV()
 {
-	return `which udevinfo 2> /dev/null | wc -l`
+	test -x /sbin/udevadm
+	return $?
 }
 
-comprobarTienesUDEV
-hayUDEV=$?
-
-for i in $(cat /proc/partitions | grep -v name | sed '/^$/d' | awk '{print "/dev/" $4}' | egrep '(sd|hd|loop)([a-z])*([0-9])*');
+for i in $(awk '$4 ~ /^(sd|hd|loo).[[:digit:]]/ {print "/dev/" $4}' /proc/partitions);
 do
 	MAGICO=`head --bytes=4 $i 2> /dev/null`;
 	LEGIBLE=`echo $MAGICO | wc -c`;
@@ -20,8 +18,8 @@ do
 	if [ $LEGIBLE -eq 5 ]; then
 		if [ $MAGICO == "WBFS" ]; then
 			USADO_LIBRE_TOTAL=`/usr/local/share/wiithon/wiithon_wrapper -p $i df 2> /dev/null`
-			if [ $hayUDEV -eq 1 ]; then
-				NOMBRE=`udevinfo -a -p $(udevinfo -q path -n $i) | egrep 'ATTRS{vendor}|ATTRS{model}' | awk -F== '{print $2}' | sed '3,$d' | sed 's/\"//g' | xargs`;
+			if [ comprobarTienesUDEV ]; then
+				NOMBRE=`/sbin/udevadm info -a -n $i | awk -F "==" 'BEGIN {n=0} $1 ~ /ATTRS{vendor}|ATTRS{model}/ {gsub(/\"/,"",$2);row[n++]=$2} END {print row[0]row[1]}'`
 			else
 				NOMBRE=""
 			fi
