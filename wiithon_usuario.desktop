@@ -2,7 +2,7 @@
 Encoding=UTF-8
 Name=Wiithon
 Terminal=false
-Exec=/usr/local/bin/wiithon
+Exec=/usr/local/share/wiithon/wiithon.py
 Icon=/usr/share/pixmaps/wiithon.svg
 Type=Application
 Categories=GNOME;Application;Game;
