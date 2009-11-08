@@ -1,5 +1,4 @@
 [Desktop Entry]
-Encoding=UTF-8
 Name=Wiithon
 Terminal=false
 Exec=/usr/local/share/wiithon/wiithon.py

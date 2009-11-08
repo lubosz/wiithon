@@ -10,6 +10,6 @@ Package: wiithon
 Architecture: any
 Depends: libc6 (>= 2.4), libc6-dev (>= 2.4), python (>= 2.5), gcc-multilib (>= 4.4) [amd64], libgtk2.0-0 (>= 2.14), python-sqlalchemy (>= 0.4), imagemagick, gnome-icon-theme, python-gtk2 (>= 2.14), python-glade2 (>= 2.14), unzip
 Description: WBFS partition manager
- Wiithon is a software developed in python, c, c++ and bash.
+ Wiithon is a software developed in Python, C, C++ and bash.
  It is used for easy management of Wii games on WBFS partitions.
  Wiithon provides a CLI and a GUI with a use very easy.
