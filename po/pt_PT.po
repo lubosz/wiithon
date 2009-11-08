@@ -3,6 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: makiolo@gmail.com\n"
+"PO-Revision-Date: 2009-11-08 20:15+0100\n"
 "Last-Translator: Ricardo Marmolejo García <makiolo@gmail.com>\n"
 "Language-Team: Español <wii.sceners.linux@lists.launchpad.net>\n"
 "MIME-Version: 1.0\n"
@@ -14,7 +15,7 @@ msgstr ""
 #: cli.py:44
 #, python-format
 msgid "No se ha encontrado la particion: %s"
-msgstr "No se ha encontrado la partición: %s"
+msgstr ""
 
 #: cli.py:53
 msgid "Lista de particiones autodetectadas : "
@@ -93,9 +94,9 @@ msgid "No has seleccionado ningun juego"
 msgstr "No has seleccionado ningún juego"
 
 #: cli.py:176
-#, fuzzy, python-format
+#, python-format
 msgid "La particion %s no contiene juegos"
-msgstr "La partición no contiene juegos"
+msgstr ""
 
 #: cli.py:186
 msgid "Buscando ficheros RAR recursivamente ... "

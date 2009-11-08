@@ -138,7 +138,7 @@ postinst:
 	@echo "Type: \"sudo gpasswd -a <user> disk\" and restart your GNOME/KDE session."
 	@echo "=================================================================="
 
-install: clean_old_wiithon copy_archives set_permisses postinst
+install: recicled_old_wiithon clean_old_wiithon copy_archives set_permisses postinst
 	@echo "=================================================================="
 	@echo "Wiithon Install OK"
 	@echo "=================================================================="
@@ -171,7 +171,7 @@ ppa-inc: generate_changelog
 ppa-upload: ppa-inc
 	dput ppa:wii.sceners.linux/wiithon ../wiithon_$(VERSION_ACTUAL)_source.changes
 
-clean_old_wiithon: recicled_old_wiithon
+clean_old_wiithon: 
 	-@$(RM) -R ~/.wiithon/caratulas/
 	-@$(RM) -R ~/.wiithon/discos/
 	-@$(RM) ~/.wiithon/bdd/juegos.db
@@ -221,6 +221,7 @@ delete_archives_installation:
 	-$(RM) $(PREFIX)/share/wiithon/recursos/glade/*.ui
 	-$(RM) $(PREFIX)/share/wiithon/recursos/imagenes/*.png
 	-$(RM) $(PREFIX)/share/wiithon/recursos/imagenes/accesorio/*.jpg
+	-rmdir $(PREFIX)/share/wiithon/recursos/imagenes/accesorio/
 
 	-$(RM) $(PREFIX)/share/wiithon/*.pyc
 	
@@ -244,10 +245,7 @@ delete_archives_installation:
 
 	-$(RM) /usr/share/applications/wiithon_usuario.desktop
 	
-	-$(RM) /usr/share/doc/wiithon/LICENCIA
-	-$(RM) /usr/share/doc/wiithon/VERSION
-	-$(RM) /usr/share/doc/wiithon/REVISION
-	-$(RM) /usr/share/doc/wiithon/TRANSLATORS
+	-$(RM) /usr/share/doc/wiithon/*
 	-rmdir /usr/share/doc/wiithon
 	
 	-$(RM) /usr/share/pixmaps/wiithon.png
