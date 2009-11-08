@@ -3,8 +3,6 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: makiolo@gmail.com\n"
-"POT-Creation-Date: 2009-11-08 16:53+0100\n"
-"PO-Revision-Date: 2009-11-08 16:30+0100\n"
 "Last-Translator: Ricardo Marmolejo García <makiolo@gmail.com>\n"
 "Language-Team: Español <wii.sceners.linux@lists.launchpad.net>\n"
 "MIME-Version: 1.0\n"
@@ -164,7 +162,7 @@ msgid "Error al formatear %s"
 msgstr "Formatting error %s"
 
 #: cli.py:252 cli.py:256
-#, python-format
+#, fuzzy, python-format
 msgid "No se ha formateado %s"
 msgstr "It has been formatted"
 

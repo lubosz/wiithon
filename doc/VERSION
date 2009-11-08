@@ -40,27 +40,7 @@ if __name__ == '__main__':
     
     try:
         rev = int(sys.argv[1])
-    except:
-        try:
-            # esta en la instalacion
-            if not os.path.exists(".bzr"): 
-                if os.path.exists("/usr/share/doc/wiithon/REVISION"): 
-                    f = open("/usr/share/doc/wiithon/REVISION", "r")
-                    rev = int(f.read())
-                    f.close()
-                else:
-                    raise Error
-            else:
-                # return estimated revision (+1)
-                if os.path.exists("doc/REVISION"): 
-                    subprocess.call("bzr revno > doc/REVISION", shell=True)
-                    f = open("doc/REVISION", "r")
-                    rev = int(f.read()) + 1
-                    f.close()
-                    subprocess.call("echo %d > doc/REVISION" % rev, shell=True)
-                else:
-                    raise Error
-        except:
-            rev = versiones[len(versiones)-1][1]
+    except:            
+        rev = 0
 
     print getVersion(rev)

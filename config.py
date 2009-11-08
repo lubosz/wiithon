@@ -13,7 +13,8 @@ import util
 import logging
 
 def getVersionRevision():
-    version = util.getSTDOUT("python /usr/share/doc/wiithon/VERSION")
+    revision = util.getSTDOUT("cat /usr/share/doc/wiithon/REVISION")
+    version = util.getSTDOUT("python /usr/share/doc/wiithon/VERSION %s" % revision)
     cachos = version.split("-")
     if len(cachos) > 1:
         version = cachos[0]

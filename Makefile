@@ -1,6 +1,9 @@
 EMAIL="makiolo@gmail.com"
 PREFIX=/usr/local
-VERSION=${shell python doc/VERSION}
+REV_ACTUAL=${shell bzr revno}
+REV_NEXT=$(shell python -c "print $(REV_ACTUAL)+1")
+VERSION_ACTUAL=${shell python doc/VERSION $(REV_ACTUAL)}
+VERSION_NEXT=${shell python doc/VERSION $(REV_NEXT)}
 ARCH=${shell uname -m}
 INSTALL_PKG=apt-get install
 
@@ -8,6 +11,7 @@ all: compile
 
 ayuda: help
 help:
+	@echo
 	@echo ==================================================================
 	@echo "step 1: \"make\""
 	@echo "step 2: \"sudo make install\""
@@ -51,9 +55,9 @@ lang: lang_enable lang_disable
 lang_enable: it es en fr de pt_BR es_CA
 lang_disable: da_DK fi_FI tr_TR ru_RU ko_KR sv_SE pt_PT da_DK nb_NO ja_JP
 
-compile: lang unrar-nonfree/unrar libwbfs_binding/wiithon_wrapper
+compile: lang unrar-nonfree/unrar libwbfs_binding/wiithon_wrapper gen_rev_now
 	@echo "=================================================================="
-	@echo "Compile OK - Wiithon $(VERSION)"
+	@echo "Compile OK"
 	@echo "=================================================================="
 
 making_directories:
@@ -159,13 +163,13 @@ deb: generate_changelog
 	debuild -b -uc -us -tc --lintian-opts -Ivi
 
 deb_sign: deb
-	gpg --armor --sign --detach-sig ../wiithon_$(VERSION)_i386.deb
+	gpg --armor --sign --detach-sig ../wiithon_$(VERSION_ACTUAL)_i386.deb
 
 ppa-inc: generate_changelog
 	debuild -S -sd -k0xB8F0176A -I -i --lintian-opts -Ivi
 	
 ppa-upload: ppa-inc
-	dput ppa:wii.sceners.linux/wiithon ../wiithon_$(VERSION)_source.changes
+	dput ppa:wii.sceners.linux/wiithon ../wiithon_$(VERSION_ACTUAL)_source.changes
 
 clean_old_wiithon: recicled_old_wiithon
 	-@$(RM) -R ~/.wiithon/caratulas/
@@ -309,7 +313,19 @@ libwbfs_binding/wiithon_wrapper: libwbfs_binding/*.c libwbfs_binding/libwbfs/*.c
 unrar-nonfree/unrar: unrar-nonfree/*.cpp unrar-nonfree/*.hpp
 	$(MAKE) -C unrar-nonfree
 
-commit: clean compile
+gen_rev_now:
+# fixme, works but exists file_exists() in makefile ?
+ifeq ($(shell if [ -x .bzr ]; then echo "y"; else echo "n"; fi), y)
+	echo $(REV_ACTUAL) > doc/REVISION
+endif
+
+gen_rev_next:
+# fixme, works but exists file_exists() in makefile ?
+ifeq ($(shell if [ -x .bzr ]; then echo "y"; else echo "n"; fi), y)
+	echo $(REV_NEXT) > doc/REVISION
+endif
+
+commit: clean compile gen_rev_next
 	bzr commit --file="COMMIT" && echo "" > COMMIT
 
 log:
@@ -324,7 +340,8 @@ log:
 # --sort-output
 po/plantilla.pot: recursos/glade/*.ui.h *.py
 	@echo "*** GETTEXT *** Extract strings from code"
-	xgettext --language=Python --no-wrap --sort-by-file --keyword=_ --keyword=N_ --from-code=utf-8 --package-name="wiithon" --package-version="$(VERSION)" --msgid-bugs-address=$(EMAIL) -o po/plantilla.pot $^ 2> /dev/null
+	xgettext --language=Python --no-wrap --sort-by-file --keyword=_ --keyword=N_ --from-code=utf-8 --package-name="wiithon" --package-version="$(VERSION_NEXT)" --msgid-bugs-address=$(EMAIL) -o po/plantilla.pot $^ 2> /dev/null
+	cat po/plantilla.pot | grep -v POT-Creation-Date | grep -v PO-Revision-Date > po/plantilla.pot
 
 # extraer strings del glade
 recursos/glade/%.ui.h: recursos/glade/%.ui
@@ -354,7 +371,7 @@ first_time:
 #
 #ppa-new: generate_changelog
 #	debuild -S -sa -k0xB8F0176A -I -i --lintian-opts -Ivi
-#	mv ../wiithon_$(VERSION).tar.gz ../wiithon_$(VERSION).orig.tar.gz
+#	mv ../wiithon_$(VERSION_ACTUAL).tar.gz ../wiithon_$(VERSION_ACTUAL).orig.tar.gz
 #	debuild -S -sk -k0xB8F0176A -I -i --lintian-opts -Ivi
 #
 

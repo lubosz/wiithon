@@ -3,8 +3,6 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: makiolo@gmail.com\n"
-"POT-Creation-Date: 2009-11-08 16:53+0100\n"
-"PO-Revision-Date: 2009-11-07 07:16+0100\n"
 "Last-Translator: Ricardo Marmolejo García <makiolo@gmail.com>\n"
 "Language-Team: Español <wii.sceners.linux@lists.launchpad.net>\n"
 "MIME-Version: 1.0\n"
@@ -414,6 +412,9 @@ msgstr "No hay particiones WBFS, se muestran los juegos de la última sesión."
 #: gui.py:343
 msgid "No puede acceder a las particiones porque el usuario que se puso en marcha wiithon no pertenecen al grupo \"disk\", se muestran los juegos de la ultima sesion."
 msgstr ""
+"No puede acceder a las particiones porque el usuario que ha abierto wiithon no pertenecen al grupo \"disk\".\n"
+"\n"
+"Se muestran los juegos de la ultima sesión."
 
 #: gui.py:356
 msgid "Se ha detectado que ninguno de tus juegos disponen de informacion extra, descargada de Internet."
