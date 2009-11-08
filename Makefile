@@ -157,7 +157,7 @@ install4ppa: copy_archives set_permisses
 
 generate_changelog:
 	@ln -sf $(shell pwd)/recursos/bazaar-plugins/gnulog.py ~/.bazaar/plugins/gnulog.py
-	bzr log -v --log-format 'gnu' > debian/changelog
+	bzr log -v --log-format 'gnu' | sed -e "s/\(<.*@[^.]*\)>/\1\.fake>/g" > debian/changelog
 	@$(RM) ~/.bazaar/plugins/gnulog.py
 
 deb: generate_changelog
