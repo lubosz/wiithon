@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: makiolo@gmail.com\n"
-"POT-Creation-Date: 2009-11-08 16:39+0100\n"
+"POT-Creation-Date: 2009-11-08 16:42+0100\n"
 "PO-Revision-Date: 2009-11-08 16:30+0100\n"
 "Last-Translator: Ricardo Marmolejo García <makiolo@gmail.com>\n"
 "Language-Team: Español <wii.sceners.linux@lists.launchpad.net>\n"
@@ -1379,98 +1379,98 @@ msgstr "Program runs with incorrect settings"
 msgid "Interrumpido por el usuario"
 msgstr "Interrupted by user"
 
-#~ msgid "Elige la particion WBFS con la que va ha trabajar : "
-#~ msgstr "Choose WBFS partition to work on :"
-
-#~ msgid "TAMANIO"
-#~ msgstr "SIZE"
-
-#~ msgid "Tamanio"
-#~ msgstr "Size"
-
-#~ msgid "No hay Juegos para descargar una caratula"
-#~ msgstr "No games to downloading a cover for"
-
-#~ msgid "ERROR, descargando %s.png"
-#~ msgstr "ERROR, downloading %s.png"
-
-#~ msgid "OK, descargado %s.png"
-#~ msgstr "OK, downloaded %s.png"
-
-#~ msgid "No hay Juegos que borrar"
-#~ msgstr "There are no games to delete"
-
-#~ msgid "Borrar juego con IDGAME"
-#~ msgstr "Remove game with IDGAME"
-
-#~ msgid "No tienes instalado ningun juego en %s"
-#~ msgstr "No games installed in %s"
-
-#~ msgid "***************** DESCARGAR DISCO %s ********************"
-#~ msgstr "***************** DOWNLOAD DISC %s ********************"
-
-#~ msgid "ERROR la ISO o la particion no existe"
-#~ msgstr "ISO or partition doesn't exist"
-
-#~ msgid "Aniadir ISO"
-#~ msgstr "Add ISO"
-
-#~ msgid "ERROR el RAR %s no tenia ninguna ISO"
-#~ msgstr "RAR %s doesn't contain an ISO"
-
-#~ msgid "ERROR no se puede descomrpimir por que reemplazaria el ISO : %s"
-#~ msgstr "ERROR extracting because the following ISO will be replaced: %s"
-
-#~ msgid "ERROR al descomrpimir el RAR : %s"
-#~ msgstr "ERROR extracting RAR : %s"
-
-#~ msgid "ERROR anadiendo la ISO : %s (comprueba que sea una ISO de WII)"
-#~ msgstr "ERROR adding ISO : %s (Is it a Wii game ISO?)"
-
-#~ msgid "ISO %s descomprimida y anadida correctamente"
-#~ msgstr "ISO %s extracted and added successfully"
-
-#~ msgid "Descomprimido correctamente"
-#~ msgstr "Extracted successfully"
-
-#~ msgid "a la particion"
-#~ msgstr "to partition"
-
-#~ msgid "Aniadir RAR con ISO dentro"
-#~ msgstr "Add RAR containing ISO"
-
-#~ msgid "No hay Juegos para extraer"
-#~ msgstr "There are no games to extract"
-
-#~ msgid "en particion"
-#~ msgstr "in partition"
-
-#~ msgid "Extraer ISO de juego con IDGAME"
-#~ msgstr "Extract ISO from game with IDGAME"
-
-#~ msgid "No hay Juegos para renombrar"
-#~ msgstr "There are no games to rename"
-
-#~ msgid "como"
-#~ msgstr "as"
-
-#~ msgid "Renombrar juego IDGAME"
-#~ msgstr "Rename game IDGAME"
-
-#~ msgid "No hay Juegos para descargar caratulas"
-#~ msgstr "No games to download covers for"
-
-#~ msgid "No se ha encontrado ninguna imagen ISO"
-#~ msgstr "ISO image not found"
-
-#~ msgid "Buscando en %s Imagenes ISO ... "
-#~ msgstr "Searching %s ISO Image ..."
-
-#~ msgid "Buscando en %s ficheros RAR ... "
-#~ msgstr "Searching %s RAR files..."
+#~ msgid "GNU GENERAL PUBLIC LICENSE Version 3"
+#~ msgstr "GNU GENERAL PUBLIC LICENSE Version 3"
 
 #~ msgid "https://launchpad.net/wiithon"
 #~ msgstr "https://launchpad.net/wiithon"
 
-#~ msgid "GNU GENERAL PUBLIC LICENSE Version 3"
-#~ msgstr "GNU GENERAL PUBLIC LICENSE Version 3"
+#~ msgid "Buscando en %s ficheros RAR ... "
+#~ msgstr "Searching %s RAR files..."
+
+#~ msgid "Buscando en %s Imagenes ISO ... "
+#~ msgstr "Searching %s ISO Image ..."
+
+#~ msgid "No se ha encontrado ninguna imagen ISO"
+#~ msgstr "ISO image not found"
+
+#~ msgid "No hay Juegos para descargar caratulas"
+#~ msgstr "No games to download covers for"
+
+#~ msgid "Renombrar juego IDGAME"
+#~ msgstr "Rename game IDGAME"
+
+#~ msgid "como"
+#~ msgstr "as"
+
+#~ msgid "No hay Juegos para renombrar"
+#~ msgstr "There are no games to rename"
+
+#~ msgid "Extraer ISO de juego con IDGAME"
+#~ msgstr "Extract ISO from game with IDGAME"
+
+#~ msgid "en particion"
+#~ msgstr "in partition"
+
+#~ msgid "No hay Juegos para extraer"
+#~ msgstr "There are no games to extract"
+
+#~ msgid "Aniadir RAR con ISO dentro"
+#~ msgstr "Add RAR containing ISO"
+
+#~ msgid "a la particion"
+#~ msgstr "to partition"
+
+#~ msgid "Descomprimido correctamente"
+#~ msgstr "Extracted successfully"
+
+#~ msgid "ISO %s descomprimida y anadida correctamente"
+#~ msgstr "ISO %s extracted and added successfully"
+
+#~ msgid "ERROR anadiendo la ISO : %s (comprueba que sea una ISO de WII)"
+#~ msgstr "ERROR adding ISO : %s (Is it a Wii game ISO?)"
+
+#~ msgid "ERROR al descomrpimir el RAR : %s"
+#~ msgstr "ERROR extracting RAR : %s"
+
+#~ msgid "ERROR no se puede descomrpimir por que reemplazaria el ISO : %s"
+#~ msgstr "ERROR extracting because the following ISO will be replaced: %s"
+
+#~ msgid "ERROR el RAR %s no tenia ninguna ISO"
+#~ msgstr "RAR %s doesn't contain an ISO"
+
+#~ msgid "Aniadir ISO"
+#~ msgstr "Add ISO"
+
+#~ msgid "ERROR la ISO o la particion no existe"
+#~ msgstr "ISO or partition doesn't exist"
+
+#~ msgid "***************** DESCARGAR DISCO %s ********************"
+#~ msgstr "***************** DOWNLOAD DISC %s ********************"
+
+#~ msgid "No tienes instalado ningun juego en %s"
+#~ msgstr "No games installed in %s"
+
+#~ msgid "Borrar juego con IDGAME"
+#~ msgstr "Remove game with IDGAME"
+
+#~ msgid "No hay Juegos que borrar"
+#~ msgstr "There are no games to delete"
+
+#~ msgid "OK, descargado %s.png"
+#~ msgstr "OK, downloaded %s.png"
+
+#~ msgid "ERROR, descargando %s.png"
+#~ msgstr "ERROR, downloading %s.png"
+
+#~ msgid "No hay Juegos para descargar una caratula"
+#~ msgstr "No games to downloading a cover for"
+
+#~ msgid "Tamanio"
+#~ msgstr "Size"
+
+#~ msgid "TAMANIO"
+#~ msgstr "SIZE"
+
+#~ msgid "Elige la particion WBFS con la que va ha trabajar : "
+#~ msgstr "Choose WBFS partition to work on :"
