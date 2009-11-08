@@ -453,18 +453,17 @@ def esImagen(fichero):
     return (getExtension(fichero)=="png") or (getExtension(fichero)=="jpg") or (getExtension(fichero)=="gif")
 
 ## check user group and permissions
-def check_permissions(partition):
-	file=open("/etc/group","r")
-	for line in file:
-       		if "disk:x:" in line:
-                	group=line.rsplit(":");
-                	break;
-	file.close;
+def check_gids():
+        file=open("/etc/group","r")
+        for line in file:
+                if "disk:x:" in line:
+                        group=line.rsplit(":");
+                        break;
+        file.close;
 
-	if (int(group[2]) in os.getgroups()):
-        	print "User %s is in disk group" % os.getlogin()
-	else:
-        	print "User %s is NOT in disk group" % os.getlogin();
+        print os.getgroups();
 
-	if (os.access(partition,os.W_OK)):
-        	print "user can write on partition %s" % partition;
+        if (int(group[2]) in os.getgroups()):
+                return True
+        else:
+                return False

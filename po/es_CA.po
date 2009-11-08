@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wiithon 1.12\n"
 "Report-Msgid-Bugs-To: makiolo@gmail.com\n"
-"POT-Creation-Date: 2009-11-07 23:26+0100\n"
+"POT-Creation-Date: 2009-11-08 10:23+0100\n"
 "PO-Revision-Date: 2009-11-07 02:12+0100\n"
 "Last-Translator: Ricardo Marmolejo García <makiolo@gmail.com>\n"
 "Language-Team: Español <wii.sceners.linux@lists.launchpad.net>\n"
@@ -91,7 +91,7 @@ msgstr "Joc %s borrat correctament"
 msgid "ERROR borrando el juego"
 msgstr "ERROR esborrant el joc"
 
-#: cli.py:174 gui.py:1317 gui.py:1365 gui.py:1472
+#: cli.py:174 gui.py:1320 gui.py:1368 gui.py:1475
 msgid "No has seleccionado ningun juego"
 msgstr "No has sel·leccionat cap joc"
 
@@ -345,7 +345,7 @@ msgstr "Utilitzat"
 msgid "Libre"
 msgstr "Lliure"
 
-#: cli.py:488 gui.py:465
+#: cli.py:488 gui.py:468
 msgid "Total"
 msgstr "Total"
 
@@ -379,255 +379,259 @@ msgstr "Extraure"
 msgid "Copiar a otra particion"
 msgstr "Copiar a altra partició"
 
-#: gui.py:340
+#: gui.py:341
 msgid "No hay particiones WBFS, se muestran los juegos de la ultima sesion."
 msgstr "No hi ha particions WBFS, s'ensenyen els ultims jocs de l'ultima sessió."
 
-#: gui.py:353
+#: gui.py:343
+msgid "No puede acceder a las particiones porque el usuario que se puso en marcha wiithon no pertenecen al grupo \"disk\", se muestran los juegos de la ultima sesion."
+msgstr ""
+
+#: gui.py:356
 msgid "Se ha detectado que ninguno de tus juegos disponen de informacion extra, descargada de Internet."
 msgstr ""
 
-#: gui.py:354
+#: gui.py:357
 msgid "Deseas descargar informacion de los juegos desde WiiTDB?"
 msgstr ""
 
-#: gui.py:363
+#: gui.py:366
 msgid "No puedes refrescar las particiones mientras hay tareas sin finalizar"
 msgstr "No pots refrescar les particions mentre hi ha tasques per finalitzar."
 
-#: gui.py:373
+#: gui.py:376
 msgid "Formato desconocido"
 msgstr "Format desconegut"
 
-#: gui.py:385
+#: gui.py:388
 msgid "Por favor. Informe a los desarrolladores de este error."
 msgstr "Per favor. informa als desenvolupadors d'aquest error."
 
-#: gui.py:387
+#: gui.py:390
 msgid "Utitice la siguiente URL para el reporte de bugs:"
 msgstr "Utilitze la seguent URL per a reportat bugs:"
 
-#: gui.py:464
+#: gui.py:467
 msgid "Dispositivo"
 msgstr "Dispositiu"
 
-#: gui.py:515
+#: gui.py:518
 msgid "BDD"
 msgstr "BDD"
 
-#: gui.py:516
+#: gui.py:519
 msgid "WBFS?"
 msgstr ""
 
-#: gui.py:518
+#: gui.py:521
 msgid "TODOS"
 msgstr "TOTS"
 
-#: gui.py:539
+#: gui.py:542
 msgid "IDGAME"
 msgstr "IDGAME"
 
-#: gui.py:540
+#: gui.py:543
 msgid "Nombre"
 msgstr "Nom"
 
-#: gui.py:541
+#: gui.py:544
 msgid "Size"
 msgstr ""
 
-#: gui.py:542
+#: gui.py:545
 msgid "Online?"
 msgstr "Online?"
 
-#: gui.py:543
+#: gui.py:546
 msgid "Local"
 msgstr "Local"
 
-#: gui.py:544
+#: gui.py:547
 msgid "Fecha"
 msgstr "Data"
 
-#: gui.py:545
+#: gui.py:548
 msgid "Rating"
 msgstr "Rating"
 
-#: gui.py:546
+#: gui.py:549
 msgid "Particion"
 msgstr "Partició"
 
-#: gui.py:648
+#: gui.py:651
 msgid "+Info"
 msgstr "+Info"
 
-#: gui.py:652 gui.py:653 gui.py:654 gui.py:655 gui.py:656 wiitdb_schema.py:369
+#: gui.py:655 gui.py:656 gui.py:657 gui.py:658 gui.py:659 wiitdb_schema.py:369
 msgid "??"
 msgstr "??"
 
-#: gui.py:673
+#: gui.py:676
 msgid "TRADUCIR_ADVERTENCIA_SEGURIDAD_RENAME_IDGAME"
 msgstr ""
 
-#: gui.py:684 gui.py:705
+#: gui.py:687 gui.py:708
 msgid "Error renombrando"
 msgstr "Error renombrant"
 
-#: gui.py:686
+#: gui.py:689
 msgid "Ya hay un juego con ese IDGAME"
 msgstr "Ja hi ha un joc amb eixa IDGAME"
 
-#: gui.py:688
+#: gui.py:691
 msgid "Error: La longitud del IDGAME debe ser 6, y solo puede contener letras y numeros"
 msgstr "Error: La longitut de l'IDGAME ha de ser 6, i sols pot contindre lletres i nombres"
 
-#: gui.py:707
+#: gui.py:710
 #, python-format
 msgid "Se han detectado caracteres no validos: %s"
 msgstr "S'han detectat caràcters no valids: %s"
 
-#: gui.py:709
+#: gui.py:712
 #, python-format
 msgid "Nuevo nombre es demasiado largo, intente con un texto menor de %d caracteres"
 msgstr "El nou nom es massa llarg, intenta amb un text menor de %d caracteres"
 
-#: gui.py:748
+#: gui.py:751
 msgid "PREGUNTA:"
 msgstr "PREGUNTA:"
 
-#: gui.py:754
+#: gui.py:757
 msgid "WARNING:"
 msgstr "WARNING:"
 
-#: gui.py:760
+#: gui.py:763
 msgid "ERROR:"
 msgstr "ERROR:"
 
-#: gui.py:766
+#: gui.py:769
 msgid "AUTENTIFICACION:"
 msgstr "AUTENTICACIÓ:"
 
-#: gui.py:772
+#: gui.py:775
 msgid "INFORMACION:"
 msgstr "INFORMACIÖ:"
 
-#: gui.py:1174
+#: gui.py:1177
 msgid "No se ha encontrado synopsis"
 msgstr "No s'ha torbat synopsis"
 
-#: gui.py:1194
+#: gui.py:1197
 msgid "ACCESORIOS: "
 msgstr "Accesoris:"
 
-#: gui.py:1199
+#: gui.py:1202
 msgid "OPCIONALES: "
 msgstr "OPCIONALS:"
 
-#: gui.py:1240
+#: gui.py:1243
 msgid "GENERO: "
 msgstr "GÈNERE:"
 
-#: gui.py:1241
+#: gui.py:1244
 msgid "Fecha de lanzamiento: "
 msgstr "Data de llançament:"
 
-#: gui.py:1242
+#: gui.py:1245
 msgid "Desarrolador/Editorial: "
 msgstr "Desarrolador/Editorial: "
 
-#: gui.py:1243
+#: gui.py:1246
 msgid "Num. jugadores en off-line: "
 msgstr "Num. jugadors desconnectats: "
 
-#: gui.py:1244
+#: gui.py:1247
 msgid "Capacidad On-line: "
 msgstr "Capacitat On-line: "
 
-#: gui.py:1245
+#: gui.py:1248
 msgid "Clasificacion parental: "
 msgstr "Classificació parental: "
 
-#: gui.py:1262 gui.py:1278 gui.py:1310
+#: gui.py:1265 gui.py:1281 gui.py:1313
 msgid "DESCRIPCION: "
 msgstr "DESCRIPCIÓ: "
 
-#: gui.py:1278 gui.py:1310
+#: gui.py:1281 gui.py:1313
 msgid "Sin descripcion."
 msgstr "Sense descripció."
 
-#: gui.py:1292
+#: gui.py:1295
 msgid "No hay datos de este juego. Intente actualizar la base de datos de WiiTDB."
 msgstr "No hi ha dades d'aquest joc. Intenta actualitzar la base de dades de WiiTDB."
 
-#: gui.py:1334
+#: gui.py:1337
 msgid "Tienes que seleccionar una particion WBFS para realizar esta accion"
 msgstr "Has de selecciona una partició WBFS per a realitzar aquesta acció"
 
-#: gui.py:1362
+#: gui.py:1365
 #, python-format
 msgid "Desea copiar el juego %s a la particion %s?"
 msgstr "Vols copiar el joc %s a la partició %s?"
 
-#: gui.py:1377
+#: gui.py:1380
 msgid "Se van a copiar los siguientes juegos a"
 msgstr "Es van a copiar els seguents jocs a"
 
-#: gui.py:1384 gui.py:1392
+#: gui.py:1387 gui.py:1395
 msgid "juegos mas"
 msgstr "jocs mes"
 
-#: gui.py:1386
+#: gui.py:1389
 msgid "A continuacion se listan los juego que NO van a ser copiados por ya estar en la particion de destino"
 msgstr "A continuació es llisten els jocs que NO seran copiats, ja que son a la partició de destí"
 
-#: gui.py:1394
+#: gui.py:1397
 msgid "Empezar a copiar?"
 msgstr "Començant a copiar?"
 
-#: gui.py:1400
+#: gui.py:1403
 #, python-format
 msgid "No hay nada que copiar a %s"
 msgstr "No hi ha res que copiar a  %s"
 
-#: gui.py:1402
+#: gui.py:1405
 msgid "Debes tener al menos 2 particiones WBFS para hacer copias 1:1"
 msgstr "Cal tenir al manys 2 particions WBFS per a fer copies 1:1"
 
-#: gui.py:1407
+#: gui.py:1410
 #, python-format
 msgid "Quieres borrar el juego: %s?"
 msgstr "Vols borrar el joc: %s?"
 
-#: gui.py:1435
+#: gui.py:1438
 #, python-format
 msgid "Error borrando el juego %s"
 msgstr "Esrror esborrant el joc %s"
 
-#: gui.py:1438 gui.py:1483 gui.py:1573
+#: gui.py:1441 gui.py:1486 gui.py:1576
 msgid "No has seleccionado ninguna particion"
 msgstr "No has sel·leccionat cap partició"
 
-#: gui.py:1445
+#: gui.py:1448
 #, python-format
 msgid "Elige un directorio donde extraer la ISO de %s"
 msgstr "Trie un directori on extraure l'ISO de %s"
 
-#: gui.py:1456
+#: gui.py:1459
 #, python-format
 msgid "Desea reemplazar la iso del juego %s?"
 msgstr "Vols reemplaçar la iso del joc %s?"
 
-#: gui.py:1459
+#: gui.py:1462
 msgid "Espacio libre insuficiente para extraer la ISO"
 msgstr "Espai lliure insuficient per a extraure l'ISO"
 
-#: gui.py:1489
+#: gui.py:1492
 msgid "Elige una imagen ISO valida para Wii"
 msgstr "Trie una imatge ISO valida per a Wii"
 
-#: gui.py:1495
+#: gui.py:1498
 msgid "Elige un directorio"
 msgstr "Trie un directori"
 
-#: gui.py:1508
+#: gui.py:1511
 msgid ""
 "Algunos juegos no se han introducido:\n"
 "\n"
@@ -635,124 +639,124 @@ msgstr ""
 "Alguns jocs no s'han introduit:\n"
 "\n"
 
-#: gui.py:1536
+#: gui.py:1539
 #, python-format
 msgid "%s ya existe en %s\n"
 msgstr "%s ja existeix a %s\n"
 
-#: gui.py:1539
+#: gui.py:1542
 #, python-format
 msgid "%s no es un ISO de Wii.\n"
 msgstr "%s no és una ISO de Wii.\n"
 
-#: gui.py:1579
+#: gui.py:1582
 msgid "Paso 1 de 2: Elige un directorio para las CARATULAS"
 msgstr "Pas 1 de 2: Tria un diretori per a les CARATULES"
 
-#: gui.py:1583
+#: gui.py:1586
 msgid "Paso 2 de 2: Elige un directorio para los DISCOS"
 msgstr "Pas 2 de 2: Tria un directori per als DISCOS"
 
-#: gui.py:1601
+#: gui.py:1604
 msgid "No tienes ningun juego"
 msgstr "No tens cap joc"
 
-#: gui.py:1610
+#: gui.py:1613
 msgid ""
 "Hay una tarea que esta bloqueando las preferencias.\n"
 "\n"
 "Espere a que finalize."
 msgstr ""
 
-#: gui.py:1616
+#: gui.py:1619
 msgid "Estas seguro de querer formatear la BDD? Se borraran tus preferencias y la informacion de los juegos"
 msgstr ""
 
-#: gui.py:1626
+#: gui.py:1629
 msgid "Es recomendable que reinicie la aplicacion"
 msgstr ""
 
-#: gui.py:1626
+#: gui.py:1629
 msgid "La BDD ha sido formateada."
 msgstr ""
 
-#: gui.py:1657
+#: gui.py:1660
 msgid "Seguro que deseas descargar informacion de los juegos de WiiTDB?"
 msgstr ""
 
-#: gui.py:1664
+#: gui.py:1667
 msgid "Ya estas descargando la informacion WiiTDB ..."
 msgstr ""
 
-#: gui.py:1673
+#: gui.py:1676
 msgid "Empezando a obtener datos de juegos desde WiiTDB"
 msgstr "Començant a obtenir dades de jocs desde WiiTDB"
 
-#: gui.py:1678
+#: gui.py:1681
 #, python-format
 msgid "%d%% - %d/%d games - %d descriptions - %d genre - %d accesories - %d companies - %d online features"
 msgstr "%d%% - %d/%d jocs - %d descripcions - %d gènere - %d accesoris - %d companyies - %d funcions en linea"
 
-#: gui.py:1702
+#: gui.py:1705
 #, python-format
 msgid "Error importando %s: %s"
 msgstr "Error important %s: %s"
 
-#: gui.py:1705
+#: gui.py:1708
 #, python-format
 msgid "Descargando WiiTDB desde %s, espere unos minutos ..."
 msgstr "Baixant WiiTDB desde %s, espereu uns segons ...."
 
-#: gui.py:1710
+#: gui.py:1713
 msgid "Empezando a descomprimir la informacion WiiTDB"
 msgstr "Començant a descomprimir l'informació WiiTDB"
 
-#: gui.py:1717
+#: gui.py:1720
 msgid "Finalizada satisfactoriamente la importacion de datos desde WiiTDB"
 msgstr "Finalitzada amb exit l'importació de dades des de WiiTDB"
 
-#: gui.py:1724
+#: gui.py:1727
 #, python-format
 msgid "Deseas borrar el archivo %s?"
 msgstr "Vols esborrar l'arxiu %s?"
 
-#: gui.py:1872
+#: gui.py:1875
 #, python-format
 msgid "Empieza %s"
 msgstr "Comença %s"
 
-#: gui.py:1884
+#: gui.py:1887
 #, python-format
 msgid "Termina: %s"
 msgstr "Finalitza: %s"
 
-#: gui.py:1901
+#: gui.py:1904
 #, python-format
 msgid "Falla la descarga de la caratula de %s"
 msgstr "Falla la baixada de la caràtula de %s"
 
-#: gui.py:1909
+#: gui.py:1912
 #, python-format
 msgid "Falla la descarga del disco de %s"
 msgstr "Falla la baixada del disc de %s"
 
-#: gui.py:1955
+#: gui.py:1958
 msgid "Finalizando ..."
 msgstr "Finalitzant .."
 
-#: gui.py:1957
+#: gui.py:1960
 msgid "ERROR!"
 msgstr "ERROR!"
 
-#: gui.py:1965
+#: gui.py:1968
 msgid "quedan"
 msgstr "queden"
 
-#: gui.py:1981
+#: gui.py:1984
 msgid "Error en progreso"
 msgstr "Errada en progregres"
 
-#: gui.py:1989
+#: gui.py:1992
 msgid "Empezando ..."
 msgstr "Començant ..."
 
@@ -1371,113 +1375,24 @@ msgstr "Programa executat amb les opcions incorrectes."
 msgid "Interrumpido por el usuario"
 msgstr "Interromput per l'usuari"
 
-#~ msgid "Asistente para particiones WBFS. Le aprarecera una lista de particiones, (solamente FAT32) de la cual, debera elegir una."
-#~ msgstr "Asistent per a particions WBFS. Li apareixerà una llista de particions, (solament FAT32) d'aquesta, ha d'escollir-ne una."
+#~ msgid "Elige la particion WBFS con la que va ha trabajar : "
+#~ msgstr "Trie la partició WBFS amb la que ha de treballar : "
 
-#~ msgid "No se ha completado el formateo de %s"
-#~ msgstr "No s'ha completat el formateig de %s"
+#~ msgid "TAMANIO"
+#~ msgstr "TAMANIO"
 
-#~ msgid "Realmente, desea formatear a WBFS la particion %s?"
-#~ msgstr "Estàs segur que vols formatejar a WBFS la partició %s?"
+# Que signigica esto?
+#~ msgid "Tamanio"
+#~ msgstr "Tamanio"
 
-#~ msgid "GNU GENERAL PUBLIC LICENSE Version 3"
-#~ msgstr "GNU GENERAL PUBLIC LICENSE Version 3"
+#~ msgid "en particion"
+#~ msgstr "en partició"
 
-#~ msgid "Wiithon 1.1"
-#~ msgstr "Wiithon 1.12"
+#~ msgid "como"
+#~ msgstr "com"
 
-#~ msgid "https://launchpad.net/wiithon"
-#~ msgstr "https://launchpad.net/wiithon"
-
-#~ msgid "Advertencia de seguridad de renombrar desde IDGAME = "
-#~ msgstr "Alerta de seguretat al reanomenar desde IDGAME ="
-
-#~ msgid "%s NO se ha podido formatear"
-#~ msgstr "%s No és pot formatar"
-
-#~ msgid "***************** DESCARGAR DISCO %s ********************"
-#~ msgstr "***************** DESCARREGAR DISC %s ********************"
-
-#~ msgid "<b>Herramientas y utilidades</b>"
-#~ msgstr "<b>Eines i utilitats</b>"
-
-#~ msgid "<small><i>* = requiere reiniciar la aplicacion</i></small>"
-#~ msgstr "<small><i>* = requereix reiniciar l'aplicació</i></small>"
-
-#~ msgid "Aniadir ISO"
-#~ msgstr "Afegir ISO"
-
-#~ msgid "Aniadir RAR con ISO dentro"
-#~ msgstr "Afegir RAR amb ISO a dins"
-
-#~ msgid "Borrar juego con IDGAME"
-#~ msgstr "Esborrar joc amb IDGAME"
-
-#~ msgid "Buscando en %s Imagenes ISO ... "
-#~ msgstr "Cercant en %s imatges ISO"
-
-#~ msgid "Buscando en %s ficheros RAR ... "
-#~ msgstr "Cercant en %s fitxers RAR ..."
-
-#~ msgid "Descomprimido correctamente"
-#~ msgstr "Descomprimit correctament"
-
-#~ msgid "ERROR al descomrpimir el RAR : %s"
-#~ msgstr "ERROR al descomprimir el RAR: %s"
-
-#~ msgid "ERROR anadiendo la ISO : %s (comprueba que sea una ISO de WII)"
-#~ msgstr "ERROR afegint la ISO: %s (comporova que siga una ISO de Wii)"
-
-#~ msgid "ERROR el RAR %s no tenia ninguna ISO"
-#~ msgstr "ERROR el RAR %s no té cap ISO"
-
-#~ msgid "ERROR la ISO o la particion no existe"
-#~ msgstr "ERROR l'ISO o la partició no existeixen."
-
-#~ msgid "ERROR no se puede descomrpimir por que reemplazaria el ISO : %s"
-#~ msgstr "ERROR no es pot descomprimir perqué remplaçaria l'ISO : %s"
-
-#~ msgid "ERROR, descargando %s.png"
-#~ msgstr "ERROR, baixant %s.png"
-
-#~ msgid "Extraer ISO de juego con IDGAME"
-#~ msgstr "Extraure ISO del joc amb IDGAME"
-
-#~ msgid "Extraer a ISO"
-#~ msgstr "Extraure a ISO"
-
-#~ msgid "ISO %s descomprimida y anadida correctamente"
-#~ msgstr "ISO %s descomrimida i afegida correctament"
-
-#~ msgid "No hay Juegos para descargar caratulas"
-#~ msgstr "No hi ha jocs per a baixar caràtules"
-
-#~ msgid "No hay Juegos para descargar una caratula"
-#~ msgstr "No hi ha jocs per a descarregar una caràtula"
-
-#~ msgid "No hay Juegos para extraer"
-#~ msgstr "No hi ha jocs per a extraure"
-
-#~ msgid "No hay Juegos para renombrar"
-#~ msgstr "No hi ha jocs per a reanomenar"
-
-#~ msgid "No hay Juegos que borrar"
-#~ msgstr "No hi ha jocs que esborrar"
-
-#~ msgid "No se ha encontrado ninguna imagen ISO"
-#~ msgstr "No s'ha trobat cap imatge ISO"
-
-#~ msgid "No tienes instalado ningun juego en %s"
-#~ msgstr "No tens instalat cap joc en %s"
-
-#~ msgid "OK, descargado %s.png"
-#~ msgstr "OK, baixat %s.png"
-
-#~ msgid "Renombrar juego IDGAME"
-#~ msgstr "Reanomena joc IDGAME"
-
-#~ msgid "Ruta para extraer ficheros .rar"
-#~ msgstr "Ruta per a extraure fitxers .rar"
+#~ msgid "a la particion"
+#~ msgstr "a la partició"
 
 #~ msgid ""
 #~ "Seguro que deseas descargar informacion de los juegos de WiiTDB?\n"
@@ -1488,21 +1403,110 @@ msgstr "Interromput per l'usuari"
 #~ "\n"
 #~ "%s"
 
-#~ msgid "a la particion"
-#~ msgstr "a la partició"
+#~ msgid "Ruta para extraer ficheros .rar"
+#~ msgstr "Ruta per a extraure fitxers .rar"
 
-#~ msgid "como"
-#~ msgstr "com"
+#~ msgid "Renombrar juego IDGAME"
+#~ msgstr "Reanomena joc IDGAME"
 
-#~ msgid "en particion"
-#~ msgstr "en partició"
+#~ msgid "OK, descargado %s.png"
+#~ msgstr "OK, baixat %s.png"
 
-# Que signigica esto?
-#~ msgid "Tamanio"
-#~ msgstr "Tamanio"
+#~ msgid "No tienes instalado ningun juego en %s"
+#~ msgstr "No tens instalat cap joc en %s"
 
-#~ msgid "TAMANIO"
-#~ msgstr "TAMANIO"
+#~ msgid "No se ha encontrado ninguna imagen ISO"
+#~ msgstr "No s'ha trobat cap imatge ISO"
 
-#~ msgid "Elige la particion WBFS con la que va ha trabajar : "
-#~ msgstr "Trie la partició WBFS amb la que ha de treballar : "
+#~ msgid "No hay Juegos que borrar"
+#~ msgstr "No hi ha jocs que esborrar"
+
+#~ msgid "No hay Juegos para renombrar"
+#~ msgstr "No hi ha jocs per a reanomenar"
+
+#~ msgid "No hay Juegos para extraer"
+#~ msgstr "No hi ha jocs per a extraure"
+
+#~ msgid "No hay Juegos para descargar una caratula"
+#~ msgstr "No hi ha jocs per a descarregar una caràtula"
+
+#~ msgid "No hay Juegos para descargar caratulas"
+#~ msgstr "No hi ha jocs per a baixar caràtules"
+
+#~ msgid "ISO %s descomprimida y anadida correctamente"
+#~ msgstr "ISO %s descomrimida i afegida correctament"
+
+#~ msgid "Extraer a ISO"
+#~ msgstr "Extraure a ISO"
+
+#~ msgid "Extraer ISO de juego con IDGAME"
+#~ msgstr "Extraure ISO del joc amb IDGAME"
+
+#~ msgid "ERROR, descargando %s.png"
+#~ msgstr "ERROR, baixant %s.png"
+
+#~ msgid "ERROR no se puede descomrpimir por que reemplazaria el ISO : %s"
+#~ msgstr "ERROR no es pot descomprimir perqué remplaçaria l'ISO : %s"
+
+#~ msgid "ERROR la ISO o la particion no existe"
+#~ msgstr "ERROR l'ISO o la partició no existeixen."
+
+#~ msgid "ERROR el RAR %s no tenia ninguna ISO"
+#~ msgstr "ERROR el RAR %s no té cap ISO"
+
+#~ msgid "ERROR anadiendo la ISO : %s (comprueba que sea una ISO de WII)"
+#~ msgstr "ERROR afegint la ISO: %s (comporova que siga una ISO de Wii)"
+
+#~ msgid "ERROR al descomrpimir el RAR : %s"
+#~ msgstr "ERROR al descomprimir el RAR: %s"
+
+#~ msgid "Descomprimido correctamente"
+#~ msgstr "Descomprimit correctament"
+
+#~ msgid "Buscando en %s ficheros RAR ... "
+#~ msgstr "Cercant en %s fitxers RAR ..."
+
+#~ msgid "Buscando en %s Imagenes ISO ... "
+#~ msgstr "Cercant en %s imatges ISO"
+
+#~ msgid "Borrar juego con IDGAME"
+#~ msgstr "Esborrar joc amb IDGAME"
+
+#~ msgid "Aniadir RAR con ISO dentro"
+#~ msgstr "Afegir RAR amb ISO a dins"
+
+#~ msgid "Aniadir ISO"
+#~ msgstr "Afegir ISO"
+
+#~ msgid "<small><i>* = requiere reiniciar la aplicacion</i></small>"
+#~ msgstr "<small><i>* = requereix reiniciar l'aplicació</i></small>"
+
+#~ msgid "<b>Herramientas y utilidades</b>"
+#~ msgstr "<b>Eines i utilitats</b>"
+
+#~ msgid "***************** DESCARGAR DISCO %s ********************"
+#~ msgstr "***************** DESCARREGAR DISC %s ********************"
+
+#~ msgid "%s NO se ha podido formatear"
+#~ msgstr "%s No és pot formatar"
+
+#~ msgid "Advertencia de seguridad de renombrar desde IDGAME = "
+#~ msgstr "Alerta de seguretat al reanomenar desde IDGAME ="
+
+#~ msgid "https://launchpad.net/wiithon"
+#~ msgstr "https://launchpad.net/wiithon"
+
+#~ msgid "Wiithon 1.1"
+#~ msgstr "Wiithon 1.12"
+
+#~ msgid "GNU GENERAL PUBLIC LICENSE Version 3"
+#~ msgstr "GNU GENERAL PUBLIC LICENSE Version 3"
+
+#~ msgid "Realmente, desea formatear a WBFS la particion %s?"
+#~ msgstr "Estàs segur que vols formatejar a WBFS la partició %s?"
+
+#~ msgid "No se ha completado el formateo de %s"
+#~ msgstr "No s'ha completat el formateig de %s"
+
+#~ msgid "Asistente para particiones WBFS. Le aprarecera una lista de particiones, (solamente FAT32) de la cual, debera elegir una."
+#~ msgstr "Asistent per a particions WBFS. Li apareixerà una llista de particions, (solament FAT32) d'aquesta, ha d'escollir-ne una."

@@ -3,6 +3,6 @@ zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz- bloquear leer wiitdb durante su escritura
 - barra de estado no funciona bien
 - icono borrar no se ve bien en el tema de 9.10
 - poner info wiitdb bloqueada en lugar de "No has seleccionado ningún juego"
-- si hay 0 particiones -> comprobar si el usuario pertenece al grupo "disk".
+zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz- si hay 0 particiones -> comprobar si el usuario pertenece al grupo "disk".
 - cleanup code to remove lintian errors from deb package
 - indicar en informacion de juego que no has seleccionado ningun juego

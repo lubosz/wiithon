@@ -337,7 +337,10 @@ class WiithonGUI(GtkBuilderWrapper):
             # 2º Salir
 
             if (self.core.prefs.ADVERTENCIA_NO_WBFS and len(self.lParti) == 0):
-                self.alert("warning" , _("No hay particiones WBFS, se muestran los juegos de la ultima sesion."))
+		if (util.check_gids()):
+                	self.alert("warning" , _("No hay particiones WBFS, se muestran los juegos de la ultima sesion."))
+		else:
+			self.alert("warning" , _("No puede acceder a las particiones porque el usuario que se puso en marcha wiithon no pertenecen al grupo \"disk\", se muestran los juegos de la ultima sesion."))
             elif (self.core.prefs.ADVERTENCIA_ACTUALIZAR_WIITDB and (len(self.lJuegos) > 0) and self.info.abajo_num_juegos_wiitdb == 0):
                 if (self.question("""
             <b>

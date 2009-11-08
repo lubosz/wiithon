@@ -75,7 +75,7 @@ msgstr "ISO %s supprim"
 msgid "ERROR borrando el juego"
 msgstr "ERROR lors de la suppression du jeu"
 
-#: cli.py:174 gui.py:1317 gui.py:1365 gui.py:1472
+#: cli.py:174 gui.py:1320 gui.py:1368 gui.py:1475
 msgid "No has seleccionado ningun juego"
 msgstr "Pas de jeu slectionn"
 
@@ -329,7 +329,7 @@ msgstr "Utilis"
 msgid "Libre"
 msgstr "Libre"
 
-#: cli.py:488 gui.py:465
+#: cli.py:488 gui.py:468
 msgid "Total"
 msgstr "Total"
 
@@ -363,378 +363,382 @@ msgstr "Extraire"
 msgid "Copiar a otra particion"
 msgstr "Copie vers une autre partition"
 
-#: gui.py:340
+#: gui.py:341
 msgid "No hay particiones WBFS, se muestran los juegos de la ultima sesion."
 msgstr ""
 
-#: gui.py:353
+#: gui.py:343
+msgid "No puede acceder a las particiones porque el usuario que se puso en marcha wiithon no pertenecen al grupo \"disk\", se muestran los juegos de la ultima sesion."
+msgstr ""
+
+#: gui.py:356
 msgid "Se ha detectado que ninguno de tus juegos disponen de informacion extra, descargada de Internet."
 msgstr ""
 
-#: gui.py:354
+#: gui.py:357
 msgid "Deseas descargar informacion de los juegos desde WiiTDB?"
 msgstr ""
 
-#: gui.py:363
+#: gui.py:366
 msgid "No puedes refrescar las particiones mientras hay tareas sin finalizar"
 msgstr "Vous ne pouvez pas actualiser tant qu'il existe des tches inacheves"
 
-#: gui.py:373
+#: gui.py:376
 msgid "Formato desconocido"
 msgstr "Format inconnu"
 
-#: gui.py:385
+#: gui.py:388
 msgid "Por favor. Informe a los desarrolladores de este error."
 msgstr ""
 
-#: gui.py:387
+#: gui.py:390
 msgid "Utitice la siguiente URL para el reporte de bugs:"
 msgstr ""
 
-#: gui.py:464
+#: gui.py:467
 msgid "Dispositivo"
 msgstr "Priphrique"
 
-#: gui.py:515
+#: gui.py:518
 msgid "BDD"
 msgstr ""
 
-#: gui.py:516
+#: gui.py:519
 msgid "WBFS?"
 msgstr ""
 
-#: gui.py:518
+#: gui.py:521
 msgid "TODOS"
 msgstr ""
 
-#: gui.py:539
+#: gui.py:542
 msgid "IDGAME"
 msgstr "IDGAME"
 
-#: gui.py:540
+#: gui.py:543
 msgid "Nombre"
 msgstr "Nom"
 
-#: gui.py:541
+#: gui.py:544
 msgid "Size"
 msgstr ""
 
-#: gui.py:542
+#: gui.py:545
 msgid "Online?"
 msgstr ""
 
-#: gui.py:543
+#: gui.py:546
 msgid "Local"
 msgstr ""
 
-#: gui.py:544
+#: gui.py:547
 msgid "Fecha"
 msgstr ""
 
-#: gui.py:545
+#: gui.py:548
 msgid "Rating"
 msgstr ""
 
-#: gui.py:546
+#: gui.py:549
 msgid "Particion"
 msgstr "Partition"
 
-#: gui.py:648
+#: gui.py:651
 msgid "+Info"
 msgstr ""
 
-#: gui.py:652 gui.py:653 gui.py:654 gui.py:655 gui.py:656 wiitdb_schema.py:369
+#: gui.py:655 gui.py:656 gui.py:657 gui.py:658 gui.py:659 wiitdb_schema.py:369
 msgid "??"
 msgstr ""
 
-#: gui.py:673
+#: gui.py:676
 msgid "TRADUCIR_ADVERTENCIA_SEGURIDAD_RENAME_IDGAME"
 msgstr ""
 
-#: gui.py:684 gui.py:705
+#: gui.py:687 gui.py:708
 msgid "Error renombrando"
 msgstr "Erreur de renommage"
 
-#: gui.py:686
+#: gui.py:689
 msgid "Ya hay un juego con ese IDGAME"
 msgstr "Un jeu existe avec ce IDGAME"
 
-#: gui.py:688
+#: gui.py:691
 msgid "Error: La longitud del IDGAME debe ser 6, y solo puede contener letras y numeros"
 msgstr "Erreur : l'IDGAME doit avoir 6 caractres, et ne peut contenir que des chiffres et des lettres"
 
-#: gui.py:707
+#: gui.py:710
 #, python-format
 msgid "Se han detectado caracteres no validos: %s"
 msgstr "Caractres invalides : %s"
 
-#: gui.py:709
+#: gui.py:712
 #, python-format
 msgid "Nuevo nombre es demasiado largo, intente con un texto menor de %d caracteres"
 msgstr "Le nouveau nom est trop long, essayez un texte de moins de %d caractres"
 
-#: gui.py:748
+#: gui.py:751
 msgid "PREGUNTA:"
 msgstr ""
 
-#: gui.py:754
+#: gui.py:757
 msgid "WARNING:"
 msgstr ""
 
-#: gui.py:760
+#: gui.py:763
 msgid "ERROR:"
 msgstr ""
 
-#: gui.py:766
+#: gui.py:769
 msgid "AUTENTIFICACION:"
 msgstr ""
 
-#: gui.py:772
+#: gui.py:775
 msgid "INFORMACION:"
 msgstr ""
 
-#: gui.py:1174
+#: gui.py:1177
 msgid "No se ha encontrado synopsis"
 msgstr ""
 
-#: gui.py:1194
+#: gui.py:1197
 msgid "ACCESORIOS: "
 msgstr ""
 
-#: gui.py:1199
+#: gui.py:1202
 msgid "OPCIONALES: "
 msgstr ""
 
-#: gui.py:1240
+#: gui.py:1243
 msgid "GENERO: "
 msgstr ""
 
-#: gui.py:1241
+#: gui.py:1244
 msgid "Fecha de lanzamiento: "
 msgstr ""
 
-#: gui.py:1242
+#: gui.py:1245
 msgid "Desarrolador/Editorial: "
 msgstr ""
 
-#: gui.py:1243
+#: gui.py:1246
 msgid "Num. jugadores en off-line: "
 msgstr ""
 
-#: gui.py:1244
+#: gui.py:1247
 msgid "Capacidad On-line: "
 msgstr ""
 
-#: gui.py:1245
+#: gui.py:1248
 msgid "Clasificacion parental: "
 msgstr ""
 
-#: gui.py:1262 gui.py:1278 gui.py:1310
+#: gui.py:1265 gui.py:1281 gui.py:1313
 msgid "DESCRIPCION: "
 msgstr ""
 
-#: gui.py:1278 gui.py:1310
+#: gui.py:1281 gui.py:1313
 msgid "Sin descripcion."
 msgstr ""
 
-#: gui.py:1292
+#: gui.py:1295
 msgid "No hay datos de este juego. Intente actualizar la base de datos de WiiTDB."
 msgstr ""
 
-#: gui.py:1334
+#: gui.py:1337
 msgid "Tienes que seleccionar una particion WBFS para realizar esta accion"
 msgstr "Vous devez slectionner une partition WBFS pour raliser cette action"
 
-#: gui.py:1362
+#: gui.py:1365
 #, python-format
 msgid "Desea copiar el juego %s a la particion %s?"
 msgstr ""
 
-#: gui.py:1377
+#: gui.py:1380
 msgid "Se van a copiar los siguientes juegos a"
 msgstr "Copie des jeux suivants vers"
 
-#: gui.py:1384 gui.py:1392
+#: gui.py:1387 gui.py:1395
 msgid "juegos mas"
 msgstr "jeux non affichs"
 
-#: gui.py:1386
+#: gui.py:1389
 msgid "A continuacion se listan los juego que NO van a ser copiados por ya estar en la particion de destino"
 msgstr "Les jeux suivants ne seront PAS copis car ils existent dans la partition cible"
 
-#: gui.py:1394
+#: gui.py:1397
 msgid "Empezar a copiar?"
 msgstr "Dmarrer la copie ?"
 
-#: gui.py:1400
+#: gui.py:1403
 #, python-format
 msgid "No hay nada que copiar a %s"
 msgstr ""
 
-#: gui.py:1402
+#: gui.py:1405
 msgid "Debes tener al menos 2 particiones WBFS para hacer copias 1:1"
 msgstr ""
 
-#: gui.py:1407
+#: gui.py:1410
 #, python-format
 msgid "Quieres borrar el juego: %s?"
 msgstr ""
 
-#: gui.py:1435
+#: gui.py:1438
 #, python-format
 msgid "Error borrando el juego %s"
 msgstr ""
 
-#: gui.py:1438 gui.py:1483 gui.py:1573
+#: gui.py:1441 gui.py:1486 gui.py:1576
 msgid "No has seleccionado ninguna particion"
 msgstr "Pas de partition slectionne"
 
-#: gui.py:1445
+#: gui.py:1448
 #, python-format
 msgid "Elige un directorio donde extraer la ISO de %s"
 msgstr "Choisissez le dossier dans lequel extraire l'ISO %s"
 
-#: gui.py:1456
+#: gui.py:1459
 #, python-format
 msgid "Desea reemplazar la iso del juego %s?"
 msgstr ""
 
-#: gui.py:1459
+#: gui.py:1462
 msgid "Espacio libre insuficiente para extraer la ISO"
 msgstr ""
 
-#: gui.py:1489
+#: gui.py:1492
 msgid "Elige una imagen ISO valida para Wii"
 msgstr "Choisissez une image ISO Wii valide"
 
-#: gui.py:1495
+#: gui.py:1498
 msgid "Elige un directorio"
 msgstr "Choisissez le dossier"
 
-#: gui.py:1508
+#: gui.py:1511
 msgid ""
 "Algunos juegos no se han introducido:\n"
 "\n"
 msgstr ""
 
-#: gui.py:1536
+#: gui.py:1539
 #, python-format
 msgid "%s ya existe en %s\n"
 msgstr ""
 
-#: gui.py:1539
+#: gui.py:1542
 #, python-format
 msgid "%s no es un ISO de Wii.\n"
 msgstr ""
 
-#: gui.py:1579
+#: gui.py:1582
 msgid "Paso 1 de 2: Elige un directorio para las CARATULAS"
 msgstr "tape 1 sur 2 : Choisissez un dossier pour les JAQUETTES"
 
-#: gui.py:1583
+#: gui.py:1586
 msgid "Paso 2 de 2: Elige un directorio para los DISCOS"
 msgstr "tape 2 sur 2 : Choisissez un dossier pour les DISQUES"
 
-#: gui.py:1601
+#: gui.py:1604
 msgid "No tienes ningun juego"
 msgstr "Pas de jeux"
 
-#: gui.py:1610
+#: gui.py:1613
 msgid ""
 "Hay una tarea que esta bloqueando las preferencias.\n"
 "\n"
 "Espere a que finalize."
 msgstr ""
 
-#: gui.py:1616
+#: gui.py:1619
 msgid "Estas seguro de querer formatear la BDD? Se borraran tus preferencias y la informacion de los juegos"
 msgstr ""
 
-#: gui.py:1626
+#: gui.py:1629
 msgid "Es recomendable que reinicie la aplicacion"
 msgstr ""
 
-#: gui.py:1626
+#: gui.py:1629
 msgid "La BDD ha sido formateada."
 msgstr ""
 
-#: gui.py:1657
+#: gui.py:1660
 msgid "Seguro que deseas descargar informacion de los juegos de WiiTDB?"
 msgstr ""
 
-#: gui.py:1664
+#: gui.py:1667
 msgid "Ya estas descargando la informacion WiiTDB ..."
 msgstr ""
 
-#: gui.py:1673
+#: gui.py:1676
 msgid "Empezando a obtener datos de juegos desde WiiTDB"
 msgstr ""
 
-#: gui.py:1678
+#: gui.py:1681
 #, python-format
 msgid "%d%% - %d/%d games - %d descriptions - %d genre - %d accesories - %d companies - %d online features"
 msgstr ""
 
-#: gui.py:1702
+#: gui.py:1705
 #, python-format
 msgid "Error importando %s: %s"
 msgstr ""
 
-#: gui.py:1705
+#: gui.py:1708
 #, python-format
 msgid "Descargando WiiTDB desde %s, espere unos minutos ..."
 msgstr ""
 
-#: gui.py:1710
+#: gui.py:1713
 msgid "Empezando a descomprimir la informacion WiiTDB"
 msgstr ""
 
-#: gui.py:1717
+#: gui.py:1720
 msgid "Finalizada satisfactoriamente la importacion de datos desde WiiTDB"
 msgstr ""
 
-#: gui.py:1724
+#: gui.py:1727
 #, python-format
 msgid "Deseas borrar el archivo %s?"
 msgstr ""
 
-#: gui.py:1872
+#: gui.py:1875
 #, python-format
 msgid "Empieza %s"
 msgstr "Dmarrage : %s"
 
-#: gui.py:1884
+#: gui.py:1887
 #, python-format
 msgid "Termina: %s"
 msgstr "Termin : %s"
 
-#: gui.py:1901
+#: gui.py:1904
 #, python-format
 msgid "Falla la descarga de la caratula de %s"
 msgstr ""
 
-#: gui.py:1909
+#: gui.py:1912
 #, python-format
 msgid "Falla la descarga del disco de %s"
 msgstr ""
 
-#: gui.py:1955
+#: gui.py:1958
 msgid "Finalizando ..."
 msgstr ""
 
-#: gui.py:1957
+#: gui.py:1960
 msgid "ERROR!"
 msgstr "ERREUR!"
 
-#: gui.py:1965
+#: gui.py:1968
 msgid "quedan"
 msgstr "reste"
 
-#: gui.py:1981
+#: gui.py:1984
 msgid "Error en progreso"
 msgstr ""
 
-#: gui.py:1989
+#: gui.py:1992
 msgid "Empezando ..."
 msgstr "Dmarrage en cours ..."
 
@@ -1360,98 +1364,98 @@ msgstr "Programme lanc avec des paramtres incorrects."
 msgid "Interrumpido por el usuario"
 msgstr "Interrompu par l'utilisateur"
 
-#~ msgid "GNU GENERAL PUBLIC LICENSE Version 3"
-#~ msgstr "Licence publique gnrale GNU Version 3"
-
-#~ msgid "https://launchpad.net/wiithon"
-#~ msgstr "https://launchpad.net/wiithon"
-
-#~ msgid "Buscando en %s ficheros RAR ... "
-#~ msgstr "Recherche %s fichiers RAR ..."
-
-#~ msgid "Buscando en %s Imagenes ISO ... "
-#~ msgstr "Recherche %s image ISO en cours ..."
-
-#~ msgid "No se ha encontrado ninguna imagen ISO"
-#~ msgstr "Image ISO non trouve"
-
-#~ msgid "No hay Juegos para descargar caratulas"
-#~ msgstr "Pas de jeu : pas de tlchargement de jaquettes"
-
-#~ msgid "Renombrar juego IDGAME"
-#~ msgstr "Renommer le jeu IDGAME"
-
-#~ msgid "como"
-#~ msgstr "comme"
-
-#~ msgid "No hay Juegos para renombrar"
-#~ msgstr "Pas de jeu  renommer"
-
-#~ msgid "Extraer ISO de juego con IDGAME"
-#~ msgstr "Extraire ISO du jeu avec IDGAME"
-
-#~ msgid "en particion"
-#~ msgstr "dans la partition"
-
-#~ msgid "No hay Juegos para extraer"
-#~ msgstr "Pas de jeu  extraire"
-
-#~ msgid "Aniadir RAR con ISO dentro"
-#~ msgstr "Ajouter RAR contenant une ISO"
-
-#~ msgid "a la particion"
-#~ msgstr "vers la partition"
-
-#~ msgid "Descomprimido correctamente"
-#~ msgstr "Dcompression russie"
-
-#~ msgid "ISO %s descomprimida y anadida correctamente"
-#~ msgstr "ISO %s dcompress et ajout"
-
-#~ msgid "ERROR anadiendo la ISO : %s (comprueba que sea una ISO de WII)"
-#~ msgstr "ERROR lors de l'ajout ISO : %s (vrifiez que c'est une ISO de jeu Wii)"
-
-#~ msgid "ERROR al descomrpimir el RAR : %s"
-#~ msgstr "ERREUR lors de la dcompression du RAR : %s"
-
-#~ msgid "ERROR no se puede descomrpimir por que reemplazaria el ISO : %s"
-#~ msgstr "ERREUR dcompression impossible pour remplacer l'ISO : %s"
-
-#~ msgid "ERROR el RAR %s no tenia ninguna ISO"
-#~ msgstr "RAR %s ne contient pas d'ISO"
-
-#~ msgid "Aniadir ISO"
-#~ msgstr "Ajouter ISO"
-
-#~ msgid "ERROR la ISO o la particion no existe"
-#~ msgstr "ERREUR l'ISO ou la partition n'existe pas"
-
-#~ msgid "***************** DESCARGAR DISCO %s ********************"
-#~ msgstr "************* TELECHARGEMENT DISQUE %s ****************"
-
-#~ msgid "No tienes instalado ningun juego en %s"
-#~ msgstr "Pas de jeux installs dans %s"
-
-#~ msgid "Borrar juego con IDGAME"
-#~ msgstr "Supprimer jeu IDGAME"
-
-#~ msgid "No hay Juegos que borrar"
-#~ msgstr "Pas de jeu  supprimer"
-
-#~ msgid "OK, descargado %s.png"
-#~ msgstr "OK, tlchargement de %s.png"
-
-#~ msgid "ERROR, descargando %s.png"
-#~ msgstr "ERREUR lors du tlchargement %s.png"
-
-#~ msgid "No hay Juegos para descargar una caratula"
-#~ msgstr "Pas de jeu : pas de tlchargement d'une jaquette"
-
-#~ msgid "Tamanio"
-#~ msgstr "Taille"
+#~ msgid "Elige la particion WBFS con la que va ha trabajar : "
+#~ msgstr "Choisissez la partition WBFS sur laquelle travailler :"
 
 #~ msgid "TAMANIO"
 #~ msgstr "TAILLE"
 
-#~ msgid "Elige la particion WBFS con la que va ha trabajar : "
-#~ msgstr "Choisissez la partition WBFS sur laquelle travailler :"
+#~ msgid "Tamanio"
+#~ msgstr "Taille"
+
+#~ msgid "No hay Juegos para descargar una caratula"
+#~ msgstr "Pas de jeu : pas de tlchargement d'une jaquette"
+
+#~ msgid "ERROR, descargando %s.png"
+#~ msgstr "ERREUR lors du tlchargement %s.png"
+
+#~ msgid "OK, descargado %s.png"
+#~ msgstr "OK, tlchargement de %s.png"
+
+#~ msgid "No hay Juegos que borrar"
+#~ msgstr "Pas de jeu  supprimer"
+
+#~ msgid "Borrar juego con IDGAME"
+#~ msgstr "Supprimer jeu IDGAME"
+
+#~ msgid "No tienes instalado ningun juego en %s"
+#~ msgstr "Pas de jeux installs dans %s"
+
+#~ msgid "***************** DESCARGAR DISCO %s ********************"
+#~ msgstr "************* TELECHARGEMENT DISQUE %s ****************"
+
+#~ msgid "ERROR la ISO o la particion no existe"
+#~ msgstr "ERREUR l'ISO ou la partition n'existe pas"
+
+#~ msgid "Aniadir ISO"
+#~ msgstr "Ajouter ISO"
+
+#~ msgid "ERROR el RAR %s no tenia ninguna ISO"
+#~ msgstr "RAR %s ne contient pas d'ISO"
+
+#~ msgid "ERROR no se puede descomrpimir por que reemplazaria el ISO : %s"
+#~ msgstr "ERREUR dcompression impossible pour remplacer l'ISO : %s"
+
+#~ msgid "ERROR al descomrpimir el RAR : %s"
+#~ msgstr "ERREUR lors de la dcompression du RAR : %s"
+
+#~ msgid "ERROR anadiendo la ISO : %s (comprueba que sea una ISO de WII)"
+#~ msgstr "ERROR lors de l'ajout ISO : %s (vrifiez que c'est une ISO de jeu Wii)"
+
+#~ msgid "ISO %s descomprimida y anadida correctamente"
+#~ msgstr "ISO %s dcompress et ajout"
+
+#~ msgid "Descomprimido correctamente"
+#~ msgstr "Dcompression russie"
+
+#~ msgid "a la particion"
+#~ msgstr "vers la partition"
+
+#~ msgid "Aniadir RAR con ISO dentro"
+#~ msgstr "Ajouter RAR contenant une ISO"
+
+#~ msgid "No hay Juegos para extraer"
+#~ msgstr "Pas de jeu  extraire"
+
+#~ msgid "en particion"
+#~ msgstr "dans la partition"
+
+#~ msgid "Extraer ISO de juego con IDGAME"
+#~ msgstr "Extraire ISO du jeu avec IDGAME"
+
+#~ msgid "No hay Juegos para renombrar"
+#~ msgstr "Pas de jeu  renommer"
+
+#~ msgid "como"
+#~ msgstr "comme"
+
+#~ msgid "Renombrar juego IDGAME"
+#~ msgstr "Renommer le jeu IDGAME"
+
+#~ msgid "No hay Juegos para descargar caratulas"
+#~ msgstr "Pas de jeu : pas de tlchargement de jaquettes"
+
+#~ msgid "No se ha encontrado ninguna imagen ISO"
+#~ msgstr "Image ISO non trouve"
+
+#~ msgid "Buscando en %s Imagenes ISO ... "
+#~ msgstr "Recherche %s image ISO en cours ..."
+
+#~ msgid "Buscando en %s ficheros RAR ... "
+#~ msgstr "Recherche %s fichiers RAR ..."
+
+#~ msgid "https://launchpad.net/wiithon"
+#~ msgstr "https://launchpad.net/wiithon"
+
+#~ msgid "GNU GENERAL PUBLIC LICENSE Version 3"
+#~ msgstr "Licence publique gnrale GNU Version 3"

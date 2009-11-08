@@ -136,7 +136,7 @@ postinst:
 	
 	@echo "=================================================================="
 	@echo "If you want run witthon as normal user you must add it to 'disk' group."
-	@echo "Type it: \"sudo gpasswd -a <user> disk\" and reboot your GNOME/KDE session."
+	@echo "Type: \"sudo gpasswd -a <user> disk\" and restart your GNOME/KDE session."
 	@echo "=================================================================="
 
 install: clean_old_wiithon copy_archives set_permisses postinst
