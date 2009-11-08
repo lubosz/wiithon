@@ -1414,14 +1414,14 @@ msgstr ""
 msgid "Interrumpido por el usuario"
 msgstr ""
 
-#~ msgid "Elige la particion WBFS con la que va ha trabajar : "
-#~ msgstr "Elige la partición WBFS con la que va ha trabajar : "
-
-#~ msgid "Wiithon 1.1"
-#~ msgstr "Wiithon 1.12"
+#~ msgid "Comando para abrir carpetas."
+#~ msgstr "Comando para abrir carpetas"
 
 #~ msgid "Realmente, desea formatear a WBFS la particion %s?"
 #~ msgstr "¿Desea formatear a WBFS la partición %s?"
 
-#~ msgid "Comando para abrir carpetas."
-#~ msgstr "Comando para abrir carpetas"
+#~ msgid "Wiithon 1.1"
+#~ msgstr "Wiithon 1.12"
+
+#~ msgid "Elige la particion WBFS con la que va ha trabajar : "
+#~ msgstr "Elige la partición WBFS con la que va ha trabajar : "
