@@ -10,7 +10,7 @@ function comprobarTienesUDEV()
         return $?
 }
 
-for i in $(awk '$4 ~ /^(sd|hd|loo).[[:digit:]]/ {print "/dev/" $4}' /proc/partitions);
+for i in $(awk '{print "/dev/" $4}' /proc/partitions);
 do
 	if file -sL $i | grep -q FAT; then
 		USADO_LIBRE_TOTAL=`df -P $i | awk -v part=$i'$1 == part {print $3/1048576";@;"$4/1048576";@;"$2/1048576}' 2> /dev/null`

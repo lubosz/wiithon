@@ -10,7 +10,7 @@ function comprobarTienesUDEV()
 	return $?
 }
 
-for i in $(awk '$4 ~ /^(sd|hd|loo).[[:digit:]]/ {print "/dev/" $4}' /proc/partitions);
+for i in $(awk '{print "/dev/" $4}' /proc/partitions);
 do
 	MAGICO=`head --bytes=4 $i 2> /dev/null`;
 	LEGIBLE=`echo $MAGICO | wc -c`;
