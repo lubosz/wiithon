@@ -44,9 +44,12 @@ if __name__ == '__main__':
         try:
             # esta en la instalacion
             if not os.path.exists(".bzr"): 
-                f = open("/usr/share/doc/wiithon/REVISION", "r")
-                rev = int(f.read())
-                f.close()
+                if os.path.exists("/usr/share/doc/wiithon/REVISION"): 
+                    f = open("/usr/share/doc/wiithon/REVISION", "r")
+                    rev = int(f.read())
+                    f.close()
+                else:
+                    raise Error
             else:
                 # return estimated revision (+1)
                 if os.path.exists("doc/REVISION"): 

@@ -53,7 +53,7 @@ lang_disable: da_DK fi_FI tr_TR ru_RU ko_KR sv_SE pt_PT da_DK nb_NO ja_JP
 
 compile: lang unrar-nonfree/unrar libwbfs_binding/wiithon_wrapper
 	@echo "=================================================================="
-	@echo "Compile OK"
+	@echo "Compile OK - Wiithon $(VERSION)"
 	@echo "=================================================================="
 
 making_directories:
@@ -75,12 +75,7 @@ recicled_old_wiithon: making_directories
 	-@mv -f ~/.wiithon/caratulas/*.png $(PREFIX)/share/wiithon/recursos/imagenes/caratulas
 	-@mv -f ~/.wiithon/discos/*.png $(PREFIX)/share/wiithon/recursos/imagenes/discos
 	
-update_revision:
-	@echo "=================================================================="
-	@echo "Install version 	$(VERSION)"
-	@echo "=================================================================="
-	
-copy_archives: making_directories update_revision
+copy_archives: making_directories
 
 	cp libwbfs_binding/wiithon_wrapper $(DESTDIR)$(PREFIX)/share/wiithon/
 	cp unrar-nonfree/unrar $(DESTDIR)$(PREFIX)/share/wiithon/
