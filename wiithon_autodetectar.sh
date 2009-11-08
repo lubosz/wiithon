@@ -2,8 +2,8 @@
 
 SEPARADOR=";@;"
 
-# = 1 --> SI tienes udevinfo
-# = 0 --> NO tienes udevinfo
+# = 1 --> SI tienes udevadm
+# = 0 --> NO tienes udevadm
 function comprobarTienesUDEV()
 {
 	test -x /sbin/udevadm
