@@ -429,7 +429,7 @@ msgstr "Non ci sono partizioni WBFS, verranno visualizzati i giochi dell'ultima 
 
 #: gui.py:343
 msgid "No puede acceder a las particiones porque el usuario que se puso en marcha wiithon no pertenecen al grupo \"disk\", se muestran los juegos de la ultima sesion."
-msgstr "Non si può accedere alle partizioni perchè l'utente con cui è stata lanciato wiithon non appartiene al gruppo \"disk\"\, verranno mostrati i giochi dell'ultima sessione."
+msgstr "Non si può accedere alle partizioni perchè l'utente con cui è stata lanciato wiithon non appartiene al gruppo \"disk\", verranno mostrati i giochi dell'ultima sessione."
 
 #: gui.py:356
 msgid "Se ha detectado que ninguno de tus juegos disponen de informacion extra, descargada de Internet."
