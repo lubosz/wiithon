@@ -461,7 +461,7 @@ class Particion(Base):
         object.__setattr__(self, name, value)
 
     def __repr__(self):
-        return "%s (%.0f GB)" % (self.device, self.total)
+        return "%s %s (%.0f GB)" % (self.device, self.fabricante, self.total)
         
     def getColorForeground(self):
         

@@ -1,20 +1,35 @@
+# Ricardo Marmolejo García <makiolo@gmail.com>, 2009.
+msgid ""
+msgstr ""
+"Project-Id-Version: \n"
+"Report-Msgid-Bugs-To: makiolo@gmail.com\n"
+"POT-Creation-Date: 2009-11-08 16:39+0100\n"
+"PO-Revision-Date: 2009-11-08 16:30+0100\n"
+"Last-Translator: Ricardo Marmolejo García <makiolo@gmail.com>\n"
+"Language-Team: Español <wii.sceners.linux@lists.launchpad.net>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Lokalize 1.0\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
 #: cli.py:44
 #, python-format
 msgid "No se ha encontrado la particion: %s"
-msgstr ""
+msgstr "No partition found: %s"
 
 #: cli.py:53
 msgid "Lista de particiones autodetectadas : "
-msgstr "Automatically detected partitions:"
+msgstr "Automatically detected partitions: "
 
 #: cli.py:60
 #, python-format
 msgid "%d - Salir"
-msgstr ""
+msgstr "%d - Exit"
 
 #: cli.py:61
 msgid "Elige la particion WBFS con la que va a trabajar : "
-msgstr ""
+msgstr "Choose the partition WBFS with which to work : "
 
 #: cli.py:63
 msgid "Saliendo por peticion del usuario."
@@ -31,7 +46,7 @@ msgstr "Value error"
 #: cli.py:155
 #, python-format
 msgid "Extraer Juego %s a ISO"
-msgstr ""
+msgstr "Extracting game %s to ISO"
 
 #: cli.py:157
 #, python-format
@@ -46,7 +61,7 @@ msgstr "ERROR extracting ISO from %s"
 #: cli.py:161
 #, python-format
 msgid "Renombrar el juego %s."
-msgstr ""
+msgstr "Rename the game %s."
 
 #: cli.py:162
 msgid "Escriba el nuevo nombre : "
@@ -64,7 +79,7 @@ msgstr "ERROR in rename"
 #: cli.py:168
 #, python-format
 msgid "Borrando juego %s"
-msgstr ""
+msgstr "Deleting game %s"
 
 #: cli.py:170
 #, python-format
@@ -82,19 +97,19 @@ msgstr "No game selected"
 #: cli.py:176
 #, python-format
 msgid "La particion %s no contiene juegos"
-msgstr ""
+msgstr "The partition %s contains no games"
 
 #: cli.py:186
 msgid "Buscando ficheros RAR recursivamente ... "
-msgstr ""
+msgstr "RAR files recursively Searching ... "
 
 #: cli.py:189
 msgid "Buscando imagenes ISO recursivamente ... "
-msgstr ""
+msgstr "ISO images recursively Searching ... "
 
 #: cli.py:204
 msgid "No se ha encontrado ninguna imagen ISO o RAR"
-msgstr ""
+msgstr "Could not find any ISO image or RAR"
 
 #: cli.py:209
 #, python-format
@@ -107,7 +122,7 @@ msgstr "Insert a Wii game in your DVD drive..."
 
 #: cli.py:214
 msgid "Juegos originales, solo con lectores LG."
-msgstr ""
+msgstr "Original games, only with LG readers."
 
 #: cli.py:215
 msgid "Pulse cualquier tecla para continuar ... "
@@ -123,7 +138,7 @@ msgstr "ERROR, downloading some cover"
 
 #: cli.py:235
 msgid "Tarea finalizada"
-msgstr ""
+msgstr "Task completed"
 
 #: cli.py:237 cli.py:258
 msgid "Has conectado el disco duro? No se ha encontrado ninguna particion valida."
@@ -132,26 +147,26 @@ msgstr "Is your hard disk connected and does it have a valid WBFS partition?"
 #: cli.py:245
 #, python-format
 msgid "Realmente, desea formatear a WBFS la particion %s? (S/N) "
-msgstr ""
+msgstr "Are you sure you want to format a partition WBFS %s? (Y/N) "
 
 #: cli.py:246
 msgid "s"
-msgstr ""
+msgstr "y"
 
 #: cli.py:248
 #, python-format
 msgid "%s se ha formateado correctamente"
-msgstr ""
+msgstr "%s is formatted correctly"
 
 #: cli.py:250
 #, python-format
 msgid "Error al formatear %s"
-msgstr ""
+msgstr "Formatting error %s"
 
 #: cli.py:252 cli.py:256
 #, python-format
 msgid "No se ha formateado %s"
-msgstr ""
+msgstr "It has been formatted"
 
 #: cli.py:255
 msgid "Interrumpido por el usuario."

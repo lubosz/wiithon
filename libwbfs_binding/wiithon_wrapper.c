@@ -428,22 +428,23 @@ int main(int argc, char *argv[])
 
     if( noFormatear == FALSE )
     {
+        printf(" ** Converting %s to FAT32 to WBFS **\n", partition);
+        printf(" ** Formating %s to FAT32 **\n", partition);
         char comando1[100] = "umount ";
         strcat (comando1, partition);
-        printf("%s\n", comando1);
-        system(comando1);
+        int ret = system(comando1);
 
         char comando2[100] = "mkdosfs -n WiithonDEV -v -s 8 -F 32 "; // 100: se reserva espacio extra
         strcat (comando2, partition);
-        printf("%s\n", comando2);
-        int ret2 = system(comando2);
-        if(ret2 == 0)
+        ret = system(comando2);
+        if(ret == 0)
         {
-            printf("First fotmated %s as FAT32\n" , partition);
+            printf(" ** Formated %s as FAT32 **\n" , partition);
+            printf(" ** Formating %s to WBFS **\n", partition);
         }
         else
         {
-            printf("Don't format. Error %d\n" , ret2);
+            printf(" ** Don't format. Error %d **\n" , ret);
             noFormatear = TRUE;
         }
     }
@@ -453,7 +454,7 @@ int main(int argc, char *argv[])
     {
         if ( noFormatear == FALSE )
         {
-            printf("Finally format %s as WBFS\n" , partition);
+            printf(" ** Formated %s as WBFS **\n" , partition);
             retorno = TRUE;
         }
         else if(numParametros == 0)

@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: wiithon 1.12\n"
 "Report-Msgid-Bugs-To: makiolo@gmail.com\n"
-"POT-Creation-Date: 2009-11-08 11:26+0100\n"
+"POT-Creation-Date: 2009-11-08 16:39+0100\n"
 "PO-Revision-Date: 2009-11-07 02:12+0100\n"
 "Last-Translator: Ricardo Marmolejo García <makiolo@gmail.com>\n"
 "Language-Team: Español <wii.sceners.linux@lists.launchpad.net>\n"
@@ -1375,24 +1375,113 @@ msgstr "Programa executat amb les opcions incorrectes."
 msgid "Interrumpido por el usuario"
 msgstr "Interromput per l'usuari"
 
-#~ msgid "Elige la particion WBFS con la que va ha trabajar : "
-#~ msgstr "Trie la partició WBFS amb la que ha de treballar : "
+#~ msgid "Asistente para particiones WBFS. Le aprarecera una lista de particiones, (solamente FAT32) de la cual, debera elegir una."
+#~ msgstr "Asistent per a particions WBFS. Li apareixerà una llista de particions, (solament FAT32) d'aquesta, ha d'escollir-ne una."
 
-#~ msgid "TAMANIO"
-#~ msgstr "TAMANIO"
+#~ msgid "No se ha completado el formateo de %s"
+#~ msgstr "No s'ha completat el formateig de %s"
 
-# Que signigica esto?
-#~ msgid "Tamanio"
-#~ msgstr "Tamanio"
+#~ msgid "Realmente, desea formatear a WBFS la particion %s?"
+#~ msgstr "Estàs segur que vols formatejar a WBFS la partició %s?"
 
-#~ msgid "en particion"
-#~ msgstr "en partició"
+#~ msgid "GNU GENERAL PUBLIC LICENSE Version 3"
+#~ msgstr "GNU GENERAL PUBLIC LICENSE Version 3"
 
-#~ msgid "como"
-#~ msgstr "com"
+#~ msgid "Wiithon 1.1"
+#~ msgstr "Wiithon 1.12"
 
-#~ msgid "a la particion"
-#~ msgstr "a la partició"
+#~ msgid "https://launchpad.net/wiithon"
+#~ msgstr "https://launchpad.net/wiithon"
+
+#~ msgid "Advertencia de seguridad de renombrar desde IDGAME = "
+#~ msgstr "Alerta de seguretat al reanomenar desde IDGAME ="
+
+#~ msgid "%s NO se ha podido formatear"
+#~ msgstr "%s No és pot formatar"
+
+#~ msgid "***************** DESCARGAR DISCO %s ********************"
+#~ msgstr "***************** DESCARREGAR DISC %s ********************"
+
+#~ msgid "<b>Herramientas y utilidades</b>"
+#~ msgstr "<b>Eines i utilitats</b>"
+
+#~ msgid "<small><i>* = requiere reiniciar la aplicacion</i></small>"
+#~ msgstr "<small><i>* = requereix reiniciar l'aplicació</i></small>"
+
+#~ msgid "Aniadir ISO"
+#~ msgstr "Afegir ISO"
+
+#~ msgid "Aniadir RAR con ISO dentro"
+#~ msgstr "Afegir RAR amb ISO a dins"
+
+#~ msgid "Borrar juego con IDGAME"
+#~ msgstr "Esborrar joc amb IDGAME"
+
+#~ msgid "Buscando en %s Imagenes ISO ... "
+#~ msgstr "Cercant en %s imatges ISO"
+
+#~ msgid "Buscando en %s ficheros RAR ... "
+#~ msgstr "Cercant en %s fitxers RAR ..."
+
+#~ msgid "Descomprimido correctamente"
+#~ msgstr "Descomprimit correctament"
+
+#~ msgid "ERROR al descomrpimir el RAR : %s"
+#~ msgstr "ERROR al descomprimir el RAR: %s"
+
+#~ msgid "ERROR anadiendo la ISO : %s (comprueba que sea una ISO de WII)"
+#~ msgstr "ERROR afegint la ISO: %s (comporova que siga una ISO de Wii)"
+
+#~ msgid "ERROR el RAR %s no tenia ninguna ISO"
+#~ msgstr "ERROR el RAR %s no té cap ISO"
+
+#~ msgid "ERROR la ISO o la particion no existe"
+#~ msgstr "ERROR l'ISO o la partició no existeixen."
+
+#~ msgid "ERROR no se puede descomrpimir por que reemplazaria el ISO : %s"
+#~ msgstr "ERROR no es pot descomprimir perqué remplaçaria l'ISO : %s"
+
+#~ msgid "ERROR, descargando %s.png"
+#~ msgstr "ERROR, baixant %s.png"
+
+#~ msgid "Extraer ISO de juego con IDGAME"
+#~ msgstr "Extraure ISO del joc amb IDGAME"
+
+#~ msgid "Extraer a ISO"
+#~ msgstr "Extraure a ISO"
+
+#~ msgid "ISO %s descomprimida y anadida correctamente"
+#~ msgstr "ISO %s descomrimida i afegida correctament"
+
+#~ msgid "No hay Juegos para descargar caratulas"
+#~ msgstr "No hi ha jocs per a baixar caràtules"
+
+#~ msgid "No hay Juegos para descargar una caratula"
+#~ msgstr "No hi ha jocs per a descarregar una caràtula"
+
+#~ msgid "No hay Juegos para extraer"
+#~ msgstr "No hi ha jocs per a extraure"
+
+#~ msgid "No hay Juegos para renombrar"
+#~ msgstr "No hi ha jocs per a reanomenar"
+
+#~ msgid "No hay Juegos que borrar"
+#~ msgstr "No hi ha jocs que esborrar"
+
+#~ msgid "No se ha encontrado ninguna imagen ISO"
+#~ msgstr "No s'ha trobat cap imatge ISO"
+
+#~ msgid "No tienes instalado ningun juego en %s"
+#~ msgstr "No tens instalat cap joc en %s"
+
+#~ msgid "OK, descargado %s.png"
+#~ msgstr "OK, baixat %s.png"
+
+#~ msgid "Renombrar juego IDGAME"
+#~ msgstr "Reanomena joc IDGAME"
+
+#~ msgid "Ruta para extraer ficheros .rar"
+#~ msgstr "Ruta per a extraure fitxers .rar"
 
 #~ msgid ""
 #~ "Seguro que deseas descargar informacion de los juegos de WiiTDB?\n"
@@ -1403,110 +1492,21 @@ msgstr "Interromput per l'usuari"
 #~ "\n"
 #~ "%s"
 
-#~ msgid "Ruta para extraer ficheros .rar"
-#~ msgstr "Ruta per a extraure fitxers .rar"
+#~ msgid "a la particion"
+#~ msgstr "a la partició"
 
-#~ msgid "Renombrar juego IDGAME"
-#~ msgstr "Reanomena joc IDGAME"
+#~ msgid "como"
+#~ msgstr "com"
 
-#~ msgid "OK, descargado %s.png"
-#~ msgstr "OK, baixat %s.png"
+#~ msgid "en particion"
+#~ msgstr "en partició"
 
-#~ msgid "No tienes instalado ningun juego en %s"
-#~ msgstr "No tens instalat cap joc en %s"
+# Que signigica esto?
+#~ msgid "Tamanio"
+#~ msgstr "Tamanio"
 
-#~ msgid "No se ha encontrado ninguna imagen ISO"
-#~ msgstr "No s'ha trobat cap imatge ISO"
+#~ msgid "TAMANIO"
+#~ msgstr "TAMANIO"
 
-#~ msgid "No hay Juegos que borrar"
-#~ msgstr "No hi ha jocs que esborrar"
-
-#~ msgid "No hay Juegos para renombrar"
-#~ msgstr "No hi ha jocs per a reanomenar"
-
-#~ msgid "No hay Juegos para extraer"
-#~ msgstr "No hi ha jocs per a extraure"
-
-#~ msgid "No hay Juegos para descargar una caratula"
-#~ msgstr "No hi ha jocs per a descarregar una caràtula"
-
-#~ msgid "No hay Juegos para descargar caratulas"
-#~ msgstr "No hi ha jocs per a baixar caràtules"
-
-#~ msgid "ISO %s descomprimida y anadida correctamente"
-#~ msgstr "ISO %s descomrimida i afegida correctament"
-
-#~ msgid "Extraer a ISO"
-#~ msgstr "Extraure a ISO"
-
-#~ msgid "Extraer ISO de juego con IDGAME"
-#~ msgstr "Extraure ISO del joc amb IDGAME"
-
-#~ msgid "ERROR, descargando %s.png"
-#~ msgstr "ERROR, baixant %s.png"
-
-#~ msgid "ERROR no se puede descomrpimir por que reemplazaria el ISO : %s"
-#~ msgstr "ERROR no es pot descomprimir perqué remplaçaria l'ISO : %s"
-
-#~ msgid "ERROR la ISO o la particion no existe"
-#~ msgstr "ERROR l'ISO o la partició no existeixen."
-
-#~ msgid "ERROR el RAR %s no tenia ninguna ISO"
-#~ msgstr "ERROR el RAR %s no té cap ISO"
-
-#~ msgid "ERROR anadiendo la ISO : %s (comprueba que sea una ISO de WII)"
-#~ msgstr "ERROR afegint la ISO: %s (comporova que siga una ISO de Wii)"
-
-#~ msgid "ERROR al descomrpimir el RAR : %s"
-#~ msgstr "ERROR al descomprimir el RAR: %s"
-
-#~ msgid "Descomprimido correctamente"
-#~ msgstr "Descomprimit correctament"
-
-#~ msgid "Buscando en %s ficheros RAR ... "
-#~ msgstr "Cercant en %s fitxers RAR ..."
-
-#~ msgid "Buscando en %s Imagenes ISO ... "
-#~ msgstr "Cercant en %s imatges ISO"
-
-#~ msgid "Borrar juego con IDGAME"
-#~ msgstr "Esborrar joc amb IDGAME"
-
-#~ msgid "Aniadir RAR con ISO dentro"
-#~ msgstr "Afegir RAR amb ISO a dins"
-
-#~ msgid "Aniadir ISO"
-#~ msgstr "Afegir ISO"
-
-#~ msgid "<small><i>* = requiere reiniciar la aplicacion</i></small>"
-#~ msgstr "<small><i>* = requereix reiniciar l'aplicació</i></small>"
-
-#~ msgid "<b>Herramientas y utilidades</b>"
-#~ msgstr "<b>Eines i utilitats</b>"
-
-#~ msgid "***************** DESCARGAR DISCO %s ********************"
-#~ msgstr "***************** DESCARREGAR DISC %s ********************"
-
-#~ msgid "%s NO se ha podido formatear"
-#~ msgstr "%s No és pot formatar"
-
-#~ msgid "Advertencia de seguridad de renombrar desde IDGAME = "
-#~ msgstr "Alerta de seguretat al reanomenar desde IDGAME ="
-
-#~ msgid "https://launchpad.net/wiithon"
-#~ msgstr "https://launchpad.net/wiithon"
-
-#~ msgid "Wiithon 1.1"
-#~ msgstr "Wiithon 1.12"
-
-#~ msgid "GNU GENERAL PUBLIC LICENSE Version 3"
-#~ msgstr "GNU GENERAL PUBLIC LICENSE Version 3"
-
-#~ msgid "Realmente, desea formatear a WBFS la particion %s?"
-#~ msgstr "Estàs segur que vols formatejar a WBFS la partició %s?"
-
-#~ msgid "No se ha completado el formateo de %s"
-#~ msgstr "No s'ha completat el formateig de %s"
-
-#~ msgid "Asistente para particiones WBFS. Le aprarecera una lista de particiones, (solamente FAT32) de la cual, debera elegir una."
-#~ msgstr "Asistent per a particions WBFS. Li apareixerà una llista de particions, (solament FAT32) d'aquesta, ha d'escollir-ne una."
+#~ msgid "Elige la particion WBFS con la que va ha trabajar : "
+#~ msgstr "Trie la partició WBFS amb la que ha de treballar : "

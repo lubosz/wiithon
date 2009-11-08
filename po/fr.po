@@ -1,3 +1,18 @@
+# Ricardo Marmolejo García <makiolo@gmail.com>, 2009.
+msgid ""
+msgstr ""
+"Project-Id-Version: wiithon 1.12\n"
+"Report-Msgid-Bugs-To: makiolo@gmail.com\n"
+"POT-Creation-Date: 2009-11-08 16:04+0100\n"
+"PO-Revision-Date: 2009-11-08 16:00+0100\n"
+"Last-Translator: carel <carel.foobar@free.fr>\n"
+"Language-Team: Español <wii.sceners.linux@lists.launchpad.net>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Lokalize 1.0\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
 #: cli.py:44
 #, python-format
 msgid "No se ha encontrado la particion: %s"
@@ -1342,7 +1357,7 @@ msgstr ""
 
 #: wiitdb_xml.py:139 wiitdb_xml.py:355 wiitdb_xml.py:358 wiitdb_xml.py:392
 msgid "XML invalido"
-msgstr ""
+msgstr "XML non valide"
 
 #: wiitdb_xml.py:408
 msgid "No existe el XML"
@@ -1363,99 +1378,3 @@ msgstr "Programme lanc avec des paramtres incorrects."
 #: wiithon.py:86
 msgid "Interrumpido por el usuario"
 msgstr "Interrompu par l'utilisateur"
-
-#~ msgid "Elige la particion WBFS con la que va ha trabajar : "
-#~ msgstr "Choisissez la partition WBFS sur laquelle travailler :"
-
-#~ msgid "TAMANIO"
-#~ msgstr "TAILLE"
-
-#~ msgid "Tamanio"
-#~ msgstr "Taille"
-
-#~ msgid "No hay Juegos para descargar una caratula"
-#~ msgstr "Pas de jeu : pas de tlchargement d'une jaquette"
-
-#~ msgid "ERROR, descargando %s.png"
-#~ msgstr "ERREUR lors du tlchargement %s.png"
-
-#~ msgid "OK, descargado %s.png"
-#~ msgstr "OK, tlchargement de %s.png"
-
-#~ msgid "No hay Juegos que borrar"
-#~ msgstr "Pas de jeu  supprimer"
-
-#~ msgid "Borrar juego con IDGAME"
-#~ msgstr "Supprimer jeu IDGAME"
-
-#~ msgid "No tienes instalado ningun juego en %s"
-#~ msgstr "Pas de jeux installs dans %s"
-
-#~ msgid "***************** DESCARGAR DISCO %s ********************"
-#~ msgstr "************* TELECHARGEMENT DISQUE %s ****************"
-
-#~ msgid "ERROR la ISO o la particion no existe"
-#~ msgstr "ERREUR l'ISO ou la partition n'existe pas"
-
-#~ msgid "Aniadir ISO"
-#~ msgstr "Ajouter ISO"
-
-#~ msgid "ERROR el RAR %s no tenia ninguna ISO"
-#~ msgstr "RAR %s ne contient pas d'ISO"
-
-#~ msgid "ERROR no se puede descomrpimir por que reemplazaria el ISO : %s"
-#~ msgstr "ERREUR dcompression impossible pour remplacer l'ISO : %s"
-
-#~ msgid "ERROR al descomrpimir el RAR : %s"
-#~ msgstr "ERREUR lors de la dcompression du RAR : %s"
-
-#~ msgid "ERROR anadiendo la ISO : %s (comprueba que sea una ISO de WII)"
-#~ msgstr "ERROR lors de l'ajout ISO : %s (vrifiez que c'est une ISO de jeu Wii)"
-
-#~ msgid "ISO %s descomprimida y anadida correctamente"
-#~ msgstr "ISO %s dcompress et ajout"
-
-#~ msgid "Descomprimido correctamente"
-#~ msgstr "Dcompression russie"
-
-#~ msgid "a la particion"
-#~ msgstr "vers la partition"
-
-#~ msgid "Aniadir RAR con ISO dentro"
-#~ msgstr "Ajouter RAR contenant une ISO"
-
-#~ msgid "No hay Juegos para extraer"
-#~ msgstr "Pas de jeu  extraire"
-
-#~ msgid "en particion"
-#~ msgstr "dans la partition"
-
-#~ msgid "Extraer ISO de juego con IDGAME"
-#~ msgstr "Extraire ISO du jeu avec IDGAME"
-
-#~ msgid "No hay Juegos para renombrar"
-#~ msgstr "Pas de jeu  renommer"
-
-#~ msgid "como"
-#~ msgstr "comme"
-
-#~ msgid "Renombrar juego IDGAME"
-#~ msgstr "Renommer le jeu IDGAME"
-
-#~ msgid "No hay Juegos para descargar caratulas"
-#~ msgstr "Pas de jeu : pas de tlchargement de jaquettes"
-
-#~ msgid "No se ha encontrado ninguna imagen ISO"
-#~ msgstr "Image ISO non trouve"
-
-#~ msgid "Buscando en %s Imagenes ISO ... "
-#~ msgstr "Recherche %s image ISO en cours ..."
-
-#~ msgid "Buscando en %s ficheros RAR ... "
-#~ msgstr "Recherche %s fichiers RAR ..."
-
-#~ msgid "https://launchpad.net/wiithon"
-#~ msgstr "https://launchpad.net/wiithon"
-
-#~ msgid "GNU GENERAL PUBLIC LICENSE Version 3"
-#~ msgstr "Licence publique gnrale GNU Version 3"

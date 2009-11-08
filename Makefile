@@ -48,8 +48,8 @@ pt_BR: po/locale/pt_BR/LC_MESSAGES/wiithon.mo
 es_CA: po/locale/es_CA/LC_MESSAGES/wiithon.mo
 
 lang: lang_enable lang_disable
-lang_enable: it es en fr de pt_BR
-lang_disable: da_DK fi_FI tr_TR ru_RU ko_KR sv_SE pt_PT da_DK nb_NO ja_JP es_CA
+lang_enable: it es en fr de pt_BR es_CA
+lang_disable: da_DK fi_FI tr_TR ru_RU ko_KR sv_SE pt_PT da_DK nb_NO ja_JP
 
 compile: lang unrar-nonfree/unrar libwbfs_binding/wiithon_wrapper
 	@echo "=================================================================="
@@ -329,7 +329,7 @@ log:
 # --sort-output
 po/plantilla.pot: recursos/glade/*.ui.h *.py
 	@echo "*** GETTEXT *** Extract strings from code"
-	xgettext --language=Python --debug --no-wrap --sort-by-file --keyword=_ --keyword=N_ --from-code=utf-8 --package-name="wiithon" --package-version="$(VERSION)" --msgid-bugs-address=$(EMAIL) -o po/plantilla.pot $^ 2> /dev/null
+	xgettext --language=Python --no-wrap --sort-by-file --keyword=_ --keyword=N_ --from-code=utf-8 --package-name="wiithon" --package-version="$(VERSION)" --msgid-bugs-address=$(EMAIL) -o po/plantilla.pot $^ 2> /dev/null
 
 # extraer strings del glade
 recursos/glade/%.ui.h: recursos/glade/%.ui

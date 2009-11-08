@@ -48,11 +48,13 @@ if __name__ == '__main__':
                 rev = int(f.read())
                 f.close()
             else:
+                # return estimated revision (+1)
                 if os.path.exists("doc/REVISION"): 
                     subprocess.call("bzr revno > doc/REVISION", shell=True)
                     f = open("doc/REVISION", "r")
-                    rev = int(f.read())
+                    rev = int(f.read()) + 1
                     f.close()
+                    subprocess.call("echo %d > doc/REVISION" % rev, shell=True)
                 else:
                     raise Error
         except:
