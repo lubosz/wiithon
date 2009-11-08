@@ -341,7 +341,9 @@ log:
 po/plantilla.pot: recursos/glade/*.ui.h *.py
 	@echo "*** GETTEXT *** Extract strings from code"
 	xgettext --language=Python --no-wrap --sort-by-file --keyword=_ --keyword=N_ --from-code=utf-8 --package-name="wiithon" --package-version="$(VERSION_NEXT)" --msgid-bugs-address=$(EMAIL) -o po/plantilla.pot $^ 2> /dev/null
-	cat po/plantilla.pot | grep -v POT-Creation-Date | grep -v PO-Revision-Date > po/plantilla.pot
+	@cat po/plantilla.pot | grep -v POT-Creation-Date | grep -v PO-Revision-Date > po/plantilla2.pot
+	@mv po/plantilla2.pot po/plantilla.pot
+	@$(RM) po/plantilla2.pot
 
 # extraer strings del glade
 recursos/glade/%.ui.h: recursos/glade/%.ui

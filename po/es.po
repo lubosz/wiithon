@@ -1424,15 +1424,3 @@ msgstr "Programa ejecutado con las opciones incorrectas."
 #: wiithon.py:86
 msgid "Interrumpido por el usuario"
 msgstr "Interrumpido por el usuario"
-
-#~ msgid "Elige la particion WBFS con la que va ha trabajar : "
-#~ msgstr "Elige la partición WBFS con la que va ha trabajar : "
-
-#~ msgid "Wiithon 1.1"
-#~ msgstr "Wiithon 1.12"
-
-#~ msgid "Realmente, desea formatear a WBFS la particion %s?"
-#~ msgstr "¿Desea formatear a WBFS la partición %s?"
-
-#~ msgid "Comando para abrir carpetas."
-#~ msgstr "Comando para abrir carpetas"
