@@ -3,8 +3,8 @@
 #. /usr/share/debconf/confmodule
 #db_version 2.0
 
-ln -sf /usr/local/share/wiithon/wiithon.py /usr/local/bin/wiithon
-ln -sf /usr/local/share/wiithon/wiithon_wrapper /usr/local/bin/wiithon_wrapper
+ln -sf /usr/share/wiithon/wiithon.py /usr/bin/wiithon
+ln -sf /usr/share/wiithon/wiithon_wrapper /usr/bin/wiithon_wrapper
 
 echo
 echo "If you want run witthon as normal user you must add it to 'disk' group."

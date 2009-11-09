@@ -1,4 +1,4 @@
 #!/bin/sh -e
 
-test -L /usr/local/bin/wiithon && rm /usr/local/bin/wiithon
-test -L /usr/local/bin/wiithon_wrapper && rm /usr/local/bin/wiithon_wrapper
+test -L /usr/bin/wiithon && rm /usr/bin/wiithon
+test -L /usr/bin/wiithon_wrapper && rm /usr/bin/wiithon_wrapper

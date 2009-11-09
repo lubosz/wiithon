@@ -33,6 +33,7 @@ WIITHON_FILES_RECURSOS = os.path.join(WIITHON_FILES , "recursos")
 WIITHON_FILES_RECURSOS_GLADE = os.path.join(WIITHON_FILES_RECURSOS , "glade")
 WIITHON_FILES_RECURSOS_IMAGENES = os.path.join(WIITHON_FILES_RECURSOS , "imagenes")
 WIITHON_FILES_RECURSOS_IMAGENES_ACCESORIO = os.path.join(WIITHON_FILES_RECURSOS_IMAGENES , "accesorio")
+print WIITHON_FILES_RECURSOS_IMAGENES_ACCESORIO
 
 HOME_WIITHON_CARATULAS = os.path.join(WIITHON_FILES_RECURSOS_IMAGENES , 'caratulas')
 HOME_WIITHON_DISCOS = os.path.join(WIITHON_FILES_RECURSOS_IMAGENES , 'discos')
@@ -80,7 +81,7 @@ NUM_LINEAS_PAUSA = 21
 SIZE_IMAGE_ACCESORIOS = 90
 
 #URL BUGS
-URL_BUGS = "https://bugs.launchpad.net/wiithon"
+URL_BUGS = "https://bugs.launchpad.net/wiithon/+filebug"
 
 if DEBUG and SUPERDEBUG:
     logging.basicConfig()

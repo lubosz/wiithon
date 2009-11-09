@@ -1,7 +1,7 @@
 [Desktop Entry]
 Name=Wiithon
 Terminal=false
-Exec=/usr/local/share/wiithon/wiithon.py
+Exec=/usr/share/wiithon/wiithon.py
 Icon=/usr/share/pixmaps/wiithon.svg
 Type=Application
 Categories=GNOME;Application;Game;

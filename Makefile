@@ -1,5 +1,5 @@
 EMAIL="makiolo@gmail.com"
-PREFIX=/usr/local
+PREFIX=/usr
 REV_ACTUAL=${shell bzr revno}
 REV_NEXT=$(shell python -c "print $(REV_ACTUAL)+1")
 VERSION_ACTUAL=${shell python doc/VERSION $(REV_ACTUAL)}
@@ -64,20 +64,19 @@ making_directories:
 	@mkdir -p $(DESTDIR)/usr/share/pixmaps
 	@mkdir -p $(DESTDIR)/usr/lib
 	@mkdir -p $(DESTDIR)/usr/share/applications
-	@mkdir -p $(DESTDIR)$(PREFIX)/bin
-	@mkdir -p $(DESTDIR)$(PREFIX)/lib
-	@mkdir -p $(DESTDIR)$(PREFIX)/lib32
+	@mkdir -p $(DESTDIR)/usr/share/doc/wiithon
 	@mkdir -p $(DESTDIR)$(PREFIX)/share/wiithon
 	@mkdir -p $(DESTDIR)$(PREFIX)/share/wiithon/recursos/glade
 	@mkdir -p $(DESTDIR)$(PREFIX)/share/wiithon/recursos/imagenes
 	@mkdir -p $(DESTDIR)$(PREFIX)/share/wiithon/recursos/imagenes/accesorio
 	@mkdir -p $(DESTDIR)$(PREFIX)/share/wiithon/recursos/imagenes/caratulas
 	@mkdir -p $(DESTDIR)$(PREFIX)/share/wiithon/recursos/imagenes/discos
-	@mkdir -p $(DESTDIR)/usr/share/doc/wiithon
 	
 recicled_old_wiithon: making_directories
 	-@mv -f ~/.wiithon/caratulas/*.png $(PREFIX)/share/wiithon/recursos/imagenes/caratulas
 	-@mv -f ~/.wiithon/discos/*.png $(PREFIX)/share/wiithon/recursos/imagenes/discos
+	-@mv -f /usr/local/share/wiithon/recursos/imagenes/caratulas/*.png $(PREFIX)/share/wiithon/recursos/imagenes/caratulas
+	-@mv -f /usr/local/share/wiithon/recursos/imagenes/discos/*.png $(PREFIX)/share/wiithon/recursos/imagenes/discos
 	
 copy_archives: making_directories
 
@@ -176,38 +175,58 @@ clean_old_wiithon:
 	-@$(RM) -R ~/.wiithon/discos/
 	-@$(RM) ~/.wiithon/bdd/juegos.db
 	-@$(RM) ~/.wiithon_acuerdo
-	-@$(RM) $(PREFIX)/share/wiithon/.acuerdo
+	-@$(RM) /usr/local/share/wiithon/.acuerdo
 	
-	-$(RM) /usr/bin/wiithon
-	-$(RM) /usr/bin/wiithon_autodetectar
-	-$(RM) /usr/bin/wiithon_autodetectar_lector
+	-@$(RM) /usr/bin/wiithon
+	-@$(RM) /usr/bin/wiithon_autodetectar
+	-@$(RM) /usr/bin/wiithon_autodetectar_lector
 	-@$(RM) /usr/bin/wbfs
 	
-	-$(RM) $(PREFIX)/bin/wiithon_autodetectar
-	-$(RM) $(PREFIX)/bin/wiithon_autodetectar_lector
-	-$(RM) $(PREFIX)/bin/wbfs
-	-$(RM) $(PREFIX)/share/wiithon/wbfs
+	-@$(RM) /usr/local/bin/wiithon_autodetectar
+	-@$(RM) /usr/local/bin/wiithon_autodetectar_lector
+	-@$(RM) /usr/local/bin/wbfs
+	-@$(RM) /usr/local/share/wiithon/wbfs
 	
-	-$(RM) $(PREFIX)/share/wiithon/glade_wrapper.py
+	-@$(RM) /usr/local/share/wiithon/glade_wrapper.py
 
-	-$(RM) $(PREFIX)/share/wiithon/recursos/glade/*.xml
-	-$(RM) $(PREFIX)/share/wiithon/recursos/glade/*.glade
+	-@$(RM) /usr/local/share/wiithon/recursos/glade/*.xml
+	-@$(RM) /usr/local/share/wiithon/recursos/glade/*.glade
 	
-	-$(RM) $(PREFIX)/share/wiithon/wiithon
-	-$(RM) $(PREFIX)/share/wiithon/wiithon_autodetectar
-	-$(RM) $(PREFIX)/share/wiithon/wiithon_autodetectar_lector
+	-@$(RM) /usr/local/share/wiithon/wiithon
+	-@$(RM) /usr/local/share/wiithon/wiithon_autodetectar
+	-@$(RM) /usr/local/share/wiithon/wiithon_autodetectar_lector
 
 	-@gconftool --recursive-unset /apps/nautilus-actions/configurations
 	-@$(RM) /usr/share/gconf/schemas/wiithon*.schemas
 	
-	-$(RM) /usr/share/applications/wiithon.desktop
-	-$(RM) /usr/share/applications/wiithon_root.desktop
+	-@$(RM) /usr/share/applications/wiithon.desktop
+	-@$(RM) /usr/share/applications/wiithon_root.desktop
 	
-	-$(RM) $(PREFIX)/share/wiithon/HOME.conf
+	-@$(RM) /usr/local/share/wiithon/HOME.conf
 
-	-$(RM) $(PREFIX)/lib/libwbfs.so
-	-$(RM) /usr/lib/libwbfs.so
-	-$(RM) /usr/lib32/libwbfs.so
+	-@$(RM) /usr/local/lib/libwbfs.so
+	-@$(RM) /usr/lib/libwbfs.so
+	-@$(RM) /usr/lib32/libwbfs.so
+	
+	-@$(RM) /usr/local/share/wiithon/*.py
+	-@$(RM) /usr/local/share/wiithon/wiithon_wrapper
+	-@$(RM) /usr/local/share/wiithon/unrar
+	-@$(RM) /usr/local/share/wiithon/*.sh
+	-@$(RM) /usr/local/share/wiithon/recursos/glade/*.ui
+	-@$(RM) /usr/local/share/wiithon/recursos/imagenes/*.png
+	-@$(RM) /usr/local/share/wiithon/recursos/imagenes/accesorio/*.jpg
+	-@rmdir /usr/local/share/wiithon/recursos/imagenes/accesorio/
+
+	-@$(RM) /usr/local/share/wiithon/*.pyc
+	
+	-@$(RM) /usr/local/share/wiithon/recursos/imagenes/caratulas/*.png
+	-@$(RM) /usr/local/share/wiithon/recursos/imagenes/discos/*.png
+	-@rmdir /usr/local/share/wiithon/recursos/imagenes/caratulas
+	-@rmdir /usr/local/share/wiithon/recursos/imagenes/discos
+	-@rmdir /usr/local/share/wiithon/recursos/imagenes
+	-@rmdir /usr/local/share/wiithon/recursos/glade
+	-@rmdir /usr/local/share/wiithon/recursos
+	-@rmdir /usr/local/share/wiithon
 	
 	@echo "=================================================================="
 	@echo "Clean old installs"
@@ -215,6 +234,7 @@ clean_old_wiithon:
 
 delete_archives_installation:
 	-$(RM) $(PREFIX)/share/wiithon/*.py
+	-$(RM) $(PREFIX)/share/wiithon/*.pyc
 	-$(RM) $(PREFIX)/share/wiithon/wiithon_wrapper
 	-$(RM) $(PREFIX)/share/wiithon/unrar
 	-$(RM) $(PREFIX)/share/wiithon/*.sh
@@ -222,8 +242,6 @@ delete_archives_installation:
 	-$(RM) $(PREFIX)/share/wiithon/recursos/imagenes/*.png
 	-$(RM) $(PREFIX)/share/wiithon/recursos/imagenes/accesorio/*.jpg
 	-rmdir $(PREFIX)/share/wiithon/recursos/imagenes/accesorio/
-
-	-$(RM) $(PREFIX)/share/wiithon/*.pyc
 	
 	-$(RM) /usr/share/locale/en/LC_MESSAGES/wiithon.mo
 	-$(RM) /usr/share/locale/es/LC_MESSAGES/wiithon.mo

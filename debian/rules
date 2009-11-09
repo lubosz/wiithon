@@ -34,7 +34,7 @@ install-stamp: build-stamp
 	dh_installdirs
  
 	# Add here commands to install the package into debian/tmp.
-	$(MAKE) DESTDIR=$(CURDIR)/debian/wiithon PREFIX=/usr/local install4ppa
+	$(MAKE) DESTDIR=$(CURDIR)/debian/wiithon PREFIX=/usr install4ppa
 
 	touch install-stamp
   

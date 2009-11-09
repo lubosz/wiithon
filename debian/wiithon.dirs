@@ -1,9 +1,8 @@
-/usr/local/bin
-/usr/local/lib
-/usr/local/lib32
-/usr/local/share/wiithon/recursos/glade
-/usr/local/share/wiithon/recursos/imagenes/accesorio
-/usr/local/share/wiithon/recursos/imagenes/caratulas
-/usr/local/share/wiithon/recursos/imagenes/discos
+/usr/bin
+/usr/lib
+/usr/share/wiithon/recursos/glade
+/usr/share/wiithon/recursos/imagenes/accesorio
+/usr/share/wiithon/recursos/imagenes/caratulas
+/usr/share/wiithon/recursos/imagenes/discos
 /usr/share/applications
 /usr/share/pixmaps
