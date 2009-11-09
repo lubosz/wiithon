@@ -40,7 +40,6 @@ HOME_WIITHON_DISCOS = os.path.join(WIITHON_FILES_RECURSOS_IMAGENES , 'discos')
 LOCALE = "/usr/share/locale/"
 ICONO = "/usr/share/pixmaps/wiithon.png"
 WBFS_APP = os.path.join(WIITHON_FILES , "wiithon_wrapper")
-print WBFS_APP
 UNRAR_APP = os.path.join(WIITHON_FILES , "wiithon_unrar")
 
 APP = "wiithon"

@@ -392,8 +392,6 @@ class Juego(Base):
     title = Column('title', Unicode(255))
     size = Column('size', Float)
     idParticion = Column("idParticion", Integer , ForeignKey('particion.idParticion'), nullable=False)
-    tieneCaratula = True
-    tieneDiscArt = True
 
     def __init__(self , idgame , title , size):
         self.idgame = util.decode(idgame)

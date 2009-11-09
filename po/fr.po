@@ -87,7 +87,7 @@ msgstr "ISO %s supprimé"
 msgid "ERROR borrando el juego"
 msgstr "ERROR lors de la suppression du jeu"
 
-#: cli.py:174 gui.py:1320 gui.py:1368 gui.py:1475
+#: cli.py:174 gui.py:1310 gui.py:1358 gui.py:1465
 msgid "No has seleccionado ningun juego"
 msgstr "Pas de jeu sélectionné"
 
@@ -509,248 +509,248 @@ msgstr ""
 msgid "INFORMACION:"
 msgstr ""
 
-#: gui.py:1177
+#: gui.py:1167
 msgid "No se ha encontrado synopsis"
 msgstr ""
 
-#: gui.py:1197
+#: gui.py:1187
 msgid "ACCESORIOS: "
 msgstr ""
 
-#: gui.py:1202
+#: gui.py:1192
 msgid "OPCIONALES: "
 msgstr ""
 
-#: gui.py:1243
+#: gui.py:1233
 msgid "GENERO: "
 msgstr ""
 
-#: gui.py:1244
+#: gui.py:1234
 msgid "Fecha de lanzamiento: "
 msgstr ""
 
-#: gui.py:1245
+#: gui.py:1235
 msgid "Desarrolador/Editorial: "
 msgstr ""
 
-#: gui.py:1246
+#: gui.py:1236
 msgid "Num. jugadores en off-line: "
 msgstr ""
 
-#: gui.py:1247
+#: gui.py:1237
 msgid "Capacidad On-line: "
 msgstr ""
 
-#: gui.py:1248
+#: gui.py:1238
 msgid "Clasificacion parental: "
 msgstr ""
 
-#: gui.py:1265 gui.py:1281 gui.py:1313
+#: gui.py:1255 gui.py:1271 gui.py:1303
 msgid "DESCRIPCION: "
 msgstr ""
 
-#: gui.py:1281 gui.py:1313
+#: gui.py:1271 gui.py:1303
 msgid "Sin descripcion."
 msgstr ""
 
-#: gui.py:1295
+#: gui.py:1285
 msgid "No hay datos de este juego. Intente actualizar la base de datos de WiiTDB."
 msgstr ""
 
-#: gui.py:1337
+#: gui.py:1327
 msgid "Tienes que seleccionar una particion WBFS para realizar esta accion"
 msgstr "Vous devez sélectionner une partition WBFS pour réaliser cette action"
 
-#: gui.py:1365
+#: gui.py:1355
 #, python-format
 msgid "Desea copiar el juego %s a la particion %s?"
 msgstr ""
 
-#: gui.py:1380
+#: gui.py:1370
 msgid "Se van a copiar los siguientes juegos a"
 msgstr "Copie des jeux suivants vers"
 
-#: gui.py:1387 gui.py:1395
+#: gui.py:1377 gui.py:1385
 msgid "juegos mas"
 msgstr "jeux non affichés"
 
-#: gui.py:1389
+#: gui.py:1379
 msgid "A continuacion se listan los juego que NO van a ser copiados por ya estar en la particion de destino"
 msgstr "Les jeux suivants ne seront PAS copiés car ils existent dans la partition cible"
 
-#: gui.py:1397
+#: gui.py:1387
 msgid "Empezar a copiar?"
 msgstr "Démarrer la copie ?"
 
-#: gui.py:1403
+#: gui.py:1393
 #, python-format
 msgid "No hay nada que copiar a %s"
 msgstr ""
 
-#: gui.py:1405
+#: gui.py:1395
 msgid "Debes tener al menos 2 particiones WBFS para hacer copias 1:1"
 msgstr ""
 
-#: gui.py:1410
+#: gui.py:1400
 #, python-format
 msgid "Quieres borrar el juego: %s?"
 msgstr ""
 
-#: gui.py:1438
+#: gui.py:1428
 #, python-format
 msgid "Error borrando el juego %s"
 msgstr ""
 
-#: gui.py:1441 gui.py:1486 gui.py:1576
+#: gui.py:1431 gui.py:1476 gui.py:1566
 msgid "No has seleccionado ninguna particion"
 msgstr "Pas de partition sélectionnée"
 
-#: gui.py:1448
+#: gui.py:1438
 #, python-format
 msgid "Elige un directorio donde extraer la ISO de %s"
 msgstr "Choisissez le dossier dans lequel extraire l'ISO %s"
 
-#: gui.py:1459
+#: gui.py:1449
 #, python-format
 msgid "Desea reemplazar la iso del juego %s?"
 msgstr ""
 
-#: gui.py:1462
+#: gui.py:1452
 msgid "Espacio libre insuficiente para extraer la ISO"
 msgstr ""
 
-#: gui.py:1492
+#: gui.py:1482
 msgid "Elige una imagen ISO valida para Wii"
 msgstr "Choisissez une image ISO Wii valide"
 
-#: gui.py:1498
+#: gui.py:1488
 msgid "Elige un directorio"
 msgstr "Choisissez le dossier"
 
-#: gui.py:1511
+#: gui.py:1501
 msgid ""
 "Algunos juegos no se han introducido:\n"
 "\n"
 msgstr ""
 
-#: gui.py:1539
+#: gui.py:1529
 #, python-format
 msgid "%s ya existe en %s\n"
 msgstr ""
 
-#: gui.py:1542
+#: gui.py:1532
 #, python-format
 msgid "%s no es un ISO de Wii.\n"
 msgstr ""
 
-#: gui.py:1582
+#: gui.py:1572
 msgid "Paso 1 de 2: Elige un directorio para las CARATULAS"
 msgstr "Étape 1 sur 2 : Choisissez un dossier pour les JAQUETTES"
 
-#: gui.py:1586
+#: gui.py:1576
 msgid "Paso 2 de 2: Elige un directorio para los DISCOS"
 msgstr "Étape 2 sur 2 : Choisissez un dossier pour les DISQUES"
 
-#: gui.py:1604
+#: gui.py:1594
 msgid "No tienes ningun juego"
 msgstr "Pas de jeux"
 
-#: gui.py:1613
+#: gui.py:1603
 msgid ""
 "Hay una tarea que esta bloqueando las preferencias.\n"
 "\n"
 "Espere a que finalize."
 msgstr ""
 
-#: gui.py:1619
+#: gui.py:1609
 msgid "Estas seguro de querer formatear la BDD? Se borraran tus preferencias y la informacion de los juegos"
 msgstr ""
 
-#: gui.py:1629
+#: gui.py:1619
 msgid "Es recomendable que reinicie la aplicacion"
 msgstr ""
 
-#: gui.py:1629
+#: gui.py:1619
 msgid "La BDD ha sido formateada."
 msgstr ""
 
-#: gui.py:1660
+#: gui.py:1650
 msgid "Seguro que deseas descargar informacion de los juegos de WiiTDB?"
 msgstr ""
 
-#: gui.py:1667
+#: gui.py:1657
 msgid "Ya estas descargando la informacion WiiTDB ..."
 msgstr ""
 
-#: gui.py:1676
+#: gui.py:1666
 msgid "Empezando a obtener datos de juegos desde WiiTDB"
 msgstr ""
 
-#: gui.py:1681
+#: gui.py:1671
 #, python-format
 msgid "%d%% - %d/%d games - %d descriptions - %d genre - %d accesories - %d companies - %d online features"
 msgstr ""
 
-#: gui.py:1705
+#: gui.py:1695
 #, python-format
 msgid "Error importando %s: %s"
 msgstr ""
 
-#: gui.py:1708
+#: gui.py:1698
 #, python-format
 msgid "Descargando WiiTDB desde %s, espere unos minutos ..."
 msgstr ""
 
-#: gui.py:1713
+#: gui.py:1703
 msgid "Empezando a descomprimir la informacion WiiTDB"
 msgstr ""
 
-#: gui.py:1720
+#: gui.py:1710
 msgid "Finalizada satisfactoriamente la importacion de datos desde WiiTDB"
 msgstr ""
 
-#: gui.py:1727
+#: gui.py:1717
 #, python-format
 msgid "Deseas borrar el archivo %s?"
 msgstr ""
 
-#: gui.py:1875
+#: gui.py:1865
 #, python-format
 msgid "Empieza %s"
 msgstr "Démarrage : %s"
 
-#: gui.py:1887
+#: gui.py:1877
 #, python-format
 msgid "Termina: %s"
 msgstr "Terminé : %s"
 
-#: gui.py:1904
+#: gui.py:1894
 #, python-format
 msgid "Falla la descarga de la caratula de %s"
 msgstr ""
 
-#: gui.py:1912
+#: gui.py:1902
 #, python-format
 msgid "Falla la descarga del disco de %s"
 msgstr ""
 
-#: gui.py:1958
+#: gui.py:1948
 msgid "Finalizando ..."
 msgstr ""
 
-#: gui.py:1960
+#: gui.py:1950
 msgid "ERROR!"
 msgstr "ERREUR!"
 
-#: gui.py:1968
+#: gui.py:1958
 msgid "quedan"
 msgstr "reste"
 
-#: gui.py:1984
+#: gui.py:1974
 msgid "Error en progreso"
 msgstr ""
 
-#: gui.py:1992
+#: gui.py:1982
 msgid "Empezando ..."
 msgstr "Démarrage en cours ..."
 
@@ -1376,162 +1376,108 @@ msgstr "Programme lancé avec des paramètres incorrects."
 msgid "Interrumpido por el usuario"
 msgstr "Interrompu par l'utilisateur"
 
-#~ msgid "***************** DESCARGAR DISCO %s ********************"
-#~ msgstr "************* TELECHARGEMENT DISQUE %s ****************"
+#~ msgid "Trabajos intensos (0)"
+#~ msgstr "Intense work (0)"
 
-#~ msgid "Aniadir ISO"
-#~ msgstr "Ajouter ISO"
+#~ msgid "Trabajos de fondo (0)"
+#~ msgstr "Batch work (0)"
 
-#~ msgid "Aniadir RAR con ISO dentro"
-#~ msgstr "Ajouter RAR contenant une ISO"
+#~ msgid "Mas informacion"
+#~ msgstr "Details"
 
-#~ msgid "Borrar juego con IDGAME"
-#~ msgstr "Supprimer jeu IDGAME"
+#~ msgid "Consola"
+#~ msgstr "Console"
 
-#~ msgid "Buscando en %s Imagenes ISO ... "
-#~ msgstr "Recherche %s image ISO en cours ..."
+#~ msgid "Ya tienes la caratula %s"
+#~ msgstr "Vous avez la jaquette %s"
 
-#~ msgid "Buscando en %s ficheros RAR ... "
-#~ msgstr "Recherche %s fichiers RAR ..."
+#~ msgid "Ya tienes el disco-caratula %s"
+#~ msgstr "Vous avez la jaquette du disque %s"
 
-#~ msgid "Descomprimido correctamente"
-#~ msgstr "Décompression réussie"
-
-#~ msgid "ERROR al descomrpimir el RAR : %s"
-#~ msgstr "ERREUR lors de la décompression du RAR : %s"
-
-#~ msgid "ERROR anadiendo la ISO : %s (comprueba que sea una ISO de WII)"
-#~ msgstr "ERROR lors de l'ajout ISO : %s (vérifiez que c'est une ISO de jeu Wii)"
-
-#~ msgid "ERROR el RAR %s no tenia ninguna ISO"
-#~ msgstr "RAR %s ne contient pas d'ISO"
-
-#~ msgid "ERROR la ISO o la particion no existe"
-#~ msgstr "ERREUR l'ISO ou la partition n'existe pas"
-
-#~ msgid "ERROR no se puede descomrpimir por que reemplazaria el ISO : %s"
-#~ msgstr "ERREUR décompression impossible pour remplacer l'ISO : %s"
-
-#~ msgid "ERROR, descargando %s.png"
-#~ msgstr "ERREUR lors du téléchargement %s.png"
-
-#~ msgid "Elige la particion WBFS con la que va ha trabajar : "
-#~ msgstr "Choisissez la partition WBFS sur laquelle travailler :"
-
-#~ msgid "Extraer ISO de juego con IDGAME"
-#~ msgstr "Extraire ISO du jeu avec IDGAME"
-
-#~ msgid "Extraer a ISO"
-#~ msgstr "Extraire ISO"
-
-#~ msgid "GNU GENERAL PUBLIC LICENSE Version 3"
-#~ msgstr "Licence publique générale GNU Version 3"
-
-#~ msgid "ISO %s descomprimida y anadida correctamente"
-#~ msgstr "ISO %s décompressé et ajouté"
-
-#~ msgid "No hay Juegos para descargar caratulas"
-#~ msgstr "Pas de jeu : pas de téléchargement de jaquettes"
-
-#~ msgid "No hay Juegos para descargar una caratula"
-#~ msgstr "Pas de jeu : pas de téléchargement d'une jaquette"
-
-#~ msgid "No hay Juegos para extraer"
-#~ msgstr "Pas de jeu à extraire"
-
-#~ msgid "No hay Juegos para renombrar"
-#~ msgstr "Pas de jeu à renommer"
-
-#~ msgid "No hay Juegos que borrar"
-#~ msgstr "Pas de jeu à supprimer"
-
-#~ msgid "No se ha encontrado ninguna imagen ISO"
-#~ msgstr "Image ISO non trouvée"
-
-#~ msgid "No tienes instalado ningun juego en %s"
-#~ msgstr "Pas de jeux installés dans %s"
-
-#~ msgid "OK, descargado %s.png"
-#~ msgstr "OK, téléchargement de %s.png"
-
-#~ msgid "Renombrar juego IDGAME"
-#~ msgstr "Renommer le jeu IDGAME"
-
-#~ msgid "TAMANIO"
-#~ msgstr "TAILLE"
-
-#~ msgid "Tamanio"
-#~ msgstr "Taille"
-
-#~ msgid "a la particion"
-#~ msgstr "vers la partition"
-
-#~ msgid "como"
-#~ msgstr "comme"
-
-#~ msgid "en particion"
-#~ msgstr "dans la partition"
-
-#~ msgid "https://launchpad.net/wiithon"
-#~ msgstr "https://launchpad.net/wiithon"
-
-#~ msgid "No hay particiones WBFS, conecte y refresque"
-#~ msgstr ""
-#~ "Pas de partition WBFS\n"
-#~ "- Connectez et appuyez sur Actualiser."
-
-#~ msgid "No hay particiones WBFS, solo puede ver sus juegos acumuladas en %s"
-#~ msgstr ""
-#~ "Pas de partition WBFS, connectez et appuyez sur Actualiser.\n"
-#~ "Dans ce mode, vous pouvez seulement :\n"
-#~ "- Voir la base de donnée de jeux accumulée par %s.\n"
-#~ "- Copier des jaquettes (habituellement vers une carte SD, pour un USB Loader)\n"
-#~ "- Lorsque vous supprimez un jeu dans ce mode, vous supprimez uniquement les jaquettes téléchargées"
+#~ msgid "Vuelvelo a intentar o mira en : http://www.theotherzone.com/wii/"
+#~ msgstr "Essayez encore ou visitez : http://www.theotherzone.com/wii/"
 
 #~ msgid ""
-#~ "No se han detectado particiones WBFS.\n"
-#~ "Si has conectado una particion WBFS y no ha sido detectada, es debido a que no hay permisos de lectura y escritura.\n"
-#~ "Para solucionarlo siga los pasos de la guia de instalacion."
+#~ "Sergio Padrino <sergio.padrino@gmail.com>\n"
+#~ "Ricardo Marmolejo Garc&#xED;a <makiolo@gmail.com>"
 #~ msgstr ""
-#~ "Pas de partition WBFS détectée.\n"
-#~ "Si vous avez connecté une partition WBFS mais qu'elle n'est pas détectée, vous devez régler les permissions (écriture lecture).\n"
-#~ "Lisez les étapes dans le manuel."
+#~ "Sergio Padrino <sergio.padrino@gmail.com>\n"
+#~ "Ricardo Marmolejo Garc&#xED;a <makiolo@gmail.com>"
 
-#~ msgid "gtk-cancel"
-#~ msgstr "gtk-cancel"
+#~ msgid "Quieres borrar el juego con %s (%s)?"
+#~ msgstr "Supprimer le jeu %s (%s)?"
 
-#~ msgid "Error borrando"
-#~ msgstr "Erreur de suppression"
+#~ msgid "No hay un numero suficiente de particiones validas, para realizar esta accion."
+#~ msgstr "Vous devez sélectionner une partition WBFS pour utiliser cette action"
 
-#~ msgid "***************** DESCARGAR CARATULA %s ********************"
-#~ msgstr "************** TELECHARGEMENT JAQUETTE %s *****************"
+#~ msgid "Fabricante"
+#~ msgstr "Fabricant"
 
-#~ msgid "Caratula descargada como"
-#~ msgstr "Jaquette téléchargé en tant que"
+#~ msgid "Error obteniendo el Fabricando del HD"
+#~ msgstr "Erreur lors de l'obtention du fabricant du disque dur"
 
-#~ msgid "Error al pasar la ISO al disco duro"
-#~ msgstr "Erreur lors du transfert de l'ISO vers le disque dur"
+#~ msgid "El juego ya esta metido, como %s (%s)"
+#~ msgstr "Ce jeu est déjà présent, en tant que %s (%s)"
 
-#~ msgid "No se ha encontrado caratula para el juego %s"
-#~ msgstr "Pas d'image ISO"
+#~ msgid "Desea reemplazar la iso del juego %s (%s)?"
+#~ msgstr "Souhaitez-vous remplacer le jeu %s (%s)?"
 
-#~ msgid "a un ISO temporal de 4.4GB en"
-#~ msgstr "vers une ISO temporaire de 4.4Go"
+#~ msgid ""
+#~ "Comprobando integridad ...\n"
+#~ "Descargando caratulas ...\n"
+#~ "Descargando discos ...\n"
+#~ msgstr ""
+#~ "Vérification intégrité ...\n"
+#~ "Téléchargement jaquettes ...\n"
 
-#~ msgid "wiithon no borra la ISO temporal, puedes borrarla si no la necesitas"
-#~ msgstr "wiithon ne supprime pas l'ISO temporaire, vous pouvez le faire si vous n'en avez pas besoin"
+#~ msgid "Advertencia de borrar %s (%s) en modo ver"
+#~ msgstr ""
+#~ "Attention:\n"
+#~ "- Vous allez effacer un jeu de la bibliothèque sans partition sélectionnée\n"
+#~ "- La jaquette et le disque téléchargés seront supprimés\n"
+#~ "Êtes-vous sûr de supprimer %s (%s)?"
 
-#~ msgid "gtk-ok"
-#~ msgstr "gtk-ok"
+#~ msgid "%s - Salir"
+#~ msgstr "%s - Sortir"
 
-#~ msgid "0 Tareas"
-#~ msgstr "0 Tâches"
+#~ msgid "Imagen ISO para Wii"
+#~ msgstr "Image ISO Wii"
 
-#~ msgid "Se descargaran en 3D"
-#~ msgstr "Elles seront téléchargées en 3D"
+#~ msgid "Finalizado."
+#~ msgstr "Terminé."
 
-#~ msgid "Se descargaran en formato paronamico"
-#~ msgstr "Elles seront téléchargées en format panoramique"
+#~ msgid "No se ha encontrado ningun ISO"
+#~ msgstr "Images ISO non trouvées"
+
+#~ msgid "La ISO o la particion ya no no existen"
+#~ msgstr "L'ISO ou la partition n'existe pas"
+
+#~ msgid "No hay nada que copiar en %s"
+#~ msgstr "Rien à copier dans %s"
+
+#~ msgid "Desea copiar el juego %s (%s) a la particion %s?"
+#~ msgstr "Souhaitez-vous copier le jeu %s (%s) vers la partition %s?"
+
+#~ msgid "Copiar todo el disco*"
+#~ msgstr "Copie tous les jeux*"
+
+#~ msgid "Copiar 1:1"
+#~ msgstr "Copie 1:1"
+
+#~ msgid "Cararuta?"
+#~ msgstr "Jaquette?"
+
+#~ msgid "Se va ha borrar la ISO descomprimida"
+#~ msgstr "L'ISO non-compressée va être supprimée"
+
+#~ msgid "No se ha borrado la ISO temporal"
+#~ msgstr "Ne supprimez pas d'ISO temporaire"
+
+#~ msgid "La ISO %s temporal fue borrada"
+#~ msgstr "L'ISO temporaire %s a été supprimée"
+
+#~ msgid "ERROR al borrar la ISO : %s"
+#~ msgstr "ERREUR lors de l'effacement de l'ISO : %s"
 
 #~ msgid "Advertencia de seguridad de renombrar desde IDGAME = %s a %s"
 #~ msgstr ""
@@ -1545,105 +1491,159 @@ msgstr "Interrompu par l'utilisateur"
 #~ "Le meilleur exemple est Guitar Hero et ses versions modifiées.\n"
 #~ "Souhaitez-vous vraiment renommer IDGAME %s en tant que %s?"
 
-#~ msgid "ERROR al borrar la ISO : %s"
-#~ msgstr "ERREUR lors de l'effacement de l'ISO : %s"
+#~ msgid "Se descargaran en formato paronamico"
+#~ msgstr "Elles seront téléchargées en format panoramique"
 
-#~ msgid "La ISO %s temporal fue borrada"
-#~ msgstr "L'ISO temporaire %s a été supprimée"
+#~ msgid "Se descargaran en 3D"
+#~ msgstr "Elles seront téléchargées en 3D"
 
-#~ msgid "No se ha borrado la ISO temporal"
-#~ msgstr "Ne supprimez pas d'ISO temporaire"
+#~ msgid "0 Tareas"
+#~ msgstr "0 Tâches"
 
-#~ msgid "Se va ha borrar la ISO descomprimida"
-#~ msgstr "L'ISO non-compressée va être supprimée"
+#~ msgid "gtk-ok"
+#~ msgstr "gtk-ok"
 
-#~ msgid "Cararuta?"
-#~ msgstr "Jaquette?"
+#~ msgid "wiithon no borra la ISO temporal, puedes borrarla si no la necesitas"
+#~ msgstr "wiithon ne supprime pas l'ISO temporaire, vous pouvez le faire si vous n'en avez pas besoin"
 
-#~ msgid "Copiar 1:1"
-#~ msgstr "Copie 1:1"
+#~ msgid "a un ISO temporal de 4.4GB en"
+#~ msgstr "vers une ISO temporaire de 4.4Go"
 
-#~ msgid "Copiar todo el disco*"
-#~ msgstr "Copie tous les jeux*"
+#~ msgid "No se ha encontrado caratula para el juego %s"
+#~ msgstr "Pas d'image ISO"
 
-#~ msgid "Desea copiar el juego %s (%s) a la particion %s?"
-#~ msgstr "Souhaitez-vous copier le jeu %s (%s) vers la partition %s?"
+#~ msgid "Error al pasar la ISO al disco duro"
+#~ msgstr "Erreur lors du transfert de l'ISO vers le disque dur"
 
-#~ msgid "No hay nada que copiar en %s"
-#~ msgstr "Rien à copier dans %s"
+#~ msgid "Caratula descargada como"
+#~ msgstr "Jaquette téléchargé en tant que"
 
-#~ msgid "La ISO o la particion ya no no existen"
-#~ msgstr "L'ISO ou la partition n'existe pas"
+#~ msgid "***************** DESCARGAR CARATULA %s ********************"
+#~ msgstr "************** TELECHARGEMENT JAQUETTE %s *****************"
 
-#~ msgid "No se ha encontrado ningun ISO"
-#~ msgstr "Images ISO non trouvées"
+#~ msgid "Error borrando"
+#~ msgstr "Erreur de suppression"
 
-#~ msgid "Finalizado."
-#~ msgstr "Terminé."
-
-#~ msgid "Imagen ISO para Wii"
-#~ msgstr "Image ISO Wii"
-
-#~ msgid "%s - Salir"
-#~ msgstr "%s - Sortir"
-
-#~ msgid "Advertencia de borrar %s (%s) en modo ver"
-#~ msgstr ""
-#~ "Attention:\n"
-#~ "- Vous allez effacer un jeu de la bibliothèque sans partition sélectionnée\n"
-#~ "- La jaquette et le disque téléchargés seront supprimés\n"
-#~ "Êtes-vous sûr de supprimer %s (%s)?"
+#~ msgid "gtk-cancel"
+#~ msgstr "gtk-cancel"
 
 #~ msgid ""
-#~ "Comprobando integridad ...\n"
-#~ "Descargando caratulas ...\n"
-#~ "Descargando discos ...\n"
+#~ "No se han detectado particiones WBFS.\n"
+#~ "Si has conectado una particion WBFS y no ha sido detectada, es debido a que no hay permisos de lectura y escritura.\n"
+#~ "Para solucionarlo siga los pasos de la guia de instalacion."
 #~ msgstr ""
-#~ "Vérification intégrité ...\n"
-#~ "Téléchargement jaquettes ...\n"
+#~ "Pas de partition WBFS détectée.\n"
+#~ "Si vous avez connecté une partition WBFS mais qu'elle n'est pas détectée, vous devez régler les permissions (écriture lecture).\n"
+#~ "Lisez les étapes dans le manuel."
 
-#~ msgid "Desea reemplazar la iso del juego %s (%s)?"
-#~ msgstr "Souhaitez-vous remplacer le jeu %s (%s)?"
-
-#~ msgid "El juego ya esta metido, como %s (%s)"
-#~ msgstr "Ce jeu est déjà présent, en tant que %s (%s)"
-
-#~ msgid "Error obteniendo el Fabricando del HD"
-#~ msgstr "Erreur lors de l'obtention du fabricant du disque dur"
-
-#~ msgid "Fabricante"
-#~ msgstr "Fabricant"
-
-#~ msgid "No hay un numero suficiente de particiones validas, para realizar esta accion."
-#~ msgstr "Vous devez sélectionner une partition WBFS pour utiliser cette action"
-
-#~ msgid "Quieres borrar el juego con %s (%s)?"
-#~ msgstr "Supprimer le jeu %s (%s)?"
-
-#~ msgid ""
-#~ "Sergio Padrino <sergio.padrino@gmail.com>\n"
-#~ "Ricardo Marmolejo Garc&#xED;a <makiolo@gmail.com>"
+#~ msgid "No hay particiones WBFS, solo puede ver sus juegos acumuladas en %s"
 #~ msgstr ""
-#~ "Sergio Padrino <sergio.padrino@gmail.com>\n"
-#~ "Ricardo Marmolejo Garc&#xED;a <makiolo@gmail.com>"
+#~ "Pas de partition WBFS, connectez et appuyez sur Actualiser.\n"
+#~ "Dans ce mode, vous pouvez seulement :\n"
+#~ "- Voir la base de donnée de jeux accumulée par %s.\n"
+#~ "- Copier des jaquettes (habituellement vers une carte SD, pour un USB Loader)\n"
+#~ "- Lorsque vous supprimez un jeu dans ce mode, vous supprimez uniquement les jaquettes téléchargées"
 
-#~ msgid "Vuelvelo a intentar o mira en : http://www.theotherzone.com/wii/"
-#~ msgstr "Essayez encore ou visitez : http://www.theotherzone.com/wii/"
+#~ msgid "No hay particiones WBFS, conecte y refresque"
+#~ msgstr ""
+#~ "Pas de partition WBFS\n"
+#~ "- Connectez et appuyez sur Actualiser."
 
-#~ msgid "Ya tienes el disco-caratula %s"
-#~ msgstr "Vous avez la jaquette du disque %s"
+#~ msgid "https://launchpad.net/wiithon"
+#~ msgstr "https://launchpad.net/wiithon"
 
-#~ msgid "Ya tienes la caratula %s"
-#~ msgstr "Vous avez la jaquette %s"
+#~ msgid "en particion"
+#~ msgstr "dans la partition"
 
-#~ msgid "Consola"
-#~ msgstr "Console"
+#~ msgid "como"
+#~ msgstr "comme"
 
-#~ msgid "Mas informacion"
-#~ msgstr "Details"
+#~ msgid "a la particion"
+#~ msgstr "vers la partition"
 
-#~ msgid "Trabajos de fondo (0)"
-#~ msgstr "Batch work (0)"
+#~ msgid "Tamanio"
+#~ msgstr "Taille"
 
-#~ msgid "Trabajos intensos (0)"
-#~ msgstr "Intense work (0)"
+#~ msgid "TAMANIO"
+#~ msgstr "TAILLE"
+
+#~ msgid "Renombrar juego IDGAME"
+#~ msgstr "Renommer le jeu IDGAME"
+
+#~ msgid "OK, descargado %s.png"
+#~ msgstr "OK, téléchargement de %s.png"
+
+#~ msgid "No tienes instalado ningun juego en %s"
+#~ msgstr "Pas de jeux installés dans %s"
+
+#~ msgid "No se ha encontrado ninguna imagen ISO"
+#~ msgstr "Image ISO non trouvée"
+
+#~ msgid "No hay Juegos que borrar"
+#~ msgstr "Pas de jeu à supprimer"
+
+#~ msgid "No hay Juegos para renombrar"
+#~ msgstr "Pas de jeu à renommer"
+
+#~ msgid "No hay Juegos para extraer"
+#~ msgstr "Pas de jeu à extraire"
+
+#~ msgid "No hay Juegos para descargar una caratula"
+#~ msgstr "Pas de jeu : pas de téléchargement d'une jaquette"
+
+#~ msgid "No hay Juegos para descargar caratulas"
+#~ msgstr "Pas de jeu : pas de téléchargement de jaquettes"
+
+#~ msgid "ISO %s descomprimida y anadida correctamente"
+#~ msgstr "ISO %s décompressé et ajouté"
+
+#~ msgid "GNU GENERAL PUBLIC LICENSE Version 3"
+#~ msgstr "Licence publique générale GNU Version 3"
+
+#~ msgid "Extraer a ISO"
+#~ msgstr "Extraire ISO"
+
+#~ msgid "Extraer ISO de juego con IDGAME"
+#~ msgstr "Extraire ISO du jeu avec IDGAME"
+
+#~ msgid "Elige la particion WBFS con la que va ha trabajar : "
+#~ msgstr "Choisissez la partition WBFS sur laquelle travailler :"
+
+#~ msgid "ERROR, descargando %s.png"
+#~ msgstr "ERREUR lors du téléchargement %s.png"
+
+#~ msgid "ERROR no se puede descomrpimir por que reemplazaria el ISO : %s"
+#~ msgstr "ERREUR décompression impossible pour remplacer l'ISO : %s"
+
+#~ msgid "ERROR la ISO o la particion no existe"
+#~ msgstr "ERREUR l'ISO ou la partition n'existe pas"
+
+#~ msgid "ERROR el RAR %s no tenia ninguna ISO"
+#~ msgstr "RAR %s ne contient pas d'ISO"
+
+#~ msgid "ERROR anadiendo la ISO : %s (comprueba que sea una ISO de WII)"
+#~ msgstr "ERROR lors de l'ajout ISO : %s (vérifiez que c'est une ISO de jeu Wii)"
+
+#~ msgid "ERROR al descomrpimir el RAR : %s"
+#~ msgstr "ERREUR lors de la décompression du RAR : %s"
+
+#~ msgid "Descomprimido correctamente"
+#~ msgstr "Décompression réussie"
+
+#~ msgid "Buscando en %s ficheros RAR ... "
+#~ msgstr "Recherche %s fichiers RAR ..."
+
+#~ msgid "Buscando en %s Imagenes ISO ... "
+#~ msgstr "Recherche %s image ISO en cours ..."
+
+#~ msgid "Borrar juego con IDGAME"
+#~ msgstr "Supprimer jeu IDGAME"
+
+#~ msgid "Aniadir RAR con ISO dentro"
+#~ msgstr "Ajouter RAR contenant une ISO"
+
+#~ msgid "Aniadir ISO"
+#~ msgstr "Ajouter ISO"
+
+#~ msgid "***************** DESCARGAR DISCO %s ********************"
+#~ msgstr "************* TELECHARGEMENT DISQUE %s ****************"

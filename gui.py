@@ -272,7 +272,7 @@ class WiithonGUI(GtkBuilderWrapper):
                 self.wb_estadoTrabajo)
             
         # Animacion que define si hay actividad de la pool batch
-        self.animar = Animador( self.wb_estadoBatch , self.poolBash , self.poolTrabajo)
+        self.animar = Animador( self.wb_estadoBatch , self.poolBash , self.poolTrabajo )
         self.animar.setDaemon(True)
         self.animar.start()
                    
@@ -950,7 +950,6 @@ class WiithonGUI(GtkBuilderWrapper):
         
         particion = self.sel_parti.obj
         if particion != None:
-            
             self.info.arriba_usado = particion.usado
             self.info.arriba_total = particion.total
             self.info.arriba_num_juegos = session.query(Juego).filter('idParticion = %d' % particion.idParticion).count()
@@ -966,15 +965,18 @@ class WiithonGUI(GtkBuilderWrapper):
         sinCaratulas = 0
         sinDiscArt = 0
         if particion != None:
-            
             sql = util.decode("idParticion=='%d'" % (particion.idParticion))
-            for juego in session.query(Juego).filter(sql):
-                if juego.getJuegoWIITDB() is not None:
-                    numInfos += 1
-                if not juego.tieneCaratula:
-                    sinCaratulas += 1
-                if not juego.tieneDiscArt:
-                    sinDiscArt += 1
+            query = session.query(Juego).filter(sql).order_by('idParticion, lower(title)').group_by('idgame')
+        else:
+            query = session.query(Juego).order_by('idParticion, lower(title)').group_by('idgame')
+
+        for juego in query:
+            if juego.getJuegoWIITDB() is not None:
+                numInfos += 1
+            if not self.core.existeCaratula(juego.idgame):
+                sinCaratulas += 1
+            if not self.core.existeDisco(juego.idgame):
+                sinDiscArt += 1
                     
         self.info.abajo_num_juegos_wiitdb = numInfos
         self.info.abajo_juegos_sin_caratula = sinCaratulas
@@ -1088,12 +1090,6 @@ class WiithonGUI(GtkBuilderWrapper):
             self.renderEditableIDGAME.set_property("editable", False)
             self.renderEditableNombre.set_property("editable", False)
             self.renderEditableNombre.set_property("attributes", self.getEstilo_grisGrande())
-            
-            #ocultar algunas coasa
-            self.wb_label_numParticionesWBFS.hide()
-            self.wb_label_juegosConInfoWiiTDB.hide()
-            self.wb_label_juegosSinCaratula.hide()
-            self.wb_label_juegosSinDiscArt.hide()
 
             self.wb_vboxProgresoEspacio.hide()
             self.wb_labelEspacio.hide()
@@ -1103,12 +1099,6 @@ class WiithonGUI(GtkBuilderWrapper):
             self.renderEditableIDGAME.set_property("editable", True)
             self.renderEditableNombre.set_property("editable", True)
             self.renderEditableNombre.set_property("attributes", self.getEstilo_azulGrande())
-            
-            #mostrar algunas coasa
-            self.wb_label_numParticionesWBFS.show()
-            self.wb_label_juegosConInfoWiiTDB.show()
-            self.wb_label_juegosSinCaratula.show()
-            self.wb_label_juegosSinDiscArt.show()
             
             self.wb_vboxProgresoEspacio.show()
             self.wb_labelEspacio.show()
