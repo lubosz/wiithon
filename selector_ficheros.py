@@ -17,7 +17,7 @@ class SelectorFicheros(gtk.FileChooserDialog):
     def __init__(self, titulo, tipo = gtk.FILE_CHOOSER_ACTION_OPEN ):
         gtk.FileChooserDialog.__init__(self, titulo, None , tipo , botones)
         # Add location popup info
-        #self.set_extra_widget(gtk.Label(_("To enter location manually press <CTRL>+L")))
+        self.set_extra_widget(gtk.Label(titulo))
         self.set_default_response(gtk.RESPONSE_OK)
         self.set_local_only(True)
         

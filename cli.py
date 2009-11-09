@@ -399,7 +399,7 @@ class WiithonCLI:
             if (os.path.exists(SALIDA)):
                 print _("Ya hay una ISO en : %s") % (SALIDA)
                 respuesta = raw_input(_("Desea reemplazarla (S/N) : "))
-                if(respuesta.lower() == "s" or respuesta.lower() == "si"):
+                if(respuesta.lower() == _("s")):
                     reemplazada = False
                 else:
                     reemplazada = True

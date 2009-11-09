@@ -133,13 +133,6 @@ class WiithonGUI(GtkBuilderWrapper):
         #self.wb_principal.maximize()
         self.wb_principal.set_size_request(1000, -1)
         self.wb_principal.show()
-        
-        if config.REV != '':
-            self.wb_principal.set_title('Wiithon %s (rev %s)' % (config.VER, config.REV))
-            self.wb_aboutdialog.set_version("%s (rev %s)" % (config.VER, config.REV))
-        else:
-            self.wb_principal.set_title('Wiithon %s' % (config.VER))
-            self.wb_aboutdialog.set_version("%s" % (config.VER))
 
         # conexion señales de la toolbar
         self.wb_tb_refrescar_wbfs.connect('clicked' , self.on_tb_toolbar_clicked)
@@ -337,10 +330,10 @@ class WiithonGUI(GtkBuilderWrapper):
             # 2º Salir
 
             if (self.core.prefs.ADVERTENCIA_NO_WBFS and len(self.lParti) == 0):
-		if (util.check_gids()):
-                	self.alert("warning" , _("No hay particiones WBFS, se muestran los juegos de la ultima sesion."))
-		else:
-			self.alert("warning" , _("No puede acceder a las particiones porque el usuario que se puso en marcha wiithon no pertenecen al grupo \"disk\", se muestran los juegos de la ultima sesion."))
+                if util.check_gids():
+                    self.alert("warning" , _("No hay particiones WBFS, se muestran los juegos de la ultima sesion."))
+                else:
+                    self.alert("warning" , _("No puede acceder a las particiones porque el usuario que se puso en marcha wiithon no pertenecen al grupo \"disk\", se muestran los juegos de la ultima sesion."))
             elif (self.core.prefs.ADVERTENCIA_ACTUALIZAR_WIITDB and (len(self.lJuegos) > 0) and self.info.abajo_num_juegos_wiitdb == 0):
                 if (self.question("""
             <b>
@@ -960,12 +953,11 @@ class WiithonGUI(GtkBuilderWrapper):
         if config.DEBUG:
             print "refrescarInfoWiiTDBNumCaratulas"
         
-        particion = self.sel_parti.obj
         numInfos = 0
         sinCaratulas = 0
         sinDiscArt = 0
-        if particion != None:
-            sql = util.decode("idParticion=='%d'" % (particion.idParticion))
+        if not self.todo:
+            sql = util.decode("idParticion=='%d'" % (self.sel_parti.obj.idParticion))
             query = session.query(Juego).filter(sql).order_by('idParticion, lower(title)').group_by('idgame')
         else:
             query = session.query(Juego).order_by('idParticion, lower(title)').group_by('idgame')
@@ -1093,6 +1085,13 @@ class WiithonGUI(GtkBuilderWrapper):
 
             self.wb_vboxProgresoEspacio.hide()
             self.wb_labelEspacio.hide()
+
+            if config.REV != '':
+                self.wb_principal.set_title('Wiithon %s (rev %s)' % (config.VER, config.REV))
+                self.wb_aboutdialog.set_version("%s (rev %s)" % (config.VER, config.REV))
+            else:
+                self.wb_principal.set_title('Wiithon %s' % (config.VER))
+                self.wb_aboutdialog.set_version("%s" % (config.VER))            
         else:
             
             # poner la columna titulo activada
@@ -1102,6 +1101,13 @@ class WiithonGUI(GtkBuilderWrapper):
             
             self.wb_vboxProgresoEspacio.show()
             self.wb_labelEspacio.show()
+            
+            if config.REV != '':
+                self.wb_principal.set_title('Wiithon %s (rev %s) %s' % (config.VER, config.REV, self.sel_parti.obj.fabricante))
+                self.wb_aboutdialog.set_version("%s (rev %s)" % (config.VER, config.REV))
+            else:
+                self.wb_principal.set_title('Wiithon %s %s' % (config.VER, self.sel_parti.obj.fabricante))
+                self.wb_aboutdialog.set_version("%s" % (config.VER))
 
     def on_tv_partitions2_cursor_changed(self , treeview):
         
@@ -1544,7 +1550,6 @@ class WiithonGUI(GtkBuilderWrapper):
                             if not encontrado:
                                 i += 1
                         if encontrado:
-                            print "eliminar %s" % ficheroRAR
                             listaRAR.remove(ficheroRAR)
                     ##################################################################
 
