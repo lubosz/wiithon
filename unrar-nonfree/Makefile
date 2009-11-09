@@ -94,6 +94,8 @@ DESTDIR=/usr
 
 ##########################
 
+OUTPUT=wiithon_unrar
+
 COMPILE=$(CXX) $(CPPFLAGS) $(CXXFLAGS) $(DEFINES)
 LINK=$(CXX)
 
@@ -110,19 +112,19 @@ OBJECTS=rar.o strlist.o strfn.o pathfn.o savepos.o smallfn.o global.o file.o fil
 .cpp.o:
 	$(COMPILE) -D$(WHAT) -c $<
 
-all:	unrar
+all:	$(OUTPUT)
 
 install:	install-unrar
 
 uninstall:	uninstall-unrar
 
 clean:
-	@rm -f *.o *.bak *~ unrar
+	@rm -f *.o *.bak *~ $(OUTPUT)
 
-unrar:	$(OBJECTS) $(UNRAR_OBJ)
-	@rm -f unrar
-	$(LINK) -o unrar $(LDFLAGS) $(OBJECTS) $(UNRAR_OBJ) $(LIBS)	
-	$(STRIP) unrar
+$(OUTPUT):	$(OBJECTS) $(UNRAR_OBJ)
+	@rm -f $(OUTPUT)
+	$(LINK) -o $(OUTPUT) $(LDFLAGS) $(OBJECTS) $(UNRAR_OBJ) $(LIBS)	
+	$(STRIP) $(OUTPUT)
 
 sfx:	WHAT=SFX_MODULE
 sfx:	$(OBJECTS)
@@ -136,10 +138,10 @@ lib:	$(OBJECTS) $(LIB_OBJ)
 	$(LINK) -shared -o libunrar.so $(LDFLAGS) $(OBJECTS) $(LIB_OBJ)
 
 install-unrar:
-			install unrar $(DESTDIR)/bin
+			install $(OUTPUT) $(DESTDIR)/bin
 
 uninstall-unrar:
-			rm -f $(DESTDIR)/bin/unrar
+			rm -f $(DESTDIR)/bin/$(OUTPUT)
 
 install-lib:
 		install libunrar.so $(DESTDIR)/lib

@@ -33,15 +33,15 @@ WIITHON_FILES_RECURSOS = os.path.join(WIITHON_FILES , "recursos")
 WIITHON_FILES_RECURSOS_GLADE = os.path.join(WIITHON_FILES_RECURSOS , "glade")
 WIITHON_FILES_RECURSOS_IMAGENES = os.path.join(WIITHON_FILES_RECURSOS , "imagenes")
 WIITHON_FILES_RECURSOS_IMAGENES_ACCESORIO = os.path.join(WIITHON_FILES_RECURSOS_IMAGENES , "accesorio")
-print WIITHON_FILES_RECURSOS_IMAGENES_ACCESORIO
 
 HOME_WIITHON_CARATULAS = os.path.join(WIITHON_FILES_RECURSOS_IMAGENES , 'caratulas')
 HOME_WIITHON_DISCOS = os.path.join(WIITHON_FILES_RECURSOS_IMAGENES , 'discos')
 
 LOCALE = "/usr/share/locale/"
-WBFS_APP = os.path.join(WIITHON_FILES , "wiithon_wrapper")
 ICONO = "/usr/share/pixmaps/wiithon.png"
-UNRAR_APP = os.path.join(WIITHON_FILES , "unrar")
+WBFS_APP = os.path.join(WIITHON_FILES , "wiithon_wrapper")
+print WBFS_APP
+UNRAR_APP = os.path.join(WIITHON_FILES , "wiithon_unrar")
 
 APP = "wiithon"
 VER, REV = getVersionRevision()

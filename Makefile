@@ -55,14 +55,13 @@ lang: lang_enable lang_disable
 lang_enable: it es en fr de pt_BR es_CA
 lang_disable: da_DK fi_FI tr_TR ru_RU ko_KR sv_SE pt_PT da_DK nb_NO ja_JP
 
-compile: lang unrar-nonfree/unrar libwbfs_binding/wiithon_wrapper gen_rev_now
+compile: lang unrar-nonfree/wiithon_unrar libwbfs_binding/wiithon_wrapper gen_rev_now
 	@echo "=================================================================="
 	@echo "Compile OK"
 	@echo "=================================================================="
 
 making_directories:
 	@mkdir -p $(DESTDIR)/usr/share/pixmaps
-	@mkdir -p $(DESTDIR)/usr/lib
 	@mkdir -p $(DESTDIR)/usr/share/applications
 	@mkdir -p $(DESTDIR)/usr/share/doc/wiithon
 	@mkdir -p $(DESTDIR)$(PREFIX)/share/wiithon
@@ -80,8 +79,8 @@ recicled_old_wiithon: making_directories
 	
 copy_archives: making_directories
 
-	cp libwbfs_binding/wiithon_wrapper $(DESTDIR)$(PREFIX)/share/wiithon/
-	cp unrar-nonfree/unrar $(DESTDIR)$(PREFIX)/share/wiithon/
+	cp libwbfs_binding/wiithon_wrapper $(DESTDIR)$(PREFIX)/games/
+	cp unrar-nonfree/wiithon_unrar $(DESTDIR)$(PREFIX)/games/
 	
 	cp *.py $(DESTDIR)$(PREFIX)/share/wiithon
 
@@ -113,9 +112,9 @@ copy_archives: making_directories
 	
 set_permisses:
 	chmod 755 $(DESTDIR)$(PREFIX)/share/wiithon/*.py
+	chmod 755 $(DESTDIR)$(PREFIX)/games/wiithon_wrapper
+	chmod 755 $(DESTDIR)$(PREFIX)/games/wiithon_unrar
 	chmod 755 $(DESTDIR)$(PREFIX)/share/wiithon/*.sh
-	chmod 755 $(DESTDIR)$(PREFIX)/share/wiithon/wiithon_wrapper
-	chmod 755 $(DESTDIR)$(PREFIX)/share/wiithon/unrar
 
 	chmod 644 $(DESTDIR)$(PREFIX)/share/wiithon/recursos/glade/*.ui
 	chmod 644 $(DESTDIR)$(PREFIX)/share/wiithon/recursos/imagenes/*.png
@@ -129,8 +128,9 @@ set_permisses:
 	@echo "=================================================================="
 
 postinst:
-	-ln -sf $(DESTDIR)$(PREFIX)/share/wiithon/wiithon.py $(DESTDIR)$(PREFIX)/bin/wiithon
-	-ln -sf $(DESTDIR)$(PREFIX)/share/wiithon/wiithon_wrapper $(DESTDIR)$(PREFIX)/bin/wiithon_wrapper
+	-ln -sf $(DESTDIR)$(PREFIX)/share/wiithon/wiithon.py $(DESTDIR)$(PREFIX)/games/wiithon
+	-ln -sf $(DESTDIR)$(PREFIX)/games/wiithon_wrapper $(DESTDIR)$(PREFIX)/share/wiithon/wiithon_wrapper
+	-ln -sf $(DESTDIR)$(PREFIX)/games/wiithon_unrar $(DESTDIR)$(PREFIX)/share/wiithon/wiithon_unrar
 	
 	@echo "=================================================================="
 	@echo "If you want run witthon as normal user you must add it to 'disk' group."
@@ -233,15 +233,16 @@ clean_old_wiithon:
 	@echo "=================================================================="
 
 delete_archives_installation:
+	-$(RM) $(PREFIX)/games/wiithon_wrapper
+	-$(RM) $(PREFIX)/games/wiithon_unrar
 	-$(RM) $(PREFIX)/share/wiithon/*.py
 	-$(RM) $(PREFIX)/share/wiithon/*.pyc
-	-$(RM) $(PREFIX)/share/wiithon/wiithon_wrapper
-	-$(RM) $(PREFIX)/share/wiithon/unrar
 	-$(RM) $(PREFIX)/share/wiithon/*.sh
 	-$(RM) $(PREFIX)/share/wiithon/recursos/glade/*.ui
 	-$(RM) $(PREFIX)/share/wiithon/recursos/imagenes/*.png
 	-$(RM) $(PREFIX)/share/wiithon/recursos/imagenes/accesorio/*.jpg
 	-rmdir $(PREFIX)/share/wiithon/recursos/imagenes/accesorio/
+	-rmdir $(PREFIX)/share/wiithon/recursos/glade/
 	
 	-$(RM) /usr/share/locale/en/LC_MESSAGES/wiithon.mo
 	-$(RM) /usr/share/locale/es/LC_MESSAGES/wiithon.mo
@@ -270,8 +271,9 @@ delete_archives_installation:
 	-$(RM) /usr/share/pixmaps/wiithon.svg
 	
 postrm:
-	-$(RM) $(PREFIX)/bin/wiithon
-	-$(RM) $(PREFIX)/bin/wiithon_wrapper
+	-$(RM) $(PREFIX)/games/wiithon
+	-$(RM) $(PREFIX)/share/wiithon/wiithon_wrapper
+	-$(RM) $(PREFIX)/share/wiithon/wiithon_unrar
 	
 uninstall: clean_old_wiithon delete_archives_installation postrm
 	@echo "=================================================================="
@@ -326,7 +328,7 @@ clean_libwbfs_binding:
 libwbfs_binding/wiithon_wrapper: libwbfs_binding/*.c libwbfs_binding/libwbfs/*.c libwbfs_binding/libwbfs/*.h 
 	$(MAKE) -C libwbfs_binding	
 
-unrar-nonfree/unrar: unrar-nonfree/*.cpp unrar-nonfree/*.hpp
+unrar-nonfree/wiithon_unrar: unrar-nonfree/*.cpp unrar-nonfree/*.hpp
 	$(MAKE) -C unrar-nonfree
 
 gen_rev_now:

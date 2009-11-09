@@ -1,4 +1,5 @@
 #!/bin/sh -e
 
-test -L /usr/bin/wiithon && rm /usr/bin/wiithon
-test -L /usr/bin/wiithon_wrapper && rm /usr/bin/wiithon_wrapper
+test -L /usr/games/wiithon && rm /usr/games/wiithon
+test -L /usr/share/wiithon/wiithon_wrapper && rm /usr/share/wiithon/wiithon_wrapper
+test -L /usr/share/wiithon/wiithon_unrar && rm /usr/share/wiithon/wiithon_unrar

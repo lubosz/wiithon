@@ -41,7 +41,7 @@
                 <property name="tooltip_text" translatable="yes">Aniade un nuevo juego de Wii, a partir de una imagen ISO, que opcionalmente puede estar comprimida en RAR.</property>
                 <property name="is_important">True</property>
                 <property name="label" translatable="yes">Nuevo</property>
-                <property name="icon_name">document-new</property>
+                <property name="icon_name">list-add</property>
               </object>
               <packing>
                 <property name="expand">False</property>
@@ -67,7 +67,7 @@
                 <property name="has_tooltip">True</property>
                 <property name="tooltip_text" translatable="yes">Borra el juego seleccionado.</property>
                 <property name="label" translatable="yes">Borrar</property>
-                <property name="icon_name">edit-delete</property>
+                <property name="icon_name">list-remove</property>
               </object>
               <packing>
                 <property name="expand">False</property>
@@ -101,19 +101,7 @@
                 <property name="visible">True</property>
                 <property name="tooltip_text" translatable="yes">Cambia el nombre del juego seleccionado. Este es el nombre con el que apareceran en los loaders.</property>
                 <property name="label" translatable="yes">Renombrar</property>
-                <property name="icon_name">edit-select-all</property>
-              </object>
-              <packing>
-                <property name="expand">False</property>
-                <property name="homogeneous">True</property>
-              </packing>
-            </child>
-            <child>
-              <object class="GtkToolButton" id="tb_copiar_1_1">
-                <property name="visible">True</property>
-                <property name="tooltip_text" translatable="yes">Hace copias directas de juegos entre particiones WBFS.</property>
-                <property name="label" translatable="yes">Copia disco a disco</property>
-                <property name="icon_name">media-tape</property>
+                <property name="icon_name">insert-text</property>
               </object>
               <packing>
                 <property name="expand">False</property>
@@ -138,7 +126,19 @@
                 <property name="visible">True</property>
                 <property name="tooltip_text" translatable="yes">Copia en 2 carpetas de destino, todo el conjunto de caratulas y de disc-art que esta siendo amacenado en los directorios de trabajo de wiithon.</property>
                 <property name="label" translatable="yes">caratulas a SD</property>
-                <property name="icon_name">media-flash</property>
+                <property name="icon_name">insert-image</property>
+              </object>
+              <packing>
+                <property name="expand">False</property>
+                <property name="homogeneous">True</property>
+              </packing>
+            </child>
+            <child>
+              <object class="GtkToolButton" id="tb_copiar_1_1">
+                <property name="visible">True</property>
+                <property name="tooltip_text" translatable="yes">Hace copias directas de juegos entre particiones WBFS.</property>
+                <property name="label" translatable="yes">Copia disco a disco</property>
+                <property name="icon_name">edit-copy</property>
               </object>
               <packing>
                 <property name="expand">False</property>
@@ -183,7 +183,7 @@
                 <property name="visible">True</property>
                 <property name="tooltip_text" translatable="yes">Configura las preferencias.</property>
                 <property name="label" translatable="yes">Preferencias</property>
-                <property name="icon_name">document-properties</property>
+                <property name="icon_name">preferences-system</property>
               </object>
               <packing>
                 <property name="expand">False</property>
