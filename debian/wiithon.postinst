@@ -3,6 +3,18 @@
 #. /usr/share/debconf/confmodule
 #db_version 2.0
 
+chmod 755 /usr/share/wiithon/wiithon.py
+chmod 755 /usr/games/wiithon_wrapper
+chmod 755 /usr/games/wiithon_unrar
+chmod 755 /usr/share/wiithon/wiithon_autodetectar*.sh
+
+chmod 644 /usr/share/wiithon/recursos/glade/*.ui
+chmod 644 /usr/share/wiithon/recursos/imagenes/*.png
+chmod 644 /usr/share/applications/wiithon_usuario.desktop
+ 
+chmod 777 /usr/share/wiithon/recursos/imagenes/caratulas
+chmod 777 /usr/share/wiithon/recursos/imagenes/discos
+
 ln -sf /usr/share/wiithon/wiithon.py /usr/games/wiithon
 ln -sf /usr/games/wiithon_wrapper /usr/share/wiithon/wiithon_wrapper
 ln -sf /usr/games/wiithon_unrar /usr/share/wiithon/wiithon_unrar

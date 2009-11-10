@@ -2,13 +2,13 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: makiolo@gmail.com\n"
+"POT-Creation-Date: \n"
+"PO-Revision-Date: \n"
 "Last-Translator: Carlo Mandelli <camandel@gmail.com>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=iso-8859-1\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: \n"
-"PO-Revision-Date: \n"
 
 #: cli.py:44
 #, python-format
@@ -87,10 +87,7 @@ msgstr "Gioco %s cancellato con successo"
 msgid "ERROR borrando el juego"
 msgstr "ERRORE durante la cancellazione del gioco"
 
-#: cli.py:174
-#: gui.py:1316
-#: gui.py:1364
-#: gui.py:1471
+#: cli.py:174 gui.py:1316 gui.py:1364 gui.py:1471
 msgid "No has seleccionado ningun juego"
 msgstr "Nessun gioco selezionato"
 
@@ -140,8 +137,7 @@ msgstr "ERRORE durante il download di qualche copertina"
 msgid "Tarea finalizada"
 msgstr "Lavori ultimati"
 
-#: cli.py:237
-#: cli.py:258
+#: cli.py:237 cli.py:258
 msgid "Has conectado el disco duro? No se ha encontrado ninguna particion valida."
 msgstr "Hai collegato il tuo disco fisso? Non è stata trovata nessuna partizione WBFS"
 
@@ -150,8 +146,7 @@ msgstr "Hai collegato il tuo disco fisso? Non è stata trovata nessuna partizione
 msgid "Realmente, desea formatear a WBFS la particion %s? (S/N) "
 msgstr "Sei veramente sicuro di voler formattare in WBFS la partizione %s? (S/N)"
 
-#: cli.py:246
-#: cli.py:402
+#: cli.py:246 cli.py:402
 msgid "s"
 msgstr "s"
 
@@ -165,8 +160,7 @@ msgstr "%s è stato formattato correttamente"
 msgid "Error al formatear %s"
 msgstr "Errore nella formattazione di %s"
 
-#: cli.py:252
-#: cli.py:256
+#: cli.py:252 cli.py:256
 #, python-format
 msgid "No se ha formateado %s"
 msgstr "Non è stato formattato %s"
@@ -183,32 +177,27 @@ msgstr "Verificare che la partizione FAT32 sia stata montata."
 msgid "Pulse cualquier tecla para continuar ...\n"
 msgstr "Premi un tasto per continuare ... \n"
 
-#: cli.py:279
-#: trabajo.py:319
+#: cli.py:279 trabajo.py:319
 #, python-format
 msgid "El archivo RAR %s: No existe"
 msgstr "L'archivio RAR %s: non esiste"
 
-#: cli.py:283
-#: trabajo.py:323
+#: cli.py:283 trabajo.py:323
 #, python-format
 msgid "Error al descomprimrir. Ya existe %s. Si desea sobreescribirlo, modifique la opcion en preferencias."
 msgstr "Errore durante la decompressione: %s esiste già. Se vuoi sovrascriverlo modifica l'opzione nelle preferenze."
 
-#: cli.py:290
-#: trabajo.py:333
+#: cli.py:290 trabajo.py:333
 #, python-format
 msgid "Error: El archivo RAR %s no contiene ninguna ISO"
 msgstr "Errore: l'archivio RAR %s non contiene nessuna ISO"
 
-#: cli.py:296
-#: trabajo.py:339
+#: cli.py:296 trabajo.py:339
 #, python-format
 msgid "No hay 4.4GB libres para descomprimir el fichero RAR: %s en la ruta %s. Puede cambiar la ruta en preferencias."
 msgstr "Non ci sono 4.4GB liberi per decomprimere il file RAR %s in %s. Puoi cambiare il percorso nelle preferenze."
 
-#: cli.py:311
-#: trabajo.py:353
+#: cli.py:311 trabajo.py:353
 #, python-format
 msgid "Error al descomrpimir el RAR : %s"
 msgstr "Errore durante la decompressione del RAR: %s"
@@ -315,18 +304,15 @@ msgstr "Valore non consentito"
 msgid "El numero dado es incorrecto"
 msgstr "Il numero indicato è errato"
 
-#: cli.py:460
-#: cli.py:462
+#: cli.py:460 cli.py:462
 msgid "Caratula?"
 msgstr "Copertina?"
 
-#: cli.py:460
-#: cli.py:462
+#: cli.py:460 cli.py:462
 msgid "SIZE"
 msgstr "DIMENSIONE"
 
-#: cli.py:460
-#: cli.py:462
+#: cli.py:460 cli.py:462
 msgid "TITULO"
 msgstr "TITOLO"
 
@@ -334,8 +320,7 @@ msgstr "TITOLO"
 msgid "SI"
 msgstr "SI"
 
-#: cli.py:470
-#: wiitdb_schema.py:327
+#: cli.py:470 wiitdb_schema.py:327
 msgid "NO"
 msgstr "NO"
 
@@ -356,8 +341,7 @@ msgstr "Usato"
 msgid "Libre"
 msgstr "Liberi"
 
-#: cli.py:488
-#: gui.py:461
+#: cli.py:488 gui.py:461
 msgid "Total"
 msgstr "Totale"
 
@@ -394,8 +378,7 @@ msgstr ""
 "\t--covers:\tScarica e copia tutte le copertine nella cartella di lavoro corrente.\n"
 "\t--discs:\tScarica e copia tutte le disc-art nella cartella di lavoro corrente."
 
-#: core.py:163
-#: core.py:176
+#: core.py:163 core.py:176
 msgid "Copiando"
 msgstr "Sto copiando"
 
@@ -404,19 +387,16 @@ msgstr "Sto copiando"
 msgid "Descargando disco de %s ..."
 msgstr "Sto scaricando il gioco di %s ..."
 
-#: core.py:211
-#: core.py:229
+#: core.py:211 core.py:229
 #, python-format
 msgid "Descargando caratula de %s desde %s ..."
 msgstr "Sto scaricando la copertina di %s da %s ..."
 
-#: gui.py:78
-#: recursos/glade/wiithon.ui.h:54
+#: gui.py:78 recursos/glade/wiithon.ui.h:54
 msgid "Renombrar"
 msgstr "Rinomina"
 
-#: gui.py:81
-#: recursos/glade/wiithon.ui.h:31
+#: gui.py:81 recursos/glade/wiithon.ui.h:31
 msgid "Extraer"
 msgstr "Estrai"
 
@@ -508,12 +488,7 @@ msgstr "Partizione"
 msgid "+Info"
 msgstr "+info"
 
-#: gui.py:648
-#: gui.py:649
-#: gui.py:650
-#: gui.py:651
-#: gui.py:652
-#: wiitdb_schema.py:369
+#: gui.py:648 gui.py:649 gui.py:650 gui.py:651 gui.py:652 wiitdb_schema.py:369
 msgid "??"
 msgstr "??"
 
@@ -530,8 +505,7 @@ msgstr ""
 "\n"
 "Sei veramente sicuro di rinominare l'IDGAME?"
 
-#: gui.py:680
-#: gui.py:701
+#: gui.py:680 gui.py:701
 msgid "Error renombrando"
 msgstr "Errore durante la rinomina"
 
@@ -609,14 +583,11 @@ msgstr "Modalit on-line: "
 msgid "Clasificacion parental: "
 msgstr "Controllo parentale: "
 
-#: gui.py:1261
-#: gui.py:1277
-#: gui.py:1309
+#: gui.py:1261 gui.py:1277 gui.py:1309
 msgid "DESCRIPCION: "
 msgstr "DESCRIZIONE: "
 
-#: gui.py:1277
-#: gui.py:1309
+#: gui.py:1277 gui.py:1309
 msgid "Sin descripcion."
 msgstr "Senza descrizione."
 
@@ -637,8 +608,7 @@ msgstr "Vuoi copiare il gioco %s sulla partizione %s?"
 msgid "Se van a copiar los siguientes juegos a"
 msgstr "Saranno copiati i seguenti giochi"
 
-#: gui.py:1383
-#: gui.py:1391
+#: gui.py:1383 gui.py:1391
 msgid "juegos mas"
 msgstr "più giochi"
 
@@ -669,9 +639,7 @@ msgstr "Vuoi cancellare il gioco: %s?"
 msgid "Error borrando el juego %s"
 msgstr "Errore durante la cancellazione del gioco %s"
 
-#: gui.py:1437
-#: gui.py:1482
-#: gui.py:1571
+#: gui.py:1437 gui.py:1482 gui.py:1571
 msgid "No has seleccionado ninguna particion"
 msgstr "Nessuna partizione selezionata"
 
@@ -1027,9 +995,7 @@ msgstr "Lingua secondaria per le descrizioni"
 msgid "Proveedor de caratulas"
 msgstr "Fornitore delle copertine"
 
-#: preferencias.py:160
-#: preferencias.py:196
-#: preferencias.py:214
+#: preferencias.py:160 preferencias.py:196 preferencias.py:214
 #: preferencias.py:233
 msgid "Por defecto"
 msgstr "Default"
@@ -1282,9 +1248,7 @@ msgstr "Immagine Wii (ISO o RAR)"
 msgid "Falta la imagen %s"
 msgstr "Nessuna immagine %s"
 
-#: trabajo.py:194
-#: trabajo.py:260
-#: trabajo.py:316
+#: trabajo.py:194 trabajo.py:260 trabajo.py:316
 #, python-format
 msgid "La particion %s: Ya no existe"
 msgstr "La partizione %s: non esiste"
@@ -1435,10 +1399,7 @@ msgstr "%d giocatori"
 msgid "Error descargando la informacion WiiTDB desde %s"
 msgstr "Errore durante il download delle informazioni WiiTDB da %s"
 
-#: wiitdb_xml.py:139
-#: wiitdb_xml.py:355
-#: wiitdb_xml.py:358
-#: wiitdb_xml.py:392
+#: wiitdb_xml.py:139 wiitdb_xml.py:355 wiitdb_xml.py:358 wiitdb_xml.py:392
 msgid "XML invalido"
 msgstr "XML non valido"
 
@@ -1461,4 +1422,3 @@ msgstr "Programma eseguito con parametri errati."
 #: wiithon.py:86
 msgid "Interrumpido por el usuario"
 msgstr "Interrotto dall'utente"
-

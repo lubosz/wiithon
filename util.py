@@ -410,7 +410,7 @@ def setLanguage(locale = 'default'):
         lang = gettext.translation(config.APP, languages=[locale])
         lang.install()
 
-def configurarLenguaje():
+def configurarLenguaje(inicial = 'default'):
 
     locale.setlocale(locale.LC_ALL, '')
 
@@ -418,7 +418,7 @@ def configurarLenguaje():
         module.bindtextdomain(config.APP,config.LOCALE)
         module.textdomain(config.APP)
         
-    setLanguage('default')
+    setLanguage(inicial)
 
 def remove_last_separator(text):
     text=text.rstrip(', ') 
@@ -454,16 +454,15 @@ def esImagen(fichero):
 
 ## check user group and permissions
 def check_gids():
-        file=open("/etc/group","r")
-        for line in file:
-                if "disk:x:" in line:
-                        group=line.rsplit(":");
-                        break;
-        file.close;
+    file=open("/etc/group","r")
+    for line in file:
+        if "disk:x:" in line:
+            group=line.rsplit(":")
+            break
+    file.close()
 
-        print os.getgroups();
+    if config.DEBUG:
+        print os.getgroups()
+        print int(group[2])
 
-        if (int(group[2]) in os.getgroups()):
-                return True
-        else:
-                return False
+    return (int(group[2]) in os.getgroups())

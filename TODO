@@ -1,3 +1,26 @@
 - poner ciclo tambien para el disc-art
 - poner info wiitdb bloqueada en lugar de "No has seleccionado ningún juego"
 - indicar en informacion de juego que no has seleccionado ningun juego
+- Purgar debería borrar las caratulas: "make purge", Pero no funciona:
+        makiolo@makiolo-portatil:~/bazaar/wiithon/wiithon-1.12$ sudo apt-get --purge remove wiithon
+        Leyendo lista de paquetes... Hecho
+        Creando árbol de dependencias       
+        Leyendo la información de estado... Hecho
+        Se instalaron de forma automática los siguientes paquetes y ya no son necesarios.
+          ubuntuone-client python-pyinotify python-protobuf python-ubuntuone-storageprotocol protobuf-compiler python-configglue python-ubuntuone-client
+        Utilice «apt-get autoremove» para eliminarlos.
+        Los siguientes paquetes se ELIMINARÁN:
+          wiithon*
+        0 actualizados, 0 se instalarán, 1 para eliminar y 40 no actualizados.
+        Se liberarán 2458kB después de esta operación.
+        ¿Desea continuar [S/n]? s
+        (Leyendo la base de datos ...  00%
+        243422 ficheros y directorios instalados actualmente.)
+        Desinstalando wiithon ...
+        Purgando ficheros de configuración de wiithon ...
+        dpkg: error al procesar wiithon (--purge):
+------> el subproceso script post-removal instalado devolvió el código de salida de error 1
+        Procesando disparadores para desktop-file-utils ...
+        Se encontraron errores al procesar:
+         wiithon
+        E: Sub-process /usr/bin/dpkg returned an error code (1)

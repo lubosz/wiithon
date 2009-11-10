@@ -111,10 +111,10 @@ copy_archives: making_directories
 	@echo "=================================================================="
 	
 set_permisses:
-	chmod 755 $(DESTDIR)$(PREFIX)/share/wiithon/*.py
+	chmod 755 $(DESTDIR)$(PREFIX)/share/wiithon/wiithon.py
 	chmod 755 $(DESTDIR)$(PREFIX)/games/wiithon_wrapper
 	chmod 755 $(DESTDIR)$(PREFIX)/games/wiithon_unrar
-	chmod 755 $(DESTDIR)$(PREFIX)/share/wiithon/*.sh
+	chmod 755 $(DESTDIR)$(PREFIX)/share/wiithon/wiithon_autodetectar*.sh
 
 	chmod 644 $(DESTDIR)$(PREFIX)/share/wiithon/recursos/glade/*.ui
 	chmod 644 $(DESTDIR)$(PREFIX)/share/wiithon/recursos/imagenes/*.png
@@ -127,7 +127,7 @@ set_permisses:
 	@echo "Permisses OK"
 	@echo "=================================================================="
 
-postinst:
+postinst: set_permisses
 	-ln -sf $(DESTDIR)$(PREFIX)/share/wiithon/wiithon.py $(DESTDIR)$(PREFIX)/games/wiithon
 	-ln -sf $(DESTDIR)$(PREFIX)/games/wiithon_wrapper $(DESTDIR)$(PREFIX)/share/wiithon/wiithon_wrapper
 	-ln -sf $(DESTDIR)$(PREFIX)/games/wiithon_unrar $(DESTDIR)$(PREFIX)/share/wiithon/wiithon_unrar
@@ -137,7 +137,7 @@ postinst:
 	@echo "Type: \"sudo gpasswd -a <user> disk\" and restart your GNOME/KDE session."
 	@echo "=================================================================="
 
-install: recicled_old_wiithon clean_old_wiithon copy_archives set_permisses postinst
+install: recicled_old_wiithon clean_old_wiithon copy_archives postinst
 	@echo "=================================================================="
 	@echo "Wiithon Install OK"
 	@echo "=================================================================="
@@ -148,7 +148,7 @@ permisos:
 	@echo "Restart GNOME / KDE for it has effect."
 	@echo "=================================================================="
 
-install4ppa: copy_archives set_permisses
+install4ppa: copy_archives
 	@echo "=================================================================="
 	@echo "Wiithon Install for PPA OK"
 	@echo "=================================================================="
@@ -163,6 +163,9 @@ deb: generate_changelog
 
 deb_sign: deb
 	gpg --armor --sign --detach-sig ../wiithon_$(VERSION_ACTUAL)_i386.deb
+	
+deb_and_install: deb_sign
+	sudo dpkg -i ../wiithon_$(VERSION_ACTUAL)_i386.deb
 
 ppa-inc: generate_changelog
 	debuild -S -sd -k0xB8F0176A -I -i --lintian-opts -Ivi
@@ -287,7 +290,6 @@ purge: uninstall
 	-rmdir $(PREFIX)/share/wiithon/recursos/imagenes/caratulas
 	-rmdir $(PREFIX)/share/wiithon/recursos/imagenes/discos
 	-rmdir $(PREFIX)/share/wiithon/recursos/imagenes
-	-rmdir $(PREFIX)/share/wiithon/recursos/glade
 	-rmdir $(PREFIX)/share/wiithon/recursos
 	-rmdir $(PREFIX)/share/wiithon
 	@echo "=================================================================="
