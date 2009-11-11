@@ -997,7 +997,7 @@ msgstr "Fornitore delle copertine"
 
 #: preferencias.py:132
 msgid "Proveedor de discos"
-msgstr ""
+msgstr "Fornitore delle disc-art"
 
 #: preferencias.py:175 preferencias.py:211 preferencias.py:229
 #: preferencias.py:248
