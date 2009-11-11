@@ -20,8 +20,9 @@ ln -sf /usr/games/wiithon_wrapper /usr/share/wiithon/wiithon_wrapper
 ln -sf /usr/games/wiithon_unrar /usr/share/wiithon/wiithon_unrar
 
 echo
-echo "If you want run witthon as normal user you must add it to 'disk' group."
+echo "If you want run wiithon as normal user you must add it to 'disk' group."
 echo "Type: \"sudo gpasswd -a \$USER disk\" and restart your GNOME/KDE session."
+echo
 
 #db_input high wiithon/group-disk || true
 #db_go || true
