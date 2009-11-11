@@ -222,7 +222,7 @@ class WiithonGUI(GtkBuilderWrapper):
                                     None ,
                                     None ,
                                     None ,
-                                    None
+                                    self.callback_termina_importar
                                     )
         self.poolBash.setDaemon(True)
         self.poolBash.start()
@@ -974,11 +974,17 @@ class WiithonGUI(GtkBuilderWrapper):
         if config.DEBUG:
             print "refrescarNumCaratulas"        
         
-        total_distintos = 0
-        for j in session.query(Juego).group_by('idgame'):
-            total_distintos += 1
-        self.info.abajo_juegos_sin_caratula = total_distintos - util.num_files_in_folder(config.HOME_WIITHON_CARATULAS)
-        self.info.abajo_juegos_sin_discart = total_distintos - util.num_files_in_folder(config.HOME_WIITHON_DISCOS)
+        juegos_sin_caratula = 0
+        juegos_sin_disc_art = 0
+        
+        for juego in self.lJuegos:
+            if not self.core.existeCaratula(juego.idgame):
+                juegos_sin_caratula += 1
+            if not self.core.existeDisco(juego.idgame):
+                juegos_sin_disc_art += 1
+        
+        self.info.abajo_juegos_sin_caratula = juegos_sin_caratula
+        self.info.abajo_juegos_sin_discart = juegos_sin_disc_art
 
     def refrescarTareasPendientes(self):
         
@@ -1665,6 +1671,7 @@ class WiithonGUI(GtkBuilderWrapper):
                         ),
                         xml = True) ):
                 self.poolTrabajo.nuevoTrabajoActualizarWiiTDB(self.core.prefs.URL_ZIP_WIITDB)
+                print self.core.prefs.URL_ZIP_WIITDB
         else:
             self.alert("warning" , _("Ya estas descargando la informacion WiiTDB ..."))
         
@@ -1677,6 +1684,8 @@ class WiithonGUI(GtkBuilderWrapper):
         self.companies = 0
         self.actualizarLabel(_("Empezando a obtener datos de juegos desde WiiTDB"))
         self.actualizarFraccion(0.0)
+        
+        # evitar usar preferencias mientras mete datos
         self.wiitdb_mutex = True
         self.wb_prefs.hide()
 
@@ -1717,14 +1726,14 @@ class WiithonGUI(GtkBuilderWrapper):
         self.actualizarLabel(_("Empezando a descomprimir la informacion WiiTDB"))
         self.actualizarFraccion(0.99)
         #self.actualizarOrientation(gtk.PROGRESS_LEFT_TO_RIGHT)
-        
-        
+
     def callback_termina_importar(self, xml, todos):
-        self.wiitdb_mutex = False
-        self.actualizarLabel(_("Finalizada satisfactoriamente la importacion de datos desde WiiTDB"))
-        self.actualizarFraccion(1.0)
-        gobject.idle_add(self.refrescarModeloJuegos, self.lJuegos)
-        gobject.idle_add(self.refrescarInfoWiiTDB)
+        if not todos:
+            self.wiitdb_mutex = False
+            self.actualizarLabel(_("Finalizada satisfactoriamente la importacion de datos desde WiiTDB"))
+            self.actualizarFraccion(1.0)
+            gobject.idle_add(self.refrescarModeloJuegos, self.lJuegos)
+            gobject.idle_add(self.refrescarInfoWiiTDB)
 
 ############# METODOS que modifican el GUI, si se llaman desde hilos, se hacen con gobject
 
@@ -1750,6 +1759,7 @@ class WiithonGUI(GtkBuilderWrapper):
         self.wb_progreso1.set_fraction( fraccion )
 
     def termina_trabajo_anadir(self, fichero, DEVICE):
+        
         # leer IDGAME del juego añadido
         IDGAME = util.getMagicISO(fichero)
 
@@ -1763,6 +1773,12 @@ class WiithonGUI(GtkBuilderWrapper):
         # seleccionamos la particion y la fila del juego añadido       
         self.seleccionarFilaConValor(self.wb_tv_partitions, 0 , juegoNuevo.particion.device)
         self.seleccionarFilaConValor(self.wb_tv_games, 0 , juegoNuevo.idgame)
+        
+        # refrescar num juegos con info wiitdb
+        self.refrescarInfoWiiTDB()
+        
+        # pregunta arreglar nombre
+        # PENDIENTE
 
     def termina_trabajo_copiar(self, juego , particion):
 
@@ -1903,7 +1919,6 @@ class WiithonGUI(GtkBuilderWrapper):
 
     def callback_termina_trabajo_descargar_caratula(self, trabajo, idgame):
         if trabajo.exito:
-            #self.info.abajo_juegos_sin_caratula -= 1
             if idgame == self.sel_juego.obj.idgame:
                 gobject.idle_add( self.ponerCaratula , idgame , self.wb_img_caratula1)
         else:
@@ -1913,7 +1928,6 @@ class WiithonGUI(GtkBuilderWrapper):
 
     def callback_termina_trabajo_descargar_disco(self, trabajo, idgame):
         if trabajo.exito:
-            #self.info.abajo_juegos_sin_discart -= 1
             if idgame == self.sel_juego.obj.idgame:
                 gobject.idle_add( self.ponerDisco , idgame , self.wb_img_disco1)
         else:

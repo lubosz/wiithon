@@ -160,8 +160,11 @@ class WiithonCLI:
                             elif accion == RENOMBRAR:
                                 print _("Renombrar el juego %s.") % (juego)
                                 NUEVO_NOMBRE = raw_input(_("Escriba el nuevo nombre : "))
-                                if ( self.core.renombrarNOMBRE( juego , NUEVO_NOMBRE ) ):
-                                    print _("ISO renombrada correctamente a %s") % NUEVO_NOMBRE
+                                if len(NUEVO_NOMBRE) > 0:
+                                    if ( self.core.renombrarNOMBRE( juego , NUEVO_NOMBRE ) ):
+                                        print _("ISO renombrada correctamente a %s") % NUEVO_NOMBRE
+                                    else:
+                                        print _("ERROR al renombrar")
                                 else:
                                     print _("ERROR al renombrar")
                             elif accion == BORRAR:

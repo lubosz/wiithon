@@ -163,8 +163,11 @@ deb: generate_changelog
 
 deb_sign: deb
 	gpg --armor --sign --detach-sig ../wiithon_$(VERSION_ACTUAL)_i386.deb
-	
+
 deb_and_install: deb_sign
+	sudo dpkg -i ../wiithon_$(VERSION_ACTUAL)_i386.deb
+
+deb_only_install:
 	sudo dpkg -i ../wiithon_$(VERSION_ACTUAL)_i386.deb
 
 ppa-inc: generate_changelog
@@ -181,6 +184,8 @@ clean_old_wiithon:
 
 	-@$(RM) -R ~/.wiithon/caratulas/
 	-@$(RM) -R ~/.wiithon/discos/
+	-@$(RM) ~/.wiithon/bdd/juegos.db
+	-@$(RM) ~/.wiithon/bdd/wiithon1.*.db
 	-@$(RM) ~/.wiithon/bdd/juegos.db
 	-@$(RM) ~/.wiithon_acuerdo
 	-@$(RM) /usr/local/share/wiithon/.acuerdo
@@ -272,13 +277,13 @@ delete_archives_installation:
 
 	-$(RM) /usr/share/applications/wiithon_usuario.desktop
 	
-	-$(RM) /usr/share/doc/wiithon/*
-	-rmdir /usr/share/doc/wiithon
-	
 	-$(RM) /usr/share/pixmaps/wiithon.png
 	-$(RM) /usr/share/pixmaps/wiithon.svg
 	
 postrm:
+	-$(RM) /usr/share/doc/wiithon/*
+	-rmdir /usr/share/doc/wiithon
+
 	-$(RM) $(PREFIX)/games/wiithon
 	-$(RM) $(PREFIX)/share/wiithon/wiithon_wrapper
 	-$(RM) $(PREFIX)/share/wiithon/wiithon_unrar

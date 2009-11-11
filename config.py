@@ -44,12 +44,13 @@ UNRAR_APP = os.path.join(WIITHON_FILES , "wiithon_unrar")
 
 APP = "wiithon"
 VER, REV = getVersionRevision()
+VER_BDD = 1
 HOME = os.environ['HOME']
 HOME_WIITHON = os.path.join(HOME , '.%s' % APP)
 HOME_WIITHON_BDD = os.path.join(HOME_WIITHON , 'bdd')
 HOME_WIITHON_LOGS = os.path.join(HOME_WIITHON , 'logs')
 HOME_WIITHON_LOGS_PROCESO = os.path.join(HOME_WIITHON_LOGS , "proceso.log")
-HOME_WIITHON_BDD_BDD = os.path.join(HOME_WIITHON_BDD, '%s%s.db' % (APP, VER))
+HOME_WIITHON_BDD_BDD = os.path.join(HOME_WIITHON_BDD, '%s_db_ver-%d.db' % (APP, VER_BDD))
 
 URI_ENGINE = 'sqlite:///%s' % HOME_WIITHON_BDD_BDD
 

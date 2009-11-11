@@ -141,10 +141,19 @@ class WiithonCORE:
         salida = util.call_out_screen(comando)
         return salida
 
-    def existeDisco(self , IDGAME):
+    # Nos dice si existe la caratula del juego "IDGAME"
+    def existeCaratula(self , IDGAME, borrar_si_no_es_png = False):
+        ruta = self.getRutaCaratula(IDGAME)
+        existe = (os.path.exists( ruta ))
+        if existe and borrar_si_no_es_png and not util.esPNG(ruta):
+            os.remove(ruta)
+            existe = False
+        return existe
+
+    def existeDisco(self , IDGAME, borrar_si_no_es_png = False):
         ruta = self.getRutaDisco(IDGAME)
         existe = (os.path.exists( ruta ))
-        if existe and not util.esPNG(ruta):
+        if existe and borrar_si_no_es_png and not util.esPNG(ruta):
             os.remove(ruta)
             existe = False
         return existe
@@ -190,15 +199,6 @@ class WiithonCORE:
         comando = "%s -p %s clonar %s %s" % (config.WBFS_APP , juego.particion.device , juego.idgame , parti_destino.device)
         salida = util.call_out_file(comando)
         return salida
-
-    # Nos dice si existe la caratula del juego "IDGAME"
-    def existeCaratula(self , IDGAME, borrar_si_no_es_png = False):
-        ruta = self.getRutaCaratula(IDGAME)
-        existe = (os.path.exists( ruta ))
-        if existe and borrar_si_no_es_png and not util.esPNG(ruta):
-            os.remove(ruta)
-            existe = False
-        return existe
             
     def descargarDisco(self , IDGAME, proveedores, ancho, alto):
         destino = self.getRutaDisco(IDGAME)
