@@ -174,6 +174,11 @@ ppa-upload: ppa-inc
 	dput ppa:wii.sceners.linux/wiithon ../wiithon_$(VERSION_ACTUAL)_source.changes
 
 clean_old_wiithon: 
+
+	@echo "=================================================================="
+	@echo "Ignore next errors"
+	@echo "=================================================================="
+
 	-@$(RM) -R ~/.wiithon/caratulas/
 	-@$(RM) -R ~/.wiithon/discos/
 	-@$(RM) ~/.wiithon/bdd/juegos.db

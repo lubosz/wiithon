@@ -13,6 +13,7 @@ import re
 import locale
 import gettext
 import statvfs
+import random
 from gettext import gettext as _
 
 from sqlalchemy.orm import scoped_session, sessionmaker
@@ -221,6 +222,9 @@ Content-Type: image/png
 '''
 
 class ErrorDescargando(Exception):
+    pass
+
+class YaEstaDescargado(Exception):
     pass
     
 def descargar(url, destino):
@@ -466,3 +470,9 @@ def check_gids():
         print int(group[2])
 
     return (int(group[2]) in os.getgroups())
+
+def rand(min, max):
+    return random.randint(min, max)
+
+def num_files_in_folder(folder):
+    return len(os.listdir(folder))

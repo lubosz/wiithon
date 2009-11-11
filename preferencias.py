@@ -103,18 +103,33 @@ class Preferencias:
         cycle_covers = ""
         cycle_covers += "http://www.wiiboxart.com/pal/%s.png\n"
         cycle_covers += "http://wiitdb.com/wiitdb/artwork/cover/EN/%s.png\n"
+        cycle_covers += "http://wiiboxart.t35.com/wiiboxart/images/2d/%s.png\n"
+        cycle_covers += "http://boxart.rowdyruff.net/flat/%s.png\n"
         cycle_covers += "http://www.wiiboxart.com/ntsc/%s.png\n"
         cycle_covers += "http://www.wiiboxart.com/ntscj/%s.png\n"
         cycle_covers += "http://wiitdb.com/wiitdb/artwork/cover/ES/%s.png\n"
+        cycle_covers += "http://wiiboxart.t35.com/wiiboxart/images/3d/%s.png\n"
         cycle_covers += "http://wiitdb.com/wiitdb/artwork/cover3D/ES/%s.png\n"
         cycle_covers += "http://wiitdb.com/wiitdb/artwork/cover3D/EN/%s.png\n"
         cycle_covers += "http://wiitdb.com/wiitdb/artwork/coverfull/FR/%s.png\n"
         cycle_covers += "http://www.wiiboxart.com/3d/160/225/%s.png\n"
+        cycle_covers += "http://wiiboxart.t35.com/wiiboxart/images/widescreen/%s.png\n"
         cycle_covers += "http://www.wiiboxart.com/widescreen/pal/%s.png\n"
         cycle_covers += "http://www.wiiboxart.com/widescreen/ntsc/%s.png\n"
         cycle_covers += "http://www.wiiboxart.com/widescreen/ntscj/%s.png\n"
         cycle_covers += "http://www.wiiboxart.com/fullcover/%s.png\n"
+        cycle_covers += "http://boxart.rowdyruff.net/3d/%s.png\n"
+        cycle_covers += "http://wiiboxart.t35.com/wiiboxart/images/full/%s.png\n"
         self.iniciarPreferencia('memo', 'PROVIDER_COVERS', defecto=cycle_covers, mostrar=cargarWidget, vbox=prefs_vbox_caratulas, label=_('Proveedor de caratulas'))
+
+        cycle_discs = ""
+        cycle_discs += "http://www.wiiboxart.com/diskart/160/160/%.3s.png\n"
+        cycle_discs += "http://wiiboxart.t35.com/wiiboxart/images/disc/hidef/%s.png\n"
+        cycle_discs += "http://wiiboxart.t35.com/wiiboxart/images/disc/standard/%s.png\n"
+        cycle_discs += "http://wiiboxart.t35.com/wiiboxart/images/disc/regional/%s.png\n"
+        cycle_discs += "http://www.wiiboxart.com/discs/%.3s.png\n"
+        cycle_discs += "http://boxart.rowdyruff.net/fulldisc/\n"
+        self.iniciarPreferencia('memo', 'PROVIDER_DISCS', defecto=cycle_discs, mostrar=cargarWidget, vbox=prefs_vbox_caratulas, label=_('Proveedor de discos'))
 
     # indicar el vbox que inicia la preferencia
     def iniciarPreferencia(self, tipo, name, defecto = '', mostrar = False, vbox = None, label = '', datos_lista = None):
@@ -152,7 +167,7 @@ class Preferencias:
                 textview.show()                
                 sw1 = gtk.ScrolledWindow()
                 sw1.set_policy(gtk.POLICY_AUTOMATIC, gtk.POLICY_AUTOMATIC)
-                sw1.set_size_request(-1, 140)
+                sw1.set_size_request(-1, 120)
                 sw1.set_shadow_type(gtk.SHADOW_IN)
                 sw1.add(textview)
                 sw1.show()

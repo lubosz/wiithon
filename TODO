@@ -1,4 +1,3 @@
-- poner ciclo tambien para el disc-art
 - poner info wiitdb bloqueada en lugar de "No has seleccionado ningún juego"
 - indicar en informacion de juego que no has seleccionado ningun juego
 - Purgar debería borrar las caratulas: "make purge", Pero no funciona:

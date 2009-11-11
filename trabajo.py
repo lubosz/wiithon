@@ -92,6 +92,7 @@ class PoolTrabajo(Pool , Thread):
         self.WIDTH_COVERS = self.core.prefs.WIDTH_COVERS
         self.HEIGHT_COVERS = self.core.prefs.HEIGHT_COVERS
         self.ruta_extraer_rar = self.core.prefs.ruta_extraer_rar
+        self.PROVIDER_DISCS = self.core.prefs.PROVIDER_DISCS
         self.WIDTH_DISCS = self.core.prefs.WIDTH_DISCS
         self.HEIGHT_DISCS = self.core.prefs.HEIGHT_DISCS
         self.rar_overwrite_iso = self.core.prefs.rar_overwrite_iso
@@ -145,17 +146,24 @@ class PoolTrabajo(Pool , Thread):
         elif( trabajo.tipo == DESCARGA_CARATULA ):
 
             idgame = trabajo.origen
-            trabajo.exito = self.descargarCaratula(core , idgame)
+            try:
+                trabajo.exito = self.descargarCaratula(core , idgame)
 
-            if self.callback_termina_trabajo_descargar_caratula:
-                self.callback_termina_trabajo_descargar_caratula(trabajo, idgame)
+                if self.callback_termina_trabajo_descargar_caratula:
+                    self.callback_termina_trabajo_descargar_caratula(trabajo, idgame)
+            except util.YaEstaDescargado:
+                pass
 
         elif( trabajo.tipo == DESCARGA_DISCO ):
-            idgame = trabajo.origen
-            trabajo.exito = self.descargarDisco(core , idgame)
 
-            if self.callback_termina_trabajo_descargar_disco:
-                self.callback_termina_trabajo_descargar_disco(trabajo, idgame)
+            idgame = trabajo.origen
+            try:
+                trabajo.exito = self.descargarDisco(core , idgame)
+
+                if self.callback_termina_trabajo_descargar_disco:
+                    self.callback_termina_trabajo_descargar_disco(trabajo, idgame)
+            except util.YaEstaDescargado:
+                pass
 
         elif( trabajo.tipo == COPIAR_CARATULA ):
             juego = trabajo.origen
@@ -244,7 +252,7 @@ class PoolTrabajo(Pool , Thread):
         return core.descargarCaratula(idgame, self.PROVIDER_COVERS, self.WIDTH_COVERS, self.HEIGHT_COVERS)
 
     def descargarDisco(self , core , idgame):
-        return core.descargarDisco(idgame, self.WIDTH_DISCS, self.HEIGHT_DISCS)
+        return core.descargarDisco(idgame, self.PROVIDER_DISCS, self.WIDTH_DISCS, self.HEIGHT_DISCS)
 
     def copiarCaratula(self , core , juego, destino):
         return core.copiarCaratula(juego, destino)

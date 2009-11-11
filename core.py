@@ -110,7 +110,7 @@ class WiithonCORE:
             return juego
         return None
 
-    def getInfoJuego(self, DEVICE, IDGAME):
+    def new_game_from_HDD(self, DEVICE, IDGAME):
         particion = self.getParticion(DEVICE)
         if particion != None:
             comando = "%s -p %s ls %s" % (config.WBFS_APP, DEVICE, IDGAME)
@@ -192,49 +192,52 @@ class WiithonCORE:
         return salida
 
     # Nos dice si existe la caratula del juego "IDGAME"
-    def existeCaratula(self , IDGAME):
+    def existeCaratula(self , IDGAME, borrar_si_no_es_png = False):
         ruta = self.getRutaCaratula(IDGAME)
         existe = (os.path.exists( ruta ))
-        if existe and not util.esPNG(ruta):
+        if existe and borrar_si_no_es_png and not util.esPNG(ruta):
             os.remove(ruta)
             existe = False
         return existe
             
-    def descargarDisco(self , IDGAME, ancho, alto):
-        if (self.existeDisco(IDGAME)):
-            return True
-        else:
-            print _("Descargando disco de %s ...") % (IDGAME)
-            try:
-                origen = "http://www.wiiboxart.com/diskart/160/160/%.3s.png" % (IDGAME)
-                destino = self.getRutaDisco(IDGAME)
-                print _("Descargando caratula de %s desde %s ...") % (IDGAME, origen)
-                util.descargarImagen(origen, destino)
-                comando = 'mogrify -resize %dx%d! "%s"' % (ancho, alto, destino)
-                util.call_out_null(comando)
-                return True
-            except util.ErrorDescargando:
-                return False
-
-    # Descarga una caratula de "IDGAME"
-    def descargarCaratula(self , IDGAME, proveedores, ancho, alto):
-        if (self.existeCaratula(IDGAME)):
-            return True
-        else:
-            destino = self.getRutaCaratula(IDGAME)
-            descargada = False
-            i = 0
-            while ( not descargada and i<len(proveedores) ):
+    def descargarDisco(self , IDGAME, proveedores, ancho, alto):
+        destino = self.getRutaDisco(IDGAME)
+        descargada = False
+        i = 0
+        while ( not descargada and i<len(proveedores) ):
+            if (self.existeDisco(IDGAME)):
+                raise util.YaEstaDescargado
+            else:
                 try:
-                    print _("Descargando caratula de %s desde %s ...") % (IDGAME, proveedores[i] % IDGAME)
-                    util.descargarImagen(proveedores[i] % IDGAME, destino)
+                    origen = proveedores[i] % IDGAME
+                    print _("Descargando disco de %s ...") % (("%s (%s)") % (IDGAME, origen))
+                    util.descargarImagen(origen, destino)
                     descargada = True
                     comando = 'mogrify -resize %dx%d! "%s"' % (ancho, alto, destino)
                     util.call_out_null(comando)
                 except util.ErrorDescargando:
                     i += 1
-                #descargada = self.existeCaratula(IDGAME)
-            return descargada
+        return descargada
+
+    # Descarga una caratula de "IDGAME"
+    def descargarCaratula(self , IDGAME, proveedores, ancho, alto):
+        destino = self.getRutaCaratula(IDGAME)
+        descargada = False
+        i = 0
+        while ( not descargada and i<len(proveedores) ):
+            if (self.existeCaratula(IDGAME)):
+                raise util.YaEstaDescargado
+            else:
+                try:
+                    origen = proveedores[i] % IDGAME
+                    print _("Descargando caratula de %s desde %s ...") % (IDGAME, origen)
+                    util.descargarImagen(origen, destino)
+                    descargada = True
+                    comando = 'mogrify -resize %dx%d! "%s"' % (ancho, alto, destino)
+                    util.call_out_null(comando)
+                except util.ErrorDescargando:
+                    i += 1
+        return descargada
 
     # borrar caratula
     def borrarCaratula( self, juego ):
@@ -246,13 +249,14 @@ class WiithonCORE:
         proveedores_covers = self.prefs.PROVIDER_COVERS
         width_covers = self.prefs.WIDTH_COVERS
         height_covers = self.prefs.HEIGHT_COVERS
+        proveedores_discs = self.prefs.PROVIDER_DISCS
         width_discs = self.prefs.WIDTH_DISCS
         height_discs = self.prefs.HEIGHT_DISCS
         ok = True
         for juego in listaJuegos:
             if ( not self.descargarCaratula( juego.idgame, proveedores_covers, width_covers, height_covers ) ):
                 ok = False
-            if ( not self.descargarDisco( juego.idgame, width_discs, height_discs) ):
+            if ( not self.descargarDisco( juego.idgame, proveedores_discs, width_discs, height_discs) ):
                 ok = False
         return ok
 
@@ -342,4 +346,3 @@ class WiithonCORE:
             return salida
         else:
             return False
-

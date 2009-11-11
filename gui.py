@@ -46,7 +46,7 @@ class WiithonGUI(GtkBuilderWrapper):
         
         # mutex de seguridad para preferencias
         # evita problemas de concurrencia en la bdd
-        self.prefs_lock = False
+        self.wiitdb_mutex = False
 
         # Representación de la fila seleccionada en los distintos treeviews
         self.sel_juego = FilaTreeview()
@@ -312,6 +312,12 @@ class WiithonGUI(GtkBuilderWrapper):
             #                    
             # Selecciona el primer juego
             self.seleccionarPrimeraFila(self.wb_tv_partitions)
+            #
+            # refrescar num juegos con info
+            self.refrescarInfoWiiTDB()
+            #
+            # refrescar num caratulas
+            self.refrescarNumCaratulas()
             #
             # descargar caratulas y discos
             query = session.query(Juego).order_by('idParticion, lower(title)').group_by('idgame')
@@ -947,32 +953,32 @@ class WiithonGUI(GtkBuilderWrapper):
             self.info.arriba_total = particion.total
             self.info.arriba_num_juegos = session.query(Juego).filter('idParticion = %d' % particion.idParticion).count()
             self.info.abajo_num_particiones = session.query(Particion).count()
-            
-    def refrescarInfoWiiTDBNumCaratulas(self):
-
-        if config.DEBUG:
-            print "refrescarInfoWiiTDBNumCaratulas"
+    
+    
+    def refrescarInfoWiiTDB(self):
         
+        if config.DEBUG:
+            print "refrescarInfoWiiTDB"
+            
         numInfos = 0
-        sinCaratulas = 0
-        sinDiscArt = 0
-        if not self.todo:
-            sql = util.decode("idParticion=='%d'" % (self.sel_parti.obj.idParticion))
-            query = session.query(Juego).filter(sql).order_by('idParticion, lower(title)').group_by('idgame')
-        else:
-            query = session.query(Juego).order_by('idParticion, lower(title)').group_by('idgame')
+        query = session.query(Juego).group_by('idgame')
 
         for juego in query:
             if juego.getJuegoWIITDB() is not None:
                 numInfos += 1
-            if not self.core.existeCaratula(juego.idgame):
-                sinCaratulas += 1
-            if not self.core.existeDisco(juego.idgame):
-                sinDiscArt += 1
                     
         self.info.abajo_num_juegos_wiitdb = numInfos
-        self.info.abajo_juegos_sin_caratula = sinCaratulas
-        self.info.abajo_juegos_sin_discart = sinDiscArt
+
+    def refrescarNumCaratulas(self):
+
+        if config.DEBUG:
+            print "refrescarNumCaratulas"        
+        
+        total_distintos = 0
+        for j in session.query(Juego).group_by('idgame'):
+            total_distintos += 1
+        self.info.abajo_juegos_sin_caratula = total_distintos - util.num_files_in_folder(config.HOME_WIITHON_CARATULAS)
+        self.info.abajo_juegos_sin_discart = total_distintos - util.num_files_in_folder(config.HOME_WIITHON_DISCOS)
 
     def refrescarTareasPendientes(self):
         
@@ -1073,7 +1079,6 @@ class WiithonGUI(GtkBuilderWrapper):
                 
                 # refrescar espacio
                 self.refrescarEspacio()
-                self.refrescarInfoWiiTDBNumCaratulas()
 
     def toggle_todo_particion(self):
         if self.todo:
@@ -1140,7 +1145,7 @@ class WiithonGUI(GtkBuilderWrapper):
         widget_imagen.set_from_file( destinoDisco )
 
     def actualizar_textview_info_wiitdb(self):
-        if self.sel_juego.obj != None and not self.prefs_lock:
+        if self.sel_juego.obj != None and not self.wiitdb_mutex:
 
             juego = self.sel_juego.obj.getJuegoWIITDB()
             if juego != None:
@@ -1427,6 +1432,9 @@ class WiithonGUI(GtkBuilderWrapper):
                         # actualizar valores de usado/libre/total
                         self.sel_parti.obj.refrescarEspacioLibreUsado(self.core)
                         
+                        # restar la info wiitdb
+                        self.refrescarInfoWiiTDB()
+                        
                         # Selecciona el primer juego
                         self.seleccionarFilaConValor(self.wb_tv_partitions, 0 , self.sel_parti.obj.device)
 
@@ -1599,7 +1607,7 @@ class WiithonGUI(GtkBuilderWrapper):
                 self.alert("warning" , _("No tienes ningun juego"))
 
         elif(id_tb == self.wb_tb_preferencias):
-            if not self.prefs_lock:
+            if not self.wiitdb_mutex:
                 self.wb_prefs.run()
                 self.poolTrabajo.actualizarPreferencias()
                 self.poolBash.actualizarPreferencias()
@@ -1626,7 +1634,7 @@ class WiithonGUI(GtkBuilderWrapper):
 
     def on_button_formatear_wbfs_clicked(self, boton):
         #comando = 'xterm -geometry 80x24 -T "%s" -n "%s" -bg black -fg white -fn 12x24 -e "wiithon -f --pause"' % (_("Formatear particion FAT"), _("Formateador WBFS"))
-        comando = '%s -e "wiithon -f --pause"' % (self.core.prefs.COMANDO_TERMINAL)
+        comando = '%s -e "%s -f --pause"' % (config.APP, self.core.prefs.COMANDO_TERMINAL)
         salida = util.call_out_null(comando)
         
     def on_button_abrir_carpeta_caratulas_clicked(self, boton):
@@ -1642,7 +1650,7 @@ class WiithonGUI(GtkBuilderWrapper):
                 
     def on_tb_actualizar_wiitdb_clicked(self, boton):
         
-        if not self.prefs_lock:
+        if not self.wiitdb_mutex:
             
             if (self.question("""
         <b>
@@ -1656,7 +1664,6 @@ class WiithonGUI(GtkBuilderWrapper):
                         self.core.prefs.URL_ZIP_WIITDB
                         ),
                         xml = True) ):
-                self.prefs_lock = True
                 self.poolTrabajo.nuevoTrabajoActualizarWiiTDB(self.core.prefs.URL_ZIP_WIITDB)
         else:
             self.alert("warning" , _("Ya estas descargando la informacion WiiTDB ..."))
@@ -1670,6 +1677,8 @@ class WiithonGUI(GtkBuilderWrapper):
         self.companies = 0
         self.actualizarLabel(_("Empezando a obtener datos de juegos desde WiiTDB"))
         self.actualizarFraccion(0.0)
+        self.wiitdb_mutex = True
+        self.wb_prefs.hide()
 
     def callback_spinner(self, cont, total):
         porcentaje = (cont * 100.0 / total)
@@ -1696,7 +1705,7 @@ class WiithonGUI(GtkBuilderWrapper):
         self.companies += 1
 
     def callback_error_importando(self, xml, motivo):
-        self.prefs_lock = False
+        self.wiitdb_mutex = False
         self.mostrarError(_("Error importando %s: %s") % (xml, motivo))
         
     def callback_empieza_descarga(self, url):
@@ -1711,10 +1720,11 @@ class WiithonGUI(GtkBuilderWrapper):
         
         
     def callback_termina_importar(self, xml, todos):
-        self.prefs_lock = False
+        self.wiitdb_mutex = False
         self.actualizarLabel(_("Finalizada satisfactoriamente la importacion de datos desde WiiTDB"))
         self.actualizarFraccion(1.0)
         gobject.idle_add(self.refrescarModeloJuegos, self.lJuegos)
+        gobject.idle_add(self.refrescarInfoWiiTDB)
 
 ############# METODOS que modifican el GUI, si se llaman desde hilos, se hacen con gobject
 
@@ -1745,7 +1755,7 @@ class WiithonGUI(GtkBuilderWrapper):
 
         # consultamos al wiithon wrapper info sobre el juego con nueva IDGAME
         # lo añadimos a la lista
-        juegoNuevo = self.core.getInfoJuego(DEVICE, IDGAME)
+        juegoNuevo = self.core.new_game_from_HDD(DEVICE, IDGAME)
         
         # refrescar su espacio uso/libre/total
         juegoNuevo.particion.refrescarEspacioLibreUsado(self.core)
@@ -1753,11 +1763,13 @@ class WiithonGUI(GtkBuilderWrapper):
         # seleccionamos la particion y la fila del juego añadido       
         self.seleccionarFilaConValor(self.wb_tv_partitions, 0 , juegoNuevo.particion.device)
         self.seleccionarFilaConValor(self.wb_tv_games, 0 , juegoNuevo.idgame)
-        
+
     def termina_trabajo_copiar(self, juego , particion):
-                   
-        juegoNuevo = self.core.getInfoJuego(particion.device, juego.idgame)
-            
+
+        # consultamos al wiithon wrapper info sobre el juego con nueva IDGAME
+        # lo añadimos a la lista
+        juegoNuevo = self.core.new_game_from_HDD(particion.device, juego.idgame)
+
         # refrescar su espacio uso/libre/total
         particion.refrescarEspacioLibreUsado(self.core)
         
@@ -1856,7 +1868,6 @@ class WiithonGUI(GtkBuilderWrapper):
                     gobject.idle_add( self.borrar_archivo_preguntando , fichero)
                 if rar_preguntar_borrar_rar:
                     gobject.idle_add( self.borrar_archivo_preguntando , trabajo.padre.origen)
-                
 
     # Al terminar hay que seleccionar la partición destino y el juego copiado
     def callback_termina_trabajo_copiar(self, trabajo, juego, particion):
@@ -1892,19 +1903,23 @@ class WiithonGUI(GtkBuilderWrapper):
 
     def callback_termina_trabajo_descargar_caratula(self, trabajo, idgame):
         if trabajo.exito:
+            #self.info.abajo_juegos_sin_caratula -= 1
             if idgame == self.sel_juego.obj.idgame:
                 gobject.idle_add( self.ponerCaratula , idgame , self.wb_img_caratula1)
         else:
-            gobject.idle_add( self.refrescarInfoWiiTDBNumCaratulas )
             print _("Falla la descarga de la caratula de %s") % idgame
+            
+        gobject.idle_add( self.refrescarNumCaratulas )            
 
     def callback_termina_trabajo_descargar_disco(self, trabajo, idgame):
         if trabajo.exito:
+            #self.info.abajo_juegos_sin_discart -= 1
             if idgame == self.sel_juego.obj.idgame:
                 gobject.idle_add( self.ponerDisco , idgame , self.wb_img_disco1)
         else:
-            gobject.idle_add( self.refrescarInfoWiiTDBNumCaratulas )
             print _("Falla la descarga del disco de %s") % idgame
+        
+        gobject.idle_add( self.refrescarNumCaratulas )
 
 class HiloCalcularProgreso(Thread):
 
