@@ -20,26 +20,29 @@ set -e
 case "$1" in
     purge)
         # repeat remove
-        test -d /usr/share/doc/wiithon && rm -f /usr/share/doc/wiithon/*
-        test -d /usr/share/doc/wiithon && rmdir /usr/share/doc/wiithon
+        #test -d /usr/share/doc/wiithon && rm -f /usr/share/doc/wiithon/*
+        #test -d /usr/share/doc/wiithon && rmdir /usr/share/doc/wiithon
+        test -d /usr/share/doc/wiithon && rm -rf /usr/share/doc/wiithon
     
         test -L /usr/games/wiithon && rm /usr/games/wiithon
         test -L /usr/share/wiithon/wiithon_wrapper && rm /usr/share/wiithon/wiithon_wrapper
         test -L /usr/share/wiithon/wiithon_unrar && rm /usr/share/wiithon/wiithon_unrar
         
         # purge
-        test -d /usr/share/wiithon/recursos/imagenes/caratulas/ && rm -f /usr/share/wiithon/recursos/imagenes/caratulas/*.png
-        test -d /usr/share/wiithon/recursos/imagenes/discos/ && rm -f /usr/share/wiithon/recursos/imagenes/discos/*.png
-        test -d /usr/share/wiithon/recursos/imagenes/caratulas && rmdir /usr/share/wiithon/recursos/imagenes/caratulas
-        test -d /usr/share/wiithon/recursos/imagenes/discos && rmdir /usr/share/wiithon/recursos/imagenes/discos
-        test -d /usr/share/wiithon/recursos/imagenes && rmdir /usr/share/wiithon/recursos/imagenes
-        test -d /usr/share/wiithon/recursos && rmdir /usr/share/wiithon/recursos
-        test -d /usr/share/wiithon && rmdir /usr/share/wiithon
+        #test -d /usr/share/wiithon/recursos/imagenes/caratulas/ && rm -f /usr/share/wiithon/recursos/imagenes/caratulas/*.png
+        #test -d /usr/share/wiithon/recursos/imagenes/discos/ && rm -f /usr/share/wiithon/recursos/imagenes/discos/*.png
+        #test -d /usr/share/wiithon/recursos/imagenes/caratulas && rmdir /usr/share/wiithon/recursos/imagenes/caratulas
+        #test -d /usr/share/wiithon/recursos/imagenes/discos && rmdir /usr/share/wiithon/recursos/imagenes/discos
+        #test -d /usr/share/wiithon/recursos/imagenes && rmdir /usr/share/wiithon/recursos/imagenes
+        #test -d /usr/share/wiithon/recursos && rmdir /usr/share/wiithon/recursos
+        #test -d /usr/share/wiithon && rmdir /usr/share/wiithon
+        test -d /usr/share/wiithon && rm -rf /usr/share/wiithon
         exit 0
         ;;
     remove)
-        test -d /usr/share/doc/wiithon && rm -f /usr/share/doc/wiithon/*
-        test -d /usr/share/doc/wiithon && rmdir /usr/share/doc/wiithon
+        #test -d /usr/share/doc/wiithon && rm -f /usr/share/doc/wiithon/*
+        #test -d /usr/share/doc/wiithon && rmdir /usr/share/doc/wiithon
+        test -d /usr/share/doc/wiithon && rm -rf /usr/share/doc/wiithon
     
         test -L /usr/games/wiithon && rm /usr/games/wiithon
         test -L /usr/share/wiithon/wiithon_wrapper && rm /usr/share/wiithon/wiithon_wrapper
