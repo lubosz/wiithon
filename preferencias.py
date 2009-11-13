@@ -59,18 +59,11 @@ class Preferencias:
         self.iniciarPreferencia('string', 'ruta_extraer_iso', defecto=os.getcwd())
         self.iniciarPreferencia('string', 'ruta_copiar_caratulas', defecto=os.getcwd())
         self.iniciarPreferencia('string', 'ruta_copiar_discos', defecto=os.getcwd())
+        
+        # general
         self.iniciarPreferencia('string', 'ruta_extraer_rar', defecto='/tmp', mostrar=cargarWidget, vbox=prefs_vbox_general, label=_('Ruta para extraer ficheros .rar. Para descomprimir junto al .rar escriba .'))
-        
-        self.iniciarPreferencia('string', 'URL_ZIP_WIITDB', defecto='http://wiitdb.com/wiitdb.zip', mostrar=cargarWidget, vbox=prefs_vbox_wiitdb, label=_('URL Base de datos WiiTDB'))
-        self.iniciarPreferencia('string', 'FORMATO_FECHA_WIITDB', defecto='%d/%m/%Y', mostrar=cargarWidget, vbox=prefs_vbox_wiitdb, label=_('Formato fecha'))
-        self.iniciarPreferencia('string', 'FORMATO_FECHA_CORTA_WIITDB', defecto='%Y/%m', mostrar=cargarWidget, vbox=prefs_vbox_wiitdb, label=_('Formato fecha corto'))
-        self.iniciarPreferencia('int', 'WIDTH_COVERS', defecto=160, mostrar=cargarWidget, vbox=prefs_vbox_caratulas, label=_('Ancho imagen caratula'))
-        self.iniciarPreferencia('int', 'HEIGHT_COVERS', defecto=224, mostrar=cargarWidget, vbox=prefs_vbox_caratulas, label=_('Altura imagen caratula'))
-        self.iniciarPreferencia('int', 'WIDTH_DISCS', defecto=160, mostrar=cargarWidget, vbox=prefs_vbox_caratulas, label=_('Ancho imagen disc-art'))
-        self.iniciarPreferencia('int', 'HEIGHT_DISCS', defecto=160, mostrar=cargarWidget, vbox=prefs_vbox_caratulas, label=_('Altura imagen disc-art'))
-        
         self.iniciarPreferencia('int', 'NUM_HILOS', defecto=8, mostrar=cargarWidget, vbox=prefs_vbox_general, label=_('Num. Hilos para tareas de fondo'))
-        
+        self.iniciarPreferencia('string', 'COMANDO_ABRIR_CARPETA', defecto='gnome-open', mostrar=cargarWidget, vbox=prefs_vbox_general, label=_('Comando para abrir carpetas'))
         self.iniciarPreferencia('bool', 'ADVERTENCIA_ACTUALIZAR_WIITDB', defecto=True, mostrar=cargarWidget, vbox=prefs_vbox_general, label=_('Mostrar una advertencia cuando no hay ninguna informacion WiiTDB'))
         self.iniciarPreferencia('bool', 'ADVERTENCIA_NO_WBFS', defecto=True, mostrar=cargarWidget, vbox=prefs_vbox_general, label=_('Mostrar una advertencia cuando no hay particiones WBFS'))
         self.iniciarPreferencia('bool', 'DRAG_AND_DROP_LOCAL', defecto=True, mostrar=cargarWidget, vbox=prefs_vbox_general, label=_('Permitir establecer caratulas locales por arrastre'))
@@ -82,10 +75,11 @@ class Preferencias:
         DESTINO_DRAG_AND_DROP =    [('C', _('Caratula')),
                                     ('D', _('Disc-art'))]
         self.iniciarPreferencia('select', 'DESTINO_ARRASTRE', defecto='C', mostrar=cargarWidget, vbox=prefs_vbox_general, label=_('Destino del arrastre de una imagen'), datos_lista = DESTINO_DRAG_AND_DROP)
-        self.iniciarPreferencia('string', 'COMANDO_ABRIR_CARPETA', defecto='gnome-open', mostrar=cargarWidget, vbox=prefs_vbox_general, label=_('Comando para abrir carpetas'))
-        self.iniciarPreferencia('string', 'COMANDO_TERMINAL', defecto='xterm -geometry 80x24 -T "Format WBFS" -n "Format WBFS" -bg black -fg white -fn 12x24', mostrar=cargarWidget, vbox=prefs_vbox_general, label=_('Comando para abrir terminal'))
         
-        # Listas de idiomas wiitdb
+        # wiitdb
+        self.iniciarPreferencia('string', 'URL_ZIP_WIITDB', defecto='http://wiitdb.com/wiitdb.zip', mostrar=cargarWidget, vbox=prefs_vbox_wiitdb, label=_('URL Base de datos WiiTDB'))
+        self.iniciarPreferencia('string', 'FORMATO_FECHA_WIITDB', defecto='%d/%m/%Y', mostrar=cargarWidget, vbox=prefs_vbox_wiitdb, label=_('Formato fecha'))
+        self.iniciarPreferencia('string', 'FORMATO_FECHA_CORTA_WIITDB', defecto='%Y/%m', mostrar=cargarWidget, vbox=prefs_vbox_wiitdb, label=_('Formato fecha corto'))
         WIITDB_LANGUAGE_LISTA =    [('EN', _('English')),
                                     ('JA', _('Japanese')),
                                     ('FR', _('French')),
@@ -100,8 +94,14 @@ class Preferencias:
         self.iniciarPreferencia('select', 'LANG_PRINCIPAL', defecto='ES', mostrar=cargarWidget, vbox=prefs_vbox_wiitdb, label=_('Idioma principal para el synopsis'), datos_lista = WIITDB_LANGUAGE_LISTA)
         self.iniciarPreferencia('select', 'LANG_SECUNDARIO', defecto='EN', mostrar=cargarWidget, vbox=prefs_vbox_wiitdb, label=_('Idioma auxiliar para el synopsis'), datos_lista = WIITDB_LANGUAGE_LISTA)
         
+        # caratulas
+        self.iniciarPreferencia('int', 'WIDTH_COVERS', defecto=160, mostrar=cargarWidget, vbox=prefs_vbox_caratulas, label=_('Ancho imagen caratula'))
+        self.iniciarPreferencia('int', 'HEIGHT_COVERS', defecto=224, mostrar=cargarWidget, vbox=prefs_vbox_caratulas, label=_('Altura imagen caratula'))
+        self.iniciarPreferencia('int', 'WIDTH_DISCS', defecto=160, mostrar=cargarWidget, vbox=prefs_vbox_caratulas, label=_('Ancho imagen disc-art'))
+        self.iniciarPreferencia('int', 'HEIGHT_DISCS', defecto=160, mostrar=cargarWidget, vbox=prefs_vbox_caratulas, label=_('Altura imagen disc-art'))
+
         cycle_covers = ""
-        # flat
+        #   - flat
         cycle_covers += "http://wiitdb.com/wiitdb/artwork/cover/ES/%s.png\n"
         cycle_covers += "http://wiitdb.com/wiitdb/artwork/cover/EN/%s.png\n"
         cycle_covers += "http://www.wiiboxart.com/pal/%s.png\n"
@@ -118,7 +118,7 @@ class Preferencias:
         cycle_covers += "http://www.wiiboxart.com/ntsc/%s.png\n"
         cycle_covers += "http://www.wiiboxart.com/ntscj/%s.png\n"
         
-        # 3d
+        #   - 3d
         cycle_covers += "http://wiitdb.com/wiitdb/artwork/cover3D/ES/%s.png\n"
         cycle_covers += "http://wiitdb.com/wiitdb/artwork/cover3D/EN/%s.png\n"
         cycle_covers += "http://www.wiiboxart.com/3d/160/225/%s.png\n"
@@ -132,7 +132,7 @@ class Preferencias:
         cycle_covers += "http://wiitdb.com/wiitdb/artwork/cover3D/US/%s.png\n"
         cycle_covers += "http://wiitdb.com/wiitdb/artwork/cover3D/JA/%s.png\n"
         
-        # full
+        #   - full
         cycle_covers += "http://wiitdb.com/wiitdb/artwork/coverfull/ES/%s.png\n"
         cycle_covers += "http://wiitdb.com/wiitdb/artwork/coverfull/EN/%s.png\n"
         cycle_covers += "http://wiiboxart.t35.com/wiiboxart/images/full/%s.png\n"
@@ -145,7 +145,7 @@ class Preferencias:
         cycle_covers += "http://wiitdb.com/wiitdb/artwork/coverfull/US/%s.png\n"
         cycle_covers += "http://wiitdb.com/wiitdb/artwork/coverfull/JA/%s.png\n"
         
-        # widescreen
+        #   - widescreen
         cycle_covers += "http://wiiboxart.t35.com/wiiboxart/images/widescreen/%s.png\n"
         cycle_covers += "http://www.wiiboxart.com/widescreen/pal/%s.png\n"
         cycle_covers += "http://www.wiiboxart.com/widescreen/ntsc/%s.png\n"
@@ -153,7 +153,7 @@ class Preferencias:
         cycle_covers += "http://www.wiiboxart.com/fullcover/%s.png\n"
         cycle_covers += "http://boxart.rowdyruff.net/3d/%s.png\n"
         
-        # hq
+        #   - hq
         cycle_covers += "http://wiitdb.com/wiitdb/artwork/coverfullHQ/ES/%s.png\n"
         cycle_covers += "http://wiitdb.com/wiitdb/artwork/coverfullHQ/EN/%s.png\n"
         cycle_covers += "http://wiitdb.com/wiitdb/artwork/coverfullHQ/FR/%s.png\n"
@@ -168,7 +168,7 @@ class Preferencias:
         self.iniciarPreferencia('memo', 'PROVIDER_COVERS', defecto=cycle_covers, mostrar=cargarWidget, vbox=prefs_vbox_caratulas, label=_('Proveedor de caratulas'))
 
         cycle_discs = ""
-        # disc & disccustom
+        #   - disc & disccustom
         cycle_discs += "http://wiitdb.com/wiitdb/artwork/disccustom/ES/%s.png\n"
         cycle_discs += "http://wiitdb.com/wiitdb/artwork/disccustom/EN/%s.png\n"
         cycle_discs += "http://wiitdb.com/wiitdb/artwork/disc/ES/%s.png\n"
