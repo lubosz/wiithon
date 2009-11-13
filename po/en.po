@@ -5,7 +5,7 @@ msgstr ""
 "Report-Msgid-Bugs-To: makiolo@gmail.com\n"
 "POT-Creation-Date: \n"
 "PO-Revision-Date: \n"
-"Last-Translator: Carlo Mandelli <camandel@gmail.com>\n"
+"Last-Translator: Ricardo Marmolejo García <makiolo@gmail.com>\n"
 "Language-Team: Español <wii.sceners.linux@lists.launchpad.net>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -188,17 +188,17 @@ msgstr "The RAR file %s does not exist"
 #: cli.py:287 trabajo.py:331
 #, python-format
 msgid "Error al descomprimrir. Ya existe %s. Si desea sobreescribirlo, modifique la opcion en preferencias."
-msgstr ""
+msgstr "Error decompressing. %s already exists. If you want overwrite it, change the option in preferencies."
 
 #: cli.py:294 trabajo.py:341
 #, python-format
 msgid "Error: El archivo RAR %s no contiene ninguna ISO"
-msgstr ""
+msgstr "Error: RAR archive %s does not contain ISO"
 
 #: cli.py:300 trabajo.py:347
 #, python-format
 msgid "No hay 4.4GB libres para descomprimir el fichero RAR: %s en la ruta %s. Puede cambiar la ruta en preferencias."
-msgstr ""
+msgstr "There are not 4.4GB free to decompress RAR file: %s in the path %s. You can change path in preferencies."
 
 #: cli.py:315 trabajo.py:361
 #, python-format
@@ -218,7 +218,7 @@ msgstr "ERROR adding ISO : %s (Is it a Wii game ISO?)"
 #: cli.py:343
 #, python-format
 msgid "Copiar .%s: %s a la particion %s"
-msgstr ""
+msgstr "Copy .%s: %s to partition %s"
 
 #: cli.py:351
 #, python-format
@@ -265,26 +265,26 @@ msgstr "Do you want to replace it? (Y/N) :"
 #: cli.py:410
 #, python-format
 msgid "Dumpeando desde %s a %s utilizando %s temporalmente"
-msgstr ""
+msgstr "Dump from %s to %s using %s as temporary"
 
 #: cli.py:411
 msgid "Puede llevar mucho tiempo ..."
-msgstr ""
+msgstr "May take several time ..."
 
 #: cli.py:415
 #, python-format
 msgid "OK, el juego se ha pasado a la particion %s"
-msgstr ""
+msgstr "OK, the game has been copied to partition %s"
 
 #: cli.py:417
 #, python-format
 msgid "Error al pasar la ISO a la particion %s"
-msgstr ""
+msgstr "Error copying ISO to partition %s"
 
 #: cli.py:418
 #, python-format
 msgid "wiithon no borra la ISO temporal: %s, puedes borrarla si no la necesitas"
-msgstr ""
+msgstr "wiithon does not delete temporary ISO: %s, you can delete it if not necessary"
 
 #: cli.py:420
 msgid "Error al dumpear la ISO"
@@ -293,7 +293,7 @@ msgstr "Error dumping the ISO"
 #: cli.py:434
 #, python-format
 msgid "No se ha encontrado el juego: %s"
-msgstr ""
+msgstr "Not found game: %s"
 
 #: cli.py:444
 msgid "Indique el NUM del juego : "
@@ -392,7 +392,7 @@ msgstr ""
 
 #: gui.py:356
 msgid "Deseas descargar informacion de los juegos desde WiiTDB?"
-msgstr ""
+msgstr "Do you want download games's informations from WiiTDB?"
 
 #: gui.py:365
 msgid "No puedes refrescar las particiones mientras hay tareas sin finalizar"
@@ -404,11 +404,11 @@ msgstr "Format Unknown"
 
 #: gui.py:387
 msgid "Por favor. Informe a los desarrolladores de este error."
-msgstr ""
+msgstr "Please, inform developers about this error."
 
 #: gui.py:389
 msgid "Utitice la siguiente URL para el reporte de bugs:"
-msgstr ""
+msgstr "Use the following URL for reporting bugs"
 
 #: gui.py:466
 msgid "Dispositivo"
@@ -514,7 +514,7 @@ msgstr "INFORMATION:"
 
 #: gui.py:1270
 msgid "No se ha encontrado synopsis"
-msgstr ""
+msgstr "No synopsis found"
 
 #: gui.py:1290
 msgid "ACCESORIOS: "
@@ -526,7 +526,7 @@ msgstr "OPTIONAL: "
 
 #: gui.py:1336
 msgid "GENERO: "
-msgstr ""
+msgstr "GENDER: "
 
 #: gui.py:1337
 msgid "Fecha de lanzamiento: "
@@ -534,7 +534,7 @@ msgstr "Released: "
 
 #: gui.py:1338
 msgid "Desarrolador/Editorial: "
-msgstr ""
+msgstr "Developer/Editor: "
 
 #: gui.py:1339
 msgid "Num. jugadores en off-line: "
@@ -546,7 +546,7 @@ msgstr "On-line feature: "
 
 #: gui.py:1341
 msgid "Clasificacion parental: "
-msgstr ""
+msgstr "Parental control: "
 
 #: gui.py:1358 gui.py:1374 gui.py:1411
 msgid "DESCRIPCION: "
@@ -567,7 +567,7 @@ msgstr "You need to select a WBFS partition"
 #: gui.py:1463
 #, python-format
 msgid "Desea copiar el juego %s a la particion %s?"
-msgstr ""
+msgstr "Do you want copy the game %s to partition %s?"
 
 #: gui.py:1478
 msgid "Se van a copiar los siguientes juegos a"
