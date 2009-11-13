@@ -672,8 +672,8 @@ class WiithonGUI(GtkBuilderWrapper):
                     sql = util.decode('idgame=="%s" and idParticion=="%d"' % (nuevoIDGAME , self.sel_parti.obj.idParticion))
                     juego = session.query(Juego).filter(sql).first()
                     if juego == None:
-                        if ( self.question(_('TRADUCIR_ADVERTENCIA_SEGURIDAD_RENAME_IDGAME') , ('\n%s -> %s') % (self.sel_juego.obj.idgame , nuevoIDGAME)) ):
-                            if self.core.renombrarIDGAME(self.sel_juego.obj , nuevoIDGAME):
+                        if ( self.question(_('TRADUCIR_ADVERTENCIA_SEGURIDAD_RENAME_IDGAME') , ('\n%s => %s') % (self.sel_juego.obj.idgame , nuevoIDGAME)) ):
+                            if self.core.renombrarIDGAME( self.sel_juego.obj , nuevoIDGAME ):
                                 # modificamos el juego modificado de la BDD
                                 if self.sel_juego.obj != None:
                                     # cambiar idgame de la bdd
@@ -1045,13 +1045,15 @@ class WiithonGUI(GtkBuilderWrapper):
             self.sel_juego.actualizar_columna(treeview)
             if self.sel_juego.it != None:
                 self.sel_juego.obj = self.getBuscarJuego(self.lJuegos, self.sel_juego.clave)
+            else:
+                self.sel_juego.obj = None
                 
-                # info wiitdb
-                self.actualizar_textview_info_wiitdb()
-                
-                # caratulas
-                self.ponerCaratula(self.sel_juego.clave, self.wb_img_caratula1)
-                self.ponerDisco(self.sel_juego.clave , self.wb_img_disco1)
+            # info wiitdb
+            self.actualizar_textview_info_wiitdb()
+            
+            # caratulas
+            self.ponerCaratula(self.sel_juego.clave, self.wb_img_caratula1)
+            self.ponerDisco(self.sel_juego.clave , self.wb_img_disco1)
 
     # Click en particiones --> refresca la lista de juegos
     def on_tv_partitions_cursor_changed(self , treeview):
@@ -1133,177 +1135,208 @@ class WiithonGUI(GtkBuilderWrapper):
             self.sel_parti_1on1.obj = self.getBuscarParticion(self.lParti, self.sel_parti_1on1.clave)
 
     def ponerCaratula(self, IDGAME, widget_imagen):
-        if not self.core.existeCaratula(IDGAME):
-            destinoCaratula = os.path.join(config.WIITHON_FILES_RECURSOS_IMAGENES , "caratula.png")
-            self.poolBash.nuevoTrabajoDescargaCaratula( IDGAME )
-        else:
-            destinoCaratula = self.core.getRutaCaratula(IDGAME)
+        
+        destinoCaratula = os.path.join(config.WIITHON_FILES_RECURSOS_IMAGENES , "caratula.png")
+        
+        if IDGAME is not None:
+
+            # existe            
+            if self.core.existeCaratula(IDGAME):
+                destinoCaratula = self.core.getRutaCaratula(IDGAME)
+                #   existe y esta descargando
+                if not util.esPNG(destinoCaratula):
+                    destinoCaratula = os.path.join(config.WIITHON_FILES_RECURSOS_IMAGENES , "caratula.png")
+                #else:   existe y esta descargado
+            # no existe        
+            else:
+                self.poolBash.nuevoTrabajoDescargaCaratula( IDGAME )
+                destinoCaratula = os.path.join(config.WIITHON_FILES_RECURSOS_IMAGENES , "caratula.png")
 
         widget_imagen.set_from_file( destinoCaratula )
 
-    def ponerDisco(self, IDGAME, widget_imagen):        
-        if not self.core.existeDisco(IDGAME):
-            destinoDisco = os.path.join(config.WIITHON_FILES_RECURSOS_IMAGENES , "disco.png")
-            self.poolBash.nuevoTrabajoDescargaDisco( IDGAME )
-        else:
-            destinoDisco = self.core.getRutaDisco(IDGAME)
+    def ponerDisco(self, IDGAME, widget_imagen):     
+
+        destinoDisco = os.path.join(config.WIITHON_FILES_RECURSOS_IMAGENES , "disco.png")
+
+        if IDGAME is not None:
+
+            # existe            
+            if self.core.existeDisco(IDGAME):
+                destinoDisco = self.core.getRutaDisco(IDGAME)
+                #   existe y esta descargando
+                if not util.esPNG(destinoDisco):
+                    destinoDisco = os.path.join(config.WIITHON_FILES_RECURSOS_IMAGENES , "disco.png")
+                #else:   existe y esta descargado
+            # no existe        
+            else:
+                self.poolBash.nuevoTrabajoDescargaDisco( IDGAME )
+                destinoDisco = os.path.join(config.WIITHON_FILES_RECURSOS_IMAGENES , "disco.png")
 
         widget_imagen.set_from_file( destinoDisco )
 
     def actualizar_textview_info_wiitdb(self):
-        if self.sel_juego.obj != None and not self.wiitdb_mutex:
+        
+        error = False
 
-            juego = self.sel_juego.obj.getJuegoWIITDB()
-            if juego != None:
+        if self.sel_juego.obj != None:
+            
+            if not self.wiitdb_mutex:
+                juego = self.sel_juego.obj.getJuegoWIITDB()
+                if juego != None:
 
-                # titulo y synopsis
-                hayPrincipal = False
-                haySecundario = False
-                i = 0
-                while not hayPrincipal and i<len(juego.descripciones):
-                    descripcion = juego.descripciones[i]
-                    hayPrincipal = descripcion.lang == self.core.prefs.LANG_PRINCIPAL
-                    if hayPrincipal:
-                        title = descripcion.title
-                        synopsis = descripcion.synopsis
-                    i += 1
-
-                if not hayPrincipal:
+                    # titulo y synopsis
+                    hayPrincipal = False
                     haySecundario = False
                     i = 0
-                    while not haySecundario and i<len(juego.descripciones):
+                    while not hayPrincipal and i<len(juego.descripciones):
                         descripcion = juego.descripciones[i]
-                        haySecundario = descripcion.lang == self.core.prefs.LANG_SECUNDARIO
-                        if haySecundario:
+                        hayPrincipal = descripcion.lang == self.core.prefs.LANG_PRINCIPAL
+                        if hayPrincipal:
                             title = descripcion.title
                             synopsis = descripcion.synopsis
                         i += 1
 
-                if not hayPrincipal and not haySecundario:
-                    title = juego.name
-                    synopsis = _('No se ha encontrado synopsis')
+                    if not hayPrincipal:
+                        haySecundario = False
+                        i = 0
+                        while not haySecundario and i<len(juego.descripciones):
+                            descripcion = juego.descripciones[i]
+                            haySecundario = descripcion.lang == self.core.prefs.LANG_SECUNDARIO
+                            if haySecundario:
+                                title = descripcion.title
+                                synopsis = descripcion.synopsis
+                            i += 1
 
-                # generos
-                generos = ""
-                for genero in juego.genero:
-                    generos += genero.nombre + ", "
-                generos=util.remove_last_separator( generos )
-                
-                # accesorios obligatorios
-                xml_inject_accesorios_obligatorios = ""
-                for accesorio in juego.obligatorio:
-                    xml_inject_accesorios_obligatorios += "<img>%s</img>" % (os.path.join(config.WIITHON_FILES_RECURSOS_IMAGENES_ACCESORIO, "%s.jpg" % accesorio.nombre))
+                    if not hayPrincipal and not haySecundario:
+                        title = juego.name
+                        synopsis = _('No se ha encontrado synopsis')
 
-                # accesorios opcionales
-                xml_inject_accesorios_opcionales = ""
-                for accesorio in juego.opcional:
-                    xml_inject_accesorios_opcionales += "<img>%s</img>" % (os.path.join(config.WIITHON_FILES_RECURSOS_IMAGENES_ACCESORIO, "%s.jpg" % accesorio.nombre))
-                
-                xml_inject = ""
-                if xml_inject_accesorios_obligatorios != "":
-                    xml_inject += "<b><big><azul><pr>%s</pr></azul></big></b><br />" % _("ACCESORIOS: ")
-                    xml_inject += "%s" % xml_inject_accesorios_obligatorios
-                    xml_inject += "<br />"
+                    # generos
+                    generos = ""
+                    for genero in juego.genero:
+                        generos += genero.nombre + ", "
+                    generos=util.remove_last_separator( generos )
                     
-                if xml_inject_accesorios_opcionales != "":
-                    xml_inject += "<b><big><verde><pr>%s</pr></verde></big></b><br />" % _("OPCIONALES: ")
-                    xml_inject += "%s" % xml_inject_accesorios_opcionales
-                    xml_inject += "<br />"
-                
+                    # accesorios obligatorios
+                    xml_inject_accesorios_obligatorios = ""
+                    for accesorio in juego.obligatorio:
+                        xml_inject_accesorios_obligatorios += "<img>%s</img>" % (os.path.join(config.WIITHON_FILES_RECURSOS_IMAGENES_ACCESORIO, "%s.jpg" % accesorio.nombre))
 
-                xml_plantilla = """<?xml version="1.0" encoding="UTF-8"?>
-<xhtml>
-    <margin8>
-        <superbig>
-            <b>
-                <verde><pr>%s</pr></verde>
-            </b>
-        </superbig>
-        <br />
-        <big>
-            <azul>
-                <pr>%s</pr>
-            </azul>
-        </big>
-        <pr>%s</pr>
-        <br />
-        <b><i><pr>%s</pr></i></b>
-            <azul><i><pr>%s</pr></i></azul><br />
-        <b><i><pr>%s</pr></i></b>
-            <i><pr>%s/%s</pr></i>
-        <br />
-        <b><i><pr>%s</pr></i></b>
-            <i><pr>%s</pr></i>
-        <br />
-        <b><i><pr>%s</pr></i></b>
-            <i><pr>%s</pr></i>
-        <br />
-        <b><i><pr>%s</pr></i></b>
-            <i><pr>%s</pr></i>
-        <br />
-        %s
+                    # accesorios opcionales
+                    xml_inject_accesorios_opcionales = ""
+                    for accesorio in juego.opcional:
+                        xml_inject_accesorios_opcionales += "<img>%s</img>" % (os.path.join(config.WIITHON_FILES_RECURSOS_IMAGENES_ACCESORIO, "%s.jpg" % accesorio.nombre))
+                    
+                    xml_inject = ""
+                    if xml_inject_accesorios_obligatorios != "":
+                        xml_inject += "<b><big><azul><pr>%s</pr></azul></big></b><br />" % _("ACCESORIOS: ")
+                        xml_inject += "%s" % xml_inject_accesorios_obligatorios
+                        xml_inject += "<br />"
+                        
+                    if xml_inject_accesorios_opcionales != "":
+                        xml_inject += "<b><big><verde><pr>%s</pr></verde></big></b><br />" % _("OPCIONALES: ")
+                        xml_inject += "%s" % xml_inject_accesorios_opcionales
+                        xml_inject += "<br />"
+                    
+
+                    xml_plantilla = """<?xml version="1.0" encoding="UTF-8"?>
+    <xhtml>
+        <margin8>
+            <superbig>
+                <b>
+                    <verde><pr>%s</pr></verde>
+                </b>
+            </superbig>
+            <br />
+            <big>
+                <azul>
+                    <pr>%s</pr>
+                </azul>
+            </big>
+            <pr>%s</pr>
+            <br />
+            <b><i><pr>%s</pr></i></b>
+                <azul><i><pr>%s</pr></i></azul><br />
+            <b><i><pr>%s</pr></i></b>
+                <i><pr>%s/%s</pr></i>
+            <br />
+            <b><i><pr>%s</pr></i></b>
+                <i><pr>%s</pr></i>
+            <br />
+            <b><i><pr>%s</pr></i></b>
+                <i><pr>%s</pr></i>
+            <br />
+            <b><i><pr>%s</pr></i></b>
+                <i><pr>%s</pr></i>
+            <br />
+            %s
+            </margin8>
+    </xhtml>
+                    """ % (
+                    util.parsear_a_XML(title),
+                    #util.parsear_a_XML(repr(self.sel_juego.obj)),
+                    _("GENERO: "), util.parsear_a_XML(generos),
+                    _("Fecha de lanzamiento: "), juego.getTextFechaLanzamiento(self.core),
+                    _("Desarrolador/Editorial: "), util.parsear_a_XML(juego.developer), util.parsear_a_XML(juego.publisher),
+                    _("Num. jugadores en off-line: "), util.parsear_a_XML(juego.getTextPlayersLocal()),
+                    _("Capacidad On-line: "), util.parsear_a_XML(juego.getTextPlayersWifi()),
+                    _("Clasificacion parental: "), util.parsear_a_XML(juego.getTextRating()),
+                    xml_inject
+                    )
+                    
+                    xml_plantilla_descripcion = """<?xml version="1.0" encoding="UTF-8"?>
+    <xhtml>                
+        <margin8>
+            <big>
+                <verde>
+                    <pr>%s</pr>
+                </verde>
+            </big>
+            <justificar>
+                <pr>%s</pr><br />
+            </justificar>
         </margin8>
-</xhtml>
-                """ % (
-                util.parsear_a_XML(title),
-                #util.parsear_a_XML(repr(self.sel_juego.obj)),
-                _("GENERO: "), util.parsear_a_XML(generos),
-                _("Fecha de lanzamiento: "), juego.getTextFechaLanzamiento(self.core),
-                _("Desarrolador/Editorial: "), util.parsear_a_XML(juego.developer), util.parsear_a_XML(juego.publisher),
-                _("Num. jugadores en off-line: "), util.parsear_a_XML(juego.getTextPlayersLocal()),
-                _("Capacidad On-line: "), util.parsear_a_XML(juego.getTextPlayersWifi()),
-                _("Clasificacion parental: "), util.parsear_a_XML(juego.getTextRating()),
-                xml_inject
-                )
-                
-                xml_plantilla_descripcion = """<?xml version="1.0" encoding="UTF-8"?>
-<xhtml>                
-    <margin8>
-        <big>
-            <verde>
-                <pr>%s</pr>
-            </verde>
-        </big>
-        <justificar>
-            <pr>%s</pr><br />
-        </justificar>
-    </margin8>
-</xhtml>
-                """ % (_("DESCRIPCION: "), util.parsear_a_XML(synopsis))
+    </xhtml>
+                    """ % (_("DESCRIPCION: "), util.parsear_a_XML(synopsis))
 
+                else:
+                    xml_plantilla_descripcion = """<?xml version="1.0" encoding="UTF-8"?>
+    <xhtml>                
+        <margin8>
+            <big>
+                <verde>
+                    <pr>%s</pr>
+                </verde>
+            </big>
+            <justificar>
+                <pr>%s</pr><br />
+            </justificar>
+        </margin8>
+    </xhtml>
+                    """ % (_("DESCRIPCION: "), _("Sin descripcion."))
+                    xml_plantilla = """<?xml version="1.0" encoding="UTF-8"?>
+    <xhtml>
+        <margin8>
+            <superbig>
+                <b>
+                    <verde><pr>%s</pr></verde>
+                </b>
+            </superbig>
+            <br />
+            <h1><pr>%s</pr></h1>
+        </margin8>
+    </xhtml>
+                    """ % ( util.parsear_a_XML(self.sel_juego.obj.title),
+                            _('No hay datos de este juego. Intente actualizar la base de datos de WiiTDB.')
+                            )
+                            
             else:
-                xml_plantilla_descripcion = """<?xml version="1.0" encoding="UTF-8"?>
-<xhtml>                
-    <margin8>
-        <big>
-            <verde>
-                <pr>%s</pr>
-            </verde>
-        </big>
-        <justificar>
-            <pr>%s</pr><br />
-        </justificar>
-    </margin8>
-</xhtml>
-                """ % (_("DESCRIPCION: "), _("Sin descripcion."))
-                xml_plantilla = """<?xml version="1.0" encoding="UTF-8"?>
-<xhtml>
-    <margin8>
-        <superbig>
-            <b>
-                <verde><pr>%s</pr></verde>
-            </b>
-        </superbig>
-        <br />
-        <h1><pr>%s</pr></h1>
-    </margin8>
-</xhtml>
-                """ % ( util.parsear_a_XML(self.sel_juego.obj.title),
-                        _('No hay datos de este juego. Intente actualizar la base de datos de WiiTDB.')
-                        )
+                error = True
 
         else:
+            error = True
 
+        if error:
             xml_plantilla_descripcion = """<?xml version="1.0" encoding="UTF-8"?>
 <xhtml>                
     <margin8>
@@ -1615,11 +1648,16 @@ class WiithonGUI(GtkBuilderWrapper):
         elif(id_tb == self.wb_tb_preferencias):
             if not self.wiitdb_mutex:
                 self.wb_prefs.run()
-                self.poolTrabajo.actualizarPreferencias()
-                self.poolBash.actualizarPreferencias()
-                self.wb_prefs.hide()
+                self.ocultar_preferencias()
             else:
                 self.alert("error" , _("Hay una tarea que esta bloqueando las preferencias.\n\nEspere a que finalize."))
+                
+    def ocultar_preferencias(self, actualizar_preferencias = True):
+        if actualizar_preferencias:
+            self.poolTrabajo.actualizarPreferencias()
+            self.poolBash.actualizarPreferencias()
+        self.wb_prefs.hide()
+        
             
 ######### HERRAMIENTAS Y UTILIDADES #################
 
@@ -1633,8 +1671,7 @@ class WiithonGUI(GtkBuilderWrapper):
                                                             self.wb_prefs_vbox_wiitdb,
                                                             False
                                                             )
-            self.poolTrabajo.actualizarPreferencias()
-            self.poolBash.actualizarPreferencias()
+            self.ocultar_preferencias()
             self.alert("warning" , _("La BDD ha sido formateada.") + '\n' + _("Es recomendable que reinicie la aplicacion"))
             self.refrescarParticionesWBFS()
 
@@ -1687,7 +1724,7 @@ class WiithonGUI(GtkBuilderWrapper):
         
         # evitar usar preferencias mientras mete datos
         self.wiitdb_mutex = True
-        self.wb_prefs.hide()
+        self.ocultar_preferencias(False)
 
     def callback_spinner(self, cont, total):
         porcentaje = (cont * 100.0 / total)
@@ -1728,7 +1765,7 @@ class WiithonGUI(GtkBuilderWrapper):
         #self.actualizarOrientation(gtk.PROGRESS_LEFT_TO_RIGHT)
 
     def callback_termina_importar(self, xml, todos):
-        if not todos:
+        if todos:
             self.wiitdb_mutex = False
             self.actualizarLabel(_("Finalizada satisfactoriamente la importacion de datos desde WiiTDB"))
             self.actualizarFraccion(1.0)
