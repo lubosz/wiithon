@@ -83,7 +83,7 @@ class Preferencias:
                                     ('D', _('Disc-art'))]
         self.iniciarPreferencia('select', 'DESTINO_ARRASTRE', defecto='C', mostrar=cargarWidget, vbox=prefs_vbox_general, label=_('Destino del arrastre de una imagen'), datos_lista = DESTINO_DRAG_AND_DROP)
         self.iniciarPreferencia('string', 'COMANDO_ABRIR_CARPETA', defecto='gnome-open', mostrar=cargarWidget, vbox=prefs_vbox_general, label=_('Comando para abrir carpetas'))
-        self.iniciarPreferencia('string', 'COMANDO_TERMINAL', defecto='gnome-terminal', mostrar=cargarWidget, vbox=prefs_vbox_general, label=_('Comando para abrir terminal'))
+        self.iniciarPreferencia('string', 'COMANDO_TERMINAL', defecto='xterm -geometry 80x24 -T "Format WBFS" -n "Format WBFS" -bg black -fg white -fn 12x24', mostrar=cargarWidget, vbox=prefs_vbox_general, label=_('Comando para abrir terminal'))
         
         # Listas de idiomas wiitdb
         WIITDB_LANGUAGE_LISTA =    [('EN', _('English')),

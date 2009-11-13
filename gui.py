@@ -732,6 +732,67 @@ class WiithonGUI(GtkBuilderWrapper):
         except AttributeError:
             pass
 
+    def dialog_select(self, titulo, label, boton_text, lista):
+        
+        botones = (gtk.STOCK_CANCEL, gtk.RESPONSE_CANCEL, str(boton_text), gtk.RESPONSE_ACCEPT)
+        const_stock_icon = gtk.STOCK_DIALOG_WARNING
+        default_response = gtk.RESPONSE_ACCEPT
+        
+        confirmar = gtk.Dialog(titulo, None,
+                        gtk.DIALOG_MODAL | gtk.DIALOG_DESTROY_WITH_PARENT,
+                        botones)           
+        confirmar.set_default_response(default_response)
+        confirmar.set_position(gtk.WIN_POS_CENTER)
+        #confirmar.set_default_size(-1,500)
+        confirmar.set_border_width(12)
+        confirmar.vbox.set_spacing(6)
+        
+        
+        ################################################################
+        
+        h1 = gtk.HBox(homogeneous=False, spacing=10)
+
+        etiqueta = gtk.Label()
+        etiqueta.set_text("<b>%s</b> : " % label)
+        etiqueta.set_use_markup(True)
+        etiqueta.set_alignment(0.0 , 0.5)
+        etiqueta.set_padding(5, -1)
+        etiqueta.show()
+        h1.pack_start(etiqueta, expand=False, fill=False, padding=0)
+
+        liststore = gtk.ListStore(str)
+        combobox = gtk.ComboBox(liststore)
+        cell = gtk.CellRendererText()
+        combobox.pack_start(cell, True)
+        combobox.add_attribute(cell, 'text', 0)  
+        for elem in lista:
+            combobox.append_text("%s" % (elem))
+        combobox.set_active(0)
+        combobox.show()
+        h1.pack_start(combobox, expand=False, fill=False, padding=0)
+        
+        ################################################################
+        
+        # poner el hbox (columnas) en el vbox reservado del dialogo
+        confirmar.vbox.pack_start(h1, True, True, 10)
+
+        # calculos del pintado
+        confirmar.show_all()
+        
+        # modal, esperando respuesta
+        respuesta  = confirmar.run()
+        
+        # devuelve el elemento de la lista elegido
+        if respuesta == gtk.RESPONSE_ACCEPT:
+            seleccionado = lista[combobox.get_active()]
+        else:
+            seleccionado = None
+        
+        # destruir dialogo
+        confirmar.destroy()
+        
+        return seleccionado
+
     '''
     question
     warning
@@ -773,7 +834,7 @@ class WiithonGUI(GtkBuilderWrapper):
             if titulo == '':
                 titulo = _("INFORMACION:")
         
-        confirmar = gtk.Dialog(titulo, self.wb_principal,
+        confirmar = gtk.Dialog(titulo, None,
                         gtk.DIALOG_MODAL | gtk.DIALOG_DESTROY_WITH_PARENT,
                         botones)           
         confirmar.set_default_response(default_response)
@@ -1676,9 +1737,26 @@ class WiithonGUI(GtkBuilderWrapper):
             self.refrescarParticionesWBFS()
 
     def on_button_formatear_wbfs_clicked(self, boton):
-        #comando = 'xterm -geometry 80x24 -T "%s" -n "%s" -bg black -fg white -fn 12x24 -e "wiithon -f --pause"' % (_("Formatear particion FAT"), _("Formateador WBFS"))
-        comando = '%s -e "%s -f --pause"' % (config.APP, self.core.prefs.COMANDO_TERMINAL)
-        salida = util.call_out_null(comando)
+        listaParticiones = self.core.sincronizarParticiones(config.DETECTOR_WBFS_FAT32)
+        if len(listaParticiones) == 0:
+            self.alert("warning" , "%s\n%s" % (_("Has conectado el disco duro? No se ha encontrado ninguna particion valida."), _("Comprueba que tienes la particion FAT32 montada.")))
+        else:
+            particion = self.dialog_select(_("Elige la particion WBFS con la que va a trabajar : "), _("Lista de particiones autodetectadas : "), _("Formatear a WBFS"), listaParticiones)
+            if particion is not None:
+                try:
+                    if self.question(_("Realmente, desea formatear a WBFS la particion %s? (S/N) ") % particion):
+                        if self.core.formatearWBFS(particion):
+                            self.ocultar_preferencias()
+                            self.refrescarParticionesWBFS()
+                            self.alert("info" , _("%s se ha formateado correctamente") % particion)
+                        else:
+                            self.alert("error" , _("Error al formatear %s") % particion)
+                    else:
+                        self.alert("info" , _("No se ha formateado %s") % particion)
+
+                except KeyboardInterrupt:
+                    self.alert("warning" , "%s\n%s" % (_("Interrumpido por el usuario."), _("No se ha formateado %s") % particion))
+            
         
     def on_button_abrir_carpeta_caratulas_clicked(self, boton):
         comando = '%s "%s"' % (self.core.prefs.COMANDO_ABRIR_CARPETA, config.HOME_WIITHON_CARATULAS)
@@ -1687,7 +1765,6 @@ class WiithonGUI(GtkBuilderWrapper):
     def on_button_abrir_carpeta_discart_clicked(self, boton):
         comando = '%s "%s"' % (self.core.prefs.COMANDO_ABRIR_CARPETA, config.HOME_WIITHON_DISCOS)
         util.call_out_null(comando)
-
                 
 ########## WIITDB ###########
                 
