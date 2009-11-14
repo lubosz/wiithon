@@ -561,7 +561,7 @@ msgstr "Personalizzabile ..."
 
 #: gui.py:945
 msgid "NOTA: Este es el nombre que aparecera en el USB Loader."
-msgstr "NOTA: questo è il nome che comparirà nell'USB Loader.""
+msgstr "NOTA: questo è il nome che comparirà nell'USB Loader."
 
 #: gui.py:945
 msgid "Nombres propuestos por la informacion WiiTDB"
