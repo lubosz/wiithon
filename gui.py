@@ -340,6 +340,7 @@ class WiithonGUI(GtkBuilderWrapper):
                     self.alert("warning" , _("No hay particiones WBFS, se muestran los juegos de la ultima sesion."))
                 else:
                     self.alert("warning" , _("No puede acceder a las particiones porque el usuario que se puso en marcha wiithon no pertenecen al grupo \"disk\", se muestran los juegos de la ultima sesion."))
+
             elif (self.core.prefs.ADVERTENCIA_ACTUALIZAR_WIITDB and (len(self.lJuegos) > 0) and self.info.abajo_num_juegos_wiitdb == 0):
                 if (self.question("""
             <b>
@@ -664,6 +665,11 @@ class WiithonGUI(GtkBuilderWrapper):
             i = i + 1
 
     def editar_idgame( self, renderEditable, i, nuevoIDGAME):
+        # renderEditable no se utiliza
+        # i no se utiliza
+        self.editar_idgame_verificando(nuevoIDGAME)
+
+    def editar_idgame_verificando( self, nuevoIDGAME):
         if self.sel_juego.it != None:
             nuevoIDGAME = nuevoIDGAME.upper()
             if(self.sel_juego.obj.idgame != nuevoIDGAME):
@@ -690,6 +696,11 @@ class WiithonGUI(GtkBuilderWrapper):
                     self.alert('error' , _("Error: La longitud del IDGAME debe ser 6, y solo puede contener letras y numeros"))
 
     def editar_nombre( self, renderEditable, i, nuevoNombre):
+        # renderEditable no se utiliza
+        # i no se utiliza
+        self.editar_nombre_verificando( nuevoNombre)
+        
+    def editar_nombre_verificando( self, nuevoNombre):        
         if self.sel_juego.it != None:
             nombreActual = self.sel_juego.obj.title
             if(nombreActual != nuevoNombre):
@@ -750,7 +761,7 @@ class WiithonGUI(GtkBuilderWrapper):
         h1 = gtk.HBox(homogeneous=False, spacing=10)
 
         etiqueta = gtk.Label()
-        etiqueta.set_text("<b>%s</b>" % label)
+        etiqueta.set_text("%s" % label)
         etiqueta.set_use_markup(True)
         etiqueta.set_alignment(0.0 , 0.5)
         etiqueta.set_padding(5, -1)
@@ -909,6 +920,37 @@ class WiithonGUI(GtkBuilderWrapper):
 
     def question(self, pregunta, titulo = '', xml = False):
         return self.alert('question', pregunta, titulo, xml)
+        
+    def personalizar_nombre_juego_seleccionado(self):
+        if self.sel_parti.it != None:
+            self.wb_tv_games.grab_focus()
+            path = self.sel_juego.get_path(self.wb_tv_games)
+            self.wb_tv_games.set_cursor(path , self.columna2 , True)
+
+        else:
+            self.alert("warning" , _("No has seleccionado ninguna particion"))
+        
+    def proponer_nombre_juego(self, juego):
+        juegoWiiTDB = juego.getJuegoWIITDB() 
+        if juegoWiiTDB is not None:
+            lista_propuestas = NonRepeatList()
+            lista_propuestas.append("%s (%s)" % (juego.title, _("actual")))
+            for descripcion in juegoWiiTDB.descripciones:
+                lista_propuestas.append(descripcion)
+            lista_propuestas.append(_("Personalizable ..."))
+                
+            descripcion = self.dialog_select(lista_propuestas,
+                                _("Renombrar el juego %s.") % juego.title,
+                                "<b>%s</b>\n\n<small>%s</small>" % (_("Nombres propuestos por la informacion WiiTDB"), _("NOTA: Este es el nombre que aparecera en el USB Loader.")),
+                                _("Renombrar")
+                                )
+            if isinstance(descripcion, JuegoDescripcion):
+                self.editar_nombre_verificando(descripcion.title)
+            elif descripcion == _("Personalizable ..."):
+                self.personalizar_nombre_juego_seleccionado()
+
+        else:
+            self.personalizar_nombre_juego_seleccionado()
 
     # callback de la señal "changed" del buscador
     # Refresca de la base de datos y filtra según lo escrito.
@@ -1011,8 +1053,7 @@ class WiithonGUI(GtkBuilderWrapper):
             self.info.arriba_total = particion.total
             self.info.arriba_num_juegos = session.query(Juego).filter('idParticion = %d' % particion.idParticion).count()
             self.info.abajo_num_particiones = session.query(Particion).count()
-    
-    
+
     def refrescarInfoWiiTDB(self):
         
         if config.DEBUG:
@@ -1020,7 +1061,6 @@ class WiithonGUI(GtkBuilderWrapper):
             
         numInfos = 0
         query = session.query(Juego).group_by('idgame')
-
         for juego in query:
             if juego.getJuegoWIITDB() is not None:
                 numInfos += 1
@@ -1520,11 +1560,9 @@ class WiithonGUI(GtkBuilderWrapper):
 
                             # borrar disco
                             self.core.borrarDisco( self.sel_juego.obj )
-                            print "disc-art borrado"
 
                             # borrar caratula
                             self.core.borrarCaratula( self.sel_juego.obj )
-                            print "caratula borrada"
                         
                         # actualizar valores de usado/libre/total
                         self.sel_parti.obj.refrescarEspacioLibreUsado(self.core)
@@ -1576,15 +1614,7 @@ class WiithonGUI(GtkBuilderWrapper):
                 self.alert("warning" , _("No has seleccionado ningun juego"))
 
         elif(id_tb == self.wb_tb_renombrar):
-            if self.sel_parti.it != None:
-                # Obtiene el foco
-                self.wb_tv_games.grab_focus()
-                # Editar celda
-                path = self.sel_juego.get_path(self.wb_tv_games)
-                self.wb_tv_games.set_cursor(path , self.columna2 , True)
-
-            else:
-                self.alert("warning" , _("No has seleccionado ninguna particion"))
+            self.proponer_nombre_juego( self.sel_juego.obj )
 
         elif(id_tb == self.wb_tb_anadir or id_tb == self.wb_tb_anadir_directorio):
             if self.sel_parti.it != None:
@@ -1738,7 +1768,7 @@ class WiithonGUI(GtkBuilderWrapper):
         if len(listaParticiones) == 0:
             self.alert("warning" , "%s\n%s" % (_("Has conectado el disco duro? No se ha encontrado ninguna particion valida."), _("Comprueba que tienes la particion FAT32 montada.")))
         else:
-            particion = self.dialog_select( listaParticiones, _("Elige la particion WBFS con la que va a trabajar : "), _("Lista de particiones autodetectadas : "), _("Formatear a WBFS"))
+            particion = self.dialog_select( listaParticiones, _("Elige la particion WBFS con la que va a trabajar : "), "<b>%s</b>" % _("Lista de particiones autodetectadas : "), _("Formatear a WBFS"))
             if particion is not None:
                 try:
                     if self.question(_("Realmente, desea formatear a WBFS la particion %s? (S/N) ") % particion):
@@ -1879,6 +1909,9 @@ class WiithonGUI(GtkBuilderWrapper):
         
         # refrescar su espacio uso/libre/total
         juegoNuevo.particion.refrescarEspacioLibreUsado(self.core)
+        
+        # limpio el filtro antes de seleccionar
+        self.wb_busqueda.set_text('')
 
         # seleccionamos la particion y la fila del juego añadido       
         self.seleccionarFilaConValor(self.wb_tv_partitions, 0 , juegoNuevo.particion.device)
@@ -1888,7 +1921,8 @@ class WiithonGUI(GtkBuilderWrapper):
         self.refrescarInfoWiiTDB()
         
         # pregunta arreglar nombre
-        # PENDIENTE
+        if self.core.prefs.proponer_nombre:
+            self.proponer_nombre_juego(juegoNuevo)
 
     def termina_trabajo_copiar(self, juego , particion):
 
@@ -1898,6 +1932,9 @@ class WiithonGUI(GtkBuilderWrapper):
 
         # refrescar su espacio uso/libre/total
         particion.refrescarEspacioLibreUsado(self.core)
+        
+        # limpio el filtro antes de seleccionar
+        self.wb_busqueda.set_text('')
         
         # seleccionamos la particion y la fila del juego añadido
         self.seleccionarFilaConValor(self.wb_tv_partitions, 0 , juegoNuevo.particion.device)

@@ -179,7 +179,7 @@ class JuegoDescripcion(Base):
         self.synopsis = util.decode(synopsis)
         
     def __repr__(self):
-        return "%s (%s): %s" % (self.title, self.lang, self.synopsis)
+        return "%s (%s)" % (self.title, self.lang)
         
     def __setattr__(self, name, value):
         if isinstance(value, str):

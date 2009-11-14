@@ -72,6 +72,7 @@ class Preferencias:
         self.iniciarPreferencia('bool', 'rar_overwrite_iso', defecto=True, mostrar=cargarWidget, vbox=prefs_vbox_general, label=_('Los isos descomprimidos desde el rar remplaza imagenes iso sin preguntar.'))
         self.iniciarPreferencia('bool', 'rar_preguntar_borrar_iso', defecto=True, mostrar=cargarWidget, vbox=prefs_vbox_general, label=_('Pregunta borrar el .iso (cuando aniamos un rar)'))
         self.iniciarPreferencia('bool', 'rar_preguntar_borrar_rar', defecto=False, mostrar=cargarWidget, vbox=prefs_vbox_general, label=_('Pregunta borrar el .rar (cuando aniamos un rar)'))
+        self.iniciarPreferencia('bool', 'proponer_nombre', defecto=True, mostrar=cargarWidget, vbox=prefs_vbox_general, label=_('Proponer un nombre de wiitdb tras anadir el juego'))
         DESTINO_DRAG_AND_DROP =    [('C', _('Caratula')),
                                     ('D', _('Disc-art'))]
         self.iniciarPreferencia('select', 'DESTINO_ARRASTRE', defecto='C', mostrar=cargarWidget, vbox=prefs_vbox_general, label=_('Destino del arrastre de una imagen'), datos_lista = DESTINO_DRAG_AND_DROP)
