@@ -298,7 +298,9 @@ class JuegoWIITDB(Base):
     features = relation(OnlineFeatures, secondary=rel_online_features_juego)
     obligatorio = relation(Accesorio, secondary=rel_accesorio_juego_obligatorio)
     opcional = relation(Accesorio, secondary=rel_accesorio_juego_opcional)
-    genero = relation(Genero, secondary=rel_juego_genero)
+    genero = relation(Genero, secondary=rel_juego_genero, backref='juego_wiitdb')
+
+    #idJuego = Column('idJuego', Integer, ForeignKey('juego.idJuego'), nullable=True)
 
     def __init__(self , idgame , name , region='', developer='', publisher='', anio='', mes='', dia='', wifi_players='', input_players=''):
         self.idgame = util.decode(idgame)
@@ -392,6 +394,8 @@ class Juego(Base):
     title = Column('title', Unicode(255))
     size = Column('size', Float)
     idParticion = Column("idParticion", Integer , ForeignKey('particion.idParticion'), nullable=False)
+    
+    #join_wiitdb = relation(JuegoWIITDB, primaryjoin=and_(idgame == JuegoWIITDB.idgame), foreign_keys=JuegoWIITDB.idJuego)
 
     def __init__(self , idgame , title , size):
         self.idgame = util.decode(idgame)

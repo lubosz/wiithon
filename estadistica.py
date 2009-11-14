@@ -226,8 +226,7 @@ class MuestraEstadistica:
         print "asimetria Bowley = %.2f" % self.asimetria_bowley()
         print "Curtosis = %.2f" % self.curtosis()
 
-##################### MAIN #############################
-
+'''
 def main():
     xi = [1,2,3,4,5,6]
     fa = [20,40,60,80,100,120]
@@ -236,3 +235,4 @@ def main():
 
 if __name__ == '__main__':
     main()
+'''

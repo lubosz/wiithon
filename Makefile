@@ -24,6 +24,9 @@ help:
 	@echo "Type: \"sudo make purge\" for full uninstall (covers, disc-art ...)"
 	@echo ==================================================================
 
+runEN:
+	LANGUAGE=en wiithon
+
 install_auto: dependencias compile install permisos
 
 dependencias:

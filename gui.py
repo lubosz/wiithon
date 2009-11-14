@@ -22,10 +22,11 @@ from builder_wrapper import GtkBuilderWrapper
 from trabajo import PoolTrabajo
 from animar import Animador
 from fila_treeview import FilaTreeview
-from wiitdb_schema import Juego, Particion, JuegoWIITDB, JuegoDescripcion, Preferencia
+from wiitdb_schema import Juego, Particion, JuegoWIITDB, JuegoDescripcion, Preferencia, Genero
 from informacion_gui import InformacionGuiPresentacion
 from selector_ficheros import SelectorFicheros
 from textview_custom import TextViewCustom
+from estadistica import MuestraEstadistica
 
 db =        util.getBDD()
 session =   util.getSesionBDD(db)
@@ -941,7 +942,7 @@ class WiithonGUI(GtkBuilderWrapper):
                 
             descripcion = self.dialog_select(lista_propuestas,
                                 _("Renombrar el juego %s.") % juego.title,
-                                "<b>%s</b>\n\n<small>%s</small>" % (_("Nombres propuestos por la informacion WiiTDB"), _("NOTA: Este es el nombre que aparecera en el USB Loader.")),
+                                "<b>%s</b>\n\n<small><i>%s</i></small>" % (_("Nombres propuestos por la informacion WiiTDB"), _("NOTA: Este es el nombre que aparecera en el USB Loader.")),
                                 _("Renombrar")
                                 )
             if isinstance(descripcion, JuegoDescripcion):
@@ -1309,11 +1310,37 @@ class WiithonGUI(GtkBuilderWrapper):
                         title = juego.name
                         synopsis = _('No se ha encontrado synopsis')
 
+                    '''
+                    i = 0
+                    xi = []
+                    fa = []
+                    for genero in session.query(Genero):
+                        xi.append(i)
+                        fa.append(len(genero.juego_wiitdb))
+                        i += 1
+                    '''
+                        
+                    #s = MuestraEstadistica(xi, fa)
+                    #s.analisis()
+
                     # generos
                     generos = ""
+                    i = 0
                     for genero in juego.genero:
-                        generos += genero.nombre + ", "
-                    generos=util.remove_last_separator( generos )
+                        
+                        cont = 0
+                        '''
+                        sql = util.decode("genero.nombre == '%s'" % (genero.nombre))
+                        for jw,g in session.query(JuegoWIITDB, Genero).filter(sql):
+                            sql = util.decode("juego.idgame == '%s'" % (jw.idgame))
+                            for j in session.query(Juego).filter(sql):
+                                cont += 1
+                        '''
+
+                        generos += "<big><pr>%s (%d)</pr></big>" % (util.parsear_a_XML(genero.nombre), len(genero.juego_wiitdb))
+                        i += 1
+                        if i != len(juego.genero):
+                            generos += "<rojo><b><pr>, </pr></b></rojo>"
                     
                     # accesorios obligatorios
                     xml_inject_accesorios_obligatorios = ""
@@ -1351,7 +1378,7 @@ class WiithonGUI(GtkBuilderWrapper):
                     <pr>%s</pr>
                 </azul>
             </big>
-            <pr>%s</pr>
+            %s
             <br />
             <b><i><pr>%s</pr></i></b>
                 <azul><i><pr>%s</pr></i></azul><br />
@@ -1372,8 +1399,7 @@ class WiithonGUI(GtkBuilderWrapper):
     </xhtml>
                     """ % (
                     util.parsear_a_XML(title),
-                    #util.parsear_a_XML(repr(self.sel_juego.obj)),
-                    _("GENERO: "), util.parsear_a_XML(generos),
+                    _("GENERO: "), generos,
                     _("Fecha de lanzamiento: "), juego.getTextFechaLanzamiento(self.core),
                     _("Desarrolador/Editorial: "), util.parsear_a_XML(juego.developer), util.parsear_a_XML(juego.publisher),
                     _("Num. jugadores en off-line: "), util.parsear_a_XML(juego.getTextPlayersLocal()),
@@ -1811,7 +1837,6 @@ class WiithonGUI(GtkBuilderWrapper):
                         ),
                         xml = True) ):
                 self.poolTrabajo.nuevoTrabajoActualizarWiiTDB(self.core.prefs.URL_ZIP_WIITDB)
-                print self.core.prefs.URL_ZIP_WIITDB
         else:
             self.alert("warning" , _("Ya estas descargando la informacion WiiTDB ..."))
         
@@ -1827,6 +1852,7 @@ class WiithonGUI(GtkBuilderWrapper):
         
         # evitar usar preferencias mientras mete datos
         self.wiitdb_mutex = True
+        # cerrar preferencias sin guardar cambios
         self.ocultar_preferencias(False)
 
     def callback_spinner(self, cont, total):
