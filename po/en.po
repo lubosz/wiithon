@@ -1000,27 +1000,27 @@ msgstr "Auxiliary language synopsis"
 
 #: preferencias.py:99
 msgid "Ancho imagen caratula"
-msgstr "Image width covers"
+msgstr "Cover image width"
 
 #: preferencias.py:100
 msgid "Altura imagen caratula"
-msgstr "Image height covers"
+msgstr "Cover image height"
 
 #: preferencias.py:101
 msgid "Ancho imagen disc-art"
-msgstr "Image width disc-art"
+msgstr "Disc-art image width"
 
 #: preferencias.py:102
 msgid "Altura imagen disc-art"
-msgstr "Image height disc-art"
+msgstr "Disc-art image height"
 
 #: preferencias.py:169
 msgid "Proveedor de caratulas"
-msgstr "Provider covers"
+msgstr "Covers provider"
 
 #: preferencias.py:200
 msgid "Proveedor de discos"
-msgstr "Provider discs"
+msgstr "Disc-arts provider"
 
 #: preferencias.py:243 preferencias.py:279 preferencias.py:297
 #: preferencias.py:316
@@ -1045,11 +1045,11 @@ msgstr "Open the folder containing the downloaded disc-arts"
 
 #: recursos/glade/wiithon.ui.h:5
 msgid "Abrir carpeta de caratulas"
-msgstr "Open folder covers"
+msgstr "Open covers folder"
 
 #: recursos/glade/wiithon.ui.h:6
 msgid "Abrir carpeta de disc-art"
-msgstr "Open folder to disc-art"
+msgstr "Open dist-arts folder"
 
 #: recursos/glade/wiithon.ui.h:7
 msgid "Acerca de ..."
@@ -1057,7 +1057,7 @@ msgstr "About ..."
 
 #: recursos/glade/wiithon.ui.h:8
 msgid "Actualiza la informacion de los juegos con BDD de Internet."
-msgstr "Update information for the Internet games with DB."
+msgstr "Update games informations from WiiTDB."
 
 #: recursos/glade/wiithon.ui.h:9
 msgid "Aniade un nuevo juego de Wii, a partir de una imagen ISO, que opcionalmente puede estar comprimida en RAR."
@@ -1081,7 +1081,7 @@ msgstr "Delete"
 
 #: recursos/glade/wiithon.ui.h:14
 msgid "Busca en todos los discos duros, particiones de tipo WBFS"
-msgstr "Search in all disks, partitions of type WBFS"
+msgstr "Search in all disks WBFS partitions"
 
 #: recursos/glade/wiithon.ui.h:15
 msgid "Buscar:"
@@ -1096,7 +1096,7 @@ msgid ""
 "Caratula del disco.\n"
 "Por defecto: 160x160"
 msgstr ""
-"Disc-art to the game.\n"
+"Game disc-art.\n"
 "Default size: 160x160"
 
 #: recursos/glade/wiithon.ui.h:19
@@ -1104,7 +1104,7 @@ msgid ""
 "Caratula del juego.\n"
 "Por defecto: 160x224"
 msgstr ""
-"Cover to the game.\n"
+"Game cover.\n"
 "Default size: 160x224"
 
 #: recursos/glade/wiithon.ui.h:21
@@ -1145,7 +1145,7 @@ msgstr "Free space / Total space"
 
 #: recursos/glade/wiithon.ui.h:30
 msgid "Extrae de la particion WBFS el juego seleccionado a una imagen ISO."
-msgstr "Extracts of the selected game WBFS partition to an ISO image."
+msgstr "Extract the selected game from a WBFS partition to an ISO image."
 
 #: recursos/glade/wiithon.ui.h:32
 msgid "Formatear BDD"
@@ -1153,7 +1153,7 @@ msgstr "Format DB"
 
 #: recursos/glade/wiithon.ui.h:34
 msgid "Formatear la BDD de Wiithon. Cuidado, poque se borraran todas las preferencias y toda la informacion de los juegos."
-msgstr "Formatting Wiithon BDD. Be careful!!! All preferences are erased and all information of the games."
+msgstr "Formatting Wiithon DB. Be careful!!! All preferences and games informations will be deleted."
 
 #: recursos/glade/wiithon.ui.h:35
 msgid "General"
@@ -1161,7 +1161,7 @@ msgstr "General"
 
 #: recursos/glade/wiithon.ui.h:36
 msgid "Hace copias directas de juegos entre particiones WBFS."
-msgstr "Direct Copy WBFS games between partitions."
+msgstr "Direct Copy games between WBFS partitions."
 
 #: recursos/glade/wiithon.ui.h:37
 msgid "Herramientas y utilidades"
@@ -1169,11 +1169,11 @@ msgstr "Tools and utilities"
 
 #: recursos/glade/wiithon.ui.h:38
 msgid "Informacion sobre Wiithon"
-msgstr "Information on Wiithon"
+msgstr "Wiithon informations"
 
 #: recursos/glade/wiithon.ui.h:39
 msgid "Lista de juegos de la particion seleccionada."
-msgstr "List of games for the selected partition."
+msgstr "Games list from selected partition."
 
 #: recursos/glade/wiithon.ui.h:40
 msgid "No cierre wiithon mientras esta animacion indique actividad"

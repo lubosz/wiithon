@@ -553,19 +553,19 @@ msgstr "Nessuna partizione selezionata"
 
 #: gui.py:938
 msgid "actual"
-msgstr ""
+msgstr "attuale"
 
 #: gui.py:941 gui.py:950
 msgid "Personalizable ..."
-msgstr ""
+msgstr "Personalizzabile ..."
 
 #: gui.py:945
 msgid "NOTA: Este es el nombre que aparecera en el USB Loader."
-msgstr ""
+msgstr "NOTA: questo è il nome che comparirà nell'USB Loader.""
 
 #: gui.py:945
 msgid "Nombres propuestos por la informacion WiiTDB"
-msgstr ""
+msgstr "Nomi proposti dalle informazioni WiiTDB"
 
 #: gui.py:1311
 msgid "No se ha encontrado synopsis"
@@ -917,7 +917,7 @@ msgstr "Richiede conferma cancellazione RAR"
 
 #: preferencias.py:75
 msgid "Proponer un nombre de wiitdb tras anadir el juego"
-msgstr ""
+msgstr "Propone un nome da WiiTDB dopo l'inserimento del gioco"
 
 #: preferencias.py:76
 msgid "Caratula"
