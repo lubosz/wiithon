@@ -474,7 +474,7 @@ class Trabajo:
         self.terminado = False
         self.exito = False
         self.padre = None
-        self.error = _("Error al finalizar la siguiente tarea:\n\n%s") % (self.__repr__())
+        self.error = "%s\n\n%s" % (_("Error al finalizar la siguiente tarea:") ,self.__repr__())
  
     def __repr__(self):
         if self.tipo == ANADIR:

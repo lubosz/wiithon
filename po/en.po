@@ -4,9 +4,9 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: makiolo@gmail.com\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2009-11-14 03:44+0100\n"
+"PO-Revision-Date: 2009-11-16 15:11+0100\n"
 "Last-Translator: Ricardo Marmolejo García <makiolo@gmail.com>\n"
-"Language-Team: Español <wii.sceners.linux@lists.launchpad.net>\n"
+"Language-Team: Español <kde-i18n-doc@kde.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -164,9 +164,9 @@ msgid "Error al formatear %s"
 msgstr "Formatting error %s"
 
 #: cli.py:255 cli.py:259 gui.py:1808 gui.py:1811
-#, fuzzy, python-format
+#, python-format
 msgid "No se ha formateado %s"
-msgstr "It has been formatted"
+msgstr "Don't it has been formatted %s"
 
 #: cli.py:258 gui.py:1811
 msgid "Interrumpido por el usuario."
@@ -351,7 +351,7 @@ msgstr "Total"
 #: cli.py:496
 msgid "AYUDA_CLI"
 msgstr ""
-"[USO]\n"
+"[USE]\n"
 "wiithon [-p /dev/sXx] [-g IDGAME] [-w /path/work] [--pause] [-h|-l|-f|-a|-e|-r|-d|-i|-m|--covers|--discs]\n"
 "\n"
 "Examples:\n"
@@ -506,7 +506,7 @@ msgstr ""
 "- The video game industry itself identifies the games so unique, and therefore should not have collision.\n"
 "- The ONLY good reason to rename a IDGAME will be able to repeatedly enter the same game with different IDGAME. The best example are Guitar Hero with \"customs\".\n"
 "\n"
-"¿Are you sure you rename the IDGAME?"
+"Are you sure you rename the IDGAME?"
 
 #: gui.py:693 gui.py:719
 msgid "Error renombrando"
@@ -1316,15 +1316,8 @@ msgid "Error: Ocurrio un error al introducir la informacion de juegos de WiiTDB"
 msgstr "Error: An error occurred when entering the information of the games"
 
 #: trabajo.py:477
-#, python-format
-msgid ""
-"Error al finalizar la siguiente tarea:\n"
-"\n"
-"%s"
-msgstr ""
-"Error finishing the following task:\n"
-"\n"
-"%s"
+msgid "Error al finalizar la siguiente tarea:"
+msgstr "Error finishing the following task:"
 
 #: trabajo.py:481
 #, python-format

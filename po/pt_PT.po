@@ -1307,11 +1307,7 @@ msgid "Error: Ocurrio un error al introducir la informacion de juegos de WiiTDB"
 msgstr "Error: Ocurrió un error al introducir la información de los juegos"
 
 #: trabajo.py:477
-#, python-format
-msgid ""
-"Error al finalizar la siguiente tarea:\n"
-"\n"
-"%s"
+msgid "Error al finalizar la siguiente tarea:"
 msgstr ""
 
 #: trabajo.py:481

@@ -1,13 +1,16 @@
+# Ricardo Marmolejo García <makiolo@gmail.com>, 2009.
 msgid ""
 msgstr ""
 "Project-Id-Version: wiithon 1.0\n"
 "Report-Msgid-Bugs-To: makiolo@gmail.com\n"
-"Last-Translator: Speedygonzales <fcpower78@googlemail.com>\n"
-"Language-Team: \n"
+"PO-Revision-Date: 2009-11-16 15:40+0100\n"
+"Last-Translator: Ricardo Marmolejo García <makiolo@gmail.com>\n"
+"Language-Team: Español <wii.sceners.linux@lists.launchpad.net>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: Lokalize 1.0\n"
 
 #: cli.py:44
 #, python-format
@@ -1254,15 +1257,8 @@ msgid "Error: Ocurrio un error al introducir la informacion de juegos de WiiTDB"
 msgstr ""
 
 #: trabajo.py:477
-#, python-format
-msgid ""
-"Error al finalizar la siguiente tarea:\n"
-"\n"
-"%s"
-msgstr ""
-"Fehler beim Abschluß des Vorgangs:\n"
-"\n"
-"%s"
+msgid "Error al finalizar la siguiente tarea:"
+msgstr "Fehler beim Abschluß des Vorgangs:"
 
 #: trabajo.py:481
 #, python-format

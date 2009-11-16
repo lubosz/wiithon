@@ -1316,15 +1316,8 @@ msgid "Error: Ocurrio un error al introducir la informacion de juegos de WiiTDB"
 msgstr "Erro: Ocorreu um erro ao entrar com a informação dos jogos do WiiTDB"
 
 #: trabajo.py:477
-#, python-format
-msgid ""
-"Error al finalizar la siguiente tarea:\n"
-"\n"
-"%s"
-msgstr ""
-"Erro ao finalizar a seguinte tarefa:\n"
-"\n"
-"%s"
+msgid "Error al finalizar la siguiente tarea:"
+msgstr "Erro ao finalizar a seguinte tarefa:"
 
 #: trabajo.py:481
 #, python-format
@@ -1445,6 +1438,3 @@ msgstr "Programa executado com as opes incorretas."
 #: wiithon.py:86
 msgid "Interrumpido por el usuario"
 msgstr "Interrompido pelo usuário"
-
-#~ msgid "Comando para abrir terminal"
-#~ msgstr "Comando para abrir terminal"

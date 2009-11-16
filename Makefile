@@ -36,6 +36,9 @@ dependencias:
 	@echo "Install depends OK"
 	@echo "=================================================================="
 
+fuzzyies:
+	-@grep -n fuzzy po/*.po
+
 da_DK: po/locale/da_DK/LC_MESSAGES/wiithon.mo
 fi_FI: po/locale/fi_FI/LC_MESSAGES/wiithon.mo
 tr_TR: po/locale/tr_TR/LC_MESSAGES/wiithon.mo
@@ -347,13 +350,11 @@ unrar-nonfree/wiithon_unrar: unrar-nonfree/*.cpp unrar-nonfree/*.hpp
 	$(MAKE) -C unrar-nonfree
 
 gen_rev_now:
-# fixme, works but exists file_exists() in makefile ?
 ifeq ($(shell if [ -x .bzr ]; then echo "y"; else echo "n"; fi), y)
 	echo $(REV_ACTUAL) > doc/REVISION
 endif
 
 gen_rev_next:
-# fixme, works but exists file_exists() in makefile ?
 ifeq ($(shell if [ -x .bzr ]; then echo "y"; else echo "n"; fi), y)
 	echo $(REV_NEXT) > doc/REVISION
 endif
@@ -387,7 +388,7 @@ recursos/glade/%.ui.h: recursos/glade/%.ui
 # tambien he quitado los comentarios con --no-location
 # --no-location
 po/%.po: po/plantilla.pot
-	msgmerge -U -N --no-wrap --sort-by-file $@ $(filter %.pot, $^)
+	msgmerge -U --no-wrap --sort-by-file $@ $(filter %.pot, $^)
 	@touch $@
 
 # generar MO

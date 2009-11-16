@@ -1,18 +1,21 @@
+# Ricardo Marmolejo García <makiolo@gmail.com>, 2009.
 msgid ""
 msgstr ""
-"Project-Id-Version: wiithon 1.0\n"
+"Project-Id-Version: wiithon 1.12\n"
 "Report-Msgid-Bugs-To: makiolo@gmail.com\n"
-"Last-Translator: carel\n"
-"Language-Team: \n"
+"PO-Revision-Date: 2009-11-16 15:17+0100\n"
+"Last-Translator: Ricardo Marmolejo García <makiolo@gmail.com>\n"
+"Language-Team: Español <kde-i18n-doc@kde.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: Lokalize 1.0\n"
 
 #: cli.py:44
 #, python-format
 msgid "No se ha encontrado la particion: %s"
-msgstr ""
+msgstr "Pas de partition %s trouvée "
 
 #: cli.py:53 gui.py:1797
 msgid "Lista de particiones autodetectadas : "
@@ -25,7 +28,7 @@ msgstr ""
 
 #: cli.py:61 gui.py:1797
 msgid "Elige la particion WBFS con la que va a trabajar : "
-msgstr ""
+msgstr "Choisissez la partition WBFS :"
 
 #: cli.py:63
 msgid "Saliendo por peticion del usuario."
@@ -42,7 +45,7 @@ msgstr "Valeur incorrecte"
 #: cli.py:155
 #, python-format
 msgid "Extraer Juego %s a ISO"
-msgstr ""
+msgstr "Extraire le jeu %s en ISO"
 
 #: cli.py:157
 #, python-format
@@ -57,7 +60,7 @@ msgstr "ERREUR lors de l'extraction de l'ISO depuis %s"
 #: cli.py:161 gui.py:944
 #, python-format
 msgid "Renombrar el juego %s."
-msgstr ""
+msgstr "Renommer le jeu %s"
 
 #: cli.py:162
 msgid "Escriba el nuevo nombre : "
@@ -75,7 +78,7 @@ msgstr "ERREUR lors du renommage"
 #: cli.py:171
 #, python-format
 msgid "Borrando juego %s"
-msgstr ""
+msgstr "Suppression du jeu %s"
 
 #: cli.py:173
 #, python-format
@@ -93,19 +96,19 @@ msgstr "Pas de jeu sélectionné"
 #: cli.py:179
 #, python-format
 msgid "La particion %s no contiene juegos"
-msgstr ""
+msgstr "La partition %s ne contient aucun jeu"
 
 #: cli.py:189
 msgid "Buscando ficheros RAR recursivamente ... "
-msgstr ""
+msgstr "Recherche récursive de fichiers RAR"
 
 #: cli.py:192
 msgid "Buscando imagenes ISO recursivamente ... "
-msgstr ""
+msgstr "Recherche récursive d'images ISO"
 
 #: cli.py:207
 msgid "No se ha encontrado ninguna imagen ISO o RAR"
-msgstr ""
+msgstr "Impossible de trouver une image ISO ou RAR"
 
 #: cli.py:212
 #, python-format
@@ -118,7 +121,7 @@ msgstr "Insérez un jeu Wii dans le lecteur DVD ..."
 
 #: cli.py:217
 msgid "Juegos originales, solo con lectores LG."
-msgstr ""
+msgstr "Jeux originaux, uniquement avec lecteurs LG"
 
 #: cli.py:218
 msgid "Pulse cualquier tecla para continuar ... "
@@ -134,7 +137,7 @@ msgstr "ERREUR, lors du téléchargement de jaquettes"
 
 #: cli.py:238
 msgid "Tarea finalizada"
-msgstr ""
+msgstr "Tâche accomplie"
 
 #: cli.py:240 cli.py:261 gui.py:1795
 msgid "Has conectado el disco duro? No se ha encontrado ninguna particion valida."
@@ -143,21 +146,22 @@ msgstr " Aucune partition WBFS trouvée : avez vous connecté votre disque conte
 #: cli.py:248 gui.py:1800
 #, python-format
 msgid "Realmente, desea formatear a WBFS la particion %s? (S/N) "
-msgstr ""
+msgstr "Souhaitez-vous réellement formater la partition %s en WBFS ? (O/N)"
 
+# does this means "yes" ?
 #: cli.py:249 cli.py:406
 msgid "s"
-msgstr ""
+msgstr "o"
 
 #: cli.py:251 gui.py:1804
 #, python-format
 msgid "%s se ha formateado correctamente"
-msgstr ""
+msgstr "%s a été formaté avec succès"
 
 #: cli.py:253 gui.py:1806
 #, python-format
 msgid "Error al formatear %s"
-msgstr ""
+msgstr "Erreur de formatage de %s"
 
 #: cli.py:255 cli.py:259 gui.py:1808 gui.py:1811
 #, python-format
@@ -166,11 +170,11 @@ msgstr ""
 
 #: cli.py:258 gui.py:1811
 msgid "Interrumpido por el usuario."
-msgstr ""
+msgstr "Arrêt par l'utilisateur"
 
 #: cli.py:262 gui.py:1795
 msgid "Comprueba que tienes la particion FAT32 montada."
-msgstr ""
+msgstr "Vérifiez que vous avez monté la partition FAT32."
 
 #: cli.py:269
 msgid "Pulse cualquier tecla para continuar ...\n"
@@ -179,17 +183,17 @@ msgstr "Appuyez sur une touche pour continuer... \n"
 #: cli.py:283 trabajo.py:327
 #, python-format
 msgid "El archivo RAR %s: No existe"
-msgstr ""
+msgstr "L'archive RAR %s n'existe pas"
 
 #: cli.py:287 trabajo.py:331
 #, python-format
 msgid "Error al descomprimrir. Ya existe %s. Si desea sobreescribirlo, modifique la opcion en preferencias."
-msgstr ""
+msgstr "Erreur lors de la décompression : %s existe déjà. Si vous souhaitez l'écraser, changez l'option dans les préférences."
 
 #: cli.py:294 trabajo.py:341
 #, python-format
 msgid "Error: El archivo RAR %s no contiene ninguna ISO"
-msgstr ""
+msgstr "Erreur : l'archive RAR %s ne contient aucune ISO"
 
 #: cli.py:300 trabajo.py:347
 #, python-format
@@ -199,22 +203,22 @@ msgstr ""
 #: cli.py:315 trabajo.py:361
 #, python-format
 msgid "Error al descomrpimir el RAR : %s"
-msgstr ""
+msgstr "Erreur lors de l'archive RAR %s"
 
 #: cli.py:322
 #, python-format
 msgid "ISO %s aniadida correctamente"
-msgstr "ISO %s ajouté"
+msgstr "ISO %s ajoutée"
 
 #: cli.py:324
 #, python-format
 msgid "ERROR aniadiendo la ISO : %s (comprueba que sea una ISO de WII)"
-msgstr "ERROR lors de l'ajout ISO : %s (vérifiez que c'est une ISO de jeu Wii)"
+msgstr "ERREUR lors de l'ajout de l'ISO %s (vérifiez que c'est une ISO de jeu Wii)"
 
 #: cli.py:343
 #, python-format
 msgid "Copiar .%s: %s a la particion %s"
-msgstr ""
+msgstr "Copier .%s : %s vers la partition %s"
 
 #: cli.py:351
 #, python-format
@@ -256,7 +260,7 @@ msgstr "Une ISO existe déjà dans : %s"
 
 #: cli.py:405
 msgid "Desea reemplazarla (S/N) : "
-msgstr "Souhaitez-vous remplacer ? (Y/N) :"
+msgstr "Souhaitez-vous remplacer ? (O/N) :"
 
 #: cli.py:410
 #, python-format
@@ -270,17 +274,17 @@ msgstr ""
 #: cli.py:415
 #, python-format
 msgid "OK, el juego se ha pasado a la particion %s"
-msgstr ""
+msgstr "OK, le jeu a été transféré sur la partition %s"
 
 #: cli.py:417
 #, python-format
 msgid "Error al pasar la ISO a la particion %s"
-msgstr ""
+msgstr "Échec du transfert de l'ISO sur la partition %s"
 
 #: cli.py:418
 #, python-format
 msgid "wiithon no borra la ISO temporal: %s, puedes borrarla si no la necesitas"
-msgstr ""
+msgstr "wiithon ne supprime pas l'ISO temporaire : %s, vous pouvez la supprimer si vous n'en avez pas besoin"
 
 #: cli.py:420
 msgid "Error al dumpear la ISO"
@@ -289,7 +293,7 @@ msgstr "Erreur lors du dump de l'ISO"
 #: cli.py:434
 #, python-format
 msgid "No se ha encontrado el juego: %s"
-msgstr ""
+msgstr "Impossible de trouver le jeu: %s"
 
 #: cli.py:444
 msgid "Indique el NUM del juego : "
@@ -309,7 +313,7 @@ msgstr "Jaquette?"
 
 #: cli.py:464 cli.py:466
 msgid "SIZE"
-msgstr ""
+msgstr "TAILLE"
 
 #: cli.py:464 cli.py:466
 msgid "TITULO"
@@ -346,7 +350,36 @@ msgstr "Total"
 
 #: cli.py:496
 msgid "AYUDA_CLI"
-msgstr "AYUDA_CLI"
+msgstr ""
+"[USE]\n"
+"wiithon [-p /dev/sXx] [-g IDGAME] [-w /path/work] [--pause] [-h|-l|-f|-a|-e|-r|-d|-i|-m|--covers|--discs]\n"
+"\n"
+"Examples:\n"
+"wiithon --ls\n"
+"wiithon -m\n"
+"wiithon -r\n"
+"wiithon -a mario.iso\n"
+"wiithon -a *.iso\n"
+"wiithon -p /dev/sdb1 -l\n"
+"wiithon --partition /dev/sdb2 --game RXG957 --rename\n"
+"\n"
+"[CONFIGURATION]\n"
+"\t-p,--partition:\tSet the partition of work. Unless stated or question is autodetected.\n"
+"\t-g,--game:\tSets the working set. Unless stated or question is autodetected.\n"
+"\t-w,--work:\tSets the working directory. If not specified the current directory is set.\n"
+"\t--pause:\tPause the application at the end of its execution\n"
+"\n"
+"[ACTIONS]\n"
+"\t-l,--ls:\tLists games\n"
+"\t-f,--format:\tConvert a FAT32 partition WBFS\n"
+"\t-m,--massive:\tAdd recursively all ISO and RAR found from the working directory.\n"
+"\t-a,--add:\tAdd a new ISO or RAR. Basic regular expressions are allowed as *.iso or *.rar\n"
+"\t-e,--extract:\tExtract a partition game WBFS ISO\n"
+"\t-r,--rename:\tRename a game.\n"
+"\t-d,--delete:\tDeleting a game.\n"
+"\t-i,--install:\tInstall a game in the WBFS partition from the DVD. (only backups, it is necessary for a reader original LG).\n"
+"\t--covers:\tDownload and copy all the covers to the current working directory.\n"
+"\t--discs:\tDownload and copy all the disc-ss current working directory."
 
 #: core.py:172 core.py:185
 msgid "Copiando"
@@ -355,12 +388,12 @@ msgstr "Copie en cours"
 #: core.py:213
 #, python-format
 msgid "Descargando disco de %s ..."
-msgstr ""
+msgstr "Téléchargement du disque %s ..."
 
 #: core.py:233
 #, python-format
 msgid "Descargando caratula de %s desde %s ..."
-msgstr ""
+msgstr "Téléchargement de la jaquette %s de %s ..."
 
 #: gui.py:79 gui.py:946 recursos/glade/wiithon.ui.h:54
 msgid "Renombrar"
@@ -376,19 +409,19 @@ msgstr "Copie vers une autre partition"
 
 #: gui.py:341
 msgid "No hay particiones WBFS, se muestran los juegos de la ultima sesion."
-msgstr ""
+msgstr "Pas de partition WBFS, les jeux de la dernière session seront affichés."
 
 #: gui.py:343
 msgid "No puede acceder a las particiones porque el usuario que se puso en marcha wiithon no pertenecen al grupo \"disk\", se muestran los juegos de la ultima sesion."
-msgstr ""
+msgstr "Vous ne pouvez pas accéder aux partitions, car l'utilisateur qui a lancé wiithon n'appartient pas au groupe \"disk\". Les jeux de la dernière session seront affichés."
 
 #: gui.py:357
 msgid "Se ha detectado que ninguno de tus juegos disponen de informacion extra, descargada de Internet."
-msgstr ""
+msgstr "Aucun de vos jeux ne disposent d'informations additionnelles téléchargées sur internet."
 
 #: gui.py:358
 msgid "Deseas descargar informacion de los juegos desde WiiTDB?"
-msgstr ""
+msgstr "Voulez-vous télécharger des informations sur les jeux provenant de WiiTDB ?"
 
 #: gui.py:367
 msgid "No puedes refrescar las particiones mientras hay tareas sin finalizar"
@@ -400,11 +433,11 @@ msgstr "Format inconnu"
 
 #: gui.py:389
 msgid "Por favor. Informe a los desarrolladores de este error."
-msgstr ""
+msgstr "Merci d'informer les développeurs de cette erreur."
 
 #: gui.py:391
 msgid "Utitice la siguiente URL para el reporte de bugs:"
-msgstr ""
+msgstr "Utilisez l'URL suivante pour signaler des bogues :"
 
 #: gui.py:468
 msgid "Dispositivo"
@@ -412,15 +445,15 @@ msgstr "Périphérique"
 
 #: gui.py:519
 msgid "BDD"
-msgstr ""
+msgstr "BDD"
 
 #: gui.py:520
 msgid "WBFS?"
-msgstr ""
+msgstr "WBFS?"
 
 #: gui.py:522
 msgid "TODOS"
-msgstr ""
+msgstr "AFAIRE"
 
 #: gui.py:543
 msgid "IDGAME"
@@ -432,23 +465,23 @@ msgstr "Nom"
 
 #: gui.py:545
 msgid "Size"
-msgstr ""
+msgstr "Taille"
 
 #: gui.py:546
 msgid "Online?"
-msgstr ""
+msgstr "En ligne ?"
 
 #: gui.py:547
 msgid "Local"
-msgstr ""
+msgstr "Local"
 
 #: gui.py:548
 msgid "Fecha"
-msgstr ""
+msgstr "Date"
 
 #: gui.py:549
 msgid "Rating"
-msgstr ""
+msgstr "Note"
 
 #: gui.py:550
 msgid "Particion"
@@ -456,15 +489,24 @@ msgstr "Partition"
 
 #: gui.py:652
 msgid "+Info"
-msgstr ""
+msgstr "+Info"
 
 #: gui.py:656 gui.py:657 gui.py:658 gui.py:659 gui.py:660 wiitdb_schema.py:371
 msgid "??"
-msgstr ""
+msgstr "??"
 
 #: gui.py:682
 msgid "TRADUCIR_ADVERTENCIA_SEGURIDAD_RENAME_IDGAME"
 msgstr ""
+"!!!! ATTENTION !!!!!\n"
+"\n"
+"This is a security warning to warn of the consequences of renaming the IDGAME.\n"
+"- It is strange that really need to rename the IDGAME.\n"
+"- If you change the IDGAME may not find the cover art and disc correctly.\n"
+"- The video game industry itself identifies the games so unique, and therefore should not have collision.\n"
+"- The ONLY good reason to rename a IDGAME will be able to repeatedly enter the same game with different IDGAME. The best example are Guitar Hero with \"customs\".\n"
+"\n"
+"Are you sure you rename the IDGAME?"
 
 #: gui.py:693 gui.py:719
 msgid "Error renombrando"
@@ -490,23 +532,23 @@ msgstr "Le nouveau nom est trop long, essayez un texte de moins de %d caractère
 
 #: gui.py:820
 msgid "PREGUNTA:"
-msgstr ""
+msgstr "QUESTION :"
 
 #: gui.py:826
 msgid "WARNING:"
-msgstr ""
+msgstr "ATTENTION :"
 
 #: gui.py:832
 msgid "ERROR:"
-msgstr ""
+msgstr "ERREUR :"
 
 #: gui.py:838
 msgid "AUTENTIFICACION:"
-msgstr ""
+msgstr "AUTHENTIFICATION :"
 
 #: gui.py:844
 msgid "INFORMACION:"
-msgstr ""
+msgstr "INFORMATION :"
 
 #: gui.py:932 gui.py:1606 gui.py:1732
 msgid "No has seleccionado ninguna particion"
@@ -530,51 +572,51 @@ msgstr ""
 
 #: gui.py:1311
 msgid "No se ha encontrado synopsis"
-msgstr ""
+msgstr "Aucun synopsis trouvé"
 
 #: gui.py:1357
 msgid "ACCESORIOS: "
-msgstr ""
+msgstr "ACCESSOIRES :"
 
 #: gui.py:1362
 msgid "OPCIONALES: "
-msgstr ""
+msgstr "OPTIONS :"
 
 #: gui.py:1402
 msgid "GENERO: "
-msgstr ""
+msgstr "Genre :"
 
 #: gui.py:1403
 msgid "Fecha de lanzamiento: "
-msgstr ""
+msgstr "Paru le :"
 
 #: gui.py:1404
 msgid "Desarrolador/Editorial: "
-msgstr ""
+msgstr "Développeur / Éditeur :"
 
 #: gui.py:1405
 msgid "Num. jugadores en off-line: "
-msgstr ""
+msgstr "Nb. joueurs hors-ligne"
 
 #: gui.py:1406
 msgid "Capacidad On-line: "
-msgstr ""
+msgstr "Capacité onligne :"
 
 #: gui.py:1407
 msgid "Clasificacion parental: "
-msgstr ""
+msgstr "Classification parentale (PEGI)"
 
 #: gui.py:1424 gui.py:1440 gui.py:1477
 msgid "DESCRIPCION: "
-msgstr ""
+msgstr "DESCRIPTION :"
 
 #: gui.py:1440 gui.py:1477
 msgid "Sin descripcion."
-msgstr ""
+msgstr "Pas de description."
 
 #: gui.py:1454
 msgid "No hay datos de este juego. Intente actualizar la base de datos de WiiTDB."
-msgstr ""
+msgstr "Pas de date pour ce jeu. Essayez de mettre à jour la base de données WiiTDB."
 
 #: gui.py:1501
 msgid "Tienes que seleccionar una particion WBFS para realizar esta accion"
@@ -583,7 +625,7 @@ msgstr "Vous devez sélectionner une partition WBFS pour réaliser cette action"
 #: gui.py:1529
 #, python-format
 msgid "Desea copiar el juego %s a la particion %s?"
-msgstr ""
+msgstr "Souhaitez-vous copier le jeu %s vers la partition %s ?"
 
 #: gui.py:1544
 msgid "Se van a copiar los siguientes juegos a"
@@ -604,21 +646,21 @@ msgstr "Démarrer la copie ?"
 #: gui.py:1567
 #, python-format
 msgid "No hay nada que copiar a %s"
-msgstr ""
+msgstr "Rien à copier vers %s"
 
 #: gui.py:1569
 msgid "Debes tener al menos 2 particiones WBFS para hacer copias 1:1"
-msgstr ""
+msgstr "Vous devez avoir au moins 2 partitions WBFS pour faire des copies 1:1 "
 
 #: gui.py:1574
 #, python-format
 msgid "Quieres borrar el juego: %s?"
-msgstr ""
+msgstr "Souhaitez-vous supprimer le jeu %s ?"
 
 #: gui.py:1603
 #, python-format
 msgid "Error borrando el juego %s"
-msgstr ""
+msgstr "Erreur lors de la suppression du jeu %s"
 
 #: gui.py:1613
 #, python-format
@@ -628,11 +670,11 @@ msgstr "Choisissez le dossier dans lequel extraire l'ISO %s"
 #: gui.py:1624
 #, python-format
 msgid "Desea reemplazar la iso del juego %s?"
-msgstr ""
+msgstr "Souhaitez-vous remplacer l'ISO du jeu %s ?"
 
 #: gui.py:1627
 msgid "Espacio libre insuficiente para extraer la ISO"
-msgstr ""
+msgstr "Espace libre insuffisant pour extraire l'ISO"
 
 #: gui.py:1649
 msgid "Elige una imagen ISO valida para Wii"
@@ -651,12 +693,12 @@ msgstr ""
 #: gui.py:1696
 #, python-format
 msgid "%s ya existe en %s\n"
-msgstr ""
+msgstr "%s existe déjà dans %s\n"
 
 #: gui.py:1699
 #, python-format
 msgid "%s no es un ISO de Wii.\n"
-msgstr ""
+msgstr "%s n'est pas une ISO wii.\n"
 
 #: gui.py:1738
 msgid "Paso 1 de 2: Elige un directorio para las CARATULAS"
@@ -676,62 +718,65 @@ msgid ""
 "\n"
 "Espere a que finalize."
 msgstr ""
+"Une tâche bloque les préférences.\n"
+"\n"
+"Attendez qu'elle se termine."
 
 #: gui.py:1780
 msgid "Estas seguro de querer formatear la BDD? Se borraran tus preferencias y la informacion de los juegos"
-msgstr ""
+msgstr "Êtes-vous sûr de vouloir formater la base de données ? Vos préférences et les informations des jeux seront supprimées"
 
 #: gui.py:1789
 msgid "Es recomendable que reinicie la aplicacion"
-msgstr ""
+msgstr "Redémarrez l'application (recommandé)"
 
 #: gui.py:1789
 msgid "La BDD ha sido formateada."
-msgstr ""
+msgstr "La base de données a été formatée"
 
 #: gui.py:1797 recursos/glade/wiithon.ui.h:33
 msgid "Formatear a WBFS"
-msgstr ""
+msgstr "Formater en WBFS"
 
 #: gui.py:1835
 msgid "Seguro que deseas descargar informacion de los juegos de WiiTDB?"
-msgstr ""
+msgstr "Êtes-vous sûr de vouloir télécharger des données de jeux provenant de WiiTDB ?"
 
 #: gui.py:1841
 msgid "Ya estas descargando la informacion WiiTDB ..."
-msgstr ""
+msgstr "Téléchargement en cours des données de WiiTDB..."
 
 #: gui.py:1850
 msgid "Empezando a obtener datos de juegos desde WiiTDB"
-msgstr ""
+msgstr "Démarrage de la récupération des données de jeu de WiiTDB"
 
 #: gui.py:1860
 #, python-format
 msgid "%d%% - %d/%d games - %d descriptions - %d genre - %d accesories - %d companies - %d online features"
-msgstr ""
+msgstr "%d%% - %d/%d jeux - %d descriptions - %d genres - %d accessoires - %d éditeurs - %d fonctions online"
 
 #: gui.py:1884
 #, python-format
 msgid "Error importando %s: %s"
-msgstr ""
+msgstr "Erreur d'import %s : %s"
 
 #: gui.py:1887
 #, python-format
 msgid "Descargando WiiTDB desde %s, espere unos minutos ..."
-msgstr ""
+msgstr "Téléchargement WiiTDB de %s, patientez une minute..."
 
 #: gui.py:1892
 msgid "Empezando a descomprimir la informacion WiiTDB"
-msgstr ""
+msgstr "Démarrage de la décompression des données WiiTDB"
 
 #: gui.py:1899
 msgid "Finalizada satisfactoriamente la importacion de datos desde WiiTDB"
-msgstr ""
+msgstr "Importation de données de WiiTDB achevée avec succès"
 
 #: gui.py:1907
 #, python-format
 msgid "Deseas borrar el archivo %s?"
-msgstr ""
+msgstr "Voulez-vous supprimer le fichier %s ?"
 
 #: gui.py:2070
 #, python-format
@@ -746,16 +791,16 @@ msgstr "Terminé : %s"
 #: gui.py:2098
 #, python-format
 msgid "Falla la descarga de la caratula de %s"
-msgstr ""
+msgstr "Impossible de télécharger la pochette pour %s"
 
 #: gui.py:2107
 #, python-format
 msgid "Falla la descarga del disco de %s"
-msgstr ""
+msgstr "Impossible de télécharger le disque pour %s"
 
 #: gui.py:2155
 msgid "Finalizando ..."
-msgstr ""
+msgstr "Finalisation..."
 
 #: gui.py:2157
 msgid "ERROR!"
@@ -767,7 +812,7 @@ msgstr "reste"
 
 #: gui.py:2181
 msgid "Error en progreso"
-msgstr ""
+msgstr "Erreur en cours"
 
 #: gui.py:2189
 msgid "Empezando ..."
@@ -780,47 +825,47 @@ msgstr "%d jeux"
 
 #: informacion_gui.py:61
 msgid "No hay particiones WBFS"
-msgstr ""
+msgstr "Pas de partition WBFS"
 
 #: informacion_gui.py:63
 msgid "1 particion WBFS"
-msgstr ""
+msgstr "1 partition WBFS"
 
 #: informacion_gui.py:65
 #, python-format
 msgid "%d particiones WBFS"
-msgstr ""
+msgstr "%d partitions WBFS"
 
 #: informacion_gui.py:68
 #, python-format
 msgid "Hay %d juegos con informacion WiiTDB"
-msgstr ""
+msgstr "%d jeux possédant des données WiiTDB"
 
 #: informacion_gui.py:72
 msgid "No faltan caratulas"
-msgstr ""
+msgstr "Aucune pochette"
 
 #: informacion_gui.py:74
 msgid "1 juego sin caratula"
-msgstr ""
+msgstr "Un jeu sans pochette"
 
 #: informacion_gui.py:76
 #, python-format
 msgid "%d juegos sin caratula"
-msgstr ""
+msgstr "%d jeux sans pochettes"
 
 #: informacion_gui.py:80
 msgid "No faltan disc-art"
-msgstr ""
+msgstr "Aucun disque"
 
 #: informacion_gui.py:82
 msgid "1 juego sin disc-art"
-msgstr ""
+msgstr "1 jeu sans disque"
 
 #: informacion_gui.py:84
 #, python-format
 msgid "%d juegos sin disc-art"
-msgstr ""
+msgstr "%d jeux sans disques"
 
 #: informacion_gui.py:90
 #, python-format
@@ -833,7 +878,7 @@ msgstr ""
 
 #: preferencias.py:65
 msgid "Num. Hilos para tareas de fondo"
-msgstr ""
+msgstr "Nb threads pour les tâches de fond"
 
 #: preferencias.py:66
 msgid "Comando para abrir carpetas"
@@ -841,11 +886,11 @@ msgstr ""
 
 #: preferencias.py:67
 msgid "Mostrar una advertencia cuando no hay ninguna informacion WiiTDB"
-msgstr ""
+msgstr "Afficher un avertissement si aucune donnée WiiTDB n'a été trouvée"
 
 #: preferencias.py:68
 msgid "Mostrar una advertencia cuando no hay particiones WBFS"
-msgstr ""
+msgstr "Afficher un avertissement su aucune partition WBFS n'a été trouvée"
 
 #: preferencias.py:69
 msgid "Permitir establecer caratulas locales por arrastre"
@@ -877,11 +922,11 @@ msgstr ""
 
 #: preferencias.py:76
 msgid "Caratula"
-msgstr ""
+msgstr "Pochette"
 
 #: preferencias.py:77
 msgid "Disc-art"
-msgstr ""
+msgstr "Disque"
 
 #: preferencias.py:78
 msgid "Destino del arrastre de una imagen"
@@ -889,87 +934,87 @@ msgstr ""
 
 #: preferencias.py:81
 msgid "URL Base de datos WiiTDB"
-msgstr ""
+msgstr "URL vers la base de données WiiTDB"
 
 #: preferencias.py:82
 msgid "Formato fecha"
-msgstr ""
+msgstr "Format pour la date"
 
 #: preferencias.py:83
 msgid "Formato fecha corto"
-msgstr ""
+msgstr "Format court pour la date"
 
 #: preferencias.py:84
 msgid "English"
-msgstr ""
+msgstr "Anglais"
 
 #: preferencias.py:85
 msgid "Japanese"
-msgstr ""
+msgstr "Japonais"
 
 #: preferencias.py:86
 msgid "French"
-msgstr ""
+msgstr "Français"
 
 #: preferencias.py:87
 msgid "German"
-msgstr ""
+msgstr "Allemand"
 
 #: preferencias.py:88
 msgid "Spanish"
-msgstr ""
+msgstr "Espagnol"
 
 #: preferencias.py:89
 msgid "Italian"
-msgstr ""
+msgstr "Italien"
 
 #: preferencias.py:90
 msgid "Dutch"
-msgstr ""
+msgstr "Néerlandais"
 
 #: preferencias.py:91
 msgid "Portuguese"
-msgstr ""
+msgstr "Portugais"
 
 #: preferencias.py:92
 msgid "Chinese-Taiwan"
-msgstr ""
+msgstr "Chinois (Taiwan)"
 
 #: preferencias.py:93
 msgid "Chinese"
-msgstr ""
+msgstr "Chinois"
 
 #: preferencias.py:94
 msgid "Korean"
-msgstr ""
+msgstr "Coréen"
 
 #: preferencias.py:95
 msgid "Idioma principal para el synopsis"
-msgstr ""
+msgstr "Langue principale pour le synopsis"
 
 #: preferencias.py:96
 msgid "Idioma auxiliar para el synopsis"
-msgstr ""
+msgstr "Langue secondaire pour le synopsis"
 
 #: preferencias.py:99
 msgid "Ancho imagen caratula"
-msgstr ""
+msgstr "Pochette : largeur de l'image"
 
 #: preferencias.py:100
 msgid "Altura imagen caratula"
-msgstr ""
+msgstr "Pochette : hauteur de l'image"
 
 #: preferencias.py:101
 msgid "Ancho imagen disc-art"
-msgstr ""
+msgstr "Disque : largeur de l'image"
 
 #: preferencias.py:102
 msgid "Altura imagen disc-art"
-msgstr ""
+msgstr "Disque : hauteur de l'image"
 
 #: preferencias.py:169
 msgid "Proveedor de caratulas"
-msgstr ""
+msgstr "Fournisseur de pochettes"
 
 #: preferencias.py:200
 msgid "Proveedor de discos"
@@ -978,23 +1023,23 @@ msgstr ""
 #: preferencias.py:243 preferencias.py:279 preferencias.py:297
 #: preferencias.py:316
 msgid "Por defecto"
-msgstr ""
+msgstr "Par défaut"
 
 #: recursos/glade/wiithon.ui.h:1
 msgid "+INFO"
-msgstr ""
+msgstr "+INFO"
 
 #: recursos/glade/wiithon.ui.h:2
 msgid "<small><i>* = algunas opciones requieren reiniciar.</i></small>"
-msgstr ""
+msgstr "<small><i>* = Certaines options nécessitent un redémarrage.</i></small>"
 
 #: recursos/glade/wiithon.ui.h:3
 msgid "Abre la carpeta donde se almacenan las caratulas descargadas"
-msgstr ""
+msgstr "Ouvrez le dossier dans lequel les pochettes sont téléchargées"
 
 #: recursos/glade/wiithon.ui.h:4
 msgid "Abre la carpeta donde se almacenan las disc-art descargadas"
-msgstr ""
+msgstr "Ouvrez le dossier dans lequel les disques sont téléchargées"
 
 #: recursos/glade/wiithon.ui.h:5
 msgid "Abrir carpeta de caratulas"
@@ -1058,7 +1103,7 @@ msgstr ""
 
 #: recursos/glade/wiithon.ui.h:21
 msgid "Caratulas"
-msgstr ""
+msgstr "Pochettes"
 
 #: recursos/glade/wiithon.ui.h:22
 msgid "Clasificar"
@@ -1066,7 +1111,7 @@ msgstr "Trier"
 
 #: recursos/glade/wiithon.ui.h:23
 msgid "Configura las preferencias."
-msgstr ""
+msgstr "Configurer les préférences"
 
 #: recursos/glade/wiithon.ui.h:24
 msgid "Copia directa de particion a particion"
@@ -1074,7 +1119,7 @@ msgstr "Copie directe de partition à partition"
 
 #: recursos/glade/wiithon.ui.h:25
 msgid "Copia disco a disco"
-msgstr ""
+msgstr "Copie disque à disque"
 
 #: recursos/glade/wiithon.ui.h:26
 msgid "Copia en 2 carpetas de destino, todo el conjunto de caratulas y de disc-art que esta siendo amacenado en los directorios de trabajo de wiithon."
@@ -1086,11 +1131,11 @@ msgstr "Copie vers destination sélectionnée *"
 
 #: recursos/glade/wiithon.ui.h:28
 msgid "Copiar todos los juegos*"
-msgstr ""
+msgstr "Copier tous les jeux*"
 
 #: recursos/glade/wiithon.ui.h:29
 msgid "Espacio usado / Espacio total"
-msgstr ""
+msgstr "Espace utilisé / Espace total"
 
 #: recursos/glade/wiithon.ui.h:30
 msgid "Extrae de la particion WBFS el juego seleccionado a una imagen ISO."
@@ -1098,7 +1143,7 @@ msgstr ""
 
 #: recursos/glade/wiithon.ui.h:32
 msgid "Formatear BDD"
-msgstr ""
+msgstr "Formater la base de données"
 
 #: recursos/glade/wiithon.ui.h:34
 msgid "Formatear la BDD de Wiithon. Cuidado, poque se borraran todas las preferencias y toda la informacion de los juegos."
@@ -1106,7 +1151,7 @@ msgstr ""
 
 #: recursos/glade/wiithon.ui.h:35
 msgid "General"
-msgstr ""
+msgstr "Général"
 
 #: recursos/glade/wiithon.ui.h:36
 msgid "Hace copias directas de juegos entre particiones WBFS."
@@ -1114,15 +1159,15 @@ msgstr ""
 
 #: recursos/glade/wiithon.ui.h:37
 msgid "Herramientas y utilidades"
-msgstr ""
+msgstr "Outils et utilitaires"
 
 #: recursos/glade/wiithon.ui.h:38
 msgid "Informacion sobre Wiithon"
-msgstr ""
+msgstr "Informations sur Wiithon"
 
 #: recursos/glade/wiithon.ui.h:39
 msgid "Lista de juegos de la particion seleccionada."
-msgstr ""
+msgstr "Liste des jeux de la partition sélectionnée"
 
 #: recursos/glade/wiithon.ui.h:40
 msgid "No cierre wiithon mientras esta animacion indique actividad"
@@ -1138,7 +1183,7 @@ msgstr "Nouveau"
 
 #: recursos/glade/wiithon.ui.h:43
 msgid "Numero de juegos con alguna informacion obtenida de internet"
-msgstr ""
+msgstr "Nombre de jeux avec des données provenant d'internet"
 
 #: recursos/glade/wiithon.ui.h:44
 msgid "Numero de juegos que no tienen caratula."
@@ -1146,23 +1191,23 @@ msgstr ""
 
 #: recursos/glade/wiithon.ui.h:45
 msgid "Numero de juegos sin caratula del disco."
-msgstr ""
+msgstr "Nombre de jeux sans disque."
 
 #: recursos/glade/wiithon.ui.h:46
 msgid "Numero de juegos."
-msgstr ""
+msgstr "Nombre de jeux."
 
 #: recursos/glade/wiithon.ui.h:47
 msgid "Numero de particiones WBFS detectado"
-msgstr ""
+msgstr "Nombre de partitions WBFS détectées"
 
 #: recursos/glade/wiithon.ui.h:48
 msgid "Numero de tareas que esperan en la cola."
-msgstr ""
+msgstr "Nombre de tâches en attente dans la file."
 
 #: recursos/glade/wiithon.ui.h:49
 msgid "Particiones autodetectadas como de tipo WBFS"
-msgstr ""
+msgstr "Partitions auto-détectées de type WBFS"
 
 #: recursos/glade/wiithon.ui.h:50
 msgid "Permite seleccionar un directorio del cual se aniadiran todos los juegos de Wii que se encuentren recursivamente."
@@ -1205,7 +1250,7 @@ msgstr "Un Gestionnaire de partition WBFS facile"
 
 #: recursos/glade/wiithon.ui.h:58
 msgid "WiiTDB"
-msgstr ""
+msgstr "WiiTDB"
 
 #: recursos/glade/wiithon.ui.h:59
 msgid "caratulas a SD"
@@ -1213,7 +1258,7 @@ msgstr "Copier sur carte SD"
 
 #: selector_ficheros.py:32
 msgid "Imagen Wii (ISO o RAR)"
-msgstr ""
+msgstr "Image Wii (ISO ou RAR)"
 
 #: textview_custom.py:74
 #, python-format
@@ -1223,12 +1268,12 @@ msgstr ""
 #: trabajo.py:202 trabajo.py:268 trabajo.py:324
 #, python-format
 msgid "La particion %s: Ya no existe"
-msgstr ""
+msgstr "La partition %s n'existe pas"
 
 #: trabajo.py:205
 #, python-format
 msgid "El archivo ISO %s: No existe"
-msgstr ""
+msgstr "L'image ISO %s n'existe pas"
 
 #: trabajo.py:217
 #, python-format
@@ -1238,22 +1283,22 @@ msgstr "%s n'est pas un jeu Wii"
 #: trabajo.py:271
 #, python-format
 msgid "El directorio %s: No existe"
-msgstr ""
+msgstr "Le dossier %s n'existe pas"
 
 #: trabajo.py:308
 #, python-format
 msgid "No se ha encontrado ningun ISO/RAR en el directorio %s"
-msgstr ""
+msgstr "Aucun ISO ou RAR trouvé dans le répertoire %s"
 
 #: trabajo.py:311
 #, python-format
 msgid "%s no es un directorio"
-msgstr ""
+msgstr "%s n'est pas un répertoire"
 
 #: trabajo.py:338
 #, python-format
 msgid "%s no es un archivo RAR"
-msgstr ""
+msgstr "%s n'est pas une archive RAR"
 
 #: trabajo.py:391
 #, python-format
@@ -1265,15 +1310,8 @@ msgid "Error: Ocurrio un error al introducir la informacion de juegos de WiiTDB"
 msgstr ""
 
 #: trabajo.py:477
-#, fuzzy, python-format
-msgid ""
-"Error al finalizar la siguiente tarea:\n"
-"\n"
-"%s"
-msgstr ""
-"Erreur à la fin de la prochaine tâche:\n"
-"\n"
-"%s"
+msgid "Error al finalizar la siguiente tarea:"
+msgstr "Erreur à la fin de la prochaine tâche:"
 
 #: trabajo.py:481
 #, python-format
@@ -1327,7 +1365,7 @@ msgstr ""
 
 #: wiitdb_schema.py:331
 msgid "No"
-msgstr ""
+msgstr "Non"
 
 #: wiitdb_schema.py:339
 msgid "SI, 1j."
@@ -1373,7 +1411,7 @@ msgstr ""
 
 #: wiitdb_xml.py:139 wiitdb_xml.py:355 wiitdb_xml.py:358 wiitdb_xml.py:392
 msgid "XML invalido"
-msgstr ""
+msgstr "XML invalide"
 
 #: wiitdb_xml.py:408
 msgid "No existe el XML"
