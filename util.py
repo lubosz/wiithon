@@ -226,13 +226,30 @@ class ErrorDescargando(Exception):
 
 class YaEstaDescargado(Exception):
     pass
-    
+
+'''
 def descargar(url, destino):
     try:
         mysock = urllib.urlopen(url)
         oFile = open(destino ,'wb')
-        oFile.write(mysock.read())
+        buffer = mysock.read()
+        oFile.write(buffer)
         oFile.close()
+    except:
+        raise ErrorDescargando
+'''
+
+def descargar(url, destino):
+    """Copy the contents of a file from a given URL
+    to a local file.
+    """
+    try:
+        webFile = urllib.urlopen(url)
+        localFile = open(destino, 'w')
+        buffer = webFile.read()
+        localFile.write(buffer)
+        webFile.close()
+        localFile.close()
     except:
         raise ErrorDescargando
 

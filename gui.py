@@ -1656,6 +1656,9 @@ class WiithonGUI(GtkBuilderWrapper):
                     fc_anadir.addFavorite( self.core.prefs.ruta_anadir_directorio )
 
                 if fc_anadir.run() == gtk.RESPONSE_OK:
+                    
+                    print fc_anadir.get_current_folder()
+                    print type(fc_anadir.get_current_folder())
 
                     if(id_tb == self.wb_tb_anadir):
                         self.core.prefs.ruta_anadir = fc_anadir.get_current_folder()

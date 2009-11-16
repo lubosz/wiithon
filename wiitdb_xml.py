@@ -96,7 +96,6 @@ class WiiTDBXML(Thread):
         except ErrorDescargando:
             self.error_importando(_("Error descargando la informacion WiiTDB desde %s") % self.url)
             
-
         if os.path.exists(self.fichXML) and descargado_y_ok:
             xmldoc = libxml2.parseFile(self.fichXML)
             ctxt = xmldoc.xpathNewContext()

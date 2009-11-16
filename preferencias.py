@@ -323,10 +323,10 @@ class Preferencias:
             vbox.pack_start(h1, expand=False, fill=False, padding=0)
         
     def entryModificado(self, entry):
-        try:
-            self.__setattr__(entry.name_pref, entry.get_text())
-        except AssertionError:
-            entry.set_text(str(self.__getattr__(entry.name_pref)))
+        #try:
+        self.__setattr__(entry.name_pref, entry.get_text())
+        #except AssertionError:
+        entry.set_text(str(self.__getattr__(entry.name_pref)))
         
     def comboModificado(self, combo, datos_lista):
         self.__setattr__(combo.name_pref, util.get_code_by_index(datos_lista, combo.get_active()))
@@ -372,7 +372,9 @@ class Preferencias:
                 session.commit()
             except:
                 session.rollback()
-                raise AssertionError
+                if config.DEBUG:
+                    print "%s ignored" % value
+                
 
     # leer del textbox
     # self.__getattribute__(self, "name")
