@@ -1059,7 +1059,9 @@ class WiithonGUI(GtkBuilderWrapper):
         if particion != None:
             self.info.arriba_usado = particion.usado
             self.info.arriba_total = particion.total
-            self.info.arriba_num_juegos = session.query(Juego).filter('idParticion = %d' % particion.idParticion).count()
+
+            sql = util.decode('idParticion = %d' % particion.idParticion)
+            self.info.arriba_num_juegos = session.query(Juego).filter(sql).count()
             self.info.abajo_num_particiones = session.query(Particion).count()
 
     def refrescarInfoWiiTDB(self):
@@ -1317,12 +1319,15 @@ class WiithonGUI(GtkBuilderWrapper):
                         title = juego.name
                         synopsis = _('No se ha encontrado synopsis')
 
+                    # TESTING 
 
                     muestra =   [    [],[]     ]
                     for genero in session.query(Genero).order_by('idGenero'):
                         muestra[0].append(genero.idGenero)
                         muestra[1].append(len(genero.juego_wiitdb))
                     s = MuestraEstadistica(muestra[0], muestra[1])
+
+                    # TESTING 
 
                     '''
                     if config.DEBUG:
@@ -1340,6 +1345,8 @@ class WiithonGUI(GtkBuilderWrapper):
                         print "------------"
                     '''
 
+                    # TESTING 
+
                     # generos
                     letra_media = 12
                     amplitud = 30
@@ -1353,6 +1360,8 @@ class WiithonGUI(GtkBuilderWrapper):
                         i += 1
                         if i != len(juego.genero):
                             generos += "<rojo><b><pr>, </pr></b></rojo>"
+                    
+                    # /TESTING 
                     
                     # accesorios obligatorios
                     xml_inject_accesorios_obligatorios = ""
@@ -1546,8 +1555,10 @@ class WiithonGUI(GtkBuilderWrapper):
                     elif(res == 2):
                         
                         # cada juego del origen se busca en la lista de juegos de destino
-                        for juego in session.query(Juego).filter('idParticion = %d' % parti_origen.idParticion):
-                            juegoDestino = session.query(Juego).filter('idgame = "%s" and idParticion = %d' % (juego.idgame, parti_destino.idParticion)).first()
+                        sql = util.decode('idParticion = %d' % parti_origen.idParticion)
+                        for juego in session.query(Juego).filter(sql):
+                            sql = util.decode('idgame = "%s" and idParticion = %d' % (juego.idgame, parti_destino.idParticion))
+                            juegoDestino = session.query(Juego).filter(sql).first()
                             if juegoDestino is None:
                                 juegosParaClonar.append( juego )
                             else:
@@ -1669,9 +1680,6 @@ class WiithonGUI(GtkBuilderWrapper):
                     fc_anadir.addFavorite( self.core.prefs.ruta_anadir_directorio )
 
                 if fc_anadir.run() == gtk.RESPONSE_OK:
-                    
-                    print fc_anadir.get_current_folder()
-                    print type(fc_anadir.get_current_folder())
 
                     if(id_tb == self.wb_tb_anadir):
                         self.core.prefs.ruta_anadir = fc_anadir.get_current_folder()
@@ -1707,6 +1715,7 @@ class WiithonGUI(GtkBuilderWrapper):
                                         self.poolBash.nuevoTrabajoDescargaDisco( idgame )
 
                                     listaISO.append(fichero)
+
                                 else:
                                     hayNoMetidos = True
                                     buffer_errorNoMetidos += _("%s ya existe en %s\n") % (juego.title, juego.particion.device)
@@ -1902,12 +1911,10 @@ class WiithonGUI(GtkBuilderWrapper):
     def callback_empieza_descarga(self, url):
         self.actualizarLabel(_("Descargando WiiTDB desde %s, espere unos minutos ...") % url)
         self.actualizarFraccion(0.01)
-        #self.actualizarOrientation(gtk.PROGRESS_RIGHT_TO_LEFT)
         
     def callback_empieza_descomprimir(self, zip):
         self.actualizarLabel(_("Empezando a descomprimir la informacion WiiTDB"))
         self.actualizarFraccion(0.99)
-        #self.actualizarOrientation(gtk.PROGRESS_LEFT_TO_RIGHT)
 
     def callback_termina_importar(self, xml, todos):
         if todos:

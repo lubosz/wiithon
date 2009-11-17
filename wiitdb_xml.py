@@ -133,9 +133,10 @@ class WiiTDBXML(Thread):
                                             if nodo.name == "id":
                                                 idgame = nodo.content
                                                 
-                                                test_sql = util.decode('idgame == "%s"' % idgame)
-                                                test_juego = session.query(Juego).filter(test_sql).first()
-                                                saltado = test_juego is None
+                                                sql = util.decode('idgame == "%s"' % idgame)
+                                                juego_wbfs = session.query(Juego).filter(sql).first()
+                                                # si no los tienes y estas descargando en masivo -> se lo salta
+                                                saltado = juego_wbfs is None and self.todos
                                                 
                                                 if not saltado:
                                                     sql = util.decode("idgame=='%s'" % (idgame))
