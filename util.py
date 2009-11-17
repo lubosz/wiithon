@@ -67,6 +67,11 @@ def tieneCaracteresRaros(cadena , listaNegra = BLACK_LIST):
             if (cadena[i]==listaNegra[j]):
                 return True
     return False
+    
+def quitarCaracteresRaros(cadena, listaNegra = BLACK_LIST):
+    for i in range(len(listaNegra)):
+        cadena = cadena.replace(listaNegra[i],'')
+    return cadena
 
 # esta función la voy a evitar y acabaré por eliminarla
 def getPopen( comando ):

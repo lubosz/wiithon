@@ -297,9 +297,6 @@ class WiithonGUI(GtkBuilderWrapper):
             # No hay particion seleccionada
             self.sel_parti.obj = None
             #
-            # Inicialmente se muestran todas las particiones
-            self.todo = True
-            #
             # autodeteccion de particiones wbfs
             self.lParti = self.core.sincronizarParticiones()
             #
@@ -351,16 +348,16 @@ class WiithonGUI(GtkBuilderWrapper):
 
             elif (self.core.prefs.ADVERTENCIA_ACTUALIZAR_WIITDB and (len(self.lJuegos) > 0) and self.info.abajo_num_juegos_wiitdb == 0):
                 if (self.question("""
-            <b>
-                <pr>%s</pr>
-                <br />
-                <br />
-                <pr>%s</pr>
-                <br />
-                <br />
-                <azul><pr>%s</pr></azul>
-            </b>
-                """ % (
+                    <b>
+                        <pr>%s</pr>
+                        <br />
+                        <br />
+                        <pr>%s</pr>
+                        <br />
+                        <br />
+                        <azul><pr>%s</pr></azul>
+                    </b>
+                    """ % (
                             _("Se ha detectado que ninguno de tus juegos disponen de informacion extra, descargada de Internet."),
                             _("Deseas descargar informacion de los juegos desde WiiTDB?"),
                             self.core.prefs.URL_ZIP_WIITDB
@@ -374,7 +371,7 @@ class WiithonGUI(GtkBuilderWrapper):
                 self.alert("warning" , _("No puedes refrescar las particiones mientras hay tareas sin finalizar"))
 
     def main(self , opciones , argumentos):
-        if len(self.lParti) > 0:
+        if self.isSelectedPartition():
             for arg in argumentos:
                 arg = os.path.abspath(arg)
                 if os.path.exists(arg):
@@ -506,6 +503,7 @@ class WiithonGUI(GtkBuilderWrapper):
         
         modelo.clear()
 
+        # me salto el 0
         i = 1
         for particion in listaParticiones:
             if( self.sel_parti == None or particion != self.sel_parti.obj ):
@@ -519,7 +517,8 @@ class WiithonGUI(GtkBuilderWrapper):
             # quiero reflejar los huecos. Esto permite un alineamiento con la lista del core
             i = i + 1
 
-        if not filtrarTodo and (len(listaParticiones) != 1):
+        # cuando hay mas de una particion y no se filtra el todo
+        if (len(listaParticiones) != 1) and not filtrarTodo:
             # Añadir TODOS
             iterador = modelo.insert(0)
             if len(listaParticiones) == 0:
@@ -678,7 +677,7 @@ class WiithonGUI(GtkBuilderWrapper):
         self.editar_idgame_verificando(nuevoIDGAME)
 
     def editar_idgame_verificando( self, nuevoIDGAME):
-        if self.sel_juego.it != None:
+        if self.isSelectedPartition() and self.isSelectedGame():
             nuevoIDGAME = nuevoIDGAME.upper()
             if(self.sel_juego.obj.idgame != nuevoIDGAME):
                 exp_reg = "[A-Z0-9]{6}"
@@ -689,13 +688,12 @@ class WiithonGUI(GtkBuilderWrapper):
                         if ( self.question(_('TRADUCIR_ADVERTENCIA_SEGURIDAD_RENAME_IDGAME') , ('\n%s => %s') % (self.sel_juego.obj.idgame , nuevoIDGAME)) ):
                             if self.core.renombrarIDGAME( self.sel_juego.obj , nuevoIDGAME ):
                                 # modificamos el juego modificado de la BDD
-                                if self.sel_juego.obj != None:
-                                    # cambiar idgame de la bdd
-                                    self.sel_juego.obj.idgame = nuevoIDGAME
-                                    session.commit()
+                                # cambiar idgame de la bdd
+                                self.sel_juego.obj.idgame = nuevoIDGAME
+                                session.commit()
 
-                                    # Refrescamos del modelo la columna modificada
-                                    self.tv_games_modelo.set_value(self.sel_juego.it , 0 ,nuevoIDGAME)
+                                # Refrescamos del modelo la columna modificada
+                                self.tv_games_modelo.set_value(self.sel_juego.it , 0 ,nuevoIDGAME)
                             else:
                                 self.alert('error' , _("Error renombrando"))
                     else:
@@ -709,19 +707,18 @@ class WiithonGUI(GtkBuilderWrapper):
         self.editar_nombre_verificando( nuevoNombre)
         
     def editar_nombre_verificando( self, nuevoNombre):        
-        if self.sel_juego.it != None:
+        if self.isSelectedPartition() and self.isSelectedGame():
             nombreActual = self.sel_juego.obj.title
             if(nombreActual != nuevoNombre):
                 if len(nuevoNombre) < config.TITULO_LONGITUD_MAX:
                     if not util.tieneCaracteresRaros(nuevoNombre , util.BLACK_LIST2):
                         if self.core.renombrarNOMBRE(self.sel_juego.obj , nuevoNombre):
-                            if self.sel_juego.obj != None:
-                                # cambiar nombre en la bdd
-                                self.sel_juego.obj.title = nuevoNombre
-                                session.commit()
+                            # cambiar nombre en la bdd
+                            self.sel_juego.obj.title = nuevoNombre
+                            session.commit()
 
-                                # Refrescamos del modelo la columna modificada
-                                self.tv_games_modelo.set_value(self.sel_juego.it , 1 , nuevoNombre)
+                            # Refrescamos del modelo la columna modificada
+                            self.tv_games_modelo.set_value(self.sel_juego.it , 1 , nuevoNombre)
                         else:
                             self.alert('error' , _("Error renombrando"))
                     else:
@@ -732,9 +729,9 @@ class WiithonGUI(GtkBuilderWrapper):
     def salir(self , widget=None, data=None):
         
         # guardar particion y juego seleccionados
-        if self.sel_juego.obj != None:
+        if self.isSelectedGame():
             self.core.prefs.idgame_seleccionado = self.sel_juego.obj.idgame
-        if self.sel_parti.obj != None:
+        if self.isSelectedPartition():
             self.core.prefs.device_seleccionado = self.sel_parti.obj.device
 
         # cerrar gui
@@ -937,28 +934,37 @@ class WiithonGUI(GtkBuilderWrapper):
 
         else:
             self.alert("warning" , _("No has seleccionado ninguna particion"))
-        
-    def proponer_nombre_juego(self, juego):
-        juegoWiiTDB = juego.getJuegoWIITDB() 
-        if juegoWiiTDB is not None:
-            lista_propuestas = NonRepeatList()
-            lista_propuestas.append("%s (%s)" % (juego.title, _("actual")))
-            for descripcion in juegoWiiTDB.descripciones:
-                lista_propuestas.append(descripcion)
-            lista_propuestas.append(_("Personalizable ..."))
-                
-            descripcion = self.dialog_select(lista_propuestas,
-                                _("Renombrar el juego %s.") % juego.title,
-                                "<b>%s</b>\n\n<small><i>%s</i></small>" % (_("Nombres propuestos por la informacion WiiTDB"), _("NOTA: Este es el nombre que aparecera en el USB Loader.")),
-                                _("Renombrar")
-                                )
-            if isinstance(descripcion, JuegoDescripcion):
-                self.editar_nombre_verificando(descripcion.title)
-            elif descripcion == _("Personalizable ..."):
-                self.personalizar_nombre_juego_seleccionado()
+    
+    def isSelectedGame(self):
+        return (self.sel_juego != None) and (self.sel_juego.it != None) and (self.sel_juego.obj != None)
 
-        else:
-            self.personalizar_nombre_juego_seleccionado()
+    def isSelectedPartition(self):
+        return (self.sel_parti != None) and (self.sel_parti.it != None) and (self.sel_parti.obj != None)
+    
+    def proponer_nombre_juego(self, juego):
+        if self.isSelectedGame():
+            if juego.idgame == self.sel_juego.obj.idgame:
+                juegoWiiTDB = juego.getJuegoWIITDB() 
+                if juegoWiiTDB is not None:
+                    lista_propuestas = NonRepeatList()
+                    lista_propuestas.append("%s (%s)" % (juego.title, _("actual")))
+                    for descripcion in juegoWiiTDB.descripciones:
+                        lista_propuestas.append(descripcion)
+                    lista_propuestas.append(_("Personalizable ..."))
+                        
+                    descripcion = self.dialog_select(lista_propuestas,
+                                        _("Renombrar el juego %s.") % juego.title,
+                                        "<b>%s</b>\n\n<small><i>%s</i></small>" % (_("Nombres propuestos por la informacion WiiTDB"), _("NOTA: Este es el nombre que aparecera en el USB Loader.")),
+                                        _("Renombrar")
+                                        )
+                    if isinstance(descripcion, JuegoDescripcion):
+                        descripcion_formateada = util.quitarCaracteresRaros(descripcion.title)
+                        self.editar_nombre_verificando(descripcion_formateada)
+                    elif descripcion == _("Personalizable ..."):
+                        self.personalizar_nombre_juego_seleccionado()
+
+                else:
+                    self.personalizar_nombre_juego_seleccionado()
 
     # callback de la señal "changed" del buscador
     # Refresca de la base de datos y filtra según lo escrito.
@@ -986,7 +992,7 @@ class WiithonGUI(GtkBuilderWrapper):
 
         subListaJuegos = []
 
-        if self.todo:
+        if not self.isSelectedPartition():
             sql = util.decode('title like "%%%s%%" or idgame like "%s%%"' % (buscar , buscar))
         else:
             sql = util.decode('idParticion="%d" and (title like "%%%s%%" or idgame like "%s%%")' % (self.sel_parti.obj.idParticion , buscar , buscar))
@@ -1055,8 +1061,10 @@ class WiithonGUI(GtkBuilderWrapper):
         if config.DEBUG:
             print "refrescarEspacio"
         
-        particion = self.sel_parti.obj
-        if particion != None:
+        if self.isSelectedPartition():
+            
+            particion = self.sel_parti.obj
+            
             self.info.arriba_usado = particion.usado
             self.info.arriba_total = particion.total
 
@@ -1176,8 +1184,6 @@ class WiithonGUI(GtkBuilderWrapper):
                 # selecciono la particion actual
                 self.sel_parti.obj = self.getBuscarParticion(self.lParti, self.sel_parti.clave)
                 
-                self.todo = self.sel_parti.obj == None
-                
                 # oculta partes del gui cuando esta en todo
                 self.toggle_todo_particion()
 
@@ -1197,7 +1203,8 @@ class WiithonGUI(GtkBuilderWrapper):
                 self.refrescarEspacio()
 
     def toggle_todo_particion(self):
-        if self.todo:
+
+        if not self.isSelectedPartition():
 
             # poner la columna titulo desactivada
             self.renderEditableIDGAME.set_property("editable", False)
@@ -1286,9 +1293,10 @@ class WiithonGUI(GtkBuilderWrapper):
         
         error = False
 
-        if self.sel_juego.obj != None:
+        if self.isSelectedGame():
             
             if not self.wiitdb_mutex:
+
                 juego = self.sel_juego.obj.getJuegoWIITDB()
                 if juego != None:
 
@@ -1319,49 +1327,24 @@ class WiithonGUI(GtkBuilderWrapper):
                         title = juego.name
                         synopsis = _('No se ha encontrado synopsis')
 
-                    # TESTING 
-
+                    # generos
                     muestra =   [    [],[]     ]
                     for genero in session.query(Genero).order_by('idGenero'):
                         muestra[0].append(genero.idGenero)
                         muestra[1].append(len(genero.juego_wiitdb))
                     s = MuestraEstadistica(muestra[0], muestra[1])
-
-                    # TESTING 
-
-                    '''
-                    if config.DEBUG:
-                        print "------------"
                     letra_media = 16
-                    amplitud = 64
-                    s = MuestraEstadistica(muestra[0], muestra[1])
-                    i=0
-                    for n in muestra[1]:
-                        indice = (n - s.media()) * amplitud / 100
-                        if config.DEBUG:
-                            print " %d * %f --------> %s = %d (fa = %s)" % (letra_media, indice, muestra[2][i], round(letra_media * 1 + indice) , n)
-                        i += 1
-                    if config.DEBUG:
-                        print "------------"
-                    '''
-
-                    # TESTING 
-
-                    # generos
-                    letra_media = 12
-                    amplitud = 30
+                    amplitud = 20
                     generos = ""
                     i = 0
                     for genero in juego.genero:
-                        
-                        cont = 0
                         tam = letra_media * 1 + ((len(genero.juego_wiitdb) - s.media()) * amplitud / 100)
+                        if tam > 63:
+                            tam = 63
                         generos += "<font%d><pr>%s</pr></font%d>" % (tam, util.parsear_a_XML(genero.nombre), tam)
                         i += 1
                         if i != len(juego.genero):
                             generos += "<rojo><b><pr>, </pr></b></rojo>"
-                    
-                    # /TESTING 
                     
                     # accesorios obligatorios
                     xml_inject_accesorios_obligatorios = ""
@@ -1402,7 +1385,7 @@ class WiithonGUI(GtkBuilderWrapper):
             %s
             <br />
             <b><i><pr>%s</pr></i></b>
-                <azul><i><pr>%s</pr></i></azul><br />
+                <i><pr>%s</pr></i><br />
             <b><i><pr>%s</pr></i></b>
                 <i><pr>%s/%s</pr></i>
             <br />
@@ -1518,7 +1501,7 @@ class WiithonGUI(GtkBuilderWrapper):
         if config.DEBUG:
             print "on_tb_toolbar_clicked"
         
-        if(self.todo and id_tb != self.wb_tb_copiar_SD and id_tb != self.wb_tb_acerca_de and id_tb != self.wb_tb_refrescar_wbfs and id_tb != self.wb_tb_preferencias):
+        if(not self.isSelectedPartition() and id_tb != self.wb_tb_copiar_SD and id_tb != self.wb_tb_acerca_de and id_tb != self.wb_tb_refrescar_wbfs and id_tb != self.wb_tb_preferencias):
             self.alert("warning" , _("Tienes que seleccionar una particion WBFS para realizar esta accion"))
 
         elif(id_tb == self.wb_tb_acerca_de):
@@ -1530,108 +1513,117 @@ class WiithonGUI(GtkBuilderWrapper):
 
         elif(id_tb == self.wb_tb_copiar_1_1):
             
-            if len(self.lParti) > 1:                
-                res = self.wb_dialogo_copia_1on1.run()
-                self.wb_dialogo_copia_1on1.hide()
-                parti_origen = self.sel_parti.obj
-                parti_destino = self.sel_parti_1on1.obj
+            if self.isSelectedPartition():
+                if len(self.lParti) > 1:                
+                    res = self.wb_dialogo_copia_1on1.run()
+                    self.wb_dialogo_copia_1on1.hide()
+                    parti_origen = self.sel_parti.obj
+                    parti_destino = self.sel_parti_1on1.obj
 
-                # salir por Cancelar ---> 0
-                # salir por Escape ---> -4
-                if(res > 0):
-                    
-                    juegosParaClonar = []
-                    juegosExistentesEnDestino = []
-
-                    if(res == 1):
-                        if self.sel_juego.it != None:
-                            juegosParaClonar.append( self.sel_juego.obj )
-
-                            pregunta = _("Desea copiar el juego %s a la particion %s?") % (self.sel_juego.obj, parti_destino)
-
-                        else:
-                            self.alert("warning" , _("No has seleccionado ningun juego"))
-
-                    elif(res == 2):
+                    # salir por Cancelar ---> 0
+                    # salir por Escape ---> -4
+                    if(res > 0):
                         
-                        # cada juego del origen se busca en la lista de juegos de destino
-                        sql = util.decode('idParticion = %d' % parti_origen.idParticion)
-                        for juego in session.query(Juego).filter(sql):
-                            sql = util.decode('idgame = "%s" and idParticion = %d' % (juego.idgame, parti_destino.idParticion))
-                            juegoDestino = session.query(Juego).filter(sql).first()
-                            if juegoDestino is None:
-                                juegosParaClonar.append( juego )
+                        juegosParaClonar = []
+                        juegosExistentesEnDestino = []
+
+                        if(res == 1):
+                            if self.isSelectedGame():
+
+                                juegosParaClonar.append( self.sel_juego.obj )
+                                pregunta = _("Desea copiar el juego %s a la particion %s?") % (self.sel_juego.obj, parti_destino)
+
                             else:
-                                juegosExistentesEnDestino.append(juegoDestino)
-                                
-                        pregunta  = "%s %s:\n\n" % (_("Se van a copiar los siguientes juegos a"), parti_destino)
-                        
-                        i = 0
-                        for juego in juegosParaClonar:
-                            pregunta += "%s\n" % (juego)
-                            i += 1
-                            if i >= config.MAX_LISTA_COPIA_1on1:
-                                pregunta += "[...] (%d %s)\n" % (len(juegosParaClonar)-config.MAX_LISTA_COPIA_1on1, _("juegos mas"))
-                                break
-                        pregunta += "\n\n%s %s:\n\n" % (_("A continuacion se listan los juego que NO van a ser copiados por ya estar en la particion de destino"),parti_destino)
-                        i = 0
-                        for juego in juegosExistentesEnDestino:
-                            pregunta += "%s\n" % (juego)
-                            i += 1
-                            if i >= config.MAX_LISTA_COPIA_1on1:
-                                pregunta += "[...] (%d %s)\n" % (len(juegosExistentesEnDestino)-config.MAX_LISTA_COPIA_1on1, _("juegos mas"))
-                                break
-                        pregunta += "\n%s" % _("Empezar a copiar?")
-                        
-                    if len(juegosParaClonar) > 0:
-                        if((self.question(pregunta))):
-                            self.poolTrabajo.nuevoTrabajoClonar( juegosParaClonar, parti_destino )
-                    else:
-                        self.alert('info',_("No hay nada que copiar a %s") % (parti_destino))
+                                self.alert("warning" , _("No has seleccionado ningun juego"))
+
+                        elif(res == 2):
+                            
+                            # cada juego del origen se busca en la lista de juegos de destino
+                            sql = util.decode('idParticion = %d' % parti_origen.idParticion)
+                            for juego in session.query(Juego).filter(sql):
+                                sql = util.decode('idgame = "%s" and idParticion = %d' % (juego.idgame, parti_destino.idParticion))
+                                juegoDestino = session.query(Juego).filter(sql).first()
+                                if juegoDestino is None:
+                                    juegosParaClonar.append( juego )
+                                else:
+                                    juegosExistentesEnDestino.append(juegoDestino)
+                                    
+                            pregunta  = "%s %s:\n\n" % (_("Se van a copiar los siguientes juegos a"), parti_destino)
+                            
+                            i = 0
+                            for juego in juegosParaClonar:
+                                pregunta += "%s\n" % (juego)
+                                i += 1
+                                if i >= config.MAX_LISTA_COPIA_1on1:
+                                    pregunta += "[...] (%d %s)\n" % (len(juegosParaClonar)-config.MAX_LISTA_COPIA_1on1, _("juegos mas"))
+                                    break
+                            pregunta += "\n\n%s %s:\n\n" % (_("A continuacion se listan los juego que NO van a ser copiados por ya estar en la particion de destino"),parti_destino)
+                            i = 0
+                            for juego in juegosExistentesEnDestino:
+                                pregunta += "%s\n" % (juego)
+                                i += 1
+                                if i >= config.MAX_LISTA_COPIA_1on1:
+                                    pregunta += "[...] (%d %s)\n" % (len(juegosExistentesEnDestino)-config.MAX_LISTA_COPIA_1on1, _("juegos mas"))
+                                    break
+                            pregunta += "\n%s" % _("Empezar a copiar?")
+                            
+                        if len(juegosParaClonar) > 0:
+                            if((self.question(pregunta))):
+                                self.poolTrabajo.nuevoTrabajoClonar( juegosParaClonar, parti_destino )
+                        else:
+                            self.alert('info',_("No hay nada que copiar a %s") % (parti_destino))
+                else:
+                    self.alert("warning" , _("Debes tener al menos 2 particiones WBFS para hacer copias 1:1"))
             else:
-                self.alert("warning" , _("Debes tener al menos 2 particiones WBFS para hacer copias 1:1"))
+                self.alert("warning" , _("No has seleccionado ninguna particion"))
 
         elif(id_tb == self.wb_tb_borrar):
-            if self.sel_parti.it != None:
+
+            if self.isSelectedPartition():
                 
-                if( self.question(_('Quieres borrar el juego: %s?') % (self.sel_juego.obj)) ):
-                    # borrar del HD
-                    if self.core.borrarJuego( self.sel_juego.obj ):
-                        
-                        # borrar de la bdd
-                        session.delete(self.sel_juego.obj)
-                        
-                        # go
-                        session.commit()
-                        
-                        # borrar caratulas no usadas
-                        sql = util.decode('idgame=="%s"' % self.sel_juego.obj.idgame)
-                        if session.query(Juego).filter(sql).count() == 0:
+                if self.isSelectedGame():
+                    
+                    if( self.question(_('Quieres borrar el juego: %s?') % (self.sel_juego.obj)) ):
+                        # borrar del HD
+                        if self.core.borrarJuego( self.sel_juego.obj ):
+                            
+                            # borrar de la bdd
+                            session.delete(self.sel_juego.obj)
+                            
+                            # go
+                            session.commit()
+                            
+                            # borrar caratulas no usadas
+                            sql = util.decode('idgame=="%s"' % self.sel_juego.obj.idgame)
+                            if session.query(Juego).filter(sql).count() == 0:
 
-                            # borrar disco
-                            self.core.borrarDisco( self.sel_juego.obj )
+                                # borrar disco
+                                self.core.borrarDisco( self.sel_juego.obj )
 
-                            # borrar caratula
-                            self.core.borrarCaratula( self.sel_juego.obj )
-                        
-                        # actualizar valores de usado/libre/total
-                        self.sel_parti.obj.refrescarEspacioLibreUsado(self.core)
-                        
-                        # restar la info wiitdb
-                        self.refrescarInfoWiiTDB()
-                        
-                        # Selecciona el primer juego
-                        self.seleccionarFilaConValor(self.wb_tv_partitions, 0 , self.sel_parti.obj.device)
+                                # borrar caratula
+                                self.core.borrarCaratula( self.sel_juego.obj )
+                            
+                            # actualizar valores de usado/libre/total
+                            self.sel_parti.obj.refrescarEspacioLibreUsado(self.core)
+                            
+                            # restar la info wiitdb
+                            self.refrescarInfoWiiTDB()
+                            
+                            # Selecciona el primer juego
+                            self.seleccionarFilaConValor(self.wb_tv_partitions, 0 , self.sel_parti.obj.device)
 
-                    else:
-                        self.alert("warning" , _("Error borrando el juego %s") % self.sel_juego.obj)
+                        else:
+                            self.alert("warning" , _("Error borrando el juego %s") % self.sel_juego.obj)
+
+                else:
+                    self.alert("warning" , _("No has seleccionado ningun juego"))
 
             else:
                 self.alert("warning" , _("No has seleccionado ninguna particion"))
 
         elif(id_tb == self.wb_tb_extraer):
 
-            if self.sel_juego.it != None:
+            if self.isSelectedGame():
 
                 fc_extraer = SelectorFicheros(
                     _('Elige un directorio donde extraer la ISO de %s') \
@@ -1667,7 +1659,8 @@ class WiithonGUI(GtkBuilderWrapper):
             self.proponer_nombre_juego( self.sel_juego.obj )
 
         elif(id_tb == self.wb_tb_anadir or id_tb == self.wb_tb_anadir_directorio):
-            if self.sel_parti.it != None:
+
+            if self.isSelectedPartition():
 
                 if(id_tb == self.wb_tb_anadir):
                     fc_anadir = SelectorFicheros(_("Elige una imagen ISO valida para Wii"))
@@ -1797,7 +1790,6 @@ class WiithonGUI(GtkBuilderWrapper):
             self.poolBash.actualizarPreferencias()
         self.wb_prefs.hide()
         
-            
 ######### HERRAMIENTAS Y UTILIDADES #################
 
     def on_formatear_bdd_clicked(self, boton):
@@ -2016,7 +2008,8 @@ class WiithonGUI(GtkBuilderWrapper):
                     elif( os.path.isdir( fichero ) ) and self.core.prefs.DRAG_AND_DROP_JUEGOS:
                         listaDirectorios.append(fichero)
                     elif(util.esImagen(fichero) and self.core.prefs.DRAG_AND_DROP_LOCAL): # Arrastrar imagenes (png, jpg, gif) desde el escritorio
-                        if self.sel_juego.it != None:
+
+                        if self.isSelectedGame():
 
                             if self.core.prefs.DESTINO_ARRASTRE == 'C':
                                 ruta = self.core.getRutaCaratula(self.sel_juego.obj.idgame)
@@ -2034,7 +2027,9 @@ class WiithonGUI(GtkBuilderWrapper):
             elif fichero.startswith("http://"):
                 # Arrastrar imagenes (png, jpg, gif) desde el navegador
                 if(util.esImagen(fichero) and self.core.prefs.DRAG_AND_DROP_HTTP):
-                    if self.sel_juego.it != None:
+                    
+                    if self.isSelectedGame():
+                        
                         if self.core.prefs.DESTINO_ARRASTRE == 'C':
                             ruta = self.core.getRutaCaratula(self.sel_juego.obj.idgame)
                             util.descargar(fichero, ruta)
@@ -2048,17 +2043,22 @@ class WiithonGUI(GtkBuilderWrapper):
                             util.call_out_null(comando)
                             self.ponerDisco(self.sel_juego.obj.idgame, self.wb_img_disco1)
 
-        if len(listaISO) > 0:
-            listaISO.sort()
-            self.poolTrabajo.nuevoTrabajoAnadir( listaISO , self.sel_parti.obj.device)
-            
-        if len(listaRAR) > 0:
-            listaRAR.sort()
-            self.poolTrabajo.nuevoTrabajoDescomprimirRAR( listaRAR , self.sel_parti.obj)
-            
-        if len(listaDirectorios) > 0:
-            listaDirectorios.sort()
-            self.poolTrabajo.nuevoTrabajoRecorrerDirectorio( listaDirectorios , self.sel_parti.obj)
+        if self.isSelectedPartition():
+
+            if len(listaISO) > 0:
+                listaISO.sort()
+                self.poolTrabajo.nuevoTrabajoAnadir( listaISO , self.sel_parti.obj.device)
+                
+            if len(listaRAR) > 0:
+                listaRAR.sort()
+                self.poolTrabajo.nuevoTrabajoDescomprimirRAR( listaRAR , self.sel_parti.obj)
+                
+            if len(listaDirectorios) > 0:
+                listaDirectorios.sort()
+                self.poolTrabajo.nuevoTrabajoRecorrerDirectorio( listaDirectorios , self.sel_parti.obj)
+                
+        else:
+            self.alert("warning" , _("No has seleccionado ninguna particion"))
 
     def callback_empieza_progreso(self, trabajo):
         self.hiloCalcularProgreso = HiloCalcularProgreso( trabajo, self.actualizarLabel , self.actualizarFraccion )
@@ -2115,8 +2115,9 @@ class WiithonGUI(GtkBuilderWrapper):
 
     def callback_termina_trabajo_descargar_caratula(self, trabajo, idgame):
         if trabajo.exito:
-            if idgame == self.sel_juego.obj.idgame:
-                gobject.idle_add( self.ponerCaratula , idgame , self.wb_img_caratula1)
+            if self.isSelectedGame():
+                if idgame == self.sel_juego.obj.idgame:
+                    gobject.idle_add( self.ponerCaratula , idgame , self.wb_img_caratula1)
         else:
             print _("Falla la descarga de la caratula de %s") % idgame
             
@@ -2124,8 +2125,9 @@ class WiithonGUI(GtkBuilderWrapper):
 
     def callback_termina_trabajo_descargar_disco(self, trabajo, idgame):
         if trabajo.exito:
-            if idgame == self.sel_juego.obj.idgame:
-                gobject.idle_add( self.ponerDisco , idgame , self.wb_img_disco1)
+            if self.isSelectedGame():
+                if idgame == self.sel_juego.obj.idgame:
+                    gobject.idle_add( self.ponerDisco , idgame , self.wb_img_disco1)
         else:
             print _("Falla la descarga del disco de %s") % idgame
         
