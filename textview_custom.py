@@ -120,6 +120,8 @@ class TextViewCustom(gtk.TextView):
         a("justificar", justification=gtk.JUSTIFY_FILL)
         a("margin8", left_margin=8, right_margin=8)
         a("margin12", left_margin=12, right_margin=12)
+        for i in range(64):
+            a("font%d" % i, size=i * pango.SCALE)    
 
     def cargar_otros_tags(self):
         # http://www.pygtk.org/docs/pygtk/class-gtktexttag.html

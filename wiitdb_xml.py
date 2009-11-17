@@ -125,22 +125,29 @@ class WiiTDBXML(Thread):
                             
                             if nodo.children is not None:
                                 nodo = nodo.children
-                                while nodo.next is not None:
+                                saltado = False
+                                while not saltado and nodo.next is not None:
                                     if nodo.type == "element":
                                         # id, region, locale, developer, publisher, date, genre, rating, wi-fi, input, rom
                                         if not iniciado:
                                             if nodo.name == "id":
                                                 idgame = nodo.content
-                                                sql = util.decode("idgame=='%s'" % (idgame))
-                                                try:
-                                                    juego = session.query(JuegoWIITDB).filter(sql).first()
-                                                except:
-                                                    self.error_importando(_("XML invalido"))
+                                                
+                                                test_sql = util.decode('idgame == "%s"' % idgame)
+                                                test_juego = session.query(Juego).filter(test_sql).first()
+                                                saltado = test_juego is None
+                                                
+                                                if not saltado:
+                                                    sql = util.decode("idgame=='%s'" % (idgame))
+                                                    try:
+                                                        juego = session.query(JuegoWIITDB).filter(sql).first()
+                                                    except:
+                                                        self.error_importando(_("XML invalido"))
 
-                                                if juego == None:
-                                                    juego = JuegoWIITDB(nodo.content, name)
+                                                    if juego == None:
+                                                        juego = JuegoWIITDB(nodo.content, name)
 
-                                                iniciado = True
+                                                    iniciado = True
                                         
                                         # ya se ha iniciado
                                         else:
@@ -346,12 +353,14 @@ class WiiTDBXML(Thread):
                                     
                                 #volver a game
                                 nodo = nodo.parent
-                                if iniciado:
-                                    session.save_or_update(juego)
-                                    if self.callback_nuevo_juego:
-                                        self.callback_nuevo_juego(juego)
-                                else:
-                                    self.error_importando(_("XML invalido"))
+
+                                if not saltado:
+                                    if iniciado:
+                                        session.save_or_update(juego)
+                                        if self.callback_nuevo_juego:
+                                            self.callback_nuevo_juego(juego)
+                                    else:
+                                        self.error_importando(_("XML invalido"))
 
                             else:
                                 self.error_importando(_("XML invalido"))

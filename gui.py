@@ -259,7 +259,8 @@ class WiithonGUI(GtkBuilderWrapper):
                                     )
         self.poolTrabajo.setDaemon(True)
         self.poolTrabajo.start()
-        
+
+        # info gui
         self.info = InformacionGuiPresentacion(self.wb_labelEspacio, self.wb_progresoEspacio, 
                 self.wb_label_numParticionesWBFS, self.wb_label_juegosConInfoWiiTDB,
                 self.wb_label_juegosSinCaratula, self.wb_label_juegosSinDiscArt,
@@ -316,6 +317,12 @@ class WiithonGUI(GtkBuilderWrapper):
             #
             # refrescar num juegos con info
             self.refrescarInfoWiiTDB()
+            #            
+            # clean png corrupts
+            query = session.query(Juego).group_by('idgame')
+            for juego in query:
+                self.core.existeCaratula(juego.idgame, True)
+                self.core.existeDisco(juego.idgame, True)
             #
             # refrescar num caratulas
             self.refrescarNumCaratulas()
@@ -1310,34 +1317,39 @@ class WiithonGUI(GtkBuilderWrapper):
                         title = juego.name
                         synopsis = _('No se ha encontrado synopsis')
 
+
+                    muestra =   [    [],[]     ]
+                    for genero in session.query(Genero).order_by('idGenero'):
+                        muestra[0].append(genero.idGenero)
+                        muestra[1].append(len(genero.juego_wiitdb))
+                    s = MuestraEstadistica(muestra[0], muestra[1])
+
                     '''
-                    i = 0
-                    xi = []
-                    fa = []
-                    for genero in session.query(Genero):
-                        xi.append(i)
-                        fa.append(len(genero.juego_wiitdb))
+                    if config.DEBUG:
+                        print "------------"
+                    letra_media = 16
+                    amplitud = 64
+                    s = MuestraEstadistica(muestra[0], muestra[1])
+                    i=0
+                    for n in muestra[1]:
+                        indice = (n - s.media()) * amplitud / 100
+                        if config.DEBUG:
+                            print " %d * %f --------> %s = %d (fa = %s)" % (letra_media, indice, muestra[2][i], round(letra_media * 1 + indice) , n)
                         i += 1
+                    if config.DEBUG:
+                        print "------------"
                     '''
-                        
-                    #s = MuestraEstadistica(xi, fa)
-                    #s.analisis()
 
                     # generos
+                    letra_media = 12
+                    amplitud = 30
                     generos = ""
                     i = 0
                     for genero in juego.genero:
                         
                         cont = 0
-                        '''
-                        sql = util.decode("genero.nombre == '%s'" % (genero.nombre))
-                        for jw,g in session.query(JuegoWIITDB, Genero).filter(sql):
-                            sql = util.decode("juego.idgame == '%s'" % (jw.idgame))
-                            for j in session.query(Juego).filter(sql):
-                                cont += 1
-                        '''
-
-                        generos += "<big><pr>%s (%d)</pr></big>" % (util.parsear_a_XML(genero.nombre), len(genero.juego_wiitdb))
+                        tam = letra_media * 1 + ((len(genero.juego_wiitdb) - s.media()) * amplitud / 100)
+                        generos += "<font%d><pr>%s</pr></font%d>" % (tam, util.parsear_a_XML(genero.nombre), tam)
                         i += 1
                         if i != len(juego.genero):
                             generos += "<rojo><b><pr>, </pr></b></rojo>"
@@ -1582,7 +1594,8 @@ class WiithonGUI(GtkBuilderWrapper):
                         session.commit()
                         
                         # borrar caratulas no usadas
-                        if session.query(Juego).filter('idgame=="%s"' % self.sel_juego.obj.idgame).count() == 0:
+                        sql = util.decode('idgame=="%s"' % self.sel_juego.obj.idgame)
+                        if session.query(Juego).filter(sql).count() == 0:
 
                             # borrar disco
                             self.core.borrarDisco( self.sel_juego.obj )

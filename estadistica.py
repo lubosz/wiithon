@@ -123,6 +123,23 @@ class MuestraEstadistica:
                 return (self.xi[i] + self.xi[i+1]) / 2.0
         return -1
 
+    # p = partes
+    def N_tiles(self, k, p):
+        # 1<=k<=3
+        if k < 1:
+            k = 1
+        if k > (p-1):
+            k = (p-1)
+        muestras = self.total_muestras()
+        valor_mediana = (k * muestras) / p
+        Fa = self.frec_acu()
+        for i in range(len(Fa)):
+            if Fa[i] > valor_mediana:
+                return self.xi[i]
+            elif Fa[i] == valor_mediana:
+                return (self.xi[i] + self.xi[i+1]) / 2.0
+        return -1
+
     def cuartiles(self, k):
         # 1<=k<=3
         if k < 1:
@@ -215,15 +232,14 @@ class MuestraEstadistica:
         print "Cuartil 1 = %.2f" % self.cuartiles(1)
         print "Cuartil 2 = %.2f" % self.cuartiles(2)
         print "Cuartil 3 = %.2f" % self.cuartiles(3)
-        print "Percentil 30 = %.2f" % self.percentiles(30)
-        print "Percentil 60 = %.2f" % self.percentiles(60)
-        print "Percentil 78 = %.2f" % self.percentiles(78)
+        for i in range(100):
+            print "Percentil %d = %.2f" % (i, self.percentiles(i))
         print "Momento 8 respecto la media = %.2f" % self.momento(8, self.media())
         print "Varianza = %.2f" % self.varianza()
         print "Desviacion tipica = %.2f" % self.desviacion_tipica()
         print "asimetria Fisher = %.2f" % self.asimetria_fisher()
         print "asimetria Pearson = %.2f" % self.asimetria_pearson()
-        print "asimetria Bowley = %.2f" % self.asimetria_bowley()
+        #print "asimetria Bowley = %.2f" % self.asimetria_bowley()
         print "Curtosis = %.2f" % self.curtosis()
 
 '''
