@@ -96,6 +96,7 @@ copy_archives: making_directories
 
 	cp recursos/icons/wiithon.png $(DESTDIR)/usr/share/pixmaps
 	cp recursos/icons/wiithon.svg $(DESTDIR)/usr/share/pixmaps
+	cp recursos/icons/wiithon.xpm $(DESTDIR)/usr/share/pixmaps
 
 	cp recursos/glade/*.ui $(DESTDIR)$(PREFIX)/share/wiithon/recursos/glade
 	cp recursos/imagenes/*.png $(DESTDIR)$(PREFIX)/share/wiithon/recursos/imagenes
@@ -111,6 +112,7 @@ copy_archives: making_directories
 	
 	cp wiithon_usuario.desktop $(DESTDIR)/usr/share/applications/
 	cp -R po/locale/ $(DESTDIR)/usr/share/
+	cp -R po/man/ $(DESTDIR)/usr/share/
 	
 	@echo "=================================================================="
 	@echo "Copy archives OK"
@@ -138,6 +140,8 @@ postinst: set_permisses
 	-ln -sf $(DESTDIR)$(PREFIX)/games/wiithon_wrapper $(DESTDIR)$(PREFIX)/share/wiithon/wiithon_wrapper
 	-ln -sf $(DESTDIR)$(PREFIX)/games/wiithon_unrar $(DESTDIR)$(PREFIX)/share/wiithon/wiithon_unrar
 	
+	if [ -x /usr/bin/update-menus ] ; then update-menus ; fi
+	
 	@echo "=================================================================="
 	@echo "If you want run witthon as normal user you must add it to 'disk' group."
 	@echo "Type: \"sudo gpasswd -a <user> disk\" and restart your GNOME/KDE session."
@@ -161,7 +165,7 @@ install4ppa: copy_archives
 
 generate_changelog:
 	@ln -sf $(shell pwd)/recursos/bazaar-plugins/gnulog.py ~/.bazaar/plugins/gnulog.py
-	bzr log -v --log-format 'gnu' | sed -e "s/\(<.*@[^.]*\)>/\1\.fake>/g" > debian/changelog
+	bzr log --log-format 'gnu' | sed -e "s/\(<.*@[^.]*\)>/\1\.fake>/g" > debian/changelog
 	@$(RM) ~/.bazaar/plugins/gnulog.py
 
 deb: generate_changelog
@@ -280,11 +284,15 @@ delete_archives_installation:
 	-$(RM) /usr/share/locale/ru_RU/LC_MESSAGES/wiithon.mo
 	-$(RM) /usr/share/locale/tr_TR/LC_MESSAGES/wiithon.mo
 	-$(RM) /usr/share/locale/es_CA/LC_MESSAGES/wiithon.mo
+	
+	-$(RM) /usr/share/man/man1/wiithon.1.gz
+	-$(RM) /usr/share/man/es/man1/wiithon.1.gz
 
 	-$(RM) /usr/share/applications/wiithon_usuario.desktop
 	
 	-$(RM) /usr/share/pixmaps/wiithon.png
 	-$(RM) /usr/share/pixmaps/wiithon.svg
+	-$(RM) /usr/share/pixmaps/wiithon.xpm
 	
 postrm:
 	-$(RM) /usr/share/doc/wiithon/*

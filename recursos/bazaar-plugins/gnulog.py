@@ -15,31 +15,10 @@
 # Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 
 """
-A bzr plugin that allows bzr log to output in GNU ChangeLog format.
+Copy this file to ~/.bazaar/plugins/
 
-Installation:
-  Copy this file to ~/.bazaar/plugins/
+bzr log --log-format 'gnu'
 
-Usage:
-  bzr log -v --log-format 'gnu'
-
-  or,
-
-  BZR_GNULOG_SPLIT_ON_BLANK_LINES=0 bzr log -v --log-format 'gnu'
-
-  By default the log formatter recognizes paragraph boundaries as
-  empty lines (like in LaTeX). The environment variable
-  BZR_GNULOG_SPLIT_ON_BLANK_LINES=0 switches it to split paragraphs by
-  the newline character instead.
-
-Changes:
-  - 2009-07-12: Missing supports_merge_revisions added, to also show
-                merged revisions from non-main branches
-  - 2009-06-24: handle get_apparent_author deprecation (based on patch by Zdenek Hatas)
-  - 2009-04-04: add option to recognize newlines as paragraph boundaries too
-  - 2009-04-04: recognize blank lines as paragraph boundaries, and don't mix paragraphs
-  - 2009-04-04: output text in default system encoding, not ascii
-  - 2008-12-08: include information of fixed bugs (bzr commit --fixes)
 """
 
 import time
@@ -54,7 +33,6 @@ import bzrlib.log
 SPLIT_ON_BLANK_LINES = bool(int(os.environ.get('BZR_GNULOG_SPLIT_ON_BLANK_LINES', "1")))
 
 HEADER_VER="wiithon (%s) karmic; urgency=high"
-HEADER_VER_REV="wiithon (%s-%s) karmic; urgency=high"
 
 class GnuFormatter(bzrlib.log.LogFormatter):
 
@@ -114,26 +92,26 @@ class GnuFormatter(bzrlib.log.LogFormatter):
 
     def show(self, revno, rev, delta, tags=None):
         to_file = self.to_file
-        #if tags is not None:
-        #    self._flush()
-        #    print >> to_file, u"=== %s ===" % ', '.join(tags)
-        date_str = time.strftime("<w>%w</w>, %d <m>%m</m> %Y %T %z", time.localtime(rev.timestamp))
-        date_str = self.parsearSpainToEnglish(date_str)
-
-        if hasattr(rev, "get_apparent_authors"):
-            author = "  ".join(rev.get_apparent_authors())
-        else:
-            author = rev.get_apparent_author().strip()
-        # OJO: 2 spaces autor__date
-        date_line = " -- " + author + "  " + date_str + "\n"
-        if date_line != self._date_line:
-            self._flush()
-            self._date_line = date_line
         
         version = self.getSTDOUT("./doc/VERSION %s" % revno)
+        
+        if version != '?.?':
+            
+            date_str = time.strftime("<w>%w</w>, %d <m>%m</m> %Y %T %z", time.localtime(rev.timestamp))
+            date_str = self.parsearSpainToEnglish(date_str)
 
-        print >> to_file, u"%s\n" % (HEADER_VER % (version))
-        self._show_changes(revno, rev, delta)
+            if hasattr(rev, "get_apparent_authors"):
+                author = "  ".join(rev.get_apparent_authors())
+            else:
+                author = rev.get_apparent_author().strip()
+            # OJO: 2 spaces autor__date
+            date_line = "\n -- " + author + "  " + date_str + "\n"
+            if date_line != self._date_line:
+                self._flush()
+                self._date_line = date_line
+            
+            print >> to_file, u"%s" % (HEADER_VER % (version))
+            self._show_changes(revno, rev, delta)
 
     def _flush(self):
         if self._date_line is None or not self._changes_buffer.getvalue():
@@ -192,7 +170,7 @@ class GnuFormatter(bzrlib.log.LogFormatter):
         to_file = self._changes_buffer
         output_standalone_message = True
         shortlog, paragraphs = self._split_message(rev.message)
-        shortlog = u"[%s] %s" % (revno, shortlog)
+        shortlog = u"%s" % (shortlog)
         bugs_text = rev.properties.get('bugs', '')
         if bugs_text:
             if shortlog[-1] in '.;':
@@ -275,15 +253,23 @@ class GnuFormatter(bzrlib.log.LogFormatter):
         if output_standalone_message:
             ## The log message, on a line by itself
             paragraphs.insert(0, shortlog)
+            primera_linea = True
             for parI, par in enumerate(paragraphs):
                 if par:
                     for l2 in textwrap.wrap(par, 70):
-                        print >> to_file,  u'  ' + l2
+                        if primera_linea:
+                            primera_linea = False
+                            print >> to_file,  u'  * ' + l2
+                        else:
+                            print >> to_file,  u'    ' + l2
                 else:
                     if parI < (len(paragraphs)-1):
                         print >> to_file
+
+                '''
                 if SPLIT_ON_BLANK_LINES:
                     print >> to_file
+                '''
             if not SPLIT_ON_BLANK_LINES:
                 print >> to_file
             self._flush()

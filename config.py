@@ -38,7 +38,7 @@ HOME_WIITHON_CARATULAS = os.path.join(WIITHON_FILES_RECURSOS_IMAGENES , 'caratul
 HOME_WIITHON_DISCOS = os.path.join(WIITHON_FILES_RECURSOS_IMAGENES , 'discos')
 
 LOCALE = "/usr/share/locale/"
-ICONO = "/usr/share/pixmaps/wiithon.png"
+ICONO = "/usr/share/pixmaps/wiithon.xpm"
 WBFS_APP = os.path.join(WIITHON_FILES , "wiithon_wrapper")
 UNRAR_APP = os.path.join(WIITHON_FILES , "wiithon_unrar")
 

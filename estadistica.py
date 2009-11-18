@@ -239,10 +239,9 @@ class MuestraEstadistica:
         print "Desviacion tipica = %.2f" % self.desviacion_tipica()
         print "asimetria Fisher = %.2f" % self.asimetria_fisher()
         print "asimetria Pearson = %.2f" % self.asimetria_pearson()
-        #print "asimetria Bowley = %.2f" % self.asimetria_bowley()
+        print "asimetria Bowley = %.2f" % self.asimetria_bowley()
         print "Curtosis = %.2f" % self.curtosis()
 
-'''
 def main():
     xi = [1,2,3,4,5,6]
     fa = [20,40,60,80,100,120]
@@ -251,4 +250,3 @@ def main():
 
 if __name__ == '__main__':
     main()
-'''
