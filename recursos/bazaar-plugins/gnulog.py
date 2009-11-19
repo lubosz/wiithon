@@ -117,8 +117,6 @@ class GnuFormatter(bzrlib.log.LogFormatter):
         if self._date_line is None or not self._changes_buffer.getvalue():
             return
         to_file = self.to_file
-        ### riga autore
-        #print >> to_file, self._date_line
         print >> to_file
         s = self._changes_buffer.getvalue()
         to_file.write(s)
@@ -143,6 +141,8 @@ class GnuFormatter(bzrlib.log.LogFormatter):
         returns:  (shortlog, paragraph_list)        
         """
         lines = message.split('\n')
+        if not lines[0] and not lines[1]:
+           lines[0]='(no commit message)'
         if lines:
             # the first line is always the shortlog
             shortlog = lines.pop(0)
