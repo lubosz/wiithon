@@ -1,0 +1,14 @@
+wwt.c ;
+wit.c ;
+wbfs-interface.[ch] ;
+wwt+wit-cmd.c ;
+lib-std.[ch] ;
+lib-error.[ch] ;
+lib-wdf.[ch] ;
+lib-sf.[ch] ;
+*.[ch] ;
+@all-source.edit-list
+@doc.edit-list
+-y 1221 wwt.c ;
+-y 890 wbfs-interface.c ;
+-y 135 lib-std.c ;

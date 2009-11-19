@@ -1,0 +1,5 @@
+*.{c,h,sh} ;
+{scripts,libwbfs}/*.{c,h,txt,sh} ;
+Makefile. Makefile.* ;
+@doc.edit-list
+*.edit-list ;

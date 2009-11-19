@@ -1,0 +1,10 @@
+iso2wbfs.c ;
+iso2wdf.c ;
+wdf2iso.c ;
+lib-sf.c ;
+wdf-dump.c ;
+wdf-cat.c ;
+wwt.c ;
+wit.c ;
+@lib-wdf.edit-list
+-y 600 lib-sf.c ;

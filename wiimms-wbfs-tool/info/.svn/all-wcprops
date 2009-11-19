@@ -1,0 +1,23 @@
+K 25
+svn:wc:ra_dav:version-url
+V 45
+/wii/!svn/ver/294/trunk/wiimms-wbfs-tool/info
+END
+cygwin.predef
+K 25
+svn:wc:ra_dav:version-url
+V 59
+/wii/!svn/ver/278/trunk/wiimms-wbfs-tool/info/cygwin.predef
+END
+linux-i386.predef
+K 25
+svn:wc:ra_dav:version-url
+V 63
+/wii/!svn/ver/294/trunk/wiimms-wbfs-tool/info/linux-i386.predef
+END
+mac-osx.predef
+K 25
+svn:wc:ra_dav:version-url
+V 60
+/wii/!svn/ver/294/trunk/wiimms-wbfs-tool/info/mac-osx.predef
+END

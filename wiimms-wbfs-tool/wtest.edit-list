@@ -1,0 +1,6 @@
+wtest.c ;
+lib-std.[ch] ;
+@lib-wdf.edit-list
+-y  170 wtest.c ;
+-y 1046 lib-std.c ;
+-y  708 lib-wdf.c ;

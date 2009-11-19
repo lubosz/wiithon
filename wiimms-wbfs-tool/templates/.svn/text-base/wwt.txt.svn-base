@@ -1,0 +1,1008 @@
+
+@@MODULE(head.txt)@@
+
+This files describes the main tool 'wwt'.
+
+
+@@MODULE(content.txt)@@
+
+
+*******************************************************************************
+*******                    Overview about this document               *********
+*******************************************************************************
+
+Contents:
+
+    Output of 'wwt --help'
+    @file
+    Commands in detail
+    Processing partitions
+    Processing ISO files
+    Processing ID6 parameters
+    Processing exclude options
+    Processing title db
+    Processing split options
+    Processing size options
+    Some options in detail
+    Hidden options (for testing)
+    Environment variables
+    Signals
+
+
+*******************************************************************************
+*******                      Output of 'wwt --help'                   *********
+*******************************************************************************
+@@EXEC(./wwt --help)@@
+
+
+*******************************************************************************
+*******                             @file                               *******
+*******************************************************************************
+
+If a parameter beginns with '@' the text behind that '@' is a filename.
+Each line of the file is taken as a parameter (not option, not command).
+Each line may terminate with LF or CR+LF. Handling of '@' is *not* recurse.
+
+The special filename '-' means: read from standard input (stdin).
+
+
+*******************************************************************************
+*******                        Commands in detail                       *******
+*******************************************************************************
+
+Command abbreviations are allowed as long as they are unique. The commands
+are listed in alphabetic order:
+
+
+-------------------------------------------------------------------------------
+
+COMMAND: ADD|A  [iso_image_path]... [directory]...
+
+ Add one or more iso images to a WBFS partition.
+
+ Options:
+
+    -A --all           Use all WBFS partitions found.
+    -a --auto          Search for WBFS partitions using /proc/partitions.
+    -p --part  part    File of primary WBFS partition. Multiple usage allowed.
+    -r --recurse path  Base of a directory tree with ISO files.
+       --psel  p-type  Partition selector: (no-)game|update|channel all(=def) raw.
+       --raw           Short cut for --psel=raw.
+    -u --update        Copy only non existing discs.
+    -o --overwrite     Overwrite existing WBFS discs.
+    -i --ignore        Ignore non ISO files without warning.
+    -R --remove        Remove ISO file if operation is successful.
+    -x --exclude id    Exclude discs with given ID4 or ID6 from operation.
+    -x --exclude @file Read exclude list from file.
+    -X --exclude-path file_or_dir
+                       ISO file or base of directory tree -> scan their ID6
+    -f --force         Force operation, ignore the chgeck result.
+       --no-check      Disable automatic check of WBFS before modificastions.
+
+    -q --quiet        Be quiet   -> print only error messages.
+    -v --verbose      Be verbose -> print continuation infos.
+    -t --test         Run in test mode, do not copy or remove anything.
+
+ The ADD command adds all given ISO images to all given WBFS partitions. The
+ filename '-' means 'read from stdin'. The three options --all, --auto and
+ --part decides which partitions will be modified (see section "Options in
+ detail: partitions" for details).
+
+ If a given file does not exist or isn't a ISO image (maybe shrinked with WDF)
+ an error message will be printed. The option --ignore suppresses this message.
+ ADD accept plain ISO files, WDF ISO files, WBFS files and directories as
+ source. For a directory each valid ISO file is used as source. The option
+ --recurse allow a definition of a directory which is search recursive.
+
+ Existing WBFS discs will be ignored if --update is set. They are only over-
+ written if the option --overwrite is set. After successfull operation and if
+ --remove is set, the ISO images will be removed from the source file system.
+
+ If the --quiet option is set only error messages will be printed.
+ If the --verbose option is set run time calculations will be made too.
+ If the --verbose option is at least twice a progress status will be shown.
+
+ If the --test option is set the programm does nothing, neither copying nor
+ removing. Instead it will print some 'WOULD ...' messages.
+
+ Before modifying the WBFS a check (see CHECK) is done. If there are any
+ problematic errors detected the WBFS is ignored. If the option --force is set,
+ the test is done but the result is ignored. The option --no-check disables
+ this automatic check.
+
+
+ Usual ERROR/EXIT CODES:
+
+    0 == OK             : all done without erros.
+    SYNTAX ERROR        : at least on syntax error in command line found.
+    MISSING PARAMETERS  : no parameters (iso images) given.
+    NO WBFS FOUND       : no WBFS partiton found.
+    TOO MUCH WBFS FOUND : 2 to more no WBFS partiton found but --all missed.
+    WRITE ERROR         : error while writing a WBFS.
+    REMOVE ERROR        : error while removing a disc from a WBFS.
+    READ ERROR          : error while reading an ISO image or a WBFS.
+
+
+-------------------------------------------------------------------------------
+
+COMMAND: CHECK|FSCK   [wbfs_partition]...
+
+ Check and perhaps repairs WBFS partitions.
+
+ Options:
+
+    -A --all          Use all WBFS partitions found.
+    -a --auto         Search for WBFS partitions using /proc/partitions.
+    -p --part  part   File of primary WBFS partition. Multiple usage allowed.
+
+       --repair mode  Repair the WBFS. 'mode' is a comma separated list of:
+                        -  | NONE       : ignore previous settings
+                        RI | RM-INVALID : remove discs with invalid blocks
+                        RO | RM-OVERLAP : remove discs with overlaped blocks
+                        RF | RM-FREE    : remove discs with free marked blocks
+                        RE | RM-EMPTY   : remove discs with no valid blocks
+                        RI | RM-ALL     : remove all discs with errors
+                        F  | FBT        : repair free blocks table
+                        *  | ALL        : repair all
+
+    -q --quiet        Be quiet.
+    -v --verbose      Be verbose.
+    -t --test         Run in test mode, modify nothing.
+
+ Command CHECKS checks WBFS partions for block errors in 5 categories:
+   - Find discs with invalid blocks.
+   - Find discs with no valid blocks.
+   - Find discs which uses same blocks.
+   - Find free blocks that marked as used.
+   - Find used blocks that marked as free.
+
+ If the option --repair then the detected error are fixed. Fixing the free
+ blocks table is the last action. Be carfull because discs will be removed.
+
+
+ Usual ERROR/EXIT CODES:
+
+    0 == OK             : all done without erros.
+    SYNTAX ERROR        : at least on syntax error in command line found.
+    NO WBFS FOUND       : no WBFS partiton found.
+    TOO MUCH WBFS FOUND : 2 to more no WBFS partiton found but --all missed.
+    WBFS INVALID        : An invalid WBFS found (WBFS with errors)
+
+
+-------------------------------------------------------------------------------
+
+COMMAND: DUMP|D   [wbfs_partition]...
+
+ Find all WBFS partitions and print out path and sizes.
+
+ Options:
+
+    -A --all          Use all WBFS partitions found.
+    -a --auto         Search for WBFS partitions using /proc/partitions.
+    -p --part  part   File of primary WBFS partition. Multiple usage allowed.
+    -l --long         Print in long format. Multiple usage possible.
+    -T --titles file  Read file for disc titles. -T0 disables titles lookup.
+
+    -q --quiet        Be quiet.
+    -v --verbose      Be verbose.
+    -t --test         Allowed but ignored.
+
+ The DUMP command dumps out the data structure of all WBFS. data. The three
+ options --all, --auto and --part decides where partitions will be searched
+ (see section "Options in detail: partitions" for details).
+
+ If at least one parameter ('wbfs_partition') is given ther option --all well
+ be enabled and all names are insterted into the partition list like --auto.
+ This enables an easy lookup like 'wwt find *.wbfs'.
+
+ DUMP will dumps the data structure of all WBFS partitions found. If the
+ option --long is set then all Wii discs of each WBFS partition will be dumped
+ too. If option --long is set at least twice an additional memory map for each
+ disc will be printed. If --long is set at least three times an additional
+ memory map for the whole WBFS is printed at the end. Failures (overlapped
+ areas) are marked with '!'.
+
+
+ Usual ERROR/EXIT CODES:
+
+    0 == OK             : all done without erros.
+    SYNTAX ERROR        : at least on syntax error in command line found.
+    READ ERROR          : error while read a file given by option --part.
+    NO WBFS FOUND       : no WBFS partiton found.
+    TOO MUCH WBFS FOUND : 2 to more no WBFS partiton found but --all missed.
+
+
+-------------------------------------------------------------------------------
+
+COMMAND: ERROR|ERR   [error_code]
+
+ Translate an exit code to a text message. Without parameters print all
+ error names and error messages.
+
+ Options:
+
+    -l --long         Print error messages instead of error names.
+    -H --no-header    Suppress printing of header and footer.
+    
+
+ With a given 'error_code' the error message that belongs the number is
+ printed to stdout and the program exits with exit status is 0 (success).
+ If the error_code is unknown or invalid the error message is '?' and the
+ program exits with exit status is 1 (failure).
+
+ Without 'error_code' a list of all error codes is printed. The output
+ contains three columns separated with colons. The format is:
+
+    error code ':' error name ':' error messages
+
+
+ Usual ERROR/EXIT CODES:
+
+    0 == OK        : all done.
+    SYNTAX ERROR   : at least on syntax error in command line found.
+    SEMANTIC ERROR : unkown error_code given.
+
+
+-------------------------------------------------------------------------------
+
+COMMAND: EXCLUDE  [additional_exclude_file]...
+
+ The command 'EXCLUDE' builts the exclude data base and prints the result to
+ stdout. The handling of the additional files works like the --exclude option.
+
+ Options:
+
+   -x --exclude id     Exclude discs with given ID4 or ID6 from operation.
+   -x --exclude @file  Read exclude list from file.
+
+   -X --exclude-path file_or_dir
+                       ISO file or base of directory tree -> scan their ID6
+
+ The section "Processing exclude options" explains the options in detail.
+
+
+ Usual ERROR/EXIT CODES:
+
+    0 == OK        : all done.
+    SYNTAX ERROR   : at least on syntax error in command line found.
+
+
+-------------------------------------------------------------------------------
+
+COMMAND: EXTRACT|X   id6...
+
+ Extract images from WBFS partitions.
+
+ Options:
+
+    -A --all           Use all WBFS partitions found.
+    -a --auto          Search for WBFS partitions using /proc/partitions.
+    -p --part  part    File of primary WBFS partition. Multiple usage allowed.
+    -d --dest  path    Defines a destination file/directory.
+    -z --split         Enable output file splitting, default split size = 2 gb.
+    -Z --split-size sz Enable output file splitting and set split size.
+    -U --unique        Eliminate repeated ID6 from parameter list.
+    -i --ignore        Ignore non existing discs without warning.
+    -o --overwrite     Overwrite existing ISO images.
+    -R --remove        Remove source if operation is successful.
+    -C --trunc         Trunc ISO images while writing.
+    -F --fast          Enables fast writing (disables searching for zero blocks).
+    -W --wdf           Write a WDF image; clears options --iso and --wbfs. (default)
+    -I --iso           Write a plain ISO image; clears options --wdf and --wbfs.
+    -B --wbfs          Write an ISO as WBFS container; clears options --wdf and --iso.
+    -T --titles file   Read file for disc titles. -T0 disables titles lookup.
+    -x --exclude id    Exclude discs with given ID4 or ID6 from operation.
+    -x --exclude @file Read exclude list from file.
+    -X --exclude-path file_or_dir
+                       ISO file or base of directory tree -> scan their ID6
+    -f --force         Force operation, ignore the chgeck result.
+       --no-check      Disable automatic check of WBFS before modificastions.
+
+    -q --quiet         Be quiet   -> print only error messages.
+    -v --verbose       Be verbose -> print continuation infos.
+    -t --test          Run in test mode, modify nothing.
+    -tt                (--test twice) print a normalized ID6 list and exit.
+    -E --esc char      Define an alternative escape character, default is '%'.
+
+ The EXTRACT command extracts all discs identified by ID6 from all given WBFS
+ partitions. The options --all, --auto and --part decides which partitions
+ will be modified (see section "Options in detail: partitions" for details).
+
+ Each parameter is scanned for an ID6. Possible formats are:
+    '*' | '+'
+    ID6
+    ID6=name
+    name [ID6]
+    ID6 anything
+ A single '*' (must be escaped by shells) or '+' means 'all'.
+ Please read section "Processing ID6 parameters" for details.
+
+ For each ID6 a Wii ISO image is created in the current working directory.
+ The option --dest can be used to define an other existing destination
+ directory. If a disc is found on 2 ore more WBFS partitons it wil only
+ extracted from the first one. To overwrite an existing file the option
+ --overwrite must be set. The option --ignore supresses error messages
+ about not found disc images.
+
+ The ISO image will be generated in an ,scrubbed' mode with holes in it.
+ It will be stored as a sparse file to save disk space. The ISO file is
+ filled at the end to the native IOS file size, 4.699.979.776 bytes for
+ single layer discs. If the option --trunc is set, then this filling is
+ disabled. --trunc seems not to be effective yet, because the data is
+ stored at the end of the image.
+
+ When the option --wdf is set (default) the file will be written as WDF
+ (see file 'WDF.txt'). A WDF can handles holes very efficiently without
+ the hidden sparse effect. The option --iso disables WDF writing and
+ enables ISO file writing.
+
+ If the --fast option is set then blocks will not be searched for zeroed
+ areas before writing it. Searching for holes works for both, WDF and ISO
+ and saves disk space but needs more calculation time.
+
+ If the option --remove is set then the discs which are extracted without
+ errors are removed from *all* WBFS partitons.
+
+ If the --quiet option is set only error messages will be printed.
+ If the --verbose option is set run time calculations will be made too.
+ If the --verbose option is at least twice a progress status will be shown.
+
+ If the --test option is set the programm does nothing, neither copying nor
+ removing. Instead it will print some 'WOULD ...' messages.
+ If the --test option is set two or more times then only a normalized ID6
+ list is printed. For each ID6 one line is printed. If a destination
+ filename is known 'ID=name' is printed, else 'ID6' alone.
+
+ Before modifying the WBFS a check (see CHECK) is done. If there are any
+ problematic errors detected the WBFS is ignored. If the option --force is set,
+ the test is done but the result is ignored. The option --no-check disables
+ this automatic check.
+
+ DESTINATION FILENAME
+
+@@MODULE(output-filename.txt)@@
+
+
+ Usual ERROR/EXIT CODES:
+
+    0 == OK             : all done without erros.
+    SYNTAX ERROR        : at least on syntax error in command line found.
+    MISSING PARAMETERS  : no parameters (ID6) given.
+    NO WBFS FOUND       : no WBFS partiton found.
+    TOO MUCH WBFS FOUND : 2 to more no WBFS partiton found but --all missed.
+    WDISC NOT FOUND     : disc not found on any WBFS partition.
+    REMOVE ERROR        : error while removing a disc from a WBFS.
+    READ ERROR          : error while reading an ISO image or a WBFS.
+
+
+-------------------------------------------------------------------------------
+
+COMMAND: FILETYPE|FT  filename...
+
+ Print a status line for each given file.
+
+ Options:
+
+    -l --long         Print in long format: Print ID6 for images.
+    -i --ignore       Ignore non existing and don't print status line.
+    -q --quiet        Allowed but ignored.
+    -v --verbose      Allowed but ignored.
+    -t --test         Allowed but ignored.
+
+ The command 'FILETYPE' prints for each given file one status line like:
+    FILETYPE ID6 SPLIT FILENAME
+ Columns 'ID6' and 'SPLIT' are only printed if option --long is set. For non
+ ISO images the ID6 is '-'. If the file is splitted than column 'SPLIT' shows
+ the number of split files instead of '-'.
+
+ Filetypes are:
+    NO-FILE  : No file found
+    DIR      : Not a file but a directory
+    WBFS     : A WBFS
+    WBFS/    : A WBFS used like directory with id6 or index or pos
+    WDF+WBFS : A WBFS shrinked with WDF (this make no sense expect transporting)
+    ISO      : A ISO image.
+    WDF+ISO  : A ISO image shrinked with WDF.
+    WDF      : Any other WDF file (not WBFS or ISO)
+    OTHER    : Any other file
+
+ Remark: The test for WBFS is poor and must be improved.
+
+
+ Usual ERROR/EXIT CODES:
+
+    0 == OK             : all done without erros.
+    SYNTAX ERROR        : at least on syntax error in command line found.
+    READ ERROR          : error while reading a file.
+
+
+-------------------------------------------------------------------------------
+
+COMMAND: FIND|F   [wbfs_partition]...
+
+ Find all WBFS partitions and print out path and sizes.
+
+ Options:
+
+    -A --all          Use all WBFS partitions found.
+    -a --auto         Search for WBFS partitions using /proc/partitions.
+    -p --part  part   File of primary WBFS partition. Multiple usage allowed.
+    -l --long         Print in long format. Multiple usage possible.
+    -H --no-header    Suppress printing of header and footer.
+
+    -q --quiet        Be quiet.
+    -v --verbose      Be verbose.
+    -t --test         Allowed but ignored.
+
+ The FIND command makes a quick search for WBFS partitions: it scans only the
+ WBFS-Header. The three options --all, --auto and --part decides where partitions
+ will be searched (see section "Options in detail: partitions" for details).
+
+ If at least one parameter ('wbfs_partition') is given ther option --all well be
+ enabled and all names are insterted into the partition list like --auto.
+ This enables an easy lookup like 'wwt find *.wbfs'.
+
+ Without option --long only a list of found WBFS partition will print out,
+ each partition in one line.
+
+ With a single --long option an aligned list with 4 colums will be printed:
+    type    : 'PLAIN' if it is a plain file or 'BLOCK' if it is a block device.
+    alloced : allocated size in MiB.
+    size    : file size in MiB.
+    file    : the given path name of the file.
+ The option --no-header suppress the output of header and footer.
+
+ With a double (or more) --long option an aligned list 4 for colums will be
+ printed:
+    type      : 'PLAIN' if it is a plain file or 'BLOCK' if it is a block device.
+    alloced   : allocated size in bytes.
+    size      : file size in bytes.
+    full path : the real path name of the file.
+ The option --no-header suppress the output of header and footer.
+
+ The 'allocated size' is smaller than the 'file length' if the file contains
+ holes (sparse files). For block devices the allocated size is always unknown
+ and printed as zero.
+
+
+ Usual ERROR/EXIT CODES:
+
+    0 == OK             : all done without erros.
+    SYNTAX ERROR        : at least on syntax error in command line found.
+    READ ERROR          : error while read a file given by option --part.
+    NO WBFS FOUND       : no WBFS partiton found.
+    TOO MUCH WBFS FOUND : 2 to more no WBFS partiton found but --all missed.
+
+
+-------------------------------------------------------------------------------
+
+COMMAND: FORMAT|INIT   filename...
+
+ Initialize (format) a WBFS partition.
+
+ Options:
+
+    -s --size  size     Floating point size of new file.
+                        Factors: bckKmMgGtT, default=G.
+
+    --sector-size size  Floating point sector of new WBFS partition.
+                        The factor must be a power of 2 and at least 512.
+                        Defauilt value is 512 bytes. Factors: bckKmMgGtT.
+
+    -f --force          Needed for formatting!
+
+    -q --quiet          Be quiet.
+    -v --verbose        Be verbose.
+    -t --test           Run in test mode, modify nothing.
+
+ The command FORMAT format block devices and plain files with a WBFS. All data
+ on the destination will be lost.
+
+ The command works in test mode if the option --test is set or the option
+ --force is not set. So you must set the option --force to format.
+
+ The option --size is irrelevant for already existing files. Non existing
+ files will be created as sparse files. Therefor the option --size is needed.
+ The option needs a integer number and an optional factor sign.
+
+ The option --sector-size set the sector size of the WBFS partiton. The default
+ is 512 bytes and most other tools and USB loaders will only support this 512.
+ But the wbfs framwork supports any value >=16 but it must be a power of 2.
+ WWT forces values >= 512.
+
+ The parameters of the size options --size and --sector-size are discussed in
+ the section "Processing size options".
+ 
+
+ Usual ERROR/EXIT CODES:
+
+    0 == OK             : all done without erros.
+    SYNTAX ERROR        : at least on syntax error in command line found.
+    MISSING PARAMETERS  : no parameters (iso images) given.
+    WRITE ERROR         : error while writing/formatting a WBFS.
+
+
+-------------------------------------------------------------------------------
+
+COMMAND: HELP|?   [any_options_or_parameters]
+
+ Ignore all options and parameters, print help to standard out (stdout) and
+ exit with status 0 (OK).
+
+ ERROR/EXIT CODES:
+
+    HELP : Help printed.
+
+
+-------------------------------------------------------------------------------
+
+COMMAND: ID6|ID   [wbfs_partition]...
+
+ List ID6 of all games of each partitions.
+
+ Options:
+
+    -A --all           Use all WBFS partitions found.
+    -a --auto          Search for WBFS partitions using /proc/partitions.
+    -p --part  part    File of primary WBFS partition. Multiple usage allowed.
+    -l --long          Print in long format. Multiple usage possible.
+    -S --sort          Sort by: id title name file region size wbfs npart ...
+    -U --unique        Print only the first disc of all with same values.
+    -x --exclude id    Exclude discs with given ID4 or ID6 from operation.
+    -x --exclude @file Read exclude list from file.
+    -X --exclude-path file_or_dir
+                       ISO file or base of directory tree -> scan their ID6
+
+    -q --quiet        Be quiet   -> list only ID6 but nothing else.
+    -v --verbose      Be verbose -> list as much as possible.
+    -t --test         Allowed but ignored.
+
+ The command 'ID' lists the ID6 of all discs for each partiton, one ID per row.
+ The three options --all, --auto and --part decides where partitions
+ will be searched (see section "Options in detail: partitions" for details).
+
+ If neither --part nor --auto is set then the options --auto and --all are
+ assumed. So the usage of 'id6' without options is easy.
+
+ If --uniqe is set each game disc with same ID6, name, size and region is only
+ printed once. The --unique option implies the --all option.
+
+ The sort order can be set by the --sort option. Sort=none means, that the ID
+ will be shown in order of the WBFS partition. The default sort order is 'ID'.
+
+ If the option --long is set the output is "WBFS_FILE/ID6" for each game.
+
+
+ Usual ERROR/EXIT CODES:
+
+    0 == OK             : all done without erros.
+    SYNTAX ERROR        : at least on syntax error in command line found.
+    READ ERROR          : error while read a file given by option --part.
+    NO WBFS FOUND       : no WBFS partiton found.
+
+
+-------------------------------------------------------------------------------
+
+COMMAND: LIST|LS   [wbfs_partition]...
+
+ List the contents of a WBFS partition.
+
+ Options:
+
+    -A --all           Use all WBFS partitions found.
+    -a --auto          Search for WBFS partitions using /proc/partitions.
+    -p --part  part    File of primary WBFS partition. Multiple usage allowed.
+    -l --long          Print in long format. Multiple usage possible.
+    -M --mixed         Print disc infos of all WBFS in mixed mode.
+    -U --unique        Print only the first disc if all with with same ID6.
+    -H --no-header     Suppress printing of header and footer.
+    -S --sort          Sort by: id title name file region size wbfs npart ...
+    -T --titles file   Read file for disc titles. -T0 disables titles lookup.
+    -x --exclude id    Exclude discs with given ID4 or ID6 from operation.
+    -x --exclude @file Read exclude list from file.
+    -X --exclude-path file_or_dir
+                       ISO file or base of directory tree -> scan their ID6
+
+    -q --quiet         Be quiet   -> list only ID6 but nothing else.
+    -v --verbose       Be verbose -> list as much as possible.
+    -t --test          Allowed but ignored.
+
+ The command 'LIST' lists infos of all discs for each partiton, one disc per
+ row. The three options --all, --auto and --part decides where partitions will
+ be searched (see section "Options in detail: partitions" for details).
+
+ If neither --part nor --auto is set then thr options --auto and --all are
+ assumed. So the usage of 'list' without options is easy.
+
+ Without --long the ID and the name are printed. With option --long the ID,
+ size, region and the name are printed.  The option --no-header suppress the
+ output of header and footer.
+
+ With --mixed all discs of all partitions were mixed together. If --uniqe is
+ set each game disc identified by ID6 is only printet once. The --mixed option
+ implies the --all option. The --unique option implies the --mixed and the
+ --all options.
+ 
+ If the option --long is given twice or more in the --mixed mode then a WBFS
+ table is printed at the top with a WBFS-Index ('WI') and the filename. The
+ game table contains an additional column with this WBFS-Index.
+
+ The sort order can be set by the --sort option. Sort=none means, that the ID
+ will be shown in order of the WBFS partition. The default sort order is
+ 'TITLE'.
+
+ If available the name of the title database is used as game name. use the
+ option -T0 to disable database titles.
+
+
+ Usual ERROR/EXIT CODES:
+
+    0 == OK             : all done without erros.
+    SYNTAX ERROR        : at least on syntax error in command line found.
+    READ ERROR          : error while read a file given by option --part.
+    NO WBFS FOUND       : no WBFS partiton found.
+    TOO MUCH WBFS FOUND : 2 to more no WBFS partiton found but --all missed.
+
+
+-------------------------------------------------------------------------------
+
+COMMANDS:
+    LIST-L|LL   [wbfs_partition]...
+    LIST-A|LA   [wbfs_partition]...
+    LIST-M|LM   [wbfs_partition]...
+    LIST-U|LU   [wbfs_partition]...
+
+ 'LIST-L' is a synonym for 'LIST --long'.
+ 'LIST-A' is a synonym for 'LIST --auto --all --long'.
+ 'LIST-M' is a synonym for 'LIST --mixed --all --long'.
+ 'LIST-U' is a synonym for 'LIST --unique --all --long'.
+ See command 'LIST' for options and details.
+
+
+-------------------------------------------------------------------------------
+
+COMMAND: REMOVE|RM   id6...
+
+ Remove images from a WBFS partition.
+
+ Options:
+
+    -A --all           Use all WBFS partitions found.
+    -a --auto          Search for WBFS partitions using /proc/partitions.
+    -p --part  part    File of primary WBFS partition. Multiple usage allowed.
+    -U --unique        Eliminate repeated ID6 from parameter list.
+    -i --ignore        Ignore non existing discs without warning.
+       --no-free       Do not free blocks when removing a disc.
+    -x --exclude id    Exclude discs with given ID4 or ID6 from operation.
+    -x --exclude @file Read exclude list from file.
+    -X --exclude-path file_or_dir
+                       ISO file or base of directory tree -> scan their ID6
+    -f --force         Force operation, ignore the chgeck result.
+       --no-check      Disable automatic check of WBFS before modificastions.
+
+    -q --quiet         Be quiet   -> print only error messages.
+    -v --verbose       Be verbose -> print continuation infos.
+    -t --test          Run in test mode, modify nothing.
+    -tt                (--test twice) print a normalized ID6 list and exit.
+
+ The REMOVE command removes all discs identified by ID6 from all given WBFS
+ partitions. The options --all, --auto and --part decides which partitions
+ will be modified (see section "Options in detail: partitions" for details).
+
+ Each parameter is scanned for an ID6. Possible formats are:
+    '*' | '+'
+    ID6
+    ID6=name
+    name [ID6]
+    ID6 anything
+ A single '*' (must be escaped by shells) or '+' means 'all'. A 'name' part
+ will be ignored. Please read section "Processing ID6 parameters" for details.
+
+ The option --ignore supresses error messages about not found disc images.
+
+ If the --quiet option is set only error messages will be printed.
+ If the --verbose option is set run time claculations will be made too.
+
+ If the --test option is set the programm does nothing, neither copying nor
+ removing. Instead it will print some 'WOULD ...' messages.
+ If the --test option is set two or more times then only a normalized ID6
+ list is printed. For each ID6 one line is printed. If a destination
+ filename is known 'ID=name' is printed, else 'ID6' alone.
+
+ If the option --no-free is set then the disc is only makred as removed. The
+ allocated blocks are not freed. Aufter using --no-free you should use the
+ command CHECK with --rapair=fbt to repair the free blocks table.
+
+ Before modifying the WBFS a check (see CHECK) is done. If there are any
+ problematic errors detected the WBFS is ignored. If the option --force is set,
+ the test is done but the result is ignored. The option --no-check disables
+ this automatic check.
+
+
+ Usual ERROR/EXIT CODES:
+
+    0 == OK             : all done without erros.
+    SYNTAX ERROR        : at least on syntax error in command line found.
+    MISSING PARAMETERS  : no parameters (ID6) given.
+    NO WBFS FOUND       : no WBFS partiton found.
+    TOO MUCH WBFS FOUND : 2 to more no WBFS partiton found but --all missed.
+    WDISC NOT FOUND     : disc not found on any WBFS partition.
+    REMOVE ERROR        : error while removing a disc from a WBFS.
+    READ ERROR          : error while reading an ISO image or a WBFS.
+
+-------------------------------------------------------------------------------
+
+COMMAND: SPACE|DF   [wbfs_partition]...
+
+ Print space information and disc usage about WBFS partitions.
+ All value printed in MiB.
+
+ Options:
+
+    -A --all          Use all WBFS partitions found. ALWAYS SET!
+    -a --auto         Search for WBFS partitions using /proc/partitions.
+    -p --part  part   File of primary WBFS partition. Multiple usage allowed.
+    -l --long         Print in long format. Multiple usage possible.
+    -H --no-header    Suppress printing of header and footer.
+
+    -q --quiet        Be quiet.
+    -v --verbose      Be verbose.
+    -t --test         Allowed but ignored.
+
+ The SPACE command makes a quick search for WBFS partitions: it scans only the
+ WBFS-Header. The three options --all, --auto and --part decides where partitions
+ will be searched (see section "Options in detail: partitions" for details).
+
+ If at least one parameter ('wbfs_partition') is given ther option --all well be
+ enabled and all names are insterted into the partition list like --auto.
+ This enables an easy lookup like 'wwt find *.wbfs'.
+
+ The SPACE/DF command prints:
+    size  : file size in MiB.
+    used  : space used by discs in MiB.
+    used% : space used by discs in percent.
+    free  : free space for discs in MiB.
+    discs : number of wii discs / max number of discs
+    file  : the given path name of the file.
+
+ With option --long the real path instead aa the given filename is printed.
+ The option --no-header suppress the output of header and footer.
+
+ Usual ERROR/EXIT CODES:
+
+    0 == OK             : all done without erros.
+    SYNTAX ERROR        : at least on syntax error in command line found.
+    READ ERROR          : error while read a file given by option --part.
+    NO WBFS FOUND       : no WBFS partiton found.
+    TOO MUCH WBFS FOUND : 2 to more no WBFS partiton found but --all missed.
+
+
+-------------------------------------------------------------------------------
+
+COMMAND: REPAIR   [wbfs_partition]...
+
+ Check and repairs WBFS partitions.
+ REPAIR is a shortcut for: CHECK --repair=fbt
+
+ Options:
+
+    -A --all          Use all WBFS partitions found.
+    -a --auto         Search for WBFS partitions using /proc/partitions.
+    -p --part  part   File of primary WBFS partition. Multiple usage allowed.
+
+       --repair mode  Repair the WBFS. 'mode' is a comma separated list of:
+                        -  | NONE       : ignore previous settings
+                        RI | RM-INVALID : remove discs with invalid blocks
+                        RO | RM-OVERLAP : remove discs with overlaped blocks
+                        RF | RM-FREE    : remove discs with free marked blocks
+                        RE | RM-EMPTY   : remove discs with no valid blocks
+                        RI | RM-ALL     : remove all discs with errors
+                        F  | FBT        : repair free blocks table
+                        *  | ALL        : repair all
+                      The default mode is 'FBT'.
+
+    -q --quiet        Be quiet.
+    -v --verbose      Be verbose.
+    -t --test         Run in test mode, modify nothing.
+
+ Command REPAIR checks and repairs WBFS partions for block errors. By default
+ errors in the 'free blocks table' will be fixed. See command CHECK for details.
+
+
+ Usual ERROR/EXIT CODES:
+
+    0 == OK             : all done without erros.
+    SYNTAX ERROR        : at least on syntax error in command line found.
+    NO WBFS FOUND       : no WBFS partiton found.
+    TOO MUCH WBFS FOUND : 2 to more no WBFS partiton found but --all missed.
+    WBFS INVALID        : An invalid WBFS found (WBFS with errors)
+
+
+-------------------------------------------------------------------------------
+
+COMMAND: TITLES|TIT   [additional_title_file]...
+
+ The command 'TITLES' builts the title data base and prints the result to
+ stdout. The handling of the additional files works like the --title option.
+
+ Options:
+
+    -T --titles file  Read file for disc titles
+       --utf-8        Enables UTF-8 support (default).
+       --no-utf-8     Disables UTF-8 support.
+
+ The section "Processing title db" explains the options in detail.
+
+
+ Usual ERROR/EXIT CODES:
+
+    0 == OK        : all done.
+    SYNTAX ERROR   : at least on syntax error in command line found.
+
+
+-------------------------------------------------------------------------------
+
+COMMAND: TRUNCATE|TR  [wbfs_partition]...
+
+ Truncate/trim WBFS partitions.
+
+    -A --all          Use all WBFS partitions found.
+    -a --auto         Search for WBFS partitions using /proc/partitions.
+    -p --part  part   File of primary WBFS partition. Multiple usage allowed.
+    -f --force        Force operation, ignore the chgeck result.
+       --no-check     Disable automatic check of WBFS before modificastions.
+
+    -q --quiet        Be quiet.
+    -v --verbose      Be verbose.
+    -t --test         Run in test mode, modify nothing.
+
+ The command TRUNCATE truncates WBFS to a minmal size. This is done by
+ calculating the last used block within th WBFS. The WBFS is still valid
+ and all modification may be done.
+
+ Before modifying the WBFS a check (see CHECK) is done. If there are any
+ problematic errors detected the WBFS is ignored. If the option --force is set,
+ the test is done but the result is ignored. The option --no-check disables
+ this automatic check.
+
+
+-------------------------------------------------------------------------------
+
+COMMAND: UPDATE|U  iso_image_path...
+
+'UPDATE' is the same as 'ADD --update'. The command 'UPDATE' does not accept
+the options --update and --overwrite. See command 'ADD' for options and details.
+
+
+-------------------------------------------------------------------------------
+
+COMMAND: VERSION   [any_options_or_parameters]
+
+ Recognize option --long and ignore all other options and parameters, print out
+ the program version to standard out (stdout) and exit with status 0 (OK).
+
+ The ouput line looks like:
+@@EXEC(./wwt version | sed 's/^/    /')@@
+
+ If option --long is set the output is printed in a machine readable format:
+@@EXEC(./wwt --long version | sed 's/^/    /')@@
+
+
+ ERROR/EXIT CODES:
+
+    HELP : Help printed.
+
+
+*******************************************************************************
+*******                     Processing partitions                       *******
+*******************************************************************************
+
+-A --all          Use all WBFS partitions found.
+-a --auto         Search for WBFS partitions using /proc/partitions.
+-p --part  part   File of primary WBFS partition. Multiple usage allowed.
+-p --part  @file  Special case: read partition list from 'file' ('-'=stdin).
+
+These 3 options defines how to search for WBFS partitions.
+The program generates an internal partion list. This partion list is filled
+by --part and --auto. --part may be set multiple times.
+
+Partitions set with the --part option must be existent, readable and valid WBFS
+partitions (exceptions explained in the command documentation). Partitions set
+with --auto are only used, if the partition is readable and the WBFS magic is
+found. If more than one partition is defined by --part then --all is set. 
+
+If using the special case '--part @file' each line of the given file is one
+partition. Each line may terminate with LF or CR+LF. Handling of '@' is
+*not* recurse. The special filename '-' means: read from standard input (stdin).
+This nice feature enables shell commands like: "wwt df -p@<(ls *.wbfs)".
+
+The program terminates with an error if not exactly one valid WBFS partition is
+found. When using --all at last one partition must be found.
+
+If neither the option --part nor --auto is set then the environment variable
+'WWT_WBFS' is searched. It contains a semicolon separated list of filenames.
+If one ore more of this files is a valid WBFS partition it is silently added
+to the partition list and the option --all is set.
+
+
+@@MODULE(proc-iso.txt)@@
+
+
+@@MODULE(proc-id6.txt)@@
+
+
+@@MODULE(proc-exclude.txt)@@
+
+
+@@MODULE(proc-titles.txt)@@
+
+
+@@MODULE(proc-split.txt)@@
+
+
+@@MODULE(proc-size.txt)@@
+
+
+*******************************************************************************
+*******                      Some options in detail                     *******
+*******************************************************************************
+
+@@MODULE(opt-sort.txt)@@
+
+-------------------------------------------------------------------------------
+
+@@MODULE(opt-psel.txt)@@
+
+
+*******************************************************************************
+*******                   Hidden options (for testing)                  *******
+*******************************************************************************
+
+There are some hidden options implemented for testing:
+
+ --io value
+
+    wwt and the other tools can handle files via open() (file mode) and via
+    fopen() (stream mode). The option --io=value allows to control the method.
+    Bit #0 is for opening WBFS and Bit #1 is for openening ISO images.
+    ('ISO' includes 'WDF-ISO')
+
+    --io=0 : WBFS=open()  ISO=open()  **default**
+    --io=1 : WBFS=fopen() ISO=open()
+    --io=2 : WBFS=open()  ISO=fopen()
+    --io=3 : WBFS=fopen() ISO=fopen()
+
+
+*******************************************************************************
+*******                      Environment variables                      *******
+*******************************************************************************
+
+The user can define environment variables as additional way to submit
+parameters to the tool:
+
+WWT_WBFS
+
+ If neither the option --part nor --auto is set then the environment variable
+ 'WWT_WBFS' is searched. It contains a semicolon separated list of filenames.
+ If one ore more of this files is a valid WBFS partition it is silently added
+ to the partition list and the option --all is set.
+
+ Example: WWT_WBFS="a.wbfs;/dev/sdc1;/dev/sdc2"
+
+WWT_OPT
+
+ 'WWT_OPT' is scanned like a command line and before the real command line is
+ scanned. Therefor 'WWT_OPT' will be converted to a parameter list. Each SPACE
+ or other control is a separator. Quoting is not possible. Only options and
+ their parameters will recognized. If such option is not compatible with
+ the command it is silently ignored.
+
+ Example: WWT_OPT="--force --overwrite -vv -T0"
+
+
+@@MODULE(signals.txt)@@
+
+
+*******************************************************************************
+*******                              END                                *******
+*******************************************************************************

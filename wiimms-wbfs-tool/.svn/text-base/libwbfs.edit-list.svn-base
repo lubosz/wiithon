@@ -1,0 +1,3 @@
+libwbfslibwbfs.[ch] ;
+libwbfs/*.[ch] ;
+libwbfs/*.txt ;

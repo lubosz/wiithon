@@ -1,0 +1,364 @@
+
+
+*******************************************************************************
+*******                           file wiidisc.h                        *******
+*******************************************************************************
+
+// [codeview]
+typedef int (*read_wiidisc_callback_t)( void *fp, u32 offset, u32 count, void* iobuf );
+
+// [codeview]
+typedef enum { ... } partition_selector_t;
+
+typedef struct wiidisc_s { ... } wiidisc_t;
+    This is the main data structure of a wii disc.
+
+void wd_build_disc_usage
+( wiidisc_t *d, partition_selector_t selector, u8* usage_table);
+    Setup 'd' for disc usage calculations and call do_disc()
+	-> d->sector_usage_table = usage_table;
+    'usage_table' is a byte table with 'WII_SECTORS_DOUBLE_LAYER' bytes.
+
+// [codeview]
+void wd_fix_partition_table(wiidisc_t *d, partition_selector_t selector, u8* partition_table);
+
+
+*******************************************************************************
+*******                           file wiidisc.c                        *******
+*******************************************************************************
+
+void decrypt_title_key ( u8 *tik, u8 *title_key )
+    decyrpt the title key and stores the result in 'title_key' (16 bytes)
+    tik: pointer to ticket (0x2a4 bytes)
+
+// [codeview]
+static u32 _be32(const u8 *p)
+
+static void disc_read ( wiidisc_t *d, u32 offset, u8 *data, u32 len );
+    read data from disc if 'data!=0' using wrapper d->read.
+    set usage table if 'sector_usage_table!=0'
+    param:
+	offset: file offset >> 2
+	len:    data length in bytes
+
+static void partition_raw_read( wiidisc_t *d, u32 offset, u8 *data, u32 len );
+    read raw partiton data
+
+static void partition_read_block ( wiidisc_t *d, u32 blockno, u8 *block )
+    read a disc block and decrypt the data
+
+// [codeview]
+static void partition_read(wiidisc_t *d,u32 offset, u8 *data, u32 len,int fake)
+
+// [codeview]
+static u32 do_fst(wiidisc_t *d,u8 *fst, const char *names, u32 i)
+
+// [codeview]
+static void do_files(wiidisc_t*d)
+
+static void do_partition ( wiidisc_t * d );
+    read the partition header infos (tmd,cert,h3) and decrypt_title_key()
+    call do_files()
+
+static int test_partition_skip ( u32 partition_type, partition_selector_t part_sel );
+    'part_sel' decides if the partition of 'partition_type' is skipped.
+    return value: 0:don't skip,  1:skip
+
+static void do_disc ( wiidisc_t * d )
+    Discover disc and call do_partition() for each non skipped partition.
+    Use wiidisc_t::part_sel as partition selector.
+
+wiidisc_t *wd_open_disc ( read_wiidisc_callback_t read, void * blackbox )
+    alloc memory and setup data structure
+    -> alloc temp buffers + save parameters
+
+void wd_close_disc ( wiidisc_t *d )
+    free alloced memory,
+
+// [codeview]
+// returns a buffer allocated with wbfs_ioalloc() or NULL if not found of alloc error
+// XXX pathname not implemented. files are extracted by their name.
+// first file found with that name is returned.
+u8 * wd_extract_file(wiidisc_t *d, partition_selector_t partition_type, char *pathname)
+
+// [codeview]
+void wd_build_disc_usage(wiidisc_t *d, partition_selector_t selector, u8* usage_table)
+
+// [codeview]
+void wd_fix_partition_table(wiidisc_t *d, partition_selector_t selector, u8* partition_table)
+
+
+*******************************************************************************
+*******                           file libwbfs.h                        *******
+*******************************************************************************
+
+// [codeview]
+typedef u32 be32_t;
+
+// [codeview]
+typedef u16 be16_t;
+
+// [codeview]
+typedef struct wbfs_head { ... } wbfs_head_t;
+
+typedef struct wbfs_disc_info { ... } wbfs_disc_info_t;
+    This structure contains two element:
+	disc_header_copy: a copy of the very first 256 bytes of the wii disc
+	wlba_table: A table with 'wbfs_t::n_wbfs_sec_per_disc' elements. 
+
+// [codeview]
+typedef int (*rw_sector_callback_t)(void*fp,u32 lba,u32 count,void*iobuf);
+
+// [codeview]
+typedef struct wbfs_s { ... } wbfs_t;
+
+// [codeview]
+typedef struct wbfs_disc_s { ... } wbfs_disc_t;
+
+// [codeview]
+#define WBFS_MAGIC (('W'<<24)|('B'<<16)|('F'<<8)|('S'))
+
+-------------------------------------------------------------------------------
+// [codeview]
+
+/*! @brief open a MSDOS partitionned harddrive. This tries to find a wbfs partition into the harddrive
+   @param read_hdsector,write_hdsector: accessors to a harddrive
+   @hd_sector_size: size of the hd sector. Can be set to zero if the partition in already initialized
+   @num_hd_sector:  number of sectors in this disc. Can be set to zero if the partition in already initialized
+   @reset: not implemented, This will format the whole harddrive with one wbfs partition that fits the whole disk.
+   calls wbfs_error() to have textual meaning of errors
+   @return NULL in case of error
+*/
+wbfs_t * wbfs_open_hd(rw_sector_callback_t read_hdsector,
+		      rw_sector_callback_t write_hdsector,
+		      void *callback_data,
+		      int hd_sector_size, int num_hd_sector, int reset);
+
+-------------------------------------------------------------------------------
+// [codeview]
+
+/*! @brief open a wbfs partition
+   @param read_hdsector,write_hdsector: accessors to the partition
+   @hd_sector_size: size of the hd sector. Can be set to zero if the partition in already initialized
+   @num_hd_sector:  number of sectors in this partition. Can be set to zero if the partition in already initialized
+   @partition_lba:  The partitio offset if you provided accessors to the whole disc.
+   @reset: initialize the partition with an empty wbfs.
+   calls wbfs_error() to have textual meaning of errors
+   @return NULL in case of error
+*/
+wbfs_t*wbfs_open_partition(rw_sector_callback_t read_hdsector,
+			   rw_sector_callback_t write_hdsector,
+			   void *callback_data,
+			   int hd_sector_size, int num_hd_sector, u32 partition_lba, int reset);
+
+
+-------------------------------------------------------------------------------
+// [codeview]
+
+/*! @brief close a already open disc inside a wbfs partition */
+void wbfs_close_disc(wbfs_disc_t*d);
+
+-------------------------------------------------------------------------------
+// [codeview]
+
+/*! @brief accessor to the wii disc
+  @param d: a pointer to already open disc
+  @param offset: an offset inside the disc, *points 32bit words*, allowing to access 16GB data
+  @param len: The length of the data to fetch, in *bytes*
+ */
+// offset is pointing 32bit words to address the whole dvd, although len is in bytes
+int wbfs_disc_read(wbfs_disc_t*d,u32 offset, u8 *data, u32 len);
+
+-------------------------------------------------------------------------------
+// [codeview]
+
+/*! add a wii dvd inside the partition
+  @param read_src_wii_disc: a callback to access the wii dvd. offsets are in 32bit, len in bytes!
+  @callback_data: private data passed to the callback
+  @spinner: a pointer to a function that is regulary called to update a progress bar.
+  @sel: selects which partitions to copy.
+  @copy_1_1: makes a 1:1 copy, whenever a game would not use the wii disc format, and some data is hidden outside the filesystem.
+ */
+u32 wbfs_add_disc(wbfs_t*p,read_wiidisc_callback_t read_src_wii_disc,
+		  void *callback_data,
+		  progress_callback_t spinner,
+		  partition_selector_t sel,
+		  int copy_1_1
+		 );
+
+-------------------------------------------------------------------------------
+// [codeview]
+
+u32 wbfs_estimate_disc(wbfs_t*p,read_wiidisc_callback_t read_src_wii_disc, void *callback_data,
+		       partition_selector_t sel);
+
+-------------------------------------------------------------------------------
+// [codeview]
+
+/*! rename a wiidvd inside a partition */
+u32 wbfs_ren_disc(wbfs_t*p, u8* discid, u8* newname);
+
+-------------------------------------------------------------------------------
+// [codeview]
+
+/*! edit a wiidvd diskid */
+u32 wbfs_nid_disc(wbfs_t*p, u8* discid, u8* newid);
+
+-------------------------------------------------------------------------------
+// [codeview]
+
+/*! extract a disc from the wbfs, unused sectors are just untouched, allowing descent filesystem to only really usefull space to store the disc.
+Even if the filesize is 4.7GB, the disc usage will be less.
+ */
+u32 wbfs_extract_disc(wbfs_disc_t*d, rw_sector_callback_t write_dst_wii_sector,void *callback_data,progress_callback_t spinner);
+
+-------------------------------------------------------------------------------
+// [codeview]
+
+/*! extract a file from the wii disc filesystem.
+  E.G. Allows to extract the opening.bnr to install a game as a system menu channel
+ */
+u32 wbfs_extract_file(wbfs_disc_t*d, char *path);
+
+-------------------------------------------------------------------------------
+// [codeview]
+
+// remove some sanity checks
+void wbfs_set_force_mode(int force);
+
+
+*******************************************************************************
+*******                           file libwbfs.c                        *******
+*******************************************************************************
+
+// [codeview]
+static int force_mode=0;
+
+// [codeview]
+void wbfs_set_force_mode(int force)
+
+// [codeview]
+static u8 size_to_shift(u32 size)
+
+// [codeview]
+#define read_le32_unaligned(x) ((x)[0]|((x)[1]<<8)|((x)[2]<<16)|((x)[3]<<24))
+
+void wbfs_sync ( wbfs_t * p );
+    writes wbfs header and freeblks (if !=0) to hardisk
+
+// [codeview]
+wbfs_t*wbfs_open_hd(
+    rw_sector_callback_t read_hdsector,
+    rw_sector_callback_t write_hdsector,
+    void *callback_data,
+    int hd_sector_size,
+    int num_hd_sector __attribute((unused)),
+    int reset)
+
+// [codeview]
+wbfs_t*wbfs_open_partition(rw_sector_callback_t read_hdsector,
+			   rw_sector_callback_t write_hdsector,
+			   void *callback_data,
+			   int hd_sector_size, int num_hd_sector, u32 part_lba, int reset)
+
+// [codeview]
+void wbfs_sync(wbfs_t*p)
+
+// [codeview]
+void wbfs_close ( wbfs_t * p )
+
+wbfs_disc_t * wbfs_open_disc_by_index ( wbfs_t * p, u32 index );
+    Open a disc by index (0..p->max_disc(.
+    Returns NULL if index is invalid or if no disc with that index exists.
+    An open disc must be closed with wbfs_close_disc()
+
+wbfs_disc_t * wbfs_open_disc_by_id6 ( wbfs_t * p, u8 * id6 );
+    Search the disc with the given ID& and open it.
+    Returns a pointer to the disc structure or NULL if disc not found.
+    An open disc must be closed with wbfs_close_disc()
+
+void wbfs_close_disc ( wbfs_disc_t * d );
+    closes a wii disc on a WBFS partition.
+
+// [codeview]
+// offset is pointing 32bit words to address the whole dvd, although len is in bytes
+int wbfs_disc_read(wbfs_disc_t *d, u32 offset, u8 *data, u32 len)
+
+u32 wbfs_count_discs ( wbfs_t * p );
+    return the number of discs inside the paritition.
+
+// [codeview]
+static u32 wbfs_sector_used(wbfs_t *p,wbfs_disc_info_t *di)
+
+enumError wbfs_get_disc_info
+	( wbfs_t * p, u32 idx, u8 * header, int header_size, u32 *size4 );
+enumError wbfs_get_disc_info_by_slot
+	( wbfs_t * p, u32 pos, u8 * header, int header_size, u32 *size4 );
+    Both functions get infos about a disc.
+    p: Valid pointer to wbfs_t
+    idx: Index (0..used_disc( of the disc.
+    pos: Position (0..p->max_disc( of the disc.
+    header: pointer to buffer taht receives the header data
+    header_size: sizeof(header)
+    size4: if not NULL: Store the internal size of the disc in u32 steps (*4).
+
+u32 wbfs_count_unusedblocks(wbfs_t*p);
+    get the number of unuseds block of the partition.
+    multiplied by p->wbfs_sec_sz gives the free bytes.
+
+// [codeview]
+static int block_used(u8 *used,u32 i,u32 wblk_sz)
+
+static u32 alloc_block ( wbfs_t * p );
+    find the first free block and allocate it.
+    return: block number >= 1
+            ~0: no blocks free
+
+static void wbfs_free_block ( wbfs_t *p, int bl )
+    frees the block 'bl'. bl must be >= 1.
+
+// [codeview]
+u32 wbfs_add_disc
+(
+    wbfs_t *p,
+    read_wiidisc_callback_t read_src_wii_disc,
+    void *callback_data,
+    progress_callback_t spinner,
+    partition_selector_t sel,
+    int copy_1_1
+)
+
+// [codeview]
+u32 wbfs_ren_disc(wbfs_t*p, u8* discid, u8* newname)
+
+// [codeview]
+u32 wbfs_nid_disc(wbfs_t*p, u8* discid, u8* newid)
+
+// [codeview]
+u32 wbfs_estimate_disc
+(
+    wbfs_t *p, read_wiidisc_callback_t read_src_wii_disc,
+    void *callback_data,
+    partition_selector_t sel
+)
+
+u32 wbfs_rm_disc ( wbfs_t * p, u8 * discid, int free_slot_only );
+    Removes a disc name by 'id6' from then partition.
+    If 'free_slot_only' is not null then only the slot s freed
+    and the free blocks table is unchanged.
+
+u32 wbfs_trim(wbfs_t*p)
+    trim the file-system to its minimum size.
+
+// [codeview]
+// data extraction
+u32 wbfs_extract_disc(wbfs_disc_t*d, rw_sector_callback_t write_dst_wii_sector,void *callback_data,progress_callback_t spinner)
+
+// not implemented!
+u32 wbfs_extract_file(wbfs_disc_t* d, char *path);
+
+
+*******************************************************************************
+*******                              END                                *******
+*******************************************************************************
+

@@ -413,11 +413,13 @@ first_time:
 #
 # Only need first time
 #
-#ppa-new: generate_changelog
-#	debuild -S -sa -k0xB8F0176A -I -i --lintian-opts -Ivi
-#	mv ../wiithon_$(VERSION_ACTUAL).tar.gz ../wiithon_$(VERSION_ACTUAL).orig.tar.gz
-#	debuild -S -sk -k0xB8F0176A -I -i --lintian-opts -Ivi
-#
+ppa-new: generate_changelog
+	debuild -S -sa -k0xB8F0176A -I -i --lintian-opts -Ivi
+	mv ../wiithon_$(VERSION_ACTUAL).tar.gz ../wiithon_$(VERSION_ACTUAL).orig.tar.gz
+	debuild -S -sk -k0xB8F0176A -I -i --lintian-opts -Ivi
+
+ppa-upload-new:
+	dput ppa:wii.sceners.linux/wiithon ../wiithon_$(VERSION_ACTUAL)_source.changes
 
 #
 # Only for new languages

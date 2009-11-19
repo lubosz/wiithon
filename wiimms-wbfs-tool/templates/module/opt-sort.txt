@@ -1,0 +1,18 @@
+The option --sort defines the sort mode for output lists.
+
+  Syntax: --sort sort_mode | -S sort_mode
+
+'sort_mode' is one of the following keywords:
+
+    - | NONE    : do not sort
+        ID      : sort by id
+    T | TITLE   : sort by title taken from title db
+    N | NAME    : sort by name
+    F | FILE    : sort by file name
+        SIZE    : sort by size
+        REGION  : sort by region
+        WBFS    : sort by wbfs file name
+        NPART   : sort by number of partitions
+        DEFAULT : use the default sort method for that output
+
+Abbreviations are allowed as long as they are unique.

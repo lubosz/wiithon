@@ -1,0 +1,32 @@
+    The destination filenames are scanned for escape sequences beginning with
+    the escape character '%'. The accepted format is:
+
+        '%cX'  or  '%mcX'  or  '%n-mcX'
+
+    'n' is the number of skipped characters of the field.
+
+    'm' is the zero based index of the last copied character.
+
+    'c' is an optional character. If c is 'u' or 'U' then the source will be
+    converted to uppercase and if c is 'l' or 'l' to lower case.
+
+    'X' selects the source and is one of (ignoring case):
+        'I' : ID6
+        'N' : Disc name
+        'T' : Title. If no title found the disc name is used.
+        'E' : The default extension ('wdf' or 'iso' or 'wbfs')
+        '+' : The default filename.
+
+    To use the '%' sign itself just type '%%'.
+
+    Examples:
+        '%4I.%E'    : Store the game with ID4 as name.
+        '%1uT/%+'   : Store the game into a subdirectory named with the
+                      first character (upper case) of the title.
+        '%3-4lI/%+' : Store the game into aa subdirectory named with the
+                      language code of the ID using the lower case letter.
+
+    Instead of '%' an alternative escape character can be used. It is defined
+    by the option --esc. This makes live easier if using the cygwin version
+    together with the windows shell 'cmd'. Define the environment variables
+    'WWT_OPT' and/or 'WIT_OPT' for a new default definition.

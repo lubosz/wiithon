@@ -1,0 +1,101 @@
+K 25
+svn:wc:ra_dav:version-url
+V 50
+/wii/!svn/ver/454/trunk/wiimms-wbfs-tool/templates
+END
+install.sh
+K 25
+svn:wc:ra_dav:version-url
+V 61
+/wii/!svn/ver/402/trunk/wiimms-wbfs-tool/templates/install.sh
+END
+WBFS.txt
+K 25
+svn:wc:ra_dav:version-url
+V 59
+/wii/!svn/ver/402/trunk/wiimms-wbfs-tool/templates/WBFS.txt
+END
+wit.txt
+K 25
+svn:wc:ra_dav:version-url
+V 58
+/wii/!svn/ver/454/trunk/wiimms-wbfs-tool/templates/wit.txt
+END
+DOCUMENTATION.txt
+K 25
+svn:wc:ra_dav:version-url
+V 68
+/wii/!svn/ver/431/trunk/wiimms-wbfs-tool/templates/DOCUMENTATION.txt
+END
+load-titles.sh
+K 25
+svn:wc:ra_dav:version-url
+V 65
+/wii/!svn/ver/402/trunk/wiimms-wbfs-tool/templates/load-titles.sh
+END
+wdf2iso.txt
+K 25
+svn:wc:ra_dav:version-url
+V 62
+/wii/!svn/ver/382/trunk/wiimms-wbfs-tool/templates/wdf2iso.txt
+END
+iso2wdf.txt
+K 25
+svn:wc:ra_dav:version-url
+V 62
+/wii/!svn/ver/382/trunk/wiimms-wbfs-tool/templates/iso2wdf.txt
+END
+announce.forum
+K 25
+svn:wc:ra_dav:version-url
+V 65
+/wii/!svn/ver/427/trunk/wiimms-wbfs-tool/templates/announce.forum
+END
+WDF.txt
+K 25
+svn:wc:ra_dav:version-url
+V 58
+/wii/!svn/ver/325/trunk/wiimms-wbfs-tool/templates/WDF.txt
+END
+wwt.txt
+K 25
+svn:wc:ra_dav:version-url
+V 58
+/wii/!svn/ver/450/trunk/wiimms-wbfs-tool/templates/wwt.txt
+END
+wdf-dump.txt
+K 25
+svn:wc:ra_dav:version-url
+V 63
+/wii/!svn/ver/294/trunk/wiimms-wbfs-tool/templates/wdf-dump.txt
+END
+wdf-cat.txt
+K 25
+svn:wc:ra_dav:version-url
+V 62
+/wii/!svn/ver/294/trunk/wiimms-wbfs-tool/templates/wdf-cat.txt
+END
+update.forum
+K 25
+svn:wc:ra_dav:version-url
+V 63
+/wii/!svn/ver/454/trunk/wiimms-wbfs-tool/templates/update.forum
+END
+version.h
+K 25
+svn:wc:ra_dav:version-url
+V 60
+/wii/!svn/ver/294/trunk/wiimms-wbfs-tool/templates/version.h
+END
+iso2wbfs.txt
+K 25
+svn:wc:ra_dav:version-url
+V 63
+/wii/!svn/ver/382/trunk/wiimms-wbfs-tool/templates/iso2wbfs.txt
+END
+txt.edit-list
+K 25
+svn:wc:ra_dav:version-url
+V 64
+/wii/!svn/ver/309/trunk/wiimms-wbfs-tool/templates/txt.edit-list
+END

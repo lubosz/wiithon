@@ -1,0 +1,28 @@
+The option --psel defines the partition selector while reading a games dics
+fom an ISO file:
+
+  Syntax: --psel partition_selector
+
+'partition_selector' is one of the following keywords:
+
+    GAME       : use only the game partition    ( partition type = 0 )
+    UPDATE     : use only the update partition  ( partition type = 1 )
+    CHANNEL    : use only the channel partition ( partition type = 2 )
+
+    NO-GAME    : use all partitions but not the Game partition.
+     NOGAME    : alternative name for 'NO-GAME'
+    NO-UPDATE  : use all partitions but not the update partition.
+     NOUPDATE  : alternative name for 'NO-UPDATE'
+    NO-CHANNEL : use all partitions but not the channel partition.
+     NOCHANNEL : alternative name for 'NO-CHANNEL'
+
+    ALL        : use all partitions (the default)
+     *         : short cut for 'ALL'
+
+    WHOLE      : more than 'ALL': copy whole dics
+     RAW       : alternative name for 'WHOLE'
+     1:1       : alternative name for 'WHOLE'
+
+    <number>   : any decimal number to specify the partition type directly.
+
+Abbreviations are allowed as long as they are unique.
