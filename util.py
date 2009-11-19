@@ -476,7 +476,7 @@ def space_for_dvd_iso_wii(path):
     return ((fs[statvfs.F_BSIZE]*fs[statvfs.F_BAVAIL]/1024) >= 4693504)
 
 def esImagen(fichero):
-    return (getExtension(fichero)=="png") or (getExtension(fichero)=="jpg") or (getExtension(fichero)=="gif")
+    return (getExtension(fichero)=="png") or (getExtension(fichero)=="jpg") or (getExtension(fichero)=="gif") or (getExtension(fichero)=="jpeg")
 
 ## check user group and permissions
 def check_gids():

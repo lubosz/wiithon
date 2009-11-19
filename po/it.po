@@ -550,7 +550,8 @@ msgstr "AUTENTICAZIONE:"
 msgid "INFORMACION:"
 msgstr "INFORMAZIONE:"
 
-#: gui.py:936 gui.py:1578 gui.py:1622 gui.py:1750 gui.py:2061
+#: gui.py:936 gui.py:1578 gui.py:1622 gui.py:1750 gui.py:2057 gui.py:2064
+#: gui.py:2071
 msgid "No has seleccionado ninguna particion"
 msgstr "Nessuna partizione selezionata"
 
@@ -780,43 +781,43 @@ msgstr "Importazione dei dati da WiiTDB conclusa correttamente"
 msgid "Deseas borrar el archivo %s?"
 msgstr "Vuoi cancellare l'archivio %s?"
 
-#: gui.py:2093
+#: gui.py:2103
 #, python-format
 msgid "Empieza %s"
 msgstr "Inizio: %s"
 
-#: gui.py:2105
+#: gui.py:2115
 #, python-format
 msgid "Termina: %s"
 msgstr "Finito: %s"
 
-#: gui.py:2122
+#: gui.py:2132
 #, python-format
 msgid "Falla la descarga de la caratula de %s"
 msgstr "E' fallito il download della copertina di %s"
 
-#: gui.py:2132
+#: gui.py:2142
 #, python-format
 msgid "Falla la descarga del disco de %s"
 msgstr "E' fallito il download della disc-art di %s"
 
-#: gui.py:2180
+#: gui.py:2190
 msgid "Finalizando ..."
 msgstr "Sto finendo ..."
 
-#: gui.py:2182
+#: gui.py:2192
 msgid "ERROR!"
 msgstr "ERRORE!"
 
-#: gui.py:2190
+#: gui.py:2200
 msgid "quedan"
 msgstr "mancano"
 
-#: gui.py:2206
+#: gui.py:2216
 msgid "Error en progreso"
 msgstr "Errore in corso"
 
-#: gui.py:2214
+#: gui.py:2224
 msgid "Empezando ..."
 msgstr "Avvio ..."
 

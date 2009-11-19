@@ -2023,6 +2023,9 @@ class WiithonGUI(GtkBuilderWrapper):
                                 comando = 'mogrify -resize %dx%d! "%s"' % (self.core.prefs.WIDTH_DISCS, self.core.prefs.HEIGHT_DISCS, ruta)
                                 util.call_out_null(comando)
                                 self.ponerDisco(self.sel_juego.obj.idgame, self.wb_img_disco1)
+                                
+                        else:
+                            print fichero
 
             elif fichero.startswith("http://"):
                 # Arrastrar imagenes (png, jpg, gif) desde el navegador
@@ -2042,23 +2045,30 @@ class WiithonGUI(GtkBuilderWrapper):
                             comando = 'mogrify -resize %dx%d! "%s"' % (self.core.prefs.WIDTH_DISCS, self.core.prefs.HEIGHT_DISCS, ruta)
                             util.call_out_null(comando)
                             self.ponerDisco(self.sel_juego.obj.idgame, self.wb_img_disco1)
+                            
+                    else:
+                        print fichero
 
-        if self.isSelectedPartition():
-
-            if len(listaISO) > 0:
+        if len(listaISO) > 0:
+            if self.isSelectedPartition():
                 listaISO.sort()
                 self.poolTrabajo.nuevoTrabajoAnadir( listaISO , self.sel_parti.obj.device)
-                
-            if len(listaRAR) > 0:
+            else:
+                self.alert("warning" , _("No has seleccionado ninguna particion"))
+            
+        if len(listaRAR) > 0:
+            if self.isSelectedPartition():
                 listaRAR.sort()
                 self.poolTrabajo.nuevoTrabajoDescomprimirRAR( listaRAR , self.sel_parti.obj)
-                
-            if len(listaDirectorios) > 0:
+            else:
+                self.alert("warning" , _("No has seleccionado ninguna particion"))
+            
+        if len(listaDirectorios) > 0:
+            if self.isSelectedPartition():
                 listaDirectorios.sort()
-                self.poolTrabajo.nuevoTrabajoRecorrerDirectorio( listaDirectorios , self.sel_parti.obj)
-                
-        else:
-            self.alert("warning" , _("No has seleccionado ninguna particion"))
+                self.poolTrabajo.nuevoTrabajoRecorrerDirectorio( listaDirectorios , self.sel_parti.obj)                
+            else:
+                self.alert("warning" , _("No has seleccionado ninguna particion"))
 
     def callback_empieza_progreso(self, trabajo):
         self.hiloCalcularProgreso = HiloCalcularProgreso( trabajo, self.actualizarLabel , self.actualizarFraccion )

@@ -408,8 +408,6 @@ po/locale/%/LC_MESSAGES/wiithon.mo: po/%.po
 	msgfmt $< -o $@
 	@rmdir $(basename $@)
 
-first_time:
-	@echo ""
 #
 # Only need first time
 #
@@ -420,6 +418,9 @@ ppa-new: generate_changelog
 
 ppa-upload-new:
 	dput ppa:wii.sceners.linux/wiithon ../wiithon_$(VERSION_ACTUAL)_source.changes
+
+first_time:
+	@echo ""
 
 #
 # Only for new languages
