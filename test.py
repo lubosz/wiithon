@@ -3,39 +3,40 @@
 # vim: set fileencoding=utf-8 :
 
 #import sys
-import libxml2
+#import libxml2
 
 #from wiitdb_xml import *
 #from core import WiithonCORE
 
-xml_plantilla = """<?xml version="1.0" encoding="UTF-8"?>
-<margenes>
-    <letra_azul>
-        <grande>
-            <subrayado>
-                $titulo
-            </subrayado>
-        </grande>
-    </letra_azul>
-    <letra_roja>
-        $message
-    </letra_roja>
-</margenes>
-"""
+if False:
+    xml_plantilla = """<?xml version="1.0" encoding="UTF-8"?>
+    <margenes>
+        <letra_azul>
+            <grande>
+                <subrayado>
+                    $titulo
+                </subrayado>
+            </grande>
+        </letra_azul>
+        <letra_roja>
+            $message
+        </letra_roja>
+    </margenes>
+    """
 
-def recorrer_nodo(nodo, level):
-    while nodo is not None:
-        if nodo.type == 'element':
-            print "activar %s" % nodo.name
-            if nodo.children.next == None:
-                print "escribir %s" % nodo.content.strip()
-            recorrer_nodo(nodo.children, level + 1)
-            print "desactivar %s" % nodo.name
-        nodo = nodo.next
+    def recorrer_nodo(nodo, level):
+        while nodo is not None:
+            if nodo.type == 'element':
+                print "activar %s" % nodo.name
+                if nodo.children.next == None:
+                    print "escribir %s" % nodo.content.strip()
+                recorrer_nodo(nodo.children, level + 1)
+                print "desactivar %s" % nodo.name
+            nodo = nodo.next
 
-doc = libxml2.parseDoc(xml_plantilla)
-recorrer_nodo(doc.children, 1)
-doc.freeDoc()
+    doc = libxml2.parseDoc(xml_plantilla)
+    recorrer_nodo(doc.children, 1)
+    doc.freeDoc()
 
 
 ##############################################
@@ -182,3 +183,5 @@ for linea in out:
     print "---------------"
     print linea.strip()
 '''
+
+

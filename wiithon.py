@@ -9,6 +9,7 @@
 import sys
 import os
 import getopt
+import gobject
 
 import config
 import util
@@ -38,6 +39,8 @@ except ImportError:
     
 def App():
     try:
+        gobject.threads_init()
+        
         util.configurarLenguaje()
 
         if os.path.exists(os.path.join(config.WIITHON_FILES , ".bzr")):
@@ -70,9 +73,13 @@ def App():
                 num_parms_cli += 1
                     
         GUI = num_parms_cli == 0
+        if GUI:
+            loading = util.LoadingThread()
+            loading.start()
+        
         core = WiithonCORE()
         if GUI:
-            interfaz = WiithonGUI(core)
+            interfaz = WiithonGUI(core, loading)
         else:
             interfaz = WiithonCLI(core)
 

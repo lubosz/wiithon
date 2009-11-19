@@ -33,11 +33,12 @@ session =   util.getSesionBDD(db)
 
 class WiithonGUI(GtkBuilderWrapper):
 
-    def __init__(self, core):
+    def __init__(self, core, loading):
         GtkBuilderWrapper.__init__(self, os.path.join(config.WIITHON_FILES_RECURSOS_GLADE, '%s.ui' % config.APP))
 
         # referencia al core
         self.core = core
+        self.loading = loading
 
         # Lista de particiones
         self.lParti = None
@@ -122,10 +123,6 @@ class WiithonGUI(GtkBuilderWrapper):
 
         backup_preferencia_device = self.core.prefs.device_seleccionado
         backup_preferencia_idgame = self.core.prefs.idgame_seleccionado
-
-        # permite usar hilos con PyGTK http://faq.pygtk.org/index.py?req=show&file=faq20.006.htp
-        # modo seguro con hilos
-        gobject.threads_init()
 
         # ocultar barra de progreso
         self.ocultarHBoxProgreso()
@@ -285,6 +282,8 @@ class WiithonGUI(GtkBuilderWrapper):
             self.wb_busqueda.grab_focus()
         else:
             self.wb_tb_refrescar_wbfs.grab_focus()
+            
+        self.loading.close()
 
     def refrescarParticionesWBFS(self, verbose = True):
         
@@ -342,11 +341,14 @@ class WiithonGUI(GtkBuilderWrapper):
 
             if (self.core.prefs.ADVERTENCIA_NO_WBFS and len(self.lParti) == 0):
                 if util.check_gids():
+                    self.loading.close()
                     self.alert("warning" , _("No hay particiones WBFS, se muestran los juegos de la ultima sesion."))
                 else:
+                    self.loading.close()
                     self.alert("warning" , _("No puede acceder a las particiones porque el usuario que se puso en marcha wiithon no pertenecen al grupo \"disk\", se muestran los juegos de la ultima sesion."))
 
             elif (self.core.prefs.ADVERTENCIA_ACTUALIZAR_WIITDB and (len(self.lJuegos) > 0) and self.info.abajo_num_juegos_wiitdb == 0):
+                self.loading.close()
                 if (self.question("""
                     <b>
                         <pr>%s</pr>
@@ -368,6 +370,7 @@ class WiithonGUI(GtkBuilderWrapper):
             
         else:
             if verbose:
+                self.loading.close()
                 self.alert("warning" , _("No puedes refrescar las particiones mientras hay tareas sin finalizar"))
 
     def main(self , opciones , argumentos):

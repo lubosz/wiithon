@@ -42,9 +42,6 @@ class CheckRelacionado(gtk.CheckButton):
         self.defecto = defecto    
 
 class Preferencias:
-    
-    def __init__(self):
-        pass
 
     def cargarPreferenciasPorDefecto(self,  prefs_vbox_general,
                                             prefs_vbox_caratulas,
