@@ -509,8 +509,8 @@ msgstr ""
 msgid "INFORMACION:"
 msgstr ""
 
-#: gui.py:936 gui.py:1578 gui.py:1622 gui.py:1750 gui.py:2057 gui.py:2064
-#: gui.py:2071
+#: gui.py:936 gui.py:1578 gui.py:1622 gui.py:1750 gui.py:2051 gui.py:2058
+#: gui.py:2065
 msgid "No has seleccionado ninguna particion"
 msgstr ""
 
@@ -735,43 +735,43 @@ msgstr ""
 msgid "Deseas borrar el archivo %s?"
 msgstr ""
 
-#: gui.py:2103
+#: gui.py:2097
 #, python-format
 msgid "Empieza %s"
 msgstr ""
 
-#: gui.py:2115
+#: gui.py:2109
 #, python-format
 msgid "Termina: %s"
 msgstr ""
 
-#: gui.py:2132
+#: gui.py:2126
 #, python-format
 msgid "Falla la descarga de la caratula de %s"
 msgstr ""
 
-#: gui.py:2142
+#: gui.py:2136
 #, python-format
 msgid "Falla la descarga del disco de %s"
 msgstr ""
 
-#: gui.py:2190
+#: gui.py:2184
 msgid "Finalizando ..."
 msgstr ""
 
-#: gui.py:2192
+#: gui.py:2186
 msgid "ERROR!"
 msgstr ""
 
-#: gui.py:2200
+#: gui.py:2194
 msgid "quedan"
 msgstr ""
 
-#: gui.py:2216
+#: gui.py:2210
 msgid "Error en progreso"
 msgstr ""
 
-#: gui.py:2224
+#: gui.py:2218
 msgid "Empezando ..."
 msgstr ""
 

@@ -2023,9 +2023,6 @@ class WiithonGUI(GtkBuilderWrapper):
                                 comando = 'mogrify -resize %dx%d! "%s"' % (self.core.prefs.WIDTH_DISCS, self.core.prefs.HEIGHT_DISCS, ruta)
                                 util.call_out_null(comando)
                                 self.ponerDisco(self.sel_juego.obj.idgame, self.wb_img_disco1)
-                                
-                        else:
-                            print fichero
 
             elif fichero.startswith("http://"):
                 # Arrastrar imagenes (png, jpg, gif) desde el navegador
@@ -2045,9 +2042,6 @@ class WiithonGUI(GtkBuilderWrapper):
                             comando = 'mogrify -resize %dx%d! "%s"' % (self.core.prefs.WIDTH_DISCS, self.core.prefs.HEIGHT_DISCS, ruta)
                             util.call_out_null(comando)
                             self.ponerDisco(self.sel_juego.obj.idgame, self.wb_img_disco1)
-                            
-                    else:
-                        print fichero
 
         if len(listaISO) > 0:
             if self.isSelectedPartition():

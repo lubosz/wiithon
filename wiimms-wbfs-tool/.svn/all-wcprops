@@ -135,17 +135,17 @@ svn:wc:ra_dav:version-url
 V 55
 /wii/!svn/ver/200/trunk/wiimms-wbfs-tool/STATISTICS.txt
 END
-dclib.edit-list
-K 25
-svn:wc:ra_dav:version-url
-V 56
-/wii/!svn/ver/246/trunk/wiimms-wbfs-tool/dclib.edit-list
-END
 svn-revision.flag
 K 25
 svn:wc:ra_dav:version-url
 V 58
 /wii/!svn/ver/454/trunk/wiimms-wbfs-tool/svn-revision.flag
+END
+dclib.edit-list
+K 25
+svn:wc:ra_dav:version-url
+V 56
+/wii/!svn/ver/246/trunk/wiimms-wbfs-tool/dclib.edit-list
 END
 debug.h
 K 25
