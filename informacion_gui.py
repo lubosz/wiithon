@@ -1,6 +1,8 @@
 #!/usr/bin/python
 # vim: set fileencoding=utf-8 :
 
+import gtk
+
 class InformacionGuiDatos(object):
 
     def __init__(self):
@@ -20,8 +22,14 @@ class InformacionGuiDatos(object):
         # aplicamos el nuevo atributo
         object.__setattr__(self, name, value)
         
+        # puede que se ejecute desde un hilo
+        gtk.gdk.threads_enter()
+        
         # representamos el nuevo dato en el gui
         self.representarDato(name, value)
+        
+        # termina de ejecutarse desde un hilo
+        gtk.gdk.threads_leave()
         
     def representarDato(self, name, value):
         # Metodo abstracto, debes sobreescribirlo.

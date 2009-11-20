@@ -393,7 +393,7 @@ class WiithonGUI(GtkBuilderWrapper):
         else:
             if verbose:
                 self.alert("warning" , _("No puedes refrescar las particiones mientras hay tareas sin finalizar"))
-        
+
     def excepthook(self, exctype, excvalue, exctb):
         tbtext = ''.join(traceback.format_exception(exctype, excvalue, exctb))
         mensaje_xml = """
@@ -566,8 +566,6 @@ class WiithonGUI(GtkBuilderWrapper):
         self.columna6 = columna6 = gtk.TreeViewColumn(_('Fecha'), render , text=5, foreground=8, background=9)
         self.columna7 = columna7 = gtk.TreeViewColumn(_('Rating'), render , text=6, foreground=8, background=9)
         self.columna8 = columna8 = gtk.TreeViewColumn(_('Particion'), render , text=7, foreground=8, background=9)
-        #self.columna9 = columna8 = gtk.TreeViewColumn(_('Particion'), render , text=7, foreground=8, background=9)
-        #self.columna10 = columna8 = gtk.TreeViewColumn(_('Particion'), render , text=7, foreground=8, background=9)
 
         columna1.set_expand(False)
         columna1.set_min_width(79)
