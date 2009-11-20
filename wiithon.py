@@ -10,6 +10,7 @@ import sys
 import os
 import getopt
 import gobject
+import subprocess
 
 import config
 import util
@@ -74,8 +75,7 @@ def App():
                     
         GUI = num_parms_cli == 0
         if GUI:
-            loading = util.LoadingThread()
-            loading.start()
+            loading = subprocess.Popen(config.LOADING_APP , shell=False)
         
         core = WiithonCORE()
         if GUI:

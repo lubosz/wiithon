@@ -38,7 +38,10 @@ class WiithonGUI(GtkBuilderWrapper):
 
         # referencia al core
         self.core = core
+        
+        # loading y su mutex
         self.loading = loading
+        self.loading_cerrado = False
 
         # Lista de particiones
         self.lParti = None
@@ -282,8 +285,25 @@ class WiithonGUI(GtkBuilderWrapper):
             self.wb_busqueda.grab_focus()
         else:
             self.wb_tb_refrescar_wbfs.grab_focus()
+
+    def main(self , opciones , argumentos):
+        if self.isSelectedPartition():
+            for arg in argumentos:
+                arg = os.path.abspath(arg)
+                if os.path.exists(arg):
+                    if util.getExtension(arg)=="iso":
+                        self.poolTrabajo.nuevoTrabajoAnadir(arg , self.sel_parti.obj.device)
+                    else:
+                        self.alert("warning" , _("Formato desconocido"))
+
+        self.cerrar_loading()
+        gtk.main()
+
             
-        self.loading.close()
+    def cerrar_loading(self):
+        if not self.loading_cerrado:
+            self.loading_cerrado = True
+            self.loading.terminate()
 
     def refrescarParticionesWBFS(self, verbose = True):
         
@@ -340,15 +360,18 @@ class WiithonGUI(GtkBuilderWrapper):
             # 2º Salir
 
             if (self.core.prefs.ADVERTENCIA_NO_WBFS and len(self.lParti) == 0):
+                
+                self.cerrar_loading()
+                
                 if util.check_gids():
-                    self.loading.close()
                     self.alert("warning" , _("No hay particiones WBFS, se muestran los juegos de la ultima sesion."))
                 else:
-                    self.loading.close()
                     self.alert("warning" , _("No puede acceder a las particiones porque el usuario que se puso en marcha wiithon no pertenecen al grupo \"disk\", se muestran los juegos de la ultima sesion."))
 
             elif (self.core.prefs.ADVERTENCIA_ACTUALIZAR_WIITDB and (len(self.lJuegos) > 0) and self.info.abajo_num_juegos_wiitdb == 0):
-                self.loading.close()
+
+                self.cerrar_loading()
+
                 if (self.question("""
                     <b>
                         <pr>%s</pr>
@@ -365,25 +388,11 @@ class WiithonGUI(GtkBuilderWrapper):
                             self.core.prefs.URL_ZIP_WIITDB
                             ),
                             xml = True) ):
-                    self.core.prefs.ADVERTENCIA_ACTUALIZAR_WIITDB = False
                     self.poolTrabajo.nuevoTrabajoActualizarWiiTDB(self.core.prefs.URL_ZIP_WIITDB)                
             
         else:
             if verbose:
-                self.loading.close()
                 self.alert("warning" , _("No puedes refrescar las particiones mientras hay tareas sin finalizar"))
-
-    def main(self , opciones , argumentos):
-        if self.isSelectedPartition():
-            for arg in argumentos:
-                arg = os.path.abspath(arg)
-                if os.path.exists(arg):
-                    if util.getExtension(arg)=="iso":
-                        self.poolTrabajo.nuevoTrabajoAnadir(arg , self.sel_parti.obj.device)
-                    else:
-                        self.alert("warning" , _("Formato desconocido"))
-
-        gtk.main()
         
     def excepthook(self, exctype, excvalue, exctb):
         tbtext = ''.join(traceback.format_exception(exctype, excvalue, exctb))

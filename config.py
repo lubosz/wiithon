@@ -41,6 +41,7 @@ LOCALE = "/usr/share/locale/"
 ICONO = "/usr/share/pixmaps/wiithon.xpm"
 WBFS_APP = os.path.join(WIITHON_FILES , "wiithon_wrapper")
 UNRAR_APP = os.path.join(WIITHON_FILES , "wiithon_unrar")
+LOADING_APP = os.path.join(WIITHON_FILES , "loading.py")
 
 APP = "wiithon"
 VER, REV = getVersionRevision()

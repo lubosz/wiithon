@@ -1,7 +1,7 @@
 10
 
 dir
-455
+459
 http://opensvn.wiimm.de/wii/trunk/wiimms-wbfs-tool
 http://opensvn.wiimm.de/wii
 
@@ -403,16 +403,16 @@ wiimm
 
 3901
 
-gen-template.sh
+lib-std.edit-list
 file
 
 
 
 
 2009-11-19T00:28:38.000000Z
-8a6a330f201611afd8070238b6215221
-2009-10-23T20:07:59.242187Z
-294
+4a56b32f4a60845f2dca991cd2ee7cee
+2009-11-10T17:05:45.230279Z
+402
 wiimm
 
 
@@ -435,7 +435,7 @@ wiimm
 
 
 
-668
+138
 
 templates.edit-list
 file
@@ -471,39 +471,8 @@ wiimm
 
 25
 
-lib-std.edit-list
-file
-
-
-
-
-2009-11-19T00:28:38.000000Z
-4a56b32f4a60845f2dca991cd2ee7cee
-2009-11-10T17:05:45.230279Z
-402
-wiimm
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-138
+info
+dir
 
 all-header.edit-list
 file
@@ -539,8 +508,39 @@ wiimm
 
 20
 
-info
-dir
+gen-template.sh
+file
+
+
+
+
+2009-11-19T00:28:38.000000Z
+8a6a330f201611afd8070238b6215221
+2009-10-23T20:07:59.242187Z
+294
+wiimm
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+668
 
 wit.edit-list
 file

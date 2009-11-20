@@ -16,7 +16,7 @@ msgstr ""
 msgid "No se ha encontrado la particion: %s"
 msgstr ""
 
-#: cli.py:53 gui.py:1817
+#: cli.py:53 gui.py:1826
 msgid "Lista de particiones autodetectadas : "
 msgstr ""
 
@@ -25,7 +25,7 @@ msgstr ""
 msgid "%d - Salir"
 msgstr ""
 
-#: cli.py:61 gui.py:1817
+#: cli.py:61 gui.py:1826
 msgid "Elige la particion WBFS con la que va a trabajar : "
 msgstr ""
 
@@ -56,7 +56,7 @@ msgstr ""
 msgid "ERROR extrayendo la ISO de %s"
 msgstr ""
 
-#: cli.py:161 gui.py:959
+#: cli.py:161 gui.py:968
 #, python-format
 msgid "Renombrar el juego %s."
 msgstr ""
@@ -88,7 +88,7 @@ msgstr ""
 msgid "ERROR borrando el juego"
 msgstr ""
 
-#: cli.py:177 gui.py:1491 gui.py:1540 gui.py:1622 gui.py:1659
+#: cli.py:177 gui.py:1500 gui.py:1549 gui.py:1631 gui.py:1668
 msgid "No has seleccionado ningun juego"
 msgstr "No has seleccionado ningún juego"
 
@@ -138,11 +138,11 @@ msgstr "ERROR, descargando alguna carátula"
 msgid "Tarea finalizada"
 msgstr ""
 
-#: cli.py:240 cli.py:261 gui.py:1815
+#: cli.py:240 cli.py:261 gui.py:1824
 msgid "Has conectado el disco duro? No se ha encontrado ninguna particion valida."
 msgstr "¿Has conectado el disco duro? No se ha encontrado ninguna partición válida."
 
-#: cli.py:248 gui.py:1820
+#: cli.py:248 gui.py:1829
 #, python-format
 msgid "Realmente, desea formatear a WBFS la particion %s? (S/N) "
 msgstr ""
@@ -151,26 +151,26 @@ msgstr ""
 msgid "s"
 msgstr ""
 
-#: cli.py:251 gui.py:1824
+#: cli.py:251 gui.py:1833
 #, python-format
 msgid "%s se ha formateado correctamente"
 msgstr ""
 
-#: cli.py:253 gui.py:1826
+#: cli.py:253 gui.py:1835
 #, python-format
 msgid "Error al formatear %s"
 msgstr ""
 
-#: cli.py:255 cli.py:259 gui.py:1828 gui.py:1831
+#: cli.py:255 cli.py:259 gui.py:1837 gui.py:1840
 #, python-format
 msgid "No se ha formateado %s"
 msgstr ""
 
-#: cli.py:258 gui.py:1831
+#: cli.py:258 gui.py:1840
 msgid "Interrumpido por el usuario."
 msgstr ""
 
-#: cli.py:262 gui.py:1815
+#: cli.py:262 gui.py:1824
 msgid "Comprueba que tienes la particion FAT32 montada."
 msgstr ""
 
@@ -342,7 +342,7 @@ msgstr ""
 msgid "Libre"
 msgstr ""
 
-#: cli.py:492 gui.py:476
+#: cli.py:492 gui.py:485
 msgid "Total"
 msgstr ""
 
@@ -393,107 +393,107 @@ msgstr ""
 msgid "Descargando caratula de %s desde %s ..."
 msgstr "Descargando carátula de %s desde %s ..."
 
-#: gui.py:80 gui.py:961 recursos/glade/wiithon.ui.h:54
+#: gui.py:83 gui.py:970 recursos/glade/wiithon.ui.h:54
 msgid "Renombrar"
 msgstr ""
 
-#: gui.py:83 recursos/glade/wiithon.ui.h:31
+#: gui.py:86 recursos/glade/wiithon.ui.h:31
 msgid "Extraer"
 msgstr ""
 
-#: gui.py:86
+#: gui.py:89
 msgid "Copiar a otra particion"
 msgstr "Copiar a otra partición"
 
-#: gui.py:345
-msgid "No hay particiones WBFS, se muestran los juegos de la ultima sesion."
-msgstr "No hay particiones WBFS, se muestran los juegos de la última sesión."
-
-#: gui.py:348
-msgid "No puede acceder a las particiones porque el usuario que se puso en marcha wiithon no pertenecen al grupo \"disk\", se muestran los juegos de la ultima sesion."
-msgstr ""
-
-#: gui.py:363
-msgid "Se ha detectado que ninguno de tus juegos disponen de informacion extra, descargada de Internet."
-msgstr "Se ha detectado que ninguno de tus juegos disponen de información extra, descargada de Internet."
-
-#: gui.py:364
-msgid "Deseas descargar informacion de los juegos desde WiiTDB?"
-msgstr "¿Deseas descargar información de los juegos desde WiiTDB?"
-
-#: gui.py:374
-msgid "No puedes refrescar las particiones mientras hay tareas sin finalizar"
-msgstr ""
-
-#: gui.py:384
+#: gui.py:297
 msgid "Formato desconocido"
 msgstr ""
 
-#: gui.py:396
+#: gui.py:367
+msgid "No hay particiones WBFS, se muestran los juegos de la ultima sesion."
+msgstr "No hay particiones WBFS, se muestran los juegos de la última sesión."
+
+#: gui.py:369
+msgid "No puede acceder a las particiones porque el usuario que se puso en marcha wiithon no pertenecen al grupo \"disk\", se muestran los juegos de la ultima sesion."
+msgstr ""
+
+#: gui.py:386
+msgid "Se ha detectado que ninguno de tus juegos disponen de informacion extra, descargada de Internet."
+msgstr "Se ha detectado que ninguno de tus juegos disponen de información extra, descargada de Internet."
+
+#: gui.py:387
+msgid "Deseas descargar informacion de los juegos desde WiiTDB?"
+msgstr "¿Deseas descargar información de los juegos desde WiiTDB?"
+
+#: gui.py:395
+msgid "No puedes refrescar las particiones mientras hay tareas sin finalizar"
+msgstr ""
+
+#: gui.py:405
 msgid "Por favor. Informe a los desarrolladores de este error."
 msgstr ""
 
-#: gui.py:398
+#: gui.py:407
 msgid "Utitice la siguiente URL para el reporte de bugs:"
 msgstr ""
 
-#: gui.py:475
+#: gui.py:484
 msgid "Dispositivo"
 msgstr ""
 
-#: gui.py:528
+#: gui.py:537
 msgid "BDD"
 msgstr ""
 
-#: gui.py:529
+#: gui.py:538
 msgid "WBFS?"
 msgstr "¿WBFS?"
 
-#: gui.py:531
+#: gui.py:540
 msgid "TODOS"
 msgstr ""
 
-#: gui.py:552
+#: gui.py:561
 msgid "IDGAME"
 msgstr ""
 
-#: gui.py:553
+#: gui.py:562
 msgid "Nombre"
 msgstr ""
 
-#: gui.py:554
+#: gui.py:563
 msgid "Size"
 msgstr "Tamaño"
 
-#: gui.py:555
+#: gui.py:564
 msgid "Online?"
 msgstr "¿OnLine?"
 
-#: gui.py:556
+#: gui.py:565
 msgid "Local"
 msgstr ""
 
-#: gui.py:557
+#: gui.py:566
 msgid "Fecha"
 msgstr ""
 
-#: gui.py:558
+#: gui.py:567
 msgid "Rating"
 msgstr ""
 
-#: gui.py:559
+#: gui.py:568
 msgid "Particion"
 msgstr "Partición"
 
-#: gui.py:661
+#: gui.py:670
 msgid "+Info"
 msgstr ""
 
-#: gui.py:665 gui.py:666 gui.py:667 gui.py:668 gui.py:669 wiitdb_schema.py:371
+#: gui.py:674 gui.py:675 gui.py:676 gui.py:677 gui.py:678 wiitdb_schema.py:371
 msgid "??"
 msgstr ""
 
-#: gui.py:691
+#: gui.py:700
 msgid "TRADUCIR_ADVERTENCIA_SEGURIDAD_RENAME_IDGAME"
 msgstr ""
 "!!!! ATENCIÓN !!!!!\n"
@@ -506,311 +506,311 @@ msgstr ""
 "\n"
 "¿Está seguro de renombrar IDGAME?"
 
-#: gui.py:701 gui.py:726
+#: gui.py:710 gui.py:735
 msgid "Error renombrando"
 msgstr ""
 
-#: gui.py:703
+#: gui.py:712
 msgid "Ya hay un juego con ese IDGAME"
 msgstr ""
 
-#: gui.py:705
+#: gui.py:714
 msgid "Error: La longitud del IDGAME debe ser 6, y solo puede contener letras y numeros"
 msgstr "Error: La longitud del IDGAME debe ser 6, y solo puede contener letras y números"
 
-#: gui.py:728
+#: gui.py:737
 #, python-format
 msgid "Se han detectado caracteres no validos: %s"
 msgstr "Se han detectado carácteres no válidos: %s"
 
-#: gui.py:730
+#: gui.py:739
 #, python-format
 msgid "Nuevo nombre es demasiado largo, intente con un texto menor de %d caracteres"
 msgstr "Nuevo nombre es demasiado largo, intente con un texto menor de %d carácteres"
 
-#: gui.py:827
+#: gui.py:836
 msgid "PREGUNTA:"
 msgstr ""
 
-#: gui.py:833
+#: gui.py:842
 msgid "WARNING:"
 msgstr "ADVERTENCIA:"
 
-#: gui.py:839
+#: gui.py:848
 msgid "ERROR:"
 msgstr ""
 
-#: gui.py:845
+#: gui.py:854
 msgid "AUTENTIFICACION:"
 msgstr "AUTENTIFICACIÓN:"
 
-#: gui.py:851
+#: gui.py:860
 msgid "INFORMACION:"
 msgstr "INFORMACIÓN:"
 
-#: gui.py:939 gui.py:1581 gui.py:1625 gui.py:1753 gui.py:2054 gui.py:2061
-#: gui.py:2068
+#: gui.py:948 gui.py:1590 gui.py:1634 gui.py:1762 gui.py:2063 gui.py:2070
+#: gui.py:2077
 msgid "No has seleccionado ninguna particion"
 msgstr "No has seleccionado ninguna partición"
 
-#: gui.py:953
+#: gui.py:962
 msgid "actual"
 msgstr ""
 
-#: gui.py:956 gui.py:966
+#: gui.py:965 gui.py:975
 msgid "Personalizable ..."
 msgstr ""
 
-#: gui.py:960
+#: gui.py:969
 msgid "NOTA: Este es el nombre que aparecera en el USB Loader."
 msgstr ""
 
-#: gui.py:960
+#: gui.py:969
 msgid "Nombres propuestos por la informacion WiiTDB"
 msgstr ""
 
-#: gui.py:1331
+#: gui.py:1340
 msgid "No se ha encontrado synopsis"
 msgstr ""
 
-#: gui.py:1364
+#: gui.py:1373
 msgid "ACCESORIOS: "
 msgstr ""
 
-#: gui.py:1369
+#: gui.py:1378
 msgid "OPCIONALES: "
 msgstr ""
 
-#: gui.py:1409
+#: gui.py:1418
 msgid "GENERO: "
 msgstr "GÉNERO: "
 
-#: gui.py:1410
+#: gui.py:1419
 msgid "Fecha de lanzamiento: "
 msgstr "Fecha: "
 
-#: gui.py:1411
+#: gui.py:1420
 msgid "Desarrolador/Editorial: "
 msgstr ""
 
-#: gui.py:1412
+#: gui.py:1421
 msgid "Num. jugadores en off-line: "
 msgstr "Local: "
 
-#: gui.py:1413
+#: gui.py:1422
 msgid "Capacidad On-line: "
 msgstr "OnLine: "
 
-#: gui.py:1414
+#: gui.py:1423
 msgid "Clasificacion parental: "
 msgstr "Clasificación parental: "
 
-#: gui.py:1431 gui.py:1447 gui.py:1484
+#: gui.py:1440 gui.py:1456 gui.py:1493
 msgid "DESCRIPCION: "
 msgstr "DESCRIPCIÓN: "
 
-#: gui.py:1447 gui.py:1484
+#: gui.py:1456 gui.py:1493
 msgid "Sin descripcion."
 msgstr "Sin descripción."
 
-#: gui.py:1461
+#: gui.py:1470
 msgid "No hay datos de este juego. Intente actualizar la base de datos de WiiTDB."
 msgstr ""
 
-#: gui.py:1508
+#: gui.py:1517
 msgid "Tienes que seleccionar una particion WBFS para realizar esta accion"
 msgstr "Tienes que seleccionar una partición WBFS para realizar esta acción"
 
-#: gui.py:1537
+#: gui.py:1546
 #, python-format
 msgid "Desea copiar el juego %s a la particion %s?"
 msgstr "¿Desea copiar el juego %s a la partición %s?"
 
-#: gui.py:1554
+#: gui.py:1563
 msgid "Se van a copiar los siguientes juegos a"
 msgstr ""
 
-#: gui.py:1561 gui.py:1569
+#: gui.py:1570 gui.py:1578
 msgid "juegos mas"
 msgstr "juegos más"
 
-#: gui.py:1563
+#: gui.py:1572
 msgid "A continuacion se listan los juego que NO van a ser copiados por ya estar en la particion de destino"
 msgstr "A continuación se listan los juego que NO van a ser copiados por ya estar en la partición de destino"
 
-#: gui.py:1571
+#: gui.py:1580
 msgid "Empezar a copiar?"
 msgstr "¿Empezar a copiar?"
 
-#: gui.py:1577
+#: gui.py:1586
 #, python-format
 msgid "No hay nada que copiar a %s"
 msgstr ""
 
-#: gui.py:1579
+#: gui.py:1588
 msgid "Debes tener al menos 2 particiones WBFS para hacer copias 1:1"
 msgstr "Debes tener al menos 2 particiones WBFS para hacer copias entre particiones WBFS"
 
-#: gui.py:1589
+#: gui.py:1598
 #, python-format
 msgid "Quieres borrar el juego: %s?"
 msgstr "¿Borrar el juego: %s?"
 
-#: gui.py:1619
+#: gui.py:1628
 #, python-format
 msgid "Error borrando el juego %s"
 msgstr ""
 
-#: gui.py:1632
+#: gui.py:1641
 #, python-format
 msgid "Elige un directorio donde extraer la ISO de %s"
 msgstr ""
 
-#: gui.py:1643
+#: gui.py:1652
 #, python-format
 msgid "Desea reemplazar la iso del juego %s?"
 msgstr "¿Desea reemplazar la iso del juego %s?"
 
-#: gui.py:1646
+#: gui.py:1655
 msgid "Espacio libre insuficiente para extraer la ISO"
 msgstr ""
 
-#: gui.py:1669
+#: gui.py:1678
 msgid "Elige una imagen ISO valida para Wii"
 msgstr "Elige una imagen ISO válida para Wii"
 
-#: gui.py:1675
+#: gui.py:1684
 msgid "Elige un directorio"
 msgstr ""
 
-#: gui.py:1688
+#: gui.py:1697
 msgid ""
 "Algunos juegos no se han introducido:\n"
 "\n"
 msgstr ""
 
-#: gui.py:1717
+#: gui.py:1726
 #, python-format
 msgid "%s ya existe en %s\n"
 msgstr ""
 
-#: gui.py:1720
+#: gui.py:1729
 #, python-format
 msgid "%s no es un ISO de Wii.\n"
 msgstr ""
 
-#: gui.py:1759
+#: gui.py:1768
 msgid "Paso 1 de 2: Elige un directorio para las CARATULAS"
 msgstr "Paso 1 de 2: Elige un directorio donde copiar las CARÁTULAS"
 
-#: gui.py:1763
+#: gui.py:1772
 msgid "Paso 2 de 2: Elige un directorio para los DISCOS"
 msgstr "Paso 2 de 2: Elige un directorio donde copiar los DISCOS"
 
-#: gui.py:1781
+#: gui.py:1790
 msgid "No tienes ningun juego"
 msgstr "No tienes ningún juego"
 
-#: gui.py:1788
+#: gui.py:1797
 msgid ""
 "Hay una tarea que esta bloqueando las preferencias.\n"
 "\n"
 "Espere a que finalize."
 msgstr ""
 
-#: gui.py:1800
+#: gui.py:1809
 msgid "Estas seguro de querer formatear la BDD? Se borraran tus preferencias y la informacion de los juegos"
 msgstr ""
 
-#: gui.py:1809
+#: gui.py:1818
 msgid "Es recomendable que reinicie la aplicacion"
 msgstr ""
 
-#: gui.py:1809
+#: gui.py:1818
 msgid "La BDD ha sido formateada."
 msgstr ""
 
-#: gui.py:1817 recursos/glade/wiithon.ui.h:33
+#: gui.py:1826 recursos/glade/wiithon.ui.h:33
 msgid "Formatear a WBFS"
 msgstr ""
 
-#: gui.py:1855
+#: gui.py:1864
 msgid "Seguro que deseas descargar informacion de los juegos de WiiTDB?"
 msgstr "¿Seguro que deseas descargar información de los juegos de WiiTDB?"
 
-#: gui.py:1861
+#: gui.py:1870
 msgid "Ya estas descargando la informacion WiiTDB ..."
 msgstr "Ya estas descargando la información WiiTDB ..."
 
-#: gui.py:1870
+#: gui.py:1879
 msgid "Empezando a obtener datos de juegos desde WiiTDB"
 msgstr ""
 
-#: gui.py:1880
+#: gui.py:1889
 #, python-format
 msgid "%d%% - %d/%d games - %d descriptions - %d genre - %d accesories - %d companies - %d online features"
 msgstr "%d%% - %d/%d juegos - %d descripciones - %d generos - %d accesorios - %d compañias - %d características online"
 
-#: gui.py:1904
+#: gui.py:1913
 #, python-format
 msgid "Error importando %s: %s"
 msgstr ""
 
-#: gui.py:1907
+#: gui.py:1916
 #, python-format
 msgid "Descargando WiiTDB desde %s, espere unos minutos ..."
 msgstr ""
 
-#: gui.py:1911
+#: gui.py:1920
 msgid "Empezando a descomprimir la informacion WiiTDB"
 msgstr "Empezando a descomprimir la información WiiTDB ..."
 
-#: gui.py:1917
+#: gui.py:1926
 msgid "Finalizada satisfactoriamente la importacion de datos desde WiiTDB"
 msgstr "Finalizada satisfactoriamente la importación de datos desde WiiTDB"
 
-#: gui.py:1925
+#: gui.py:1934
 #, python-format
 msgid "Deseas borrar el archivo %s?"
 msgstr "¿Deseas borrar el archivo %s?"
 
-#: gui.py:2100
+#: gui.py:2109
 #, python-format
 msgid "Empieza %s"
 msgstr ""
 
-#: gui.py:2112
+#: gui.py:2121
 #, python-format
 msgid "Termina: %s"
 msgstr ""
 
-#: gui.py:2129
+#: gui.py:2138
 #, python-format
 msgid "Falla la descarga de la caratula de %s"
 msgstr "Falla la descarga de la carátula de %s"
 
-#: gui.py:2139
+#: gui.py:2148
 #, python-format
 msgid "Falla la descarga del disco de %s"
 msgstr ""
 
-#: gui.py:2187
+#: gui.py:2196
 msgid "Finalizando ..."
 msgstr ""
 
-#: gui.py:2189
+#: gui.py:2198
 msgid "ERROR!"
 msgstr ""
 
-#: gui.py:2197
+#: gui.py:2206
 msgid "quedan"
 msgstr ""
 
-#: gui.py:2213
+#: gui.py:2222
 msgid "Error en progreso"
 msgstr ""
 
-#: gui.py:2221
+#: gui.py:2230
 msgid "Empezando ..."
 msgstr ""
 
@@ -1415,11 +1415,11 @@ msgstr "XML inválido"
 msgid "No existe el XML"
 msgstr ""
 
-#: wiithon.py:37
+#: wiithon.py:38
 msgid "Necesitas tener instalado pyGTK o GTKv2"
 msgstr ""
 
-#: wiithon.py:47
+#: wiithon.py:48
 msgid "Instala wiithon, no lo ejecute desde ./wiithon.py"
 msgstr ""
 
