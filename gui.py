@@ -7,6 +7,7 @@ import time
 import sys
 import re
 import traceback
+import signal
 from threading import Thread
 
 import gtk
@@ -303,7 +304,7 @@ class WiithonGUI(GtkBuilderWrapper):
     def cerrar_loading(self):
         if not self.loading_cerrado:
             self.loading_cerrado = True
-            util.call_out_null("kill -2 %d" % self.loading.pid)
+            os.kill(self.loading.pid, signal.SIGINT)
 
     def refrescarParticionesWBFS(self, verbose = True):
         
