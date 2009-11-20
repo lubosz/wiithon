@@ -121,6 +121,7 @@ copy_archives: making_directories
 	
 set_permisses:
 	chmod 755 $(DESTDIR)$(PREFIX)/share/wiithon/wiithon.py
+	chmod 755 $(DESTDIR)$(PREFIX)/share/wiithon/loading.py
 	chmod 755 $(DESTDIR)$(PREFIX)/games/wiithon_wrapper
 	chmod 755 $(DESTDIR)$(PREFIX)/games/wiithon_unrar
 	chmod 755 $(DESTDIR)$(PREFIX)/share/wiithon/wiithon_autodetectar*.sh

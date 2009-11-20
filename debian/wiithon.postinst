@@ -27,6 +27,7 @@ case "$1" in
     configure)
     
         chmod 755 /usr/share/wiithon/wiithon.py
+        chmod 755 /usr/share/wiithon/loading.py
         chmod 755 /usr/games/wiithon_wrapper
         chmod 755 /usr/games/wiithon_unrar
         chmod 755 /usr/share/wiithon/wiithon_autodetectar*.sh
