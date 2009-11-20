@@ -303,13 +303,7 @@ class WiithonGUI(GtkBuilderWrapper):
     def cerrar_loading(self):
         if not self.loading_cerrado:
             self.loading_cerrado = True
-            try:
-                self.loading.terminate()
-            # for python 2.5
-            # FIXME: dont can test it ... prefer put exactly except
-            # except AttributeError ?
-            except:
-                util.call_out_null("kill -9 %d" % self.loading.pid)
+            util.call_out_null("kill -2 %d" % self.loading.pid)
 
     def refrescarParticionesWBFS(self, verbose = True):
         
