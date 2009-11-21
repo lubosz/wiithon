@@ -173,7 +173,7 @@ while hilo.isAlive():
     print "Aún no ha terminado %d" % i
     time.sleep(2)
     i = i + 1
-
+editar_juego
 print "YA ha terminado!"
 '''
 '''
@@ -183,5 +183,4 @@ for linea in out:
     print "---------------"
     print linea.strip()
 '''
-
 

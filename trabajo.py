@@ -11,13 +11,13 @@ import util
 from pool import Pool
 from wiitdb_schema import Juego
 from wiitdb_xml import *
-from util import ErrorDescargando
+from util import ErrorDescargando, SesionWiiTDB
 
 # pseudo-enumerado
 (ANADIR,EXTRAER,CLONAR,DESCARGA_CARATULA,
 DESCARGA_DISCO,COPIAR_CARATULA,COPIAR_DISCO,
 RECORRER_DIRECTORIO,DESCOMPRIMIR_RAR,
-ACTUALIZAR_WIITDB)=([ "%d" % i for i in range(10) ])
+ACTUALIZAR_WIITDB,EDITAR_JUEGO_WIITDB)=([ "%d" % i for i in range(11) ])
 
 '''
 Herencia Multiple, Es un Pool (implementado en pool.py) y un Thread
@@ -85,6 +85,9 @@ class PoolTrabajo(Pool , Thread):
         self.callback_termina_importar = callback_termina_importar
         
         self.actualizarPreferencias()
+        
+        # sesion http con wiitdb
+        self.sesion_wiitdb = SesionWiiTDB()
 
 
     def actualizarPreferencias(self):
@@ -188,6 +191,10 @@ class PoolTrabajo(Pool , Thread):
         elif( trabajo.tipo == ACTUALIZAR_WIITDB ):
             url = trabajo.origen
             trabajo.exito = self.actualizarWiiTDB(url)
+            
+        elif( trabajo.tipo == EDITAR_JUEGO_WIITDB):
+            IDGAME = trabajo.origen.idgame
+            trabajo.exito = self.editarJuegoWiiTDB(IDGAME)
 
         trabajo.terminado = True
 
@@ -393,6 +400,17 @@ class PoolTrabajo(Pool , Thread):
             trabajo.error = _("Error: Ocurrio un error al introducir la informacion de juegos de WiiTDB")
         
         return exito
+        
+    def editarJuegoWiiTDB(self, IDGAME):
+        exito = False
+        try:
+            url = self.sesion_wiitdb.editar_juego(IDGAME)
+            if url is not None:
+                util.call_out_null('%s "%s"' % ("firefox", url))
+                exito = True
+        except:
+            pass
+        return exito
 
     ######################### INTERFAZ PUBLICO #######################################
 
@@ -447,12 +465,15 @@ class PoolTrabajo(Pool , Thread):
 
     def nuevoTrabajoActualizarWiiTDB(self , url):
         return self.nuevoTrabajo( ACTUALIZAR_WIITDB , url )
+        
+    def nuevoTrabajoEditarJuegoWiiTDB(self , juego):
+        return self.nuevoTrabajo( EDITAR_JUEGO_WIITDB , juego )
 
 '''
 tipo:
     tipo de Trabajo
     (ANADIR,EXTRAER,CLONAR,DESCARGA_CARATULA,DESCARGA_DISCO,COPIAR_CARATULA,COPIAR_DISCO,
-    RECORRER_DIRECTORIO,DESCOMPRIMIR_RAR,ACTUALIZAR_WIITDB)
+    RECORRER_DIRECTORIO,DESCOMPRIMIR_RAR,ACTUALIZAR_WIITDB,EDITAR_JUEGO_WIITDB)
 origen y destino:
     Casi todos los trabajos, son de gestión, es decir transacciones que tienen 
     un origen y un destino, en general.
@@ -497,3 +518,5 @@ class Trabajo:
             return _("Descomprimir RAR %s") % (os.path.basename(self.origen))
         elif self.tipo == ACTUALIZAR_WIITDB:
             return _("Actualizar WiiTDB desde %s") % (self.origen)
+        elif self.tipo == EDITAR_JUEGO_WIITDB:
+            return _("Editar Juego WiiTDB con ID: %s") % (self.origen)

@@ -12,18 +12,6 @@ import sys
 import util
 import logging
 
-def getVersionRevision():
-    revision = util.getSTDOUT("cat /usr/share/doc/wiithon/REVISION")
-    version = util.getSTDOUT("python /usr/share/doc/wiithon/VERSION %s" % revision)
-    cachos = version.split("-")
-    if len(cachos) > 1:
-        version = cachos[0]
-        revision = cachos[1]
-    else:
-        version = cachos[0]
-        revision = ''
-    return version, revision
-
 DEBUG = False
 SUPERDEBUG = False
 
@@ -44,7 +32,10 @@ UNRAR_APP = os.path.join(WIITHON_FILES , "wiithon_unrar")
 LOADING_APP = os.path.join(WIITHON_FILES , "loading.py")
 
 APP = "wiithon"
-VER, REV = getVersionRevision()
+try:
+    VER, REV = util.getVersionRevision()
+except AttributeError:
+    VER, REV = "?", "?"
 VERS_BDD = [1,2] # last is active
 HOME = os.environ['HOME']
 HOME_WIITHON = os.path.join(HOME , '.%s' % APP)
@@ -61,10 +52,13 @@ for ver in VERS_BDD:
 
 URI_ENGINE = 'sqlite:///%s' % HOME_WIITHON_BDD_BDD
 
-# crear directorios si no existen
-util.try_mkdir( HOME_WIITHON )
-util.try_mkdir( HOME_WIITHON_BDD )
-util.try_mkdir( HOME_WIITHON_LOGS )
+try:
+    # crear directorios si no existen
+    util.try_mkdir( HOME_WIITHON )
+    util.try_mkdir( HOME_WIITHON_BDD )
+    util.try_mkdir( HOME_WIITHON_LOGS )
+except AttributeError:
+    pass
 
 DETECTOR_WBFS = os.path.join( WIITHON_FILES , "wiithon_autodetectar.sh" )
 DETECTOR_WBFS_LECTOR = os.path.join( WIITHON_FILES , "wiithon_autodetectar_lector.sh" )
@@ -89,6 +83,11 @@ SIZE_IMAGE_ACCESORIOS = 90
 
 #URL BUGS
 URL_BUGS = "https://bugs.launchpad.net/wiithon/+filebug"
+
+#INFO STATIC WIITDB
+URL_WIITDB = "wiitdb.com"
+USER_WIITDB = "Wiithon_1_21"
+PASS_WIITDB = "Wiithon_1_21"
 
 if DEBUG and SUPERDEBUG:
     logging.basicConfig()

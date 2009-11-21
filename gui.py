@@ -93,6 +93,12 @@ class WiithonGUI(GtkBuilderWrapper):
                 ('Borrar', gtk.STOCK_DELETE, None, None, '',
                  self.menu_contextual_borrar),
 
+                ('VerJuegoWiiTDB', None, "Ver Juego WiiTDB", None, '', # sin traducir temporalmente
+                 self.menu_contextual_ver_juego_wiitdb),
+
+                ('EditarJuegoWiiTDB', None, "Editar Juego WiiTDB", None, '', # sin traducir temporalmente
+                 self.menu_contextual_editar_juego_wiitdb),
+
                 ])
 
         self.uimgr.insert_action_group(actiongroup)
@@ -105,6 +111,9 @@ class WiithonGUI(GtkBuilderWrapper):
                 <menuitem action="Copiar"/>
                 <separator/>
                 <menuitem action="Borrar"/>
+                <separator/>
+                <menuitem action="VerJuegoWiiTDB"/>
+                <menuitem action="EditarJuegoWiiTDB"/>
             </popup>
         </ui>
         '''
@@ -396,6 +405,7 @@ class WiithonGUI(GtkBuilderWrapper):
                 self.alert("warning" , _("No puedes refrescar las particiones mientras hay tareas sin finalizar"))
 
     def excepthook(self, exctype, excvalue, exctb):
+        self.cerrar_loading()
         tbtext = ''.join(traceback.format_exception(exctype, excvalue, exctb))
         mensaje_xml = """
         <negro><pr>%s</pr></negro><br />
@@ -404,7 +414,7 @@ class WiithonGUI(GtkBuilderWrapper):
         <negro><pr>%s</pr></negro><br />
         <u><azul><pr>%s</pr></azul></u><br />
         """  % (    _("Por favor. Informe a los desarrolladores de este error."),
-                    tbtext,
+                    util.parsear_a_XML(tbtext),
                     _('Utitice la siguiente URL para el reporte de bugs:'),
                     config.URL_BUGS)
         self.alert('error' , mensaje_xml, excvalue, xml=True)
@@ -472,6 +482,18 @@ class WiithonGUI(GtkBuilderWrapper):
 
     def menu_contextual_borrar(self, action):
         self.on_tb_toolbar_clicked( self.wb_tb_borrar )
+
+    def menu_contextual_ver_juego_wiitdb(self, action):
+        if self.isSelectedGame():
+            self.alert("warning" , "Sin implementar")
+        else:
+            self.alert("warning" , _("No has seleccionado ningun juego"))
+        
+    def menu_contextual_editar_juego_wiitdb(self, action):
+        if self.isSelectedGame():
+            self.poolBash.nuevoTrabajoEditarJuegoWiiTDB(self.sel_juego.obj)
+        else:
+            self.alert("warning" , _("No has seleccionado ningun juego"))
 
     def cargarParticionesVista(self, treeview, callback_cursor_changed):
         

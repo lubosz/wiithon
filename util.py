@@ -283,14 +283,16 @@ def descargarImagen(url, destino, type = "image/png", referer = "http://www.wiib
         
         r = conn.getresponse()
         
+        ###  BUSCAR MIME PNG ###
+        headers = r.getheaders()
         i = 0
         encontrado = False
-        headers = r.getheaders()
         while (not encontrado) and (i<len(headers)):
             if headers[i][0] == "content-type":
                 encontrado = (headers[i][1] == type)
             if not encontrado:
                 i = i + 1
+        ### /BUSCAR MIME PNG ###
         
         if encontrado and r.status == 200 and r.reason == "OK":
             fichero = file( destino, "wb" )
@@ -500,3 +502,125 @@ def rand(min, max):
 
 def num_files_in_folder(folder):
     return len(os.listdir(folder))
+
+def getVersionRevision():
+    revision = getSTDOUT("cat /usr/share/doc/wiithon/REVISION")
+    version = getSTDOUT("python /usr/share/doc/wiithon/VERSION %s" % revision)
+    cachos = version.split("-")
+    if len(cachos) > 1:
+        version = cachos[0]
+        revision = cachos[1]
+    else:
+        version = cachos[0]
+        revision = ''
+    return version, revision
+
+class SesionWiiTDB:
+
+    def __init__(self):
+        self.dominio = config.URL_WIITDB
+        self.connected = False
+        self.PHPSESSID = None
+        self.timeout = 0
+
+    def conectar_wiitdb(self):
+        
+        if config.DEBUG:
+            print "conectar_wiitdb"
+        
+        if not self.connected:
+
+            conn = httplib.HTTPConnection(self.dominio)
+
+            data = {    'authid': config.USER_WIITDB,
+                        'authpw': config.PASS_WIITDB}
+
+            params = urllib.urlencode(data)
+                
+            headers = {
+                        "Host": self.dominio,
+                        "User-Agent": "Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.9.1.5) Gecko/20091109 Ubuntu/9.10 (karmic) Firefox/3.5.5",
+                        "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8",
+                        "Accept-Language": "es-es,es;q=0.8,en-us;q=0.5,en;q=0.3",
+                        "Accept-Encoding": "gzip,deflate",
+                        "Accept-Charset": "ISO-8859-1,utf-8;q=0.7,*;q=0.7",
+                        "Keep-Alive": "300",
+                        "Connection": "keep-alive",
+                        "Referer": "http://%s/Login/Signup?action=login" % (self.dominio),
+                        "Content-Type": "application/x-www-form-urlencoded",
+                        "Content-Length": "%d" % (len(config.USER_WIITDB)+len(config.PASS_WIITDB)+2*len("authid")+2+1)
+                        }
+
+            conn.request ("POST", '/Login/Signup?action=login', params, headers)
+            r = conn.getresponse()
+            
+            ###  BUSCAR PHPSESSID ###
+            headers = r.getheaders()
+            i = 0
+            encontrado = False
+            while (not encontrado) and (i<len(headers)):
+                encontrado = headers[i][0] == "set-cookie"
+                if not encontrado:
+                    i = i + 1
+            ### /BUSCAR MIME PNG ###
+            
+            conn.close()
+            
+            self.connected = encontrado
+            if self.connected:
+                s = headers[i][1]
+                self.PHPSESSID = s[s.find("=")+1:s.find(";")]
+                self.timeout = time.time()
+
+    def desconectar_wiitdb(self):
+        
+        if config.DEBUG:
+            print "desconectar_wiitdb"
+        
+        if self.connected:
+
+            conn = httplib.HTTPConnection(self.dominio)
+            
+            params = None
+            headers = {
+                            "Host": self.dominio,
+                            "User-Agent": "Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.9.1.5) Gecko/20091109 Ubuntu/9.10 (karmic) Firefox/3.5.5",
+                            "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8",
+                            "Accept-Language": "es-es,es;q=0.8,en-us;q=0.5,en;q=0.3",
+                            "Accept-Encoding": "gzip,deflate",
+                            "Accept-Charset": "ISO-8859-1,utf-8;q=0.7,*;q=0.7",
+                            "Keep-Alive": "300",
+                            "Connection": "keep-alive",
+                            "Referer": "http://" % self.dominio,
+                            "Cookie": "PHPSESSID=%s" % self.PHPSESSID
+                        }
+            conn.request ("GET", 'Login/Signup?action=logout', params, headers)
+            r = conn.getresponse()
+            conn.close()
+            self.connected = False
+            self.PHPSESSID = None
+            self.timeout = 0
+            
+    def connect_if_need_it(self):
+        tries = 3
+        minutes_timeout = 15
+        i = 0
+        while i<tries and not self.connected and (time.time()-self.timeout) > (minutes_timeout*60):
+            self.desconectar_wiitdb()
+            self.conectar_wiitdb()
+            i += 1
+            if i > 1:
+                time.sleep(2)
+
+    def editar_juego(self, IDGAME):
+        
+        if config.DEBUG:
+            print "editar_juego"
+        
+        # conecta con wiitdb si hace falta
+        self.connect_if_need_it()
+
+        if self.connected:
+            return "http://%s/Game/%s?action=edit&PHPSESSID=%s" % (self.dominio, IDGAME, self.PHPSESSID)
+        else:
+            return None
