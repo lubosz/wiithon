@@ -1,3 +1,0 @@
-*.{c,h} ;
-&/*.{c,h} ;
-libwbfs/reference.txt ;

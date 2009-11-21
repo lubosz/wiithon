@@ -171,7 +171,7 @@ class JuegoDescripcion(Base):
     idJuegoWIITDB = Column('idJuegoWIITDB', Integer , ForeignKey('juego_wiitdb.idJuegoWIITDB'))
     lang = Column('lang', VARCHAR(2))
     title = Column('title', Unicode(255))
-    synopsis = Column('synopsis', Unicode(5000))
+    synopsis = Column('synopsis', Unicode(5000), nullable = False)
     
     def __init__(self, lang='', title='', synopsis=''):
         self.lang = lang
@@ -282,7 +282,6 @@ class JuegoWIITDB(Base):
     wifi_players = Column('wifi_players', Integer)
     input_players = Column('input_players', Integer)
 
-    # relaciones
     #   1:1
     rating_type = relation(RatingType)
     rating_value = relation(RatingValue)
@@ -299,8 +298,6 @@ class JuegoWIITDB(Base):
     obligatorio = relation(Accesorio, secondary=rel_accesorio_juego_obligatorio)
     opcional = relation(Accesorio, secondary=rel_accesorio_juego_opcional)
     genero = relation(Genero, secondary=rel_juego_genero, backref='juego_wiitdb')
-
-    #idJuego = Column('idJuego', Integer, ForeignKey('juego.idJuego'), nullable=True)
 
     def __init__(self , idgame , name , region='', developer='', publisher='', anio='', mes='', dia='', wifi_players='', input_players=''):
         self.idgame = util.decode(idgame)

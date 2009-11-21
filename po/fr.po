@@ -324,7 +324,7 @@ msgstr "TITRE"
 msgid "SI"
 msgstr "OUI"
 
-#: cli.py:474 wiitdb_schema.py:329
+#: cli.py:474 wiitdb_schema.py:326
 msgid "NO"
 msgstr "NON"
 
@@ -492,7 +492,7 @@ msgstr "Partition"
 msgid "+Info"
 msgstr "+Info"
 
-#: gui.py:673 gui.py:674 gui.py:675 gui.py:676 gui.py:677 wiitdb_schema.py:371
+#: gui.py:673 gui.py:674 gui.py:675 gui.py:676 gui.py:677 wiitdb_schema.py:368
 msgid "??"
 msgstr "??"
 
@@ -1371,43 +1371,43 @@ msgstr "Extraction RAR %s"
 msgid "Actualizar WiiTDB desde %s"
 msgstr "Actualisation WiiTDB de %s"
 
-#: wiitdb_schema.py:331
+#: wiitdb_schema.py:328
 msgid "No"
 msgstr "Non"
 
-#: wiitdb_schema.py:339
+#: wiitdb_schema.py:336
 msgid "SI, 1j."
 msgstr "O, 1j."
 
-#: wiitdb_schema.py:341
+#: wiitdb_schema.py:338
 #, python-format
 msgid "Si, 1 jugador (%s)"
 msgstr "Oui, 1 jour (%s)"
 
-#: wiitdb_schema.py:344
+#: wiitdb_schema.py:341
 #, python-format
 msgid "SI, %djs."
 msgstr "O, %dj."
 
-#: wiitdb_schema.py:346
+#: wiitdb_schema.py:343
 #, python-format
 msgid "Si, %d jugadores (%s)"
 msgstr "Oui, %d joueurs (%s)"
 
-#: wiitdb_schema.py:353
+#: wiitdb_schema.py:350
 msgid "1j."
 msgstr "1j."
 
-#: wiitdb_schema.py:355
+#: wiitdb_schema.py:352
 msgid "1 jugador"
 msgstr "1 joueur"
 
-#: wiitdb_schema.py:358
+#: wiitdb_schema.py:355
 #, python-format
 msgid "%djs."
 msgstr "%dj."
 
-#: wiitdb_schema.py:360
+#: wiitdb_schema.py:357
 #, python-format
 msgid "%d jugadores"
 msgstr "%d joueurs"
@@ -1417,11 +1417,11 @@ msgstr "%d joueurs"
 msgid "Error descargando la informacion WiiTDB desde %s"
 msgstr "Erreur de téléchargement des informations de WiiTDB pour %s"
 
-#: wiitdb_xml.py:146 wiitdb_xml.py:364 wiitdb_xml.py:367 wiitdb_xml.py:401
+#: wiitdb_xml.py:146 wiitdb_xml.py:368 wiitdb_xml.py:371 wiitdb_xml.py:405
 msgid "XML invalido"
 msgstr "XML invalide"
 
-#: wiitdb_xml.py:417
+#: wiitdb_xml.py:421
 msgid "No existe el XML"
 msgstr "Le XML n'existe pas"
 
