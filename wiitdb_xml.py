@@ -177,10 +177,6 @@ class WiiTDBXML(Thread):
                                                         nodo = nodo.next
                                                     nodo = nodo.parent
 
-                                                if juego.idgame == 'RLBPWR':
-                                                    print descripcion.title
-                                                    print descripcion.synopsis
-
                                                 # añadimos la descripcion al juego
                                                 juego.descripciones.append(descripcion)
 

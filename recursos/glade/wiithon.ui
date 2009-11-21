@@ -590,25 +590,20 @@ Por defecto: 160x224</property>
     <property name="website">https://launchpad.net/wiithon</property>
     <property name="website_label">https://launchpad.net/wiithon</property>
     <property name="license" translatable="yes">TEXTO_LICENCIA</property>
-    <property name="authors">Encargados del desarrollo:
-Ricardo Marmolejo Garc&#xED;a
-E-mail: makiolo@gmail.com
-Userid: makiolo
-
-Colaboradores:
-Jos&#xE9;-Luis Segura &lt;josel.segura@gmail.com&gt;
-Sergio Padrino &lt;sergio.padrino@gmail.com&gt;
-Carlo Mandelli &lt;camandel@gmail.com&gt;
+    <property name="authors">Desarrolladores Activos: 	Ricardo Marmolejo Garc&#xED;a, Carlo Mandelli
+Desarrolladores Inactivos: 	Jose Luis Segura
+Peque&#xF1;as contribuciones: 	Carel Foobar, Sergio Padrino
 </property>
     <property name="documenters"></property>
     <property name="translator_credits">Spanish: makiolo (Ricardo Marmolejo Garc&#xED;a) &lt;makiolo@gmail.com&gt; [es.po]
 Franc&#xE9;s: carel &lt;carel.foobar@free.fr&gt; [fr.po]
 English: Koen Maes &lt;whacker@gmail.com&gt; [en.po]
 Dutch: Koen Maes &lt;whacker@gmail.com&gt; [nl_NL.po]
-German: Speedygonzales (Markus Gewiss) &lt;fcpower78@googlemail.com&gt; [de.po]
+German: Speedygonzales (Markus Gewiss) &lt;markus@foto-engels.de&gt; [de.po]
+Portuguese: a.k.a. "Pakatus" &lt;nfernandes@gmail.com&gt; [pt_PT.po]
 Brazilian Portuguese: Alex Ant&#xE3;o &lt;alexcarlosantao@gmail.com&gt; [pt_BR.po]
 Italian: Carlo Mandelli &lt;camandel@gmail.com&gt; [it.po]
-</property>
+Catal&#xE1;n: Victor Mic&#xF3; Biosca &lt;thor9216@gmail.com&gt; [es_CA.po]</property>
     <child internal-child="vbox">
       <object class="GtkVBox" id="dialog-vbox3">
         <property name="visible">True</property>

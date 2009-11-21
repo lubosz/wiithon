@@ -1416,11 +1416,11 @@ msgstr "%d jogadores"
 msgid "Error descargando la informacion WiiTDB desde %s"
 msgstr "Erro ao baixar a informação WiiTDB a partir de %s"
 
-#: wiitdb_xml.py:146 wiitdb_xml.py:368 wiitdb_xml.py:371 wiitdb_xml.py:405
+#: wiitdb_xml.py:146 wiitdb_xml.py:364 wiitdb_xml.py:367 wiitdb_xml.py:401
 msgid "XML invalido"
 msgstr "XML inválido"
 
-#: wiitdb_xml.py:421
+#: wiitdb_xml.py:417
 msgid "No existe el XML"
 msgstr "O XML não existe"
 

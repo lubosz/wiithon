@@ -1317,7 +1317,7 @@ class WiithonGUI(GtkBuilderWrapper):
                     i = 0
                     while not hayPrincipal and i<len(juego.descripciones):
                         descripcion = juego.descripciones[i]
-                        hayPrincipal = descripcion.lang == self.core.prefs.LANG_PRINCIPAL
+                        hayPrincipal = descripcion.lang == self.core.prefs.LANG_PRINCIPAL and (descripcion.synopsis != "")
                         if hayPrincipal:
                             title = descripcion.title
                             synopsis = descripcion.synopsis
@@ -1328,7 +1328,7 @@ class WiithonGUI(GtkBuilderWrapper):
                         i = 0
                         while not haySecundario and i<len(juego.descripciones):
                             descripcion = juego.descripciones[i]
-                            haySecundario = descripcion.lang == self.core.prefs.LANG_SECUNDARIO
+                            haySecundario = descripcion.lang == self.core.prefs.LANG_SECUNDARIO and (descripcion.synopsis != "")
                             if haySecundario:
                                 title = descripcion.title
                                 synopsis = descripcion.synopsis
