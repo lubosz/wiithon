@@ -1,10 +1,10 @@
 #!/usr/bin/python -W ignore::DeprecationWarning
 # -*- coding: utf-8 -*-
 # vim: set fileencoding=utf-8 :
-#
+# 
 # :: Mantenedor: Ricardo Marmolejo García <makiolo@gmail.com>
-# :: Web : http://blogricardo.wordpress.com/2009/06/21/wiithon-1-0-liberado/
-# :: Ver LICENCIA.txt
+# :: Web : http://blogricardo.wordpress.com/2009/11/20/wiithon-1-1-publicado/
+# :: Ver doc/LICENCIA
 
 import sys
 import os
@@ -45,7 +45,10 @@ def App():
         
         # setup language from preferencies
         prefs = Preferencias()
-        util.configurarLenguaje(prefs.APPLICATION_LANGUAGE)
+        try:
+            util.configurarLenguaje(prefs.APPLICATION_LANGUAGE)
+        except:
+            util.configurarLenguaje()
 
         if os.path.exists(os.path.join(config.WIITHON_FILES , ".bzr")):
             print _("Instala wiithon, no lo ejecute desde ./wiithon.py")
@@ -73,14 +76,22 @@ def App():
 
         num_parms_cli = 0
         for option, value in options:
-            if not (util.getExtension(option) == "iso"):
+
+            if(util.getExtension(fichero)=="iso"):
+                pass
+            elif(util.getExtension(fichero)=="rar"):
+                pass
+            elif( os.path.isdir( fichero ) ):
+                pass
+            else:
                 num_parms_cli += 1
-                    
+
+
         GUI = num_parms_cli == 0
         if GUI:
             loading = subprocess.Popen(config.LOADING_APP , shell=False)
         
-        core = WiithonCORE()
+        core = WiithonCORE(prefs)
         if GUI:
             interfaz = WiithonGUI(core, loading)
         else:

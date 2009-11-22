@@ -15,7 +15,7 @@ import shutil
 
 import util
 import config
-from util import NonRepeatList, SintaxisInvalida
+from util import SintaxisInvalida
 from wiitdb_schema import Juego, Particion
 from preferencias import Preferencias
 
@@ -23,8 +23,9 @@ db =        util.getBDD()
 session =   util.getSesionBDD(db)
 
 class WiithonCORE:
-    
-    prefs = Preferencias()
+
+    def __init__(self, prefs):
+        self.prefs = prefs
 
     def syncronizarJuegos(self , particion):
         comando = "%s -p %s ls" % (config.WBFS_APP, particion.device)

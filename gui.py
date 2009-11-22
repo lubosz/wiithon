@@ -329,19 +329,46 @@ class WiithonGUI(GtkBuilderWrapper):
             self.wb_tb_refrescar_wbfs.grab_focus()
 
     def main(self , opciones , argumentos):
-        if self.isSelectedPartition():
-            for arg in argumentos:
-                arg = os.path.abspath(arg)
-                if os.path.exists(arg):
-                    if util.getExtension(arg)=="iso":
-                        self.poolTrabajo.nuevoTrabajoAnadir(arg , self.sel_parti.obj.device)
-                    else:
-                        self.alert("warning" , _("Formato desconocido"))
+        
+        listaISO = NonRepeatList()
+        listaRAR = NonRepeatList()
+        listaDirectorios = NonRepeatList()
+        
+        for arg in argumentos:
+            fichero = os.path.abspath(arg)
+            if(util.getExtension(fichero)=="iso"):
+                listaISO.append(fichero)
+            elif(util.getExtension(fichero)=="rar"):
+                listaRAR.append(fichero)
+            elif( os.path.isdir( fichero ) ):
+                listaDirectorios.append(fichero)
+                        
+        if len(listaISO) > 0 or len(listaRAR) > 0 or len(listaDirectorios) > 0:
 
+            if self.isSelectedPartition():
+
+                if len(listaISO) > 0:
+                    listaISO.sort()
+                    self.poolTrabajo.nuevoTrabajoAnadir( listaISO , self.sel_parti.obj.device)
+                    
+                if len(listaRAR) > 0:
+                    listaRAR.sort()
+                    self.poolTrabajo.nuevoTrabajoDescomprimirRAR( listaRAR , self.sel_parti.obj)
+
+                if len(listaDirectorios) > 0:
+                    listaDirectorios.sort()
+                    self.poolTrabajo.nuevoTrabajoRecorrerDirectorio( listaDirectorios , self.sel_parti.obj)                
+                    
+            else:
+                self.alert("warning" , _("No has seleccionado ninguna particion"))
+
+        # cerrar carga
         self.cerrar_loading()
+        
+        # GO
         gtk.main()
 
-            
+
     def cerrar_loading(self):
         if not self.loading_cerrado:
             self.loading_cerrado = True
@@ -2092,9 +2119,9 @@ class WiithonGUI(GtkBuilderWrapper):
     def drag_data_received_cb(self, widget, drag_context, x, y, selection_data, info, timestamp):
         'Callback invoked when the DnD data is received'        
         tuplaArrastrados = selection_data.get_uris()
-        listaISO = []
-        listaRAR = []
-        listaDirectorios = []
+        listaISO = NonRepeatList()
+        listaRAR = NonRepeatList()
+        listaDirectorios = NonRepeatList()
         for fichero in tuplaArrastrados:
             if fichero.startswith("file://"):
                 fichero = fichero.replace("file://" , "")
@@ -2141,24 +2168,22 @@ class WiithonGUI(GtkBuilderWrapper):
                             util.call_out_null(comando)
                             self.ponerDisco(self.sel_juego.obj.idgame, self.wb_img_disco1)
 
-        if len(listaISO) > 0:
+        if len(listaISO) > 0 or len(listaRAR) > 0 or len(listaDirectorios) > 0:
+
             if self.isSelectedPartition():
-                listaISO.sort()
-                self.poolTrabajo.nuevoTrabajoAnadir( listaISO , self.sel_parti.obj.device)
-            else:
-                self.alert("warning" , _("No has seleccionado ninguna particion"))
-            
-        if len(listaRAR) > 0:
-            if self.isSelectedPartition():
-                listaRAR.sort()
-                self.poolTrabajo.nuevoTrabajoDescomprimirRAR( listaRAR , self.sel_parti.obj)
-            else:
-                self.alert("warning" , _("No has seleccionado ninguna particion"))
-            
-        if len(listaDirectorios) > 0:
-            if self.isSelectedPartition():
-                listaDirectorios.sort()
-                self.poolTrabajo.nuevoTrabajoRecorrerDirectorio( listaDirectorios , self.sel_parti.obj)                
+
+                if len(listaISO) > 0:
+                    listaISO.sort()
+                    self.poolTrabajo.nuevoTrabajoAnadir( listaISO , self.sel_parti.obj.device)
+                    
+                if len(listaRAR) > 0:
+                    listaRAR.sort()
+                    self.poolTrabajo.nuevoTrabajoDescomprimirRAR( listaRAR , self.sel_parti.obj)
+
+                if len(listaDirectorios) > 0:
+                    listaDirectorios.sort()
+                    self.poolTrabajo.nuevoTrabajoRecorrerDirectorio( listaDirectorios , self.sel_parti.obj)                
+                    
             else:
                 self.alert("warning" , _("No has seleccionado ninguna particion"))
 
