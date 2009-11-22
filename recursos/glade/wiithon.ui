@@ -914,6 +914,28 @@ Catal&#xE1;n: Victor Mic&#xF3; Biosca &lt;thor9216@gmail.com&gt; [es_CA.po]</pro
               </packing>
             </child>
             <child>
+              <object class="GtkVBox" id="prefs_vbox_buscadores">
+                <property name="visible">True</property>
+                <property name="orientation">vertical</property>
+                <child>
+                  <placeholder/>
+                </child>
+              </object>
+              <packing>
+                <property name="position">3</property>
+              </packing>
+            </child>
+            <child type="tab">
+              <object class="GtkLabel" id="label8">
+                <property name="visible">True</property>
+                <property name="label" translatable="yes">Buscadores</property>
+              </object>
+              <packing>
+                <property name="position">3</property>
+                <property name="tab_fill">False</property>
+              </packing>
+            </child>
+            <child>
               <object class="GtkVBox" id="vbox1">
                 <property name="visible">True</property>
                 <property name="orientation">vertical</property>
@@ -1055,7 +1077,7 @@ Catal&#xE1;n: Victor Mic&#xF3; Biosca &lt;thor9216@gmail.com&gt; [es_CA.po]</pro
                 </child>
               </object>
               <packing>
-                <property name="position">3</property>
+                <property name="position">4</property>
               </packing>
             </child>
             <child type="tab">
@@ -1064,7 +1086,7 @@ Catal&#xE1;n: Victor Mic&#xF3; Biosca &lt;thor9216@gmail.com&gt; [es_CA.po]</pro
                 <property name="label" translatable="yes">Herramientas y utilidades</property>
               </object>
               <packing>
-                <property name="position">3</property>
+                <property name="position">4</property>
                 <property name="tab_fill">False</property>
               </packing>
             </child>

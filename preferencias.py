@@ -46,6 +46,7 @@ class Preferencias:
     def cargarPreferenciasPorDefecto(self,  prefs_vbox_general,
                                             prefs_vbox_caratulas,
                                             prefs_vbox_wiitdb,
+                                            prefs_vbox_buscadores,
                                             cargarWidget = True):
         
         # Data type: 'bool', 'int', 'float', 'string', 'memo', 'select'        
@@ -195,6 +196,13 @@ class Preferencias:
         cycle_discs += "http://wiitdb.com/wiitdb/artwork/disc/JA/%s.png\n"
         cycle_discs += "http://boxart.rowdyruff.net/disc/%.3s.png\n"
         self.iniciarPreferencia('memo', 'PROVIDER_DISCS', defecto=cycle_discs, mostrar=cargarWidget, vbox=prefs_vbox_caratulas, label=_('Proveedor de discos'))
+        
+        # Buscadores
+        prefs_vbox_buscadores
+        self.iniciarPreferencia('string', 'BUSCAR_URL_GOOGLE', defecto="http://www.google.es/#hl=es&q=%s&meta=&aq=f&oq=&fp=5251967318b7af98", mostrar=cargarWidget, vbox=prefs_vbox_buscadores, label=_('URL de busqueda en Google. (%s es el nombre del juego)'))
+        self.iniciarPreferencia('string', 'BUSCAR_URL_WIKIPEDIA', defecto="http://es.wikipedia.org/w/index.php?title=Especial%%3ABuscar&search=%s&fulltext=Buscar", mostrar=cargarWidget, vbox=prefs_vbox_buscadores, label=_('URL de busqueda en Wikipedia. (%s es el nombre del juego)'))
+        self.iniciarPreferencia('string', 'BUSCAR_URL_YOUTUBE', defecto="http://www.youtube.com/results?search_query=%s&search_type=&aq=f", mostrar=cargarWidget, vbox=prefs_vbox_buscadores, label=_('URL de busqueda en Youtube. (%s es el nombre del juego)'))
+        self.iniciarPreferencia('string', 'BUSCAR_URL_IGN', defecto="http://search.ign.com/products?query=%s", mostrar=cargarWidget, vbox=prefs_vbox_buscadores, label=_('URL de busqueda en IGN. (%s es el nombre del juego)'))
 
     # indicar el vbox que inicia la preferencia
     def iniciarPreferencia(self, tipo, name, defecto = '', mostrar = False, vbox = None, label = '', datos_lista = None):

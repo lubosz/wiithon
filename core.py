@@ -169,7 +169,8 @@ class WiithonCORE:
         if( self.existeCaratula(juego.idgame) ):
             try:
                 origen = self.getRutaCaratula(juego.idgame)
-                print "%s %s ----> %s ... " % (_("Copiando"), origen , destino)
+                if config.DEBUG:
+                    print "%s %s ----> %s ... " % (_("Copiando"), origen , destino)
                 shutil.copyfile(origen, destino)
                 return True
             except:
@@ -182,7 +183,8 @@ class WiithonCORE:
         if( self.existeDisco(juego.idgame) ):
             try:
                 origen = self.getRutaDisco(juego.idgame)
-                print "%s %s ----> %s ... " % (_("Copiando"), origen , destino)
+                if config.DEBUG:
+                    print "%s %s ----> %s ... " % (_("Copiando"), origen , destino)
                 shutil.copyfile(origen, destino)
                 return True
             except:

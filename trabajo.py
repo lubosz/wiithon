@@ -13,11 +13,12 @@ from wiitdb_schema import Juego
 from wiitdb_xml import *
 from util import ErrorDescargando, SesionWiiTDB
 
-# pseudo-enumerado
+# trabajos en pseudo-enumerado
 (ANADIR,EXTRAER,CLONAR,DESCARGA_CARATULA,
 DESCARGA_DISCO,COPIAR_CARATULA,COPIAR_DISCO,
 RECORRER_DIRECTORIO,DESCOMPRIMIR_RAR,
-ACTUALIZAR_WIITDB,EDITAR_JUEGO_WIITDB)=([ "%d" % i for i in range(11) ])
+ACTUALIZAR_WIITDB,EDITAR_JUEGO_WIITDB,
+VER_URL)=([ "%d" % i for i in range(12) ])
 
 '''
 Herencia Multiple, Es un Pool (implementado en pool.py) y un Thread
@@ -88,7 +89,6 @@ class PoolTrabajo(Pool , Thread):
         
         # sesion http con wiitdb
         self.sesion_wiitdb = SesionWiiTDB()
-
 
     def actualizarPreferencias(self):
         self.PROVIDER_COVERS = self.core.prefs.PROVIDER_COVERS
@@ -196,11 +196,17 @@ class PoolTrabajo(Pool , Thread):
             IDGAME = trabajo.origen.idgame
             trabajo.exito = self.editarJuegoWiiTDB(IDGAME)
 
+        elif( trabajo.tipo == VER_URL ):
+            url = trabajo.origen
+            trabajo.exito = self.abrirPagina(url)
+
         trabajo.terminado = True
 
         # termina un trabajo genérico
         if self.callback_termina_trabajo:
             self.callback_termina_trabajo(trabajo)
+            
+    ############ METODOS PRIVADOS QUE REALIZAN EL TRABAJO #############################
 
     def anadir(self , core ,trabajo , fichero , DEVICE):
         exito = False
@@ -406,11 +412,14 @@ class PoolTrabajo(Pool , Thread):
         try:
             url = self.sesion_wiitdb.editar_juego(IDGAME)
             if url is not None:
-                util.call_out_null('%s "%s"' % ("firefox", url))
-                exito = True
+                exito = self.abrirPagina(url)
         except:
             pass
         return exito
+        
+    def abrirPagina(self, url):
+        util.call_out_null('%s "%s"' % ("firefox", url))
+        return True
 
     ######################### INTERFAZ PUBLICO #######################################
 
@@ -469,11 +478,14 @@ class PoolTrabajo(Pool , Thread):
     def nuevoTrabajoEditarJuegoWiiTDB(self , juego):
         return self.nuevoTrabajo( EDITAR_JUEGO_WIITDB , juego )
 
+    def nuevoTrabajoVerPagina(self , url):
+        return self.nuevoTrabajo( VER_URL , url )
+
 '''
 tipo:
     tipo de Trabajo
     (ANADIR,EXTRAER,CLONAR,DESCARGA_CARATULA,DESCARGA_DISCO,COPIAR_CARATULA,COPIAR_DISCO,
-    RECORRER_DIRECTORIO,DESCOMPRIMIR_RAR,ACTUALIZAR_WIITDB,EDITAR_JUEGO_WIITDB)
+    RECORRER_DIRECTORIO,DESCOMPRIMIR_RAR,ACTUALIZAR_WIITDB,EDITAR_JUEGO_WIITDB,VER_URL)
 origen y destino:
     Casi todos los trabajos, son de gestión, es decir transacciones que tienen 
     un origen y un destino, en general.
@@ -519,4 +531,8 @@ class Trabajo:
         elif self.tipo == ACTUALIZAR_WIITDB:
             return _("Actualizar WiiTDB desde %s") % (self.origen)
         elif self.tipo == EDITAR_JUEGO_WIITDB:
-            return _("Editar Juego WiiTDB con ID: %s") % (self.origen)
+            return _("Editar Juego WiiTDB: %s") % (self.origen)
+        elif self.tipo == VER_URL:
+            return _("Abrir pagina: %s") % (self.origen)
+        else:
+            return _("Trabajo desconocido")

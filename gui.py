@@ -98,9 +98,21 @@ class WiithonGUI(GtkBuilderWrapper):
 
                 ('EditarJuegoWiiTDB', None, "Editar Juego WiiTDB", None, '', # sin traducir temporalmente
                  self.menu_contextual_editar_juego_wiitdb),
+                 
+                ('BuscarGoogle', None, "Buscar en Google", None, '', # sin traducir temporalmente
+                 self.menu_contextual_buscar_google),
+                 
+                ('BuscarWikipedia', None, "Buscar en Wikipedia", None, '', # sin traducir temporalmente
+                 self.menu_contextual_buscar_wikipedia),
+                 
+                ('BuscarYoutube', None, "Buscar en Youtube", None, '', # sin traducir temporalmente
+                 self.menu_contextual_buscar_youtube),
+                 
+                ('BuscarIGN', None, "Buscar en IGN", None, '', # sin traducir temporalmente
+                 self.menu_contextual_buscar_ign),
 
                 ])
-
+        
         self.uimgr.insert_action_group(actiongroup)
 
         ui_desc = '''
@@ -114,6 +126,11 @@ class WiithonGUI(GtkBuilderWrapper):
                 <separator/>
                 <menuitem action="VerJuegoWiiTDB"/>
                 <menuitem action="EditarJuegoWiiTDB"/>
+                <separator/>
+                <menuitem action="BuscarGoogle"/>
+                <menuitem action="BuscarWikipedia"/>
+                <menuitem action="BuscarYoutube"/>
+                <menuitem action="BuscarIGN"/>
             </popup>
         </ui>
         '''
@@ -131,7 +148,9 @@ class WiithonGUI(GtkBuilderWrapper):
         # iniciar preferencias
         self.core.prefs.cargarPreferenciasPorDefecto(   self.wb_prefs_vbox_general,
                                                         self.wb_prefs_vbox_caratulas,
-                                                        self.wb_prefs_vbox_wiitdb
+                                                        self.wb_prefs_vbox_wiitdb,
+                                                        self.wb_prefs_vbox_buscadores,
+                                                        True
                                                         )
 
         backup_preferencia_device = self.core.prefs.device_seleccionado
@@ -209,8 +228,8 @@ class WiithonGUI(GtkBuilderWrapper):
         # trabajos LIGEROS
         self.poolBash = PoolTrabajo(
                                     self.core , self.core.prefs.NUM_HILOS ,
-                                    None ,
-                                    None ,
+                                    self.callback_empieza_trabajo ,
+                                    self.callback_termina_trabajo ,
                                     None ,
                                     None ,
                                     None ,
@@ -485,13 +504,37 @@ class WiithonGUI(GtkBuilderWrapper):
 
     def menu_contextual_ver_juego_wiitdb(self, action):
         if self.isSelectedGame():
-            self.alert("warning" , "Sin implementar")
+            self.poolBash.nuevoTrabajoVerPagina("http://wiitdb.com/Game/%s" % self.sel_juego.obj.idgame)
         else:
             self.alert("warning" , _("No has seleccionado ningun juego"))
         
     def menu_contextual_editar_juego_wiitdb(self, action):
         if self.isSelectedGame():
             self.poolBash.nuevoTrabajoEditarJuegoWiiTDB(self.sel_juego.obj)
+        else:
+            self.alert("warning" , _("No has seleccionado ningun juego"))
+            
+    def menu_contextual_buscar_google(self, action):
+        if self.isSelectedGame():
+            self.poolBash.nuevoTrabajoVerPagina(self.core.prefs.BUSCAR_URL_GOOGLE % ("wii %s" % self.sel_juego.obj.title))
+        else:
+            self.alert("warning" , _("No has seleccionado ningun juego"))
+        
+    def menu_contextual_buscar_wikipedia(self, action):
+        if self.isSelectedGame():
+            self.poolBash.nuevoTrabajoVerPagina(self.core.prefs.BUSCAR_URL_WIKIPEDIA % ("wii %s" % self.sel_juego.obj.title))
+        else:
+            self.alert("warning" , _("No has seleccionado ningun juego"))
+        
+    def menu_contextual_buscar_youtube(self, action):
+        if self.isSelectedGame():
+            self.poolBash.nuevoTrabajoVerPagina(self.core.prefs.BUSCAR_URL_YOUTUBE % ("wii %s" % self.sel_juego.obj.title))
+        else:
+            self.alert("warning" , _("No has seleccionado ningun juego"))
+        
+    def menu_contextual_buscar_ign(self, action):
+        if self.isSelectedGame():
+            self.poolBash.nuevoTrabajoVerPagina(self.core.prefs.BUSCAR_URL_IGN % ("wii %s" % self.sel_juego.obj.title))
         else:
             self.alert("warning" , _("No has seleccionado ningun juego"))
 
@@ -1833,6 +1876,7 @@ class WiithonGUI(GtkBuilderWrapper):
             self.core.prefs.cargarPreferenciasPorDefecto(   self.wb_prefs_vbox_general,
                                                             self.wb_prefs_vbox_caratulas,
                                                             self.wb_prefs_vbox_wiitdb,
+                                                            self.wb_prefs_vbox_buscadores,
                                                             False
                                                             )
             self.ocultar_preferencias()
@@ -2127,8 +2171,12 @@ class WiithonGUI(GtkBuilderWrapper):
         gobject.idle_add( self.refrescarTareasPendientes )
 
     def callback_empieza_trabajo(self, trabajo):
-        print _("Empieza %s") % trabajo
+        if config.DEBUG:
+            print _("Empieza %s") % trabajo
+
         gobject.idle_add( self.refrescarTareasPendientes )
+        gobject.idle_add(self.actualizarFraccion , 1.0 )
+        gobject.idle_add(self.actualizarLabel , "%s" % trabajo )
 
     def callback_termina_trabajo(self, trabajo):
         # No hay trabajo cuando el contador este a 1, que es el propio trabajo que da la señal
@@ -2138,8 +2186,9 @@ class WiithonGUI(GtkBuilderWrapper):
         # al final, por ser bloqueante
         if not trabajo.exito:
             gobject.idle_add( self.mostrarError , trabajo.error )
-            
-        print _("Termina: %s") % trabajo
+        
+        if config.DEBUG:
+            print _("Termina: %s") % trabajo
 
     def callback_empieza_trabajo_extraer(self, trabajo):
         pass

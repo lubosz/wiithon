@@ -12,6 +12,7 @@ char *s = N_("Asistente para particiones WBFS. Le aparecera una lista de partici
 char *s = N_("Borra el juego seleccionado.");
 char *s = N_("Borrar");
 char *s = N_("Busca en todos los discos duros, particiones de tipo WBFS");
+char *s = N_("Buscadores");
 char *s = N_("Buscar:");
 char *s = N_("Cambia el nombre del juego seleccionado. Este es el nombre con el que apareceran en los loaders.");
 char *s = N_("Caratula del disco.\n"
