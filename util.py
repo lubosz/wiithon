@@ -450,7 +450,29 @@ def setLanguage(locale = 'default'):
 
 def configurarLenguaje(inicial = 'default'):
 
-    locale.setlocale(locale.LC_ALL, '')
+    if inicial == 'es':
+        lang = 'es_ES.UTF-8'
+    elif inicial == 'it':
+        lang = 'it_IT.UTF-8'
+    elif inicial == 'en':
+        lang = 'en_US.UTF-8'
+    elif inicial == 'fr':
+        lang = 'fr_FR.UTF-8'
+    elif inicial == 'de':
+        lang = 'de_DE.UTF-8'
+    elif inicial == 'nl_NL':
+        lang = 'nl_NL.UTF-8'
+    elif inicial == 'pt_BR':
+        lang = 'pt_BR.UTF-8'
+    elif inicial == 'pt_PT':
+        lang = 'pt_PT.UTF-8'
+    elif inicial == 'es_CA':
+        lang = 'es_CA.UTF-8'
+
+    try:
+        locale.setlocale(locale.LC_ALL, lang)
+    except:
+        locale.setlocale(locale.LC_ALL, '')
 
     for module in (gettext, gtk.glade):
         module.bindtextdomain(config.APP,config.LOCALE)
