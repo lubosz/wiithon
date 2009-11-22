@@ -93,23 +93,29 @@ class WiithonGUI(GtkBuilderWrapper):
                 ('Borrar', gtk.STOCK_DELETE, None, None, '',
                  self.menu_contextual_borrar),
 
-                ('VerJuegoWiiTDB', None, "Ver Juego WiiTDB", None, '', # sin traducir temporalmente
+                ('VerJuegoWiiTDB', None, _("Ver Juego en WiiTDB"), None, '',
                  self.menu_contextual_ver_juego_wiitdb),
 
-                ('EditarJuegoWiiTDB', None, "Editar Juego WiiTDB", None, '', # sin traducir temporalmente
+                ('EditarJuegoWiiTDB', None, _("Editar Juego en WiiTDB"), None, '',
                  self.menu_contextual_editar_juego_wiitdb),
                  
-                ('BuscarGoogle', None, "Buscar en Google", None, '', # sin traducir temporalmente
+                ('BuscarGoogle', None, "%s Google" % _("Buscar en"), None, '',
                  self.menu_contextual_buscar_google),
                  
-                ('BuscarWikipedia', None, "Buscar en Wikipedia", None, '', # sin traducir temporalmente
+                ('BuscarWikipedia', None, "%s Wikipedia" % _("Buscar en"), None, '',
                  self.menu_contextual_buscar_wikipedia),
                  
-                ('BuscarYoutube', None, "Buscar en Youtube", None, '', # sin traducir temporalmente
+                ('BuscarYoutube', None, "%s Youtube" % _("Buscar en"), None, '',
                  self.menu_contextual_buscar_youtube),
                  
-                ('BuscarIGN', None, "Buscar en IGN", None, '', # sin traducir temporalmente
+                ('BuscarIGN', None, "%s IGN" % _("Buscar en"), None, '',
                  self.menu_contextual_buscar_ign),
+                 
+                ('BuscarGameSpot', None, "%s GameSpot" % _("Buscar en"), None, '',
+                 self.menu_contextual_buscar_gamespot),
+                 
+                ('BuscarVGChartz', None, "%s VGChartz" % _("Buscar en"), None, '',
+                 self.menu_contextual_buscar_vgchartz),
 
                 ])
         
@@ -131,6 +137,8 @@ class WiithonGUI(GtkBuilderWrapper):
                 <menuitem action="BuscarWikipedia"/>
                 <menuitem action="BuscarYoutube"/>
                 <menuitem action="BuscarIGN"/>
+                <menuitem action="BuscarGameSpot"/>
+                <menuitem action="BuscarVGChartz"/>
             </popup>
         </ui>
         '''
@@ -157,7 +165,7 @@ class WiithonGUI(GtkBuilderWrapper):
         backup_preferencia_idgame = self.core.prefs.idgame_seleccionado
 
         # ocultar barra de progreso
-        self.ocultarHBoxProgreso()
+        #self.ocultarHBoxProgreso()
 
         self.wb_principal.set_icon_from_file(config.ICONO)
         #self.wb_principal.maximize()
@@ -229,7 +237,7 @@ class WiithonGUI(GtkBuilderWrapper):
         self.poolBash = PoolTrabajo(
                                     self.core , self.core.prefs.NUM_HILOS ,
                                     self.callback_empieza_trabajo ,
-                                    self.callback_termina_trabajo ,
+                                    None ,
                                     None ,
                                     None ,
                                     None ,
@@ -287,6 +295,7 @@ class WiithonGUI(GtkBuilderWrapper):
                                     self.callback_termina_importar
                                     )
         self.poolTrabajo.setDaemon(True)
+        self.poolTrabajo.poolBash = self.poolBash
         self.poolTrabajo.start()
 
         # info gui
@@ -296,7 +305,11 @@ class WiithonGUI(GtkBuilderWrapper):
                 self.wb_estadoTrabajo)
             
         # Animacion que define si hay actividad de la pool batch
-        self.animar = Animador( self.wb_estadoBatch , self.poolBash , self.poolTrabajo )
+        self.animar = Animador(     self.wb_estadoBatch,
+                                    self.poolBash,
+                                    self.poolTrabajo,
+                                    self.mostrarHBoxProgreso,
+                                    self.ocultarHBoxProgreso)
         self.animar.setDaemon(True)
         self.animar.start()
                    
@@ -516,25 +529,37 @@ class WiithonGUI(GtkBuilderWrapper):
             
     def menu_contextual_buscar_google(self, action):
         if self.isSelectedGame():
-            self.poolBash.nuevoTrabajoVerPagina(self.core.prefs.BUSCAR_URL_GOOGLE % ("wii %s" % self.sel_juego.obj.title))
+            self.poolBash.nuevoTrabajoVerPagina(self.core.prefs.BUSCAR_URL_GOOGLE % ("wii %s" % util.get_title_for_search(self.sel_juego.obj)))
         else:
             self.alert("warning" , _("No has seleccionado ningun juego"))
         
     def menu_contextual_buscar_wikipedia(self, action):
         if self.isSelectedGame():
-            self.poolBash.nuevoTrabajoVerPagina(self.core.prefs.BUSCAR_URL_WIKIPEDIA % ("wii %s" % self.sel_juego.obj.title))
+            self.poolBash.nuevoTrabajoVerPagina(self.core.prefs.BUSCAR_URL_WIKIPEDIA % ("wii %s" % util.get_title_for_search(self.sel_juego.obj)))
         else:
             self.alert("warning" , _("No has seleccionado ningun juego"))
         
     def menu_contextual_buscar_youtube(self, action):
         if self.isSelectedGame():
-            self.poolBash.nuevoTrabajoVerPagina(self.core.prefs.BUSCAR_URL_YOUTUBE % ("wii %s" % self.sel_juego.obj.title))
+            self.poolBash.nuevoTrabajoVerPagina(self.core.prefs.BUSCAR_URL_YOUTUBE % ("wii %s" % util.get_title_for_search(self.sel_juego.obj)))
         else:
             self.alert("warning" , _("No has seleccionado ningun juego"))
         
     def menu_contextual_buscar_ign(self, action):
         if self.isSelectedGame():
-            self.poolBash.nuevoTrabajoVerPagina(self.core.prefs.BUSCAR_URL_IGN % ("wii %s" % self.sel_juego.obj.title))
+            self.poolBash.nuevoTrabajoVerPagina(self.core.prefs.BUSCAR_URL_IGN % ("wii %s" % util.get_title_for_search(self.sel_juego.obj)))
+        else:
+            self.alert("warning" , _("No has seleccionado ningun juego"))
+            
+    def menu_contextual_buscar_gamespot(self, action):
+        if self.isSelectedGame():
+            self.poolBash.nuevoTrabajoVerPagina(self.core.prefs.BUSCAR_URL_GAMESPOT % ("wii %s" % util.get_title_for_search(self.sel_juego.obj)))
+        else:
+            self.alert("warning" , _("No has seleccionado ningun juego"))
+            
+    def menu_contextual_buscar_vgchartz(self, action):
+        if self.isSelectedGame():
+            self.poolBash.nuevoTrabajoVerPagina(self.core.prefs.BUSCAR_URL_VGCHARTZ % ("wii %s" % util.get_title_for_search(self.sel_juego.obj)))
         else:
             self.alert("warning" , _("No has seleccionado ningun juego"))
 
@@ -1186,7 +1211,7 @@ class WiithonGUI(GtkBuilderWrapper):
         self.info.arriba_num_tareas = self.poolTrabajo.numTrabajos
 
         # mostrar espacio barra progreso    
-        self.wb_box_progreso.show()
+        #self.mostrarHBoxProgreso()
 
     def getBuscarJuego(self, listaJuegos, idgame):
         
@@ -1195,6 +1220,7 @@ class WiithonGUI(GtkBuilderWrapper):
         
         if listaJuegos == None or idgame == None:
             return None
+
         encontrado = False
         i = 0
         while not encontrado and i<len(listaJuegos):
@@ -1202,6 +1228,7 @@ class WiithonGUI(GtkBuilderWrapper):
             encontrado = juego.idgame == idgame
             if not encontrado:
                 i += 1
+
         if encontrado:
             return listaJuegos[i]
         else:
@@ -1214,6 +1241,7 @@ class WiithonGUI(GtkBuilderWrapper):
         
         if listaParticiones == None or device == None:
             return None
+
         encontrado = False
         i = 0
         while not encontrado and i<len(listaParticiones):
@@ -1221,6 +1249,7 @@ class WiithonGUI(GtkBuilderWrapper):
             encontrado = (particion.device == device)
             if not encontrado:
                 i += 1
+
         if encontrado:
             return listaParticiones[i]
         else:
@@ -1771,18 +1800,6 @@ class WiithonGUI(GtkBuilderWrapper):
                                 sql = util.decode("idgame=='%s' and idParticion=='%d'" % (idgame , self.sel_parti.obj.idParticion))
                                 juego = session.query(Juego).filter(sql).first()
                                 if juego is None:
-
-                                    # vamos descargando info wiitdb
-                                    # no podemos usar objeto porque es None ...
-                                    self.poolBash.nuevoTrabajoActualizarWiiTDB('%s?ID=%s' % (self.core.prefs.URL_ZIP_WIITDB, idgame))
-
-                                    # vamos descargando caratulas
-                                    if not self.core.existeCaratula(idgame):
-                                        self.poolBash.nuevoTrabajoDescargaCaratula( idgame )
-
-                                    if not self.core.existeDisco(idgame):
-                                        self.poolBash.nuevoTrabajoDescargaDisco( idgame )
-
                                     listaISO.append(fichero)
 
                                 else:
@@ -1919,13 +1936,13 @@ class WiithonGUI(GtkBuilderWrapper):
         if not self.wiitdb_mutex:
             
             if (self.question("""
-        <b>
-            <pr>%s</pr>
-            <br />
-            <br />
-            <azul><pr>%s</pr></azul>
-        </b>
-            """ % (
+                    <b>
+                        <pr>%s</pr>
+                        <br />
+                        <br />
+                        <azul><pr>%s</pr></azul>
+                    </b>
+                """ % (
                         _("Seguro que deseas descargar informacion de los juegos de WiiTDB?"),
                         self.core.prefs.URL_ZIP_WIITDB
                         ),
@@ -1999,6 +2016,10 @@ class WiithonGUI(GtkBuilderWrapper):
         if self.question(_('Deseas borrar el archivo %s?') % archivo):
             if os.path.exists(archivo):
                 os.remove(archivo)
+
+    def mostrarHBoxProgreso(self):
+        self.wb_box_progreso.show()
+        return False
 
     def ocultarHBoxProgreso(self):
         self.wb_box_progreso.hide()
@@ -2175,13 +2196,17 @@ class WiithonGUI(GtkBuilderWrapper):
             print _("Empieza %s") % trabajo
 
         gobject.idle_add( self.refrescarTareasPendientes )
-        gobject.idle_add(self.actualizarFraccion , 1.0 )
-        gobject.idle_add(self.actualizarLabel , "%s" % trabajo )
+        
+        if not self.poolTrabajo.estaOcupado():
+            gobject.idle_add(self.actualizarFraccion , 1.0 )
+            gobject.idle_add(self.actualizarLabel , "%s" % trabajo )
 
     def callback_termina_trabajo(self, trabajo):
         # No hay trabajo cuando el contador este a 1, que es el propio trabajo que da la señal
+        '''
         if(self.poolTrabajo.numTrabajos <= 1):
             gobject.timeout_add( 5000, self.ocultarHBoxProgreso )
+        '''
 
         # al final, por ser bloqueante
         if not trabajo.exito:

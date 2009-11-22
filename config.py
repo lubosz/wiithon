@@ -34,7 +34,7 @@ LOADING_APP = os.path.join(WIITHON_FILES , "loading.py")
 APP = "wiithon"
 try:
     VER, REV = util.getVersionRevision()
-except AttributeError:
+except:
     VER, REV = "?", "?"
 VERS_BDD = [1,2] # last is active
 HOME = os.environ['HOME']
@@ -84,10 +84,8 @@ SIZE_IMAGE_ACCESORIOS = 90
 #URL BUGS
 URL_BUGS = "https://bugs.launchpad.net/wiithon/+filebug"
 
-#INFO STATIC WIITDB
+# URL WIITDB
 URL_WIITDB = "wiitdb.com"
-USER_WIITDB = "Wiithon_1_21"
-PASS_WIITDB = "Wiithon_1_21"
 
 if DEBUG and SUPERDEBUG:
     logging.basicConfig()

@@ -89,6 +89,9 @@ class PoolTrabajo(Pool , Thread):
         
         # sesion http con wiitdb
         self.sesion_wiitdb = SesionWiiTDB()
+        
+        # pool ayudante
+        self.poolBash = None
 
     def actualizarPreferencias(self):
         self.PROVIDER_COVERS = self.core.prefs.PROVIDER_COVERS
@@ -99,8 +102,12 @@ class PoolTrabajo(Pool , Thread):
         self.WIDTH_DISCS = self.core.prefs.WIDTH_DISCS
         self.HEIGHT_DISCS = self.core.prefs.HEIGHT_DISCS
         self.rar_overwrite_iso = self.core.prefs.rar_overwrite_iso
+        self.COMANDO_ABRIR_WEB = self.core.prefs.COMANDO_ABRIR_WEB
         self.rar_preguntar_borrar_iso = self.core.prefs.rar_preguntar_borrar_iso
         self.rar_preguntar_borrar_rar = self.core.prefs.rar_preguntar_borrar_rar
+        self.USER_WIITDB = self.core.prefs.USER_WIITDB
+        self.PASS_WIITDB = self.core.prefs.PASS_WIITDB
+        self.URL_ZIP_WIITDB = self.core.prefs.URL_ZIP_WIITDB
 
     def run(self):
         self.empezar( args=(self.core,) )
@@ -211,13 +218,32 @@ class PoolTrabajo(Pool , Thread):
     def anadir(self , core ,trabajo , fichero , DEVICE):
         exito = False
 
+        idgame = util.getMagicISO(fichero)
+
         if (  not os.path.exists(DEVICE)):
             trabajo.error = _("La particion %s: Ya no existe") % particion.device
             
         elif( not os.path.exists(fichero) ):
             trabajo.error = _("El archivo ISO %s: No existe") % fichero
+            
+        elif idgame is None:
+            trabajo.error = _("El archivo ISO %s: No es un juego de Wii") % fichero
 
         elif( util.getExtension(fichero) == "iso" ):
+            
+            ########### TAREA AUXILIAR ######################
+
+            # vamos descargando info wiitdb
+            self.poolBash.nuevoTrabajoActualizarWiiTDB('%s?ID=%s' % (self.URL_ZIP_WIITDB, idgame))
+
+            # vamos descargando caratulas
+            if not core.existeCaratula(idgame):
+                self.poolBash.nuevoTrabajoDescargaCaratula( idgame )
+
+            if not core.existeDisco(idgame):
+                self.poolBash.nuevoTrabajoDescargaDisco( idgame )
+
+            #################################################
             
             if self.callback_empieza_progreso:
                 self.callback_empieza_progreso(trabajo)
@@ -410,15 +436,16 @@ class PoolTrabajo(Pool , Thread):
     def editarJuegoWiiTDB(self, IDGAME):
         exito = False
         try:
-            url = self.sesion_wiitdb.editar_juego(IDGAME)
+            self.sesion_wiitdb.connect_if_need_it(self.USER_WIITDB, self.PASS_WIITDB)
+            url = self.sesion_wiitdb.get_url_editar_juego(IDGAME)
             if url is not None:
                 exito = self.abrirPagina(url)
         except:
-            pass
+            trabajo.error = _("Error: Al intentar identificarse en WiiTDB para editar el juego.")
         return exito
         
     def abrirPagina(self, url):
-        util.call_out_null('%s "%s"' % ("firefox", url))
+        util.call_out_null('%s "%s"' % (self.COMANDO_ABRIR_WEB, url))
         return True
 
     ######################### INTERFAZ PUBLICO #######################################
@@ -516,10 +543,10 @@ class Trabajo:
             return _("Extraer %s a la ruta %s") % (self.origen.title, self.destino)
         elif self.tipo == CLONAR and isinstance(self.origen, Juego):
             return _("Copiando el juego %s desde %s a la particion %s") % (self.origen.title, self.origen.particion , self.destino)
-        elif self.tipo == DESCARGA_CARATULA and isinstance(self.origen, Juego):
-            return _("Descargando caratula de %s") % (self.origen.title)
-        elif self.tipo == DESCARGA_DISCO and isinstance(self.origen, Juego):
-            return _("Descargando disco de %s") % (self.origen.title)
+        elif self.tipo == DESCARGA_CARATULA:
+            return _("Descargando caratula de %s") % (self.origen)
+        elif self.tipo == DESCARGA_DISCO:
+            return _("Descargando disco de %s") % (self.origen)
         elif self.tipo == COPIAR_CARATULA and isinstance(self.origen, Juego):
             return _("Copiando la caratula %s a la ruta %s") % (self.origen.title, self.destino)
         elif self.tipo == COPIAR_DISCO and isinstance(self.origen, Juego):

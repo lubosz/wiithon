@@ -54,13 +54,13 @@ def getNombreFichero(fichero):
         return fichero
 
 def getMagicISO(imagenISO):
-    f = open(imagenISO , "r")
-    magic = f.read(6)
-    f.close()
-    if len(magic) == 6 and re.match("[A-Z0-9]{6}",magic):
-        return magic
-    else:
-        return None
+    if os.path.exists(imagenISO):
+        f = open(imagenISO , "r")
+        magic = f.read(6)
+        f.close()
+        if len(magic) == 6 and re.match("[A-Z0-9]{6}",magic):
+            return magic
+    return None
 
 def tieneCaracteresRaros(cadena , listaNegra = BLACK_LIST):
     # Nos dice si *cadena* tiene caracteres raros dados por una lista negra
@@ -523,7 +523,7 @@ class SesionWiiTDB:
         self.PHPSESSID = None
         self.timeout = 0
 
-    def conectar_wiitdb(self):
+    def conectar_wiitdb(self, user, password):
         
         if config.DEBUG:
             print "conectar_wiitdb"
@@ -532,8 +532,8 @@ class SesionWiiTDB:
 
             conn = httplib.HTTPConnection(self.dominio)
 
-            data = {    'authid': config.USER_WIITDB,
-                        'authpw': config.PASS_WIITDB}
+            data = {    'authid': user,
+                        'authpw': password}
 
             params = urllib.urlencode(data)
                 
@@ -548,7 +548,7 @@ class SesionWiiTDB:
                         "Connection": "keep-alive",
                         "Referer": "http://%s/Login/Signup?action=login" % (self.dominio),
                         "Content-Type": "application/x-www-form-urlencoded",
-                        "Content-Length": "%d" % (len(config.USER_WIITDB)+len(config.PASS_WIITDB)+2*len("authid")+2+1)
+                        "Content-Length": "%d" % (len(user)+len(password)+2*len("authid")+2+1)
                         }
 
             conn.request ("POST", '/Login/Signup?action=login', params, headers)
@@ -601,26 +601,42 @@ class SesionWiiTDB:
             self.PHPSESSID = None
             self.timeout = 0
             
-    def connect_if_need_it(self):
+    def connect_if_need_it(self, user, password):
         tries = 3
         minutes_timeout = 15
         i = 0
         while i<tries and not self.connected and (time.time()-self.timeout) > (minutes_timeout*60):
             self.desconectar_wiitdb()
-            self.conectar_wiitdb()
+            self.conectar_wiitdb(user, password)
             i += 1
             if i > 1:
                 time.sleep(2)
 
-    def editar_juego(self, IDGAME):
+    def get_url_editar_juego(self, IDGAME):
         
         if config.DEBUG:
             print "editar_juego"
-        
-        # conecta con wiitdb si hace falta
-        self.connect_if_need_it()
 
         if self.connected:
             return "http://%s/Game/%s?action=edit&PHPSESSID=%s" % (self.dominio, IDGAME, self.PHPSESSID)
         else:
             return None
+
+def get_title_for_search(juego):
+
+    # valor inicial
+    title = juego.title
+    encontrado = False
+    
+    juego_wiitdb = juego.getJuegoWIITDB()
+    if juego_wiitdb is not None:
+        i = 0
+        while not encontrado and i<len(juego_wiitdb.descripciones):
+            descripcion = juego_wiitdb.descripciones[i]
+            encontrado = descripcion.lang == 'EN'
+            i += 1
+
+        if encontrado:
+            title = descripcion.title
+        
+    return urllib.quote(title)

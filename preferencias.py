@@ -49,7 +49,7 @@ class Preferencias:
                                             prefs_vbox_buscadores,
                                             cargarWidget = True):
         
-        # Data type: 'bool', 'int', 'float', 'string', 'memo', 'select'        
+        # Data type: 'bool', 'int', 'float', 'string', 'password' , 'memo', 'select'        
         self.iniciarPreferencia('string', 'device_seleccionado')
         self.iniciarPreferencia('string', 'idgame_seleccionado')
         self.iniciarPreferencia('string', 'ruta_anadir', defecto=os.getcwd())
@@ -62,6 +62,7 @@ class Preferencias:
         self.iniciarPreferencia('string', 'ruta_extraer_rar', defecto='/tmp', mostrar=cargarWidget, vbox=prefs_vbox_general, label=_('Ruta para extraer ficheros .rar. Para descomprimir junto al .rar escriba .'))
         self.iniciarPreferencia('int', 'NUM_HILOS', defecto=8, mostrar=cargarWidget, vbox=prefs_vbox_general, label=_('Num. Hilos para tareas de fondo'))
         self.iniciarPreferencia('string', 'COMANDO_ABRIR_CARPETA', defecto='gnome-open', mostrar=cargarWidget, vbox=prefs_vbox_general, label=_('Comando para abrir carpetas'))
+        self.iniciarPreferencia('string', 'COMANDO_ABRIR_WEB', defecto='gnome-open', mostrar=cargarWidget, vbox=prefs_vbox_general, label=_('Comando para abrir paginas Web'))
         self.iniciarPreferencia('bool', 'ADVERTENCIA_ACTUALIZAR_WIITDB', defecto=True, mostrar=cargarWidget, vbox=prefs_vbox_general, label=_('Mostrar una advertencia cuando no hay ninguna informacion WiiTDB'))
         self.iniciarPreferencia('bool', 'ADVERTENCIA_NO_WBFS', defecto=True, mostrar=cargarWidget, vbox=prefs_vbox_general, label=_('Mostrar una advertencia cuando no hay particiones WBFS'))
         self.iniciarPreferencia('bool', 'DRAG_AND_DROP_LOCAL', defecto=True, mostrar=cargarWidget, vbox=prefs_vbox_general, label=_('Permitir establecer caratulas locales por arrastre'))
@@ -92,6 +93,8 @@ class Preferencias:
                                     ('KO', _('Korean'))]
         self.iniciarPreferencia('select', 'LANG_PRINCIPAL', defecto='ES', mostrar=cargarWidget, vbox=prefs_vbox_wiitdb, label=_('Idioma principal para el synopsis'), datos_lista = WIITDB_LANGUAGE_LISTA)
         self.iniciarPreferencia('select', 'LANG_SECUNDARIO', defecto='EN', mostrar=cargarWidget, vbox=prefs_vbox_wiitdb, label=_('Idioma auxiliar para el synopsis'), datos_lista = WIITDB_LANGUAGE_LISTA)
+        self.iniciarPreferencia('string', 'USER_WIITDB', defecto='Wiithon_1_21', mostrar=cargarWidget, vbox=prefs_vbox_wiitdb, label=_('Usuario (para editar informacion en wiitdb.com)'))
+        self.iniciarPreferencia('password', 'PASS_WIITDB', defecto='Wiithon_1_21', mostrar=cargarWidget, vbox=prefs_vbox_wiitdb, label=_('Password (para editar informacion en wiitdb.com)'))
         
         # caratulas
         self.iniciarPreferencia('int', 'WIDTH_COVERS', defecto=160, mostrar=cargarWidget, vbox=prefs_vbox_caratulas, label=_('Ancho imagen caratula'))
@@ -203,6 +206,8 @@ class Preferencias:
         self.iniciarPreferencia('string', 'BUSCAR_URL_WIKIPEDIA', defecto="http://es.wikipedia.org/w/index.php?title=Especial%%3ABuscar&search=%s&fulltext=Buscar", mostrar=cargarWidget, vbox=prefs_vbox_buscadores, label=_('URL de busqueda en Wikipedia. (%s es el nombre del juego)'))
         self.iniciarPreferencia('string', 'BUSCAR_URL_YOUTUBE', defecto="http://www.youtube.com/results?search_query=%s&search_type=&aq=f", mostrar=cargarWidget, vbox=prefs_vbox_buscadores, label=_('URL de busqueda en Youtube. (%s es el nombre del juego)'))
         self.iniciarPreferencia('string', 'BUSCAR_URL_IGN', defecto="http://search.ign.com/products?query=%s", mostrar=cargarWidget, vbox=prefs_vbox_buscadores, label=_('URL de busqueda en IGN. (%s es el nombre del juego)'))
+        self.iniciarPreferencia('string', 'BUSCAR_URL_GAMESPOT', defecto="http://www.gamespot.com/search.html?qs=%s&om_act=convert&om_clk=search", mostrar=cargarWidget, vbox=prefs_vbox_buscadores, label=_('URL de busqueda en GameSpot. (%s es el nombre del juego)'))
+        self.iniciarPreferencia('string', 'BUSCAR_URL_VGCHARTZ', defecto="http://www.vgchartz.com/games/index.php?name=&keyword=%s&console=Wii&region=All&developer=&publisher=&genre=&boxart=Both&results=50&order=Hits", mostrar=cargarWidget, vbox=prefs_vbox_buscadores, label=_('URL de busqueda en VGChartz. (%s es el nombre del juego)'))
 
     # indicar el vbox que inicia la preferencia
     def iniciarPreferencia(self, tipo, name, defecto = '', mostrar = False, vbox = None, label = '', datos_lista = None):
@@ -314,6 +319,9 @@ class Preferencias:
                 entry.set_max_length(255)
                 entry.set_editable(True)
                 entry.set_size_request(250, -1)
+                if tipo == 'password':
+                    entry.set_visibility(False)
+                    
                 entry.connect('changed' , self.entryModificado)
                 entry.show()
                 h1.pack_start(entry, expand=True, fill=True, padding=0)
@@ -366,12 +374,12 @@ class Preferencias:
             
             try:
             
-                # Data type: 'bool', 'int', 'float', 'string', 'memo', 'select'
+                # Data type: 'bool', 'int', 'float', 'string', 'password' , 'memo', 'select'
                 if tipo == 'int':
                     preferencia.valor = int(value)
                 elif tipo == 'float':
                     preferencia.valor = float(value)
-                else:# string | memo | select | bool
+                else:# string | password | memo | select | bool
                     preferencia.valor = str(value)
 
                 session.commit()
@@ -396,7 +404,7 @@ class Preferencias:
             tipo = preferencia.tipo
             valor = preferencia.valor
 
-            # Data type: 'bool', 'int', 'float', 'string', 'memo', 'select'
+            # Data type: 'bool', 'int', 'float', 'string', 'password', 'memo', 'select'
             if tipo == 'bool':
                 retorno = valor == "True"
             elif tipo == 'int':
@@ -405,7 +413,7 @@ class Preferencias:
                 retorno = float(valor)
             elif tipo == 'memo':
                 retorno = valor.strip().split('\n')
-            else:# string | select | bool
+            else:# string | password | select | bool
                 retorno = str(valor)
 
         return retorno

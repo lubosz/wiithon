@@ -1,2 +1,1 @@
-debug/repasar linea 512@gui.py
-poner Editar información Wiitdb con link -> http://wiitdb.com/Game/RSIP69?action=edit
+- Crear Trabajos con alta prioridad: Los trabajos generados despues de descomprimir un RAR deben saltarse toda la cola
