@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: makiolo@gmail.com\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2009-11-22 11:45+0100\n"
+"PO-Revision-Date: 2009-11-22 12:35+0100\n"
 "Last-Translator: Carlo Mandelli <camandel@gmail.com>\n"
 "Language-Team: Español <kde-i18n-doc@kde.org>\n"
 "MIME-Version: 1.0\n"
@@ -450,11 +450,11 @@ msgstr "Copy to other partition"
 
 #: gui.py:96
 msgid "Ver Juego en WiiTDB"
-msgstr ""
+msgstr "View game on WiiTDB"
 
 #: gui.py:99
 msgid "Editar Juego en WiiTDB"
-msgstr ""
+msgstr "Edit game on WiiTDB"
 
 #: gui.py:102
 #: gui.py:105
@@ -982,7 +982,7 @@ msgstr "Dutch"
 
 #: preferencias.py:68
 msgid "Catalàn"
-msgstr ""
+msgstr "Catalan"
 
 #: preferencias.py:69
 msgid "Brazilian Portuguese"
@@ -1099,11 +1099,11 @@ msgstr "Auxiliary language synopsis"
 
 #: preferencias.py:106
 msgid "Usuario (para editar informacion en wiitdb.com)"
-msgstr ""
+msgstr "Username (to edit informations on wiitdb.com)"
 
 #: preferencias.py:107
 msgid "Password (para editar informacion en wiitdb.com)"
-msgstr ""
+msgstr "Password (to edit informations on wiitdb.com)"
 
 #: preferencias.py:110
 msgid "Ancho imagen caratula"
@@ -1132,32 +1132,32 @@ msgstr "Disc-arts provider"
 #: preferencias.py:215
 #, python-format
 msgid "URL de busqueda en Google. (%s es el nombre del juego)"
-msgstr ""
+msgstr "Google search URL (%s is the game name)"
 
 #: preferencias.py:216
 #, python-format
 msgid "URL de busqueda en Wikipedia. (%s es el nombre del juego)"
-msgstr ""
+msgstr "Wikipedia search URL (%s is the game name)"
 
 #: preferencias.py:217
 #, python-format
 msgid "URL de busqueda en Youtube. (%s es el nombre del juego)"
-msgstr ""
+msgstr "YouTube search URL (%s is the game name)"
 
 #: preferencias.py:218
 #, python-format
 msgid "URL de busqueda en IGN. (%s es el nombre del juego)"
-msgstr ""
+msgstr "IGN search URL (%s is the game name)"
 
 #: preferencias.py:219
 #, python-format
 msgid "URL de busqueda en GameSpot. (%s es el nombre del juego)"
-msgstr ""
+msgstr "GameSpot search URL (%s is the game name)"
 
 #: preferencias.py:220
 #, python-format
 msgid "URL de busqueda en VGChartz. (%s es el nombre del juego)"
-msgstr ""
+msgstr "VGChartz search URL (%s is the game name)"
 
 #: preferencias.py:263
 #: preferencias.py:299
@@ -1467,7 +1467,7 @@ msgstr "Error: An error occurred when entering the information of the games"
 
 #: trabajo.py:447
 msgid "Error: Al intentar identificarse en WiiTDB para editar el juego."
-msgstr ""
+msgstr "Error: authenticating on WiiTDB to edit game."
 
 #: trabajo.py:544
 msgid "Error al finalizar la siguiente tarea:"
@@ -1526,7 +1526,7 @@ msgstr "Update WiiTDB from %s"
 #: trabajo.py:568
 #, python-format
 msgid "Editar Juego WiiTDB: %s"
-msgstr ""
+msgstr "Edit WiiTDB game info: %s"
 
 #: trabajo.py:570
 #, python-format
