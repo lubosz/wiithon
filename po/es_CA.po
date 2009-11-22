@@ -890,201 +890,215 @@ msgstr "%d jocs sense disc-art"
 msgid "Hay %d tareas"
 msgstr "Hi ha %d tasques"
 
-#: preferencias.py:62
+#: preferencias.py:62 preferencias.py:93
+msgid "English"
+msgstr "English"
+
+#: preferencias.py:63 preferencias.py:97
+msgid "Spanish"
+msgstr "Spanish"
+
+#: preferencias.py:64 preferencias.py:98
+msgid "Italian"
+msgstr "Italian"
+
+#: preferencias.py:65 preferencias.py:95
+msgid "French"
+msgstr "French"
+
+#: preferencias.py:66 preferencias.py:96
+msgid "German"
+msgstr "German"
+
+#: preferencias.py:67 preferencias.py:99
+msgid "Dutch"
+msgstr "Dutch"
+
+#: preferencias.py:68
+msgid "Catalàn"
+msgstr ""
+
+#: preferencias.py:69
+#, fuzzy
+msgid "Brazilian Portuguese"
+msgstr "Portuguese"
+
+#: preferencias.py:70 preferencias.py:100
+msgid "Portuguese"
+msgstr "Portuguese"
+
+#: preferencias.py:71
+#, fuzzy
+msgid "Idioma de wiithon"
+msgstr "Informació sobre Wiithon"
+
+#: preferencias.py:72
 msgid "Ruta para extraer ficheros .rar. Para descomprimir junto al .rar escriba ."
 msgstr "Ruta per extraure fitxers .rar. Per a descomprimir amb el .rar escriu ."
 
-#: preferencias.py:63
+#: preferencias.py:73
 msgid "Num. Hilos para tareas de fondo"
 msgstr "Num. Fils per a tasques de fons"
 
-#: preferencias.py:64
+#: preferencias.py:74
 msgid "Comando para abrir carpetas"
 msgstr "Ordre per a obrir carpetes"
 
-#: preferencias.py:65
+#: preferencias.py:75
 #, fuzzy
 msgid "Comando para abrir paginas Web"
 msgstr "Ordre per a obrir carpetes"
 
-#: preferencias.py:66
+#: preferencias.py:76
 msgid "Mostrar una advertencia cuando no hay ninguna informacion WiiTDB"
 msgstr "Ensenyar una advertència quan no hi ha cap informació WiiTDB"
 
-#: preferencias.py:67
+#: preferencias.py:77
 msgid "Mostrar una advertencia cuando no hay particiones WBFS"
 msgstr "Ensenyar una advertència quan no hi ha particions WBFS"
 
-#: preferencias.py:68
+#: preferencias.py:78
 msgid "Permitir establecer caratulas locales por arrastre"
 msgstr "Permetre establir caràtules locals arrosegant"
 
-#: preferencias.py:69
+#: preferencias.py:79
 msgid "Permitir establecer caratulas desde http por arrastre"
 msgstr "Permetre establir caràtules des de http arrosegant"
 
-#: preferencias.py:70
+#: preferencias.py:80
 msgid "Permitir arrastrar juegos en ISO, RAR o directorios."
 msgstr "Permet arrosegar jocs en ISO, RAR, o directoris."
 
 # aniamos?
-#: preferencias.py:71
+#: preferencias.py:81
 msgid "Los isos descomprimidos desde el rar remplaza imagenes iso sin preguntar."
 msgstr "Les Isos descomprimides des de el rar remplaça imatges ISO sense preguntar"
 
 # No entiendo esta linea
-#: preferencias.py:72
+#: preferencias.py:82
 msgid "Pregunta borrar el .iso (cuando aniamos un rar)"
 msgstr "Vols esborrar el .iso? (quan comprimixes un rar) "
 
-#: preferencias.py:73
+#: preferencias.py:83
 msgid "Pregunta borrar el .rar (cuando aniamos un rar)"
 msgstr "Vols esborrar el .rar= (quan descomprimixes un rar)"
 
-#: preferencias.py:74
+#: preferencias.py:84
 msgid "Proponer un nombre de wiitdb tras anadir el juego"
 msgstr ""
 
-#: preferencias.py:75
+#: preferencias.py:85
 msgid "Caratula"
 msgstr "Caràtula"
 
-#: preferencias.py:76
+#: preferencias.py:86
 msgid "Disc-art"
 msgstr "Disc-art"
 
-#: preferencias.py:77
+#: preferencias.py:87
 msgid "Destino del arrastre de una imagen"
 msgstr "Destí de l'arrosegament d'una imatge"
 
-#: preferencias.py:80
+#: preferencias.py:90
 msgid "URL Base de datos WiiTDB"
 msgstr "URL Base de dades WiiTDB"
 
-#: preferencias.py:81
+#: preferencias.py:91
 msgid "Formato fecha"
 msgstr "Format data"
 
-#: preferencias.py:82
+#: preferencias.py:92
 msgid "Formato fecha corto"
 msgstr "Format data curt"
 
-#: preferencias.py:83
-msgid "English"
-msgstr "English"
-
-#: preferencias.py:84
+#: preferencias.py:94
 msgid "Japanese"
 msgstr "Japanese"
 
-#: preferencias.py:85
-msgid "French"
-msgstr "French"
-
-#: preferencias.py:86
-msgid "German"
-msgstr "German"
-
-#: preferencias.py:87
-msgid "Spanish"
-msgstr "Spanish"
-
-#: preferencias.py:88
-msgid "Italian"
-msgstr "Italian"
-
-#: preferencias.py:89
-msgid "Dutch"
-msgstr "Dutch"
-
-#: preferencias.py:90
-msgid "Portuguese"
-msgstr "Portuguese"
-
-#: preferencias.py:91
+#: preferencias.py:101
 msgid "Chinese-Taiwan"
 msgstr "Chinese-Taiwan"
 
-#: preferencias.py:92
+#: preferencias.py:102
 msgid "Chinese"
 msgstr "Chinese"
 
-#: preferencias.py:93
+#: preferencias.py:103
 msgid "Korean"
 msgstr "Korean"
 
-#: preferencias.py:94
+#: preferencias.py:104
 msgid "Idioma principal para el synopsis"
 msgstr "Idioma principal per al synopsis"
 
-#: preferencias.py:95
+#: preferencias.py:105
 msgid "Idioma auxiliar para el synopsis"
 msgstr "Idioma auxiliar per al synopsis"
 
-#: preferencias.py:96
+#: preferencias.py:106
 msgid "Usuario (para editar informacion en wiitdb.com)"
 msgstr ""
 
-#: preferencias.py:97
+#: preferencias.py:107
 msgid "Password (para editar informacion en wiitdb.com)"
 msgstr ""
 
-#: preferencias.py:100
+#: preferencias.py:110
 msgid "Ancho imagen caratula"
 msgstr "Ample imatge caratula"
 
-#: preferencias.py:101
+#: preferencias.py:111
 msgid "Altura imagen caratula"
 msgstr "Altura imatge caratula"
 
-#: preferencias.py:102
+#: preferencias.py:112
 msgid "Ancho imagen disc-art"
 msgstr "Ample imatge disc-art"
 
-#: preferencias.py:103
+#: preferencias.py:113
 msgid "Altura imagen disc-art"
 msgstr "Altura imatge disc-art"
 
-#: preferencias.py:170
+#: preferencias.py:180
 msgid "Proveedor de caratulas"
 msgstr "Proveidor de caràtules"
 
-#: preferencias.py:201
+#: preferencias.py:211
 msgid "Proveedor de discos"
 msgstr ""
 
-#: preferencias.py:205
+#: preferencias.py:215
 #, python-format
 msgid "URL de busqueda en Google. (%s es el nombre del juego)"
 msgstr ""
 
-#: preferencias.py:206
+#: preferencias.py:216
 #, python-format
 msgid "URL de busqueda en Wikipedia. (%s es el nombre del juego)"
 msgstr ""
 
-#: preferencias.py:207
+#: preferencias.py:217
 #, python-format
 msgid "URL de busqueda en Youtube. (%s es el nombre del juego)"
 msgstr ""
 
-#: preferencias.py:208
+#: preferencias.py:218
 #, python-format
 msgid "URL de busqueda en IGN. (%s es el nombre del juego)"
 msgstr ""
 
-#: preferencias.py:209
+#: preferencias.py:219
 #, python-format
 msgid "URL de busqueda en GameSpot. (%s es el nombre del juego)"
 msgstr ""
 
-#: preferencias.py:210
+#: preferencias.py:220
 #, python-format
 msgid "URL de busqueda en VGChartz. (%s es el nombre del juego)"
 msgstr ""
 
-#: preferencias.py:253 preferencias.py:289 preferencias.py:307
-#: preferencias.py:329
+#: preferencias.py:263 preferencias.py:299 preferencias.py:317
+#: preferencias.py:339
 msgid "Por defecto"
 msgstr "Per defecte"
 
@@ -1511,18 +1525,18 @@ msgstr "XML invàlid"
 msgid "No existe el XML"
 msgstr "No existeix l'XML"
 
-#: wiithon.py:38
+#: wiithon.py:39
 msgid "Necesitas tener instalado pyGTK o GTKv2"
 msgstr "Necessites tenir instalar pyGTK o GTKv2"
 
-#: wiithon.py:48
+#: wiithon.py:51
 msgid "Instala wiithon, no lo ejecute desde ./wiithon.py"
 msgstr "Instala wiithon, no l'executes des de ./wiithon.py"
 
-#: wiithon.py:89
+#: wiithon.py:92
 msgid "Programa ejecutado con las opciones incorrectas."
 msgstr "Programa executat amb les opcions incorrectes."
 
-#: wiithon.py:93
+#: wiithon.py:96
 msgid "Interrumpido por el usuario"
 msgstr "Interromput per l'usuari"

@@ -14,6 +14,7 @@ import subprocess
 
 import config
 import util
+from preferencias import Preferencias
 from cli import WiithonCLI
 from gui import WiithonGUI
 from core import WiithonCORE
@@ -42,7 +43,9 @@ def App():
     try:
         gobject.threads_init()
         
-        util.configurarLenguaje()
+        # setup language from preferencies
+        prefs = Preferencias()
+        util.configurarLenguaje(prefs.APPLICATION_LANGUAGE)
 
         if os.path.exists(os.path.join(config.WIITHON_FILES , ".bzr")):
             print _("Instala wiithon, no lo ejecute desde ./wiithon.py")

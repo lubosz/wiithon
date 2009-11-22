@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: makiolo@gmail.com\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2009-11-22 09:31+0100\n"
+"PO-Revision-Date: 2009-11-22 11:42+0100\n"
 "Last-Translator: Carlo Mandelli <camandel@gmail.com>\n"
 "Language-Team: Español <wii.sceners.linux@lists.launchpad.net>\n"
 "MIME-Version: 1.0\n"
@@ -951,199 +951,218 @@ msgid "Hay %d tareas"
 msgstr "Ci sono %d operazioni"
 
 #: preferencias.py:62
-msgid "Ruta para extraer ficheros .rar. Para descomprimir junto al .rar escriba ."
-msgstr "Percorso per estrazione file RAR. Per decomprimerlo nella stessa cartella del RAR inserire . (punto)"
-
-#: preferencias.py:63
-msgid "Num. Hilos para tareas de fondo"
-msgstr "Num. di thread per le operazioni in background"
-
-#: preferencias.py:64
-msgid "Comando para abrir carpetas"
-msgstr "Comando per aprire le cartelle"
-
-#: preferencias.py:65
-msgid "Comando para abrir paginas Web"
-msgstr "Comando per aprire pagine Web"
-
-#: preferencias.py:66
-msgid "Mostrar una advertencia cuando no hay ninguna informacion WiiTDB"
-msgstr "Visualizza un avviso quando non ci sono informazioni WiiTDB"
-
-#: preferencias.py:67
-msgid "Mostrar una advertencia cuando no hay particiones WBFS"
-msgstr "Visualizza un avviso quando non ci sono partizioni WBFS"
-
-#: preferencias.py:68
-msgid "Permitir establecer caratulas locales por arrastre"
-msgstr "Permette di impostare le copertine locali tramite trascinamento"
-
-#: preferencias.py:69
-msgid "Permitir establecer caratulas desde http por arrastre"
-msgstr "Permette di impostare le copertine da http tramite trascinamento"
-
-#: preferencias.py:70
-msgid "Permitir arrastrar juegos en ISO, RAR o directorios."
-msgstr "Permette il trascinamento dei giochi in ISO, RAR o cartelle."
-
-#: preferencias.py:71
-msgid "Los isos descomprimidos desde el rar remplaza imagenes iso sin preguntar."
-msgstr "Le ISO estratte dal RAR sostituiscono il file esistente senza chiedere conferma."
-
-#: preferencias.py:72
-msgid "Pregunta borrar el .iso (cuando aniamos un rar)"
-msgstr "Richiede conferma cancellazione ISO"
-
-#: preferencias.py:73
-msgid "Pregunta borrar el .rar (cuando aniamos un rar)"
-msgstr "Richiede conferma cancellazione RAR"
-
-#: preferencias.py:74
-msgid "Proponer un nombre de wiitdb tras anadir el juego"
-msgstr "Propone un nome da WiiTDB dopo l'inserimento del gioco"
-
-#: preferencias.py:75
-msgid "Caratula"
-msgstr "Copertina"
-
-#: preferencias.py:76
-msgid "Disc-art"
-msgstr "Disc-art"
-
-#: preferencias.py:77
-msgid "Destino del arrastre de una imagen"
-msgstr "Destinazione immagine trascinata"
-
-#: preferencias.py:80
-msgid "URL Base de datos WiiTDB"
-msgstr "URL base dati WiiTDB"
-
-#: preferencias.py:81
-msgid "Formato fecha"
-msgstr "Formato data"
-
-#: preferencias.py:82
-msgid "Formato fecha corto"
-msgstr "Formato data corta"
-
-#: preferencias.py:83
+#: preferencias.py:93
 msgid "English"
 msgstr "Inglese"
 
-#: preferencias.py:84
-msgid "Japanese"
-msgstr "Giapponese"
-
-#: preferencias.py:85
-msgid "French"
-msgstr "Francese"
-
-#: preferencias.py:86
-msgid "German"
-msgstr "Tedesco"
-
-#: preferencias.py:87
+#: preferencias.py:63
+#: preferencias.py:97
 msgid "Spanish"
 msgstr "Spagnolo"
 
-#: preferencias.py:88
+#: preferencias.py:64
+#: preferencias.py:98
 msgid "Italian"
 msgstr "Italiano"
 
-#: preferencias.py:89
+#: preferencias.py:65
+#: preferencias.py:95
+msgid "French"
+msgstr "Francese"
+
+#: preferencias.py:66
+#: preferencias.py:96
+msgid "German"
+msgstr "Tedesco"
+
+#: preferencias.py:67
+#: preferencias.py:99
 msgid "Dutch"
 msgstr "Olandese"
 
-#: preferencias.py:90
+#: preferencias.py:68
+msgid "Catalàn"
+msgstr "Catalano"
+
+#: preferencias.py:69
+msgid "Brazilian Portuguese"
+msgstr "Portoghese Brasiliano"
+
+#: preferencias.py:70
+#: preferencias.py:100
 msgid "Portuguese"
 msgstr "Portoghese"
 
+#: preferencias.py:71
+msgid "Idioma de wiithon"
+msgstr "Lingua di Wiithon"
+
+#: preferencias.py:72
+msgid "Ruta para extraer ficheros .rar. Para descomprimir junto al .rar escriba ."
+msgstr "Percorso per estrazione file RAR. Per decomprimerlo nella stessa cartella del RAR inserire . (punto)"
+
+#: preferencias.py:73
+msgid "Num. Hilos para tareas de fondo"
+msgstr "Num. di thread per le operazioni in background"
+
+#: preferencias.py:74
+msgid "Comando para abrir carpetas"
+msgstr "Comando per aprire le cartelle"
+
+#: preferencias.py:75
+msgid "Comando para abrir paginas Web"
+msgstr "Comando per aprire pagine Web"
+
+#: preferencias.py:76
+msgid "Mostrar una advertencia cuando no hay ninguna informacion WiiTDB"
+msgstr "Visualizza un avviso quando non ci sono informazioni WiiTDB"
+
+#: preferencias.py:77
+msgid "Mostrar una advertencia cuando no hay particiones WBFS"
+msgstr "Visualizza un avviso quando non ci sono partizioni WBFS"
+
+#: preferencias.py:78
+msgid "Permitir establecer caratulas locales por arrastre"
+msgstr "Permette di impostare le copertine locali tramite trascinamento"
+
+#: preferencias.py:79
+msgid "Permitir establecer caratulas desde http por arrastre"
+msgstr "Permette di impostare le copertine da http tramite trascinamento"
+
+#: preferencias.py:80
+msgid "Permitir arrastrar juegos en ISO, RAR o directorios."
+msgstr "Permette il trascinamento dei giochi in ISO, RAR o cartelle."
+
+#: preferencias.py:81
+msgid "Los isos descomprimidos desde el rar remplaza imagenes iso sin preguntar."
+msgstr "Le ISO estratte dal RAR sostituiscono il file esistente senza chiedere conferma."
+
+#: preferencias.py:82
+msgid "Pregunta borrar el .iso (cuando aniamos un rar)"
+msgstr "Richiede conferma cancellazione ISO"
+
+#: preferencias.py:83
+msgid "Pregunta borrar el .rar (cuando aniamos un rar)"
+msgstr "Richiede conferma cancellazione RAR"
+
+#: preferencias.py:84
+msgid "Proponer un nombre de wiitdb tras anadir el juego"
+msgstr "Propone un nome da WiiTDB dopo l'inserimento del gioco"
+
+#: preferencias.py:85
+msgid "Caratula"
+msgstr "Copertina"
+
+#: preferencias.py:86
+msgid "Disc-art"
+msgstr "Disc-art"
+
+#: preferencias.py:87
+msgid "Destino del arrastre de una imagen"
+msgstr "Destinazione immagine trascinata"
+
+#: preferencias.py:90
+msgid "URL Base de datos WiiTDB"
+msgstr "URL base dati WiiTDB"
+
 #: preferencias.py:91
+msgid "Formato fecha"
+msgstr "Formato data"
+
+#: preferencias.py:92
+msgid "Formato fecha corto"
+msgstr "Formato data corta"
+
+#: preferencias.py:94
+msgid "Japanese"
+msgstr "Giapponese"
+
+#: preferencias.py:101
 msgid "Chinese-Taiwan"
 msgstr "Cinese-Taiwanese"
 
-#: preferencias.py:92
+#: preferencias.py:102
 msgid "Chinese"
 msgstr "Cinese"
 
-#: preferencias.py:93
+#: preferencias.py:103
 msgid "Korean"
 msgstr "Coreano"
 
-#: preferencias.py:94
+#: preferencias.py:104
 msgid "Idioma principal para el synopsis"
 msgstr "Lingua principale per le descrizioni"
 
-#: preferencias.py:95
+#: preferencias.py:105
 msgid "Idioma auxiliar para el synopsis"
 msgstr "Lingua secondaria per le descrizioni"
 
-#: preferencias.py:96
+#: preferencias.py:106
 msgid "Usuario (para editar informacion en wiitdb.com)"
 msgstr "Utente (per modificare le informazioni su wiitdb.com)"
 
-#: preferencias.py:97
+#: preferencias.py:107
 msgid "Password (para editar informacion en wiitdb.com)"
 msgstr "Password (per modificare le informazioni su wiitdb.com)"
 
-#: preferencias.py:100
+#: preferencias.py:110
 msgid "Ancho imagen caratula"
 msgstr "Larghezza immagine copertina"
 
-#: preferencias.py:101
+#: preferencias.py:111
 msgid "Altura imagen caratula"
 msgstr "Altezza immagine copertina"
 
-#: preferencias.py:102
+#: preferencias.py:112
 msgid "Ancho imagen disc-art"
 msgstr "Larghezza immagine disc-art"
 
-#: preferencias.py:103
+#: preferencias.py:113
 msgid "Altura imagen disc-art"
 msgstr "Altezza immagine disc-art"
 
-#: preferencias.py:170
+#: preferencias.py:180
 msgid "Proveedor de caratulas"
 msgstr "Fornitore delle copertine"
 
-#: preferencias.py:201
+#: preferencias.py:211
 msgid "Proveedor de discos"
 msgstr "Fornitore delle disc-art"
 
-#: preferencias.py:205
+#: preferencias.py:215
 #, python-format
 msgid "URL de busqueda en Google. (%s es el nombre del juego)"
 msgstr "URL di ricerca in Google (%s è il nome del gioco)"
 
-#: preferencias.py:206
+#: preferencias.py:216
 #, python-format
 msgid "URL de busqueda en Wikipedia. (%s es el nombre del juego)"
 msgstr "URL di ricerca in Wikipedia (%s è il nome del gioco)"
 
-#: preferencias.py:207
+#: preferencias.py:217
 #, python-format
 msgid "URL de busqueda en Youtube. (%s es el nombre del juego)"
 msgstr "URL di ricerca in YouTube (%s è il nome del gioco)"
 
-#: preferencias.py:208
+#: preferencias.py:218
 #, python-format
 msgid "URL de busqueda en IGN. (%s es el nombre del juego)"
 msgstr "URL di ricerca in IGN (%s è il nome del gioco)"
 
-#: preferencias.py:209
+#: preferencias.py:219
 #, python-format
 msgid "URL de busqueda en GameSpot. (%s es el nombre del juego)"
 msgstr "URL di ricerca in GameSpot (%s è il nome del gioco)"
 
-#: preferencias.py:210
+#: preferencias.py:220
 #, python-format
 msgid "URL de busqueda en VGChartz. (%s es el nombre del juego)"
 msgstr "URL di ricerca in VGCHartz (%s è il nome del gioco)"
 
-#: preferencias.py:253
-#: preferencias.py:289
-#: preferencias.py:307
-#: preferencias.py:329
+#: preferencias.py:263
+#: preferencias.py:299
+#: preferencias.py:317
+#: preferencias.py:339
 msgid "Por defecto"
 msgstr "Default"
 
@@ -1575,19 +1594,19 @@ msgstr "XML non valido"
 msgid "No existe el XML"
 msgstr "Non esiste il file XML"
 
-#: wiithon.py:38
+#: wiithon.py:39
 msgid "Necesitas tener instalado pyGTK o GTKv2"
 msgstr "Deve essere installato pyGTK o GTKv2"
 
-#: wiithon.py:48
+#: wiithon.py:51
 msgid "Instala wiithon, no lo ejecute desde ./wiithon.py"
 msgstr "Installa wiithon, non lo lanciare direttamente da ./wiithon.py"
 
-#: wiithon.py:89
+#: wiithon.py:92
 msgid "Programa ejecutado con las opciones incorrectas."
 msgstr "Programma eseguito con parametri errati."
 
-#: wiithon.py:93
+#: wiithon.py:96
 msgid "Interrumpido por el usuario"
 msgstr "Interrotto dall'utente"
 
