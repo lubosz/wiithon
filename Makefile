@@ -200,58 +200,28 @@ clean_old_wiithon:
 	-@$(RM) ~/.wiithon/bdd/wiithon1.*.db
 	-@$(RM) ~/.wiithon/bdd/juegos.db
 	-@$(RM) ~/.wiithon_acuerdo
-	-@$(RM) /usr/local/share/wiithon/.acuerdo
 	
 	-@$(RM) /usr/bin/wiithon
 	-@$(RM) /usr/bin/wiithon_autodetectar
 	-@$(RM) /usr/bin/wiithon_autodetectar_lector
 	-@$(RM) /usr/bin/wbfs
 	
+	-@$(RM) /usr/local/bin/wiithon
 	-@$(RM) /usr/local/bin/wiithon_autodetectar
 	-@$(RM) /usr/local/bin/wiithon_autodetectar_lector
 	-@$(RM) /usr/local/bin/wbfs
-	-@$(RM) /usr/local/share/wiithon/wbfs
-	
-	-@$(RM) /usr/local/share/wiithon/glade_wrapper.py
-
-	-@$(RM) /usr/local/share/wiithon/recursos/glade/*.xml
-	-@$(RM) /usr/local/share/wiithon/recursos/glade/*.glade
-	
-	-@$(RM) /usr/local/share/wiithon/wiithon
-	-@$(RM) /usr/local/share/wiithon/wiithon_autodetectar
-	-@$(RM) /usr/local/share/wiithon/wiithon_autodetectar_lector
 
 	-@gconftool --recursive-unset /apps/nautilus-actions/configurations
 	-@$(RM) /usr/share/gconf/schemas/wiithon*.schemas
 	
 	-@$(RM) /usr/share/applications/wiithon.desktop
 	-@$(RM) /usr/share/applications/wiithon_root.desktop
-	
-	-@$(RM) /usr/local/share/wiithon/HOME.conf
 
 	-@$(RM) /usr/local/lib/libwbfs.so
 	-@$(RM) /usr/lib/libwbfs.so
 	-@$(RM) /usr/lib32/libwbfs.so
 	
-	-@$(RM) /usr/local/share/wiithon/*.py
-	-@$(RM) /usr/local/share/wiithon/wiithon_wrapper
-	-@$(RM) /usr/local/share/wiithon/unrar
-	-@$(RM) /usr/local/share/wiithon/*.sh
-	-@$(RM) /usr/local/share/wiithon/recursos/glade/*.ui
-	-@$(RM) /usr/local/share/wiithon/recursos/imagenes/*.png
-	-@$(RM) /usr/local/share/wiithon/recursos/imagenes/accesorio/*.jpg
-	-@rmdir /usr/local/share/wiithon/recursos/imagenes/accesorio/
-
-	-@$(RM) /usr/local/share/wiithon/*.pyc
-	
-	-@$(RM) /usr/local/share/wiithon/recursos/imagenes/caratulas/*.png
-	-@$(RM) /usr/local/share/wiithon/recursos/imagenes/discos/*.png
-	-@rmdir /usr/local/share/wiithon/recursos/imagenes/caratulas
-	-@rmdir /usr/local/share/wiithon/recursos/imagenes/discos
-	-@rmdir /usr/local/share/wiithon/recursos/imagenes
-	-@rmdir /usr/local/share/wiithon/recursos/glade
-	-@rmdir /usr/local/share/wiithon/recursos
-	-@rmdir /usr/local/share/wiithon
+	-@$(RM) -R /usr/local/share/wiithon
 	
 	@echo "=================================================================="
 	@echo "Clean old installs"

@@ -180,27 +180,27 @@ msgstr ""
 msgid "Pulse cualquier tecla para continuar ...\n"
 msgstr ""
 
-#: cli.py:283 trabajo.py:366
+#: cli.py:283 trabajo.py:369
 #, python-format
 msgid "El archivo RAR %s: No existe"
 msgstr ""
 
-#: cli.py:287 trabajo.py:370
+#: cli.py:287 trabajo.py:373
 #, python-format
 msgid "Error al descomprimrir. Ya existe %s. Si desea sobreescribirlo, modifique la opcion en preferencias."
 msgstr "Error al descomprimrir. Ya existe %s. Si desea sobreescribirlo, modifique la opción en preferencias."
 
-#: cli.py:294 trabajo.py:380
+#: cli.py:294 trabajo.py:383
 #, python-format
 msgid "Error: El archivo RAR %s no contiene ninguna ISO"
 msgstr ""
 
-#: cli.py:300 trabajo.py:386
+#: cli.py:300 trabajo.py:389
 #, python-format
 msgid "No hay 4.4GB libres para descomprimir el fichero RAR: %s en la ruta %s. Puede cambiar la ruta en preferencias."
 msgstr ""
 
-#: cli.py:315 trabajo.py:400
+#: cli.py:315 trabajo.py:403
 #, python-format
 msgid "Error al descomrpimir el RAR : %s"
 msgstr ""
@@ -1323,124 +1323,124 @@ msgstr ""
 msgid "Falta la imagen %s"
 msgstr ""
 
-#: trabajo.py:224 trabajo.py:307 trabajo.py:363
+#: trabajo.py:227 trabajo.py:310 trabajo.py:366
 #, python-format
 msgid "La particion %s: Ya no existe"
 msgstr "La partición %s: Ya no existe"
 
-#: trabajo.py:227
+#: trabajo.py:230
 #, python-format
 msgid "El archivo ISO %s: No existe"
 msgstr ""
 
-#: trabajo.py:230
+#: trabajo.py:233
 #, fuzzy, python-format
 msgid "El archivo ISO %s: No es un juego de Wii"
 msgstr "ERROR %s no es un juego de Wii"
 
-#: trabajo.py:256
+#: trabajo.py:259
 #, python-format
 msgid "%s no es un ningun juego de Wii"
 msgstr "%s no es un ningún juego de Wii"
 
-#: trabajo.py:310
+#: trabajo.py:313
 #, python-format
 msgid "El directorio %s: No existe"
 msgstr ""
 
-#: trabajo.py:347
+#: trabajo.py:350
 #, python-format
 msgid "No se ha encontrado ningun ISO/RAR en el directorio %s"
 msgstr "No se ha encontrado ningún ISO/RAR en el directorio %s"
 
-#: trabajo.py:350
+#: trabajo.py:353
 #, python-format
 msgid "%s no es un directorio"
 msgstr ""
 
-#: trabajo.py:377
+#: trabajo.py:380
 #, python-format
 msgid "%s no es un archivo RAR"
 msgstr ""
 
-#: trabajo.py:430
+#: trabajo.py:433
 #, python-format
 msgid "Error: Al descargar la bdd wiitdb de: %s"
 msgstr "Error: Al descargar la BDD de Internet de: %s"
 
-#: trabajo.py:432
+#: trabajo.py:435
 msgid "Error: Ocurrio un error al introducir la informacion de juegos de WiiTDB"
 msgstr "Error: Ocurrió un error al introducir la información de los juegos"
 
-#: trabajo.py:444
+#: trabajo.py:447
 msgid "Error: Al intentar identificarse en WiiTDB para editar el juego."
 msgstr ""
 
-#: trabajo.py:537
+#: trabajo.py:544
 msgid "Error al finalizar la siguiente tarea:"
 msgstr ""
 
-#: trabajo.py:541
+#: trabajo.py:548
 #, python-format
 msgid "Anadir %s a la particion %s"
 msgstr "Añadir %s a la partición %s"
 
-#: trabajo.py:543
+#: trabajo.py:550
 #, python-format
 msgid "Extraer %s a la ruta %s"
 msgstr "Extraer %s a la ruta %s"
 
-#: trabajo.py:545
+#: trabajo.py:552
 #, python-format
 msgid "Copiando el juego %s desde %s a la particion %s"
 msgstr "Copiando el juego %s desde %s a la partición %s"
 
-#: trabajo.py:547
+#: trabajo.py:554
 #, python-format
 msgid "Descargando caratula de %s"
 msgstr "Descargando carátula de %s"
 
-#: trabajo.py:549
+#: trabajo.py:556
 #, python-format
 msgid "Descargando disco de %s"
 msgstr ""
 
-#: trabajo.py:551
+#: trabajo.py:558
 #, python-format
 msgid "Copiando la caratula %s a la ruta %s"
 msgstr "Copiando la carátula %s a la ruta %s"
 
-#: trabajo.py:553
+#: trabajo.py:560
 #, python-format
 msgid "Copiando el disco %s a la ruta %s"
 msgstr ""
 
-#: trabajo.py:555
+#: trabajo.py:562
 #, python-format
 msgid "Recorrer directorio %s"
 msgstr ""
 
-#: trabajo.py:557
+#: trabajo.py:564
 #, python-format
 msgid "Descomprimir RAR %s"
 msgstr ""
 
-#: trabajo.py:559
+#: trabajo.py:566
 #, python-format
 msgid "Actualizar WiiTDB desde %s"
 msgstr ""
 
-#: trabajo.py:561
+#: trabajo.py:568
 #, python-format
 msgid "Editar Juego WiiTDB: %s"
 msgstr ""
 
-#: trabajo.py:563
+#: trabajo.py:570
 #, python-format
 msgid "Abrir pagina: %s"
 msgstr ""
 
-#: trabajo.py:565
+#: trabajo.py:572
 msgid "Trabajo desconocido"
 msgstr ""
 

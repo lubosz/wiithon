@@ -424,12 +424,20 @@ def descomprimirZIP(file_in, file_out):
         comando = 'unzip -o "%s" "%s"' % (file_in, file_out)
         call_out_null(comando)
 
-def parsear_a_XML(texto):
+def parsear_a_XML(texto, especiales = False):
     texto = texto.replace("&" , "&amp;")
     texto = texto.replace(">" , "&gt;")
     texto = texto.replace("<" , "&lt;")
     texto = texto.replace("\'" , "&apos;")
-    texto = texto.replace("\"" , "&quot;")
+    if especiales:
+        texto = texto.replace("á" , "&aacute;")
+        texto = texto.replace("é" , "&eacute;")
+        texto = texto.replace("í" , "&iacute;")
+        texto = texto.replace("ó" , "&oacute;")
+        texto = texto.replace("ú" , "&uacute;")
+        texto = texto.replace("ñ" , "&ntilde;")
+        texto = texto.replace("€" , "&euro;")
+    
     return texto
 
 def setLanguage(locale = 'default'):
@@ -638,5 +646,11 @@ def get_title_for_search(juego):
 
         if encontrado:
             title = descripcion.title
-        
-    return urllib.quote(title)
+    
+    title = parsear_a_XML(title, True)
+    try:
+        title = urllib.quote(title)
+    except:
+        title = quitarCaracteresRaros(title)
+
+    return title

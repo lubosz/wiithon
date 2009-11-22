@@ -20,6 +20,9 @@ RECORRER_DIRECTORIO,DESCOMPRIMIR_RAR,
 ACTUALIZAR_WIITDB,EDITAR_JUEGO_WIITDB,
 VER_URL)=([ "%d" % i for i in range(12) ])
 
+# prioridades
+(ALTA,BAJA)=([ "%d" % i for i in range(2) ])
+
 '''
 Herencia Multiple, Es un Pool (implementado en pool.py) y un Thread
 
@@ -518,6 +521,9 @@ origen y destino:
     un origen y un destino, en general.
 terminado:
     Trabajo hecho o no
+prioridad:
+    ALTA: Se cuela de todos excepto (trabajo activos o trabajos con proridad alta)
+    BAJA: Se proceso por orden de cola
 exito:
     Exito al finalizar o no
 padre:
@@ -532,6 +538,7 @@ class Trabajo:
         self.origen = origen
         self.destino = destino
         self.terminado = False
+        self.prioridad = BAJA
         self.exito = False
         self.padre = None
         self.error = "%s\n\n%s" % (_("Error al finalizar la siguiente tarea:") ,self.__repr__())
