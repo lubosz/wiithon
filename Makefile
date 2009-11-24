@@ -345,6 +345,10 @@ commit: clean compile gen_rev_next
 
 log:
 	bzr log --forward --short
+	
+# pull from other pc than dont can push in launchpad
+pull_pc_susana:
+	bzr pull bzr+ssh://susana@192.168.1.100/home/susana/compilado/wiithon/trunk
 
 # TRADUCCION
 # http://faq.pygtk.org/index.py?req=show&file=faq22.002.htp
