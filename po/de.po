@@ -18,7 +18,7 @@ msgstr ""
 msgid "No se ha encontrado la particion: %s"
 msgstr "Partiton %s konnte nicht gefunden werden"
 
-#: cli.py:53 gui.py:1935
+#: cli.py:53 gui.py:1930
 msgid "Lista de particiones autodetectadas : "
 msgstr "Automatisch gefundene Partitionen:"
 
@@ -27,7 +27,7 @@ msgstr "Automatisch gefundene Partitionen:"
 msgid "%d - Salir"
 msgstr "%d - verlassen"
 
-#: cli.py:61 gui.py:1935
+#: cli.py:61 gui.py:1930
 msgid "Elige la particion WBFS con la que va a trabajar : "
 msgstr "Wählen Sie eine WBFS Partition:"
 
@@ -142,11 +142,11 @@ msgstr "Fehler beim herunterladen von Titelbildern"
 msgid "Tarea finalizada"
 msgstr "Aufgabe beendet"
 
-#: cli.py:240 cli.py:261 gui.py:1933
+#: cli.py:240 cli.py:261 gui.py:1928
 msgid "Has conectado el disco duro? No se ha encontrado ninguna particion valida."
 msgstr "Haben Sie die Festplatte mit einer WBFS Partition angeschlossen?"
 
-#: cli.py:248 gui.py:1938
+#: cli.py:248 gui.py:1933
 #, python-format
 msgid "Realmente, desea formatear a WBFS la particion %s? (S/N) "
 msgstr "Möchten Sie wirklich die Partition %s als WBFS partitionieren (J/N)"
@@ -155,26 +155,26 @@ msgstr "Möchten Sie wirklich die Partition %s als WBFS partitionieren (J/N)"
 msgid "s"
 msgstr "j"
 
-#: cli.py:251 gui.py:1942
+#: cli.py:251 gui.py:1937
 #, python-format
 msgid "%s se ha formateado correctamente"
 msgstr "%s wurde formatiert"
 
-#: cli.py:253 gui.py:1944
+#: cli.py:253 gui.py:1939
 #, python-format
 msgid "Error al formatear %s"
 msgstr "Fehler beim formatieren von %s"
 
-#: cli.py:255 cli.py:259 gui.py:1946 gui.py:1949
+#: cli.py:255 cli.py:259 gui.py:1941 gui.py:1944
 #, python-format
 msgid "No se ha formateado %s"
 msgstr "Es wurde %s formatiert"
 
-#: cli.py:258 gui.py:1949
+#: cli.py:258 gui.py:1944
 msgid "Interrumpido por el usuario."
 msgstr "Abbruch durch Benutzer"
 
-#: cli.py:262 gui.py:1933
+#: cli.py:262 gui.py:1928
 msgid "Comprueba que tienes la particion FAT32 montada."
 msgstr "Überprüfen Sie ob die FAT32 Partition gemountet ist."
 
@@ -393,7 +393,7 @@ msgstr ""
 msgid "Buscar en"
 msgstr "Suche:"
 
-#: gui.py:363 gui.py:1064 gui.py:1710 gui.py:1754 gui.py:1870 gui.py:2188
+#: gui.py:363 gui.py:1064 gui.py:1710 gui.py:1754 gui.py:1870 gui.py:2183
 msgid "No has seleccionado ninguna particion"
 msgstr "keine Partition ausgewählt"
 
@@ -696,95 +696,95 @@ msgstr ""
 msgid "Estas seguro de querer formatear la BDD? Se borraran tus preferencias y la informacion de los juegos"
 msgstr ""
 
-#: gui.py:1927
+#: gui.py:1922
 msgid "Es recomendable que reinicie la aplicacion"
 msgstr ""
 
-#: gui.py:1927
+#: gui.py:1922
 msgid "La BDD ha sido formateada."
 msgstr "Die Festplatte wurde formatiert"
 
-#: gui.py:1935 recursos/glade/wiithon.ui.h:34
+#: gui.py:1930 recursos/glade/wiithon.ui.h:34
 msgid "Formatear a WBFS"
 msgstr "Formatiere als WBFS"
 
-#: gui.py:1973
+#: gui.py:1968
 msgid "Seguro que deseas descargar informacion de los juegos de WiiTDB?"
 msgstr ""
 
-#: gui.py:1979
+#: gui.py:1974
 msgid "Ya estas descargando la informacion WiiTDB ..."
 msgstr ""
 
-#: gui.py:1988
+#: gui.py:1983
 msgid "Empezando a obtener datos de juegos desde WiiTDB"
 msgstr ""
 
-#: gui.py:1998
+#: gui.py:1993
 #, python-format
 msgid "%d%% - %d/%d games - %d descriptions - %d genre - %d accesories - %d companies - %d online features"
 msgstr ""
 
-#: gui.py:2022
+#: gui.py:2017
 #, python-format
 msgid "Error importando %s: %s"
 msgstr "Fehler beim imporiteren %s: %s"
 
-#: gui.py:2025
+#: gui.py:2020
 #, python-format
 msgid "Descargando WiiTDB desde %s, espere unos minutos ..."
 msgstr ""
 
-#: gui.py:2029
+#: gui.py:2024
 msgid "Empezando a descomprimir la informacion WiiTDB"
 msgstr ""
 
-#: gui.py:2035
+#: gui.py:2030
 msgid "Finalizada satisfactoriamente la importacion de datos desde WiiTDB"
 msgstr ""
 
-#: gui.py:2043
+#: gui.py:2038
 #, python-format
 msgid "Deseas borrar el archivo %s?"
 msgstr ""
 
-#: gui.py:2221
+#: gui.py:2216
 #, python-format
 msgid "Empieza %s"
 msgstr "Start: %s"
 
-#: gui.py:2241
+#: gui.py:2236
 #, python-format
 msgid "Termina: %s"
 msgstr "Fertiggestellt: %s"
 
-#: gui.py:2258
+#: gui.py:2253
 #, python-format
 msgid "Falla la descarga de la caratula de %s"
 msgstr ""
 
-#: gui.py:2268
+#: gui.py:2263
 #, python-format
 msgid "Falla la descarga del disco de %s"
 msgstr ""
 
-#: gui.py:2316
+#: gui.py:2311
 msgid "Finalizando ..."
 msgstr "Abschließen..."
 
-#: gui.py:2318
+#: gui.py:2313
 msgid "ERROR!"
 msgstr "Fehler!"
 
-#: gui.py:2326
+#: gui.py:2321
 msgid "quedan"
 msgstr "verbleibend"
 
-#: gui.py:2342
+#: gui.py:2337
 msgid "Error en progreso"
 msgstr ""
 
-#: gui.py:2350
+#: gui.py:2345
 msgid "Empezando ..."
 msgstr "Start ..."
 
@@ -1466,15 +1466,15 @@ msgstr "XML ist nicht vorhanden"
 msgid "Necesitas tener instalado pyGTK o GTKv2"
 msgstr "pyGTK oder GTKv2 benötigt"
 
-#: wiithon.py:54
+#: wiithon.py:51
 msgid "Instala wiithon, no lo ejecute desde ./wiithon.py"
 msgstr ""
 
-#: wiithon.py:103
+#: wiithon.py:100
 msgid "Programa ejecutado con las opciones incorrectas."
 msgstr "Programm läuft mit den falschen Einstellungen"
 
-#: wiithon.py:107
+#: wiithon.py:104
 msgid "Interrumpido por el usuario"
 msgstr "Abbruch durch Benutzer"
 

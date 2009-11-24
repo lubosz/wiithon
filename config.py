@@ -87,6 +87,9 @@ URL_BUGS = "https://bugs.launchpad.net/wiithon/+filebug"
 # URL WIITDB
 URL_WIITDB = "wiitdb.com"
 
+# LANGUAGE IF DONT AUTODETECT
+LANGUAGE_WIITHON_DEFAULT = 'en'
+
 if DEBUG and SUPERDEBUG:
     logging.basicConfig()
     logging.getLogger('sqlalchemy.engine').setLevel(logging.INFO)

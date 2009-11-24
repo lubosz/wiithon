@@ -1917,12 +1917,7 @@ class WiithonGUI(GtkBuilderWrapper):
         if self.question(_('Estas seguro de querer formatear la BDD? Se borraran tus preferencias y la informacion de los juegos')):
             util.borrarBDD(wiitdb_schema.Base.metadata)
             util.crearBDD(wiitdb_schema.Base.metadata)
-            self.core.prefs.cargarPreferenciasPorDefecto(   self.wb_prefs_vbox_general,
-                                                            self.wb_prefs_vbox_caratulas,
-                                                            self.wb_prefs_vbox_wiitdb,
-                                                            self.wb_prefs_vbox_buscadores,
-                                                            False
-                                                            )
+            self.core.prefs.cargarPreferenciasPorDefecto()
             self.ocultar_preferencias()
             self.alert("warning" , _("La BDD ha sido formateada.") + '\n' + _("Es recomendable que reinicie la aplicacion"))
             self.refrescarParticionesWBFS()

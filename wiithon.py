@@ -42,13 +42,10 @@ except ImportError:
 def App():
     try:
         gobject.threads_init()
-        
-        # setup language from preferencies
+       
         prefs = Preferencias()
-        try:
-            util.configurarLenguaje(prefs.APPLICATION_LANGUAGE)
-        except:
-            util.configurarLenguaje()
+        prefs.cargarPreferenciasPorDefecto()
+        util.configurarLenguaje(prefs.APPLICATION_LANGUAGE)
 
         if os.path.exists(os.path.join(config.WIITHON_FILES , ".bzr")):
             print _("Instala wiithon, no lo ejecute desde ./wiithon.py")

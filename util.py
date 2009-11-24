@@ -447,6 +447,7 @@ def setLanguage(locale = 'default'):
     else:
         lang = gettext.translation(config.APP, languages=[locale])
         lang.install()
+        os.environ['LANGUAGE'] = locale
 
 def configurarLenguaje(inicial = 'default'):
 
@@ -479,6 +480,24 @@ def configurarLenguaje(inicial = 'default'):
         module.textdomain(config.APP)
         
     setLanguage(inicial)
+
+def get_lang_default(APP_LANGUAGE_LISTA):
+    try:
+        LANG = os.environ['LANG'].split('_')[0]
+        encontrado = False
+        i = 0
+        while not encontrado and i<len(APP_LANGUAGE_LISTA):
+            value = APP_LANGUAGE_LISTA[i][0]
+            language = APP_LANGUAGE_LISTA[i][1]
+            encontrado = value == LANG
+            i += 1
+        
+        if not encontrado:
+            return config.LANGUAGE_WIITHON_DEFAULT
+        else:
+            return LANG
+    except:
+        return config.LANGUAGE_WIITHON_DEFAULT
 
 def remove_last_separator(text):
     text=text.rstrip(', ') 

@@ -43,11 +43,11 @@ class CheckRelacionado(gtk.CheckButton):
 
 class Preferencias:
 
-    def cargarPreferenciasPorDefecto(self,  prefs_vbox_general,
-                                            prefs_vbox_caratulas,
-                                            prefs_vbox_wiitdb,
-                                            prefs_vbox_buscadores,
-                                            cargarWidget = True):
+    def cargarPreferenciasPorDefecto(self,  prefs_vbox_general = None,
+                                            prefs_vbox_caratulas = None,
+                                            prefs_vbox_wiitdb = None,
+                                            prefs_vbox_buscadores = None,
+                                            cargarWidget = False):
         
         # Data type: 'bool', 'int', 'float', 'string', 'password' , 'memo', 'select'        
         self.iniciarPreferencia('string', 'device_seleccionado')
@@ -68,7 +68,7 @@ class Preferencias:
                                      ('es_CA', _('Catalàn')),
                                      ('pt_BR', _('Brazilian Portuguese')),
                                      ('pt_PT', _('Portuguese'))]
-        self.iniciarPreferencia('select', 'APPLICATION_LANGUAGE', defecto='en', mostrar=cargarWidget, vbox=prefs_vbox_general, label=_('Idioma de wiithon'), datos_lista = APP_LANGUAGE_LISTA)
+        self.iniciarPreferencia('select', 'APPLICATION_LANGUAGE', defecto=util.get_lang_default(APP_LANGUAGE_LISTA), mostrar=cargarWidget, vbox=prefs_vbox_general, label=_('Idioma de wiithon'), datos_lista = APP_LANGUAGE_LISTA)
         self.iniciarPreferencia('string', 'ruta_extraer_rar', defecto='/tmp', mostrar=cargarWidget, vbox=prefs_vbox_general, label=_('Ruta para extraer ficheros .rar. Para descomprimir junto al .rar escriba .'))
         self.iniciarPreferencia('int', 'NUM_HILOS', defecto=8, mostrar=cargarWidget, vbox=prefs_vbox_general, label=_('Num. Hilos para tareas de fondo'))
         self.iniciarPreferencia('string', 'COMANDO_ABRIR_CARPETA', defecto='gnome-open', mostrar=cargarWidget, vbox=prefs_vbox_general, label=_('Comando para abrir carpetas'))
