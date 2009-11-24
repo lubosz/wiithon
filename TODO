@@ -1,3 +1,4 @@
 - Crear Trabajos con alta prioridad: Los trabajos generados despues de descomprimir un RAR deben saltarse toda la cola
 - Modo desatendido: sin preguntas
 - Descomprimir en "." no funciona bien
+- Poner idioma principal y auxiliar basandose en el lenguage del sistema.

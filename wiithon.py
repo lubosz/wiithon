@@ -74,11 +74,11 @@ def App():
         num_parms_cli = 0
         for option, value in options:
 
-            if(util.getExtension(fichero)=="iso"):
+            if(util.getExtension(option)=="iso"):
                 pass
-            elif(util.getExtension(fichero)=="rar"):
+            elif(util.getExtension(option)=="rar"):
                 pass
-            elif( os.path.isdir( fichero ) ):
+            elif( os.path.isdir(option) ):
                 pass
             else:
                 num_parms_cli += 1
