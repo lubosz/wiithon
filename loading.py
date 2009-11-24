@@ -4,7 +4,11 @@ import os
 import gtk
 import signal
 
-import config
+# !! for avois config depend, avoid connect in db
+#import config
+WIITHON_FILES = os.path.dirname(__file__)
+WIITHON_FILES_RECURSOS = os.path.join(WIITHON_FILES , "recursos")
+WIITHON_FILES_RECURSOS_IMAGENES = os.path.join(WIITHON_FILES_RECURSOS , "imagenes")
 
 class Loading(gtk.Window):
     
@@ -17,7 +21,7 @@ class Loading(gtk.Window):
         vbox.show()
         
         image = gtk.Image()
-        image.set_from_file( os.path.join(config.WIITHON_FILES_RECURSOS_IMAGENES, "loading.gif"))
+        image.set_from_file( os.path.join(WIITHON_FILES_RECURSOS_IMAGENES, "loading.gif"))
         image.show()
         
         # empaquetamos todo
