@@ -90,6 +90,9 @@ URL_WIITDB = "wiitdb.com"
 # LANGUAGE IF DONT AUTODETECT
 LANGUAGE_WIITHON_DEFAULT = 'en'
 
+# LANGUAGE FOR SEARCH
+LANGUAGE_FOR_SEARCH = 'EN'
+
 if DEBUG and SUPERDEBUG:
     logging.basicConfig()
     logging.getLogger('sqlalchemy.engine').setLevel(logging.INFO)

@@ -74,7 +74,7 @@ def quitarCaracteresRaros(cadena, listaNegra = BLACK_LIST):
     for i in range(len(listaNegra)):
         cadena = cadena.replace(listaNegra[i],'')
     return cadena
-
+    
 # esta función la voy a evitar y acabaré por eliminarla
 def getPopen( comando ):
     sp = subprocess
@@ -424,21 +424,31 @@ def descomprimirZIP(file_in, file_out):
         comando = 'unzip -o "%s" "%s"' % (file_in, file_out)
         call_out_null(comando)
 
-def parsear_a_XML(texto, especiales = False):
+def parsear_a_XML(texto):
     texto = texto.replace("&" , "&amp;")
     texto = texto.replace(">" , "&gt;")
     texto = texto.replace("<" , "&lt;")
-    texto = texto.replace("\'" , "&apos;")
-    if especiales:
-        texto = texto.replace("á" , "&aacute;")
-        texto = texto.replace("é" , "&eacute;")
-        texto = texto.replace("í" , "&iacute;")
-        texto = texto.replace("ó" , "&oacute;")
-        texto = texto.replace("ú" , "&uacute;")
-        texto = texto.replace("ñ" , "&ntilde;")
-        texto = texto.replace("€" , "&euro;")
-    
+    texto = texto.replace("\'" , "&apos;")    
     return texto
+    
+# as "urllib.quote()"
+def encode_strange_characters_url(texto):
+    texto = strip_multiples_spaces(texto)
+    texto = texto.replace("&" , "%26")
+    texto = texto.replace("/" , "%2F") 
+    texto = texto.replace("á" , "%E1")
+    texto = texto.replace("é" , "%E9")
+    texto = texto.replace("í" , "%ED")
+    texto = texto.replace("ó" , "%F3")
+    texto = texto.replace("ú" , "%FA")
+    texto = texto.replace("ñ" , "%F1")
+    texto = texto.replace("€" , "%80")
+    texto = texto.replace(" " , "%20")
+    texto = texto.replace(":" , "%3A")
+    return texto
+    
+def strip_multiples_spaces(texto):
+    return " ".join(texto.split())
 
 def setLanguage(locale = 'default'):
         
@@ -655,6 +665,7 @@ class SesionWiiTDB:
         minutes_timeout = 15
         i = 0
         while i<tries and not self.connected and (time.time()-self.timeout) > (minutes_timeout*60):
+            print time.time()-self.timeout
             self.desconectar_wiitdb()
             self.conectar_wiitdb(user, password)
             i += 1
@@ -682,16 +693,12 @@ def get_title_for_search(juego):
         i = 0
         while not encontrado and i<len(juego_wiitdb.descripciones):
             descripcion = juego_wiitdb.descripciones[i]
-            encontrado = descripcion.lang == 'EN'
+            encontrado = descripcion.lang == config.LANGUAGE_FOR_SEARCH
             i += 1
 
         if encontrado:
             title = descripcion.title
-    
-    title = parsear_a_XML(title, True)
-    try:
-        title = urllib.quote(title)
-    except:
-        title = quitarCaracteresRaros(title)
+
+    title = encode_strange_characters_url(title)
 
     return title
