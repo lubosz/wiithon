@@ -102,8 +102,16 @@ class Preferencias:
                                     ('ZHTW', _('Chinese-Taiwan')),
                                     ('ZHCN', _('Chinese')),
                                     ('KO', _('Korean'))]
-        self.iniciarPreferencia('select', 'LANG_PRINCIPAL', defecto='ES', mostrar=cargarWidget, vbox=prefs_vbox_wiitdb, label=_('Idioma principal para el synopsis'), datos_lista = WIITDB_LANGUAGE_LISTA)
-        self.iniciarPreferencia('select', 'LANG_SECUNDARIO', defecto='EN', mostrar=cargarWidget, vbox=prefs_vbox_wiitdb, label=_('Idioma auxiliar para el synopsis'), datos_lista = WIITDB_LANGUAGE_LISTA)
+
+        # It dont work for Chinese / Chinese-Taiwan
+        defecto_principal = util.get_lang_default(WIITDB_LANGUAGE_LISTA).upper()
+        if defecto_principal == 'EN':
+            defecto_secundario = 'ES'
+        else:
+            defecto_secundario = 'EN'
+        
+        self.iniciarPreferencia('select', 'LANG_PRINCIPAL', defecto=defecto_principal, mostrar=cargarWidget, vbox=prefs_vbox_wiitdb, label=_('Idioma principal para el synopsis'), datos_lista = WIITDB_LANGUAGE_LISTA)
+        self.iniciarPreferencia('select', 'LANG_SECUNDARIO', defecto=defecto_secundario, mostrar=cargarWidget, vbox=prefs_vbox_wiitdb, label=_('Idioma auxiliar para el synopsis'), datos_lista = WIITDB_LANGUAGE_LISTA)
         self.iniciarPreferencia('string', 'USER_WIITDB', defecto='Wiithon_1_21', mostrar=cargarWidget, vbox=prefs_vbox_wiitdb, label=_('Usuario (para editar informacion en wiitdb.com)'))
         self.iniciarPreferencia('password', 'PASS_WIITDB', defecto='Wiithon_1_21', mostrar=cargarWidget, vbox=prefs_vbox_wiitdb, label=_('Password (para editar informacion en wiitdb.com)'))
         

@@ -499,7 +499,7 @@ def get_lang_default(APP_LANGUAGE_LISTA):
         while not encontrado and i<len(APP_LANGUAGE_LISTA):
             value = APP_LANGUAGE_LISTA[i][0]
             language = APP_LANGUAGE_LISTA[i][1]
-            encontrado = value == LANG
+            encontrado = value.lower() == LANG
             i += 1
         
         if not encontrado:
@@ -665,7 +665,6 @@ class SesionWiiTDB:
         minutes_timeout = 15
         i = 0
         while i<tries and not self.connected and (time.time()-self.timeout) > (minutes_timeout*60):
-            print time.time()-self.timeout
             self.desconectar_wiitdb()
             self.conectar_wiitdb(user, password)
             i += 1

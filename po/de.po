@@ -982,78 +982,78 @@ msgstr "Chinesisch"
 msgid "Korean"
 msgstr "Koreanisch"
 
-#: preferencias.py:105
+#: preferencias.py:113
 msgid "Idioma principal para el synopsis"
 msgstr "bevorzugte Sprache"
 
-#: preferencias.py:106
+#: preferencias.py:114
 msgid "Idioma auxiliar para el synopsis"
 msgstr "zweit Sprache"
 
-#: preferencias.py:107
+#: preferencias.py:115
 msgid "Usuario (para editar informacion en wiitdb.com)"
 msgstr ""
 
-#: preferencias.py:108
+#: preferencias.py:116
 msgid "Password (para editar informacion en wiitdb.com)"
 msgstr ""
 
-#: preferencias.py:111
+#: preferencias.py:119
 msgid "Ancho imagen caratula"
 msgstr "Breite Titelbildes"
 
-#: preferencias.py:112
+#: preferencias.py:120
 msgid "Altura imagen caratula"
 msgstr "Höhe Titelbild"
 
-#: preferencias.py:113
+#: preferencias.py:121
 msgid "Ancho imagen disc-art"
 msgstr "breite Diskbild"
 
-#: preferencias.py:114
+#: preferencias.py:122
 msgid "Altura imagen disc-art"
 msgstr "Höhe Diskbild"
 
-#: preferencias.py:181
+#: preferencias.py:189
 msgid "Proveedor de caratulas"
 msgstr "Titelbilder von"
 
-#: preferencias.py:212
+#: preferencias.py:220
 msgid "Proveedor de discos"
 msgstr "Diskbilder von"
 
-#: preferencias.py:216
+#: preferencias.py:224
 #, python-format
 msgid "URL de busqueda en Google. (%s es el nombre del juego)"
 msgstr ""
 
-#: preferencias.py:217
+#: preferencias.py:225
 #, python-format
 msgid "URL de busqueda en Wikipedia. (%s es el nombre del juego)"
 msgstr ""
 
-#: preferencias.py:218
+#: preferencias.py:226
 #, python-format
 msgid "URL de busqueda en Youtube. (%s es el nombre del juego)"
 msgstr ""
 
-#: preferencias.py:219
+#: preferencias.py:227
 #, python-format
 msgid "URL de busqueda en IGN. (%s es el nombre del juego)"
 msgstr ""
 
-#: preferencias.py:220
+#: preferencias.py:228
 #, python-format
 msgid "URL de busqueda en GameSpot. (%s es el nombre del juego)"
 msgstr ""
 
-#: preferencias.py:221
+#: preferencias.py:229
 #, python-format
 msgid "URL de busqueda en VGChartz. (%s es el nombre del juego)"
 msgstr ""
 
-#: preferencias.py:264 preferencias.py:300 preferencias.py:318
-#: preferencias.py:340
+#: preferencias.py:272 preferencias.py:308 preferencias.py:326
+#: preferencias.py:348
 msgid "Por defecto"
 msgstr "Vorgabe"
 

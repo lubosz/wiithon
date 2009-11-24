@@ -1020,78 +1020,78 @@ msgstr "Cinese"
 msgid "Korean"
 msgstr "Coreano"
 
-#: preferencias.py:105
+#: preferencias.py:113
 msgid "Idioma principal para el synopsis"
 msgstr "Lingua principale per le descrizioni"
 
-#: preferencias.py:106
+#: preferencias.py:114
 msgid "Idioma auxiliar para el synopsis"
 msgstr "Lingua secondaria per le descrizioni"
 
-#: preferencias.py:107
+#: preferencias.py:115
 msgid "Usuario (para editar informacion en wiitdb.com)"
 msgstr "Utente (per modificare le informazioni su wiitdb.com)"
 
-#: preferencias.py:108
+#: preferencias.py:116
 msgid "Password (para editar informacion en wiitdb.com)"
 msgstr "Password (per modificare le informazioni su wiitdb.com)"
 
-#: preferencias.py:111
+#: preferencias.py:119
 msgid "Ancho imagen caratula"
 msgstr "Larghezza immagine copertina"
 
-#: preferencias.py:112
+#: preferencias.py:120
 msgid "Altura imagen caratula"
 msgstr "Altezza immagine copertina"
 
-#: preferencias.py:113
+#: preferencias.py:121
 msgid "Ancho imagen disc-art"
 msgstr "Larghezza immagine disc-art"
 
-#: preferencias.py:114
+#: preferencias.py:122
 msgid "Altura imagen disc-art"
 msgstr "Altezza immagine disc-art"
 
-#: preferencias.py:181
+#: preferencias.py:189
 msgid "Proveedor de caratulas"
 msgstr "Fornitore delle copertine"
 
-#: preferencias.py:212
+#: preferencias.py:220
 msgid "Proveedor de discos"
 msgstr "Fornitore delle disc-art"
 
-#: preferencias.py:216
+#: preferencias.py:224
 #, python-format
 msgid "URL de busqueda en Google. (%s es el nombre del juego)"
 msgstr "URL di ricerca in Google (%s è il nome del gioco)"
 
-#: preferencias.py:217
+#: preferencias.py:225
 #, python-format
 msgid "URL de busqueda en Wikipedia. (%s es el nombre del juego)"
 msgstr "URL di ricerca in Wikipedia (%s è il nome del gioco)"
 
-#: preferencias.py:218
+#: preferencias.py:226
 #, python-format
 msgid "URL de busqueda en Youtube. (%s es el nombre del juego)"
 msgstr "URL di ricerca in YouTube (%s è il nome del gioco)"
 
-#: preferencias.py:219
+#: preferencias.py:227
 #, python-format
 msgid "URL de busqueda en IGN. (%s es el nombre del juego)"
 msgstr "URL di ricerca in IGN (%s è il nome del gioco)"
 
-#: preferencias.py:220
+#: preferencias.py:228
 #, python-format
 msgid "URL de busqueda en GameSpot. (%s es el nombre del juego)"
 msgstr "URL di ricerca in GameSpot (%s è il nome del gioco)"
 
-#: preferencias.py:221
+#: preferencias.py:229
 #, python-format
 msgid "URL de busqueda en VGChartz. (%s es el nombre del juego)"
 msgstr "URL di ricerca in VGCHartz (%s è il nome del gioco)"
 
-#: preferencias.py:264 preferencias.py:300 preferencias.py:318
-#: preferencias.py:340
+#: preferencias.py:272 preferencias.py:308 preferencias.py:326
+#: preferencias.py:348
 msgid "Por defecto"
 msgstr "Default"
 
