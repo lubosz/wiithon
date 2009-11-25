@@ -543,18 +543,19 @@ def esImagen(fichero):
 
 ## check user group and permissions
 def check_gids():
-    file=open("/etc/group","r")
-    for line in file:
-        if "disk:x:" in line:
-            group=line.rsplit(":")
-            break
-    file.close()
+    
+    try:
+        group = 0
+        file=open("/etc/group","r")
+        for line in file:
+            if "disk:x:" in line:
+                group = int(line.rsplit(":")[2])
+                break
+        file.close()
 
-    if config.DEBUG:
-        print os.getgroups()
-        print int(group[2])
-
-    return (int(group[2]) in os.getgroups())
+        return group in os.getgroups()
+    except:
+        return False
 
 def rand(min, max):
     return random.randint(min, max)
