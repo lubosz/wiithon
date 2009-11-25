@@ -922,7 +922,7 @@ msgstr "Portoghese"
 
 #: preferencias.py:71
 msgid "Swedish"
-msgstr ""
+msgstr "Svedese"
 
 #: preferencias.py:72
 msgid "Idioma de wiithon"
