@@ -594,7 +594,7 @@ msgstr "OPTIONAL: "
 
 #: gui.py:1538
 msgid "GENERO: "
-msgstr "GENDER: "
+msgstr "GENRE: "
 
 #: gui.py:1539
 msgid "Fecha de lanzamiento: "
