@@ -548,11 +548,10 @@ def check_gids():
         group = 0
         file=open("/etc/group","r")
         for line in file:
-            if "disk:x:" in line:
-                group = int(line.rsplit(":")[2])
+            if line.startswith("disk:"):
+                group = int(line.split(":")[2])
                 break
         file.close()
-
         return group in os.getgroups()
     except:
         return False
