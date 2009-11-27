@@ -1005,7 +1005,8 @@ class WiithonGUI(GtkBuilderWrapper):
                 titulo = _("INFORMACION:")
         
         confirmar = gtk.Dialog(titulo, None,
-                        gtk.DIALOG_MODAL | gtk.DIALOG_DESTROY_WITH_PARENT,
+                        #gtk.DIALOG_MODAL | gtk.DIALOG_DESTROY_WITH_PARENT,
+                        gtk.DIALOG_DESTROY_WITH_PARENT,
                         botones)           
         confirmar.set_default_response(default_response)
         confirmar.set_position(gtk.WIN_POS_CENTER)
@@ -1851,28 +1852,45 @@ class WiithonGUI(GtkBuilderWrapper):
 
                     listaISO = []
                     listaRAR = []
-                    listaDirectorios = []
-                    buffer_errorNoMetidos = _("Algunos juegos no se han introducido:\n\n")
-                    hayNoMetidos = False
                     for fichero in fc_anadir.get_filenames():
                         if( os.path.isdir( fichero ) ):
-                            listaDirectorios.append(fichero)
+                            encontradosRAR =  util.rec_glob(fichero, "*.rar")
+                            hayRAR = len(encontradosRAR) > 0
+                            if hayRAR:
+                                listaRAR.extend(encontradosRAR)
+
+                            encontradosISO =  util.rec_glob(fichero, "*.iso")
+                            hayISO = len(encontradosISO) > 0
+                            if hayISO:
+                                listaISO.extend(encontradosISO)
+                            
                         elif( util.getExtension(fichero) == "rar" ):
                             listaRAR.append(fichero)
-                        elif( util.getExtension(fichero) == "iso" ):
-                            idgame = util.getMagicISO(fichero)
-                            if idgame is not None:
-                                sql = util.decode("idgame=='%s' and idParticion=='%d'" % (idgame , self.sel_parti.obj.idParticion))
-                                juego = session.query(Juego).filter(sql).first()
-                                if juego is None:
-                                    listaISO.append(fichero)
 
-                                else:
-                                    hayNoMetidos = True
-                                    buffer_errorNoMetidos += _("%s ya existe en %s\n") % (juego.title, juego.particion.device)
+                        elif( util.getExtension(fichero) == "iso" ):
+                            listaISO.append(fichero)
+                            
+                    buffer_errorNoMetidos = _("Algunos juegos no se han introducido:\n\n")
+                    hayNoMetidos = False
+                    for fichero in listaISO:
+                            
+                        ok = False
+                        idgame = util.getMagicISO(fichero)
+                        if idgame is not None:
+                            sql = util.decode("idgame=='%s' and idParticion=='%d'" % (idgame , self.sel_parti.obj.idParticion))
+                            juego = session.query(Juego).filter(sql).first()
+                            if juego is None:
+                                ok = True
+
                             else:
                                 hayNoMetidos = True
-                                buffer_errorNoMetidos += _("%s no es un ISO de Wii.\n") % (fichero)
+                                buffer_errorNoMetidos += _("%s ya existe en %s\n") % (juego.title, juego.particion.device)
+                        else:
+                            hayNoMetidos = True
+                            buffer_errorNoMetidos += _("%s no es un ISO de Wii.\n") % (fichero)
+                            
+                        if not ok:
+                            listaISO.remove(fichero)
 
                     if hayNoMetidos:
                         self.alert('warning', buffer_errorNoMetidos)
@@ -1897,10 +1915,6 @@ class WiithonGUI(GtkBuilderWrapper):
                     if len(listaRAR) > 0:
                         listaRAR.sort()
                         self.poolTrabajo.nuevoTrabajoDescomprimirRAR( listaRAR , self.sel_parti.obj)
-                        
-                    if len(listaDirectorios) > 0:
-                        listaDirectorios.sort()
-                        self.poolTrabajo.nuevoTrabajoRecorrerDirectorio( listaDirectorios , self.sel_parti.obj)
 
                 fc_anadir.destroy()
 
@@ -2293,12 +2307,6 @@ class WiithonGUI(GtkBuilderWrapper):
             gobject.idle_add(self.actualizarLabel , "%s" % trabajo )
 
     def callback_termina_trabajo(self, trabajo):
-        # No hay trabajo cuando el contador este a 1, que es el propio trabajo que da la señal
-        '''
-        if(self.poolTrabajo.numTrabajos <= 1):
-            gobject.timeout_add( 5000, self.ocultarHBoxProgreso )
-        '''
-
         # al final, por ser bloqueante
         if not trabajo.exito:
             gobject.idle_add( self.mostrarError , trabajo.error )

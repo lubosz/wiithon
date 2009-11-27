@@ -36,19 +36,22 @@ class WiithonCORE:
             idgame = util.decode(cachos[0])
             sql = util.decode("idgame=='%s' and idParticion='%s'" % (idgame, particion.idParticion))
             juego = session.query(Juego).filter(sql).first()
-            if juego == None:
-                try:
-                    juego = Juego(cachos)
-                    juego.particion = particion
-                    session.save(juego)
-                except SintaxisInvalida:
-                    continue
-            else:
-                session.update(juego)
+            if juego is not None:
+                # el juego ya existe, se borra
+                session.delete(juego)
+                
+                # guardan cambios
+                session.commit()
+                
+            try:
+                juego = Juego(cachos)
+                juego.particion = particion
+                session.save(juego)
+                salida.append(juego)
+                session.commit()
 
-            salida.append(juego)
-
-        session.commit()
+            except SintaxisInvalida:
+                continue
 
         return salida
 
@@ -65,19 +68,28 @@ class WiithonCORE:
                 cachos = linea.strip().split(config.SEPARADOR)
                 device = util.decode(cachos[0])
                 particion = self.getParticion(device)
-                if particion == None:
-                    try:
-                        particion = Particion(cachos)
-                        session.save(particion)
-                    except SintaxisInvalida:
-                        continue
-                else:
-                    session.update(particion)
+                if particion is not None:
 
-                listaParticiones.append(particion)
-        
-        # generate idParticion   
-        session.commit()
+                    # borrar TODOS los juegos de esta particion
+                    query = session.query(Juego)
+                    query = query.filter("idParticion = %d" % particion.idParticion)
+                    for juego in query:
+                        session.delete(juego)
+                        
+                    # ya borro la particion
+                    session.delete(particion)
+                    
+                    # guardar cambios
+                    session.commit()
+
+                try:
+                    particion = Particion(cachos)
+                    session.save(particion)
+                    listaParticiones.append(particion)
+                    session.commit()
+                    
+                except SintaxisInvalida:
+                    continue
         
         if len(listaParticiones) > 0:
 

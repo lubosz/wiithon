@@ -2,7 +2,6 @@
 - Modo desatendido: sin preguntas
 - Descomprimir en "." no funciona bien
 - Repasar connect_if_need_it()
-- poner boton buscar en lugar on change
 - forzar info wiitdb de este juego
 - opción forzar descarga caratulas
 - eliminar rar que tienen su nombre como directorio
