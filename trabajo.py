@@ -56,7 +56,9 @@ class PoolTrabajo(Pool , Thread):
                                         callback_empieza_descarga,
                                         callback_empieza_descomprimir,
                                         callback_empieza_importar,
-                                        callback_termina_importar
+                                        callback_termina_importar,
+                                        callback_empieza_progreso_indefinido,
+                                        callback_termina_progreso_indefinido
                                         ):
         Pool.__init__(self , numHilos)
         Thread.__init__(self)
@@ -87,6 +89,8 @@ class PoolTrabajo(Pool , Thread):
         self.callback_empieza_descomprimir = callback_empieza_descomprimir
         self.callback_empieza_importar = callback_empieza_importar
         self.callback_termina_importar = callback_termina_importar
+        self.callback_empieza_progreso_indefinido = callback_empieza_progreso_indefinido
+        self.callback_termina_progreso_indefinido = callback_termina_progreso_indefinido
         
         self.actualizarPreferencias()
         
@@ -111,6 +115,7 @@ class PoolTrabajo(Pool , Thread):
         self.USER_WIITDB = self.core.prefs.USER_WIITDB
         self.PASS_WIITDB = self.core.prefs.PASS_WIITDB
         self.URL_ZIP_WIITDB = self.core.prefs.URL_ZIP_WIITDB
+        self.FORMATO_EXTRACT = self.core.prefs.FORMATO_EXTRACT
 
     def run(self):
         self.empezar( args=(self.core,) )
@@ -264,17 +269,21 @@ class PoolTrabajo(Pool , Thread):
         
         exito = False
         
-        if self.callback_empieza_progreso:
-            self.callback_empieza_progreso(trabajo)
+        if self.FORMATO_EXTRACT == 'iso':
+            if self.callback_empieza_progreso:
+                self.callback_empieza_progreso(trabajo)
         else:
-            print "no hay progreso que empezar"
+            if self.callback_empieza_progreso_indefinido:
+                self.callback_empieza_progreso_indefinido(trabajo)
         
-        exito = core.extraerJuego(juego, destino)
-        
-        if self.callback_termina_progreso:
-            self.callback_termina_progreso(trabajo)
+        exito = core.extraerJuego(juego, destino, self.FORMATO_EXTRACT)
+
+        if self.FORMATO_EXTRACT == 'iso':        
+            if self.callback_termina_progreso:
+                self.callback_termina_progreso(trabajo)
         else:
-            print "no hay progreso que terminar"
+            if self.callback_termina_progreso_indefinido:
+                self.callback_termina_progreso_indefinido(trabajo)
         
         return exito
 

@@ -57,6 +57,7 @@ class Preferencias:
         self.iniciarPreferencia('string', 'ruta_extraer_iso', defecto=os.getcwd())
         self.iniciarPreferencia('string', 'ruta_copiar_caratulas', defecto=os.getcwd())
         self.iniciarPreferencia('string', 'ruta_copiar_discos', defecto=os.getcwd())
+        self.iniciarPreferencia('string', 'tipo_caratula', defecto=0)
         
         # general
         APP_LANGUAGE_LISTA    =    [('en', _('English')),
@@ -86,6 +87,11 @@ class Preferencias:
         DESTINO_DRAG_AND_DROP =    [('C', _('Caratula')),
                                     ('D', _('Disc-art'))]
         self.iniciarPreferencia('select', 'DESTINO_ARRASTRE', defecto='C', mostrar=cargarWidget, vbox=prefs_vbox_general, label=_('Destino del arrastre de una imagen'), datos_lista = DESTINO_DRAG_AND_DROP)
+        FORMATO_EXTRACT    =        [
+                                        ('iso', _('ISO sin comprimir')),
+                                        ('wbfs', _('WBFS comprimido, para usar con USBLoader-FAT')),
+                                     ]
+        self.iniciarPreferencia('select', 'FORMATO_EXTRACT', defecto='iso', mostrar=cargarWidget, vbox=prefs_vbox_general, label=_('Formato de extraccion'), datos_lista = FORMATO_EXTRACT)
         
         # wiitdb
         self.iniciarPreferencia('string', 'URL_ZIP_WIITDB', defecto='http://wiitdb.com/wiitdb.zip', mostrar=cargarWidget, vbox=prefs_vbox_wiitdb, label=_('URL Base de datos WiiTDB'))

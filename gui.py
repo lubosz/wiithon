@@ -32,7 +32,12 @@ from estadistica import MuestraEstadistica
 db =        util.getBDD()
 session =   util.getSesionBDD(db)
 
+# prioridades
+(COVER_NORMAL, COVER_3D, COVER_FULL)=([ "%d" % i for i in range(3) ])
+
 class WiithonGUI(GtkBuilderWrapper):
+    
+    activo = None
 
     def __init__(self, core, loading):
         GtkBuilderWrapper.__init__(self, os.path.join(config.WIITHON_FILES_RECURSOS_GLADE, '%s.ui' % config.APP))
@@ -152,6 +157,26 @@ class WiithonGUI(GtkBuilderWrapper):
         self.wb_principal.connect("drag_motion", self.drop_motion)
         self.wb_principal.connect("drag_drop", self.drag_drop)
         self.wb_principal.connect("drag_data_received", self.drag_data_received_cb)
+               
+        # activar caratula activa
+        self.wb_boton_normal.connect("toggled", self.on_clicked_tipo_caratula, COVER_NORMAL)
+        self.wb_boton_3d.connect("toggled", self.on_clicked_tipo_caratula, COVER_3D)
+        self.wb_boton_full.connect("toggled", self.on_clicked_tipo_caratula, COVER_FULL)
+        
+        self.toggle_tipo_caratula_activo = None
+        self.cover_type = self.core.prefs.tipo_caratula
+
+        if self.cover_type == COVER_3D: # 3D
+            self.wb_boton_3d.set_active(True)
+            self.toggle_tipo_caratula_activo = self.wb_boton_3d
+            
+        elif self.cover_type == COVER_FULL: # FULL
+            self.wb_boton_full.set_active(True)
+            self.toggle_tipo_caratula_activo = self.wb_boton_full
+        
+        else:# NORMAL
+            self.wb_boton_normal.set_active(True)
+            self.toggle_tipo_caratula_activo = self.wb_boton_normal
 
         # iniciar preferencias
         self.core.prefs.cargarPreferenciasPorDefecto(   self.wb_prefs_vbox_general,
@@ -188,8 +213,8 @@ class WiithonGUI(GtkBuilderWrapper):
         self.wb_busqueda = util.Entry(clear=True)
         self.wb_busqueda.show()
         self.wb_box_busqueda.pack_start(self.wb_busqueda)
-        self.wb_busqueda.connect('changed' , self.on_busqueda_changed)
-        
+        self.wb_busqueda.connect('activate' , self.on_boton_buscar_clicked)
+        self.wb_busqueda.connect('changed' , self.on_busqueda_change)
         self.wb_principal.connect('destroy', self.salir)
 
         # carga la vista del TreeView de particiones
@@ -260,7 +285,9 @@ class WiithonGUI(GtkBuilderWrapper):
                                     None ,
                                     None ,
                                     None ,
-                                    self.callback_termina_importar
+                                    self.callback_termina_importar,
+                                    None,
+                                    None
                                     )
         self.poolBash.setDaemon(True)
         self.poolBash.start()
@@ -292,7 +319,9 @@ class WiithonGUI(GtkBuilderWrapper):
                                     self.callback_empieza_descarga,
                                     self.callback_empieza_descomprimir,
                                     self.callback_empieza_importar,
-                                    self.callback_termina_importar
+                                    self.callback_termina_importar,
+                                    self.callback_empieza_progreso_indefinido,
+                                    self.callback_termina_progreso_indefinido
                                     )
         self.poolTrabajo.setDaemon(True)
         self.poolTrabajo.poolBash = self.poolBash
@@ -1094,16 +1123,22 @@ class WiithonGUI(GtkBuilderWrapper):
                 else:
                     self.personalizar_nombre_juego_seleccionado()
 
-    # callback de la señal "changed" del buscador
-    # Refresca de la base de datos y filtra según lo escrito.
-    def on_busqueda_changed(self , widget):
+
+    def on_busqueda_change(self, widget):
+        if self.wb_busqueda.get_text() == "":
+            self.on_boton_buscar_clicked()
+
+    def on_boton_buscar_clicked(self , widget=None):
         
         if config.DEBUG:
-            print "on_busqueda_changed"
+            print "on_boton_buscar_clicked"
         
-        self.buscar = widget.get_text()
-        self.lJuegos = self.buscar_juego_bdd(self.buscar)
-        self.refrescarModeloJuegos( self.lJuegos )
+        nuevoBuscar = self.wb_busqueda.get_text()
+        if self.buscar != nuevoBuscar:
+
+            self.buscar = nuevoBuscar
+            self.lJuegos = self.buscar_juego_bdd(nuevoBuscar)
+            self.refrescarModeloJuegos( self.lJuegos )
 
     def leer_juegos_de_las_particiones(self, particiones):
         
@@ -1124,7 +1159,7 @@ class WiithonGUI(GtkBuilderWrapper):
             sql = util.decode('title like "%%%s%%" or idgame like "%s%%"' % (buscar , buscar))
         else:
             sql = util.decode('idParticion="%d" and (title like "%%%s%%" or idgame like "%s%%")' % (self.sel_parti.obj.idParticion , buscar , buscar))
-
+        
         query = session.query(Juego).filter(sql).order_by('lower(title)')
         for juego in query:
             subListaJuegos.append(juego)
@@ -1771,8 +1806,11 @@ class WiithonGUI(GtkBuilderWrapper):
                     if self.core.existeExtraido(self.sel_juego.obj , ruta_selec):
                         extraer = self.question(_('Desea reemplazar la iso del juego %s?') % (self.sel_juego.obj))
                     else:
-                        if not util.space_for_dvd_iso_wii(ruta_selec):
-                            self.alert("warning" , _("Espacio libre insuficiente para extraer la ISO"))
+                        if self.core.prefs.FORMATO_EXTRACT == 'iso':
+                            if not util.space_for_dvd_iso_wii(ruta_selec):
+                                self.alert("warning" , _("Espacio libre insuficiente para extraer la ISO"))
+                            else:
+                                extraer = True
                         else:
                             extraer = True
                         
@@ -1950,6 +1988,31 @@ class WiithonGUI(GtkBuilderWrapper):
     def on_button_abrir_carpeta_discart_clicked(self, boton):
         comando = '%s "%s"' % (self.core.prefs.COMANDO_ABRIR_CARPETA, config.HOME_WIITHON_DISCOS)
         util.call_out_null(comando)
+        
+############################# 3 botones caratula ###########
+
+    def on_clicked_tipo_caratula(self, widget, nuevo_cover_type):
+        
+        if self.cover_type != nuevo_cover_type:
+            
+            if widget != self.toggle_tipo_caratula_activo:
+                
+                self.cover_type = nuevo_cover_type
+                
+                if self.toggle_tipo_caratula_activo is not None:
+                    self.toggle_tipo_caratula_activo.set_active(False)
+                    self.alert("warning" , "No implemented")
+
+                if nuevo_cover_type == COVER_NORMAL:
+                    self.toggle_tipo_caratula_activo = self.wb_boton_normal
+                elif nuevo_cover_type == COVER_3D:
+                    self.toggle_tipo_caratula_activo = self.wb_boton_3d
+                elif nuevo_cover_type == COVER_FULL:
+                    self.toggle_tipo_caratula_activo = self.wb_boton_full
+                
+                self.core.prefs.tipo_caratula = nuevo_cover_type
+                session.commit()
+
                 
 ########## WIITDB ###########
                 
@@ -2189,6 +2252,14 @@ class WiithonGUI(GtkBuilderWrapper):
 
     def callback_termina_progreso(self, trabajo):
         gobject.idle_add(self.actualizarFraccion , 1.0 )
+        
+    def callback_empieza_progreso_indefinido(self, trabajo):
+        gobject.idle_add(self.actualizarFraccion , 0.1 )
+        gobject.idle_add(self.actualizarLabel , _("Trabajando con %s, sin estimar el tiempo restante ...") % trabajo )
+        
+    def callback_termina_progreso_indefinido(self, trabajo):
+        gobject.idle_add(self.actualizarFraccion , 1.0 )
+        gobject.idle_add(self.actualizarLabel , _("Termina: %s") % trabajo )
 
     def callback_empieza_trabajo_anadir(self, trabajo):
         pass

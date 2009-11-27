@@ -2,3 +2,11 @@
 - Modo desatendido: sin preguntas
 - Descomprimir en "." no funciona bien
 - Repasar connect_if_need_it()
+- poner boton buscar en lugar on change
+- forzar info wiitdb de este juego
+- opción forzar descarga caratulas
+- eliminar rar que tienen su nombre como directorio
+- advertir de la existencia de juegos cuando añadimos por directorio.
+- extraer juego actual: ./wbfs_file /dev/sdc1 extract_wbfs RYBP69 /media/DF85-005F/wbfs
+- extraer todos los juegos: ./wbfs_file /dev/sdc1 extract_wbfs_all /media/DF85-005F/wbfs
+- warnings in libwbfs

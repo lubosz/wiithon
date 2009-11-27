@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 CC = gcc
 CFLAGS = -O2 -Wall
+#CFLAGS = -g -Wall
 DEFINES = -DLARGE_FILES -D_FILE_OFFSET_BITS=64
 LDFLAGS = -m32
 INCLUDE = -Ilibwbfs

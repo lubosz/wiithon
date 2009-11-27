@@ -491,7 +491,7 @@ class Particion(Base):
         self.total = float(cachos[2])
         session.commit()
 
-try:        
+try:
     Index('idUnico_particion', Particion.device, unique=True)
 except:
     Index('idUnico_particion', Particion.c.device, unique=True)

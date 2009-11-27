@@ -1,4 +1,6 @@
+unrar-nonfree/wiithon_unrar
 libwbfs_binding/wiithon_wrapper
+wbfs_file_1.8/wiithon_wbfs_file
 COMMIT
 wiithon_wrapper/*.o
 *~
@@ -7,7 +9,6 @@ recursos/imagenes/*.xcf
 editar.sh
 recursos/threadpool.py
 schema.sql
-unrar-nonfree/wiithon_unrar
 doc/Análisis/
 doc/Diseño/
 recursos/prueba.py

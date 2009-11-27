@@ -1007,3 +1007,111 @@ error:
 	return 0;
 }
 
+wbfs_disc_t *wbfs_open_index_disc(wbfs_t* p, u32 i)
+{
+	int disc_info_sz_lba = p->disc_info_sz>>p->hd_sec_sz_s;
+	wbfs_disc_t *d = 0;
+
+	if (p->head->disc_table[i])
+	{
+		p->read_hdsector(p->callback_data,
+		p->part_lba+1+i*disc_info_sz_lba,1,p->tmp_buffer);
+
+		d = wbfs_malloc(sizeof(*d));
+		if(d)
+		{
+			d->p = p;
+			d->i = i;
+			d->header = wbfs_ioalloc(p->disc_info_sz);
+			if(d->header)
+			{
+				p->read_hdsector(p->callback_data,
+				p->part_lba+1+i*disc_info_sz_lba,
+				disc_info_sz_lba,d->header);
+				p->n_disc_open ++;
+				return d;
+			}
+			else
+			{
+				if(d) wbfs_iofree(d);
+				return NULL;       
+			}
+		}
+		else
+		{
+			if(d) wbfs_iofree(d);
+			return NULL;       
+		}
+	}
+	else
+	{
+		return NULL;	
+	}
+}
+
+
+u32 wbfs_integrity_check(wbfs_t* p , u8* discid)
+{	
+	u32 i2,n,m;
+	u32 disc_info_sz_lba = p->disc_info_sz >> p->hd_sec_sz_s;
+	u32 discn;
+
+	u8 id1[7];
+	u8 id2[7];
+
+	load_freeblocks(p);
+
+	wbfs_disc_t *d = wbfs_open_disc(p , discid);
+	if(!d)
+	{
+		return FALSE;	
+	}
+	else
+	{
+		memcpy(id1,p->tmp_buffer,6);
+		id1[6]='\0';
+
+		u32 correcto = TRUE;
+		i2 = 0;
+		
+		while( (correcto == TRUE) && i2<p->max_disc)
+		{
+			wbfs_disc_t * d2 = wbfs_open_index_disc(p, i2);
+			if (d2 != NULL && d != d2)
+			{
+				memcpy(id2,p->tmp_buffer,6);
+				id2[6]='\0';
+				if( strcmp(id1 , id2) != 0 )
+				{
+					n = 0;
+					while ( (correcto == TRUE) && n<p->n_wbfs_sec_per_disc )
+					{
+						u32 iwlba = wbfs_ntohs(d->header->wlba_table[n]);
+						if (iwlba)
+						{
+							m = 0;
+							while( (correcto == TRUE) && m<p->n_wbfs_sec_per_disc )
+							{
+								u32 iwlba2 = wbfs_ntohs(d2->header->wlba_table[m]);
+								if(iwlba)
+								{
+									if(iwlba==iwlba2)
+									{
+										correcto = FALSE;
+									}
+								}
+							m++;
+							}
+						}
+					n++;
+					}
+				}
+				wbfs_close_disc(d2);
+			}
+			i2++;
+		}
+		wbfs_close_disc(d);
+		return correcto;			
+	}
+}
+

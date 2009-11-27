@@ -306,6 +306,51 @@ Por defecto: 160x224</property>
                     <property name="position">3</property>
                   </packing>
                 </child>
+                <child>
+                  <object class="GtkHBox" id="hbox2">
+                    <property name="visible">True</property>
+                    <child>
+                      <object class="GtkToggleButton" id="boton_normal">
+                        <property name="label" translatable="yes">Normal</property>
+                        <property name="visible">True</property>
+                        <property name="can_focus">True</property>
+                        <property name="receives_default">True</property>
+                        <property name="relief">none</property>
+                      </object>
+                      <packing>
+                        <property name="position">0</property>
+                      </packing>
+                    </child>
+                    <child>
+                      <object class="GtkToggleButton" id="boton_3d">
+                        <property name="label" translatable="yes">3D</property>
+                        <property name="visible">True</property>
+                        <property name="can_focus">True</property>
+                        <property name="receives_default">True</property>
+                        <property name="relief">none</property>
+                      </object>
+                      <packing>
+                        <property name="position">1</property>
+                      </packing>
+                    </child>
+                    <child>
+                      <object class="GtkToggleButton" id="boton_full">
+                        <property name="label" translatable="yes">Full</property>
+                        <property name="visible">True</property>
+                        <property name="can_focus">True</property>
+                        <property name="receives_default">True</property>
+                        <property name="relief">none</property>
+                      </object>
+                      <packing>
+                        <property name="position">2</property>
+                      </packing>
+                    </child>
+                  </object>
+                  <packing>
+                    <property name="expand">False</property>
+                    <property name="position">4</property>
+                  </packing>
+                </child>
               </object>
               <packing>
                 <property name="resize">False</property>
@@ -325,18 +370,6 @@ Por defecto: 160x224</property>
                       <object class="GtkHBox" id="hbox6">
                         <property name="visible">True</property>
                         <child>
-                          <object class="GtkLabel" id="label1">
-                            <property name="visible">True</property>
-                            <property name="xpad">8</property>
-                            <property name="ypad">8</property>
-                            <property name="label" translatable="yes">Buscar:</property>
-                          </object>
-                          <packing>
-                            <property name="expand">False</property>
-                            <property name="position">0</property>
-                          </packing>
-                        </child>
-                        <child>
                           <object class="GtkHBox" id="box_busqueda">
                             <property name="visible">True</property>
                             <child>
@@ -345,11 +378,25 @@ Por defecto: 160x224</property>
                           </object>
                           <packing>
                             <property name="expand">False</property>
+                            <property name="position">0</property>
+                          </packing>
+                        </child>
+                        <child>
+                          <object class="GtkButton" id="boton_buscar">
+                            <property name="label">gtk-find</property>
+                            <property name="visible">True</property>
+                            <property name="can_focus">True</property>
+                            <property name="receives_default">True</property>
+                            <property name="use_stock">True</property>
+                            <signal name="clicked" handler="on_boton_buscar_clicked"/>
+                          </object>
+                          <packing>
+                            <property name="expand">False</property>
                             <property name="position">1</property>
                           </packing>
                         </child>
                         <child>
-                          <object class="GtkLabel" id="label10">
+                          <object class="GtkLabel" id="label_espacio_vacio">
                             <property name="visible">True</property>
                           </object>
                           <packing>
@@ -374,6 +421,7 @@ Por defecto: 160x224</property>
                         <child>
                           <object class="GtkVBox" id="vboxProgresoEspacio">
                             <property name="visible">True</property>
+                            <property name="orientation">vertical</property>
                             <child>
                               <object class="GtkLabel" id="label5">
                                 <property name="height_request">5</property>

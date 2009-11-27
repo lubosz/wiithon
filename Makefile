@@ -57,13 +57,16 @@ de: po/locale/de/LC_MESSAGES/wiithon.mo
 pt_BR: po/locale/pt_BR/LC_MESSAGES/wiithon.mo
 es_CA: po/locale/es_CA/LC_MESSAGES/wiithon.mo
 
-lang: lang_enable lang_disable
 lang_enable: it es en fr de pt_BR es_CA
 lang_disable: da_DK fi_FI tr_TR ru_RU ko_KR sv_SE pt_PT da_DK nb_NO ja_JP
-
-compile: lang unrar-nonfree/wiithon_unrar libwbfs_binding/wiithon_wrapper gen_rev_now
+lang: lang_enable lang_disable
 	@echo "=================================================================="
-	@echo "Compile OK"
+	@echo "Languages updates!"
+	@echo "=================================================================="
+
+compile: lang unrar-nonfree/wiithon_unrar wbfs_file_1.8/wiithon_wbfs_file libwbfs_binding/wiithon_wrapper gen_rev_now
+	@echo "=================================================================="
+	@echo "100% Compile OK"
 	@echo "=================================================================="
 
 making_directories:
@@ -87,6 +90,7 @@ copy_archives: making_directories
 
 	cp libwbfs_binding/wiithon_wrapper $(DESTDIR)$(PREFIX)/games/
 	cp unrar-nonfree/wiithon_unrar $(DESTDIR)$(PREFIX)/games/
+	cp wbfs_file_1.8/wiithon_wbfs_file $(DESTDIR)$(PREFIX)/games/
 	
 	cp *.py $(DESTDIR)$(PREFIX)/share/wiithon
 
@@ -124,6 +128,7 @@ set_permisses:
 	chmod 755 $(DESTDIR)$(PREFIX)/share/wiithon/loading.py
 	chmod 755 $(DESTDIR)$(PREFIX)/games/wiithon_wrapper
 	chmod 755 $(DESTDIR)$(PREFIX)/games/wiithon_unrar
+	chmod 755 $(DESTDIR)$(PREFIX)/games/wiithon_wbfs_file
 	chmod 755 $(DESTDIR)$(PREFIX)/share/wiithon/wiithon_autodetectar*.sh
 
 	chmod 644 $(DESTDIR)$(PREFIX)/share/wiithon/recursos/glade/*.ui
@@ -141,6 +146,7 @@ postinst: set_permisses
 	-ln -sf $(DESTDIR)$(PREFIX)/share/wiithon/wiithon.py $(DESTDIR)$(PREFIX)/games/wiithon
 	-ln -sf $(DESTDIR)$(PREFIX)/games/wiithon_wrapper $(DESTDIR)$(PREFIX)/share/wiithon/wiithon_wrapper
 	-ln -sf $(DESTDIR)$(PREFIX)/games/wiithon_unrar $(DESTDIR)$(PREFIX)/share/wiithon/wiithon_unrar
+	-ln -sf $(DESTDIR)$(PREFIX)/games/wiithon_wbfs_file $(DESTDIR)$(PREFIX)/share/wiithon/wiithon_wbfs_file
 	
 	if [ -x /usr/bin/update-menus ] ; then update-menus ; fi
 	
@@ -228,8 +234,11 @@ clean_old_wiithon:
 	@echo "=================================================================="
 
 delete_archives_installation:
+
 	-$(RM) $(PREFIX)/games/wiithon_wrapper
 	-$(RM) $(PREFIX)/games/wiithon_unrar
+	-$(RM) $(PREFIX)/games/wiithon_wbfs_file
+
 	-$(RM) $(PREFIX)/share/wiithon/*.py
 	-$(RM) $(PREFIX)/share/wiithon/*.pyc
 	-$(RM) $(PREFIX)/share/wiithon/*.sh
@@ -274,6 +283,7 @@ postrm:
 	-$(RM) $(PREFIX)/games/wiithon
 	-$(RM) $(PREFIX)/share/wiithon/wiithon_wrapper
 	-$(RM) $(PREFIX)/share/wiithon/wiithon_unrar
+	-$(RM) $(PREFIX)/share/wiithon/wiithon_wbfs_file
 	
 uninstall: clean_old_wiithon delete_archives_installation postrm
 	@echo "=================================================================="
@@ -293,7 +303,7 @@ purge: uninstall
 	@echo "Uninstall OK & all clean (purge covers & disc-art ...)"
 	@echo "=================================================================="
 
-clean: clean_libwbfs_binding clean_gettext clean_unrar
+clean: clean_wbfs_file_1.8 clean_libwbfs_binding clean_gettext clean_unrar
 	$(RM) *.pyc
 	$(RM) *~
 	$(RM) po/*~
@@ -323,12 +333,27 @@ clean_unrar:
 
 clean_libwbfs_binding:
 	$(MAKE) -C libwbfs_binding clean
+	
+clean_wbfs_file_1.8:
+	$(MAKE) -C wbfs_file_1.8 clean
+	
+wbfs_file_1.8/wiithon_wbfs_file: wbfs_file_1.8/*.c wbfs_file_1.8/*.h wbfs_file_1.8/libwbfslite/* wbfs_file_1.8/libwbfs/*
+	$(MAKE) -C wbfs_file_1.8
+	@echo "=================================================================="
+	@echo "wbfs_file for fat32 support compile OK!"
+	@echo "=================================================================="
 
 libwbfs_binding/wiithon_wrapper: libwbfs_binding/*.c libwbfs_binding/libwbfs/*.c libwbfs_binding/libwbfs/*.h 
-	$(MAKE) -C libwbfs_binding	
+	$(MAKE) -C libwbfs_binding
+	@echo "=================================================================="
+	@echo "Wiithon wrapper compile OK"
+	@echo "=================================================================="
 
 unrar-nonfree/wiithon_unrar: unrar-nonfree/*.cpp unrar-nonfree/*.hpp
 	$(MAKE) -C unrar-nonfree
+	@echo "=================================================================="
+	@echo "UNRAR modified for wiithon compile OK"
+	@echo "=================================================================="
 
 gen_rev_now:
 ifeq ($(shell if [ -x .bzr ]; then echo "y"; else echo "n"; fi), y)

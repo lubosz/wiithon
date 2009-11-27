@@ -1,4 +1,5 @@
 char *s = N_("+INFO");
+char *s = N_("3D");
 char *s = N_("<small><i>* = algunas opciones requieren reiniciar.</i></small>");
 char *s = N_("Abre la carpeta donde se almacenan las caratulas descargadas");
 char *s = N_("Abre la carpeta donde se almacenan las disc-art descargadas");
@@ -13,7 +14,6 @@ char *s = N_("Borra el juego seleccionado.");
 char *s = N_("Borrar");
 char *s = N_("Busca en todos los discos duros, particiones de tipo WBFS");
 char *s = N_("Buscadores");
-char *s = N_("Buscar:");
 char *s = N_("Cambia el nombre del juego seleccionado. Este es el nombre con el que apareceran en los loaders.");
 char *s = N_("Caratula del disco.\n"
              "Por defecto: 160x160");
@@ -33,12 +33,14 @@ char *s = N_("Extraer");
 char *s = N_("Formatear BDD");
 char *s = N_("Formatear a WBFS");
 char *s = N_("Formatear la BDD de Wiithon. Cuidado, poque se borraran todas las preferencias y toda la informacion de los juegos.");
+char *s = N_("Full");
 char *s = N_("General");
 char *s = N_("Hace copias directas de juegos entre particiones WBFS.");
 char *s = N_("Herramientas y utilidades");
 char *s = N_("Informacion sobre Wiithon");
 char *s = N_("Lista de juegos de la particion seleccionada.");
 char *s = N_("No cierre wiithon mientras esta animacion indique actividad");
+char *s = N_("Normal");
 char *s = N_("Nota, la copia no sobreescribire nada, solo copia juegos que no tenga el destino");
 char *s = N_("Nuevo");
 char *s = N_("Numero de juegos con alguna informacion obtenida de internet");

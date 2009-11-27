@@ -321,12 +321,15 @@ class WiithonCORE:
         return os.path.exists(destino)
 
     # extrae el juego a un destino
-    def extraerJuego(self ,juego , destino = ''):
+    def extraerJuego(self ,juego , destino = '', formato = 'iso'):
         if destino != '':
             trabajoActual = os.getcwd()
             os.chdir( destino )
 
-        comando = "%s -p %s extract %s" % (config.WBFS_APP, juego.particion.device , juego.idgame)
+        if formato == 'iso':
+            comando = "%s -p %s extract %s" % (config.WBFS_APP, juego.particion.device , juego.idgame)
+        elif formato == 'wbfs':
+            comando = "%s %s extract_wbfs %s %s" % (config.WBFS_FILE, juego.particion.device , juego.idgame, destino)
         salida = util.call_out_file(comando)
 
         if destino != '':

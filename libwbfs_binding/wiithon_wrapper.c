@@ -235,6 +235,11 @@ wiithon_wrapper_ls_idgame(wbfs_t *p, u8 *idgame)
     return OK;
 }
 
+int wiithon_wrapper_check_idgame(wbfs_t *p, u8 *idgame)
+{
+    return wbfs_integrity_check(p, (u8*)idgame);
+}
+
 int wiithon_wrapper_df(wbfs_t *p)
 {
     f32 usado;
@@ -387,6 +392,7 @@ int uso(char *argv[])
 {
     printf("\t%s -p /dev/sdxY formatear\n" , argv[0]);
     printf("\t%s -p /dev/sdxY ls\n" , argv[0]);
+    printf("\t%s -p /dev/sdxY check IDGAME\n" , argv[0]);
     printf("\t%s -p /dev/sdxY ls IDGAME\n" , argv[0]);
     printf("\t%s -p /dev/sdxY df\n" , argv[0]);
     printf("\t%s -p /dev/sdxY add fichero.iso\n" , argv[0]);
@@ -459,6 +465,7 @@ int main(int argc, char *argv[])
         }
         else if(numParametros == 0)
         {
+            printf("%d\n", numParametros);
             retorno = uso(argv);
         }
         else if ((numParametros == 1) && (strcmp(argv[optind], "ls") == 0))
@@ -468,6 +475,10 @@ int main(int argc, char *argv[])
         else if ((numParametros == 2) && (strcmp(argv[optind], "ls") == 0))
         {
             retorno = wiithon_wrapper_ls_idgame(p, (u8*)argv[4]);
+        }
+        else if ((numParametros == 2) && (strcmp(argv[optind], "check") == 0))
+        {
+            retorno = wiithon_wrapper_check_idgame(p, (u8*)argv[4]);
         }
         else if ((numParametros == 1) && (strcmp(argv[optind], "df") == 0))
         {
