@@ -25,52 +25,16 @@ set -e
 
 case "$1" in
     configure)
-    
-        # recycled
-        test -e ~/.wiithon/caratulas/*.png && test -e /usr/share/wiithon/recursos/imagenes/caratulas && mv -f ~/.wiithon/caratulas/*.png /usr/share/wiithon/recursos/imagenes/caratulas
-        test -e ~/.wiithon/discos/*.png && test -e /usr/share/wiithon/recursos/imagenes/discos && mv -f ~/.wiithon/discos/*.png /usr/share/wiithon/recursos/imagenes/discos
-        test -e /usr/local/share/wiithon/recursos/imagenes/caratulas/*.png && test -e /usr/share/wiithon/recursos/imagenes/caratulas && mv -f /usr/local/share/wiithon/recursos/imagenes/caratulas/*.png /usr/share/wiithon/recursos/imagenes/caratulas
-        test -e /usr/local/share/wiithon/recursos/imagenes/discos/*.png && test -e /usr/share/wiithon/recursos/imagenes/discos && mv -f /usr/local/share/wiithon/recursos/imagenes/discos/*.png /usr/share/wiithon/recursos/imagenes/discos
-        
-        # clean
-        test -d ~/.wiithon/caratulas/ && rm -rf ~/.wiithon/caratulas/
-        test -d ~/.wiithon/discos/ && rm -rf ~/.wiithon/discos/
-        
-        test -e ~/.wiithon/bdd/juegos.db && rm -f ~/.wiithon/bdd/juegos.db
-        test -e ~/.wiithon/bdd/wiithon1.*.db && rm -f ~/.wiithon/bdd/wiithon1.*.db
-        test -e ~/.wiithon/bdd/juegos.db && rm -f ~/.wiithon/bdd/juegos.db
-        test -e ~/.wiithon_acuerdo && rm -f ~/.wiithon_acuerdo
-        
-        test -e /usr/bin/wiithon && rm -f /usr/bin/wiithon
-        test -e /usr/bin/wiithon_autodetectar && rm -f /usr/bin/wiithon_autodetectar
-        test -e /usr/bin/wiithon_autodetectar_lector && rm -f /usr/bin/wiithon_autodetectar_lector
-        test -e /usr/bin/wbfs && rm -f /usr/bin/wbfs
-        
-        test -e /usr/local/bin/wiithon && rm -f /usr/local/bin/wiithon
-        test -e /usr/local/bin/wiithon_autodetectar && rm -f /usr/local/bin/wiithon_autodetectar
-        test -e /usr/local/bin/wiithon_autodetectar_lector && rm -f /usr/local/bin/wiithon_autodetectar_lector
-        test -e /usr/local/bin/wbfs && rm -f /usr/local/bin/wbfs
-
-        test -e /usr/bin/gconftool && gconftool --recursive-unset /apps/nautilus-actions/configurations
-        test -e /usr/share/gconf/schemas/wiithon*.schemas && rm -f /usr/share/gconf/schemas/wiithon*.schemas
-        
-        test -e /usr/share/applications/wiithon.desktop && rm -f /usr/share/applications/wiithon.desktop
-        test -e /usr/share/applications/wiithon_root.desktop && rm -f /usr/share/applications/wiithon_root.desktop
-        
-        test -e /usr/local/lib/libwbfs.so && rm -f /usr/local/lib/libwbfs.so
-        test -e /usr/lib/libwbfs.so && rm -f /usr/lib/libwbfs.so
-        test -e /usr/lib32/libwbfs.so && rm -f /usr/lib32/libwbfs.so
-        
-        test -d /usr/local/share/wiithon && rm -rf /usr/local/share/wiithon
-        
         # fix permises
         
         chmod 755 /usr/share/wiithon/wiithon.py
         chmod 755 /usr/share/wiithon/loading.py
+        chmod 755 /usr/share/wiithon/wiithon_autodetectar*.sh
         chmod 755 /usr/games/wiithon_wrapper
         chmod 755 /usr/games/wiithon_unrar
         chmod 755 /usr/games/wiithon_wbfs_file
-        chmod 755 /usr/share/wiithon/wiithon_autodetectar*.sh
+        chmod 755 /usr/games/wiithon_wdf2iso
+        chmod 755 /usr/games/wiithon_iso2wdf
         chmod 755 /usr/share/wiithon/wiithon_debug.sh
 
         chmod 644 /usr/share/wiithon/recursos/glade/*.ui
@@ -86,6 +50,8 @@ case "$1" in
         ln -sf /usr/games/wiithon_wrapper /usr/share/wiithon/wiithon_wrapper
         ln -sf /usr/games/wiithon_unrar /usr/share/wiithon/wiithon_unrar
         ln -sf /usr/games/wiithon_wbfs_file /usr/share/wiithon/wiithon_wbfs_file
+        ln -sf /usr/games/wiithon_wdf2iso /usr/share/wiithon/wiithon_wdf2iso
+        ln -sf /usr/games/wiithon_iso2wdf /usr/share/wiithon/wiithon_iso2wdf
         
         if [ -x /usr/bin/update-menus ] ; then update-menus ; fi
 

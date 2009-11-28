@@ -1,6 +1,6 @@
 
 #ifndef WWT_ERROR_H
-#define WWT_ERROR_H 1 
+#define WWT_ERROR_H 1
 
 //
 ///////////////////////////////////////////////////////////////////////////////
@@ -14,13 +14,13 @@ typedef enum enumError
 	ERR_WARNING,	// separator: below = real errors and not warnings
 
 	ERR_NO_WDF,
-	ERR_WDF_VERSION, 
+	ERR_WDF_VERSION,
 	ERR_WDF_SPLIT,
 	ERR_WDF_INVALID,
 
 	ERR_WDISC_NOT_FOUND,
 	ERR_NO_WBFS_FOUND,
-	ERR_TOO_MUCH_WBFS_FOUND,
+	ERR_TO_MUCH_WBFS_FOUND,
 	ERR_WBFS_INVALID,
 
 	ERR_CANT_OPEN,
@@ -75,4 +75,4 @@ int PrintError ( const char * func, const char * file, unsigned int line,
 ///////////////                     END                         ///////////////
 ///////////////////////////////////////////////////////////////////////////////
 
-#endif // WWT_ERROR_H 1 
+#endif // WWT_ERROR_H 1

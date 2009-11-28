@@ -180,7 +180,7 @@ of the FBT are set with the value 0xff. Remember: A set bit means "free block".
 a) If N is a multiple of 8 (N%8 == 0) then 1 block to much is marked as free.
    But because of the allocation bug (see below) this bug appears only, if N
    is a multiple of 32.
-   
+
 b) If N%8 > 1 then to less blocks are marked as free. But this means only that
    not the whole WBFS is used for discs.
 

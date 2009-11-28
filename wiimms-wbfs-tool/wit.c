@@ -127,11 +127,14 @@ typedef enum enumOptionsBit
 	OB_CMD_DUMP	= OB_LONG,
 	OB_CMD_ID6	= OB_SORT|OB_UNIQUE,
 	OB_CMD_LIST	= OB_SORT|OB_LONG|OB_UNIQUE|OB_NO_HEADER,
-	OB_CMD_DIFF	= OB__MASK_PSEL|OB_DEST|OB_IGNORE|OB_LONG,
+	OB_CMD_DIFF	= OB__MASK_PSEL|OB_DEST|OB__MASK_OFT|OB_IGNORE|OB_LONG,
 	OB_CMD_COPY	= OB__MASK_PSEL|OB__MASK_SPLIT|OB__MASK_OFT|OB_DEST
 			  |OB_PRESERVE|OB_IGNORE|OB_REMOVE|OB_OVERWRITE,
-	OB_CMD_SCRUB	= OB__MASK_PSEL|OB__MASK_SPLIT|OB_PRESERVE|OB_IGNORE,
- /*?*/	OB_CMD_REMOVE	= OB_UNIQUE|OB_IGNORE,
+	OB_CMD_SCRUB	= OB__MASK_PSEL|OB__MASK_SPLIT|OB__MASK_OFT|OB_PRESERVE|OB_IGNORE,
+	OB_CMD_MOVE	= OB_IGNORE|OB_DEST|OB_OVERWRITE|OB_IGNORE,
+	OB_CMD_REMOVE	= OB_IGNORE|OB_UNIQUE,
+	OB_CMD_RENAME	= OB_IGNORE|OB_ISO|OB_WBFS,
+	OB_CMD_SETTITLE	= OB_CMD_RENAME,
 
 } enumOptionsBit;
 
@@ -162,7 +165,10 @@ typedef enum enumCommands
 	CMD_DIFF,
 	CMD_COPY,
 	CMD_SCRUB,
+	CMD_MOVE,
 	CMD_REMOVE,
+	CMD_RENAME,
+	CMD_SETTITLE,
 
 	CMD__N
 
@@ -250,7 +256,7 @@ CommandTab_t CommandTab[] =
     #endif
 	{ CMD_ERROR,	"ERROR",	"ERR",		OB_CMD_ERROR },
 	{ CMD_EXCLUDE,	"EXCLUDE",	0,		OB_CMD_EXCLUDE },
-	{ CMD_TITLES,	"TITLES",	"TIT",		OB_CMD_TITLES },
+	{ CMD_TITLES,	"TITLES",	0,		OB_CMD_TITLES },
 
 	{ CMD_FILELIST,	"FILELIST",	"FL",		OB_CMD_FILELIST },
 	{ CMD_FILETYPE,	"FILETYPE",	"FT",		OB_CMD_FILETYPE },
@@ -264,7 +270,10 @@ CommandTab_t CommandTab[] =
 	{ CMD_DIFF,	"DIFF",		"CMP",		OB_CMD_DIFF },
 	{ CMD_COPY,	"COPY",		"CP",		OB_CMD_COPY },
 	{ CMD_SCRUB,	"SCRUB",	"SB",		OB_CMD_SCRUB },
+	{ CMD_MOVE,	"MOVE",		"MV",		OB_CMD_MOVE },
 	{ CMD_REMOVE,	"REMOVE",	"RM",		OB_CMD_REMOVE },
+	{ CMD_RENAME,	"RENAME",	"REN",		OB_CMD_RENAME },
+	{ CMD_SETTITLE,	"SETTITLE",	"ST",		OB_CMD_SETTITLE },
 
 	{ CMD__N,0,0,0 }
 };
@@ -285,7 +294,7 @@ static char help_text[] =
     "   VERSION         : Print program name and version and exit.\n"
     "   ERROR    | ERR  : Translate exit code to message.\n"
     "   EXCLUDE         : Print the internal exclude database to stdout.\n"
-    "   TITLES   | TIT  : Print the internal title database to stdout.\n"
+    "   TITLES          : Print the internal title database to stdout.\n"
     "\n"
     "   FILELIST | FT   : List all aource files decared by --source and --recurse.\n"
     "   FILETYPE | FT   : Print a status line for each source file.\n"
@@ -299,7 +308,12 @@ static char help_text[] =
     "   DIFF     | CMP  : Compare ISO images (scrubbed or raw).\n"
     "   COPY     | CP   : Copy ISO images.\n"
     "   SCRUB    | SB   : Scrub ISO images.\n"
-//  " ? REMOVE   | RM   : Remove all ISO files with the specific ID6.\n"
+    "   MOVE     | MV   : Move/rename ISO files.\n"
+ #ifdef TEST // [2do]
+    " ? REMOVE   | RM   : Remove all ISO files with the specific ID6.\n"
+ #endif
+    "   RENAME   | REN  : Rename the ID6 of discs. Disc title can also be set.\n"
+    "   SETTITLE | ST   : Set the disc title of discs.\n"
     "\n"
     "General options (for all commands except 'ERROR'):\n"
     "\n"
@@ -352,7 +366,7 @@ static char help_text[] =
     "   HELP     | ?       [ignored]...\n"
     "   VERSION         -l [ignored]...\n"
     "   ERROR    | ERR  -l [error_code] // NO OTHER OPTIONS\n"
-    "   TITLES   | TIT     [additional_title_file]...\n"
+    "   TITLES             [additional_title_file]...\n"
     "\n"
     "   FILELIST | FL   -l   -ii        [source]...\n"
     "   FILETYPE | FT   -ll  -ii        [source]...\n"
@@ -364,7 +378,12 @@ static char help_text[] =
     "   DIFF     | CMP  -tt     -i    --psel= [source]... [-d=]dest\n"
     "   COPY     | CP   -tt -zZ -ipRo --psel= [source]... [-d=]dest\n"
     "   SCRUB    | SB   -tt -zZ -ip   --psel= [source]...\n"
-//  "   REMOVE   | RM   ...                   id6...\n"
+    "   MOVE     | MV   -tt     -i    --psel= [source]... [-d=]dest\n"
+ #ifdef TEST // [2do]
+    "   REMOVE   | RM   ...             id6...\n"
+ #endif
+    "   RENAME   | REN  -i -IB          id6=[new][,title]...\n"
+    "   SETTITLE | ST   -i -IB          id6=title...\n"
     "\n";
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -564,7 +583,7 @@ enumError exec_dump ( SuperFile_t * sf, Iterator_t * it )
 	goto abort;
     CalcWDiscInfo(&wdi);
 
-    err = LoadPartitionInfo(sf, &wdi, it->long_count ? &mm : 0 );
+    err = LoadPartitionInfo(sf, &wdi, it->long_count>1 ? &mm : 0 );
     if (err)
 	goto dump_mm;
 
@@ -581,13 +600,13 @@ enumError exec_dump ( SuperFile_t * sf, Iterator_t * it )
 
     u32 nt = wdi.n_ptab;
     u32 np = wdi.n_part;
-    
+
     printf("\n  %d partition table%s with %d partition%s:\n\n"
 	    "     tab.idx   n(part)       offset(part.tab) .. end(p.tab)\n"
 	    "    --------------------------------------------------------\n",
 		nt, nt == 1 ? "" : "s",
 		np, np == 1 ? "" : "s" );
-    
+
     int i;
     WDPartCount_t *pc = wdi.pcount;
     for ( i = 0; i < WD_MAX_PART_INFO; i++, pc++ )
@@ -638,8 +657,8 @@ enumError exec_dump ( SuperFile_t * sf, Iterator_t * it )
 
     //--------------------------------------------------
 
-    for ( i = 0, pi = wdi.pinfo; i < np; i++, pi++ )
-    {
+    if (it->long_count)
+      for ( i = 0, pi = wdi.pinfo; i < np; i++, pi++ )
 	if ( pi->size )
 	{
 	    printf("\n  Partition table #%d, partition #%d, type %x [%s]:\n",
@@ -651,20 +670,19 @@ enumError exec_dump ( SuperFile_t * sf, Iterator_t * it )
 				     " %02x%02x%02x%02x %02x%02x%02x%02x\n",
 		p8[0], p8[1], p8[2], p8[3], p8[4], p8[5], p8[6], p8[7],
 		p8[8], p8[9], p8[10], p8[11], p8[12], p8[13], p8[14], p8[15] );
-	    
+
 	    dump_data( pi->off, pi->ph.tmd_off4,  pi->ph.tmd_size,		"TMD:" );
 	    dump_data( pi->off, pi->ph.cert_off4, pi->ph.cert_size,		"Cert:" );
 	    dump_data( pi->off, pi->ph.h3_off4,   WD_H3_SIZE,		"H3:" );
 	    dump_data( pi->off, pi->ph.data_off4, (off_t)pi->ph.data_size<<2, "Data:" );
 	}
-    }
 
     //--------------------------------------------------
 
 
  dump_mm:
 
-    if (it->long_count)
+    if ( it->long_count > 1 )
     {
 	mi = InsertMemMap(&mm,0,0x100);
 	StringCopyS(mi->info,sizeof(mi->info),"Disc header");
@@ -828,7 +846,7 @@ enumError cmd_list()
 		wlist.used,
 		wlist.total_size_mib, (wlist.total_size_mib+512)/1024 );
     }
-    
+
     if (long_count)
     {
 	if (print_header)
@@ -839,7 +857,7 @@ enumError cmd_list()
 	    max_name_wd += n1;
 	    if ( max_name_wd < n2 )
 		max_name_wd = n2;
-	
+
 	    if (line2)
 		fputs("      n(p)  type  file path\n",stdout);
 
@@ -919,12 +937,15 @@ enumError exec_diff ( SuperFile_t * f1, Iterator_t * it )
 			    ? f1->f.outname
 			    : f1->f.fname;
     GenImageFileName(&f2.f,opt_dest,oname,oft);
-    SubstFileNameSF(&f2,f1);
-    
-    f2.f.disable_errors = it->act_non_exist != ACT_WARN;
-    enumError err = OpenSF(&f2,0,it->act_non_iso||it->act_wbfs>=ACT_ALLOW);
+    SubstFileNameSF(&f2,f1,0);
+
+    //f2.f.disable_errors = it->act_non_exist != ACT_WARN;
+    enumError err = OpenSF(&f2,0,it->act_non_iso||it->act_wbfs>=ACT_ALLOW,0);
     if (err)
-	return err;
+    {
+	it->diff_count++;
+	return ERR_OK;
+    }
     f2.f.disable_errors = false;
 
     f2.indent		= 5;
@@ -948,17 +969,15 @@ enumError exec_diff ( SuperFile_t * f1, Iterator_t * it )
 		progname, raw_mode ? "RAW" : "SCRUB",
 		oft_name[f1->oft], f1->f.fname, oft_name[f2.oft], f2.f.fname );
     }
-    
+
     err =  DiffSF( f1, &f2, it->long_count, raw_mode ? WHOLE_DISC : partition_selector );
     if ( err == ERR_DIFFER )
     {
 	it->diff_count++;
 	err = ERR_OK;
 	if ( verbose >= 0 )
-	{
 	    printf( "! ISOs differ: %s:%s : %s:%s\n",
 			oft_name[f1->oft], f1->f.fname, oft_name[f2.oft], f2.f.fname );
-	}
     }
     it->done_count++;
 
@@ -986,7 +1005,7 @@ enumError cmd_diff()
 	opt_dest = param->arg;
 	param->arg = 0;
     }
-    
+
     ParamList_t * param;
     for ( param = first_param; param; param = param->next )
 	AppendStringField(&source_list,param->arg,true);
@@ -1019,13 +1038,18 @@ enumError exec_copy ( SuperFile_t * fi, Iterator_t * it )
     if (!fi->f.id6[0])
 	return ERR_OK;
 
-    enumOFT oft = CalcOFT(output_file_type,opt_dest,fi->f.fname,OFT__DEFAULT);
+    const bool scrub_it = it->scrub_it
+		&& ( output_file_type == OFT_UNKNOWN || output_file_type == GetOFT(fi) );
+
+    const enumOFT oft = scrub_it
+			? GetOFT(fi)
+			: CalcOFT(output_file_type,opt_dest,fi->f.fname,OFT__DEFAULT);
 
     SuperFile_t fo;
     InitializeSF(&fo);
     fo.oft = oft;
 
-    if (it->scrub_it)
+    if (scrub_it)
 	fo.f.fname = strdup(fi->f.fname);
     else
     {
@@ -1035,7 +1059,7 @@ enumError exec_copy ( SuperFile_t * fi, Iterator_t * it )
 				? fi->f.outname
 				: fi->f.fname;
 	GenImageFileName(&fo.f,opt_dest,oname,oft);
-	SubstFileNameSF(&fo,fi);
+	SubstFileNameSF(&fo,fi,0);
     }
 
     fo.indent		= 5;
@@ -1046,7 +1070,7 @@ enumError exec_copy ( SuperFile_t * fi, Iterator_t * it )
     const bool raw_mode = partition_selector == WHOLE_DISC || !fi->f.id6[0];
     if (testmode)
     {
-	if (it->scrub_it)
+	if (scrub_it)
 	    printf( "%s: WOULD %s %s:%s\n",
 		progname, raw_mode ? "COPY " : "SCRUB",
 		oft_name[oft], fi->f.fname );
@@ -1060,7 +1084,7 @@ enumError exec_copy ( SuperFile_t * fi, Iterator_t * it )
 
     if ( verbose >= 0 )
     {
-	if (it->scrub_it)
+	if (scrub_it)
 	    printf( "* %s %s %s %s\n",
 		progname, raw_mode ? "COPY " : "SCRUB",
 		oft_name[oft], fi->f.fname );
@@ -1069,7 +1093,7 @@ enumError exec_copy ( SuperFile_t * fi, Iterator_t * it )
 		progname, raw_mode ? "COPY " : "SCRUB",
 		oft_name[fi->oft], fi->f.fname, oft_name[oft], fo.f.fname );
     }
-    
+
     enumError err = CreateFile( &fo.f, 0, IOM_IS_IMAGE, it->overwrite );
     if (err)
 	goto abort;
@@ -1078,7 +1102,7 @@ enumError exec_copy ( SuperFile_t * fi, Iterator_t * it )
 	SetupSplitFile(&fo.f,oft,opt_split_size);
 
     fo.file_size = fi->file_size;
-    err = SetupWriteSF( &fo, it->scrub_it ? GetOFT(fi) : oft );
+    err = SetupWriteSF(&fo,oft);
     if (err)
 	goto abort;
 
@@ -1092,7 +1116,7 @@ enumError exec_copy ( SuperFile_t * fi, Iterator_t * it )
     err = ResetSF( &fo, used_options & OB_PRESERVE ? &fi->f.st : 0 );
     if (err)
 	goto abort;
-    
+
     return ERR_OK;
 
  abort:
@@ -1120,8 +1144,7 @@ enumError cmd_copy()
 	opt_dest = param->arg;
 	param->arg = 0;
     }
-//    bool dest_is_dir = IsDirectory(opt_dest,false);
-    
+
     ParamList_t * param;
     for ( param = first_param; param; param = param->next )
 	AppendStringField(&source_list,param->arg,true);
@@ -1180,10 +1203,223 @@ enumError cmd_scrub()
 //
 ///////////////////////////////////////////////////////////////////////////////
 
+enumError exec_move ( SuperFile_t * fi, Iterator_t * it )
+{
+    SuperFile_t fo;
+    InitializeSF(&fo);
+    fo.oft = fi->oft;
+
+    ccp oname = fi->oft == OFT_WBFS && fi->f.id6[0]
+			? fi->f.id6
+			: fi->f.outname
+				? fi->f.outname
+				: fi->f.fname;
+    GenImageFileName(&fo.f,opt_dest,oname,fi->oft);
+    SubstFileNameSF(&fo,fi,0);
+
+    if ( strcmp(fi->f.fname,fo.f.fname) )
+    {
+	if ( !it->overwrite && !stat(fo.f.fname,&fo.f.st) )
+	{
+	    ERROR0(ERR_CANT_CREATE,"File already exists: %s\n",fo.f.fname); 
+	}
+	else if (!CheckCreated(fo.f.fname,false))
+	{
+	    if ( testmode || verbose >= 0 )
+	    {
+		printf(" - %sMove %s:%s -> %s\n",
+		    testmode ? "WOULD " : "",
+		    oft_name[fo.oft], fi->f.fname, fo.f.fname );
+	    }
+
+	    if ( !testmode && rename(fi->f.fname,fo.f.fname) )
+		return ERROR1( ERR_CANT_CREATE, "Can't create file: %s\n", fo.f.fname );
+	}
+    }
+
+    ResetSF(&fo,0);
+    return ERR_OK;
+}
+
+//-----------------------------------------------------------------------------
+
+enumError cmd_move()
+{
+    if ( verbose >= 0 )
+	print_title(stdout);
+
+    if (!opt_dest)
+    {
+	if (!first_param)
+	    return ERROR0(ERR_MISSING_PARAM, "Missing destination parameter\n" );
+
+	ParamList_t * param;
+	for ( param = first_param; param->next; param = param->next )
+	    ;
+	ASSERT(param);
+	ASSERT(!param->next);
+	opt_dest = param->arg;
+	param->arg = 0;
+    }
+
+    ParamList_t * param;
+    for ( param = first_param; param; param = param->next )
+	AppendStringField(&source_list,param->arg,true);
+
+    Iterator_t it;
+    InitializeIterator(&it);
+    it.act_non_iso	= used_options & OB_IGNORE ? ACT_IGNORE : ACT_WARN;
+    it.act_wbfs		= ACT_ALLOW;
+    it.overwrite	= used_options & OB_OVERWRITE ? 1 : 0;
+
+    if ( testmode > 1 )
+    {
+	it.func = exec_filetype;
+	enumError err = SourceIterator(&it,false);
+	printf("DESTINATION: %s\n",opt_dest);
+	return err;
+    }
+
+    it.func = exec_move;
+    return SourceIterator(&it,false);
+}
+
+//
+///////////////////////////////////////////////////////////////////////////////
+
+enumError exec_remove ( SuperFile_t * fi, Iterator_t * it )
+{
+    ParamList_t * param;
+    for ( param = first_param; param; param = param->next )
+	if (!strcmp(param->selector,fi->f.id6))
+	    break;
+
+    if (!param)
+	return ERR_OK;
+
+    // [2do]
+    printf("NOT IMPLEMENTED: REMOVE %s\n",fi->f.fname);
+    return ERR_OK;
+}
+
+//-----------------------------------------------------------------------------
+
 enumError cmd_remove()
 {
-    // [2do] ???
-    return ERR_NOT_IMPLEMENTED;
+    if ( verbose >= 0 )
+	print_title(stdout);
+
+    if ( !source_list.used && !recurse_list.used )
+	return ERROR0( ERR_MISSING_PARAM, "Missing source files.\n");
+
+    CheckParamID6( ( used_options & OB_UNIQUE ) != 0, false );
+    if ( !n_param )
+	return ERROR0(ERR_MISSING_PARAM, "Missing ID6 parameters.\n" );
+
+    Iterator_t it;
+    InitializeIterator(&it);
+    it.act_non_iso	= used_options & OB_IGNORE ? ACT_IGNORE : ACT_WARN;
+    it.act_wbfs		= it.act_non_iso;
+    it.long_count	= long_count;
+
+    if ( testmode > 1 )
+    {
+	it.func = exec_filetype;
+	enumError err = SourceIterator(&it,false);
+	printf("DESTINATION: %s\n",opt_dest);
+	return err;
+    }
+
+    it.func = exec_remove;
+    return SourceIterator(&it,false);
+}
+
+//
+///////////////////////////////////////////////////////////////////////////////
+
+enumError exec_rename ( SuperFile_t * fi, Iterator_t * it )
+{
+    ParamList_t *param, *plus_param = 0;
+    for ( param = first_param; param; param = param->next )
+    {
+	if ( !plus_param && param->selector[0] == '+' )
+	    plus_param = param;
+	else if ( !strcmp(param->selector,fi->f.id6) )
+	    break;
+    }
+
+    if (!param)
+    {
+	if (!plus_param)
+	    return ERR_OK;
+	param = plus_param;
+    }
+
+    bool change_wbfs	= 0 != ( used_options & OB_WBFS );
+    bool change_iso	= 0 != ( used_options & OB_ISO );
+    if ( !change_wbfs && !change_iso )
+	change_wbfs = change_iso = true;
+
+    if ( fi->oft == OFT_WBFS )
+    {
+	ASSERT(fi->wbfs);
+	return RenameWDisc( fi->wbfs, param->id6, param->arg,
+			    change_wbfs, change_iso, verbose, testmode );
+    }
+
+
+    const int bufsize = WII_TITLE_OFF + WII_TITLE_SIZE;
+    char buf[bufsize];
+
+    enumError err = ReadSF(fi,0,buf,sizeof(buf));
+    if (err)
+	return err;
+
+    if (RenameISOHeader( buf, fi->f.fname,
+			 param->id6, param->arg, verbose, testmode ))
+    {
+	err = WriteSF(fi,0,buf,sizeof(buf));
+	if (err)
+	    return err;
+	if ( fi->oft == OFT_WDF )
+	    err = TermWriteWDF(fi);
+    }
+    return err;
+}
+
+//-----------------------------------------------------------------------------
+
+enumError cmd_rename ( bool rename_id )
+{
+    if ( verbose >= 0 )
+	print_title(stdout);
+
+    if ( !source_list.used && !recurse_list.used )
+	return ERROR0( ERR_MISSING_PARAM, "Missing source files.\n");
+
+    enumError err = CheckParamRename(rename_id,!rename_id,false);
+    if (err)
+	return err;
+    if ( !n_param )
+	return ERROR0(ERR_MISSING_PARAM, "Missing renaming parameters.\n" );
+
+    Iterator_t it;
+    InitializeIterator(&it);
+    it.open_modify	= true;
+    it.act_non_iso	= used_options & OB_IGNORE ? ACT_IGNORE : ACT_WARN;
+    it.act_wbfs		= ACT_EXPAND;
+    it.long_count	= long_count;
+
+    if ( testmode > 1 )
+    {
+	it.func = exec_filetype;
+	enumError err = SourceIterator(&it,false);
+	printf("DESTINATION: %s\n",opt_dest);
+	return err;
+    }
+
+    it.func = exec_rename;
+    return SourceIterator(&it,false);
 }
 
 //
@@ -1410,7 +1646,10 @@ enumError check_command ( int argc, char ** argv )
 	case CMD_DIFF:		err = cmd_diff(); break;
 	case CMD_COPY:		err = cmd_copy(); break;
 	case CMD_SCRUB:		err = cmd_scrub(); break;
+	case CMD_MOVE:		err = cmd_move(); break;
 	case CMD_REMOVE:	err = cmd_remove(); break;
+	case CMD_RENAME:	err = cmd_rename(true); break;
+	case CMD_SETTITLE:	err = cmd_rename(false); break;
 
 	default:
 	    help_exit();
@@ -1451,13 +1690,13 @@ int main ( int argc, char ** argv )
     enumError err = CheckEnvOptions("WIT_OPT",CheckOptions,1);
     if (err)
 	hint_exit(err);
-    
+
     err = CheckOptions(argc,argv,0);
     if (err)
 	hint_exit(err);
 
     err = check_command(argc,argv);
-	
+
     if (SIGINT_level)
 	err = ERROR0(ERR_INTERRUPT,"Program interrupted by user.");
     return err;

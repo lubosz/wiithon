@@ -1,6 +1,6 @@
 
 #ifndef WWT_WBFS_INTERFACE_H
-#define WWT_WBFS_INTERFACE_H 1 
+#define WWT_WBFS_INTERFACE_H 1
 
 #include <stdio.h>
 
@@ -70,6 +70,8 @@ typedef struct PartitionInfo_t
 
 //-----------------------------------------------------------------------------
 
+extern int wbfs_count;
+
 extern PartitionInfo_t *  first_partition_info;
 extern PartitionInfo_t ** append_partition_info;
 
@@ -94,6 +96,8 @@ void ScanPartitionGames();
 ParamList_t * CheckParamID6 ( bool unique, bool lookup_title_db );
 ParamList_t * SearchParamID6 ( ccp id6 );
 int PrintParamID6();
+
+enumError CheckParamRename ( bool rename_id, bool allow_plus, bool allow_index );
 
 //
 ///////////////////////////////////////////////////////////////////////////////
@@ -219,7 +223,7 @@ typedef struct WDiscInfo_t
 //-----------------------------------------------------------------------------
 
 typedef struct WDiscListItem_t
-{	
+{
 	u32  size_mib;
 	char id6[7];
 	char name64[65];
@@ -276,7 +280,7 @@ typedef struct CheckDisc_t
 	u16  bl_fbt;		// num of blocks marked free in fbt
 	u16  bl_overlap;	// num of blocks that overlaps other discs
 	u16  bl_invalid;	// num of blocks with invalid blocks
-	u16  bl_total;		// total block errors
+	u16  err_count;		// total count of errors
 
 } CheckDisc_t;
 
@@ -289,7 +293,7 @@ typedef struct CheckWBFS_t
 	WBFS_t * wbfs;		// attached WBFS
 
     // data
-    
+
 	off_t  fbt_off;		// offset of fbt
 	size_t fbt_size;	// size of fbt
 	u32 * cur_fbt;		// current free blocks table (1 bit per block)
@@ -298,7 +302,7 @@ typedef struct CheckWBFS_t
 	u8  * ubl;		// used blocks (1 byte per block), copy of fbt
 	u8  * blc;		// block usage counter
 	CheckDisc_t * disc;	// disc list
-	
+
     // statistics
 
 	u32 err_fbt_used;	// number of wrong used marked blocks
@@ -321,8 +325,8 @@ typedef struct CheckWBFS_t
 ///////////////////////////////////////////////////////////////////////////////
 
 extern int partition_selector;
-extern u8 wdisc_usage_tab [WII_SECTORS_DOUBLE_LAYER];
-extern u8 wdisc_usage_tab2[WII_SECTORS_DOUBLE_LAYER];
+extern u8 wdisc_usage_tab [WII_MAX_SECTORS];
+extern u8 wdisc_usage_tab2[WII_MAX_SECTORS];
 
 int ScanPartitionSelector ( ccp arg );
 
@@ -343,7 +347,7 @@ enumError OpenPartWBFS	( WBFS_t * w, struct PartitionInfo_t *  info );
 enumError GetFirstWBFS	( WBFS_t * w, struct PartitionInfo_t ** info );
 enumError GetNextWBFS	( WBFS_t * w, struct PartitionInfo_t ** info );
 
-enumError DumpWBFS	( WBFS_t * w, FILE * f, int indent, int dump_level );
+enumError DumpWBFS	( WBFS_t * w, FILE * f, int indent, int dump_level, CheckWBFS_t * ck );
 
 //-----------------------------------------------------------------------------
 
@@ -372,11 +376,14 @@ enumError GetWDiscInfo	     ( WBFS_t * w, WDiscInfo_t * dinfo, int disc_index );
 enumError GetWDiscInfoBySlot ( WBFS_t * w, WDiscInfo_t * dinfo, u32 disc_slot );
 enumError FindWDiscInfo	     ( WBFS_t * w, WDiscInfo_t * dinfo, ccp id6 );
 
+enumError LoadIsoHeader	( WBFS_t * w, WDiscHeader_t * iso_header, wbfs_disc_t * disc );
+
 void CalcWDiscInfo ( WDiscInfo_t * winfo );
 enumError CountPartitions ( SuperFile_t * sf, WDiscInfo_t * dinfo );
 enumError LoadPartitionInfo ( SuperFile_t * sf, WDiscInfo_t * dinfo, MemMap_t * mm );
 
-enumError DumpWDiscInfo  ( WDiscInfo_t * dinfo, FILE * f, int indent );
+enumError DumpWDiscInfo
+	( WDiscInfo_t * dinfo, WDiscHeader_t * iso_header, FILE * f, int indent );
 
 //-----------------------------------------------------------------------------
 
@@ -393,7 +400,9 @@ void SortWDiscList   ( WDiscList_t * wlist, enum SortMode sort_mode,
 
 //-----------------------------------------------------------------------------
 
-enumError OpenWDisc	( WBFS_t * w, ccp id6 );
+enumError OpenWDiscID6	( WBFS_t * w, ccp id6 );
+enumError OpenWDiscIndex( WBFS_t * w, u32 index );
+enumError OpenWDiscSlot	( WBFS_t * w, u32 slot );
 enumError CloseWDisc	( WBFS_t * w );
 enumError ExistsWDisc	( WBFS_t * w, ccp id6 );
 
@@ -402,6 +411,12 @@ WDiscHeader_t * GetWDiscHeader ( WBFS_t * w );
 enumError AddWDisc	( WBFS_t * w, SuperFile_t * sf, int partition_selector );
 enumError ExtractWDisc	( WBFS_t * w, SuperFile_t * sf );
 enumError RemoveWDisc	( WBFS_t * w, ccp id6, bool free_slot_only );
+enumError RenameWDisc	( WBFS_t * w, ccp new_id6, ccp new_title,
+	bool change_wbfs_head, bool change_iso_head, int verbose, int testmode );
+
+int RenameISOHeader ( void * data, ccp fname,
+	ccp new_id6, ccp new_title, int verbose, int testmode );
+
 
 //
 ///////////////////////////////////////////////////////////////////////////////
@@ -433,6 +448,7 @@ typedef struct Iterator_t
 
 	// options
 
+	bool open_modify;		// open in modify mode
 	enumAction act_non_exist;	// action for non existing files
 	enumAction act_non_iso;		// action for non iso files
 	enumAction act_wbfs;		// action for wbfs files with n(disc) != 1

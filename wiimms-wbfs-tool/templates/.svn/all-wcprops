@@ -1,7 +1,13 @@
 K 25
 svn:wc:ra_dav:version-url
 V 50
-/wii/!svn/ver/454/trunk/wiimms-wbfs-tool/templates
+/wii/!svn/ver/491/trunk/wiimms-wbfs-tool/templates
+END
+WBFS.txt
+K 25
+svn:wc:ra_dav:version-url
+V 59
+/wii/!svn/ver/472/trunk/wiimms-wbfs-tool/templates/WBFS.txt
 END
 install.sh
 K 25
@@ -9,23 +15,23 @@ svn:wc:ra_dav:version-url
 V 61
 /wii/!svn/ver/402/trunk/wiimms-wbfs-tool/templates/install.sh
 END
-WBFS.txt
-K 25
-svn:wc:ra_dav:version-url
-V 59
-/wii/!svn/ver/402/trunk/wiimms-wbfs-tool/templates/WBFS.txt
-END
 wit.txt
 K 25
 svn:wc:ra_dav:version-url
 V 58
-/wii/!svn/ver/454/trunk/wiimms-wbfs-tool/templates/wit.txt
+/wii/!svn/ver/491/trunk/wiimms-wbfs-tool/templates/wit.txt
+END
+gbatemp-update.forum
+K 25
+svn:wc:ra_dav:version-url
+V 71
+/wii/!svn/ver/491/trunk/wiimms-wbfs-tool/templates/gbatemp-update.forum
 END
 DOCUMENTATION.txt
 K 25
 svn:wc:ra_dav:version-url
 V 68
-/wii/!svn/ver/431/trunk/wiimms-wbfs-tool/templates/DOCUMENTATION.txt
+/wii/!svn/ver/472/trunk/wiimms-wbfs-tool/templates/DOCUMENTATION.txt
 END
 load-titles.sh
 K 25
@@ -33,23 +39,17 @@ svn:wc:ra_dav:version-url
 V 65
 /wii/!svn/ver/402/trunk/wiimms-wbfs-tool/templates/load-titles.sh
 END
-wdf2iso.txt
-K 25
-svn:wc:ra_dav:version-url
-V 62
-/wii/!svn/ver/382/trunk/wiimms-wbfs-tool/templates/wdf2iso.txt
-END
 iso2wdf.txt
 K 25
 svn:wc:ra_dav:version-url
 V 62
 /wii/!svn/ver/382/trunk/wiimms-wbfs-tool/templates/iso2wdf.txt
 END
-announce.forum
+wdf2iso.txt
 K 25
 svn:wc:ra_dav:version-url
-V 65
-/wii/!svn/ver/427/trunk/wiimms-wbfs-tool/templates/announce.forum
+V 62
+/wii/!svn/ver/382/trunk/wiimms-wbfs-tool/templates/wdf2iso.txt
 END
 WDF.txt
 K 25
@@ -61,7 +61,7 @@ wwt.txt
 K 25
 svn:wc:ra_dav:version-url
 V 58
-/wii/!svn/ver/450/trunk/wiimms-wbfs-tool/templates/wwt.txt
+/wii/!svn/ver/491/trunk/wiimms-wbfs-tool/templates/wwt.txt
 END
 wdf-dump.txt
 K 25
@@ -75,11 +75,11 @@ svn:wc:ra_dav:version-url
 V 62
 /wii/!svn/ver/294/trunk/wiimms-wbfs-tool/templates/wdf-cat.txt
 END
-update.forum
+gbatemp-announce.forum
 K 25
 svn:wc:ra_dav:version-url
-V 63
-/wii/!svn/ver/454/trunk/wiimms-wbfs-tool/templates/update.forum
+V 73
+/wii/!svn/ver/472/trunk/wiimms-wbfs-tool/templates/gbatemp-announce.forum
 END
 version.h
 K 25
@@ -98,4 +98,10 @@ K 25
 svn:wc:ra_dav:version-url
 V 64
 /wii/!svn/ver/309/trunk/wiimms-wbfs-tool/templates/txt.edit-list
+END
+u30-update.forum
+K 25
+svn:wc:ra_dav:version-url
+V 67
+/wii/!svn/ver/465/trunk/wiimms-wbfs-tool/templates/u30-update.forum
 END

@@ -148,7 +148,7 @@ static int LoadTitleFile ( ccp fname, bool warn )
 
 	char *dest = title_buf;
 	char *dend = dest + sizeof(title_buf) - 6; // enough for SPACE + UTF8 + NULL
-	
+
 	bool have_blank = false;
 	while ( dest < dend && *ptr )
 	{
@@ -226,7 +226,7 @@ void InitializeTDB()
 
 ccp GetTitle ( ccp id6, ccp default_if_failed )
 {
-    if (!title_mode)
+    if ( !title_mode || !id6 || !*id6 )
 	return default_if_failed;
 
     InitializeTDB();
@@ -493,12 +493,12 @@ int InsertID ( ID_DB_t * db, ccp id, ccp title )
     memmove( elem+1, elem, (db->used-idx)*sizeof(*elem) );
     db->used++;
     ASSERT( db->used <= db->size );
-    
+
     int tlen = title ? strlen(title) : 0;
     ID_t * t = *elem = (ID_t*)malloc(sizeof(ID_t)+tlen);
     if (!t)
 	OUT_OF_MEMORY;
-    
+
     StringCopyS(t->id,sizeof(t->id),id);
     StringCopyS(t->title,tlen+1,title);
 
@@ -545,7 +545,7 @@ int RemoveID ( ID_DB_t * db, ccp id, bool remove_extended )
 	    elem = db->list + idx;
 	    memmove( elem, elem+count, (db->used-idx)*sizeof(*elem) );
 	    break;
-	    
+
 	default:
 	    ASSERT(0);
     }
@@ -557,7 +557,7 @@ int RemoveID ( ID_DB_t * db, ccp id, bool remove_extended )
 
 void DumpIDDB ( ID_DB_t * db, FILE * f )
 {
-    if ( !db || !db->list || !f ) 
+    if ( !db || !db->list || !f )
 	return;
 
     ID_t ** list = db->list, **end;

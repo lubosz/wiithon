@@ -1,6 +1,6 @@
 
 #ifndef WWT_LIB_STD_H
-#define WWT_LIB_STD_H 1 
+#define WWT_LIB_STD_H 1
 
 #define _GNU_SOURCE 1
 
@@ -112,7 +112,10 @@ typedef enum enumSystemID
 #define MAX_SPLIT_FILES		100
 #define MIN_SPLIT_SIZE		100000000
 #define ISO_SPLIT_DETECT_SIZE	(4ull*GiB)
-#define HD_SECTOR_SIZE		0x100
+#define HD_SECTOR_SIZE		0x200
+
+#define DEF_SPLIT_SIZE		4000000000ull
+#define DEF_SPLIT_SIZE_WBFS	0xffff8000ull
 
 //
 ///////////////////////////////////////////////////////////////////////////////
@@ -137,7 +140,7 @@ enumError CheckEnvOptions ( ccp varname, check_opt_func, int mode );
 
 #if EXTENDED_IO_FUNC
 
- #define XPARM ccp func, ccp file, uint line, 
+ #define XPARM ccp func, ccp file, uint line,
  #define XCALL func,file,line,
  #define XERROR0 func,file,line,0
  #define XERROR1 func,file,line,errno
@@ -148,6 +151,7 @@ enumError CheckEnvOptions ( ccp varname, check_opt_func, int mode );
  #define SetFileTime(f,s)	XSetFileTime	(__FUNCTION__,__FILE__,__LINE__,f,s)
  #define OpenFile(f,n,i)	XOpenFile	(__FUNCTION__,__FILE__,__LINE__,f,n,i)
  #define OpenFileModify(f,n,i)	XOpenFileModify	(__FUNCTION__,__FILE__,__LINE__,f,n,i)
+ #define CheckCreated(f,d)	XCheckCreated	(__FUNCTION__,__FILE__,__LINE__,f,d)
  #define CreateFile(f,n,i,o)	XCreateFile	(__FUNCTION__,__FILE__,__LINE__,f,n,i,o)
  #define OpenStreamFile(f)	XOpenStreamFile	(__FUNCTION__,__FILE__,__LINE__,f)
  #define SetupSplitFile(f,m,s)	XSetupSplitFile	(__FUNCTION__,__FILE__,__LINE__,f,m,s)
@@ -181,6 +185,7 @@ enumError CheckEnvOptions ( ccp varname, check_opt_func, int mode );
  #define SetFileTime(f,s)	XSetFileTime	(f,s)
  #define OpenFile(f,n,i)	XOpenFile	(f,n,i)
  #define OpenFileModify(f,n,i)	XOpenFileModify	(f,n,i)
+ #define CheckCreated(f,d)	XCheckCreated	(f,d)
  #define CreateFile(f,n,i,o)	XCreateFile	(f,n,i,o)
  #define OpenStreamFile(f)	XOpenStreamFile	(f)
  #define SetupSplitFile(f,m,s)	XSetupSplitFile	(f,m,s)
@@ -261,7 +266,7 @@ typedef enum enumFileType
 
 	FT_UNKNOWN	= 0x0000,  // not analysed yet
 
-	FT_ID_DIR	= 0x0001,  // is a directory 
+	FT_ID_DIR	= 0x0001,  // is a directory
 	FT_ID_WBFS	= 0x0002,  // file is a WBFS
 	FT_ID_ISO	= 0x0004,  // file is a ISO image
 	FT_ID_OTHER	= 0x0008,  // file neither a WBFS nor a ISO image
@@ -351,17 +356,17 @@ typedef struct File_t
  #endif
 
 	// split file support
-	
+
 	struct File_t **split_f; // list with pointers to the split files
 	int split_used;		 // number of used split files in 'split_f'
 	off_t split_filesize;	 // max file size for new files
 	ccp split_fname_format;	 // format with '%u' at the end for 'fname'
-	ccp split_ftemp_format; // format with '%u' at the end for 'rename'
-	
+	ccp split_rename_format; // format with '%u' at the end for 'rename'
+
 	// wbfs vars
 
 	u32 sector_size;	// size of one hd sector, default = 512
-	
+
 	// statistics
 
 	u32 tell_count;		// number of successfull tell operations
@@ -387,6 +392,7 @@ enumError XSetFileTime	( XPARM File_t * f, struct stat * st );
 enumError XOpenFile       ( XPARM File_t * f, ccp fname, enumIOMode iomode );
 enumError XOpenFileModify ( XPARM File_t * f, ccp fname, enumIOMode iomode );
 enumError XCreateFile     ( XPARM File_t * f, ccp fname, enumIOMode iomode, int overwrite );
+enumError XCheckCreated   ( XPARM             ccp fname, bool disable_errors );
 enumError XOpenStreamFile ( XPARM File_t * f );
 enumError XSetupSplitFile ( XPARM File_t *f, enumOFT oft, off_t file_size );
 enumError XCreateSplitFile( XPARM File_t *f, uint split_idx );
@@ -403,6 +409,8 @@ void CopyFD ( File_t * dest, File_t * src );
 
 struct WDF_Head_t;
 enumError XAnalyseWH ( XPARM File_t * f, struct WDF_Head_t * wh, bool print_err );
+
+enumError StatFile ( struct stat * st, ccp fname, int fd );
 
 //-----------------------------------------------------------------------------
 // file io with error messages
@@ -481,10 +489,11 @@ char * StringCat3E ( char * buf, char * buf_end, ccp src1, ccp src2, ccp src3 );
 
 //-----
 
-int  CheckID  ( ccp id4_or_6 );		// check up to 7 chars
-bool CheckID6 ( const void * id6  );	// exactly the first 6 bytes are checked
-int  CountIDChars ( ccp id );		// count number of allowed ID characters
-char * ScanID ( char * destbuf7, int * destlen, ccp source );
+int  CheckID	    ( ccp id4_or_6 );		// check up to 7 chars
+int  CheckIDnocase  ( ccp id4_or_6 );		// check up to 7 chars, ignoring case
+bool CheckID6	    ( const void * id6  );	// exactly the first 6 bytes are checked
+int  CountIDChars   ( ccp id );			// count number of allowed ID characters
+char * ScanID	    ( char * destbuf7, int * destlen, ccp source );
 
 char * ScanNumU32   ( ccp arg, u32 * p_stat, u32 * p_num,            u32 min, u32 max );
 char * ScanRangeU32 ( ccp arg, u32 * p_stat, u32 * p_n1, u32 * p_n2, u32 min, u32 max );
@@ -566,6 +575,7 @@ typedef struct ParamList_t
 {
 	char * arg;
 	char id6[7];
+	char selector[7];
 	int count;
 	struct ParamList_t * next;
 
@@ -589,8 +599,9 @@ int AddParam ( ccp arg, int is_temp );
 
 typedef struct SubstString_t
 {
-	char c1, c2;	// up to 2 codes (lower+upper case)
-	ccp  str;	// pointer to string
+	char c1, c2;		// up to 2 codes (lower+upper case)
+	bool allow_slash;	// true: allow slash in replacement
+	ccp  str;		// pointer to string
 
 } SubstString_t;
 
@@ -739,4 +750,4 @@ extern StringField_t created_files;
 ///////////////                     END                         ///////////////
 ///////////////////////////////////////////////////////////////////////////////
 
-#endif // WWT_LIB_STD_H 1 
+#endif // WWT_LIB_STD_H 1

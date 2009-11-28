@@ -9,11 +9,20 @@
 #include <stdarg.h>
 #include <string.h>
 #include <fcntl.h>
+#include <sys/ioctl.h>
 #include <unistd.h>
 #include <errno.h>
 #include <ctype.h>
 #include <signal.h>
 #include <utime.h>
+
+#if defined(__CYGWIN__)
+  #include <cygwin/fs.h>
+#elif defined(__APPLE__)
+  #include <sys/disc.h>
+#elif defined(__linux__)
+  #include <linux/fs.h>
+#endif
 
 #include "libwbfs.h"
 #include "types.h"
@@ -107,7 +116,7 @@ static void sig_handler ( int signum )
 		verbose--;
 	    TRACE("#SIGNAL# USR1: verbose = %d\n",verbose);
 	    fprintf(stderr,usr_msg,1,"DECREASED",verbose);
-	    break; 
+	    break;
 
 	case SIGUSR2:
 	    if ( verbose < 4 )
@@ -131,7 +140,7 @@ void SetupLib ( int argc, char ** argv, ccp p_progname, enumProgID prid )
     {
 	char fname[100];
 	snprintf(fname,sizeof(fname),"_trace-%s.tmp",p_progname);
-	TRACE_FILE = fopen(fname,"wb");
+	TRACE_FILE = fopen(fname,"w");
 	if (!TRACE_FILE)
 	    fprintf(stderr,"open TRACE_FILE failed: %s\n",fname);
     }
@@ -206,7 +215,7 @@ void SetupLib ( int argc, char ** argv, ccp p_progname, enumProgID prid )
     #else
 	revision_id = (prid << 20) + SYSTEMID + REVISION_NUM + REVID_UNKNOWN;
     #endif
-	
+
     //----- setup progname
 
     if ( argc > 0 && *argv && **argv )
@@ -348,7 +357,7 @@ enumError CheckEnvOptions ( ccp varname, check_opt_func func, int mode )
     {
 	while ( *src > 0 && *src <= ' ' ) // skip blanks & control
 	    src++;
-	    
+
 	if (!*src)
 	    break;
 
@@ -385,7 +394,7 @@ enumError CheckEnvOptions ( ccp varname, check_opt_func func, int mode )
     // don't free() because is's possible that there are pointers to arguments
     //free(argv);
     //free(buf);
-    
+
     return stat;
 }
 
@@ -409,7 +418,7 @@ ccp GetErrorName ( int stat )
 
 	case ERR_WDISC_NOT_FOUND:	return "WDISC NOT FOUND";
 	case ERR_NO_WBFS_FOUND:		return "NO WBFS FOUND";
-	case ERR_TOO_MUCH_WBFS_FOUND:	return "TOO MUCH WBFS FOUND";
+	case ERR_TO_MUCH_WBFS_FOUND:	return "TO MUCH WBFS FOUND";
 	case ERR_WBFS_INVALID:		return "INVALID WBFS";
 
 	case ERR_CANT_OPEN:		return "CAN'T OPEN FILE";
@@ -452,7 +461,7 @@ ccp GetErrorText ( int stat )
 
 	case ERR_WDISC_NOT_FOUND:	return "Wii disc not found";
 	case ERR_NO_WBFS_FOUND:		return "No WBFS found";
-	case ERR_TOO_MUCH_WBFS_FOUND:	return "Too much WBFS found";
+	case ERR_TO_MUCH_WBFS_FOUND:	return "To much WBFS found";
 	case ERR_WBFS_INVALID:		return "Invalid WBFS";
 
 	case ERR_CANT_OPEN:		return "Can't open file";
@@ -524,7 +533,7 @@ int PrintError ( ccp func, ccp file, uint line,
  #endif
 
  #if defined(EXTENDED_ERRORS)
-    if ( err_code > ERR_OK )
+    if ( err_code > ERR_WARNING )
  #else
     if ( err_code >= ERR_NOT_IMPLEMENTED )
  #endif
@@ -605,6 +614,141 @@ ccp PrintMSec ( char * buf, int bufsize, u32 msec, bool PrintMSec )
 enumIOMode opt_iomode = IOM__IS_DEFAULT | IOM_FORCE_STREAM;
 
 ///////////////////////////////////////////////////////////////////////////////
+
+static int valid_offset ( int fd, off_t off )
+{
+    //TRACE(" - valid_offset(%d,%llu=%#x)\n",fd,off,off);
+    char ch;
+    if (lseek(fd,off,SEEK_SET) == (off_t)-1 )
+	return 0;
+    return read(fd,&ch,1) == 1;
+}
+
+//-----------------------------------------------------------------------------
+
+static off_t GetBlockDevSize ( int fd )
+{
+    TRACE("GetBlockDevSize(%d)\n",fd);
+
+ #ifdef BLKGETSIZE64
+    TRACE(" - try BLKGETSIZE64\n");
+    {
+	unsigned long long size64 = 0;
+	if ( ioctl(fd, BLKGETSIZE64, &size64 ) >= 0 && size64 )
+	    return size64;
+    }
+ #endif
+
+ #ifdef DKIOCGETBLOCKCOUNT
+    TRACE(" - try DKIOCGETBLOCKCOUNT\n");
+    {
+	unsigned long long size64 = 0;
+	if ( ioctl(fd, DKIOCGETBLOCKCOUNT, &size64 ) >= 0  && size64 )
+	    return size64 << 9;
+    }
+ #endif
+
+ #ifdef BLKGETSIZE
+    TRACE(" - try BLKGETSIZE\n");
+    {
+	unsigned long size32 = 0;
+	if ( ioctl(fd, BLKGETSIZE, &size32 ) >= 0 && size32 )
+	    return (off_t)size32 << 9;
+    }
+ #endif
+
+    TRACE(" - try lseek(SEEK_END)\n");
+    {
+	off_t off = 0;
+	off = lseek(fd,0,SEEK_END);
+	if ( off && off != (off_t)-1 )
+	{
+	    lseek(fd,0,SEEK_SET);
+	    return off;
+	}
+    }
+
+    TRACE(" - try binary search\n");
+    off_t low, high;
+    for ( low = 0, high = GiB; high > low && valid_offset(fd,high); high *= 2 )
+	low = high;
+
+    while ( low < high - 1 )
+    {
+	const off_t mid = (low + high) / 2;
+	if (valid_offset(fd,mid))
+	    low = mid;
+	else
+	    high = mid;
+    }
+    lseek(fd,0,SEEK_SET);
+    return low + 1;
+}
+
+///////////////////////////////////////////////////////////////////////////////
+
+enumError StatFile ( struct stat * st, ccp fname, int fd )
+{
+    ASSERT(st);
+
+    TRACE("StatFile(%s,%d)\n",fname?fname:"",fd);
+
+    // normalize parameters
+    if ( fname && *fname )
+	fd = -1;
+    else
+	fname = 0;
+
+    if ( fname ? stat(fname,st) : fstat(fd,st) )
+    {
+	memset(st,0,sizeof(*st));
+	return ERR_WARNING;
+    }
+
+    TRACE(" - st_dev:     %llu\n",st->st_dev);
+    TRACE(" - st_ino:     %llu\n",st->st_ino);
+    TRACE(" - st_mode:    %u\n",st->st_mode);
+    TRACE(" - st_nlink:   %u\n",st->st_nlink);
+    TRACE(" - st_uid:     %u\n",st->st_uid);
+    TRACE(" - st_gid:     %u\n",st->st_gid);
+    TRACE(" - st_rdev:    %llu\n",st->st_rdev);
+    TRACE(" - st_size:    %llu\n",st->st_size);
+    TRACE(" - st_blksize: %llu\n",(u64)st->st_blksize);
+    TRACE(" - st_blocks:  %llu\n",st->st_blocks);
+    TRACE(" - st_atime:   %llu\n",(u64)st->st_atime);
+    TRACE(" - st_mtime:   %llu\n",(u64)st->st_mtime);
+    TRACE(" - st_ctime:   %llu\n",(u64)st->st_ctime);
+
+    if ( !st->st_size && ( S_ISREG(st->st_mode) || S_ISBLK(st->st_mode)) )
+    {
+	if (fname)
+	    fd = open(fname,O_RDONLY);
+
+	if ( fd != -1 )
+	{
+	    if (S_ISBLK(st->st_mode))
+	    {
+		st->st_size = GetBlockDevSize(fd);
+		TRACE(" + st_size:    %llu\n",st->st_size);
+	    }
+
+	    if (!st->st_size)
+	    {
+		st->st_size = lseek(fd,0,SEEK_END);
+		TRACE(" + st_size:    %llu\n",st->st_size);
+		lseek(fd,0,SEEK_SET);
+	    }
+	    
+	    if (fname)
+		close(fd);
+	}
+    }
+
+    return ERR_OK;
+}
+
+///////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////
 // initialize, reset and close files
 
 void InitializeFile ( File_t * f )
@@ -677,7 +821,7 @@ enumError XClearFile ( XPARM File_t * f, bool remove_file )
     FreeString(f->rename);		f->rename		= 0;
     FreeString(f->outname);		f->outname		= 0;
     FreeString(f->split_fname_format);	f->split_fname_format	= EmptyString;
-    FreeString(f->split_ftemp_format);	f->split_ftemp_format	= 0;
+    FreeString(f->split_rename_format);	f->split_rename_format	= 0;
 
  #if CACHE_ENABLED
     ASSERT(!f->is_caching);
@@ -727,7 +871,7 @@ enumError XCloseFile ( XPARM File_t * f, bool remove_file )
 		err = err1;
 	}
     }
-    else if (!f->is_stdfile)
+    else if ( !f->is_stdfile && S_ISREG(f->st.st_mode) )
     {
 	ccp path = f->path ? f->path : f->fname;
 	if ( remove_file && path && *path )
@@ -793,7 +937,7 @@ enumError XSetFileTime ( XPARM File_t * f, struct stat * st )
 	struct utimbuf ubuf;
 	ubuf.actime  = st->st_atime;
 	ubuf.modtime = st->st_mtime;
-	
+
 	if (f->split_f)
 	{
 	    File_t **end, **ptr = f->split_f;
@@ -865,40 +1009,17 @@ static enumError XOpenFileHelper
 				"Can't open file: %s\n",f->fname);
 	}
     }
-    else if (fstat(f->fd,&f->st))
+    else if (StatFile(&f->st,0,f->fd))
     {
 	close(f->fd);
 	f->fd = -1;
-	memset(&f->st,0,sizeof(f->st));
 	f->max_error = f->last_error = ERR_READ_FAILED;
 	if (!f->disable_errors)
 	    PrintError( XERROR1, f->last_error,"Can't stat file: %s\n",f->fname);
     }
     else
     {
-	TRACE("lstat(%s)\n",f->fname);
-	TRACE(" - st_dev:     %llu\n",f->st.st_dev);
-	TRACE(" - st_ino:     %llu\n",f->st.st_ino);
-	TRACE(" - st_mode:    %u\n",f->st.st_mode);
-	TRACE(" - st_nlink:   %u\n",f->st.st_nlink);
-	TRACE(" - st_uid:     %u\n",f->st.st_uid);
-	TRACE(" - st_gid:     %u\n",f->st.st_gid);
-	TRACE(" - st_rdev:    %llu\n",f->st.st_rdev);
-	TRACE(" - st_size:    %llu\n",f->st.st_size);
-	TRACE(" - st_blksize: %llu\n",(u64)f->st.st_blksize);
-	TRACE(" - st_blocks:  %llu\n",f->st.st_blocks);
-	TRACE(" - st_atime:   %llu\n",(u64)f->st.st_atime);
-	TRACE(" - st_mtime:   %llu\n",(u64)f->st.st_mtime);
-	TRACE(" - st_ctime:   %llu\n",(u64)f->st.st_ctime);
-
 	f->seek_allowed = S_ISREG(f->st.st_mode) || S_ISBLK(f->st.st_mode);
-	if ( !f->st.st_size && f->seek_allowed )
-	{
-	    f->st.st_size = lseek(f->fd,0,SEEK_END);
-	    TRACE(" + st_size:    %llu\n",f->st.st_size);
-	    lseek(f->fd,0,SEEK_SET);
-	}
-
 	if ( iomode & opt_iomode )
 	    XOpenStreamFile(XCALL f);
     }
@@ -954,10 +1075,24 @@ enumError XOpenFileModify ( XPARM File_t * f, ccp fname, enumIOMode iomode )
 
 ///////////////////////////////////////////////////////////////////////////////
 
+enumError XCheckCreated ( XPARM ccp fname, bool disable_errors )
+{
+    if (!InsertStringField(&created_files,fname,false))
+    {
+	if (!disable_errors)
+	    PrintError( XERROR0, ERR_CANT_CREATE,
+		"File already created: %s\n", fname );
+	return ERR_CANT_CREATE;
+    }
+    return ERR_OK;
+}
+
+///////////////////////////////////////////////////////////////////////////////
+
 enumError XCreateFile ( XPARM File_t * f, ccp fname, enumIOMode iomode, int overwrite )
 {
     ASSERT(f);
-    
+
     if (!fname)
     {
 	fname = f->fname;
@@ -1017,13 +1152,8 @@ enumError XCreateFile ( XPARM File_t * f, ccp fname, enumIOMode iomode, int over
     }
     else
     {
-	if (!InsertStringField(&created_files,fname,false))
-	{
-	    if (!disable_errors)
-		PrintError( XERROR0, ERR_CANT_CREATE,
-			"File already created: %s\n", fname );
+	if (XCheckCreated(XCALL fname,disable_errors))
 	    goto abort;
-	}
 
 	f->rename = strdup(fname);
 
@@ -1320,7 +1450,7 @@ void GenDestFileName
 	    if ( rm_len && rm_len <= name_len && !strcasecmp(rm,default_name+cut_len) )
 	    {
 		// got it!
-		
+
 		if ( cut_len < sizeof(fbuf) )
 		{
 		    memcpy(fbuf,default_name,cut_len);
@@ -1410,9 +1540,14 @@ enumError XSetupSplitFile ( XPARM File_t *f, enumOFT oft, off_t split_size )
     // at very first: setup split file format
 
     FreeString(f->split_fname_format);
-    f->split_fname_format = AllocSplitFilename(f->fname,oft);
-    FreeString(f->split_ftemp_format);
-    f->split_ftemp_format = f->rename ? AllocSplitFilename(f->rename,oft) : 0;
+    FreeString(f->split_rename_format);
+    if (f->rename)
+    {
+	f->split_fname_format = AllocSplitFilename(f->fname,OFT_PLAIN);
+	f->split_rename_format = AllocSplitFilename(f->rename,oft);
+    }
+    else
+	f->split_fname_format = AllocSplitFilename(f->fname,oft);
 
     char fname[PATH_MAX];
 
@@ -1422,7 +1557,7 @@ enumError XSetupSplitFile ( XPARM File_t *f, enumOFT oft, off_t split_size )
 	snprintf(fname,sizeof(fname),f->split_fname_format,1);
 	struct stat st;
 	if (stat(fname,&st))
-	    return ERR_OK; // no split files found -> return 
+	    return ERR_OK; // no split files found -> return
     }
 
     File_t ** list = calloc(MAX_SPLIT_FILES,sizeof(*list));
@@ -1448,7 +1583,7 @@ enumError XSetupSplitFile ( XPARM File_t *f, enumOFT oft, off_t split_size )
     f->fd = -1;
     f->split_f = list;
     f->split_used = 1;
-    
+
     if (f->rename)
     {
 	// fname is only informative -> use the final name
@@ -1459,10 +1594,18 @@ enumError XSetupSplitFile ( XPARM File_t *f, enumOFT oft, off_t split_size )
 	f->fname = strdup(f->fname);
     if (f->path)
 	f->path = strdup(f->path);
-    f->split_filesize = split_size ? split_size : 2000000000ull;
+
+    if ( oft == OFT_WBFS )
+    {
+	f->split_filesize  = split_size ? split_size : DEF_SPLIT_SIZE_WBFS;
+	f->split_filesize &= ~0x7fffull;
+    }
+    else
+	f->split_filesize = split_size ? split_size : DEF_SPLIT_SIZE;
+
     first->split_filesize = first->st.st_size;
     first->split_fname_format = EmptyString;
-    first->split_ftemp_format = 0;
+    first->split_rename_format = 0;
     first->outname = 0;
 
     TRACE("#S#   Split setup, size=%llu, fname=%s\n",
@@ -1474,8 +1617,8 @@ enumError XSetupSplitFile ( XPARM File_t *f, enumOFT oft, off_t split_size )
     noTRACE(" path:    %p %p\n",f->path,first->path);
     noTRACE(" rename:  %p %p\n",f->rename,first->rename);
     noTRACE(" outname: %p %p\n",f->outname,first->outname);
-    noTRACE(" split-fname-format: %s\n",f->split_fname_format);
-    noTRACE(" split-ftemp-format: %s\n",f->split_ftemp_format);
+    noTRACE(" split-fname-format:  %s\n",f->split_fname_format);
+    noTRACE(" split-rename-format: %s\n",f->split_rename_format);
 
     if (f->is_reading)
     {
@@ -1503,10 +1646,10 @@ enumError XSetupSplitFile ( XPARM File_t *f, enumOFT oft, off_t split_size )
 		return err;
 	    }
 
-	    if (f->split_ftemp_format)
+	    if (f->split_rename_format)
 	    {
 		ASSERT(!fi->rename);
-		snprintf(fname,sizeof(fname),f->split_ftemp_format,idx);
+		snprintf(fname,sizeof(fname),f->split_rename_format,idx);
 		fi->rename = strdup(fname);
 	    }
 
@@ -1517,7 +1660,7 @@ enumError XSetupSplitFile ( XPARM File_t *f, enumOFT oft, off_t split_size )
 	}
 	f->split_used = idx;
     }
-    
+
     File_t * fi = f->split_f[f->split_used-1];
     ASSERT(fi);
     if ( fi->split_filesize < f->split_filesize )
@@ -1593,10 +1736,10 @@ enumError XCreateSplitFile ( XPARM File_t *f, uint split_idx )
 	if (err)
 	    return err;
 	f2->split_filesize = f->split_filesize;
-	if (f->split_ftemp_format)
+	if (f->split_rename_format)
 	{
 	    ASSERT(!f2->rename);
-	    snprintf(fname,sizeof(fname),f->split_ftemp_format,f->split_used-1);
+	    snprintf(fname,sizeof(fname),f->split_rename_format,f->split_used-1);
 	    f2->rename = strdup(fname);
 	}
     }
@@ -1782,7 +1925,7 @@ enumError XAnalyseWH ( XPARM File_t * f, WDF_Head_t * wh, bool print_err )
 	// file size to short -> maybe a splitted file
 	XSetupSplitFile(XCALL f,OFT_UNKNOWN,0);
     }
-    
+
     if ( wh->chunk_off != wh->data_size + sizeof(WDF_Head_t)
 	|| wh->chunk_off + WDF_MAGIC_SIZE + chunk_tab_size != f->st.st_size )
     {
@@ -1801,7 +1944,7 @@ enumError XAnalyseWH ( XPARM File_t * f, WDF_Head_t * wh, bool print_err )
     }
 
     TRACE(" - OK\n");
-    return ERR_OK;    
+    return ERR_OK;
 }
 
 //
@@ -2776,7 +2919,7 @@ char * StringCat3S ( char * buf, size_t buf_size, ccp src1, ccp src2, ccp src3 )
 ///////////////////////////////////////////////////////////////////////////////
 
 int CheckID ( ccp id4_or_6 )
-{   
+{
     ccp ptr = id4_or_6;
     ccp end = ptr + 7;
     while ( ptr < end && ( *ptr >= 'A' && *ptr <= 'Z'
@@ -2789,8 +2932,23 @@ int CheckID ( ccp id4_or_6 )
 
 ///////////////////////////////////////////////////////////////////////////////
 
+int CheckIDnocase ( ccp id4_or_6 )
+{
+    ccp ptr = id4_or_6;
+    ccp end = ptr + 7;
+    while ( ptr < end && ( *ptr >= 'A' && *ptr <= 'Z'
+			|| *ptr >= 'a' && *ptr <= 'z'
+			|| *ptr >= '0' && *ptr <= '9' ))
+	ptr++;
+
+    const int len = ptr - id4_or_6;
+    return len == 4 || len == 6 ? len : 0;
+}
+
+///////////////////////////////////////////////////////////////////////////////
+
 bool CheckID6 ( const void * id6 )
-{   
+{
     ccp ptr = (ccp)id6;
     ccp end = ptr + 6;
     while ( ptr < end && ( *ptr >= 'A' && *ptr <= 'Z'
@@ -3026,7 +3184,7 @@ char * ScanSize ( double * num, ccp source,
 	    end = (char*)source;
 	    break;
 	}
-	    
+
 	default_factor1 = default_factor2;
     }
 
@@ -3306,7 +3464,7 @@ char * ScanRangeU32 ( ccp arg, u32 * p_stat, u32 * p_n1, u32 * p_n2, u32 min, u3
 	n2 = max;
     stat = 2;
     arg = end;
-    
+
  abort:
 
     if ( stat > 0 )
@@ -3442,7 +3600,7 @@ SortMode ScanSortMode ( ccp arg )
     CommandTab_t * cmd = ScanCommand(0,arg,tab);
     if (cmd)
 	return cmd->id;
-	
+
     ERROR0(ERR_SYNTAX,"Illegal sort mode (option --sort): '%s'\n",arg);
     return SORT__ERROR;
 }
@@ -3704,13 +3862,12 @@ ParamList_t * AppendParam ( ccp arg, int is_temp )
 	param->arg = (char*)arg;
     param->count = 0;
     param->next  = 0;
-    TRACE("INS: A=%08x->%08x P=%08x &N=%08x->%08x\n",
-	    (uint)append_param, (uint)*append_param,
-	    (uint)param, (uint)&param->next, (uint)param->next );
+    noTRACE("INS: A=%p->%p P=%p &N=%p->%p\n",
+	    append_param, *append_param,
+	    param, &param->next, param->next );
     *append_param = param;
     append_param = &param->next;
-    TRACE("  => A=%08x->%08x\n",
-	    (uint)append_param, (uint)*append_param );
+    noTRACE("  => A=%p->%p\n", append_param, *append_param );
     n_param++;
 
     return param;
@@ -3774,7 +3931,7 @@ char * SubstString
 	    }
 	    if (!ch)
 		break;
-		
+
 	    size_t count = source - start;
 
 	    SubstString_t * ptr;
@@ -3821,7 +3978,7 @@ char * SubstString
 		memcpy(tempbuf,start,count);
 		tempbuf[count] = 0;
 	    }
-	    dest = NormalizeFileName(dest,end,tempbuf,false);
+	    dest = NormalizeFileName(dest,end,tempbuf,ptr->allow_slash);
 	}
     *dest = 0;
     return dest;
@@ -3982,7 +4139,7 @@ void PrintMemMap ( MemMap_t * mm, FILE * f, int indent )
 
     fprintf(f,"%*s      unused :   off(beg) ..   off(end) :      size : info\n%*s%.*s\n",
 	    indent, "", indent, "", max_ilen+54, LongSep );
-    
+
     off_t max_end = 0;
     for ( i = 0; i < mm->used; i++ )
     {
@@ -3990,7 +4147,7 @@ void PrintMemMap ( MemMap_t * mm, FILE * f, int indent )
 	const u64 end = ptr->off + ptr->size;
 	if ( ptr->off > max_end )
 	    fprintf(f,"%*s%s%10llx :%11llx ..%11llx :%10llx : %s\n",
-		indent, "", ovl[ptr->overlap&3], ptr->off - max_end, 
+		indent, "", ovl[ptr->overlap&3], ptr->off - max_end,
 		ptr->off, end, ptr->size, ptr->info );
 	else
 	    fprintf(f,"%*s%s           :%11llx ..%11llx :%10llx : %s\n",

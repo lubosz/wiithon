@@ -35,12 +35,12 @@ The terms are added together. If there is at the very end of the term 1 sign
 it wil be interpreted as '-1' or '+1' (using the deault factor for other terms).
 
 Option --size
-    Default factor for first term:     1G 
+    Default factor for first term:     1G
     Default factors for other terms:   1
     Minimal value:                    10m
 
 Option --split-size
-    Default factor for first term:     1G 
+    Default factor for first term:     1G
     Default factors for other terms: 512
     Value must be multiples of:      512
     Minimal value:                   100m

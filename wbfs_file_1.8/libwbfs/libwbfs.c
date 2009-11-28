@@ -457,7 +457,7 @@ u32 wbfs_add_disc(wbfs_t*p, read_wiidisc_callback_t read_src_wii_disc,
 	info = wbfs_ioalloc(p->disc_info_sz);
 	u8*b = (u8*)info;
 	read_src_wii_disc(callback_data,0,0x100,info->disc_header_copy);
-	fprintf(stderr, "adding %c%c%c%c%c%c %s...\n",b[0], b[1], b[2], b[3], b[4], b[5], b + 0x20);
+	//fprintf(stderr, "adding %c%c%c%c%c%c %s...\n",b[0], b[1], b[2], b[3], b[4], b[5], b + 0x20);
 
 	copy_buffer = wbfs_ioalloc(p->wii_sec_sz);
 	if(!copy_buffer)
@@ -546,7 +546,7 @@ error:
 		wbfs_iofree(copy_buffer);
 	// init with all free blocks
 
-	return 0;
+	return OK;
 }
 
 u32 wbfs_rm_disc(wbfs_t*p, u8* discid)

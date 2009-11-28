@@ -78,7 +78,7 @@ struct option long_opt[] =
 	{ "split-size",	1, 0, 'Z' },
 	 { "splitsize",	1, 0, 'Z' },
 	{ "overwrite",	0, 0, 'o' },
-	
+
 	{ "io",		1, 0, GETOPT_IO },	// [2do] hidden option for tests
 
 	{0,0,0,0}
@@ -181,7 +181,7 @@ enumError CheckOptions ( int argc, char ** argv )
 	  case GETOPT_RAW:
 	    partition_selector = WHOLE_DISC;
 	    break;
-  
+
 	  case 'Z':
 	    if (ScanSizeOptU64(&opt_split_size,optarg,GiB,0,
 				"split-size",MIN_SPLIT_SIZE,0,512,0,true))
@@ -217,7 +217,7 @@ enumError iso2wdf ( ccp fname )
     InitializeSF(&fi);
     InitializeSF(&fo);
 
-    enumError err = OpenSF(&fi,fname,true);
+    enumError err = OpenSF(&fi,fname,true,false);
     if (err)
 	return err;
     const bool raw_mode = partition_selector == WHOLE_DISC || !fi.f.id6[0];
@@ -264,7 +264,7 @@ enumError iso2wdf ( ccp fname )
     err = ResetSF( &fo, opt_preserve ? &fi.f.st : 0 );
     if (err)
 	goto abort;
-    
+
     ResetSF(&fi,0);
     return ERR_OK;
 

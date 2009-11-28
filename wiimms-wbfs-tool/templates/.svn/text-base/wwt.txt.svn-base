@@ -69,6 +69,7 @@ COMMAND: ADD|A  [iso_image_path]... [directory]...
        --psel  p-type  Partition selector: (no-)game|update|channel all(=def) raw.
        --raw           Short cut for --psel=raw.
     -u --update        Copy only non existing discs.
+       --sync          Remove and copy until source and dest are identical.
     -o --overwrite     Overwrite existing WBFS discs.
     -i --ignore        Ignore non ISO files without warning.
     -R --remove        Remove ISO file if operation is successful.
@@ -76,8 +77,8 @@ COMMAND: ADD|A  [iso_image_path]... [directory]...
     -x --exclude @file Read exclude list from file.
     -X --exclude-path file_or_dir
                        ISO file or base of directory tree -> scan their ID6
-    -f --force         Force operation, ignore the chgeck result.
-       --no-check      Disable automatic check of WBFS before modificastions.
+    -f --force         Force operation, ignore the check result.
+       --no-check      Disable automatic check of WBFS before modifications.
 
     -q --quiet        Be quiet   -> print only error messages.
     -v --verbose      Be verbose -> print continuation infos.
@@ -98,6 +99,11 @@ COMMAND: ADD|A  [iso_image_path]... [directory]...
  written if the option --overwrite is set. After successfull operation and if
  --remove is set, the ISO images will be removed from the source file system.
 
+ If option --sync is set than before adding all discs that are not part of
+ the soruce list are removed from the WBFS. The option --sync includes
+ the option --update. After operation the WBFS contains exactly the ISO images
+ which ae defined in the source list.
+
  If the --quiet option is set only error messages will be printed.
  If the --verbose option is set run time calculations will be made too.
  If the --verbose option is at least twice a progress status will be shown.
@@ -117,7 +123,7 @@ COMMAND: ADD|A  [iso_image_path]... [directory]...
     SYNTAX ERROR        : at least on syntax error in command line found.
     MISSING PARAMETERS  : no parameters (iso images) given.
     NO WBFS FOUND       : no WBFS partiton found.
-    TOO MUCH WBFS FOUND : 2 to more no WBFS partiton found but --all missed.
+    TO MUCH WBFS FOUND  : 2 to more no WBFS partiton found but --all missed.
     WRITE ERROR         : error while writing a WBFS.
     REMOVE ERROR        : error while removing a disc from a WBFS.
     READ ERROR          : error while reading an ISO image or a WBFS.
@@ -135,6 +141,11 @@ COMMAND: CHECK|FSCK   [wbfs_partition]...
     -a --auto         Search for WBFS partitions using /proc/partitions.
     -p --part  part   File of primary WBFS partition. Multiple usage allowed.
 
+    -l --long         Print more details.
+    -ll               Print WBFS dump including corrupted discs if errors found.
+    -lll              Print WBFS dump including all discs if errors found.
+    -llll             Print WBFS dump including full memory map.
+
        --repair mode  Repair the WBFS. 'mode' is a comma separated list of:
                         -  | NONE       : ignore previous settings
                         RI | RM-INVALID : remove discs with invalid blocks
@@ -146,8 +157,9 @@ COMMAND: CHECK|FSCK   [wbfs_partition]...
                         *  | ALL        : repair all
 
     -q --quiet        Be quiet.
-    -v --verbose      Be verbose.
+    -v --verbose      Be verbose. set also '--long' level if long is not set.
     -t --test         Run in test mode, modify nothing.
+
 
  Command CHECKS checks WBFS partions for block errors in 5 categories:
    - Find discs with invalid blocks.
@@ -165,7 +177,7 @@ COMMAND: CHECK|FSCK   [wbfs_partition]...
     0 == OK             : all done without erros.
     SYNTAX ERROR        : at least on syntax error in command line found.
     NO WBFS FOUND       : no WBFS partiton found.
-    TOO MUCH WBFS FOUND : 2 to more no WBFS partiton found but --all missed.
+    TO MUCH WBFS FOUND  : 2 to more no WBFS partiton found but --all missed.
     WBFS INVALID        : An invalid WBFS found (WBFS with errors)
 
 
@@ -209,7 +221,81 @@ COMMAND: DUMP|D   [wbfs_partition]...
     SYNTAX ERROR        : at least on syntax error in command line found.
     READ ERROR          : error while read a file given by option --part.
     NO WBFS FOUND       : no WBFS partiton found.
-    TOO MUCH WBFS FOUND : 2 to more no WBFS partiton found but --all missed.
+    TO MUCH WBFS FOUND  : 2 to more no WBFS partiton found but --all missed.
+
+
+-------------------------------------------------------------------------------
+
+COMMAND: EDIT   [sub_command]...
+
+ Change the data of one WBFS file/partitions.
+
+ Options:
+
+    -a --auto         Search for WBFS partitions using /proc/partitions.
+    -p --part  part   File of primary WBFS partition. Multiple usage allowed.
+    -f --force        Needed for leaving test mode and for changing data!
+    -t --test         Force test mode.
+
+ EDIT is a dangerous command. It let you (de-)activate the disc slots and
+ edit the block assignments. Exactly 1 WBFS must be specified. All parameters
+ are sub commands. Modifications are only done if option --force is set.
+
+     **********************************************************
+     *****  WARNING: This command can damage your WBFS!!  *****
+     **********************************************************
+
+ Each parameter is one sub command. The case of commands is ignored. After
+ editing a check of the WBFS is made and a status printed if errors found.
+ The general subcommand syntax is:
+
+    subcommand=parameter[,parameter]...
+
+ List of subcommands:
+
+   RM=a,b-c,...
+   R=a,b-c,...
+      Remove disc in slot 'a' or the slot range of blocks 'b-c' from wbfs.
+      The slot is only marked as free, no blocks are freed. EDIT does not
+      allow undefined slot numbers.
+
+   ACT=a,b-c,...
+   A=a,b-c,...
+      Activate disc in slot 'a' or the slot range of blocks 'b-c' from wbfs.
+      The slot is only marked as activated without any tests. EDIT does not
+      allow undefined slot numbers.
+
+   INV=a,b-c,...
+   I=a,b-c,...
+      Like 'ACT' but the slot is additionally marked as invalid.
+
+   FREE=a,b-c,...
+   F=a,b-c,...
+      Modify the free blocks table and mark the single block 'a' or the range
+      of blocks 'b-c' as free.  EDIT does not allow undefined block numbers.
+
+   USE=a,b-c,...
+   U=a,b-c,...
+      Modify the free blocks table and mark the single block 'a' or the range
+      of blocks 'b-c' as used. EDIT does not allow undefined block numbers.
+
+   ID6=a:b,c-d:e,...
+      For the game with ID6:
+         Set ISO block 'a' to WBFS block 'b' or set ISO blocks 'c-d' to WBFS
+         blocks 'e...'. If 'e' is zero then set ISO blocks 'c-d' to zero
+         (=unused). EDIT does not allow undefined block numbers.
+
+ Note: The block size for all sub commands is always the WBFS block size,
+       but never the ISO block size.
+
+
+ Usual ERROR/EXIT CODES:
+
+    0 == OK             : all done without erros.
+    SYNTAX ERROR        : at least on syntax error in command line found.
+    READ ERROR          : error while read a file given by option --part.
+    NO WBFS FOUND       : no WBFS partiton found.
+    TO MUCH WBFS FOUND  : 2 to more no WBFS partiton found but --all missed.
 
 
 -------------------------------------------------------------------------------
@@ -223,7 +309,7 @@ COMMAND: ERROR|ERR   [error_code]
 
     -l --long         Print error messages instead of error names.
     -H --no-header    Suppress printing of header and footer.
-    
+
 
  With a given 'error_code' the error message that belongs the number is
  printed to stdout and the program exits with exit status is 0 (success).
@@ -295,8 +381,8 @@ COMMAND: EXTRACT|X   id6...
     -x --exclude @file Read exclude list from file.
     -X --exclude-path file_or_dir
                        ISO file or base of directory tree -> scan their ID6
-    -f --force         Force operation, ignore the chgeck result.
-       --no-check      Disable automatic check of WBFS before modificastions.
+    -f --force         Force operation, ignore the check result.
+       --no-check      Disable automatic check of WBFS before modifications.
 
     -q --quiet         Be quiet   -> print only error messages.
     -v --verbose       Be verbose -> print continuation infos.
@@ -369,7 +455,7 @@ COMMAND: EXTRACT|X   id6...
     SYNTAX ERROR        : at least on syntax error in command line found.
     MISSING PARAMETERS  : no parameters (ID6) given.
     NO WBFS FOUND       : no WBFS partiton found.
-    TOO MUCH WBFS FOUND : 2 to more no WBFS partiton found but --all missed.
+    TO MUCH WBFS FOUND  : 2 to more no WBFS partiton found but --all missed.
     WDISC NOT FOUND     : disc not found on any WBFS partition.
     REMOVE ERROR        : error while removing a disc from a WBFS.
     READ ERROR          : error while reading an ISO image or a WBFS.
@@ -471,7 +557,7 @@ COMMAND: FIND|F   [wbfs_partition]...
     SYNTAX ERROR        : at least on syntax error in command line found.
     READ ERROR          : error while read a file given by option --part.
     NO WBFS FOUND       : no WBFS partiton found.
-    TOO MUCH WBFS FOUND : 2 to more no WBFS partiton found but --all missed.
+    TO MUCH WBFS FOUND  : 2 to more no WBFS partiton found but --all missed.
 
 
 -------------------------------------------------------------------------------
@@ -489,7 +575,7 @@ COMMAND: FORMAT|INIT   filename...
                         The factor must be a power of 2 and at least 512.
                         Defauilt value is 512 bytes. Factors: bckKmMgGtT.
 
-    -f --force          Needed for formatting!
+    -f --force          Needed for leaving test mode and for formatting!
 
     -q --quiet          Be quiet.
     -v --verbose        Be verbose.
@@ -512,7 +598,7 @@ COMMAND: FORMAT|INIT   filename...
 
  The parameters of the size options --size and --sector-size are discussed in
  the section "Processing size options".
- 
+
 
  Usual ERROR/EXIT CODES:
 
@@ -622,7 +708,7 @@ COMMAND: LIST|LS   [wbfs_partition]...
  set each game disc identified by ID6 is only printet once. The --mixed option
  implies the --all option. The --unique option implies the --mixed and the
  --all options.
- 
+
  If the option --long is given twice or more in the --mixed mode then a WBFS
  table is printed at the top with a WBFS-Index ('WI') and the filename. The
  game table contains an additional column with this WBFS-Index.
@@ -641,7 +727,7 @@ COMMAND: LIST|LS   [wbfs_partition]...
     SYNTAX ERROR        : at least on syntax error in command line found.
     READ ERROR          : error while read a file given by option --part.
     NO WBFS FOUND       : no WBFS partiton found.
-    TOO MUCH WBFS FOUND : 2 to more no WBFS partiton found but --all missed.
+    TO MUCH WBFS FOUND  : 2 to more no WBFS partiton found but --all missed.
 
 
 -------------------------------------------------------------------------------
@@ -677,8 +763,8 @@ COMMAND: REMOVE|RM   id6...
     -x --exclude @file Read exclude list from file.
     -X --exclude-path file_or_dir
                        ISO file or base of directory tree -> scan their ID6
-    -f --force         Force operation, ignore the chgeck result.
-       --no-check      Disable automatic check of WBFS before modificastions.
+    -f --force         Force operation, ignore the check result.
+       --no-check      Disable automatic check of WBFS before modifications.
 
     -q --quiet         Be quiet   -> print only error messages.
     -v --verbose       Be verbose -> print continuation infos.
@@ -725,7 +811,7 @@ COMMAND: REMOVE|RM   id6...
     SYNTAX ERROR        : at least on syntax error in command line found.
     MISSING PARAMETERS  : no parameters (ID6) given.
     NO WBFS FOUND       : no WBFS partiton found.
-    TOO MUCH WBFS FOUND : 2 to more no WBFS partiton found but --all missed.
+    TO MUCH WBFS FOUND  : 2 to more no WBFS partiton found but --all missed.
     WDISC NOT FOUND     : disc not found on any WBFS partition.
     REMOVE ERROR        : error while removing a disc from a WBFS.
     READ ERROR          : error while reading an ISO image or a WBFS.
@@ -774,7 +860,36 @@ COMMAND: SPACE|DF   [wbfs_partition]...
     SYNTAX ERROR        : at least on syntax error in command line found.
     READ ERROR          : error while read a file given by option --part.
     NO WBFS FOUND       : no WBFS partiton found.
-    TOO MUCH WBFS FOUND : 2 to more no WBFS partiton found but --all missed.
+    TO MUCH WBFS FOUND  : 2 to more no WBFS partiton found but --all missed.
+
+
+-------------------------------------------------------------------------------
+
+COMMAND: RENAME|REN  id6=[new_id6][,title] ...
+
+ Change the ID6 or/and the title of discs.
+
+ Options:
+
+    -A --all           Use all WBFS partitions found.
+    -a --auto          Search for WBFS partitions using /proc/partitions.
+    -p --part  part    File of primary WBFS partition. Multiple usage allowed.
+    -x --exclude id    Exclude discs with given ID4 or ID6 from operation.
+    -x --exclude @file Read exclude list from file.
+    -X --exclude-path file_or_dir
+                       ISO file or base of directory tree -> scan their ID6
+
+    -i --ignore        Ignore non existing discs without warning.
+    -I --iso           Change only the ISO header inside the WBFS.
+    -B --wbfs          Change only the WBFS inode infos.
+
+    -f --force         Force operation, ignore the check result.
+       --no-check      Disable automatic check of WBFS before modifications.
+
+ EXPERIMENTAL!
+ The implementation is not testet very well.
+
+@@MODULE(set-title.txt)@@
 
 
 -------------------------------------------------------------------------------
@@ -814,13 +929,51 @@ COMMAND: REPAIR   [wbfs_partition]...
     0 == OK             : all done without erros.
     SYNTAX ERROR        : at least on syntax error in command line found.
     NO WBFS FOUND       : no WBFS partiton found.
-    TOO MUCH WBFS FOUND : 2 to more no WBFS partiton found but --all missed.
+    TO MUCH WBFS FOUND  : 2 to more no WBFS partiton found but --all missed.
     WBFS INVALID        : An invalid WBFS found (WBFS with errors)
 
 
 -------------------------------------------------------------------------------
 
-COMMAND: TITLES|TIT   [additional_title_file]...
+COMMAND: SETTITLE|ST   id6=new_title ...
+
+ Change the title of discs.
+
+ Options:
+
+    -A --all           Use all WBFS partitions found.
+    -a --auto          Search for WBFS partitions using /proc/partitions.
+    -p --part  part    File of primary WBFS partition. Multiple usage allowed.
+    -x --exclude id    Exclude discs with given ID4 or ID6 from operation.
+    -x --exclude @file Read exclude list from file.
+    -X --exclude-path file_or_dir
+                       ISO file or base of directory tree -> scan their ID6
+    -i --ignore        Ignore non existing discs without warning.
+    -I --iso           Change only the ISO header inside the WBFS.
+    -B --wbfs          Change only the WBFS indode infos.
+
+    -f --force         Force operation, ignore the check result.
+       --no-check      Disable automatic check of WBFS before modifications.
+
+ EXPERIMENTAL!
+ The implementation is not testet very well.
+
+@@MODULE(set-title.txt)@@
+
+
+-------------------------------------------------------------------------------
+
+COMMAND: SNYC  iso_image_path...
+
+'SNYC' is the same as 'ADD --snyc'. The command 'SNYC' does not accept the
+options --update, --overwrite and --sync.
+
+See command 'ADD' for options and details.
+
+
+-------------------------------------------------------------------------------
+
+COMMAND: TITLES   [additional_title_file]...
 
  The command 'TITLES' builts the title data base and prints the result to
  stdout. The handling of the additional files works like the --title option.
@@ -849,8 +1002,8 @@ COMMAND: TRUNCATE|TR  [wbfs_partition]...
     -A --all          Use all WBFS partitions found.
     -a --auto         Search for WBFS partitions using /proc/partitions.
     -p --part  part   File of primary WBFS partition. Multiple usage allowed.
-    -f --force        Force operation, ignore the chgeck result.
-       --no-check     Disable automatic check of WBFS before modificastions.
+    -f --force        Force operation, ignore the check result.
+       --no-check     Disable automatic check of WBFS before modifications.
 
     -q --quiet        Be quiet.
     -v --verbose      Be verbose.
@@ -871,7 +1024,9 @@ COMMAND: TRUNCATE|TR  [wbfs_partition]...
 COMMAND: UPDATE|U  iso_image_path...
 
 'UPDATE' is the same as 'ADD --update'. The command 'UPDATE' does not accept
-the options --update and --overwrite. See command 'ADD' for options and details.
+the options --update and --overwrite.
+
+See command 'ADD' for options and details.
 
 
 -------------------------------------------------------------------------------
@@ -909,7 +1064,7 @@ by --part and --auto. --part may be set multiple times.
 Partitions set with the --part option must be existent, readable and valid WBFS
 partitions (exceptions explained in the command documentation). Partitions set
 with --auto are only used, if the partition is readable and the WBFS magic is
-found. If more than one partition is defined by --part then --all is set. 
+found. If more than one partition is defined by --part then --all is set.
 
 If using the special case '--part @file' each line of the given file is one
 partition. Each line may terminate with LF or CR+LF. Handling of '@' is

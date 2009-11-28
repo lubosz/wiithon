@@ -1,7 +1,7 @@
 K 25
 svn:wc:ra_dav:version-url
 V 57
-/wii/!svn/ver/454/trunk/wiimms-wbfs-tool/templates/module
+/wii/!svn/ver/491/trunk/wiimms-wbfs-tool/templates/module
 END
 head.txt
 K 25
@@ -13,7 +13,7 @@ last-history.txt
 K 25
 svn:wc:ra_dav:version-url
 V 74
-/wii/!svn/ver/454/trunk/wiimms-wbfs-tool/templates/module/last-history.txt
+/wii/!svn/ver/491/trunk/wiimms-wbfs-tool/templates/module/last-history.txt
 END
 opt-psel.txt
 K 25
@@ -51,6 +51,12 @@ svn:wc:ra_dav:version-url
 V 74
 /wii/!svn/ver/309/trunk/wiimms-wbfs-tool/templates/module/proc-exclude.txt
 END
+set-title.txt
+K 25
+svn:wc:ra_dav:version-url
+V 71
+/wii/!svn/ver/491/trunk/wiimms-wbfs-tool/templates/module/set-title.txt
+END
 proc-iso.txt
 K 25
 svn:wc:ra_dav:version-url
@@ -61,19 +67,19 @@ proc-size.txt
 K 25
 svn:wc:ra_dav:version-url
 V 71
-/wii/!svn/ver/325/trunk/wiimms-wbfs-tool/templates/module/proc-size.txt
+/wii/!svn/ver/472/trunk/wiimms-wbfs-tool/templates/module/proc-size.txt
 END
 proc-split.txt
 K 25
 svn:wc:ra_dav:version-url
 V 72
-/wii/!svn/ver/325/trunk/wiimms-wbfs-tool/templates/module/proc-split.txt
+/wii/!svn/ver/472/trunk/wiimms-wbfs-tool/templates/module/proc-split.txt
 END
 output-filename.txt
 K 25
 svn:wc:ra_dav:version-url
 V 77
-/wii/!svn/ver/450/trunk/wiimms-wbfs-tool/templates/module/output-filename.txt
+/wii/!svn/ver/491/trunk/wiimms-wbfs-tool/templates/module/output-filename.txt
 END
 signals.txt
 K 25

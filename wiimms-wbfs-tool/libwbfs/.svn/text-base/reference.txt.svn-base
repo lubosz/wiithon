@@ -17,7 +17,7 @@ void wd_build_disc_usage
 ( wiidisc_t *d, partition_selector_t selector, u8* usage_table);
     Setup 'd' for disc usage calculations and call do_disc()
 	-> d->sector_usage_table = usage_table;
-    'usage_table' is a byte table with 'WII_SECTORS_DOUBLE_LAYER' bytes.
+    'usage_table' is a byte table with 'WII_MAX_SECTORS' bytes.
 
 // [codeview]
 void wd_fix_partition_table(wiidisc_t *d, partition_selector_t selector, u8* partition_table);
@@ -104,7 +104,7 @@ typedef struct wbfs_head { ... } wbfs_head_t;
 typedef struct wbfs_disc_info { ... } wbfs_disc_info_t;
     This structure contains two element:
 	disc_header_copy: a copy of the very first 256 bytes of the wii disc
-	wlba_table: A table with 'wbfs_t::n_wbfs_sec_per_disc' elements. 
+	wlba_table: A table with 'wbfs_t::n_wbfs_sec_per_disc' elements.
 
 // [codeview]
 typedef int (*rw_sector_callback_t)(void*fp,u32 lba,u32 count,void*iobuf);
@@ -195,18 +195,6 @@ u32 wbfs_estimate_disc(wbfs_t*p,read_wiidisc_callback_t read_src_wii_disc, void 
 -------------------------------------------------------------------------------
 // [codeview]
 
-/*! rename a wiidvd inside a partition */
-u32 wbfs_ren_disc(wbfs_t*p, u8* discid, u8* newname);
-
--------------------------------------------------------------------------------
-// [codeview]
-
-/*! edit a wiidvd diskid */
-u32 wbfs_nid_disc(wbfs_t*p, u8* discid, u8* newid);
-
--------------------------------------------------------------------------------
-// [codeview]
-
 /*! extract a disc from the wbfs, unused sectors are just untouched, allowing descent filesystem to only really usefull space to store the disc.
 Even if the filesize is 4.7GB, the disc usage will be less.
  */
@@ -225,6 +213,17 @@ u32 wbfs_extract_file(wbfs_disc_t*d, char *path);
 
 // remove some sanity checks
 void wbfs_set_force_mode(int force);
+
+-------------------------------------------------------------------------------
+
+int wd_rename
+    (
+	void * data,		// pointer to ISO data
+	const char * new_id,	// if !NULL: take the first 6 chars as ID
+	const char * new_title	// if !NULL: take the first 0x39 chars as title
+    );
+    Data is a pinter to a ISO header.
+    This functions modifies the header and set a new ID and/or a new title.
 
 
 *******************************************************************************
@@ -277,6 +276,17 @@ wbfs_disc_t * wbfs_open_disc_by_id6 ( wbfs_t * p, u8 * id6 );
     Returns a pointer to the disc structure or NULL if disc not found.
     An open disc must be closed with wbfs_close_disc()
 
+int wbfs_rename_disc
+    (
+	wbfs_disc_t * d,	// pointer to an open disc
+	const char * new_id,	// if !NULL: take the first 6 chars as ID
+	const char * new_title,	// if !NULL: take the first 0x39 chars as title
+	int change_wbfs_head,	// if !0: change ID/title of WBFS header
+	int change_iso_head	// if !0: change ID/title of ISO header
+    );
+    Change ID and/or title of a disc. The paramters 'new_id' and 'new_title'
+    are checked and cutted to the maximal length.
+
 void wbfs_close_disc ( wbfs_disc_t * d );
     closes a wii disc on a WBFS partition.
 
@@ -328,11 +338,13 @@ u32 wbfs_add_disc
     int copy_1_1
 )
 
-// [codeview]
-u32 wbfs_ren_disc(wbfs_t*p, u8* discid, u8* newname)
+u32 wbfs_ren_disc ( wbfs_t * p, u8 * discid, u8 * newname )
+    Set a new title (WBFS inode only) for disc with ID 'discid'
+    -> wrapper for wbfs_rename_disc()
 
-// [codeview]
 u32 wbfs_nid_disc(wbfs_t*p, u8* discid, u8* newid)
+    Change the ID (WBFS inode only) for disc with ID 'discid'
+    -> wrapper for wbfs_rename_disc()
 
 // [codeview]
 u32 wbfs_estimate_disc

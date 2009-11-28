@@ -9,7 +9,7 @@
 #include <string.h>
 #include <errno.h>
 #include <arpa/inet.h>
- 
+
 #include "debug.h"
 #include "libwbfs.h"
 #include "lib-wdf.h"
@@ -40,7 +40,7 @@ void InitializeWH ( WDF_Head_t * wh )
     memcpy(wh->magic,WDF_MAGIC,sizeof(wh->magic));
 
     wh->wdf_version = WDF_VERSION;
-    wh->split_file_id = revision_id; // ;)
+    wh->split_file_id = 0;
     wh->split_file_num_of = 1;
 }
 
@@ -275,8 +275,11 @@ enumError SetupReadWDF ( SuperFile_t * sf )
 	    goto invalid;
 
     memcpy(&sf->wh,&wh,sizeof(sf->wh));
-    sf->file_size = sf->wh.file_size;
-    sf->oft = OFT_WDF;
+    sf->file_size	= sf->wh.file_size;
+    sf->f.max_off	= sf->wh.chunk_off;
+    sf->max_virt_off	= sf->wh.data_size;
+    sf->oft		= OFT_WDF;
+
     TRACE("#W# WDF FOUND!\n");
     return ERR_OK;
 
@@ -308,12 +311,12 @@ enumError ReadWDF ( SuperFile_t * sf, off_t off, void * buf, size_t count )
 		    off, count, sf->f.fname );
 	    return ERR_READ_FAILED;
 	}
-	
+
 	const off_t max_read = sf->wh.file_size > off
 					? sf->wh.file_size - off
 					: 0;
 	ASSERT( count > max_read );
-	
+
 	if ( sf->f.read_behind_eof == 1 )
 	{
 	    sf->f.read_behind_eof = 2;
@@ -376,7 +379,7 @@ enumError ReadWDF ( SuperFile_t * sf, off_t off, void * buf, size_t count )
 
 	if ( off >= wc->file_pos && off < wc->file_pos + wc->data_size )
 	{
-	    // we want a part of this 
+	    // we want a part of this
 	    const u64 delta     = off - wc->file_pos;
 	    const u64 max_size  = wc->data_size - delta;
 	    const u32 read_size = max_size < count ? (u32)max_size : count;
@@ -509,7 +512,7 @@ enumError WriteWDF ( SuperFile_t * sf, off_t off, const void * buf, size_t count
 	// SPECIAL CASE:
 	//    the current virtual file will be extended
 	//    -> no nned to search chunks
-     
+
 	if ( off == sf->max_virt_off )
 	{
 	    // maybe an extend of the last chunk -> get the last chunk
@@ -597,7 +600,7 @@ enumError WriteWDF ( SuperFile_t * sf, off_t off, const void * buf, size_t count
 
 	if ( off >= wc->file_pos && off < wc->file_pos + wc->data_size )
 	{
-	    // we want a part of this 
+	    // we want a part of this
 	    const u64 delta     = off - wc->file_pos;
 	    const u64 max_size  = wc->data_size - delta;
 	    const u32 wr_size = max_size < count ? (u32)max_size : count;

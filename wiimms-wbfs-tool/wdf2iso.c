@@ -213,7 +213,7 @@ enumError wdf2iso ( ccp fname )
     InitializeSF(&fi);
     InitializeSF(&fo);
 
-    enumError err = OpenSF(&fi,fname,true);
+    enumError err = OpenSF(&fi,fname,true,false);
     if (err)
 	return err;
     const bool raw_mode = partition_selector == WHOLE_DISC || !fi.f.id6[0];
@@ -260,7 +260,7 @@ enumError wdf2iso ( ccp fname )
     err = ResetSF( &fo, opt_preserve ? &fi.f.st : 0 );
     if (err)
 	goto abort;
-    
+
     ResetSF(&fi,0);
     return ERR_OK;
 

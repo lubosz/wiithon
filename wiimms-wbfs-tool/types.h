@@ -1,6 +1,6 @@
 
 #ifndef WWT_TYPES_H
-#define WWT_TYPES_H 1 
+#define WWT_TYPES_H 1
 
 #include <types.h>
 #include <limits.h>

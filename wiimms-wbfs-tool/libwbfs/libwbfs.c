@@ -6,6 +6,8 @@
 #include "libwbfs.h"
 #include <errno.h>
 
+///////////////////////////////////////////////////////////////////////////////
+
 #ifndef WIN32
 #define likely(x)       __builtin_expect(!!(x), 1)
 #define unlikely(x)     __builtin_expect(!!(x), 0)
@@ -14,8 +16,23 @@
 #define unlikely(x)		(x)
 #endif
 
+///////////////////////////////////////////////////////////////////////////////
+
 #define WBFS_ERROR(x) do {wbfs_error(x);goto error;}while(0)
 #define ALIGN_LBA(x) (((x)+p->hd_sec_sz-1)&(~(p->hd_sec_sz-1)))
+
+///////////////////////////////////////////////////////////////////////////////
+// debugging macros
+
+#ifndef TRACE
+ #define TRACE(...)
+#endif
+
+#ifndef ASSERT
+ #define ASSERT(cond)
+#endif
+
+///////////////////////////////////////////////////////////////////////////////
 
 static int force_mode=0;
 
@@ -23,6 +40,8 @@ void wbfs_set_force_mode(int force)
 {
     force_mode = force;
 }
+
+///////////////////////////////////////////////////////////////////////////////
 
 static u8 size_to_shift(u32 size)
 {
@@ -35,28 +54,37 @@ static u8 size_to_shift(u32 size)
     return ret-1;
 }
 
+///////////////////////////////////////////////////////////////////////////////
+
 #define read_le32_unaligned(x) ((x)[0]|((x)[1]<<8)|((x)[2]<<16)|((x)[3]<<24))
 
 void wbfs_sync(wbfs_t*p);
 
-wbfs_t*wbfs_open_hd(
-    rw_sector_callback_t read_hdsector,
-    rw_sector_callback_t write_hdsector,
-    void *callback_data,
-    int hd_sector_size,
-    int num_hd_sector __attribute((unused)),
-    int reset)
+wbfs_t * wbfs_open_hd
+(
+	rw_sector_callback_t read_hdsector,
+	rw_sector_callback_t write_hdsector,
+	void *callback_data,
+	int hd_sector_size,
+	int num_hd_sector __attribute((unused)),
+	int reset
+)
 { // [codeview]
+
     int i
 #ifdef UNUSED_STUFF
     = num_hd_sector
 #endif
       , ret;
-    u8 *ptr,*tmp_buffer = wbfs_ioalloc(hd_sector_size);
     u8 part_table[16*4];
+    u8 *ptr, *tmp_buffer = wbfs_ioalloc(hd_sector_size);
+    if (!tmp_buffer)
+	OUT_OF_MEMORY;
+
     ret = read_hdsector(callback_data,0,1,tmp_buffer);
     if (ret)
 	return 0;
+
     //find wbfs partition
     wbfs_memcpy(part_table,tmp_buffer+0x1be,16*4);
     ptr = part_table;
@@ -118,7 +146,7 @@ wbfs_t * wbfs_open_partition
 
     p->wii_sec_sz		= WII_SECTOR_SIZE;
     p->wii_sec_sz_s		= size_to_shift(WII_SECTOR_SIZE);
-    p->n_wii_sec_per_disc	= WII_SECTORS_DOUBLE_LAYER;
+    p->n_wii_sec_per_disc	= WII_MAX_SECTORS;
 
     //----- init/load partition header
 
@@ -140,8 +168,9 @@ wbfs_t * wbfs_open_partition
 
 	// choose minimum wblk_sz that fits this partition size
 	// the max value chooses the maximal supported partition size
+	//   - start value <6 ==> n_wbfs_sec_per_disc becomsto large
 	int sz_s;
-	for ( sz_s = 6; sz_s < 11; sz_s++ )
+	for ( sz_s = 6; sz_s < 12; sz_s++ )
 	{
 	    // ensure that wbfs_sec_sz is big enough to address every blocks using 16 bits
 	    if ( p->n_wii_sec < (1<<16) * (1<<sz_s) )
@@ -251,6 +280,9 @@ wbfs_t * wbfs_open_partition
     //----- etc
 
     p->tmp_buffer = wbfs_ioalloc(p->hd_sec_sz);
+    if (!p->tmp_buffer)
+	OUT_OF_MEMORY;
+
     p->n_disc_open = 0;
     if (reset)
 	wbfs_sync(p);
@@ -350,16 +382,17 @@ wbfs_disc_t * wbfs_open_disc_by_slot ( wbfs_t * p, u32 slot )
 
 ///////////////////////////////////////////////////////////////////////////////
 
-void wbfs_sync_disc_header ( wbfs_disc_t * d )
+int wbfs_sync_disc_header ( wbfs_disc_t * d )
 {
     ASSERT(d);
     if ( !d || !d->p || !d->header )
-	 return;
+	 return 1;
 
-    const u32 disc_info_sz_lba = d->p->disc_info_sz >> d->p->hd_sec_sz_s;
-    d->p->write_hdsector (
-			d->p->callback_data,
-			d->p->part_lba + 1 + d->slot * disc_info_sz_lba,
+    wbfs_t * p = d->p;
+    const u32 disc_info_sz_lba = p->disc_info_sz >> p->hd_sec_sz_s;
+    return p->write_hdsector (
+			p->callback_data,
+			p->part_lba + 1 + d->slot * disc_info_sz_lba,
 			disc_info_sz_lba,
 			d->header );
 }
@@ -372,6 +405,55 @@ void wbfs_close_disc ( wbfs_disc_t * d )
     d->p->n_disc_open--;
     wbfs_iofree(d->header);
     wbfs_free(d);
+}
+
+///////////////////////////////////////////////////////////////////////////////
+// rename a disc
+
+int wbfs_rename_disc
+(
+	wbfs_disc_t * d,	// pointer to an open disc
+	const char * new_id,	// if !NULL: take the first 6 chars as ID
+	const char * new_title,	// if !NULL: take the first 0x39 chars as title
+	int change_wbfs_head,	// if !0: change ID/title of WBFS header
+	int change_iso_head	// if !0: change ID/title of ISO header
+)
+{
+    ASSERT(d);
+    ASSERT(d->p);
+    ASSERT(d->header);
+
+    wbfs_t * p = d->p;
+
+    if ( change_wbfs_head
+	&& wd_rename(d->header->disc_header_copy,new_id,new_title) )
+    {
+	int err = wbfs_sync_disc_header(d);
+	if (err)
+	    return err;
+    }
+
+    if ( change_iso_head )
+    {
+	u32 wlba = ntohs(d->header->wlba_table[0]);
+	if (wlba)
+	{
+	    u8 * tmpbuf = p->tmp_buffer;
+	    ASSERT(tmpbuf);
+	    const u32 lba = wlba << ( p->wbfs_sec_sz_s - p->hd_sec_sz_s );
+	    int err = p->read_hdsector( p->callback_data, lba, 1, tmpbuf );
+	    if (err)
+		return err;
+	    if (wd_rename(tmpbuf,new_id,new_title))
+	    {
+		err = p->write_hdsector( p->callback_data, lba, 1, tmpbuf );
+		if (err)
+		    return err;
+	    }
+	}
+    }
+
+    return 0;
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -508,7 +590,7 @@ enumError wbfs_get_disc_info_by_slot
     if (header_size > (int)p->hd_sec_sz)
 	header_size = p->hd_sec_sz;
     memcpy( header, p->tmp_buffer, header_size );
-    
+
     if (size)
     {
 	u32 sec_used;
@@ -577,7 +659,7 @@ static int block_used ( u8 *used, u32 i, u32 wblk_sz )
     u32 k;
     i *= wblk_sz;
     for ( k = 0; k < wblk_sz; k++ )
-	if ( i + k < WII_SECTORS_DOUBLE_LAYER && used[i+k] )
+	if ( i + k < WII_MAX_SECTORS && used[i+k] )
 	    return 1;
     return 0;
 }
@@ -688,7 +770,7 @@ u32 wbfs_add_disc
 	copy_1_1 = 1;
 
  // [codeview]
- 
+
     if (!copy_1_1)
     {
 	d = wd_open_disc(read_src_wii_disc, callback_data);
@@ -757,7 +839,10 @@ u32 wbfs_add_disc
 		WBFS_ERROR("no space left on device (disc full)");
 	    }
 
-	    if (read_src_wii_disc(callback_data, i * (p->wbfs_sec_sz >> 2), p->wbfs_sec_sz, copy_buffer))
+	    if (read_src_wii_disc( callback_data,
+				   i * (p->wbfs_sec_sz >> 2),
+				   p->wbfs_sec_sz,
+				   copy_buffer))
 		WBFS_ERROR("error reading disc");
 
 	    // fix the partition table.
@@ -794,52 +879,33 @@ error:
 }
 
 ///////////////////////////////////////////////////////////////////////////////
+// old 'rename title' interface
 
-u32 wbfs_ren_disc(wbfs_t*p, u8* discid, u8* newname)
-{ // [codeview]
+u32 wbfs_ren_disc ( wbfs_t * p, u8 * discid, u8 * newname )
+{
     wbfs_disc_t *d = wbfs_open_disc_by_id6(p, discid);
-    int disc_info_sz_lba = p->disc_info_sz>>p->hd_sec_sz_s;
-
     if (!d)
 	return 1;
 
-    memset(d->header->disc_header_copy+0x20, 0, 0x40);
-    strncpy((char*)d->header->disc_header_copy+0x20, (char*)newname, 0x39);
-    d->header->disc_header_copy[0x20+0x39] = '\0'; //force last char to 0
-
-    p->write_hdsector (	p->callback_data,
-			p->part_lba + 1 + d->slot * disc_info_sz_lba,
-			disc_info_sz_lba,
-			d->header);
-
+    // use the new implementation
+    int err = wbfs_rename_disc(d,0,(char*)newname,1,0);
     wbfs_close_disc(d);
-    wbfs_sync(p);
-    return 0;
+    return err;
 }
 
 ///////////////////////////////////////////////////////////////////////////////
+// old 'rename id' interface
 
-u32 wbfs_nid_disc(wbfs_t*p, u8* discid, u8* newid)
-{ // [codeview]
+u32 wbfs_nid_disc ( wbfs_t * p, u8 * discid, u8 * newid )
+{
     wbfs_disc_t *d = wbfs_open_disc_by_id6(p, discid);
-    int disc_info_sz_lba = p->disc_info_sz >> p->hd_sec_sz_s;
-
     if (!d)
 	return 1;
 
-    if (strlen((const char *)newid) > 0x6)
-	return 1;
-
-    strcpy((char *)(d->header->disc_header_copy+0x0), (const char *)newid);
-
-    p->write_hdsector(p->callback_data,
-		      p->part_lba + 1 + d->slot * disc_info_sz_lba,
-		      disc_info_sz_lba,
-		      d->header );
-
+    // use the new implementation
+    int err = wbfs_rename_disc(d,(char*)newid,0,1,0);
     wbfs_close_disc(d);
-    wbfs_sync(p);
-    return 0;
+    return err;
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -936,13 +1002,13 @@ u32 wbfs_trim ( wbfs_t * p )
     // trim the file-system to its minimum size
 
     wbfs_load_freeblocks(p);
-    
+
     u32 max_block = find_last_used_block(p) + 1;
     p->n_hd_sec = max_block << p->wbfs_sec_sz_s - p->hd_sec_sz_s;
     p->head->n_hd_sec = wbfs_htonl(p->n_hd_sec);
 
     TRACE("max_block=%u, n_hd_sec=%u\n",max_block,p->n_hd_sec);
- 
+
     // mrk all blocks 'used'
     // [fbt-bug]
     memset(p->freeblks,0,p->freeblks_size4*4);

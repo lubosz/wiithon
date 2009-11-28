@@ -12,23 +12,23 @@
 
 //---------------------------------------------------------------------------
 //
-//  The title data base is a list of pointers. Each pointer points to a 
+//  The title data base is a list of pointers. Each pointer points to a
 //  dynamic allocated memory location structured by this:
-//  
+//
 //      6 bytes : For the ID. The ID have 1 to 6 characters padded with NULL.
 //      1 byte  : A NULL character (needed by strcmp())
 //    >=1 byte  : The title, NULL terminated.
-//  
+//
 //  The list is orderd by the ID which is unique in the data base.
-//  
+//
 //  While inserting an ID an existing entry will be removed. Additional all
 //  entries that begins with the new ID are removed.
-//  
+//
 //  While looking up for an ID, the ID itself is searched. If not found an
 //  abbreviaton for that ID is searched. Binary searching is used.
 //
 //---------------------------------------------------------------------------
- 
+
 #endif
 //
 ///////////////////////////////////////////////////////////////////////////////

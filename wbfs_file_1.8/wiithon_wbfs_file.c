@@ -81,13 +81,13 @@ int write_wii_sector_file(void*_fp,u32 lba,u32 count,void*iobuf)
     {
         printf("\n\n"FMT_lld" %p\n",off,_fp);
         wbfs_error("error seeking in written disc file");
-        return 1;
+        return FALSE;
     }
     if (fwrite(iobuf, count*0x8000, 1, fp) != 1){
         wbfs_error("error writing disc file");
-        return 1;
+        return FALSE;
     }
-    return 0;
+    return OK;
 }
 
 
@@ -286,10 +286,10 @@ int do_extract(wbfs_disc_t *d, char *destname)
     if (f) {
         fclose(f);
         if (OPT_overwrite) {
-            printf("\nNote: file already exists: %s (overwriting)\n", destname);
+            //printf("\nNote: file already exists: %s (overwriting)\n", destname);
         } else {
-            printf("\nError: file already exists: %s\n", destname);
-            return -1;
+            //printf("\nError: file already exists: %s\n", destname);
+            return FALSE;
         }
     }
 
@@ -297,7 +297,7 @@ int do_extract(wbfs_disc_t *d, char *destname)
     if(!f)
         wbfs_fatal("unable to open dest file");
     else{
-        printf("writing to %s\n",destname);
+        //printf("writing to %s\n",destname);
 
         // check if the game is DVD9..
         // XXX is it needed?
@@ -322,7 +322,7 @@ int do_extract(wbfs_disc_t *d, char *destname)
 
         ret = wbfs_extract_disc(d,write_wii_sector_file,f,_spinner);
         fclose(f);
-        printf("\n");
+        //printf("\n");
     }
     return ret;
 }
@@ -385,7 +385,7 @@ void mk_title_txt(char *fname_wbfs, u8 *hdr)
     if (!f) return;
     fprintf(f, "%.6s = %.64s\n", id, title);
     fclose(f);
-    printf("Info file: %s\n", fname);
+    //printf("Info file: %s\n", fname);
 }
 
 int wbfs_applet_extract_iso(wbfs_t *p, char*argv, char *path)
@@ -414,21 +414,21 @@ int wbfs_applet_extract_wbfs(wbfs_t *p, char*arg, char *path)
     int ret = 1;
     wbfs_disc_t *d = wbfs_open_disc(p,(u8*)arg);
     if(!d) {
-        printf("%s not in disc..\n",arg);
-        return -1;
+        //printf("%s not in disc..\n",arg);
+        return FALSE;
     }
 
     u8 b[0x100];
     wbfs_disc_read(d, 0, b, 0x100);
     u32 magic = _be32(b+24);
     if(magic!=0x5D1C9EA3){
-        printf("SKIP: Not a wii disc - bad magic (%08x)\n\n", magic);
+        //printf("SKIP: Not a wii disc - bad magic (%08x)\n\n", magic);
         goto err;
     }
 
     char destname[1024];
     if (strlen(arg)!=6) {
-        printf("invalid DISCID: '%s'\n", arg);
+        //printf("invalid DISCID: '%s'\n", arg);
         goto err;
     }
     strcpy(destname, path);
@@ -439,7 +439,7 @@ int wbfs_applet_extract_wbfs(wbfs_t *p, char*arg, char *path)
     strcat(destname, arg);
     strcat(destname, ".wbfs");
     
-    printf("Writing '%s' to: '%s'\n", arg, destname);
+    //printf("Writing '%s' to: '%s'\n", arg, destname);
     mk_title_txt(destname, b);
     fflush(stdout);
 
@@ -462,31 +462,34 @@ int wbfs_applet_extract_wbfs(wbfs_t *p, char*arg, char *path)
 
 err:
     if (d) wbfs_close_disc(d);
-    return -1;
+    return FALSE;
 }
 
 int wbfs_applet_extract_wbfs_all(wbfs_t *p, char *path)
 {
     int count = wbfs_count_discs(p);
     if(count==0) {
-        printf("wbfs empty\n");
-        return -1;
+        //printf("wbfs empty\n");
+        return FALSE;
     }
     wbfs_applet_ls(p);
-    printf("\nExtracting ALL games to: '%s'\n", path);
+    //printf("\nExtracting ALL games to: '%s'\n", path);
 
     int i, r, ret = 0;
     u32 size;
     u8 b[0x100];
     char discid[8];
-    for (i=0;i<count;i++) {
-        if(!wbfs_get_disc_info(p,i,b,0x100,&size)) {
+    for (i=0;i<count;i++)
+    {
+        if(!wbfs_get_disc_info(p,i,b,0x100,&size))
+        {
             printf("\n%d / %d : ", i+1, count);
             printf("%.6s : %-40s %.2fG\n", b, b + 0x20, size*4ULL/(GB));
             //printf("("FMT_lld")\n", (u64)size*4ULL);
             // check magic
             u32 magic = _be32(b+24);
-            if (magic != 0x5D1C9EA3){
+            if (magic != 0x5D1C9EA3)
+            {
                 printf("SKIP: Not a wii disc - bad magic (%08x)\n\n", magic);
                 continue;
             }
@@ -499,13 +502,13 @@ int wbfs_applet_extract_wbfs_all(wbfs_t *p, char *path)
             }
         }
     }
-    printf("Done.\n");
+    //printf("Done.\n");
     return ret;
 }
 
 int wbfs_applet_add_wbfs(wbfs_t *p, char *fname)
 {
-    printf("Adding %s to WBFS\n", fname);
+    //printf("Adding %s to WBFS\n", fname);
 
     split_info_t src_split;
     wbfs_t *src_p = wbfs_split_open_partition(&src_split, fname, 0);
@@ -722,13 +725,13 @@ int wbfs_applet_create0(char *dest_name, char*argv)
 
 int conv_to_wbfs(char *filename, char *dest_dir)
 {
-    printf("Converting %s to WBFS\n", filename);
+    //printf("Converting %s to WBFS\n", filename);
     char newname[1024], *c;
     u8 discid[8];
     FILE *f = fopen(filename,"rb");
     if(!f) {
-        printf("unable to open iso file '%s'", filename);
-        return -1;
+        //printf("unable to open iso file '%s'", filename);
+        return FALSE;
     }
     fread(discid,6,1,f);
     fclose(f);
@@ -744,26 +747,26 @@ int conv_to_wbfs(char *filename, char *dest_dir)
         c = newname + strlen(newname);
     }
     sprintf(c, "%.6s.wbfs", discid);
-    printf("Writing: %s\n", newname);
+    //printf("Writing: %s\n", newname);
     wbfs_applet_create(newname, filename);
-    return 0;
+    return OK;
 }
 
 int conv_to_iso(char *filename, char *dest_dir)
 {
     char discid[8];
 
-    printf("Converting %s to ISO\n", filename);
+    //printf("Converting %s to ISO\n", filename);
 
     wbfs_t *p = wbfs_auto_open_partition(filename, 0);
     if(!p) {
-        printf("error opening %s\n", filename);
-        return -1;
+        //printf("error opening %s\n", filename);
+        return FALSE;
     }
     if (get_first_disc_id(p, discid))
     {
-        printf("error finding ID in %s\n", filename);
-        return -1;
+        //printf("error finding ID in %s\n", filename);
+        return FALSE;
     }
     char path[1024], *c;
     if (*dest_dir == 0) {
@@ -775,7 +778,7 @@ int conv_to_iso(char *filename, char *dest_dir)
         dest_dir = path;
     }
     wbfs_applet_extract_iso(p, discid, dest_dir);
-    return 0;
+    return OK;
 }
 
 int convert(char *filename, char *dest_dir)
@@ -1018,7 +1021,6 @@ int main(int argc, char *argv[])
     if (optind >= argc) {
         goto usage;
     }
-
 
     if (strcmp(argv[optind], "create")==0)
     {

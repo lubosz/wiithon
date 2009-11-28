@@ -15,7 +15,10 @@
         'N' : Disc name
         'T' : Title. If no title found the disc name is used.
         'E' : The default extension ('wdf' or 'iso' or 'wbfs')
-        '+' : The default filename.
+        'P' : The path (all upto the last '/') of the source file
+        'F' : The filename (start behind the last '/') of the source file
+        'X' : Extended filename: A shortcut for '%T [%I].%E'
+        '+' : The default filename: WBFS='%I.%E', all other='%X'
 
     To use the '%' sign itself just type '%%'.
 
@@ -30,3 +33,5 @@
     by the option --esc. This makes live easier if using the cygwin version
     together with the windows shell 'cmd'. Define the environment variables
     'WWT_OPT' and/or 'WIT_OPT' for a new default definition.
+    Example for Unix bash: export WWT_OPT="--esc=$"
+    Example for Windows:   set WWT_OPT=--esc=$

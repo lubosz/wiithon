@@ -1,13 +1,13 @@
 K 25
 svn:wc:ra_dav:version-url
 V 48
-/wii/!svn/ver/450/trunk/wiimms-wbfs-tool/libwbfs
+/wii/!svn/ver/491/trunk/wiimms-wbfs-tool/libwbfs
 END
 wiidisc.h
 K 25
 svn:wc:ra_dav:version-url
 V 58
-/wii/!svn/ver/339/trunk/wiimms-wbfs-tool/libwbfs/wiidisc.h
+/wii/!svn/ver/491/trunk/wiimms-wbfs-tool/libwbfs/wiidisc.h
 END
 .svn-ignore
 K 25
@@ -25,7 +25,7 @@ libwbfs.c
 K 25
 svn:wc:ra_dav:version-url
 V 58
-/wii/!svn/ver/450/trunk/wiimms-wbfs-tool/libwbfs/libwbfs.c
+/wii/!svn/ver/491/trunk/wiimms-wbfs-tool/libwbfs/libwbfs.c
 END
 rijndael.c
 K 25
@@ -37,17 +37,17 @@ reference.txt
 K 25
 svn:wc:ra_dav:version-url
 V 62
-/wii/!svn/ver/427/trunk/wiimms-wbfs-tool/libwbfs/reference.txt
+/wii/!svn/ver/491/trunk/wiimms-wbfs-tool/libwbfs/reference.txt
 END
 wiidisc.c
 K 25
 svn:wc:ra_dav:version-url
 V 58
-/wii/!svn/ver/339/trunk/wiimms-wbfs-tool/libwbfs/wiidisc.c
+/wii/!svn/ver/491/trunk/wiimms-wbfs-tool/libwbfs/wiidisc.c
 END
 libwbfs.h
 K 25
 svn:wc:ra_dav:version-url
 V 58
-/wii/!svn/ver/427/trunk/wiimms-wbfs-tool/libwbfs/libwbfs.h
+/wii/!svn/ver/491/trunk/wiimms-wbfs-tool/libwbfs/libwbfs.h
 END

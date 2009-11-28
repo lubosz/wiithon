@@ -64,6 +64,8 @@ DETECTOR_WBFS = os.path.join( WIITHON_FILES , "wiithon_autodetectar.sh" )
 DETECTOR_WBFS_LECTOR = os.path.join( WIITHON_FILES , "wiithon_autodetectar_lector.sh" )
 DETECTOR_WBFS_FAT32 = os.path.join( WIITHON_FILES , "wiithon_autodetectar_fat32.sh" )
 WBFS_FILE = os.path.join( WIITHON_FILES , "wiithon_wbfs_file" )
+WDF_TO_ISO = os.path.join( WIITHON_FILES , "wiithon_wdf2iso" )
+ISO_TO_WDF = os.path.join( WIITHON_FILES , "wiithon_iso2wdf" )
 
 # Definido en libwbfs, longitud maxima de un titulo
 TITULO_LONGITUD_MAX = 0x80

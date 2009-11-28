@@ -99,7 +99,7 @@ typedef struct wbfs_s
 	u32 wii_sec_sz;		// always WII_SECTOR_SIZE
 	u8  wii_sec_sz_s;	// always 15
 	u32 n_wii_sec;
-	u32 n_wii_sec_per_disc;	// always WII_SECTORS_DOUBLE_LAYER
+	u32 n_wii_sec_per_disc;	// always WII_MAX_SECTORS
 
 	/* The size of a wbfs sector */
 	u32 wbfs_sec_sz;
@@ -123,7 +123,7 @@ typedef struct wbfs_s
 
 	u16 disc_info_sz;
 
-	u8  *tmp_buffer;  // pre-allocated buffer for unaligned read
+	u8  *tmp_buffer;	// pre-allocated buffer for unaligned read
 
 	u32 n_disc_open;
 
@@ -176,10 +176,20 @@ wbfs_t*wbfs_open_partition(rw_sector_callback_t read_hdsector,
 void wbfs_close ( wbfs_t * p );
 void wbfs_sync  ( wbfs_t * p );
 
-wbfs_disc_t * wbfs_open_disc_by_slot ( wbfs_t * p, u32 split );
+wbfs_disc_t * wbfs_open_disc_by_slot ( wbfs_t * p, u32 slot );
 wbfs_disc_t * wbfs_open_disc_by_id6  ( wbfs_t * p, u8 * id6 );
-void wbfs_sync_disc_header ( wbfs_disc_t * d );
+int wbfs_sync_disc_header ( wbfs_disc_t * d );
 void wbfs_close_disc ( wbfs_disc_t * d );
+
+// rename a disc
+int wbfs_rename_disc
+(
+	wbfs_disc_t * d,	// pointer to an open disc
+	const char * new_id,	// if !NULL: take the first 6 chars as ID
+	const char * new_title,	// if !NULL: take the first 0x39 chars as title
+	int change_wbfs_head,	// if !0: change ID/title of WBFS header
+	int change_iso_head	// if !0: change ID/title of ISO header
+);
 
 //-----------------------------------------------------------------------------
 
@@ -230,10 +240,10 @@ u32 wbfs_estimate_disc(wbfs_t*p,read_wiidisc_callback_t read_src_wii_disc, void 
 // remove a disc from partition
 u32 wbfs_rm_disc ( wbfs_t * p, u8 * discid, int free_slot_only );
 
-/*! rename a wiidvd inside a partition */
+// rename a wiidvd inside a partition
 u32 wbfs_ren_disc(wbfs_t*p, u8* discid, u8* newname);
 
-/*! edit a wiidvd diskid */
+// edit a wiidvd diskid
 u32 wbfs_nid_disc(wbfs_t*p, u8* discid, u8* newid);
 
 /*! trim the file-system to its minimum size

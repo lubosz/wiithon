@@ -1,35 +1,19 @@
-wwt v0.16a r428 - 2009-11-15
+wwt v0.18a r465 - 2009-11-22
 
- - wwt DUMP layout redesigned.
- - libwbfs: free blocks table bug fixes:
-    - Fix the free block table while formatting or loading
-    - Allocation of free blocks behind 32 bit boundaries
-    - Fix table if WBFS if full while adding a game.
-    - I propagate libwbfs v1 (v0 prior).
- - bug fix: progress info failed if writing splitted files.
- - wwt ADD/UPDATE/EXTRACT/REMOVE/TRUNCATE: A CHECK is done automatically.
-   The WBFS will be ignored if problematic errors are detected.
-     --force:    Print messages but ignore result of the check and continue.
-     --no-check: Disable the automatic check.
- - wwt ADD/UPDATE: Cleanup to previous state if the disc is full.
- - wwt REMOVE: new option: --no-free: do not free blocks.
- - wwt CHECK: new option: --repair=mode: fix the detected errors.
-   THIS OPTION IS EXPERIMENTAL!
- - New wwt command: REPAIR: Shortcut for: CHECK --repair=fbt
-   (fbt = Free Blocks Table)  THIS COMMAND IS EXPERIMENTAL!
-
-wwt v0.16b r431 - 2009-11-15
-
- - wwt EXTRACT and REMOVE denied options --force and --no-check.
- - cygwin: REPAIR can't write unaligned free blocks tables.
+ - Bug fix: Wrong temp filename while creating an splitted WBFS.
+ - Default split size is now 4GiB-32KiB for WBFS and 4GB for all other files.
+ - wwt CHECK -ll: Print an additional dump if errors found.
+ - wit SCRUB: Allow type conversion.
+ - new commands: wwt RENAME+SETTITLE: Set ID and title of discs [EXPERIMENTAL].
+ - IMPORTAND BUG FIX in libwbfs/wiidisc: All scrubbing operations including
+   adding to a WBFS could loose sectors.
 
 wwt v@.@@@ r@@REV-NEXT@@ - @@@@-@@-@@
 
- - wwt ADD --ignore: Ignores non exsting sources without message.
- - wwt DUMP: show memory range of each inode.
- - New command: wit DIFF: Compare ISO images in raw or scrubbed mode.
-   EXPERIMENTAL, because the DIFF command is not testet very well yet!
- - wwt EXTRACT + wit COPY/DIFF: Handle '%'-escapes for output file name.
- - New option --esc: Define an alternative escape character, default is '%'.
- - Bug fix: Wrong name scheme for splitted WBFS files.
- - Some minor bugs.
+ - New ADD option: --sync: Synchronize: remove and add until WBFS contains
+   the same discs as source list.
+ - New comamnd: wwt SYNC: Abbreviation for: ADD --sync
+ - New commands: wit RENAME+SETTITLE: Set ID and title of discs [EXPERIMENTAL].
+ - New command: wit MOVE: move/rename iso files.
+ - MAC bug fix: segmentation fault if formatting a drive.
+ - Bug fix: Interrupt possible while processing a source directory.

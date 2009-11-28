@@ -1,6 +1,6 @@
 
 #ifndef WWT_LIB_WDF_H
-#define WWT_LIB_WDF_H 1 
+#define WWT_LIB_WDF_H 1
 
 #include "types.h"
 #include "libwbfs.h"
@@ -30,7 +30,7 @@ typedef u32 WDF_Hole_t;
 ///////////////////////////////////////////////////////////////////////////////
 ///////////////                 struct WDF_Head_t               ///////////////
 ///////////////////////////////////////////////////////////////////////////////
-// This is the header of a WDF. 
+// This is the header of a WDF.
 // Remember: Within a file the data is stored in network byte order (big endian)
 
 typedef struct WDF_Head_t
@@ -61,7 +61,7 @@ typedef struct WDF_Head_t
 ///////////////////////////////////////////////////////////////////////////////
 ///////////////                struct WDF_Chunk_t               ///////////////
 ///////////////////////////////////////////////////////////////////////////////
-// This is the chunk info of WDF. 
+// This is the chunk info of WDF.
 // Remember: Within a file the data is stored in network byte order (big endian)
 
 typedef struct WDF_Chunk_t
@@ -113,7 +113,7 @@ typedef struct SuperFile_t
 	int wc_used;			// number of used elements in 'wc'
 
 	// WBFS support (read only)
-	
+
 	struct WBFS_t * wbfs;		// a WBFS
 
 } SuperFile_t;
@@ -142,14 +142,15 @@ enumError RemoveSF ( SuperFile_t * sf );
 enumError SetupReadSF   ( SuperFile_t * sf );		// all files
 enumError SetupReadISO  ( SuperFile_t * sf );		// only iso images
 enumError SetupReadWBFS ( SuperFile_t * sf );		// setup wbfs/disc reading
-enumError OpenSF	( SuperFile_t * sf, ccp fname, bool allow_non_iso );
+enumError OpenSF
+	( SuperFile_t * sf, ccp fname, bool allow_non_iso, bool open_modify );
 
 // setup writing
 enumError SetupWriteSF	( SuperFile_t * sf, enumOFT );	// setup writing
 enumError SetupWriteWBFS( SuperFile_t * sf );		// setup wbfs/disc writing
 
 // filename helper
-void SubstFileNameSF ( SuperFile_t * fo, SuperFile_t * fi );
+void SubstFileNameSF ( SuperFile_t * fo, SuperFile_t * fi, ccp f_name );
 
 // main read and write functions
 enumError ReadSF	( SuperFile_t * sf, off_t off, void * buf, size_t count );

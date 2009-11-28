@@ -71,7 +71,7 @@ COMMAND: COPY|CP
  Copy all sources to the destination directory. The files are converted to WDF
  or ISO or WBFS controlled by options --wdf, --iso and --wbfs) and/or scrubbed
  (controlled by options --psel and --raw).
- 
+
  Options:
 
     -s --source  path  ISO file or directory with ISO files.
@@ -140,7 +140,7 @@ COMMAND: DIFF|CMP
  Compare all sources with a destination. Source and destinaton can be plain ISO
  files, WDF-ISO files or WBFS files with a selector. The comparing can be done
  in scrubbed mode (controlled by options --psel and --raw).
- 
+
  Options:
 
     -s --source  path  ISO file or directory with ISO files.
@@ -152,6 +152,10 @@ COMMAND: DIFF|CMP
     -l --long          Print position of first mismatch.
     -ll                (--long twice): Print all mismatch positions,
                        but only 1 per ISO block (0x8000 = 32768 bytes).
+
+    -W --wdf           Search for *.wdf files in the destination directory.
+    -I --iso           Search for *.iso files in the destination directory.
+    -B --wbfs          Search for *.wbfs files in the destination directory.
 
     -q --quiet         Be quiet   -> print only error messages.
     -v --verbose       Be verbose -> print continuation infos.
@@ -201,12 +205,15 @@ COMMAND: DUMP|D   [path]...
 
     -s --source  path  ISO file or directory with ISO files.
     -r --recurse path  ISO file or base of a directory tree with ISO files.
-    -l --long          Print in long format. Multiple usage possible.
     -T --titles file   Read file for disc titles. -T0 disables titles lookup.
 
+    -l --long          Print memory map for each partiton.
+    -ll                Print memory map for whole ISO image.
+
  DUMP will dumps the data structure of all ISO files. If the option --long is
- an additional memory map for the whole ISO file is printed at the end.
- Failures (overlapped areas) are marked with '!'.
+ ser an additional memory map for each partiton is printed. If the option
+ --long is set twice or more an additional memory map for the whole ISO file
+ is printed at the end. Failures (overlapped areas) are marked with '!'.
 
 
  Usual ERROR/EXIT CODES:
@@ -287,7 +294,7 @@ COMMAND: FILELIST|FL  [path]...
     -i --ignore        Ignore non existing files/discs without warning.
     -ii                (--ignore twice) Ignore all non ISO files.
     -l --long          Print the real path instead of given path.
- 
+
  The filename of each file in the internal file list is printed as one line.
  If no source is given, the current working directory is used as source.
 
@@ -317,8 +324,8 @@ COMMAND: FILETYPE|FT  [path]...
     -ll                (--long twice) Print real path instead of given path.
     -i --ignore        Ignore non existing and don't print status line.
     -ii                (--ignore twice) Ignore all non ISO files.
-    
- 
+
+
  The command 'FILETYPE' prints for each file in the internal file database
  (build by the options --source and --recurse) one status line like:
     FILETYPE ID6 filename
@@ -434,7 +441,7 @@ COMMAND: LIST|LS   [path]...
  The internal ISO database is build under control of the options --source,
  --recurse, --exclude and --exclude-path. See section "Processing --source
  and --recurse" for details.
- 
+
  Without --long the ID and the name are printed. With option --long the ID,
  size, region and the name are printed.  The option --no-header suppress the
  output of header and footer.
@@ -442,7 +449,7 @@ COMMAND: LIST|LS   [path]...
  If the option --long is given twice or more a second line with thr number
  of partitions, the file type ('ISO' or 'WDF') and the file path is printed.
  If the option --long is given three times the real path is printed.
- 
+
  If available the name of the title database is used. use the option -T0 to
  disable database titles.
 
@@ -471,6 +478,56 @@ COMMANDS:
 
 -------------------------------------------------------------------------------
 
+COMMAND: MOVE|MV
+
+ Syntax: MOVE source_file destination_file
+         MOVE [-s path] [-r path] [sources]... destination
+         MOVE [-s path] [-r path] [sources]... -d destination
+
+ Move and/or renames all sources to the destination directory. The contents of
+ the files are unchanged.
+
+ Options:
+
+    -s --source  path  ISO file or directory with ISO files.
+    -r --recurse path  ISO file or base of a directory tree with ISO files.
+    -d --dest path     Define a destination file/directory.
+    -o --overwrite     Overwrite existing ISO images.
+    -i --ignore        Ignore non existing files/discs without warning.
+
+    -q --quiet         Be quiet   -> print only error messages.
+    -v --verbose       Be verbose -> print continuation infos.
+    -t --test          Run in test mode, modify nothing.
+    -E --esc char      Define an alternative escape character, default is '%'.
+
+ The command MOVE moves and/or renames all given sources. If the option --dest
+ is not set the last parameter is used as destination. If exact one source file
+ is given the destination can be a file name.
+
+ Each source is canidat for moving. Non ISO files are ignored with a warning.
+ The option --ignore suppresses this warning. Existing files will only be
+ overwrtitten if option --overwrite is set.
+
+ The option --test enables test mode: No files are renamed. If --test is set at
+ least two times a source list with a trailing destination will be printed.
+
+
+ DESTINATION FILENAME
+
+@@MODULE(output-filename.txt)@@
+
+
+ Usual ERROR/EXIT CODES:
+
+    0 == OK             : all done without erros.
+    SYNTAX ERROR        : at least on syntax error in command line found.
+    READ ERROR          : error while reading a file.
+    WRITE ERROR         : error while writing a file.
+    CANT CREATE         : Can't create output file.
+
+
+-------------------------------------------------------------------------------
+
 COMMAND: REMOVE|RM   id6...
 
  Remove images from a WBFS partition.
@@ -479,6 +536,11 @@ COMMAND: REMOVE|RM   id6...
 
     -s --source  path  ISO file or directory with ISO files.
     -r --recurse path  ISO file or base of a directory tree with ISO files.
+    -x --exclude id    Exclude discs with given ID4 or ID6 from operation.
+    -x --exclude @file Read exclude list from file.
+    -X --exclude-path file_or_dir
+                       ISO file or base of directory tree -> scan their ID6
+
     -U --unique       Eliminate repeated ID6 from parameter list.
     -i --ignore       Ignore non existing discs without warning.
 
@@ -492,11 +554,36 @@ COMMAND: REMOVE|RM   id6...
 
 -------------------------------------------------------------------------------
 
+COMMAND: RENAME|REN  id6=[new_id6][,title] ...
+
+ Change the ID6 or/and the title of discs.
+
+ Options:
+
+    -s --source  path  ISO file or directory with ISO files.
+    -r --recurse path  ISO file or base of a directory tree with ISO files.
+    -x --exclude id    Exclude discs with given ID4 or ID6 from operation.
+    -x --exclude @file Read exclude list from file.
+    -X --exclude-path file_or_dir
+                       ISO file or base of directory tree -> scan their ID6
+
+    -i --ignore        Ignore non existing discs without warning.
+    -I --iso           If WBFS: Change only the ISO header inside the WBFS.
+    -B --wbfs          If WBFS: Change only the WBFS inode infos.
+
+ EXPERIMENTAL!
+ The implementation is not testet very well.
+
+@@MODULE(set-title.txt)@@
+
+
+-------------------------------------------------------------------------------
+
 COMMAND: SCRUB|SB  iso_image_path...
 
  Copy all found ISO images. SCRUB works like COPY but the output file replaces
  the input files. Scrubbing is coltrolled by the options --psel and --raw.
- 
+
  Options:
 
     -s --source  path  ISO file or directory with ISO files.
@@ -506,6 +593,10 @@ COMMAND: SCRUB|SB  iso_image_path...
     -z --split         Enable output file splitting, default split size = 2 gb.
     -Z --split-size sz Enable output file splitting and set split size.
     -p --preserve      Preserve file times (atime+mtime).
+
+    -W --wdf           Write a WDF image; clears options --iso and --wbfs. (default)
+    -I --iso           Write a plain ISO image; clears options --wdf and --wbfs.
+    -B --wbfs          Write an ISO as WBFS container; clears options --wdf and --iso.
 
     -q --quiet         Be quiet   -> print only error messages.
     -v --verbose       Be verbose -> print continuation infos.
@@ -536,7 +627,34 @@ COMMAND: SCRUB|SB  iso_image_path...
 
 -------------------------------------------------------------------------------
 
-COMMAND: TITLES|TIT   [additional_title_file]...
+COMMAND: SETTITLE|ST   id6=new_title ...
+
+ Change the title of discs.
+
+ Change the ID6 or/and the title of discs.
+
+ Options:
+
+    -s --source  path  ISO file or directory with ISO files.
+    -r --recurse path  ISO file or base of a directory tree with ISO files.
+    -x --exclude id    Exclude discs with given ID4 or ID6 from operation.
+    -x --exclude @file Read exclude list from file.
+    -X --exclude-path file_or_dir
+                       ISO file or base of directory tree -> scan their ID6
+
+    -i --ignore        Ignore non existing discs without warning.
+    -I --iso           If WBFS: Change only the ISO header inside the WBFS.
+    -B --wbfs          If WBFS: Change only the WBFS inode infos.
+
+ EXPERIMENTAL!
+ The implementation is not testet very well.
+
+@@MODULE(set-title.txt)@@
+
+
+-------------------------------------------------------------------------------
+
+COMMAND: TITLES   [additional_title_file]...
 
  The command 'TITLES' builts the title data base and prints the result to
  stdout. The handling of the additional files works like the --title option.

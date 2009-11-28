@@ -149,13 +149,16 @@ typedef enum enumOptionsBit
 	OB_CMD_REPAIR	= OB_CMD_CHECK,
 	OB_CMD_EDIT	= OB_AUTO|OB_PART|OB_FORCE,
 	OB_CMD_TRUNCATE	= OB__MASK_PART|OB__MASK_NO_CHK,
-	OB_CMD_UPDATE	= OB__MASK_PART|OB__MASK_PSEL|OB__MASK_NO_CHK
+	OB_CMD_SYNC	= OB__MASK_PART|OB__MASK_PSEL|OB__MASK_NO_CHK
 			  |OB_RECURSE|OB_IGNORE|OB_REMOVE|OB_TRUNC,
+	OB_CMD_UPDATE	= OB_CMD_SYNC|OB_SYNC,
 	OB_CMD_ADD	= OB_CMD_UPDATE|OB_OVERWRITE|OB_UPDATE,
 	OB_CMD_EXTRACT	= OB__MASK_PART|OB__MASK_SPLIT|OB__MASK_OFT|OB__MASK_NO_CHK
 			  |OB_UNIQUE|OB_DEST|OB_FAST|OB_TRUNC
 			  |OB_IGNORE|OB_REMOVE|OB_OVERWRITE|OB_UPDATE,
 	OB_CMD_REMOVE	= OB__MASK_PART|OB__MASK_NO_CHK|OB_UNIQUE|OB_IGNORE|OB_NO_FREE,
+	OB_CMD_RENAME	= OB__MASK_PART|OB__MASK_NO_CHK|OB_IGNORE|OB_ISO|OB_WBFS,
+	OB_CMD_SETTITLE	= OB_CMD_RENAME,
 	OB_CMD_FILETYPE	= OB_LONG|OB_IGNORE,
 
 } enumOptionsBit;
@@ -192,8 +195,11 @@ typedef enum enumCommands
 
 	CMD_ADD,
 	CMD_UPDATE,
+	CMD_SYNC,
 	CMD_EXTRACT,
 	CMD_REMOVE,
+	CMD_RENAME,
+	CMD_SETTITLE,
 
 	CMD_FILETYPE,
 
@@ -302,7 +308,7 @@ CommandTab_t CommandTab[] =
     #endif
 	{ CMD_ERROR,	"ERROR",	"ERR",		OB_CMD_ERROR },
 	{ CMD_EXCLUDE,	"EXCLUDE",	0,		OB_CMD_EXCLUDE },
-	{ CMD_TITLES,	"TITLES",	"TIT",		OB_CMD_TITLES },
+	{ CMD_TITLES,	"TITLES",	0,		OB_CMD_TITLES },
 
 	{ CMD_FIND,	"FIND",		"F",		OB_CMD_FIND },
 	{ CMD_SPACE,	"SPACE",	"DF",		OB_CMD_SPACE },
@@ -323,8 +329,11 @@ CommandTab_t CommandTab[] =
 
 	{ CMD_ADD,	"ADD",		"A",		OB_CMD_ADD },
 	{ CMD_UPDATE,	"UPDATE",	"U",		OB_CMD_UPDATE },
+	{ CMD_SYNC,	"SYNC",		0,		OB_CMD_SYNC },
 	{ CMD_EXTRACT,	"EXTRACT",	"X",		OB_CMD_EXTRACT },
 	{ CMD_REMOVE,	"REMOVE",	"RM",		OB_CMD_REMOVE },
+	{ CMD_RENAME,	"RENAME",	"REN",		OB_CMD_RENAME },
+	{ CMD_SETTITLE,	"SETTITLE",	"ST",		OB_CMD_SETTITLE },
 
 	{ CMD_FILETYPE,	"FILETYPE",	"FT",		OB_CMD_FILETYPE },
 
@@ -347,7 +356,7 @@ static char help_text[] =
     "   VERSION         : Print program name and version and exit.\n"
     "   ERROR    | ERR  : Translate exit code to message.\n"
     "   EXCLUDE         : Print the internal exclude database to stdout.\n"
-    "   TITLES   | TIT  : Print the internal title database to stdout.\n"
+    "   TITLES          : Print the internal title database to stdout.\n"
     "\n"
     "   FIND     | F    : Find WBFS partitions.\n"
     "   SPACE    | DF   : Print disk space of WBFS partitions.\n"
@@ -368,8 +377,11 @@ static char help_text[] =
     "\n"
     "   ADD      | A    : Add ISO images to WBFS partitions.\n"
     "   UPDATE   | U    : Add missing ISO images to WBFS partitions.\n"
+    "   SYNC            : Remove and copy until source and WBFS are identical.\n"
     "   EXTRACT  | X    : Extract discs from WBFS partitions as ISO images.\n"
     "   REMOVE   | RM   : Remove discs from WBFS partitions.\n"
+    "   RENAME   | REN  : Rename the ID6 of discs. Disc title can also be set.\n"
+    "   SETTITLE | ST   : Set the disc title of discs.\n"
     "\n"
     "   FILETYPE | FT   : Print a status line for each given file.\n"
     "\n"
@@ -409,7 +421,7 @@ static char help_text[] =
     "      --repair mode   Repair: NONE, FBT, RM-(INVALID|OVERLAP|FREE|EMPTY|ALL), ALL.\n"
     "      --no-free       Do not free blocks when removing a disc.\n"
     "   -u --update        Copy only non existing discs.\n"
-//  " ?    --sync          Remove and copy until source and dest are identical.\n"
+    "      --sync          Remove and copy until source and dest are identical.\n"
     "   -o --overwrite     Overwrite existing files.\n"
     "   -i --ignore        Ignore non existing files/discs without warning.\n"
     "   -R --remove        Remove source files/discs if operation is successful.\n"
@@ -436,7 +448,7 @@ static char help_text[] =
     "   VERSION         -l [ignored]...\n"
     "   ERROR    | ERR  -l [error_code] // NO OTHER OPTIONS\n"
     "   EXCLUDE            [additional_excludes]...\n"
-    "   TITLES   | TIT     [additional_title_file]...\n"
+    "   TITLES             [additional_title_file]...\n"
     "\n"
     "   FIND     | F    -p part -aA -ll -H                  [wbfs_partition]...\n"
     "   SPACE    | DF   -p part -aA -l  -H                  [wbfs_partition]...\n"
@@ -449,13 +461,16 @@ static char help_text[] =
     "   FORMAT   | INIT -s size --sector-size num --force   file|blockdev...\n"
     "   CHECK    | FSCK -p part -aA -ll                     [wbfs_partition]...\n"
     "   REPAIR          -p part -aA -ll                     [wbfs_partition]...\n"
-    "   EDIT            -p part -a --force                  [wbfs_partition]...\n"
+    "   EDIT            -p part -a                --force   [sub_command]...\n"
     "   TRUNCATE | TR   -p part -aA                         [wbfs_partition]...\n"
     "\n"
     "   ADD      | A    -p part -aA -iRCou -r --psel --raw  iso|wbfs|dir...\n"
     "   UPDATE   | U    -p part -aA -iRC   -r --psel --raw  iso|wbfs|dir...\n"
-    "   EXTRACT  | X    -p part -aA -iRCou -yY -UF -d dest  id6...\n"
+    "   SYNC            -p part -aA -iRC   -r --psel --raw  iso|wbfs|dir...\n"
+    "   EXTRACT  | X    -p part -aA -iRCou -yY -UF -d* -WIB id6...\n"
     "   REMOVE   | RM   -p part -aA -i         -U           id6...\n"
+    "   RENAME   | REN  -p part -aA -i -IB                  id6=[new][,title]...\n"
+    "   SETTITLE | ST   -p part -aA -i -IB                  id6=title...\n"
     "\n"
     "   FILETYPE | FT               -i     -l               filename...\n"
     "\n";
@@ -538,10 +553,10 @@ void hint_exit ( enumError err )
 
     SubstString_t tab[] =
     {
-	{ '1', 0,   "1234567890" },
-	{ 'a', 'A', "AbCdEfGhIjKlMn" },
-	{ 'x', 'X', "xyz" },
-	{0,0,0}
+	{ '1', 0,   0, "1234567890" },
+	{ 'a', 'A', 0, "AbCdEfGhIjKlMn" },
+	{ 'x', 'X', 0, "xyz" },
+	{0,0,0,0}
     };
 
     ParamList_t * param;
@@ -551,7 +566,7 @@ void hint_exit ( enumError err )
 	SubstString(buf,sizeof(buf),tab,param->arg);
 	printf("%s -> %s\n",param->arg,buf);
     }
-    
+
   #else // test INT
 
     int i, max = 5;
@@ -615,7 +630,7 @@ enumError cmd_find()
 		printf("\n");
 	    break;
 
-	default: // >= 2x verbose
+	default: // >= 2x long_count
 	    if (print_header)
 		printf("\ntype     disk usage     file size  full path\n\n");
 	    for ( info = first_partition_info; info; info = info->next )
@@ -662,7 +677,7 @@ enumError cmd_dump()
 	  err = GetNextWBFS(&wbfs,&info) )
     {
 	printf("\nDUMP of %s\n\n",info->path);
-	DumpWBFS(&wbfs,stdout,2,long_count);
+	DumpWBFS(&wbfs,stdout,2,long_count,0);
     }
     return ResetWBFS(&wbfs);
 }
@@ -1065,7 +1080,7 @@ enumError cmd_format()
 	return ERROR0(ERR_MISSING_PARAM,"missing parameters => abort.\n");
 
     int error_count = 0, create_count = 0, format_count = 0;
-    const u32 size_gib = (u32)( (opt_size+GiB/2)/GiB );
+    const u32 create_size_gib = (opt_size+GiB/2)/GiB;
 
     ParamList_t * param;
     for ( param = first_param; param; param = param->next )
@@ -1074,8 +1089,10 @@ enumError cmd_format()
 	    continue;
 
 	bool is_block = false;
+	u32 size_gib = create_size_gib;
+
 	struct stat st;
-	if (stat(param->arg,&st))
+	if (StatFile(&st,param->arg,0))
 	{
 	    // no file found
 	    if (!opt_size)
@@ -1100,7 +1117,6 @@ enumError cmd_format()
 
 		File_t f;
 		InitializeFile(&f);
-		
 		enumError err = CreateFile(&f,param->arg,IOM_NO_STREAM,1);
 		if (err)
 		{
@@ -1113,46 +1129,50 @@ enumError cmd_format()
 
 		if (SetSizeF(&f,opt_size))
 		{
-		    ClearFile(&f,false);
-		    unlink(param->arg);
+		    ClearFile(&f,true);
 		    error_count++;
 		    continue;
 		}
+
 		ClearFile(&f,false);
 		create_count++;
 	    }
 	}
-	else if (S_ISBLK(st.st_mode))
+	else
 	{
-	    is_block = true;
-	    // [2do] check mounted ?
-	}
-	else if (!S_ISREG(st.st_mode))
-	{
-	    ERROR0(ERR_WRONG_FILE_TYPE,
-		"%s: Neither regular file nor block device: %s\n",param->arg);
-	    continue;
+	    size_gib = (st.st_size+GiB/2)/GiB;
+	    if (S_ISBLK(st.st_mode))
+	    {
+		is_block = true;
+		// [2do] check mounted ?
+	    }
+	    else if (!S_ISREG(st.st_mode))
+	    {
+		ERROR0(ERR_WRONG_FILE_TYPE,
+		    "%s: Neither regular file nor block device: %s\n",param->arg);
+		continue;
+	    }
 	}
 
 	if (testmode)
 	{
-	    TRACE("WOULD FORMAT %s %s [sector size %u]\n",
+	    TRACE("WOULD FORMAT %s %s [%u GiB, sector size %u]\n",
 			is_block ? "BLOCK DEVICE" : "PLAIN FILE",
-			param->arg, opt_sector_size );
-	    printf("WOULD FORMAT %s %s [sector size %u]\n",
+			param->arg, size_gib, opt_sector_size );
+	    printf("WOULD FORMAT %s %s [%u GiB, sector size %u]\n",
 			is_block ? "BLOCK DEVICE" : "PLAIN FILE",
-			param->arg, opt_sector_size );
+			param->arg, size_gib, opt_sector_size );
 	    format_count++;
 	}
 	else
 	{
-	    TRACE("FORMAT %s %s [sector size %u]\n",
+	    TRACE("FORMAT %s %s [%u GiB, sector size %u]\n",
 			is_block ? "BLOCK DEVICE" : "PLAIN FILE",
-			param->arg, opt_sector_size );
+			param->arg, size_gib, opt_sector_size );
 	    if (verbose>=0)
-		printf("FORMAT %s %s [sector size %u]\n",
+		printf("FORMAT %s %s [%u GiB, sector size %u]\n",
 			is_block ? "BLOCK DEVICE" : "PLAIN FILE",
-			param->arg, opt_sector_size );
+			param->arg, size_gib, opt_sector_size );
 
 	    WBFS_t wbfs;
 	    InitializeWBFS(&wbfs);
@@ -1239,7 +1259,7 @@ enumError cmd_check()
 
     if ( verbose > 0 )
 	putchar('\n');
-	
+
     return err_count ? ERR_WBFS_INVALID : max_error;
 }
 
@@ -1272,38 +1292,15 @@ enumError cmd_edit()
     if (!n_param)
     {
 	printf("\n"
-	 "EDIT is a dangerous command. It let you edit block assignments.\n"
-	 "You have to specify exactly 1 WBFS to modify. All parameters are\n"
-	 "sub commands. Modifications are only done if option --force is set.\n"
+	 "EDIT is a dangerous command. It let you (de-)activate the disc slots and\n"
+	 "edit the block assignments. Exactly 1 WBFS must be specified. All parameters\n"
+	 "are sub commands. Modifications are only done if option --force is set.\n"
 	 "\n"
 	 "     **********************************************************\n"
 	 "     *****  WARNING: This command can damage your WBFS!!  *****\n"
 	 "%s"
+	 "     *****  See documentation file 'wwt.txt' for details. *****\n"
 	 "     **********************************************************\n"
-	 "\n"
-	 "Parameters = sub commands:\n"
-	 "\n"
-	 "  rm=a,b-c,...   |  r=...\n"
-	 "      Remove disc in slot 'a' or the slot range of blocks 'b-c' from wbfs.\n"
-	 "      The slot is only marked as free, no blocks are freed.\n"
-	 "\n"
-	 "  act=a,b-c,...   |  a=...\n"
-	 "      Active disc in slot 'a' or the slot range of blocks 'b-c' from wbfs.\n"
-	 "      The slot is only marked as activated without any tests.\n"
-	 "\n"
-	 "  free=a,b-c,...  |  f=...\n"
-	 "      Mark the single block 'a' or the range of blocks 'b-c' as free.\n"
-	 "\n"
-	 "  use=a,b-c,...  |   u=...\n"
-	 "      Mark the single block 'a' or the range of blocks 'b-c' as used.\n"
-	 "\n"
-	 "  ID6=a:b,c-d:e,...\n"
-	 "      For the game with ID6:\n"
-	 "        Set ISO block 'a' to WBFS block 'b' or\n"
-	 "        Set ISO blocks 'c-d' to WBFS blocks 'e...'.\n"
-	 "        If 'e' is zero then set ISO blocks 'c-d' to zero (=unused).\n"
-	 "\n"
-	 "Note: Block size is always the WBFS blocksize, but never the ISO block size.\n"
 	 "\n",
 	used_options & OB_FORCE ? ""
 		: "     *****     INFO: Use --force to leave the test mode.  *****\n" );
@@ -1315,17 +1312,13 @@ enumError cmd_edit()
     if (err)
 	return err;
 
+    if ( wbfs_count != 1 )
+	return ERROR0( wbfs_count ? ERR_TO_MUCH_WBFS_FOUND : ERR_NO_WBFS_FOUND,
+			"Exact one WBFS mus be selected, not %u\n",wbfs_count);
+
     WBFS_t wbfs;
     InitializeWBFS(&wbfs);
     PartitionInfo_t * info;
-
-    int count = 0;
-    for ( err = GetFirstWBFS(&wbfs,&info); !err; err = GetNextWBFS(&wbfs,&info) )
-	count++;
-
-    if ( count != 1 )
-	return ERROR0(ERR_SEMANTIC,"Exact one WBFS mus be selected, not %u\n",count);
-	
     err = GetFirstWBFS(&wbfs,&info);
     if (err)
 	return err;
@@ -1343,12 +1336,10 @@ enumError cmd_edit()
 	   w->n_wbfs_sec - 1, w->n_wbfs_sec_per_disc,
 	   wbfs.used_discs, w->max_disc );
 
-    const int DO_RM	= -1;
-    const int DO_ACT	= -2;
-    const int DO_FREE	= -3;
-    const int DO_USED	= -4;
+    enum { DO_RM = -5, DO_ACT, DO_INV, DO_FREE, DO_USED };
+    ASSERT( DO_USED < 0 );
 
-    CommandTab_t * ctab = calloc(5+wbfs.used_discs,sizeof(*ctab));
+    CommandTab_t * ctab = calloc(6+wbfs.used_discs,sizeof(*ctab));
     CommandTab_t * cptr = ctab;
 
     cptr->id	= DO_RM;
@@ -1359,6 +1350,11 @@ enumError cmd_edit()
     cptr->id	= DO_ACT;
     cptr->name1	= "ACT";
     cptr->name2	= "A";
+    cptr++;
+
+    cptr->id	= DO_INV;
+    cptr->name1	= "INV";
+    cptr->name2	= "I";
     cptr++;
 
     cptr->id	= DO_FREE;
@@ -1409,9 +1405,17 @@ enumError cmd_edit()
 
 	arg++;
 
-	if ( cptr->id == DO_RM || cptr->id == DO_ACT )
+	if ( cptr->id == DO_RM || cptr->id == DO_ACT || cptr->id == DO_INV )
 	{
-	    const bool is_act = cptr->id == DO_ACT;
+	    int mode;
+	    ccp info;
+	    switch(cptr->id)
+	    {
+		case DO_RM:  mode = 0; info = "remove"; break;
+		case DO_ACT: mode = 1; info = "activate"; break;
+		default:     mode = 2; info = "invalidate"; break;
+	    }
+
 	    while (*arg)
 	    {
 		u32 stat, n1, n2;
@@ -1420,15 +1424,13 @@ enumError cmd_edit()
 		{
 		    if ( n1 == n2 )
 			printf("  - %s%s disc %u.\n",
-				testmode ? "WOULD " : "",
-				is_act ? "activate" : "remove", n1 );
+				testmode ? "WOULD " : "", info, n1 );
 		    else
 			printf("  - %s%s discs %u.%u.\n",
-				testmode ? "WOULD " : "",
-				is_act ? "activate" : "remove", n1, n2 );
+				testmode ? "WOULD " : "", info, n1, n2 );
 		    if (!testmode)
 			while ( n1 <= n2 )
-			    w->head->disc_table[n1++] = is_act;
+			    w->head->disc_table[n1++] = mode;
 		}
 		if ( *arg != ',' )
 		    break;
@@ -1521,7 +1523,7 @@ enumError cmd_edit()
 	putchar('\n');
     ResetCheckWBFS(&ck);
     ResetWBFS(&wbfs);
-    
+
     return ERR_OK;
 }
 
@@ -1600,11 +1602,25 @@ enumError cmd_truncate()
 //
 ///////////////////////////////////////////////////////////////////////////////
 
+static ID_DB_t sync_list;
+
+enumError exec_scan_id ( SuperFile_t * sf, Iterator_t * it )
+{
+    if (sf->f.id6[0])
+	InsertID(&sync_list,sf->f.id6,0);
+    return ERR_OK;
+}
+
+//-----------------------------------------------------------------------------
+
 enumError exec_add ( SuperFile_t * sf, Iterator_t * it )
 {
     ASSERT(sf);
     ASSERT(it);
     ASSERT(it->wbfs);
+
+    if (SIGINT_level)
+	return ERR_INTERRUPT;
 
  #if CACHE_ENABLED
 
@@ -1617,20 +1633,18 @@ enumError exec_add ( SuperFile_t * sf, Iterator_t * it )
 
     if ( IsExcluded(sf->f.id6) || PrintErrorFT(&sf->f,ft_test) )
 	return ERR_OK;
-#else
+ #else
     AnalyseFT(&sf->f);
     if ( IsExcluded(sf->f.id6) || PrintErrorFT(&sf->f,FT_A_ISO|FT_A_SEEKABLE) )
 	return ERR_OK;
-#endif
-
-    const u32 fsize_mib = (u32)( (sf->f.st.st_blocks*512+MiB/2)/MiB );
+ #endif
 
     if (!ExistsWDisc(it->wbfs,sf->f.id6))
     {
 	if (it->update)
 	    return ERR_OK;
 
-	if (it->overwrite)   
+	if (it->overwrite)
 	{
 	    ccp title = GetTitle(sf->f.id6,"");
 	    if (testmode)
@@ -1649,24 +1663,24 @@ enumError exec_add ( SuperFile_t * sf, Iterator_t * it )
 	}
 	else
 	{
-	    printf(" - DISC %s [%s, %d MiB] already installed -> ignore\n",
-		    sf->f.fname, sf->f.id6, fsize_mib );
+	    printf(" - DISC %s [%s] already installed -> ignore\n",
+		    sf->f.fname, sf->f.id6 );
 	    return ERR_OK;
 	}
     }
 
     if (testmode)
     {
-	TRACE("WOULD ADD [%s,%dM] %s\n",sf->f.id6,fsize_mib,sf->f.fname);
-	printf(" - WOULD ADD [%s] %s:%s (%dM)\n",
-		sf->f.id6, oft_name[sf->oft], sf->f.fname, fsize_mib );
+	TRACE("WOULD ADD [%s] %s\n",sf->f.id6,sf->f.fname);
+	printf(" - WOULD ADD [%s] %s:%s\n",
+		sf->f.id6, oft_name[sf->oft], sf->f.fname );
     }
     else
     {
-	TRACE("ADD [%s,%dM] %s\n",sf->f.id6,fsize_mib,sf->f.fname);
+	TRACE("ADD [%s] %s\n",sf->f.id6,sf->f.fname);
 	if ( verbose >= 0 || progress > 0 )
-	    printf(" - ADD [%s] %s:%s (%dM)\n",
-			sf->f.id6, oft_name[sf->oft], sf->f.fname, fsize_mib );
+	    printf(" - ADD [%s] %s:%s\n",
+			sf->f.id6, oft_name[sf->oft], sf->f.fname );
 	fflush(stdout);
 
 	sf->indent		= 5;
@@ -1702,9 +1716,11 @@ enumError cmd_add()
     if ( !source_list.used && !recurse_list.used )
 	return ERROR0(ERR_MISSING_PARAM,"missing parameters\n");
 
+    if ( used_options & OB_SYNC )
+	used_options |= OB_UPDATE;
+
     Iterator_t it;
     InitializeIterator(&it);
-    it.func		= exec_add;
     it.act_non_iso	= used_options & OB_IGNORE ? ACT_IGNORE : ACT_WARN;
     it.act_non_exist	= it.act_non_iso;
     it.act_open		= it.act_non_iso;
@@ -1713,7 +1729,16 @@ enumError cmd_add()
     it.overwrite	= used_options & OB_OVERWRITE ? 1 : 0;
     it.remove_source	= used_options & OB_REMOVE ? 1 : 0;
 
-    uint copy_count = 0, wbfs_count = 0, wbfs_mod_count = 0;
+    if ( used_options & OB_SYNC )
+    {
+	it.func = exec_scan_id;
+	err = SourceIterator(&it,false);
+	if (err)
+	    return err;
+    }
+    it.func = exec_add;
+
+    uint copy_count = 0, rm_count = 0, wbfs_count = 0, wbfs_mod_count = 0;
 
     const bool check_it	    = ( used_options & OB_NO_CHECK ) == 0;
     const bool ignore_check = ( used_options & OB_FORCE ) != 0;
@@ -1742,6 +1767,35 @@ enumError cmd_add()
 	    }
 	}
 
+	int wbfs_rm_count = 0;
+	if ( used_options & OB_SYNC )
+	{
+	    WDiscList_t * wlist = GenerateWDiscList(&wbfs,0);
+	    
+	    WDiscListItem_t * ptr = wlist->first_disc;
+	    WDiscListItem_t * end = ptr + wlist->used;
+	    for ( ; ptr < end; ptr++ )
+	    {
+		TDBfind_t stat;
+		FindID(&sync_list,ptr->id6,&stat,0);
+		if ( stat != IDB_ID_FOUND )
+		{
+		    if (testmode)
+		    {
+			printf(" - WOULD REMOVE [%s]\n",ptr->id6);
+			wbfs_rm_count++;
+		    }
+		    else
+		    {
+			printf(" - REMOVE [%s]\n",ptr->id6);
+			if (!RemoveWDisc(&wbfs,ptr->id6,false))
+			    wbfs_rm_count++;
+		    }
+		}
+	    }
+	    FreeWDiscList(wlist);
+	}
+
 	it.done_count = 0;
 	it.wbfs = &wbfs;
 	it.open_dev = wbfs.sf->f.st.st_dev;
@@ -1750,13 +1804,21 @@ enumError cmd_add()
 	if (err)
 	    break;
 
-	if (it.done_count)
+	if ( it.done_count || wbfs_rm_count )
 	{
 	    wbfs_mod_count++;
 	    copy_count += it.done_count;
+	    rm_count += wbfs_rm_count;
 	    if (verbose>=0)
-		printf("* WBFS #%d: %d image%s added.\n",
-		    wbfs_count, it.done_count, it.done_count==1 ? "" : "s" );
+	    {
+		*iobuf = 0;
+		if ( wbfs_rm_count )
+		    snprintf(iobuf,sizeof(iobuf)," %d disc%s removed,",
+			wbfs_rm_count, wbfs_rm_count == 1 ? "" : "s" );
+		printf("* WBFS #%d:%s %d disc%s added.\n",
+		    wbfs_count, iobuf,
+		    it.done_count, it.done_count==1 ? "" : "s" );
+	    }
 	}
 
 	if ( used_options & OB_TRUNC )
@@ -1792,6 +1854,15 @@ enumError cmd_update()
 //
 ///////////////////////////////////////////////////////////////////////////////
 
+enumError cmd_sync()
+{
+    used_options |= OB_SYNC;
+    return cmd_add();
+}
+
+//
+///////////////////////////////////////////////////////////////////////////////
+
 enumError cmd_extract()
 {
     if ( verbose >= 0 && testmode < 2 )
@@ -1811,7 +1882,7 @@ enumError cmd_extract()
     const int update = used_options & OB_UPDATE;
     if (update)
 	DefineExcludePath( opt_dest && *opt_dest ? opt_dest : ".", 1 );
-	
+
     //----- extract discs
 
     int extract_count = 0, rm_count = 0;
@@ -1860,7 +1931,7 @@ enumError cmd_extract()
 		continue;
 	    }
 
-	    OpenWDisc(&wbfs,id6);
+	    OpenWDiscID6(&wbfs,id6);
 	    WDiscHeader_t * dhead = GetWDiscHeader(&wbfs);
 	    if (dhead)
 	    {
@@ -1883,12 +1954,12 @@ enumError cmd_extract()
 		// and now the destination filename
 		SubstString_t subst_tab[] =
 		{
-		    { 'i', 'I', id6 },
-		    { 'n', 'N', (ccp)dhead->game_title },
-		    { 't', 'T', title },
-		    { 'e', 'E', oft_ext[oft]+1 },
-		    { '+', '+', fo.f.fname },
-		    {0,0,0}
+		    { 'i', 'I', 0, id6 },
+		    { 'n', 'N', 0, (ccp)dhead->game_title },
+		    { 't', 'T', 0, title },
+		    { 'e', 'E', 0, oft_ext[oft]+1 },
+		    { '+', '+', 1, fo.f.fname },
+		    {0,0,0,0}
 		};
 		char dbuf[PATH_MAX], fbuf[PATH_MAX];
 		SubstString(dbuf,sizeof(dbuf),subst_tab,opt_dest);
@@ -2161,6 +2232,161 @@ enumError cmd_remove()
 //
 ///////////////////////////////////////////////////////////////////////////////
 
+enumError cmd_rename ( bool rename_id )
+{
+    if ( verbose >= 0 )
+	print_title(stdout);
+
+    enumError err = AnalysePartitions(stdout,false,false);
+    if (err)
+	return err;
+
+    if (!n_param)
+	return ERROR0(ERR_MISSING_PARAM,"missing parameters\n");
+
+    err = CheckParamRename(rename_id,!rename_id,true);
+    if (err)
+	return err;
+
+    //----- rename
+
+    const bool check_it		= 0 == ( used_options & OB_NO_CHECK );
+    const bool ignore_check	= 0 != ( used_options & OB_FORCE );
+    const bool change_wbfs	= 0 != ( used_options & OB_WBFS );
+    const bool change_iso	= 0 != ( used_options & OB_ISO );
+
+    int mv_count = 0, wbfs_count = 0, wbfs_mod_count = 0;
+
+    WBFS_t wbfs;
+    InitializeWBFS(&wbfs);
+    PartitionInfo_t * info;
+    for ( err = GetFirstWBFS(&wbfs,&info);
+	  !err && !SIGINT_level;
+	  err = GetNextWBFS(&wbfs,&info) )
+    {
+	wbfs_count++;
+	if (verbose>=0)
+	    printf("%sWBFSv%u #%d opened: %s\n",
+		    verbose>0 ? "\n" : "",
+		    wbfs.wbfs->head->wbfs_version, wbfs_count, info->path );
+
+	if ( !info->is_checked && check_it )
+	{
+	    info->is_checked = true;
+	    if ( AutoCheckWBFS(&wbfs,ignore_check) > ERR_WARNING )
+	    {
+		ERROR0(ERR_WBFS_INVALID,"Ignore invalid WBFS: %s\n\n",info->path);
+		ResetWBFS(&wbfs);
+		continue;
+	    }
+	}
+
+	int wbfs_mv_count = 0;
+	bool wbfs_go = true;
+	ParamList_t * param;
+	for ( param = first_param;
+	      param && wbfs_go && !SIGINT_level;
+	      param = param->next )
+	{
+	    ccp sel = param->selector;
+	    if (!*sel)
+		continue;
+	    fflush(stdout);
+
+	    if ( *sel == '+' )
+	    {
+		int idx;
+		for ( idx = 0; idx < wbfs.used_discs; idx++ )
+		{
+		    enumError err = OpenWDiscIndex(&wbfs,idx);
+		    if (err)
+			return err;
+		    RenameWDisc( &wbfs, param->id6, param->arg,
+				 change_wbfs, change_iso, verbose, testmode );
+		    wbfs_mv_count++;
+		}
+		continue;
+	    }
+
+	    enumError err;
+	    switch (*sel)
+	    {
+		case '#': // disc slot
+		    {
+			u32 slot = strtoul(sel+1,0,10);
+			err = OpenWDiscSlot(&wbfs,slot);
+			if ( err == ERR_WDISC_NOT_FOUND )
+			    ERROR0(err, "No disc at slot #%u; %s\n",slot,info->path);
+		    }
+		    break;
+
+		case '$': // disc index
+		    {
+			u32 idx = strtoul(sel+1,0,10);
+			err = OpenWDiscIndex(&wbfs,idx);
+			if ( err == ERR_WDISC_NOT_FOUND )
+			    ERROR0(err, "No disc at index %u; %s\n",idx,info->path);
+		    }
+		    break;
+
+		default: // ID6
+		    err = OpenWDiscID6(&wbfs,sel);
+		    break;
+	    }
+	    if (!err)
+	    {
+		RenameWDisc( &wbfs, param->id6, param->arg,
+				change_wbfs, change_iso, verbose, testmode );
+		param->count++;
+		wbfs_mv_count++;
+	    }
+	}
+
+	if (wbfs_mv_count)
+	{
+	    wbfs_mod_count++;
+	    mv_count += wbfs_mv_count;
+	    if (verbose>=0)
+		printf("* WBFS #%d: %d disc%s changed.\n",
+		    wbfs_count, wbfs_mv_count, wbfs_mv_count==1 ? "" : "s" );
+	}
+    }
+    ResetWBFS(&wbfs);
+
+    if ( verbose >= 1 )
+	printf("\n");
+
+    if ( !(used_options&OB_IGNORE) )
+    {
+	ParamList_t * param;
+	int warn_count = 0;
+	for ( param = first_param; param; param = param->next )
+	    if ( param->selector && !param->count )
+	    {
+		ERROR0(ERR_WARNING,"Disc [%s] not found.\n",param->selector);
+		warn_count++;
+	    }
+	if ( warn_count && verbose >= 1 )
+	    printf("\n");
+    }
+
+    if ( verbose >= 0 )
+    {
+	if ( wbfs_count > 1 )
+	    printf("** %d disc%s changed, %d of %d WBFS modified.\n",
+			mv_count, mv_count==1 ? "" : "s",
+			wbfs_mod_count, wbfs_count );
+
+	if ( verbose >= 1 )
+	    printf("\n");
+    }
+
+    return max_error;
+}
+
+//
+///////////////////////////////////////////////////////////////////////////////
+
 enumError cmd_filetype()
 {
     File_t f;
@@ -2272,7 +2498,7 @@ enumError CheckOptions ( int argc, char ** argv, int is_env )
 	    }
 	    break;
 
-	  case 'p': 
+	  case 'p':
 	    SetOption(OPT_PART,"part");
 	    AtFileHelper(optarg,false,AddPartition);
 	    break;
@@ -2462,8 +2688,11 @@ enumError check_command ( int argc, char ** argv )
 
 	case CMD_ADD:		err = cmd_add(); break;
 	case CMD_UPDATE:	err = cmd_update(); break;
+	case CMD_SYNC:		err = cmd_sync(); break;
 	case CMD_EXTRACT:	err = cmd_extract(); break;
 	case CMD_REMOVE:	err = cmd_remove(); break;
+	case CMD_RENAME:	err = cmd_rename(true); break;
+	case CMD_SETTITLE:	err = cmd_rename(false); break;
 
 	case CMD_FILETYPE:	err = cmd_filetype(); break;
 
@@ -2503,13 +2732,13 @@ int main ( int argc, char ** argv )
     enumError err = CheckEnvOptions("WWT_OPT",CheckOptions,1);
     if (err)
 	hint_exit(err);
-    
+
     err = CheckOptions(argc,argv,0);
     if (err)
 	hint_exit(err);
 
     err = check_command(argc,argv);
-	
+
     if (SIGINT_level)
 	err = ERROR0(ERR_INTERRUPT,"Program interrupted by user.");
     return err;

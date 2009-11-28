@@ -185,7 +185,7 @@ void test_splitted_file()
     CreateFile( &of, 0, IOM_NO_STREAM,true);
 
     printf("*** created -> press ENTER: "); fflush(stdout); getchar();
-    
+
     SetupSplitFile(&of,OFT_PLAIN,0x80);
 
     static char abc[] = "abcdefghijklmnopqrstuvwxyz\n";
@@ -206,15 +206,15 @@ void test_splitted_file()
     InitializeFile(&f);
     OpenFileModify(&f,"pool/split-file.xxx",IOM_NO_STREAM);
     SetupSplitFile(&f,OFT_PLAIN,0x100);
-    
+
     SeekF(&f,0xc0);
-    
+
     for ( i = 0; i < 20; i++ )
 	WriteF(&f,ABC,strlen(ABC));
 
     char buf[200];
     ReadAtF(&f,0,buf,sizeof(buf));
-    printf("%.*s|\n",sizeof(buf),buf);
+    printf("%.*s|\n",(int)sizeof(buf),buf);
 
     CloseFile(&f,false);
 }

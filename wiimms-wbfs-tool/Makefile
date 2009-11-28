@@ -9,7 +9,7 @@ WWT_SHORT	= wwt
 WWT_LONG	= Wiimms WBFS Tool
 WIT_SHORT	= wit
 WIT_LONG	= Wiimms ISO Tool
-VERSION		= 0.17a
+VERSION		= 0.19a
 
 ifeq ($(TERM),cygwin)
 SYSTEM		:= cygwin
@@ -78,7 +78,8 @@ VPATH		+= libwbfs
 ifeq ($(SYSTEM),cygwin)
 LIBS		= -lcrypt
 else
-LIBS		= -lcrypto
+#LIBS		= -lcrypto
+LIBS		= 
 endif
 
 DEFINES1	=  -DLARGE_FILES -D_FILE_OFFSET_BITS=64
@@ -88,7 +89,7 @@ DEFINES1	+= -DEXTENDED_ERRORS=1	# enable extended error messages (function,line,
 DEFINES		=  $(strip $(DEFINES1) $(MODE) $(XDEF))
 
 CFLAGS		= -fomit-frame-pointer -fno-strict-aliasing \
-		  -Wall -Wno-parentheses -Wno-unused-function \
+		  -Wall -Wno-parentheses -Wno-unused-function -Wno-unused-result \
 		  -O3 -Ilibwbfs -I.
 #CFLAGS		+= -mtune=generic
 #CFLAGS		+= -march=i686 
@@ -153,9 +154,9 @@ $(ALL_TOOLS): %: %.o $(ALL_O) Makefile
 	@echo "***    tool $@ $(MODE)"
 	@$(CC) $(CFLAGS) $(DEFINES) $(LDFLAGS) $@.o $(ALL_O) $(LIBS) -o $@
 	@if test -f $@.exe; then $(STRIP) $@.exe; else $(STRIP) $@; fi
-	@mkdir -p bin/debug
-	@cp -p $@ bin
-	@if test -s $(MODE_FILE) && grep -Fq -e -DDEBUG $(MODE_FILE); then cp -p $@ bin/debug; fi
+	#@mkdir -p bin/debug
+	#@cp -p $@ bin
+	#@if test -s $(MODE_FILE) && grep -Fq -e -DDEBUG $(MODE_FILE); then cp -p $@ bin/debug; fi
 
 #
 #--------------------------
@@ -183,13 +184,14 @@ all++: clean+ all titles distrib
 .PHONY : chmod
 chmod:
 	@echo "***   chmod"
+	@mkdir -p $(DIR_LIST)
 	@chmod -f 664 *.txt *.c *.h *.edit-list Makefile* $(SCRIPTS)/* lib*/*
 	@chmod -f 664 $(TEMPLATES)/* $(MODULES)/*
 	-@chmod -f 775 $(DIR_LIST) 2>/dev/null || true
 	@chmod -f 775 *.sh $(TEMPLATES)/*.sh $(SCRIPTS)/*.sh bin/* bin/debug/*
 	-@chown -f --reference=. * $(DIR_LIST)			2>/dev/null || true
-	-@chown -f --reference=. * $(TEMPLATES)/* $(SCRIPTS)/*	2>/dev/null || true
-	-@chown -f --reference=. * bin/* work/*			2>/dev/null || true
+	-@chown -f --reference=. * $(TEMPLATES)/* $(MODULES)/*	2>/dev/null || true
+	-@chown -f --reference=. * bin/* work/*	$(SCRIPTS)/*	2>/dev/null || true
 	$(shell for f in $(ALL_TOOLS); do test -f "$f" && chmod 775 "$f"; done)
 
 #
@@ -402,8 +404,21 @@ load-titles.sh: templates.sed templates/load-titles.sh
 
 version.h: templates.sed $(TEMPLATES)/version.h
 	@echo "***  create version.h"
-	@chmod ug+x $(GEN_TEMPLATE)
+	@chmod 775 $(GEN_TEMPLATE)
 	@$(GEN_TEMPLATE) version.h
+
+#
+#--------------------------
+
+%.wbfs: wwt
+	@echo "***  create $@, $(WBFS_SIZE)G, add smallest $(WBFS_COUNT) ISOs"
+	@rm -f $@
+	@./wwt format --force --size $(WBFS_SIZE)- "$@"
+	@stat --format="%b|%n" pool/iso/*.iso \
+		| sort -n \
+		| awk '-F|' '{print $$2}' \
+		| head -n$(WBFS_COUNT) \
+		| ./wwt -A -p "$@" add @- -v
 
 #
 #--------------------------
@@ -473,6 +488,7 @@ help:
 	@echo  " make install	copy tools to $(INSTALL_PATH)"
 	@echo  " make titles	get titles from $(URI_TITLES)"
 	@echo  " make version	generate file 'version.h'"
+	@echo  " make %.wbfs	gen %.wbfs, $(WBFS_SIZE)G, add smallest $(WBFS_COUNT) ISOs"
 	@echo  " make wbfs	gen $(WBFS_FILE), $(WBFS_SIZE)G, add smallest $(WBFS_COUNT) ISOs"
 	@echo  " make wbfs+	gen $(WBFS_FILES), $(WBFS_SIZE)G, add smallest $(WBFS_COUNT) ISOs"
 	@echo  ""

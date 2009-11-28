@@ -10,7 +10,7 @@
 #include <ctype.h>
 #include <arpa/inet.h>
 #include <dirent.h>
- 
+
 #include "debug.h"
 #include "libwbfs.h"
 #include "lib-wdf.h"
@@ -114,7 +114,7 @@ enumError ResetSF ( SuperFile_t * sf, struct stat * set_time )
  #else
     sf->show_msec = false;
  #endif
-    
+
     return err;
 }
 
@@ -153,8 +153,8 @@ enumError SetupReadSF ( SuperFile_t * sf )
     TRACE("SetupReadSF(%p) fd=%d is-r=%d is-w=%d\n",
 	sf, sf->f.fd, sf->f.is_reading, sf->f.is_writing );
 
-    if ( !sf || !sf->f.is_reading || sf->f.is_writing )
-	return ERROR0(ERR_INTERNAL,"Internal error");
+    if ( !sf || !sf->f.is_reading )
+	return ERROR0(ERR_INTERNAL,0);
 
     sf->oft = OFT_PLAIN;
     if ( sf->f.ftype == FT_UNKNOWN )
@@ -201,7 +201,7 @@ enumError SetupReadWBFS ( SuperFile_t * sf )
     TRACE("SetupReadWBFS(%p)\n",sf);
 
     if ( !sf || !sf->f.is_reading || sf->wbfs )
-	return ERROR0(ERR_INTERNAL,"Internal error");
+	return ERROR0(ERR_INTERNAL,0);
 
     WBFS_t * wbfs =  malloc(sizeof(*wbfs));
     if (!wbfs)
@@ -211,7 +211,7 @@ enumError SetupReadWBFS ( SuperFile_t * sf )
     if (err)
 	goto abort;
 
-    err = OpenWDisc(wbfs,sf->f.id6);
+    err = OpenWDiscID6(wbfs,sf->f.id6);
     if (err)
 	goto abort;
 
@@ -258,15 +258,19 @@ enumError SetupReadWBFS ( SuperFile_t * sf )
 
 ///////////////////////////////////////////////////////////////////////////////
 
-enumError OpenSF ( SuperFile_t * sf, ccp fname, bool allow_non_iso )
+enumError OpenSF
+	( SuperFile_t * sf, ccp fname, bool allow_non_iso, bool open_modify )
 {
     ASSERT(sf);
     CloseSF(sf,0);
-    TRACE("#S# OpenSF(%p,%s,%d)\n",sf,fname,allow_non_iso);
+    TRACE("#S# OpenSF(%p,%s,%d,%d)\n",sf,fname,allow_non_iso,open_modify);
 
     const bool disable_errors = sf->f.disable_errors;
     sf->f.disable_errors = true;
-    OpenFile(&sf->f,fname,IOM_IS_IMAGE);
+    if (open_modify)
+	OpenFileModify(&sf->f,fname,IOM_IS_IMAGE);
+    else
+	OpenFile(&sf->f,fname,IOM_IS_IMAGE);
     sf->f.disable_errors = disable_errors;
 
  #if CACHE_ENABLED
@@ -286,7 +290,7 @@ enumError SetupWriteSF ( SuperFile_t * sf, enumOFT oft )
     TRACE("SetupWriteSF(%p)\n",sf);
 
     if ( !sf || sf->f.is_reading || !sf->f.is_writing )
-	return ERROR0(ERR_INTERNAL,"Internal error");
+	return ERROR0(ERR_INTERNAL,0);
 
     sf->oft = CalcOFT(oft,sf->f.fname,0,OFT__DEFAULT);
     switch(sf->oft)
@@ -299,7 +303,7 @@ enumError SetupWriteSF ( SuperFile_t * sf, enumOFT oft )
 
 	case OFT_WBFS:
 	    return SetupWriteWBFS(sf);
-	    
+
 	default:
 	    return ERROR0(ERR_INTERNAL,"Unknown output file format: %s\n",sf->oft);
     }
@@ -327,7 +331,8 @@ enumError SetupWriteWBFS ( SuperFile_t * sf )
 
 ///////////////////////////////////////////////////////////////////////////////
 
-void SubstFileNameSF ( SuperFile_t * fo, SuperFile_t * fi )
+void SubstFileNameSF
+	( SuperFile_t * fo, SuperFile_t * fi, ccp f_name )
 {
     ASSERT(fo);
     ASSERT(fi);
@@ -335,21 +340,28 @@ void SubstFileNameSF ( SuperFile_t * fo, SuperFile_t * fi )
     char buf[HD_SECTOR_SIZE];
     memset(&buf,0,sizeof(buf));
     if (fi->f.id6[0])
-    {    
+    {
 	const bool disable_errors = fi->f.disable_errors;
 	fi->f.disable_errors = true;
 	ReadSF(fi,0,&buf,sizeof(buf));
 	fi->f.disable_errors = disable_errors;
     }
 
-    ccp oname = fo->oft == OFT_WBFS && fi->f.id6[0]
-			? fi->f.id6
-			: fi->f.outname
-				? fi->f.outname
-				: fi->f.fname;
-    ccp temp = strrchr(oname,'/');
+    if (!f_name)
+    {
+	f_name = fi->f.fname;
+	ccp temp = strrchr(f_name,'/');
+	if (temp)
+	    f_name = temp+1;
+    }
+
+    char src_path[PATH_MAX];
+    StringCopyS(src_path,sizeof(src_path),fi->f.fname);
+    char * temp = strrchr(src_path,'/');
     if (temp)
-	oname = temp+1;
+	*temp = 0;
+    else
+	*src_path = 0;
 
     ccp name = (ccp)((WDiscHeader_t*)buf)->game_title;
     if (!name)
@@ -357,14 +369,32 @@ void SubstFileNameSF ( SuperFile_t * fo, SuperFile_t * fi )
 
     ccp title = GetTitle(fi->f.id6,name);
 
+    char x_buf[1000];
+    snprintf(x_buf,sizeof(x_buf),"%s [%s]%s",
+		title, fi->f.id6, oft_ext[fo->oft] );
+
+    char plus_buf[20];
+    ccp plus_name;
+    if ( fo->oft == OFT_WBFS )
+    {
+	snprintf(plus_buf,sizeof(plus_buf),"%s%s",
+	    fi->f.id6, oft_ext[fo->oft] );
+	plus_name = plus_buf;
+    }
+    else
+	plus_name = x_buf;
+
     SubstString_t subst_tab[] =
     {
-	{ 'i', 'I', fi->f.id6 },
-	{ 'n', 'N', name },
-	{ 't', 'T', title },
-	{ 'e', 'E', oft_ext[fo->oft]+1 },
-	{ '+', '+', oname },
-	{0,0,0}
+	{ 'i', 'I', 0, fi->f.id6 },
+	{ 'n', 'N', 0, name },
+	{ 't', 'T', 0, title },
+	{ 'e', 'E', 0, oft_ext[fo->oft]+1 },
+	{ 'p', 'P', 1, src_path },
+	{ 'f', 'F', 1, f_name },
+	{ 'x', 'X', 0, x_buf },
+	{ '+', '+', 0, plus_name },
+	{0,0,0,0}
     };
 
     char fname[PATH_MAX*2];
@@ -409,7 +439,7 @@ enumError ReadSF ( SuperFile_t * sf, off_t off, void * buf, size_t count )
 	    max_count = count;
 
 	const u32 wlba = bl < w->n_wbfs_sec_per_disc ? ntohs(wlba_tab[bl]) : 0;
-	
+
 	TRACE(">> BL=%d[%d], BL-OFF=%x, count=%x/%x\n",
 		bl, wlba, bl_off, max_count, count );
 
@@ -429,7 +459,7 @@ enumError ReadSF ( SuperFile_t * sf, off_t off, void * buf, size_t count )
 	count -= max_count;
 	buf = (char*)buf + max_count;
     }
-    
+
     return ERR_OK;
 }
 
@@ -447,7 +477,7 @@ enumError WriteSF ( SuperFile_t * sf, off_t off, const void * buf, size_t count 
 	case OFT_WDF:
 	    ASSERT(sf->wc);
 	    return WriteWDF(sf,off,buf,count);
-	    
+
 	case OFT_WBFS:
 	    ASSERT(sf->wbfs);
 	    return ERROR0(ERR_INTERNAL,"WBFS direct writing not supported.");
@@ -471,7 +501,7 @@ enumError WriteSparseSF ( SuperFile_t * sf, off_t off, const void * buf, size_t 
 	case OFT_WDF:
 	    ASSERT(sf->wc);
 	    return WriteSparseWDF(sf,off,buf,count);
-	    
+
 	case OFT_WBFS:
 	    ASSERT(sf->wbfs);
 	    return ERROR0(ERR_INTERNAL,"WBFS direct writing not supported.");
@@ -618,7 +648,7 @@ void PrintProgressSF ( u64 p_done, u64 p_total, void * param )
     SuperFile_t * sf = (SuperFile_t*) param;
     TRACE("PrintProgressSF(%llu,%llu), sf=%p, fd=%d, sh-prog=%d\n",
 		p_done, p_total, sf,
-		sf ? GetFD(&sf->f) : -2, 
+		sf ? GetFD(&sf->f) : -2,
 		sf ? sf->show_progress : -1 );
 
     if ( !sf || !sf->show_progress || !p_done || !p_total )
@@ -697,7 +727,7 @@ void PrintSummarySF ( SuperFile_t * sf )
 	u64 total = sf->f.bytes_read + sf->f.bytes_written;
 	if (total)
 	{
-	    snprintf(buf,sizeof(buf),"%*s%llu MiB copied in %s, %4.1f MiB/sec",
+	    snprintf(buf,sizeof(buf),"%*s%4llu MiB copied in %s, %4.1f MiB/sec",
 		sf->indent,"", (total+MiB/2)/MiB,
 		tim, (double)total * 1000 / MiB / elapsed );
 	}
@@ -731,11 +761,11 @@ enumFileType AnalyseFT ( File_t * f )
 
 	if ( !f->is_reading )
 	    return f->ftype;
-	
+
 	ccp name = strrchr(f->fname,'/');
 	if (!name)
 	    return f->ftype;
-	    
+
 	enum { IS_NONE, IS_ID6, IS_INDEX, IS_SLOT } mode = IS_NONE;
 	char id6[7];
 
@@ -913,7 +943,7 @@ enumFileType AnalyseFT ( File_t * f )
 	err = AnalyseWH(f,&wh,false);
 	if ( err != ERR_NO_WDF )
 	    ft |= FT_A_WDF;
-	    
+
 	if (!err)
 	{
 	    TRACE(" - WDF found -> load first chunk\n");
@@ -1096,7 +1126,7 @@ enumError CopySF ( SuperFile_t * in, SuperFile_t * out, u32 psel )
     ASSERT(out);
     TRACE("---\n");
     TRACE("+++ CopySF(%d->%d,%d) +++\n",GetFD(&in->f),GetFD(&out->f),psel);
-   
+
     if (out->wbfs)
 	return CopyToWBFS(in,out,psel);
 
@@ -1190,7 +1220,7 @@ enumError CopyRaw ( File_t * in, SuperFile_t * out )
 
     if ( out->show_progress )
 	PrintProgressSF(0,in->st.st_size,out);
- 
+
     while ( copy_size > 0 )
     {
 	if ( SIGINT_level > 1 )
@@ -1223,7 +1253,7 @@ enumError CopyRaw ( File_t * in, SuperFile_t * out )
 		    ptr++;
 
 		// accept only large holes
-		if ( (ccp)ptr - (ccp)data_end >= WDF_MIN_HOLE_SIZE ) 
+		if ( (ccp)ptr - (ccp)data_end >= WDF_MIN_HOLE_SIZE )
 		    break;
 	    }
 
@@ -1366,7 +1396,7 @@ enumError CopyWBFSDisc ( SuperFile_t * in, SuperFile_t * out )
 	if (!copybuf)
 	    OUT_OF_MEMORY;
     }
-	 
+	
     SetSizeSF(out,in->file_size);
     enumError err = ERR_OK;
 
@@ -1444,7 +1474,7 @@ static void PrintDiff ( off_t off, char *iobuf1, char *iobuf2, size_t iosize )
 	if ( *iobuf1 != *iobuf2 )
 	{
 	    const size_t bl = off/WII_SECTOR_SIZE;
-	    printf("! differ at ISO block #%06u, off=%#09llx     \n", bl, off );
+	    printf("! differ at ISO block #%06zu, off=%#09llx     \n", bl, off );
 	    off_t old = off;
 	    off = (bl+1) * (off_t)WII_SECTOR_SIZE;
 	    const size_t skip = off - old;
@@ -1542,7 +1572,7 @@ enumError DiffSF ( SuperFile_t * f1, SuperFile_t * f2, int long_count, u32 psel 
 	    if (err)
 		return err;
 
-	    if (differ = memcmp(iobuf1,iobuf2,WII_SECTOR_SIZE))
+	    if (memcmp(iobuf1,iobuf2,WII_SECTOR_SIZE))
 	    {
 		differ = true;
 		if (long_count)
@@ -1550,7 +1580,7 @@ enumError DiffSF ( SuperFile_t * f1, SuperFile_t * f2, int long_count, u32 psel 
 		if ( long_count < 2 )
 		    break;
 	    }
-	
+
 	    if ( f2->show_progress )
 		PrintProgressSF(++pr_done,pr_total,f2);
 	}
@@ -1628,7 +1658,7 @@ enumError DiffRaw ( SuperFile_t * f1, SuperFile_t * f2, int long_count )
 	if ( f2->show_progress )
 	    PrintProgressSF(off,total_size,f2);
     }
-    
+
     if ( f2->show_progress || f2->show_summary )
 	PrintSummarySF(f2);
 
@@ -1692,7 +1722,7 @@ static enumError SourceIteratorHelper ( Iterator_t * it, ccp path )
 		const enumAction act_non_iso   = it->act_non_iso;
 		it->act_non_exist = it->act_non_iso = ACT_IGNORE;
 
-		while ( err == ERR_OK )
+		while ( err == ERR_OK && !SIGINT_level )
 		{
 		    struct dirent * dent = readdir(dir);
 		    if (!dent)
@@ -1711,13 +1741,13 @@ static enumError SourceIteratorHelper ( Iterator_t * it, ccp path )
 		it->depth--;
 	    }
 	}
-	return err;
+	return err ? err : SIGINT_level ? ERR_INTERRUPT : ERR_OK;
     }
 
     //----- file part
 
     sf.f.disable_errors = it->act_non_exist != ACT_WARN;
-    err = OpenSF(&sf,path,it->act_non_iso||it->act_wbfs>=ACT_ALLOW);
+    err = OpenSF(&sf,path,it->act_non_iso||it->act_wbfs>=ACT_ALLOW,it->open_modify);
     if ( err != ERR_OK && err != ERR_CANT_OPEN )
 	return ERR_OK;
     sf.f.disable_errors = false;
@@ -1782,7 +1812,7 @@ static enumError SourceIteratorHelper ( Iterator_t * it, ccp path )
 		}
 		else
 		    ResetSF(&sf,0);
-		return err;
+		return err ? err : SIGINT_level ? ERR_INTERRUPT : ERR_OK;
 	    }
 	}
 	else if ( it->act_non_iso < ACT_ALLOW )
@@ -1801,7 +1831,7 @@ static enumError SourceIteratorHelper ( Iterator_t * it, ccp path )
 
  abort:
     ResetSF(&sf,0);
-    return err;
+    return err ? err : SIGINT_level ? ERR_INTERRUPT : ERR_OK;
 }
 
 //-----------------------------------------------------------------------------
@@ -1819,7 +1849,7 @@ enumError SourceIterator ( Iterator_t * it, bool current_dir_is_default )
 
     if ( it->act_wbfs < it->act_non_iso )
 	it->act_wbfs = it->act_non_iso;
-    
+
     InitializeStringField(&dir_done_list);
     InitializeStringField(&file_done_list);
 

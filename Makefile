@@ -64,7 +64,7 @@ lang: lang_enable lang_disable
 	@echo "Languages updates!"
 	@echo "=================================================================="
 
-compile: lang unrar-nonfree/wiithon_unrar wbfs_file_1.8/wiithon_wbfs_file libwbfs_binding/wiithon_wrapper gen_rev_now
+compile: gen_rev_now lang wiimms-wbfs-tool/wdf2iso wiimms-wbfs-tool/iso2wdf unrar-nonfree/wiithon_unrar wbfs_file_1.8/wiithon_wbfs_file libwbfs_binding/wiithon_wrapper
 	@echo "=================================================================="
 	@echo "100% Compile OK"
 	@echo "=================================================================="
@@ -91,6 +91,8 @@ copy_archives: making_directories
 	cp libwbfs_binding/wiithon_wrapper $(DESTDIR)$(PREFIX)/games/
 	cp unrar-nonfree/wiithon_unrar $(DESTDIR)$(PREFIX)/games/
 	cp wbfs_file_1.8/wiithon_wbfs_file $(DESTDIR)$(PREFIX)/games/
+	cp wiimms-wbfs-tool/wdf2iso $(DESTDIR)$(PREFIX)/games/wiithon_wdf2iso
+	cp wiimms-wbfs-tool/iso2wdf $(DESTDIR)$(PREFIX)/games/wiithon_iso2wdf
 	
 	cp *.py $(DESTDIR)$(PREFIX)/share/wiithon
 
@@ -127,10 +129,12 @@ copy_archives: making_directories
 set_permisses:
 	chmod 755 $(DESTDIR)$(PREFIX)/share/wiithon/wiithon.py
 	chmod 755 $(DESTDIR)$(PREFIX)/share/wiithon/loading.py
+	chmod 755 $(DESTDIR)$(PREFIX)/share/wiithon/wiithon_autodetectar*.sh
 	chmod 755 $(DESTDIR)$(PREFIX)/games/wiithon_wrapper
 	chmod 755 $(DESTDIR)$(PREFIX)/games/wiithon_unrar
 	chmod 755 $(DESTDIR)$(PREFIX)/games/wiithon_wbfs_file
-	chmod 755 $(DESTDIR)$(PREFIX)/share/wiithon/wiithon_autodetectar*.sh
+	chmod 755 $(DESTDIR)$(PREFIX)/games/wiithon_wdf2iso
+	chmod 755 $(DESTDIR)$(PREFIX)/games/wiithon_iso2wdf
 	chmod 755 $(DESTDIR)$(PREFIX)/share/wiithon/wiithon_debug.sh
 
 	chmod 644 $(DESTDIR)$(PREFIX)/share/wiithon/recursos/glade/*.ui
@@ -149,6 +153,8 @@ postinst: set_permisses
 	-ln -sf $(DESTDIR)$(PREFIX)/games/wiithon_wrapper $(DESTDIR)$(PREFIX)/share/wiithon/wiithon_wrapper
 	-ln -sf $(DESTDIR)$(PREFIX)/games/wiithon_unrar $(DESTDIR)$(PREFIX)/share/wiithon/wiithon_unrar
 	-ln -sf $(DESTDIR)$(PREFIX)/games/wiithon_wbfs_file $(DESTDIR)$(PREFIX)/share/wiithon/wiithon_wbfs_file
+	-ln -sf $(DESTDIR)$(PREFIX)/games/wiithon_wdf2iso $(DESTDIR)$(PREFIX)/share/wiithon/wiithon_wdf2iso
+	-ln -sf $(DESTDIR)$(PREFIX)/games/wiithon_iso2wdf $(DESTDIR)$(PREFIX)/share/wiithon/wiithon_iso2wdf
 	
 	if [ -x /usr/bin/update-menus ] ; then update-menus ; fi
 	
@@ -157,7 +163,9 @@ postinst: set_permisses
 	@echo "Type: \"sudo gpasswd -a <user> disk\" and restart your GNOME/KDE session."
 	@echo "=================================================================="
 
-install: recicled_old_wiithon clean_old_wiithon copy_archives postinst
+preinst: recicled_old_wiithon clean_old_wiithon
+
+install: preinst copy_archives postinst
 	@echo "=================================================================="
 	@echo "Wiithon Install OK"
 	@echo "=================================================================="
@@ -240,6 +248,8 @@ delete_archives_installation:
 	-$(RM) $(PREFIX)/games/wiithon_wrapper
 	-$(RM) $(PREFIX)/games/wiithon_unrar
 	-$(RM) $(PREFIX)/games/wiithon_wbfs_file
+	-$(RM) $(PREFIX)/games/wiithon_wdf2iso
+	-$(RM) $(PREFIX)/games/wiithon_iso2wdf
 
 	-$(RM) $(PREFIX)/share/wiithon/*.py
 	-$(RM) $(PREFIX)/share/wiithon/*.pyc
@@ -286,6 +296,8 @@ postrm:
 	-$(RM) $(PREFIX)/share/wiithon/wiithon_wrapper
 	-$(RM) $(PREFIX)/share/wiithon/wiithon_unrar
 	-$(RM) $(PREFIX)/share/wiithon/wiithon_wbfs_file
+	-$(RM) $(PREFIX)/share/wiithon/wiithon_wdf2iso
+	-$(RM) $(PREFIX)/share/wiithon/wiithon_iso2wdf
 	
 uninstall: clean_old_wiithon delete_archives_installation postrm
 	@echo "=================================================================="
@@ -305,7 +317,7 @@ purge: uninstall
 	@echo "Uninstall OK & all clean (purge covers & disc-art ...)"
 	@echo "=================================================================="
 
-clean: clean_wbfs_file_1.8 clean_libwbfs_binding clean_gettext clean_unrar
+clean: clean_wbfs_file_1.8 clean_libwbfs_binding clean_gettext clean_unrar clean_wdf2iso_and_iso2wdf
 	$(RM) *.pyc
 	$(RM) *~
 	$(RM) po/*~
@@ -339,6 +351,9 @@ clean_libwbfs_binding:
 clean_wbfs_file_1.8:
 	$(MAKE) -C wbfs_file_1.8 clean
 	
+clean_wdf2iso_and_iso2wdf:
+	$(MAKE) -C wiimms-wbfs-tool clean
+	
 wbfs_file_1.8/wiithon_wbfs_file: wbfs_file_1.8/*.c wbfs_file_1.8/*.h wbfs_file_1.8/libwbfs/*.c wbfs_file_1.8/libwbfs/*.h
 	$(MAKE) -C wbfs_file_1.8
 	@echo "=================================================================="
@@ -355,6 +370,18 @@ unrar-nonfree/wiithon_unrar: unrar-nonfree/*.cpp unrar-nonfree/*.hpp
 	$(MAKE) -C unrar-nonfree
 	@echo "=================================================================="
 	@echo "UNRAR modified for wiithon compile OK"
+	@echo "=================================================================="
+
+wiimms-wbfs-tool/wdf2iso:
+	$(MAKE) -C wiimms-wbfs-tool wdf2iso
+	@echo "=================================================================="
+	@echo "wdf2iso compile OK"
+	@echo "=================================================================="
+
+wiimms-wbfs-tool/iso2wdf:
+	$(MAKE) -C wiimms-wbfs-tool iso2wdf
+	@echo "=================================================================="
+	@echo "iso2wdf compile OK"
 	@echo "=================================================================="
 
 gen_rev_now:

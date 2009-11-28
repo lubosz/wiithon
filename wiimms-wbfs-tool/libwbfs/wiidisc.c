@@ -35,34 +35,28 @@ static u32 _be32(const u8 *p)
 
 ///////////////////////////////////////////////////////////////////////////////
 
-static void disc_read ( wiidisc_t *d,u32 offset, u8 *data, u32 len)
+static void disc_read ( wiidisc_t * d, u32 offset, u8 * data, u32 len )
 {
-    // [2do]
-    // ERROR: different block usage calculation if len==0
-    //	 data==0 => 1 block is marked
-    //   data!=0 => no block is marked
+    if (!len)
+	return;
 
     if (data)
     {
-	int ret=0;
-	if (!len)
-	    return;
-	ret = d->read(d->fp,offset,len,data);
+	const int ret = d->read(d->fp,offset,len,data);
 	if (ret)
 	    wbfs_fatal("error reading disc (disc_read)");
     }
 
-    if (d->sector_usage_table)
+    if ( d->sector_usage_table )
     {
-	u32 blockno = offset>>13;
-	do
-	{
-	    d->sector_usage_table[blockno]=1;
-	    blockno+=1;
-	    if (len>WII_SECTOR_SIZE)
-		len-=WII_SECTOR_SIZE;
-	}
-	while (len>WII_SECTOR_SIZE);
+	u32 first_block = offset >> 13;
+	len += ( offset << 2 ) & 0x7fff;
+	u32 end_block = first_block + ( len + WII_SECTOR_SIZE - 1 >> 13 );
+	if ( end_block > WII_MAX_SECTORS )
+	     end_block = WII_MAX_SECTORS;
+
+	if ( first_block < end_block )
+	    memset( d->sector_usage_table + first_block, 1, end_block - first_block );
     }
 }
 
@@ -274,7 +268,7 @@ static void do_disc ( wiidisc_t * d )
     const int MAX_PARTITIONS = BUFSIZE / 2 / sizeof(u32);
 
     u8 *b = wbfs_ioalloc(BUFSIZE);
-    u32 partition_offset[MAX_PARTITIONS]; 
+    u32 partition_offset[MAX_PARTITIONS];
     u32 partition_type[MAX_PARTITIONS];
     u32 n_partitions;
     u32 magic;
@@ -288,7 +282,7 @@ static void do_disc ( wiidisc_t * d )
 	wbfs_error("not a wii disc");
 	return ;
     }
-    
+
     // read partition table
     disc_read( d, 0x40000>>2, b, BUFSIZE );
     n_partitions = _be32(b);
@@ -372,7 +366,7 @@ void wd_build_disc_usage
 	( wiidisc_t * d, partition_selector_t selector, u8 * usage_table )
 {
     d->sector_usage_table = usage_table;
-    wbfs_memset(usage_table,0,WII_SECTORS_DOUBLE_LAYER);
+    wbfs_memset(usage_table,0,WII_MAX_SECTORS);
     d->part_sel = selector;
     do_disc(d);
     d->part_sel = ALL_PARTITIONS;
@@ -410,6 +404,39 @@ void wd_fix_partition_table(wiidisc_t *d, partition_selector_t selector, u8* par
     }
     b32 = (u32*)(partition_table);
     *b32 = wbfs_htonl(j);
+}
+
+///////////////////////////////////////////////////////////////////////////////
+// rename ID and title of a ISO header
+
+int wd_rename
+(
+	void * p_data,		// pointer to ISO data
+	const char * new_id,	// if !NULL: take the first 6 chars as ID
+	const char * new_title	// if !NULL: take the first 0x39 chars as title
+)
+{
+    ASSERT(p_data);
+    u8 *data = p_data;
+
+    int done = 0;
+
+    if ( new_id && strlen(new_id) >= 6 )
+    {
+	memcpy(data,new_id,6);
+	done |= 1;
+    }
+
+    if ( new_title && *new_title )
+    {
+	data += WII_TITLE_OFF;
+	memset(data,0,WII_TITLE_SIZE);
+	const size_t slen = strlen(new_title);
+	memcpy(data, new_title, slen < WII_TITLE_SIZE ? slen : WII_TITLE_SIZE-1 );
+	done |= 2;
+    }
+
+    return done;
 }
 
 ///////////////////////////////////////////////////////////////////////////////

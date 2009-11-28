@@ -29,6 +29,10 @@ enum // some constants
     WII_SECTOR_SIZE		= 0x8000,
     WII_SECTORS_SINGLE_LAYER	= 143432,
     WII_SECTORS_DOUBLE_LAYER	= 2 * WII_SECTORS_SINGLE_LAYER,
+    WII_MAX_SECTORS		= WII_SECTORS_DOUBLE_LAYER,
+
+    WII_TITLE_OFF		= 0x20,
+    WII_TITLE_SIZE		= 0x40,
 };
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -58,7 +62,7 @@ typedef struct wiidisc_s
     read_wiidisc_callback_t read;	// read-data-function
     void *fp;				// file handle (black box)
     u8 *sector_usage_table;		// if not NULL: calculate usage
-					// size = WII_SECTORS_DOUBLE_LAYER
+					// size = WII_MAX_SECTORS
 
     // everything points 32bit words.
     u32 disc_raw_offset;
@@ -97,6 +101,13 @@ void wd_build_disc_usage
 // effectively remove not copied partition from the partition table.
 void wd_fix_partition_table
 	( wiidisc_t * d, partition_selector_t selector, u8 * partition_table );
+
+int wd_rename
+(
+	void * data,		// pointer to ISO data
+	const char * new_id,	// if !NULL: take the first 6 chars as ID
+	const char * new_title	// if !NULL: take the first 0x39 chars as title
+);
 
 ///////////////////////////////////////////////////////////////////////////////
 
