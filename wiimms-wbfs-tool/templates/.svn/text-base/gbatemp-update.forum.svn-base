@@ -1,0 +1,36 @@
+
+[size="5"][color="#0000FF"][b]wwt: Wiimms WBFS Tool v@.@@@ - @@@@-@@-@@[/b][/color][/size]
+[size="3"][color="#800000"][b]A command line WBFS tool set for various os.[/b][/color][/size]
+
+I have updated the tool. The [url=@@URI-GBATEMP@@][b]first post with more details[/b][/url] is updated too.
+
+[color="#000080"][b]Download:[/b][/color]
+~[color="#000080"][b]Download[/b][/color] [color="#800000"][b]this EXPERIMENTAL release:[/b][/color]
+[list]
+[*] [url=@@URI-DOWNLOAD-I386@@][b]@@DISTRIB-I386@@[/b][/url] : linux/i386 version
+[*] [url=@@URI-DOWNLOAD-CYGWIN@@][b]@@DISTRIB-CYGWIN@@[/b][/url] : cygwin (win32) version
+[/list]
+
+[b]Highlights/bug fixes of this release:[/b]
+[list]
+
+[*] The wwt command ADD support the new option --sync: Synchronize the WBFS by removing and adding discs until the WBFS contains exactloy the discs of the source list.
+
+The new wwt command "SYNC" is an abbreviation of "ADD --sync". 
+[color="#ffffff"].[/color]
+
+[*] The new command "wit MOVE" can rename ISO files. While using %-escapes many naming schemes are possible.
+[color="#ffffff"].[/color]
+
+[*] The calculation of the size of blcok devices is now much better. Thanks for help.
+[color="#ffffff"].[/color]
+
+[/list]
+
+[b]Last changes:[/b]
+[code]
+@@MODULE(last-history.txt)@@
+[/code]
+
+Sources comes with GPL2. Checkout the sources directly from the [url=@@URI-REPOS@@][b]SVN repository[/b][/url] or [url=@@URI-VIEWVC@@][b]browse the source[/b][/url].
+

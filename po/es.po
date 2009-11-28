@@ -1565,8 +1565,8 @@ msgstr "Programa ejecutado con las opciones incorrectas."
 msgid "Interrumpido por el usuario"
 msgstr "Interrumpido por el usuario"
 
-#~ msgid "ISO sin comprimir"
-#~ msgstr "ISO sin comprimir"
-
 #~ msgid "Buscar:"
 #~ msgstr "Buscar:"
+
+#~ msgid "ISO sin comprimir"
+#~ msgstr "ISO sin comprimir"

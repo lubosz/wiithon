@@ -1565,8 +1565,8 @@ msgstr "Programma eseguito con parametri errati."
 msgid "Interrumpido por el usuario"
 msgstr "Interrotto dall'utente"
 
-#~ msgid "ISO sin comprimir"
-#~ msgstr "ISO non compressa"
-
 #~ msgid "Buscar:"
 #~ msgstr "Cerca:"
+
+#~ msgid "ISO sin comprimir"
+#~ msgstr "ISO non compressa"

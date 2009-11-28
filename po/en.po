@@ -1565,8 +1565,8 @@ msgstr "Program runs with incorrect settings"
 msgid "Interrumpido por el usuario"
 msgstr "Interrupted by user"
 
-#~ msgid "ISO sin comprimir"
-#~ msgstr "Uncompressed ISO"
-
 #~ msgid "Buscar:"
 #~ msgstr "Search:"
+
+#~ msgid "ISO sin comprimir"
+#~ msgstr "Uncompressed ISO"
