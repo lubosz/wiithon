@@ -4,6 +4,7 @@
 
 
 #include "libwbfs.h"
+#include <time.h>
 
 #define likely(x)       __builtin_expect(!!(x), 1)
 #define unlikely(x)     __builtin_expect(!!(x), 0)
@@ -677,7 +678,7 @@ int read_wiidisc_wbfsdisc(void*fp,u32 offset,u32 count,void*iobuf)
     int ret = wbfs_disc_read((wbfs_disc_t*)fp, offset, iobuf, count);
     if (ret) {
         if (force_mode) {
-            static first_warn = 1;
+            static int first_warn = 1;
             if (first_warn) {
                 printf("WARNING: error reading %d [%d] from wbfs\n", offset, count);
                 printf("Probably corrupted. Using force mode (fill with 0)\n");
@@ -720,4 +721,86 @@ error:
         return ret;
 }
 
+void spinner(u64 x, u64 max)
+{
+    
+    // casos de excepcion
+    if(max == 0 || x > max)
+    {
+        printf("Error en el contador\n");
+        return;
+    }
+    
+    static time_t start_time;
+    static u32 d;    
+    static int porcentaje_ponderado;
 
+    int percent;
+    
+    int diferencia;
+    
+    u32 restante;
+    u32 h, m, s;
+
+	if (x == 0) {
+		start_time = time(NULL);
+        d = 300;
+        porcentaje_ponderado = 0;
+	}
+
+    d = time(NULL) - start_time;
+    
+    
+    percent = (100 * x) / max;
+
+    if(percent > 0)
+    {
+        /*
+         * d = tiempo desde que empezo
+         * porcen% --------> d
+         * 100-porcen% ----> restante
+         */
+        
+        if( percent > porcentaje_ponderado )
+        {
+            diferencia = percent - porcentaje_ponderado;
+            porcentaje_ponderado+=(diferencia/2);
+        }
+
+        if (porcentaje_ponderado != 0)
+        {
+            restante = (d * (100-porcentaje_ponderado)) / porcentaje_ponderado;
+        }
+        else
+        {
+            restante = 300;    
+        }
+    }
+    else
+    {
+        porcentaje_ponderado = 0;
+        restante = 0;    
+    }
+
+    h = (restante / 3600);
+    m = (restante / 60) % 60;
+    s = (restante % 60);
+    
+    if(x != max)
+    {        
+        fprintf(stdout , "%d;@;%d;@;%d;@;%d\n", porcentaje_ponderado, h, m, s);
+    }
+    else
+    {
+        fprintf(stdout, "FIN;@;%d;@;%d;@;%d\n", h, m, s);
+    }
+    
+    fflush(stdout);
+}
+
+
+void fatal(const char *s, ...)
+{
+    perror(s);
+    exit(FALSE);
+}

@@ -1757,8 +1757,6 @@ class WiithonGUI(GtkBuilderWrapper):
                             
                             # borrar de la bdd
                             session.delete(self.sel_juego.obj)
-                            
-                            # go
                             session.commit()
                             
                             # borrar caratulas no usadas
@@ -2025,8 +2023,6 @@ class WiithonGUI(GtkBuilderWrapper):
                     self.toggle_tipo_caratula_activo = self.wb_boton_full
                 
                 self.core.prefs.tipo_caratula = nuevo_cover_type
-                session.commit()
-
                 
 ########## WIITDB ###########
                 

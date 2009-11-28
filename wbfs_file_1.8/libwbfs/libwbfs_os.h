@@ -5,7 +5,6 @@
 // libwbfs_glue.h for segher tools env.
 
 // standard u8, u32 and co types, + fatal
-#include "tools.h"
 #include <stdio.h>
 
 #define wbfs_fatal(x) fatal(x)
@@ -37,6 +36,18 @@ inline static void*wbfs_ioallocx(size_t s, int line, const char *fun)
 }
 #define wbfs_ioalloc(x) wbfs_ioallocx(x,__LINE__,__FUNCTION__)
 */
+
+// añadido por makiolo
+
+// basic data types
+typedef unsigned char u8;
+typedef unsigned short u16;
+typedef unsigned int u32;
+typedef unsigned long long u64;
+
+#define OK 0
+#define TRUE 0
+#define FALSE 1
 
 #ifdef unix
 #include <arpa/inet.h>

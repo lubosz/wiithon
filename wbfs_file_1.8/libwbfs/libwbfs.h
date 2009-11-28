@@ -217,6 +217,10 @@ u32 wbfs_size_disc(wbfs_t*p,read_wiidisc_callback_t read_src_wii_disc,
                   void *callback_data,partition_selector_t sel,
 				  u32 *comp_size, u32 *real_size);
 
+void spinner(u64 x, u64 max);
+
+void fatal(const char *s, ...);
+
 #ifdef __cplusplus
    }
 #endif /* __cplusplus */

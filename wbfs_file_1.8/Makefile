@@ -1,57 +1,19 @@
-NAME = wiithon_wbfs_file
-PROGS = negentig scrub wbfs 
-COMMON = tools.o bn.o ec.o disc_usage_table.o libwbfs.o wiidisc.o rijndael.o splits.o
-DEFINES = -DLARGE_FILES -D_FILE_OFFSET_BITS=64
-
+# -*- coding: utf-8 -*-
 CC = gcc
-LIBS = -lcrypto
+CFLAGS = -O2 -Wall -Wno-unused-variable -Wno-unused-result
+DEFINES = -DLARGE_FILES -D_FILE_OFFSET_BITS=64
+LDFLAGS = -m32
+INCLUDE = -Ilibwbfs
+OBJETIVOS = wiithon_wbfs_file
+DEPENDENCIAS = libwbfs/libwbfs.o libwbfs/libwbfs_linux.o libwbfs/wiidisc.o libwbfs/rijndael.o splits.o wiithon_wbfs_file.o
 
-ifdef CYGWIN
-MSYSTEM = MINGW32
-CC = /c/MinGW/bin/gcc
-endif
+all: $(OBJETIVOS)
 
-ifeq ($(MSYSTEM),MINGW32)
+wiithon_wbfs_file: $(DEPENDENCIAS)
+	$(CC) $(DEFINES) $(INCLUDE) $(LDFLAGS) -o $@ $^
 
-	# http://sourceforge.net/projects/mingw/files/
-	LIBS = -lcrypto -lwsock32
-	ADD_CF = -I/mingw/include
-	ADD_LF = -static
-	COMMON += libwbfs_win32.o 
-
-else ifeq ($(shell uname),Darwin)
-
-	COMMON += libwbfs_osx.o 
-	LIBS = -lcrypto -ldl
-	ADD_CF = -arch i386 -arch ppc
-	ADD_LF = -arch i386 -arch ppc
-
-else
-	COMMON += libwbfs_linux.o 
-	ADD_LF = -static
-	LIBS = -lcrypto -ldl
-endif
-
-#CFLAGS = -Wall -W -Os -Ilibwbfs -I.
-#CFLAGS = -Wall -W  -g -ggdb $(ADD_CF) -Ilibwbfs -I.
-CFLAGS = -Wall -W -O $(ADD_CF) -Ilibwbfs -I.
-#LDFLAGS = -m32 -static
-LDFLAGS = $(ADD_LF) 
-
-VPATH+=libwbfs
-OBJS = $(patsubst %,%.o,$(PROGS)) $(COMMON)
-
-$(NAME): wbfs.o $(COMMON) Makefile
-	$(CC) $(CFLAGS) $(LDFLAGS) $< $(COMMON) $(LIBS) -o $@
-
-all: $(PROGS)
-
-$(PROGS): %: %.o $(COMMON) Makefile
-	$(CC) $(CFLAGS) $(LDFLAGS) $< $(COMMON) $(LIBS) -o $@
-
-# $(OBJS): %.o: %.c tools.h Makefile
-$(OBJS): %.o: %.c tools.h
-	$(CC) $(CFLAGS) $(DEFINES) -c $< -o $@ 
+%.o: %.c
+	$(CC) $(DEFINES) $(INCLUDE) $(CFLAGS) $(LDFLAGS) -o $@ -c $<
 
 clean:
-	-rm -f $(OBJS) $(PROGS) $(NAME)
+	$(RM) $(DEPENDENCIAS) $(OBJETIVOS) *~

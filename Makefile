@@ -337,7 +337,7 @@ clean_libwbfs_binding:
 clean_wbfs_file_1.8:
 	$(MAKE) -C wbfs_file_1.8 clean
 	
-wbfs_file_1.8/wiithon_wbfs_file: wbfs_file_1.8/*.c wbfs_file_1.8/*.h wbfs_file_1.8/libwbfslite/* wbfs_file_1.8/libwbfs/*
+wbfs_file_1.8/wiithon_wbfs_file: wbfs_file_1.8/*.c wbfs_file_1.8/*.h wbfs_file_1.8/libwbfs/*.c wbfs_file_1.8/libwbfs/*.h
 	$(MAKE) -C wbfs_file_1.8
 	@echo "=================================================================="
 	@echo "wbfs_file for fat32 support compile OK!"

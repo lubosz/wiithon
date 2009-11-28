@@ -19,7 +19,7 @@
 #include <ctype.h>
 #include <libgen.h>
 
-#include "tools.h"
+//#include "tools.h"
 #include "libwbfs.h"
 #include "splits.h"
 
@@ -209,6 +209,7 @@ int wbfs_applet_mkhbc(wbfs_t *p)
             printf("%s\n",filename);
             if (chdir(filename))
                 wbfs_fatal("chdir");
+            
             system("cp ../boot.dol .");
             system("cp ../icon.png .");
             xml = fopen("meta.xml","wb");

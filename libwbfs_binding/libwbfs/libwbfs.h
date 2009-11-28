@@ -231,6 +231,8 @@ unsigned int wbfs_copy_disc(wbfs_disc_t*d_src, wbfs_t*p_dst, progress_callback_t
 
 void fatal(const char *s, ...);
 
+void spinner(u64 x, u64 max);
+
 #ifdef __cplusplus
    }
 #endif /* __cplusplus */

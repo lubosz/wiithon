@@ -2,19 +2,7 @@
 // Licensed under the terms of the GNU GPL, version 2
 // http://www.gnu.org/licenses/old-licenses/gpl-2.0.txt
 
-#include <stdio.h>     /* for printf */
-#include <stdlib.h>    /* for exit */
-#include <getopt.h>
-#include <sys/stat.h>
-#include <unistd.h>
-#include <string.h>
-#include <ctype.h>
-
-#include "tools.h"
-#include "libwbfs.h"
 #include "splits.h"
-
-#include "platform.h"
 
 u64 OPT_split_size = SPLIT_SIZE_4;
 

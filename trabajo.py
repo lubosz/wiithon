@@ -268,22 +268,30 @@ class PoolTrabajo(Pool , Thread):
     def extraer(self , core , trabajo , juego , destino):
         
         exito = False
-        
+
+        if self.callback_empieza_progreso:
+            self.callback_empieza_progreso(trabajo)
+        '''
         if self.FORMATO_EXTRACT == 'iso':
             if self.callback_empieza_progreso:
                 self.callback_empieza_progreso(trabajo)
         else:
             if self.callback_empieza_progreso_indefinido:
                 self.callback_empieza_progreso_indefinido(trabajo)
+        '''
         
         exito = core.extraerJuego(juego, destino, self.FORMATO_EXTRACT)
 
+        if self.callback_termina_progreso:
+            self.callback_termina_progreso(trabajo)
+        '''
         if self.FORMATO_EXTRACT == 'iso':        
             if self.callback_termina_progreso:
                 self.callback_termina_progreso(trabajo)
         else:
             if self.callback_termina_progreso_indefinido:
                 self.callback_termina_progreso_indefinido(trabajo)
+        '''
         
         return exito
 

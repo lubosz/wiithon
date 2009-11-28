@@ -2,6 +2,10 @@
 // Licensed under the terms of the GNU GPL, version 2
 // http://www.gnu.org/licenses/old-licenses/gpl-2.0.txt
 
+#ifndef _SPLITS_H
+#define _SPLITS_H
+
+
 #include <stdio.h>     /* for printf */
 #include <stdlib.h>    /* for exit */
 #include <getopt.h>
@@ -10,7 +14,7 @@
 #include <string.h>
 #include <ctype.h>
 
-#include "tools.h"
+//#include "tools.h"
 #include "libwbfs.h"
 
 #include "platform.h"
@@ -50,3 +54,4 @@ int split_create(split_info_t *s, char *fname, u64 split_size, u64 total_size);
 int split_open(split_info_t *s, char *fname);
 
 
+#endif
