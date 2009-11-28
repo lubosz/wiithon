@@ -134,6 +134,8 @@ class WiithonCLI:
                 accion = CARATULAS
             elif option in ['--discs']:
                 accion = DISCOS
+            elif option in ['-v', '--version']:
+                print "Wiithon version %s (rev %s)" % (config.VER, config.REV)
         
         # A = acciones que necesitan una particion WBFS
         # OR

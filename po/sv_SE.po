@@ -43,314 +43,314 @@ msgstr "Out of range"
 msgid "Valor incorrecto"
 msgstr "Felaktigt värde"
 
-#: cli.py:155
+#: cli.py:157
 #, python-format
 msgid "Extraer Juego %s a ISO"
 msgstr "Packa upp %s till ISO"
 
-#: cli.py:157
+#: cli.py:159
 #, python-format
 msgid "Juego %s extraido OK"
 msgstr "Uppackning av %s klar"
 
-#: cli.py:159
+#: cli.py:161
 #, python-format
 msgid "ERROR extrayendo la ISO de %s"
 msgstr "FEL vid uppackning av %s till ISO"
 
-#: cli.py:161 gui.py:1114
+#: cli.py:163 gui.py:1114
 #, python-format
 msgid "Renombrar el juego %s."
 msgstr "Döp om %s"
 
-#: cli.py:162
+#: cli.py:164
 msgid "Escriba el nuevo nombre : "
 msgstr "Skriv in nytt namn:"
 
-#: cli.py:165
+#: cli.py:167
 #, python-format
 msgid "ISO renombrada correctamente a %s"
 msgstr "Namnet bytt till %s"
 
-#: cli.py:167 cli.py:169
+#: cli.py:169 cli.py:171
 msgid "ERROR al renombrar"
 msgstr "FEL vid namnbytet"
 
-#: cli.py:171
+#: cli.py:173
 #, python-format
 msgid "Borrando juego %s"
 msgstr "Ta bort %s"
 
-#: cli.py:173
+#: cli.py:175
 #, python-format
 msgid "Juego %s borrado correctamente"
 msgstr "ISO %s borttagen"
 
-#: cli.py:175
+#: cli.py:177
 msgid "ERROR borrando el juego"
 msgstr "FEL vid borttagning av spel"
 
-#: cli.py:177 gui.py:578 gui.py:584 gui.py:590 gui.py:596 gui.py:602
+#: cli.py:179 gui.py:578 gui.py:584 gui.py:590 gui.py:596 gui.py:602
 #: gui.py:608 gui.py:614 gui.py:620 gui.py:1656 gui.py:1705 gui.py:1785
 #: gui.py:1825
 msgid "No has seleccionado ningun juego"
 msgstr "Inget spel är valt"
 
-#: cli.py:179
+#: cli.py:181
 #, python-format
 msgid "La particion %s no contiene juegos"
 msgstr "Partitionen innehåller inga spel"
 
-#: cli.py:189
+#: cli.py:191
 msgid "Buscando ficheros RAR recursivamente ... "
 msgstr "Söker efter RAR-filer rekursivt..."
 
-#: cli.py:192
+#: cli.py:194
 msgid "Buscando imagenes ISO recursivamente ... "
 msgstr "Söker efter ISO-filer rekursivt..."
 
-#: cli.py:207
+#: cli.py:209
 msgid "No se ha encontrado ninguna imagen ISO o RAR"
 msgstr "Kunde inte hitta någon ISO- eller RAR-fil"
 
-#: cli.py:212
+#: cli.py:214
 #, python-format
 msgid "Listando juegos de : %s"
 msgstr "Spel i: %s"
 
-#: cli.py:216
+#: cli.py:218
 msgid "Inserte un juego de la Wii en su lector de DVD ..."
 msgstr "Sätt in ett Wii-spel i DVD-läsaren..."
 
-#: cli.py:217
+#: cli.py:219
 msgid "Juegos originales, solo con lectores LG."
 msgstr "Originalspel, endast med DVD-läsare ifrån LG"
 
-#: cli.py:218
+#: cli.py:220
 msgid "Pulse cualquier tecla para continuar ... "
 msgstr "Tryck valfri tangent för att fortsätta..."
 
-#: cli.py:224
+#: cli.py:226
 msgid "OK, todas las caratulas se han descargado"
 msgstr "Alla omslag nerladdade"
 
-#: cli.py:226
+#: cli.py:228
 msgid "ERROR, descargando alguna caratula"
 msgstr "FEL vid nerladdning av några omslag"
 
-#: cli.py:238
+#: cli.py:240
 msgid "Tarea finalizada"
 msgstr "Åtgärden klar"
 
-#: cli.py:240 cli.py:261 gui.py:1978
+#: cli.py:242 cli.py:263 gui.py:1978
 msgid "Has conectado el disco duro? No se ha encontrado ninguna particion valida."
 msgstr "Är din hårddisk ansluten eller saknar den en giltig WBFS-partition?"
 
-#: cli.py:248 gui.py:1983
+#: cli.py:250 gui.py:1983
 #, python-format
 msgid "Realmente, desea formatear a WBFS la particion %s? (S/N) "
 msgstr "Är du säker på att du vill formatera partitionen %s med WBFS? Allt som finns på partitionen kommer att försvinna! (Formateringen tar en stund beroende på hur stor disk du har) (J/N)"
 
-#: cli.py:249 cli.py:406
+#: cli.py:251 cli.py:408
 msgid "s"
 msgstr "j"
 
-#: cli.py:251 gui.py:1987
+#: cli.py:253 gui.py:1987
 #, python-format
 msgid "%s se ha formateado correctamente"
 msgstr "%s formaterades utan problem"
 
-#: cli.py:253 gui.py:1989
+#: cli.py:255 gui.py:1989
 #, python-format
 msgid "Error al formatear %s"
 msgstr "Fel vid formatering av %s"
 
-#: cli.py:255 cli.py:259 gui.py:1991 gui.py:1994
+#: cli.py:257 cli.py:261 gui.py:1991 gui.py:1994
 #, python-format
 msgid "No se ha formateado %s"
 msgstr "%s verkar inte vara formaterad"
 
-#: cli.py:258 gui.py:1994
+#: cli.py:260 gui.py:1994
 msgid "Interrumpido por el usuario."
 msgstr "Avbrutet av användaren"
 
-#: cli.py:262 gui.py:1978
+#: cli.py:264 gui.py:1978
 msgid "Comprueba que tienes la particion FAT32 montada."
 msgstr "Verifiera att du har monterat en FAT32-partition."
 
-#: cli.py:269
+#: cli.py:271
 msgid "Pulse cualquier tecla para continuar ...\n"
 msgstr "Tryck på valfri tangent för att fortsätta... \n"
 
-#: cli.py:283 trabajo.py:386
+#: cli.py:285 trabajo.py:386
 #, python-format
 msgid "El archivo RAR %s: No existe"
 msgstr "RAR-filen %s saknas"
 
-#: cli.py:287 trabajo.py:390
+#: cli.py:289 trabajo.py:390
 #, python-format
 msgid "Error al descomprimrir. Ya existe %s. Si desea sobreescribirlo, modifique la opcion en preferencias."
 msgstr "Fel vid uppackning! %s finns redan. Om du vill skriva över den, ändra i Inställningar."
 
-#: cli.py:294 trabajo.py:400
+#: cli.py:296 trabajo.py:400
 #, python-format
 msgid "Error: El archivo RAR %s no contiene ninguna ISO"
 msgstr "Fel: RAR-arkivet %s innehåller ingen ISO"
 
-#: cli.py:300 trabajo.py:406
+#: cli.py:302 trabajo.py:406
 #, python-format
 msgid "No hay 4.4GB libres para descomprimir el fichero RAR: %s en la ruta %s. Puede cambiar la ruta en preferencias."
 msgstr "Det finns inte 4,4GB fritt utrymme för att packa upp RAR-filen %s i %s. Du kan ändra målkatalog i Inställningar."
 
-#: cli.py:315 trabajo.py:420
+#: cli.py:317 trabajo.py:420
 #, python-format
 msgid "Error al descomrpimir el RAR : %s"
 msgstr "Fel vid uppackning av RAR-filen %s"
 
-#: cli.py:322
+#: cli.py:324
 #, python-format
 msgid "ISO %s aniadida correctamente"
 msgstr "ISO %s tillagd"
 
-#: cli.py:324
+#: cli.py:326
 #, python-format
 msgid "ERROR aniadiendo la ISO : %s (comprueba que sea una ISO de WII)"
 msgstr "FEL när ISO %s skulle läggas till. (Är ISO:n ett Wii-spel?)"
 
-#: cli.py:343
+#: cli.py:345
 #, python-format
 msgid "Copiar .%s: %s a la particion %s"
 msgstr "Kopierar .%s: %s till partition %s"
 
-#: cli.py:351
+#: cli.py:353
 #, python-format
 msgid "ERROR %s no es un ningun juego de Wii"
 msgstr "FEL %s är inget Wii-spel"
 
-#: cli.py:362
+#: cli.py:364
 msgid "INFORME DE RESULTADOS"
 msgstr "RESULTATRAPPORT"
 
-#: cli.py:367
+#: cli.py:369
 msgid "Todo metido en el HD correctamente"
 msgstr "Allting har lagts till till hårddisken utan problem"
 
-#: cli.py:371
+#: cli.py:373
 msgid "Juegos correctos"
 msgstr "Bra spel"
 
-#: cli.py:378
+#: cli.py:380
 msgid "Juegos erroneos"
 msgstr "Dåligt spel"
 
-#: cli.py:388
+#: cli.py:390
 msgid "Buscando un Disco de Wii ..."
 msgstr "Söker efter Wii-skiva..."
 
-#: cli.py:395
+#: cli.py:397
 msgid "No se ha encontrado ningun disco de la Wii"
 msgstr "Hittade ingen Wii-skiva"
 
-#: cli.py:397
+#: cli.py:399
 msgid "Hay mas de un juego de la Wii, deja solo 1 para eliminar la ambiguedad"
 msgstr "Det är mer än ett Wii-spel, välj endast 1 för att förhindra tvetydighet"
 
-#: cli.py:404
+#: cli.py:406
 #, python-format
 msgid "Ya hay una ISO en : %s"
 msgstr "Det finns redan en ISO i: %s"
 
-#: cli.py:405
+#: cli.py:407
 msgid "Desea reemplazarla (S/N) : "
 msgstr "Vill du byta ut den? (J/N):"
 
-#: cli.py:410
+#: cli.py:412
 #, python-format
 msgid "Dumpeando desde %s a %s utilizando %s temporalmente"
 msgstr "Flytta tillfälligt ifrån %s till %s genom att använda %s"
 
-#: cli.py:411
+#: cli.py:413
 msgid "Puede llevar mucho tiempo ..."
 msgstr "Detta kommer att ta en stund..."
 
-#: cli.py:415
+#: cli.py:417
 #, python-format
 msgid "OK, el juego se ha pasado a la particion %s"
 msgstr "Klart, spelet har kopierats till partition %s"
 
-#: cli.py:417
+#: cli.py:419
 #, python-format
 msgid "Error al pasar la ISO a la particion %s"
 msgstr "Fel vid kopiering av ISO:n till partition %s"
 
-#: cli.py:418
+#: cli.py:420
 #, python-format
 msgid "wiithon no borra la ISO temporal: %s, puedes borrarla si no la necesitas"
 msgstr "Wiithon tog inte bort den tillfälliga ISO:n: %s, du kan själv ta bort den om du inte behöver den mer"
 
-#: cli.py:420
+#: cli.py:422
 msgid "Error al dumpear la ISO"
 msgstr "Fel vid dumpning av ISO"
 
-#: cli.py:434
+#: cli.py:436
 #, python-format
 msgid "No se ha encontrado el juego: %s"
 msgstr "Hittar inte spelet: %s"
 
-#: cli.py:444
+#: cli.py:446
 msgid "Indique el NUM del juego : "
 msgstr "Antal spel :"
 
-#: cli.py:454
+#: cli.py:456
 msgid "Numero fuera de rango"
 msgstr "Ej giltigt nummer"
 
-#: cli.py:456
+#: cli.py:458
 msgid "El numero dado es incorrecto"
 msgstr "Fel nummer"
 
-#: cli.py:464 cli.py:466
+#: cli.py:466 cli.py:468
 msgid "Caratula?"
 msgstr "Omslag?"
 
-#: cli.py:464 cli.py:466
+#: cli.py:466 cli.py:468
 msgid "SIZE"
 msgstr "STORLEK"
 
-#: cli.py:464 cli.py:466
+#: cli.py:466 cli.py:468
 msgid "TITULO"
 msgstr "TITEL"
 
-#: cli.py:472
+#: cli.py:474
 msgid "SI"
 msgstr "JA"
 
-#: cli.py:474 wiitdb_schema.py:326
+#: cli.py:476 wiitdb_schema.py:326
 msgid "NO"
 msgstr "NEJ"
 
-#: cli.py:482
+#: cli.py:484
 #, python-format
 msgid "Presiona cualquier tecla para mostrar %d lineas mas"
 msgstr "Tryck på valfri tangent för att visa fler rader av %d "
 
-#: cli.py:486
+#: cli.py:488
 msgid "juegos de WII"
 msgstr "Wii-spel"
 
-#: cli.py:490
+#: cli.py:492
 msgid "Usado"
 msgstr "Använt"
 
-#: cli.py:491
+#: cli.py:493
 msgid "Libre"
 msgstr "Ledigt"
 
-#: cli.py:492 gui.py:632
+#: cli.py:494 gui.py:632
 msgid "Total"
 msgstr "Totalt"
 
-#: cli.py:496
+#: cli.py:498
 msgid "AYUDA_CLI"
 msgstr ""
 "[USE]\n"
@@ -1568,11 +1568,11 @@ msgstr "Du måste installera pyGTK eller GTKv2"
 msgid "Instala wiithon, no lo ejecute desde ./wiithon.py"
 msgstr "Du måste installera Wiithon, kör inte ifrån ./wiithon.py"
 
-#: wiithon.py:100
+#: wiithon.py:107
 msgid "Programa ejecutado con las opciones incorrectas."
 msgstr "Programmet körs med felaktiga inställningar"
 
-#: wiithon.py:104
+#: wiithon.py:111
 msgid "Interrumpido por el usuario"
 msgstr "Avbrutet av användraren"
 

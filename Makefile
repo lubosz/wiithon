@@ -97,6 +97,7 @@ copy_archives: making_directories
 	cp wiithon_autodetectar.sh $(DESTDIR)$(PREFIX)/share/wiithon
 	cp wiithon_autodetectar_lector.sh $(DESTDIR)$(PREFIX)/share/wiithon
 	cp wiithon_autodetectar_fat32.sh $(DESTDIR)$(PREFIX)/share/wiithon
+	cp wiithon_debug.sh $(DESTDIR)$(PREFIX)/share/wiithon
 
 	cp recursos/icons/wiithon.png $(DESTDIR)/usr/share/pixmaps
 	cp recursos/icons/wiithon.svg $(DESTDIR)/usr/share/pixmaps
@@ -130,6 +131,7 @@ set_permisses:
 	chmod 755 $(DESTDIR)$(PREFIX)/games/wiithon_unrar
 	chmod 755 $(DESTDIR)$(PREFIX)/games/wiithon_wbfs_file
 	chmod 755 $(DESTDIR)$(PREFIX)/share/wiithon/wiithon_autodetectar*.sh
+	chmod 755 $(DESTDIR)$(PREFIX)/share/wiithon/wiithon_debug.sh
 
 	chmod 644 $(DESTDIR)$(PREFIX)/share/wiithon/recursos/glade/*.ui
 	chmod 644 $(DESTDIR)$(PREFIX)/share/wiithon/recursos/imagenes/*.png

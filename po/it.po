@@ -43,314 +43,314 @@ msgstr "Non consentito"
 msgid "Valor incorrecto"
 msgstr "Valore errato"
 
-#: cli.py:155
+#: cli.py:157
 #, python-format
 msgid "Extraer Juego %s a ISO"
 msgstr "Estrazione gioco %s su ISO"
 
-#: cli.py:157
+#: cli.py:159
 #, python-format
 msgid "Juego %s extraido OK"
 msgstr "Gioco %s estratto correttamente"
 
-#: cli.py:159
+#: cli.py:161
 #, python-format
 msgid "ERROR extrayendo la ISO de %s"
 msgstr "ERRORE durante l'estrazione della ISO di %s"
 
-#: cli.py:161 gui.py:1114
+#: cli.py:163 gui.py:1114
 #, python-format
 msgid "Renombrar el juego %s."
 msgstr "Rinomina il gioco %s."
 
-#: cli.py:162
+#: cli.py:164
 msgid "Escriba el nuevo nombre : "
 msgstr "Inserisci il nuovo nome : "
 
-#: cli.py:165
+#: cli.py:167
 #, python-format
 msgid "ISO renombrada correctamente a %s"
 msgstr "ISO rinominata con successo in %s"
 
-#: cli.py:167 cli.py:169
+#: cli.py:169 cli.py:171
 msgid "ERROR al renombrar"
 msgstr "ERRORE durante la rinomina"
 
-#: cli.py:171
+#: cli.py:173
 #, python-format
 msgid "Borrando juego %s"
 msgstr "Sto cancellando il gioco %s"
 
-#: cli.py:173
+#: cli.py:175
 #, python-format
 msgid "Juego %s borrado correctamente"
 msgstr "Gioco %s cancellato con successo"
 
-#: cli.py:175
+#: cli.py:177
 msgid "ERROR borrando el juego"
 msgstr "ERRORE durante la cancellazione del gioco"
 
-#: cli.py:177 gui.py:578 gui.py:584 gui.py:590 gui.py:596 gui.py:602
+#: cli.py:179 gui.py:578 gui.py:584 gui.py:590 gui.py:596 gui.py:602
 #: gui.py:608 gui.py:614 gui.py:620 gui.py:1656 gui.py:1705 gui.py:1785
 #: gui.py:1825
 msgid "No has seleccionado ningun juego"
 msgstr "Nessun gioco selezionato"
 
-#: cli.py:179
+#: cli.py:181
 #, python-format
 msgid "La particion %s no contiene juegos"
 msgstr "La partizione %s non contiene giochi"
 
-#: cli.py:189
+#: cli.py:191
 msgid "Buscando ficheros RAR recursivamente ... "
 msgstr "Ricerca ricorsiva archivi RAR ..."
 
-#: cli.py:192
+#: cli.py:194
 msgid "Buscando imagenes ISO recursivamente ... "
 msgstr "Ricerca ricorsiva immagini ISO ..."
 
-#: cli.py:207
+#: cli.py:209
 msgid "No se ha encontrado ninguna imagen ISO o RAR"
 msgstr "Non è stata trovata nessuna immagine ISO o RAR"
 
-#: cli.py:212
+#: cli.py:214
 #, python-format
 msgid "Listando juegos de : %s"
 msgstr "Elenco giochi su : %s"
 
-#: cli.py:216
+#: cli.py:218
 msgid "Inserte un juego de la Wii en su lector de DVD ..."
 msgstr "Inserisci un gioco Wii nel lettore DVD ..."
 
-#: cli.py:217
+#: cli.py:219
 msgid "Juegos originales, solo con lectores LG."
 msgstr "Giochi originali, solo con lettori LG."
 
-#: cli.py:218
+#: cli.py:220
 msgid "Pulse cualquier tecla para continuar ... "
 msgstr "Premi un tasto per continuare ..."
 
-#: cli.py:224
+#: cli.py:226
 msgid "OK, todas las caratulas se han descargado"
 msgstr "OK, tutte le copertine sono state scaricate"
 
-#: cli.py:226
+#: cli.py:228
 msgid "ERROR, descargando alguna caratula"
 msgstr "ERRORE durante il download di qualche copertina"
 
-#: cli.py:238
+#: cli.py:240
 msgid "Tarea finalizada"
 msgstr "Lavori ultimati"
 
-#: cli.py:240 cli.py:261 gui.py:1978
+#: cli.py:242 cli.py:263 gui.py:1978
 msgid "Has conectado el disco duro? No se ha encontrado ninguna particion valida."
 msgstr "Hai collegato il tuo disco fisso? Non è stata trovata nessuna partizione WBFS"
 
-#: cli.py:248 gui.py:1983
+#: cli.py:250 gui.py:1983
 #, python-format
 msgid "Realmente, desea formatear a WBFS la particion %s? (S/N) "
 msgstr "Sei veramente sicuro di voler formattare in WBFS la partizione %s? (S/N)"
 
-#: cli.py:249 cli.py:406
+#: cli.py:251 cli.py:408
 msgid "s"
 msgstr "s"
 
-#: cli.py:251 gui.py:1987
+#: cli.py:253 gui.py:1987
 #, python-format
 msgid "%s se ha formateado correctamente"
 msgstr "%s è stato formattato correttamente"
 
-#: cli.py:253 gui.py:1989
+#: cli.py:255 gui.py:1989
 #, python-format
 msgid "Error al formatear %s"
 msgstr "Errore nella formattazione di %s"
 
-#: cli.py:255 cli.py:259 gui.py:1991 gui.py:1994
+#: cli.py:257 cli.py:261 gui.py:1991 gui.py:1994
 #, python-format
 msgid "No se ha formateado %s"
 msgstr "Non è stato formattato %s"
 
-#: cli.py:258 gui.py:1994
+#: cli.py:260 gui.py:1994
 msgid "Interrumpido por el usuario."
 msgstr "Interrotto dall'utente"
 
-#: cli.py:262 gui.py:1978
+#: cli.py:264 gui.py:1978
 msgid "Comprueba que tienes la particion FAT32 montada."
 msgstr "Verificare che la partizione FAT32 sia stata montata."
 
-#: cli.py:269
+#: cli.py:271
 msgid "Pulse cualquier tecla para continuar ...\n"
 msgstr "Premi un tasto per continuare ... \n"
 
-#: cli.py:283 trabajo.py:386
+#: cli.py:285 trabajo.py:386
 #, python-format
 msgid "El archivo RAR %s: No existe"
 msgstr "L'archivio RAR %s: non esiste"
 
-#: cli.py:287 trabajo.py:390
+#: cli.py:289 trabajo.py:390
 #, python-format
 msgid "Error al descomprimrir. Ya existe %s. Si desea sobreescribirlo, modifique la opcion en preferencias."
 msgstr "Errore durante la decompressione: %s esiste già. Se vuoi sovrascriverlo modifica l'opzione nelle preferenze."
 
-#: cli.py:294 trabajo.py:400
+#: cli.py:296 trabajo.py:400
 #, python-format
 msgid "Error: El archivo RAR %s no contiene ninguna ISO"
 msgstr "Errore: l'archivio RAR %s non contiene nessuna ISO"
 
-#: cli.py:300 trabajo.py:406
+#: cli.py:302 trabajo.py:406
 #, python-format
 msgid "No hay 4.4GB libres para descomprimir el fichero RAR: %s en la ruta %s. Puede cambiar la ruta en preferencias."
 msgstr "Non ci sono 4.4GB liberi per decomprimere il file RAR %s in %s. Puoi cambiare il percorso nelle preferenze."
 
-#: cli.py:315 trabajo.py:420
+#: cli.py:317 trabajo.py:420
 #, python-format
 msgid "Error al descomrpimir el RAR : %s"
 msgstr "Errore durante la decompressione del RAR: %s"
 
-#: cli.py:322
+#: cli.py:324
 #, python-format
 msgid "ISO %s aniadida correctamente"
 msgstr "ISO %s aggiunta con successo"
 
-#: cli.py:324
+#: cli.py:326
 #, python-format
 msgid "ERROR aniadiendo la ISO : %s (comprueba que sea una ISO de WII)"
 msgstr "ERRORE aggiungendo la ISO : %s (verifica che sia una ISO di un gioco Wii)"
 
-#: cli.py:343
+#: cli.py:345
 #, python-format
 msgid "Copiar .%s: %s a la particion %s"
 msgstr "Copia .%s: %s sulla partizione %s"
 
-#: cli.py:351
+#: cli.py:353
 #, python-format
 msgid "ERROR %s no es un ningun juego de Wii"
 msgstr "ERRORE %s non è un gioco Wii"
 
-#: cli.py:362
+#: cli.py:364
 msgid "INFORME DE RESULTADOS"
 msgstr "REPORT DEI RISULTATI"
 
-#: cli.py:367
+#: cli.py:369
 msgid "Todo metido en el HD correctamente"
 msgstr "Copiato tutto con successo sul disco fisso"
 
-#: cli.py:371
+#: cli.py:373
 msgid "Juegos correctos"
 msgstr "Giochi corretti"
 
-#: cli.py:378
+#: cli.py:380
 msgid "Juegos erroneos"
 msgstr "Giochi errati"
 
-#: cli.py:388
+#: cli.py:390
 msgid "Buscando un Disco de Wii ..."
 msgstr "Sto cercando un disco Wii ..."
 
-#: cli.py:395
+#: cli.py:397
 msgid "No se ha encontrado ningun disco de la Wii"
 msgstr "Non è stato trovato nessun disco Wii"
 
-#: cli.py:397
+#: cli.py:399
 msgid "Hay mas de un juego de la Wii, deja solo 1 para eliminar la ambiguedad"
 msgstr "Ci sono più giochi Wii. Lasciane solo 1 per eliminare l'ambiguità"
 
-#: cli.py:404
+#: cli.py:406
 #, python-format
 msgid "Ya hay una ISO en : %s"
 msgstr "Esiste già una ISO in : %s"
 
-#: cli.py:405
+#: cli.py:407
 msgid "Desea reemplazarla (S/N) : "
 msgstr "Vuoi sostituirla? (S/N) :"
 
-#: cli.py:410
+#: cli.py:412
 #, python-format
 msgid "Dumpeando desde %s a %s utilizando %s temporalmente"
 msgstr "Estrazione da %s a %s usando temporaneamente %s"
 
-#: cli.py:411
+#: cli.py:413
 msgid "Puede llevar mucho tiempo ..."
 msgstr "Può richiedere molto tempo ..."
 
-#: cli.py:415
+#: cli.py:417
 #, python-format
 msgid "OK, el juego se ha pasado a la particion %s"
 msgstr "OK, il gioco è stato trasferito sulla partizione %s"
 
-#: cli.py:417
+#: cli.py:419
 #, python-format
 msgid "Error al pasar la ISO a la particion %s"
 msgstr "Errore durante il trasferimento della ISO sulla partizione %s"
 
-#: cli.py:418
+#: cli.py:420
 #, python-format
 msgid "wiithon no borra la ISO temporal: %s, puedes borrarla si no la necesitas"
 msgstr "wiithon non rimuove automaticamente la ISO temporaneo: %s, se non serve puoi cancellarla"
 
-#: cli.py:420
+#: cli.py:422
 msgid "Error al dumpear la ISO"
 msgstr "Errore durante il dump ISO"
 
-#: cli.py:434
+#: cli.py:436
 #, python-format
 msgid "No se ha encontrado el juego: %s"
 msgstr "Non è stato trovato il gioco: %s"
 
-#: cli.py:444
+#: cli.py:446
 msgid "Indique el NUM del juego : "
 msgstr "Indica il NUM del gioco : "
 
-#: cli.py:454
+#: cli.py:456
 msgid "Numero fuera de rango"
 msgstr "Valore non consentito"
 
-#: cli.py:456
+#: cli.py:458
 msgid "El numero dado es incorrecto"
 msgstr "Il numero indicato è errato"
 
-#: cli.py:464 cli.py:466
+#: cli.py:466 cli.py:468
 msgid "Caratula?"
 msgstr "Copertina?"
 
-#: cli.py:464 cli.py:466
+#: cli.py:466 cli.py:468
 msgid "SIZE"
 msgstr "DIMENSIONE"
 
-#: cli.py:464 cli.py:466
+#: cli.py:466 cli.py:468
 msgid "TITULO"
 msgstr "TITOLO"
 
-#: cli.py:472
+#: cli.py:474
 msgid "SI"
 msgstr "SI"
 
-#: cli.py:474 wiitdb_schema.py:326
+#: cli.py:476 wiitdb_schema.py:326
 msgid "NO"
 msgstr "NO"
 
-#: cli.py:482
+#: cli.py:484
 #, python-format
 msgid "Presiona cualquier tecla para mostrar %d lineas mas"
 msgstr "Premi un tasto per visualizzare %d linee in più"
 
-#: cli.py:486
+#: cli.py:488
 msgid "juegos de WII"
 msgstr "giochi WII"
 
-#: cli.py:490
+#: cli.py:492
 msgid "Usado"
 msgstr "Usato"
 
-#: cli.py:491
+#: cli.py:493
 msgid "Libre"
 msgstr "Liberi"
 
-#: cli.py:492 gui.py:632
+#: cli.py:494 gui.py:632
 msgid "Total"
 msgstr "Totale"
 
-#: cli.py:496
+#: cli.py:498
 msgid "AYUDA_CLI"
 msgstr ""
 "[USO]\n"
@@ -793,7 +793,7 @@ msgstr "Vuoi cancellare l'archivio %s?"
 #: gui.py:2268
 #, python-format
 msgid "Trabajando con %s, sin estimar el tiempo restante ..."
-msgstr ""
+msgstr "Estrazione in corso di %s, tempo restante non disponibile"
 
 #: gui.py:2272 gui.py:2311
 #, python-format
@@ -999,16 +999,15 @@ msgstr "Destinazione immagine trascinata"
 
 #: preferencias.py:91
 msgid "ISO sin comprimir"
-msgstr ""
+msgstr "ISO non compressa"
 
 #: preferencias.py:92
 msgid "WBFS comprimido, para usar con USBLoader-FAT"
-msgstr ""
+msgstr "Compresso in WBFS, da usare con USBLoader con supporto FAT"
 
 #: preferencias.py:94
-#, fuzzy
 msgid "Formato de extraccion"
-msgstr "Formato sconosciuto"
+msgstr "Formato di estrazione"
 
 #: preferencias.py:97
 msgid "URL Base de datos WiiTDB"
@@ -1119,7 +1118,7 @@ msgstr "+INFO"
 
 #: recursos/glade/wiithon.ui.h:2
 msgid "3D"
-msgstr ""
+msgstr "3D"
 
 #: recursos/glade/wiithon.ui.h:3
 msgid "<small><i>* = algunas opciones requieren reiniciar.</i></small>"
@@ -1247,7 +1246,7 @@ msgstr "Formattazione DB di Wiithon. Attenzione, verranno cancellate tutte le pr
 
 #: recursos/glade/wiithon.ui.h:36
 msgid "Full"
-msgstr ""
+msgstr "Full"
 
 #: recursos/glade/wiithon.ui.h:37
 msgid "General"
@@ -1275,7 +1274,7 @@ msgstr "Non chiudere wiithon mentre questa animazione indica attiva in corso"
 
 #: recursos/glade/wiithon.ui.h:43
 msgid "Normal"
-msgstr ""
+msgstr "Normali"
 
 #: recursos/glade/wiithon.ui.h:44
 msgid "Nota, la copia no sobreescribire nada, solo copia juegos que no tenga el destino"
@@ -1552,11 +1551,11 @@ msgstr "Deve essere installato pyGTK o GTKv2"
 msgid "Instala wiithon, no lo ejecute desde ./wiithon.py"
 msgstr "Installa wiithon, non lo lanciare direttamente da ./wiithon.py"
 
-#: wiithon.py:100
+#: wiithon.py:107
 msgid "Programa ejecutado con las opciones incorrectas."
 msgstr "Programma eseguito con parametri errati."
 
-#: wiithon.py:104
+#: wiithon.py:111
 msgid "Interrumpido por el usuario"
 msgstr "Interrotto dall'utente"
 

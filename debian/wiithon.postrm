@@ -37,7 +37,7 @@ case "$1" in
         test -L /usr/games/wiithon && rm /usr/games/wiithon
         test -L /usr/share/wiithon/wiithon_wrapper && rm /usr/share/wiithon/wiithon_wrapper
         test -L /usr/share/wiithon/wiithon_unrar && rm /usr/share/wiithon/wiithon_unrar
-        test -L /usr/share/wiithon/wiithon_unrar && rm /usr/share/wiithon/wiithon_wbfs_file
+        test -L /usr/share/wiithon/wiithon_wbfs_file && rm /usr/share/wiithon/wiithon_wbfs_file
         exit 0
         ;;
     upgrade)

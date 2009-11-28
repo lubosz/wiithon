@@ -51,8 +51,14 @@ def App():
             print _("Instala wiithon, no lo ejecute desde ./wiithon.py")
             sys.exit(1)
 
+        try:
+            if (os.environ['WIITHON_DEBUG'] == 'True'):
+                config.DEBUG = True
+        except:
+            pass
+
         options, arguments = getopt.getopt(sys.argv[1:],
-                                'hlferdimp:g:a:w:',
+                                'hlferdimvp:g:a:w:',
                                 [
                                     'pause',
                                     'work',
@@ -68,7 +74,8 @@ def App():
                                     'discs',
                                     'massive',
                                     'partition',
-                                    'game'
+                                    'game',
+                                    'version'
                                 ])
 
         num_parms_cli = 0

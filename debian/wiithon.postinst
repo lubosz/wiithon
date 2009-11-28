@@ -71,6 +71,7 @@ case "$1" in
         chmod 755 /usr/games/wiithon_unrar
         chmod 755 /usr/games/wiithon_wbfs_file
         chmod 755 /usr/share/wiithon/wiithon_autodetectar*.sh
+        chmod 755 /usr/share/wiithon/wiithon_debug.sh
 
         chmod 644 /usr/share/wiithon/recursos/glade/*.ui
         chmod 644 /usr/share/wiithon/recursos/imagenes/*.png
