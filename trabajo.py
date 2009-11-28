@@ -455,13 +455,16 @@ class PoolTrabajo(Pool , Thread):
         
     def editarJuegoWiiTDB(self, IDGAME):
         exito = False
-        try:
-            self.sesion_wiitdb.connect_if_need_it(self.USER_WIITDB, self.PASS_WIITDB)
-            url = self.sesion_wiitdb.get_url_editar_juego(IDGAME)
-            if url is not None:
-                exito = self.abrirPagina(url)
-        except:
-            trabajo.error = _("Error: Al intentar identificarse en WiiTDB para editar el juego.")
+        if self.USER_WIITDB != "" and self.PASS_WIITDB != "":
+            try:
+                self.sesion_wiitdb.connect_if_need_it(self.USER_WIITDB, self.PASS_WIITDB)
+                url = self.sesion_wiitdb.get_url_editar_juego(IDGAME)
+                if url is not None:
+                    exito = self.abrirPagina(url)
+            except:
+                trabajo.error = _("Error: Al intentar identificarse en WiiTDB para editar el juego.")
+        else:
+            trabajo.error = _("Escriba su login y password en las preferencias. Si no dispone de uno, registrese en %s") % (config.URL_WIITDB)
         return exito
         
     def abrirPagina(self, url):

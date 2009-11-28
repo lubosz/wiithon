@@ -88,10 +88,11 @@ class Preferencias:
                                     ('D', _('Disc-art'))]
         self.iniciarPreferencia('select', 'DESTINO_ARRASTRE', defecto='C', mostrar=cargarWidget, vbox=prefs_vbox_general, label=_('Destino del arrastre de una imagen'), datos_lista = DESTINO_DRAG_AND_DROP)
         FORMATO_EXTRACT    =        [
-                                        ('iso', _('ISO sin comprimir')),
-                                        ('wbfs', _('WBFS comprimido, para usar con USBLoader-FAT')),
+                                        ('iso', _('Formato ISO - Sin gestion de huecos')),
+                                        ('wbfs', _('Formato WBFS - para USBLoader-FAT')),
+                                        ('iso', 'Formato WDF (Wii Disc File) - Not implemented in gui yet'),
                                      ]
-        self.iniciarPreferencia('select', 'FORMATO_EXTRACT', defecto='iso', mostrar=cargarWidget, vbox=prefs_vbox_general, label=_('Formato de extraccion'), datos_lista = FORMATO_EXTRACT)
+        self.iniciarPreferencia('select', 'FORMATO_EXTRACT', defecto='wbfs', mostrar=cargarWidget, vbox=prefs_vbox_general, label=_('Formato de extraccion'), datos_lista = FORMATO_EXTRACT)
         
         # wiitdb
         self.iniciarPreferencia('string', 'URL_ZIP_WIITDB', defecto='http://wiitdb.com/wiitdb.zip', mostrar=cargarWidget, vbox=prefs_vbox_wiitdb, label=_('URL Base de datos WiiTDB'))
@@ -118,8 +119,8 @@ class Preferencias:
         
         self.iniciarPreferencia('select', 'LANG_PRINCIPAL', defecto=defecto_principal, mostrar=cargarWidget, vbox=prefs_vbox_wiitdb, label=_('Idioma principal para el synopsis'), datos_lista = WIITDB_LANGUAGE_LISTA)
         self.iniciarPreferencia('select', 'LANG_SECUNDARIO', defecto=defecto_secundario, mostrar=cargarWidget, vbox=prefs_vbox_wiitdb, label=_('Idioma auxiliar para el synopsis'), datos_lista = WIITDB_LANGUAGE_LISTA)
-        self.iniciarPreferencia('string', 'USER_WIITDB', defecto='Wiithon_1_21', mostrar=cargarWidget, vbox=prefs_vbox_wiitdb, label=_('Usuario (para editar informacion en wiitdb.com)'))
-        self.iniciarPreferencia('password', 'PASS_WIITDB', defecto='Wiithon_1_21', mostrar=cargarWidget, vbox=prefs_vbox_wiitdb, label=_('Password (para editar informacion en wiitdb.com)'))
+        self.iniciarPreferencia('string', 'USER_WIITDB', defecto='', mostrar=cargarWidget, vbox=prefs_vbox_wiitdb, label=_('Usuario (para editar informacion en wiitdb.com)'))
+        self.iniciarPreferencia('password', 'PASS_WIITDB', defecto='', mostrar=cargarWidget, vbox=prefs_vbox_wiitdb, label=_('Password (para editar informacion en wiitdb.com)'))
         
         # caratulas
         self.iniciarPreferencia('int', 'WIDTH_COVERS', defecto=160, mostrar=cargarWidget, vbox=prefs_vbox_caratulas, label=_('Ancho imagen caratula'))

@@ -154,9 +154,6 @@ $(ALL_TOOLS): %: %.o $(ALL_O) Makefile
 	@echo "***    tool $@ $(MODE)"
 	@$(CC) $(CFLAGS) $(DEFINES) $(LDFLAGS) $@.o $(ALL_O) $(LIBS) -o $@
 	@if test -f $@.exe; then $(STRIP) $@.exe; else $(STRIP) $@; fi
-	#@mkdir -p bin/debug
-	#@cp -p $@ bin
-	#@if test -s $(MODE_FILE) && grep -Fq -e -DDEBUG $(MODE_FILE); then cp -p $@ bin/debug; fi
 
 #
 #--------------------------

@@ -51,12 +51,6 @@ def App():
             print _("Instala wiithon, no lo ejecute desde ./wiithon.py")
             sys.exit(1)
 
-        try:
-            if (os.environ['WIITHON_DEBUG'] == 'True'):
-                config.DEBUG = True
-        except:
-            pass
-
         options, arguments = getopt.getopt(sys.argv[1:],
                                 'hlferdimvp:g:a:w:',
                                 [

@@ -24,3 +24,12 @@ po/locale/
 po/lokalize-scripts/
 po/proyecto_lokalize.ktp
 wiimms-wbfs-tool/.svn/
+wiimms-wbfs-tool/h.edit-list
+wiimms-wbfs-tool/templates/gbatemp-announce.forum
+wiimms-wbfs-tool/templates/gbatemp-update.forum
+wiimms-wbfs-tool/templates/u30-update.forum
+wiimms-wbfs-tool/templates/.svn/text-base/gbatemp-announce.forum.svn-base
+wiimms-wbfs-tool/templates/.svn/text-base/gbatemp-update.forum.svn-base
+wiimms-wbfs-tool/templates/.svn/text-base/u30-update.forum.svn-base
+wiimms-wbfs-tool/templates/module/set-title.txt
+wiimms-wbfs-tool/templates/module/.svn/text-base/set-title.txt.svn-base

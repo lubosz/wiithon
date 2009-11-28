@@ -359,6 +359,9 @@ def decode(s, code = 'utf-8'):
 class NoDeberiaPasar(Exception):
     pass
 
+class CauseException(Exception):
+    pass
+
 # lanzado por particion
 class SintaxisInvalida(Exception):
     pass

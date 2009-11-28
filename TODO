@@ -10,7 +10,5 @@
 - ISO -> WBFS : wiithon_wbfs_file entrada.iso convert /folder/output/
 - WDF -> ISO : wiithon_wdf2iso -oq entrada.wdf -d salida.iso
 - ISO -> WDF : wiithon_iso2wdf -oq entrada.iso -d salida.wdf
-
-
-9824e5a2cb77c1f1ab0691b79ff1bae0  RVHP41.wbfs
-b7c6fd85b96f6fb893dd0e937e6f304f  RVHP41_Scrabble_Wii.txt
+- Extract all in context menu
+- implement wdf in gui

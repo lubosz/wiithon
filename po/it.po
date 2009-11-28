@@ -889,27 +889,27 @@ msgstr "%d giochi senza disc-art"
 msgid "Hay %d tareas"
 msgstr "Ci sono %d operazioni"
 
-#: preferencias.py:63 preferencias.py:100
+#: preferencias.py:63 preferencias.py:101
 msgid "English"
 msgstr "Inglese"
 
-#: preferencias.py:64 preferencias.py:104
+#: preferencias.py:64 preferencias.py:105
 msgid "Spanish"
 msgstr "Spagnolo"
 
-#: preferencias.py:65 preferencias.py:105
+#: preferencias.py:65 preferencias.py:106
 msgid "Italian"
 msgstr "Italiano"
 
-#: preferencias.py:66 preferencias.py:102
+#: preferencias.py:66 preferencias.py:103
 msgid "French"
 msgstr "Francese"
 
-#: preferencias.py:67 preferencias.py:103
+#: preferencias.py:67 preferencias.py:104
 msgid "German"
 msgstr "Tedesco"
 
-#: preferencias.py:68 preferencias.py:106
+#: preferencias.py:68 preferencias.py:107
 msgid "Dutch"
 msgstr "Olandese"
 
@@ -921,7 +921,7 @@ msgstr "Catalano"
 msgid "Brazilian Portuguese"
 msgstr "Portoghese Brasiliano"
 
-#: preferencias.py:71 preferencias.py:107
+#: preferencias.py:71 preferencias.py:108
 msgid "Portuguese"
 msgstr "Portoghese"
 
@@ -998,117 +998,118 @@ msgid "Destino del arrastre de una imagen"
 msgstr "Destinazione immagine trascinata"
 
 #: preferencias.py:91
-msgid "ISO sin comprimir"
-msgstr "ISO non compressa"
+msgid "Formato ISO - Sin gestion de huecos"
+msgstr ""
 
 #: preferencias.py:92
-msgid "WBFS comprimido, para usar con USBLoader-FAT"
+#, fuzzy
+msgid "Formato WBFS - para USBLoader-FAT"
 msgstr "Compresso in WBFS, da usare con USBLoader con supporto FAT"
 
-#: preferencias.py:94
+#: preferencias.py:95
 msgid "Formato de extraccion"
 msgstr "Formato di estrazione"
 
-#: preferencias.py:97
+#: preferencias.py:98
 msgid "URL Base de datos WiiTDB"
 msgstr "URL base dati WiiTDB"
 
-#: preferencias.py:98
+#: preferencias.py:99
 msgid "Formato fecha"
 msgstr "Formato data"
 
-#: preferencias.py:99
+#: preferencias.py:100
 msgid "Formato fecha corto"
 msgstr "Formato data corta"
 
-#: preferencias.py:101
+#: preferencias.py:102
 msgid "Japanese"
 msgstr "Giapponese"
 
-#: preferencias.py:108
+#: preferencias.py:109
 msgid "Chinese-Taiwan"
 msgstr "Cinese-Taiwanese"
 
-#: preferencias.py:109
+#: preferencias.py:110
 msgid "Chinese"
 msgstr "Cinese"
 
-#: preferencias.py:110
+#: preferencias.py:111
 msgid "Korean"
 msgstr "Coreano"
 
-#: preferencias.py:119
+#: preferencias.py:120
 msgid "Idioma principal para el synopsis"
 msgstr "Lingua principale per le descrizioni"
 
-#: preferencias.py:120
+#: preferencias.py:121
 msgid "Idioma auxiliar para el synopsis"
 msgstr "Lingua secondaria per le descrizioni"
 
-#: preferencias.py:121
+#: preferencias.py:122
 msgid "Usuario (para editar informacion en wiitdb.com)"
 msgstr "Utente (per modificare le informazioni su wiitdb.com)"
 
-#: preferencias.py:122
+#: preferencias.py:123
 msgid "Password (para editar informacion en wiitdb.com)"
 msgstr "Password (per modificare le informazioni su wiitdb.com)"
 
-#: preferencias.py:125
+#: preferencias.py:126
 msgid "Ancho imagen caratula"
 msgstr "Larghezza immagine copertina"
 
-#: preferencias.py:126
+#: preferencias.py:127
 msgid "Altura imagen caratula"
 msgstr "Altezza immagine copertina"
 
-#: preferencias.py:127
+#: preferencias.py:128
 msgid "Ancho imagen disc-art"
 msgstr "Larghezza immagine disc-art"
 
-#: preferencias.py:128
+#: preferencias.py:129
 msgid "Altura imagen disc-art"
 msgstr "Altezza immagine disc-art"
 
-#: preferencias.py:195
+#: preferencias.py:196
 msgid "Proveedor de caratulas"
 msgstr "Fornitore delle copertine"
 
-#: preferencias.py:226
+#: preferencias.py:227
 msgid "Proveedor de discos"
 msgstr "Fornitore delle disc-art"
 
-#: preferencias.py:230
+#: preferencias.py:231
 #, python-format
 msgid "URL de busqueda en Google. (%s es el nombre del juego)"
 msgstr "URL di ricerca in Google (%s è il nome del gioco)"
 
-#: preferencias.py:231
+#: preferencias.py:232
 #, python-format
 msgid "URL de busqueda en Wikipedia. (%s es el nombre del juego)"
 msgstr "URL di ricerca in Wikipedia (%s è il nome del gioco)"
 
-#: preferencias.py:232
+#: preferencias.py:233
 #, python-format
 msgid "URL de busqueda en Youtube. (%s es el nombre del juego)"
 msgstr "URL di ricerca in YouTube (%s è il nome del gioco)"
 
-#: preferencias.py:233
+#: preferencias.py:234
 #, python-format
 msgid "URL de busqueda en IGN. (%s es el nombre del juego)"
 msgstr "URL di ricerca in IGN (%s è il nome del gioco)"
 
-#: preferencias.py:234
+#: preferencias.py:235
 #, python-format
 msgid "URL de busqueda en GameSpot. (%s es el nombre del juego)"
 msgstr "URL di ricerca in GameSpot (%s è il nome del gioco)"
 
-#: preferencias.py:235
+#: preferencias.py:236
 #, python-format
 msgid "URL de busqueda en VGChartz. (%s es el nombre del juego)"
 msgstr "URL di ricerca in VGCHartz (%s è il nome del gioco)"
 
-#: preferencias.py:278 preferencias.py:314 preferencias.py:332
-#: preferencias.py:354
+#: preferencias.py:279 preferencias.py:315 preferencias.py:333
+#: preferencias.py:355
 msgid "Por defecto"
 msgstr "Default"
 
@@ -1417,75 +1418,80 @@ msgstr "Errore durante il download del DB WiiTDB da: %s"
 msgid "Error: Ocurrio un error al introducir la informacion de juegos de WiiTDB"
 msgstr "Errore: si è verificato un problema durante l'inserimento delle informazioni dei giochi da WiiTDB"
 
-#: trabajo.py:464
+#: trabajo.py:465
 msgid "Error: Al intentar identificarse en WiiTDB para editar el juego."
 msgstr "Errore durante l'autenticazione su WiiTDB per modificare le informazioni del gioco."
 
-#: trabajo.py:561
+#: trabajo.py:467
+#, python-format
+msgid "Escriba su login y password en las preferencias. Si no dispone de uno, registrese en %s"
+msgstr ""
+
+#: trabajo.py:564
 msgid "Error al finalizar la siguiente tarea:"
 msgstr "Errore al termine della seguente operazione:"
 
-#: trabajo.py:565
+#: trabajo.py:568
 #, python-format
 msgid "Anadir %s a la particion %s"
 msgstr "Aggiungo %s sulla partitizione %s"
 
-#: trabajo.py:567
+#: trabajo.py:570
 #, python-format
 msgid "Extraer %s a la ruta %s"
 msgstr "Estrazione %s sul percorso %s"
 
-#: trabajo.py:569
+#: trabajo.py:572
 #, python-format
 msgid "Copiando el juego %s desde %s a la particion %s"
 msgstr "Sto copiando il gioco %s da %s sulla partizione %s"
 
-#: trabajo.py:571
+#: trabajo.py:574
 #, python-format
 msgid "Descargando caratula de %s"
 msgstr "Sto scaricando la copertina di %s"
 
-#: trabajo.py:573
+#: trabajo.py:576
 #, python-format
 msgid "Descargando disco de %s"
 msgstr "Sto scaricando la disc-art di %s"
 
-#: trabajo.py:575
+#: trabajo.py:578
 #, python-format
 msgid "Copiando la caratula %s a la ruta %s"
 msgstr "Sto copiando la copertina %s nel percorso %s"
 
-#: trabajo.py:577
+#: trabajo.py:580
 #, python-format
 msgid "Copiando el disco %s a la ruta %s"
 msgstr "Sto copiando il disco %s nel percorso %s"
 
-#: trabajo.py:579
+#: trabajo.py:582
 #, python-format
 msgid "Recorrer directorio %s"
 msgstr "Andare nella cartella %s"
 
-#: trabajo.py:581
+#: trabajo.py:584
 #, python-format
 msgid "Descomprimir RAR %s"
 msgstr "Decompressione RAR %s"
 
-#: trabajo.py:583
+#: trabajo.py:586
 #, python-format
 msgid "Actualizar WiiTDB desde %s"
 msgstr "Aggiornamento WiiTDB da %s"
 
-#: trabajo.py:585
+#: trabajo.py:588
 #, python-format
 msgid "Editar Juego WiiTDB: %s"
 msgstr "Modifica informazioni gioco WiiTDB: %s"
 
-#: trabajo.py:587
+#: trabajo.py:590
 #, python-format
 msgid "Abrir pagina: %s"
 msgstr "Apre la pagina: %s"
 
-#: trabajo.py:589
+#: trabajo.py:592
 msgid "Trabajo desconocido"
 msgstr "Formato sconosciuto"
 
@@ -1551,13 +1557,16 @@ msgstr "Deve essere installato pyGTK o GTKv2"
 msgid "Instala wiithon, no lo ejecute desde ./wiithon.py"
 msgstr "Installa wiithon, non lo lanciare direttamente da ./wiithon.py"
 
-#: wiithon.py:107
+#: wiithon.py:101
 msgid "Programa ejecutado con las opciones incorrectas."
 msgstr "Programma eseguito con parametri errati."
 
-#: wiithon.py:111
+#: wiithon.py:105
 msgid "Interrumpido por el usuario"
 msgstr "Interrotto dall'utente"
+
+#~ msgid "ISO sin comprimir"
+#~ msgstr "ISO non compressa"
 
 #~ msgid "Buscar:"
 #~ msgstr "Cerca:"

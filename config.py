@@ -12,8 +12,15 @@ import sys
 import util
 import logging
 
-DEBUG = False
-SUPERDEBUG = False
+try:
+    if (os.environ['WIITHON_DEBUG'] == 'True'):
+        DEBUG = True
+        SUPERDEBUG = True
+    else:
+        raise util.CauseException
+except:
+    DEBUG = False
+    SUPERDEBUG = False
 
 WIITHON_PATH = os.path.dirname(sys.argv[0])
 WIITHON_FILES = os.path.dirname(__file__)
@@ -36,7 +43,7 @@ try:
     VER, REV = util.getVersionRevision()
 except:
     VER, REV = "?", "?"
-VERS_BDD = [1,2] # last is active
+VERS_BDD = [1,2,3] # last is active
 HOME = os.environ['HOME']
 HOME_WIITHON = os.path.join(HOME , '.%s' % APP)
 HOME_WIITHON_BDD = os.path.join(HOME_WIITHON , 'bdd')
