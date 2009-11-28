@@ -64,7 +64,7 @@ lang: lang_enable lang_disable
 	@echo "Languages updates!"
 	@echo "=================================================================="
 
-compile: gen_rev_now lang wiimms-wbfs-tool/wdf2iso wiimms-wbfs-tool/iso2wdf unrar-nonfree/wiithon_unrar wbfs_file_1.8/wiithon_wbfs_file libwbfs_binding/wiithon_wrapper
+compile: gen_rev_now lang wiimms-wbfs-tool/wdf2iso wiimms-wbfs-tool/iso2wdf wiimms-wbfs-tool/wwt unrar-nonfree/wiithon_unrar wbfs_file_1.8/wiithon_wbfs_file libwbfs_binding/wiithon_wrapper
 	@echo "=================================================================="
 	@echo "100% Compile OK"
 	@echo "=================================================================="
@@ -93,6 +93,7 @@ copy_archives: making_directories
 	cp wbfs_file_1.8/wiithon_wbfs_file $(DESTDIR)$(PREFIX)/games/
 	cp wiimms-wbfs-tool/wdf2iso $(DESTDIR)$(PREFIX)/games/wiithon_wdf2iso
 	cp wiimms-wbfs-tool/iso2wdf $(DESTDIR)$(PREFIX)/games/wiithon_iso2wdf
+	cp wiimms-wbfs-tool/wwt $(DESTDIR)$(PREFIX)/games/wiithon_wwt
 	
 	cp *.py $(DESTDIR)$(PREFIX)/share/wiithon
 
@@ -130,12 +131,13 @@ set_permisses:
 	chmod 755 $(DESTDIR)$(PREFIX)/share/wiithon/wiithon.py
 	chmod 755 $(DESTDIR)$(PREFIX)/share/wiithon/loading.py
 	chmod 755 $(DESTDIR)$(PREFIX)/share/wiithon/wiithon_autodetectar*.sh
+	chmod 755 $(DESTDIR)$(PREFIX)/share/wiithon/wiithon_debug.sh
 	chmod 755 $(DESTDIR)$(PREFIX)/games/wiithon_wrapper
 	chmod 755 $(DESTDIR)$(PREFIX)/games/wiithon_unrar
 	chmod 755 $(DESTDIR)$(PREFIX)/games/wiithon_wbfs_file
 	chmod 755 $(DESTDIR)$(PREFIX)/games/wiithon_wdf2iso
 	chmod 755 $(DESTDIR)$(PREFIX)/games/wiithon_iso2wdf
-	chmod 755 $(DESTDIR)$(PREFIX)/share/wiithon/wiithon_debug.sh
+	chmod 755 $(DESTDIR)$(PREFIX)/games/wiithon_wwt
 
 	chmod 644 $(DESTDIR)$(PREFIX)/share/wiithon/recursos/glade/*.ui
 	chmod 644 $(DESTDIR)$(PREFIX)/share/wiithon/recursos/imagenes/*.png
@@ -155,6 +157,7 @@ postinst: set_permisses
 	-ln -sf $(DESTDIR)$(PREFIX)/games/wiithon_wbfs_file $(DESTDIR)$(PREFIX)/share/wiithon/wiithon_wbfs_file
 	-ln -sf $(DESTDIR)$(PREFIX)/games/wiithon_wdf2iso $(DESTDIR)$(PREFIX)/share/wiithon/wiithon_wdf2iso
 	-ln -sf $(DESTDIR)$(PREFIX)/games/wiithon_iso2wdf $(DESTDIR)$(PREFIX)/share/wiithon/wiithon_iso2wdf
+	-ln -sf $(DESTDIR)$(PREFIX)/games/wiithon_wwt $(DESTDIR)$(PREFIX)/share/wiithon/wiithon_wwt
 	
 	if [ -x /usr/bin/update-menus ] ; then update-menus ; fi
 	
@@ -250,6 +253,7 @@ delete_archives_installation:
 	-$(RM) $(PREFIX)/games/wiithon_wbfs_file
 	-$(RM) $(PREFIX)/games/wiithon_wdf2iso
 	-$(RM) $(PREFIX)/games/wiithon_iso2wdf
+	-$(RM) $(PREFIX)/games/wiithon_wwt
 
 	-$(RM) $(PREFIX)/share/wiithon/*.py
 	-$(RM) $(PREFIX)/share/wiithon/*.pyc
@@ -298,6 +302,7 @@ postrm:
 	-$(RM) $(PREFIX)/share/wiithon/wiithon_wbfs_file
 	-$(RM) $(PREFIX)/share/wiithon/wiithon_wdf2iso
 	-$(RM) $(PREFIX)/share/wiithon/wiithon_iso2wdf
+	-$(RM) $(PREFIX)/share/wiithon/wiithon_wwt
 	
 uninstall: clean_old_wiithon delete_archives_installation postrm
 	@echo "=================================================================="
@@ -317,7 +322,7 @@ purge: uninstall
 	@echo "Uninstall OK & all clean (purge covers & disc-art ...)"
 	@echo "=================================================================="
 
-clean: clean_wbfs_file_1.8 clean_libwbfs_binding clean_gettext clean_unrar clean_wdf2iso_and_iso2wdf
+clean: clean_wbfs_file_1.8 clean_libwbfs_binding clean_gettext clean_unrar clean_wdf2iso_and_iso2wdf_and_wwt
 	$(RM) *.pyc
 	$(RM) *~
 	$(RM) po/*~
@@ -351,7 +356,7 @@ clean_libwbfs_binding:
 clean_wbfs_file_1.8:
 	$(MAKE) -C wbfs_file_1.8 clean
 	
-clean_wdf2iso_and_iso2wdf:
+clean_wdf2iso_and_iso2wdf_and_wwt:
 	$(MAKE) -C wiimms-wbfs-tool clean
 	
 wbfs_file_1.8/wiithon_wbfs_file: wbfs_file_1.8/*.c wbfs_file_1.8/*.h wbfs_file_1.8/libwbfs/*.c wbfs_file_1.8/libwbfs/*.h
@@ -382,6 +387,12 @@ wiimms-wbfs-tool/iso2wdf:
 	$(MAKE) -C wiimms-wbfs-tool iso2wdf
 	@echo "=================================================================="
 	@echo "iso2wdf compile OK"
+	@echo "=================================================================="
+
+wiimms-wbfs-tool/wwt:
+	$(MAKE) -C wiimms-wbfs-tool wwt
+	@echo "=================================================================="
+	@echo "wwt compile OK"
 	@echo "=================================================================="
 
 gen_rev_now:

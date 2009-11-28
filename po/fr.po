@@ -182,27 +182,27 @@ msgstr "Vérifiez que vous avez monté la partition FAT32."
 msgid "Pulse cualquier tecla para continuar ...\n"
 msgstr "Appuyez sur une touche pour continuer... \n"
 
-#: cli.py:285 trabajo.py:386
+#: cli.py:285 trabajo.py:389
 #, python-format
 msgid "El archivo RAR %s: No existe"
 msgstr "L'archive RAR %s n'existe pas"
 
-#: cli.py:289 trabajo.py:390
+#: cli.py:289 trabajo.py:393
 #, python-format
 msgid "Error al descomprimrir. Ya existe %s. Si desea sobreescribirlo, modifique la opcion en preferencias."
 msgstr "Erreur lors de la décompression : %s existe déjà. Si vous souhaitez l'écraser, changez l'option dans les préférences."
 
-#: cli.py:296 trabajo.py:400
+#: cli.py:296 trabajo.py:403
 #, python-format
 msgid "Error: El archivo RAR %s no contiene ninguna ISO"
 msgstr "Erreur : l'archive RAR %s ne contient aucune ISO"
 
-#: cli.py:302 trabajo.py:406
+#: cli.py:302 trabajo.py:409
 #, python-format
 msgid "No hay 4.4GB libres para descomprimir el fichero RAR: %s en la ruta %s. Puede cambiar la ruta en preferencias."
 msgstr "Moins de 4.4Go sont libres. Impossible de décompresser le fichier RAR %s dans le dossier %s. Changez le chemin dans les préférences"
 
-#: cli.py:317 trabajo.py:420
+#: cli.py:317 trabajo.py:423
 #, python-format
 msgid "Error al descomrpimir el RAR : %s"
 msgstr "Erreur lors de l'archive RAR %s"
@@ -998,12 +998,17 @@ msgid "Destino del arrastre de una imagen"
 msgstr "Destination du glisser-déposer"
 
 #: preferencias.py:91
-msgid "Formato ISO - Sin gestion de huecos"
+msgid "Formato ISO - para Grabacion DVD"
 msgstr ""
 
 #: preferencias.py:92
 #, fuzzy
-msgid "Formato WBFS - para USBLoader-FAT"
+msgid "Formato WBFS - para USBLoader-FAT32"
+msgstr "Comprimé en WBFS, pour utilisation avec un USBLoader en FAT"
+
+#: preferencias.py:93
+#, fuzzy
+msgid "Formato WDF - para Almacenamiento"
 msgstr "Comprimé en WBFS, pour utilisation avec un USBLoader en FAT"
 
 #: preferencias.py:95
@@ -1369,7 +1374,7 @@ msgstr "Image Wii (ISO ou RAR)"
 msgid "Falta la imagen %s"
 msgstr "Image manquante : %s"
 
-#: trabajo.py:232 trabajo.py:327 trabajo.py:383
+#: trabajo.py:232 trabajo.py:330 trabajo.py:386
 #, python-format
 msgid "La particion %s: Ya no existe"
 msgstr "La partition %s n'existe pas"
@@ -1384,114 +1389,114 @@ msgstr "L'image ISO %s n'existe pas"
 msgid "El archivo ISO %s: No es un juego de Wii"
 msgstr "L'iso %s n'est pas jeu Wii"
 
-#: trabajo.py:264
+#: trabajo.py:266
 #, python-format
 msgid "%s no es un ningun juego de Wii"
 msgstr "%s n'est pas un jeu Wii"
 
-#: trabajo.py:330
+#: trabajo.py:333
 #, python-format
 msgid "El directorio %s: No existe"
 msgstr "Le dossier %s n'existe pas"
 
-#: trabajo.py:367
+#: trabajo.py:370
 #, python-format
 msgid "No se ha encontrado ningun ISO/RAR en el directorio %s"
 msgstr "Aucun ISO ou RAR trouvé dans le répertoire %s"
 
-#: trabajo.py:370
+#: trabajo.py:373
 #, python-format
 msgid "%s no es un directorio"
 msgstr "%s n'est pas un répertoire"
 
-#: trabajo.py:397
+#: trabajo.py:400
 #, python-format
 msgid "%s no es un archivo RAR"
 msgstr "%s n'est pas une archive RAR"
 
-#: trabajo.py:450
+#: trabajo.py:453
 #, python-format
 msgid "Error: Al descargar la bdd wiitdb de: %s"
 msgstr "Erreur lors du téléchargement WiiTDB de %s"
 
-#: trabajo.py:452
+#: trabajo.py:455
 msgid "Error: Ocurrio un error al introducir la informacion de juegos de WiiTDB"
 msgstr "Erreur : un erreur s'est produite lors de l'injection des informations de jeux de WiiTDB"
 
-#: trabajo.py:465
+#: trabajo.py:468
 msgid "Error: Al intentar identificarse en WiiTDB para editar el juego."
 msgstr "Erreur lors d'une tentative d'identification WiiTDB pour l'éditeur du jeu."
 
-#: trabajo.py:467
+#: trabajo.py:470
 #, python-format
 msgid "Escriba su login y password en las preferencias. Si no dispone de uno, registrese en %s"
 msgstr ""
 
-#: trabajo.py:564
+#: trabajo.py:567
 msgid "Error al finalizar la siguiente tarea:"
 msgstr "Erreur à la fin de la prochaine tâche:"
 
-#: trabajo.py:568
+#: trabajo.py:571
 #, python-format
 msgid "Anadir %s a la particion %s"
 msgstr "Ajouter %s à la partition %s"
 
-#: trabajo.py:570
+#: trabajo.py:573
 #, python-format
 msgid "Extraer %s a la ruta %s"
 msgstr "Extraction %s vers %s"
 
-#: trabajo.py:572
+#: trabajo.py:575
 #, python-format
 msgid "Copiando el juego %s desde %s a la particion %s"
 msgstr "Copier jeu %s de %s vers la partition %s"
 
-#: trabajo.py:574
+#: trabajo.py:577
 #, python-format
 msgid "Descargando caratula de %s"
 msgstr "Télécharge jaquette %s"
 
-#: trabajo.py:576
+#: trabajo.py:579
 #, python-format
 msgid "Descargando disco de %s"
 msgstr "Télécharge disque %s"
 
-#: trabajo.py:578
+#: trabajo.py:581
 #, python-format
 msgid "Copiando la caratula %s a la ruta %s"
 msgstr "Copier jaquette %s vers %s"
 
-#: trabajo.py:580
+#: trabajo.py:583
 #, python-format
 msgid "Copiando el disco %s a la ruta %s"
 msgstr "Copier disque %s vers %s"
 
-#: trabajo.py:582
+#: trabajo.py:585
 #, python-format
 msgid "Recorrer directorio %s"
 msgstr "Parcourir le dossier %s"
 
-#: trabajo.py:584
+#: trabajo.py:587
 #, python-format
 msgid "Descomprimir RAR %s"
 msgstr "Extraction RAR %s"
 
-#: trabajo.py:586
+#: trabajo.py:589
 #, python-format
 msgid "Actualizar WiiTDB desde %s"
 msgstr "Actualisation WiiTDB de %s"
 
-#: trabajo.py:588
+#: trabajo.py:591
 #, python-format
 msgid "Editar Juego WiiTDB: %s"
 msgstr "Modifier jeu WiiTDB : %s"
 
-#: trabajo.py:590
+#: trabajo.py:593
 #, python-format
 msgid "Abrir pagina: %s"
 msgstr "Ouvrir page : %s"
 
-#: trabajo.py:592
+#: trabajo.py:595
 msgid "Trabajo desconocido"
 msgstr "Emploi inconnu"
 
@@ -1565,8 +1570,8 @@ msgstr "Programme lancé avec des paramètres incorrects."
 msgid "Interrumpido por el usuario"
 msgstr "Interrompu par l'utilisateur"
 
-#~ msgid "Buscar:"
-#~ msgstr "Recherche:"
-
 #~ msgid "ISO sin comprimir"
 #~ msgstr "ISO sans compression"
+
+#~ msgid "Buscar:"
+#~ msgstr "Recherche:"

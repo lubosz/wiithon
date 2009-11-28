@@ -82,10 +82,10 @@ The check is very fast. The wwt commands ADD, UPDATE, EXTRACT, REMOVE and TRUNCA
 [*] [url=@@URI-DOWNLOAD-I386@@][b]@@DISTRIB-I386@@[/b][/url] : linux/i386 version
 [*] [url=@@URI-DOWNLOAD-CYGWIN@@][b]@@DISTRIB-CYGWIN@@[/b][/url] : cygwin (win32) version
 [/list]
-[color="#000080"][b]Download of the previous version:[/b][/color][list]
-[*] [url=http://wiimm.de/x/wwt-v0.18a-r465-i386.tar.gz][b]wwt-v0.18a-r465-i386.tar.gz[/b][/url] (linux/i386 version)
-[*] [url=http://wiimm.de/x/wwt-v0.18a-r465-cygwin.zip][b]wwt-v0.18a-r465-cygwin.zip[/b][/url] (cygwin version)
-[/list]
+~[color="#000080"][b]Download of the previous version:[/b][/color][list]
+~[*] [url=http://wiimm.de/x/wwt-v0.18a-r465-i386.tar.gz][b]wwt-v0.18a-r465-i386.tar.gz[/b][/url] (linux/i386 version)
+~[*] [url=http://wiimm.de/x/wwt-v0.18a-r465-cygwin.zip][b]wwt-v0.18a-r465-cygwin.zip[/b][/url] (cygwin version)
+~[/list]
 
 [b]Last changes:[/b]
 [code]

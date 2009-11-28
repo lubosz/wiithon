@@ -600,7 +600,7 @@ enumError cmd_find()
     }
 
     const enumError err = AnalysePartitions(stderr,true,true);
-    if ( err || verbose < 0 )
+    if ( verbose < 0 )
     {
 	// if quiet: only status will be given, no print out
 	return err;
@@ -618,11 +618,13 @@ enumError cmd_find()
 
 	case 1:
 	    if (print_header)
-		printf("\ntype  d.usage    size  file (sizes in MiB)\n\n");
+		printf("\n"
+			"type  wbfs d.usage    size  file (sizes in MiB)\n"
+			"-----------------------------------------------\n");
 	    for ( info = first_partition_info; info; info = info->next )
-		if ( info->part_mode >= PM_WBFS )
-		    printf("%s %7lld %7lld  %s\n",
+		 printf("%s %s %7lld %7lld  %s\n",
 				info->is_block_dev ? "BLOCK" : "PLAIN",
+				info->part_mode >= PM_WBFS ? "WBFS" : " -- ",
 				(info->disk_usage+MiB/2)/MiB,
 				(info->file_size+MiB/2)/MiB,
 				info->path );
@@ -632,11 +634,13 @@ enumError cmd_find()
 
 	default: // >= 2x long_count
 	    if (print_header)
-		printf("\ntype     disk usage     file size  full path\n\n");
+		printf("\n"
+			"type  wbfs    disk usage     file size  full path\n"
+			"-------------------------------------------------\n");
 	    for ( info = first_partition_info; info; info = info->next )
-		if ( info->part_mode >= PM_WBFS )
-		    printf("%s %13lld %13lld  %s\n",
+		printf("%s %s %13lld %13lld  %s\n",
 				info->is_block_dev ? "BLOCK" : "PLAIN",
+				info->part_mode >= PM_WBFS ? "WBFS" : " -- ",
 				info->disk_usage,
 				info->file_size,
 				info->real_path );

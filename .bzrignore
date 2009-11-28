@@ -3,6 +3,7 @@ libwbfs_binding/wiithon_wrapper
 wbfs_file_1.8/wiithon_wbfs_file
 wiimms-wbfs-tool/iso2wdf
 wiimms-wbfs-tool/wdf2iso
+wiimms-wbfs-tool/wwt
 COMMIT
 wiithon_wrapper/*.o
 *~
@@ -28,3 +29,4 @@ po/proyecto_lokalize.ktp
 wiimms-wbfs-tool/.svn/
 wiimms-wbfs-tool/*.d
 wiimms-wbfs-tool/Makefile.setup
+svn-revision.*

@@ -9,7 +9,7 @@ WWT_SHORT	= wwt
 WWT_LONG	= Wiimms WBFS Tool
 WIT_SHORT	= wit
 WIT_LONG	= Wiimms ISO Tool
-VERSION		= 0.19a
+VERSION		= 0.19b
 
 ifeq ($(TERM),cygwin)
 SYSTEM		:= cygwin

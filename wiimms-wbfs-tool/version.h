@@ -10,15 +10,15 @@
 #define WIT_LONG	"Wiimms ISO Tool"
 #define AUTHOR		"Dirk Clemens"
 
-#define VERSION		"0.19a"
-#define REVISION	"493M"
-#define REVISION_NUM	493
-#define REVISION_NEXT	494
+#define VERSION		"0.19b"
+#define REVISION	"495M"
+#define REVISION_NUM	495
+#define REVISION_NEXT	496
 
-#define BINTIME		1259436044
+#define BINTIME		1259442777
 #define DATE		"2009-11-28"
-#define TIME		"20:20:44"
-#define DATETIME	"2009-11-28 20:20:44"
+#define TIME		"22:12:57"
+#define DATETIME	"2009-11-28 22:12:57"
 
 #define URI_REPOS	"http://opensvn.wiimm.de/wii/trunk/wiimms-wbfs-tool/"
 #define URI_VIEWVC	"http://opensvn.wiimm.de/viewvc/wii/trunk/wiimms-wbfs-tool/"

@@ -14,15 +14,10 @@ I have updated the tool. The [url=@@URI-GBATEMP@@][b]first post with more detail
 [b]Highlights/bug fixes of this release:[/b]
 [list]
 
-[*] The wwt command ADD support the new option --sync: Synchronize the WBFS by removing and adding discs until the WBFS contains exactloy the discs of the source list.
-
-The new wwt command "SYNC" is an abbreviation of "ADD --sync". 
+[*]
 [color="#ffffff"].[/color]
 
-[*] The new command "wit MOVE" can rename ISO files. While using %-escapes many naming schemes are possible.
-[color="#ffffff"].[/color]
-
-[*] The calculation of the size of blcok devices is now much better. Thanks for help.
+[*]
 [color="#ffffff"].[/color]
 
 [/list]

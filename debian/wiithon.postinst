@@ -30,12 +30,13 @@ case "$1" in
         chmod 755 /usr/share/wiithon/wiithon.py
         chmod 755 /usr/share/wiithon/loading.py
         chmod 755 /usr/share/wiithon/wiithon_autodetectar*.sh
+        chmod 755 /usr/share/wiithon/wiithon_debug.sh
         chmod 755 /usr/games/wiithon_wrapper
         chmod 755 /usr/games/wiithon_unrar
         chmod 755 /usr/games/wiithon_wbfs_file
         chmod 755 /usr/games/wiithon_wdf2iso
         chmod 755 /usr/games/wiithon_iso2wdf
-        chmod 755 /usr/share/wiithon/wiithon_debug.sh
+        chmod 755 /usr/games/wiithon_wwt
 
         chmod 644 /usr/share/wiithon/recursos/glade/*.ui
         chmod 644 /usr/share/wiithon/recursos/imagenes/*.png
@@ -52,6 +53,7 @@ case "$1" in
         ln -sf /usr/games/wiithon_wbfs_file /usr/share/wiithon/wiithon_wbfs_file
         ln -sf /usr/games/wiithon_wdf2iso /usr/share/wiithon/wiithon_wdf2iso
         ln -sf /usr/games/wiithon_iso2wdf /usr/share/wiithon/wiithon_iso2wdf
+        ln -sf /usr/games/wiithon_wwt /usr/share/wiithon/wiithon_wwt
         
         if [ -x /usr/bin/update-menus ] ; then update-menus ; fi
 

@@ -240,16 +240,18 @@ class PoolTrabajo(Pool , Thread):
         elif( util.getExtension(fichero) == "iso" ):
             
             ########### TAREA AUXILIAR ######################
+            
+            if self.poolBash is not None:
 
-            # vamos descargando info wiitdb
-            self.poolBash.nuevoTrabajoActualizarWiiTDB('%s?ID=%s' % (self.URL_ZIP_WIITDB, idgame))
+                # vamos descargando info wiitdb
+                self.poolBash.nuevoTrabajoActualizarWiiTDB('%s?ID=%s' % (self.URL_ZIP_WIITDB, idgame))
 
-            # vamos descargando caratulas
-            if not core.existeCaratula(idgame):
-                self.poolBash.nuevoTrabajoDescargaCaratula( idgame )
+                # vamos descargando caratulas
+                if not core.existeCaratula(idgame):
+                    self.poolBash.nuevoTrabajoDescargaCaratula( idgame )
 
-            if not core.existeDisco(idgame):
-                self.poolBash.nuevoTrabajoDescargaDisco( idgame )
+                if not core.existeDisco(idgame):
+                    self.poolBash.nuevoTrabajoDescargaDisco( idgame )
 
             #################################################
             
@@ -268,30 +270,31 @@ class PoolTrabajo(Pool , Thread):
     def extraer(self , core , trabajo , juego , destino):
         
         exito = False
+        
+        print "1111111111"
 
-        if self.callback_empieza_progreso:
-            self.callback_empieza_progreso(trabajo)
-        '''
-        if self.FORMATO_EXTRACT == 'iso':
+        if self.FORMATO_EXTRACT == 'iso' or self.FORMATO_EXTRACT == 'wbfs':
             if self.callback_empieza_progreso:
                 self.callback_empieza_progreso(trabajo)
         else:
             if self.callback_empieza_progreso_indefinido:
                 self.callback_empieza_progreso_indefinido(trabajo)
-        '''
+        
+        print "2222"
         
         exito = core.extraerJuego(juego, destino, self.FORMATO_EXTRACT)
+        
+        print "3333"
 
         if self.callback_termina_progreso:
             self.callback_termina_progreso(trabajo)
-        '''
-        if self.FORMATO_EXTRACT == 'iso':        
+            
+        if self.FORMATO_EXTRACT == 'iso' or self.FORMATO_EXTRACT == 'wbfs':
             if self.callback_termina_progreso:
                 self.callback_termina_progreso(trabajo)
         else:
             if self.callback_termina_progreso_indefinido:
                 self.callback_termina_progreso_indefinido(trabajo)
-        '''
         
         return exito
 

@@ -88,11 +88,11 @@ class Preferencias:
                                     ('D', _('Disc-art'))]
         self.iniciarPreferencia('select', 'DESTINO_ARRASTRE', defecto='C', mostrar=cargarWidget, vbox=prefs_vbox_general, label=_('Destino del arrastre de una imagen'), datos_lista = DESTINO_DRAG_AND_DROP)
         FORMATO_EXTRACT    =        [
-                                        ('iso', _('Formato ISO - Sin gestion de huecos')),
-                                        ('wbfs', _('Formato WBFS - para USBLoader-FAT')),
-                                        ('iso', 'Formato WDF (Wii Disc File) - Not implemented in gui yet'),
+                                        ('iso', _('Formato ISO - para Grabacion DVD')),
+                                        ('wbfs', _('Formato WBFS - para USBLoader-FAT32')),
+                                        ('wdf', _('Formato WDF - para Almacenamiento')),
                                      ]
-        self.iniciarPreferencia('select', 'FORMATO_EXTRACT', defecto='wbfs', mostrar=cargarWidget, vbox=prefs_vbox_general, label=_('Formato de extraccion'), datos_lista = FORMATO_EXTRACT)
+        self.iniciarPreferencia('select', 'FORMATO_EXTRACT', defecto='iso', mostrar=cargarWidget, vbox=prefs_vbox_general, label=_('Formato de extraccion'), datos_lista = FORMATO_EXTRACT)
         
         # wiitdb
         self.iniciarPreferencia('string', 'URL_ZIP_WIITDB', defecto='http://wiitdb.com/wiitdb.zip', mostrar=cargarWidget, vbox=prefs_vbox_wiitdb, label=_('URL Base de datos WiiTDB'))

@@ -1,14 +1,4 @@
-wwt v0.18a r465 - 2009-11-22
-
- - Bug fix: Wrong temp filename while creating an splitted WBFS.
- - Default split size is now 4GiB-32KiB for WBFS and 4GB for all other files.
- - wwt CHECK -ll: Print an additional dump if errors found.
- - wit SCRUB: Allow type conversion.
- - new commands: wwt RENAME+SETTITLE: Set ID and title of discs [EXPERIMENTAL].
- - IMPORTAND BUG FIX in libwbfs/wiidisc: All scrubbing operations including
-   adding to a WBFS could loose sectors.
-
-wwt v@.@@@ r@@REV-NEXT@@ - @@@@-@@-@@
+wwt v0.19a r491 - 2009-11-27
 
  - New ADD option: --sync: Synchronize: remove and add until WBFS contains
    the same discs as source list.
@@ -17,3 +7,6 @@ wwt v@.@@@ r@@REV-NEXT@@ - @@@@-@@-@@
  - New command: wit MOVE: move/rename iso files.
  - MAC bug fix: segmentation fault if formatting a drive.
  - Bug fix: Interrupt possible while processing a source directory.
+
+wwt v@.@@@ r@@REV-NEXT@@ - @@@@-@@-@@
+ - wwt FIND -l: List all and not only WBFS partitions.

@@ -155,7 +155,7 @@ class WiithonCLI:
                         if juego is not None:
                             if accion == EXTRAER:
                                 print _("Extraer Juego %s a ISO") % juego
-                                if( self.core.extraerJuego(juego) ):
+                                if( self.core.extraerJuego(juego, ".", self.core.prefs.FORMATO_EXTRACT) ):
                                     print _("Juego %s extraido OK") % (juego)
                                 else:
                                     print _("ERROR extrayendo la ISO de %s") % (juego)                            

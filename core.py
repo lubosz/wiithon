@@ -334,19 +334,31 @@ class WiithonCORE:
 
     # extrae el juego a un destino
     def extraerJuego(self ,juego , destino = '', formato = 'iso'):
-        if destino != '':
-            trabajoActual = os.getcwd()
-            os.chdir( destino )
 
         if formato == 'iso':
             comando = "%s -p %s extract %s" % (config.WBFS_APP, juego.particion.device , juego.idgame)
         elif formato == 'wbfs':
             comando = "%s %s extract_wbfs %s %s" % (config.WBFS_FILE, juego.particion.device , juego.idgame, destino)
-        salida = util.call_out_file(comando)
+        elif formato == 'wdf':
+            comando = "%s EXTRACT -p %s -o -W %s" % (config.WWT, juego.particion.device , juego.idgame)
+        else:
+            comando = None
+        
+        if comando is not None:
+            
+            if destino != '':
+                trabajoActual = os.getcwd()
+                os.chdir( destino )
 
-        if destino != '':
-            os.chdir( trabajoActual )
-        return salida
+            salida = util.call_out_file(comando)
+
+            if destino != '':
+                os.chdir( trabajoActual )
+
+            return salida
+
+        else:
+            return False
         
     def getEspacioLibreUsado(self, particion):
         comando = "%s -p %s df" % (config.WBFS_APP, particion.device)

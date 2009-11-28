@@ -28,6 +28,7 @@ case "$1" in
         test -L /usr/share/wiithon/wiithon_wbfs_file && rm /usr/share/wiithon/wiithon_wbfs_file
         test -L /usr/share/wiithon/wiithon_wdf2iso && rm /usr/share/wiithon/wiithon_wdf2iso
         test -L /usr/share/wiithon/wiithon_iso2wdf && rm /usr/share/wiithon/wiithon_iso2wdf
+        test -L /usr/share/wiithon/wiithon_wwt && rm /usr/share/wiithon/wiithon_wwt
         
         # purge
         test -d /usr/share/wiithon && rm -rf /usr/share/wiithon
@@ -41,7 +42,8 @@ case "$1" in
         test -L /usr/share/wiithon/wiithon_unrar && rm /usr/share/wiithon/wiithon_unrar
         test -L /usr/share/wiithon/wiithon_wbfs_file && rm /usr/share/wiithon/wiithon_wbfs_file
         test -L /usr/share/wiithon/wiithon_wdf2iso && rm /usr/share/wiithon/wiithon_wdf2iso
-        test -L /usr/share/wiithon/wiithon_iso2wdf && rm /usr/share/wiithon/wiithon_iso2wdf        
+        test -L /usr/share/wiithon/wiithon_iso2wdf && rm /usr/share/wiithon/wiithon_iso2wdf
+        test -L /usr/share/wiithon/wiithon_wwt && rm /usr/share/wiithon/wiithon_wwt
         
         exit 0
         ;;

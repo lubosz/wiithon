@@ -398,6 +398,16 @@ wwt v0.17a r454 - 2009-11-18
  - Bug fix: Wrong name scheme for splitted WBFS files.
  - Some minor bugs fixed.
 
+wwt v0.18a r465 - 2009-11-22
+
+ - Bug fix: Wrong temp filename while creating an splitted WBFS.
+ - Default split size is now 4GiB-32KiB for WBFS and 4GB for all other files.
+ - wwt CHECK -ll: Print an additional dump if errors found.
+ - wit SCRUB: Allow type conversion.
+ - new commands: wwt RENAME+SETTITLE: Set ID and title of discs [EXPERIMENTAL].
+ - IMPORTAND BUG FIX in libwbfs/wiidisc: All scrubbing operations including
+   adding to a WBFS could loose sectors.
+
 @@MODULE(last-history.txt)@@
 
 
