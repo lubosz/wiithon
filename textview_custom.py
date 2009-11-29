@@ -20,7 +20,7 @@ class TagCustom(gtk.TextTag):
         
     def desactivar(self):
         self.activado = False
-
+        
 class TextViewCustom(gtk.TextView):
 
     def __init__(self):
@@ -110,6 +110,8 @@ class TextViewCustom(gtk.TextView):
         a("naranja", foreground='orange')
         a("verde", foreground='darkgreen')
         a("azul", foreground='blue')
+        a("darkblue", foreground='darkblue')
+        a("purple", foreground='purple')
         a("gris", foreground='darkgray')
         a("superbig", size=18 * pango.SCALE)
         a("big", size=14 * pango.SCALE)
@@ -120,8 +122,6 @@ class TextViewCustom(gtk.TextView):
         a("justificar", justification=gtk.JUSTIFY_FILL)
         a("margin8", left_margin=8, right_margin=8)
         a("margin12", left_margin=12, right_margin=12)
-        for i in range(64):
-            a("font%d" % i, size=i * pango.SCALE)    
 
     def cargar_otros_tags(self):
         # http://www.pygtk.org/docs/pygtk/class-gtktexttag.html

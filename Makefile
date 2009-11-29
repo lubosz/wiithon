@@ -377,19 +377,19 @@ unrar-nonfree/wiithon_unrar: unrar-nonfree/*.cpp unrar-nonfree/*.hpp
 	@echo "UNRAR modified for wiithon compile OK"
 	@echo "=================================================================="
 
-wiimms-wbfs-tool/wdf2iso:
+wiimms-wbfs-tool/wdf2iso: wiimms-wbfs-tool/*.c wiimms-wbfs-tool/*.h wiimms-wbfs-tool/libwbfs/*.c wiimms-wbfs-tool/libwbfs/*.h
 	$(MAKE) -C wiimms-wbfs-tool wdf2iso
 	@echo "=================================================================="
 	@echo "wdf2iso compile OK"
 	@echo "=================================================================="
 
-wiimms-wbfs-tool/iso2wdf:
+wiimms-wbfs-tool/iso2wdf: wiimms-wbfs-tool/*.c wiimms-wbfs-tool/*.h wiimms-wbfs-tool/libwbfs/*.c wiimms-wbfs-tool/libwbfs/*.h
 	$(MAKE) -C wiimms-wbfs-tool iso2wdf
 	@echo "=================================================================="
 	@echo "iso2wdf compile OK"
 	@echo "=================================================================="
 
-wiimms-wbfs-tool/wwt:
+wiimms-wbfs-tool/wwt: wiimms-wbfs-tool/*.c wiimms-wbfs-tool/*.h wiimms-wbfs-tool/libwbfs/*.c wiimms-wbfs-tool/libwbfs/*.h
 	$(MAKE) -C wiimms-wbfs-tool wwt
 	@echo "=================================================================="
 	@echo "wwt compile OK"

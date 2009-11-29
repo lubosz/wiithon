@@ -15,10 +15,10 @@
 #define REVISION_NUM	495
 #define REVISION_NEXT	496
 
-#define BINTIME		1259442777
+#define BINTIME		1259445284
 #define DATE		"2009-11-28"
-#define TIME		"22:12:57"
-#define DATETIME	"2009-11-28 22:12:57"
+#define TIME		"22:54:44"
+#define DATETIME	"2009-11-28 22:54:44"
 
 #define URI_REPOS	"http://opensvn.wiimm.de/wii/trunk/wiimms-wbfs-tool/"
 #define URI_VIEWVC	"http://opensvn.wiimm.de/viewvc/wii/trunk/wiimms-wbfs-tool/"

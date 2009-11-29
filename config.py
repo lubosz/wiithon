@@ -90,7 +90,7 @@ MAX_LISTA_COPIA_1on1 = 15
 NUM_LINEAS_PAUSA = 21
 
 # ALTO de las imagenes de los accesorios
-SIZE_IMAGE_ACCESORIOS = 90
+SIZE_IMAGE_ACCESORIOS = 80
 
 #URL BUGS
 URL_BUGS = "https://bugs.launchpad.net/wiithon/+filebug"

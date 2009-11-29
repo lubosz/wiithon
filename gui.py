@@ -1496,6 +1496,7 @@ class WiithonGUI(GtkBuilderWrapper):
                         synopsis = _('No se ha encontrado synopsis')
 
                     # generos
+                    '''
                     muestra =   [    [],[]     ]
                     for genero in session.query(Genero).order_by('idGenero'):
                         muestra[0].append(genero.idGenero)
@@ -1503,16 +1504,29 @@ class WiithonGUI(GtkBuilderWrapper):
                     s = MuestraEstadistica(muestra[0], muestra[1])
                     letra_media = 16
                     amplitud = 20
+                    '''
+                    
                     generos = ""
                     i = 0
                     for genero in juego.genero:
+                        '''
                         tam = letra_media * 1 + ((len(genero.juego_wiitdb) - s.media()) * amplitud / 100)
                         if tam > 63:
                             tam = 63
-                        generos += "<font%d><pr>%s</pr></font%d>" % (tam, util.parsear_a_XML(genero.nombre), tam)
+                        tam = 16
+                        '''
+                        
+                        frec_genero = len(genero.juego_wiitdb)
+                        if frec_genero > 1:
+                            text_games = _("juegos")
+                        else:
+                            text_games = _("juego")
+                        
+                        generos += "<big><u><pr>%s</pr></u></big><gris><pr> (%d %s)</pr></gris>" % (util.parsear_a_XML(genero.nombre), frec_genero, text_games)
+
                         i += 1
                         if i != len(juego.genero):
-                            generos += "<rojo><b><pr>, </pr></b></rojo>"
+                            generos += "<negro><b><pr>, </pr></b></negro>"
                     
                     # accesorios obligatorios
                     xml_inject_accesorios_obligatorios = ""
@@ -1526,14 +1540,14 @@ class WiithonGUI(GtkBuilderWrapper):
                     
                     xml_inject = ""
                     if xml_inject_accesorios_obligatorios != "":
-                        xml_inject += "<b><big><azul><pr>%s</pr></azul></big></b><br />" % _("ACCESORIOS: ")
+                        #xml_inject += "<b><big><azul><pr>%s</pr></azul></big></b><br />" % _("ACCESORIOS: ")
                         xml_inject += "%s" % xml_inject_accesorios_obligatorios
-                        xml_inject += "<br />"
+                        #xml_inject += "<br />"
                         
                     if xml_inject_accesorios_opcionales != "":
-                        xml_inject += "<b><big><verde><pr>%s</pr></verde></big></b><br />" % _("OPCIONALES: ")
+                        #xml_inject += "<b><big><verde><pr>%s</pr></verde></big></b><br />" % _("OPCIONALES: ")
                         xml_inject += "%s" % xml_inject_accesorios_opcionales
-                        xml_inject += "<br />"
+                        #xml_inject += "<br />"
                     
 
                     xml_plantilla = """<?xml version="1.0" encoding="UTF-8"?>
@@ -1541,25 +1555,19 @@ class WiithonGUI(GtkBuilderWrapper):
         <margin8>
             <superbig>
                 <b>
-                    <verde><pr>%s</pr></verde>
+                    <u><darkblue><pr>%s</pr></darkblue></u>
                 </b>
             </superbig>
-            <br />
-            <big>
-                <azul>
-                    <pr>%s</pr>
-                </azul>
-            </big>
-            %s
+            <purple><b><pr> %s</pr></b></purple>
             <br />
             <b><i><pr>%s</pr></i></b>
-                <i><pr>%s</pr></i><br />
+            %s
+            <br />
             <b><i><pr>%s</pr></i></b>
                 <i><pr>%s/%s</pr></i>
             <br />
             <b><i><pr>%s</pr></i></b>
-                <i><pr>%s</pr></i>
-            <br />
+                <i><pr>%s </pr></i>
             <b><i><pr>%s</pr></i></b>
                 <i><pr>%s</pr></i>
             <br />
@@ -1570,9 +1578,8 @@ class WiithonGUI(GtkBuilderWrapper):
             </margin8>
     </xhtml>
                     """ % (
-                    util.parsear_a_XML(title),
+                    util.parsear_a_XML(title), juego.getTextFechaLanzamiento(self.core),
                     _("GENERO: "), generos,
-                    _("Fecha de lanzamiento: "), juego.getTextFechaLanzamiento(self.core),
                     _("Desarrolador/Editorial: "), util.parsear_a_XML(juego.developer), util.parsear_a_XML(juego.publisher),
                     _("Num. jugadores en off-line: "), util.parsear_a_XML(juego.getTextPlayersLocal()),
                     _("Capacidad On-line: "), util.parsear_a_XML(juego.getTextPlayersWifi()),

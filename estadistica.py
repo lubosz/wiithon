@@ -112,17 +112,6 @@ class MuestraEstadistica:
                 i_max = i
         return self.xi[i_max]
 
-    def mediana(self):
-        muestras = self.total_muestras()
-        valor_mediana = muestras / 2.0
-        Fa = self.frec_acu()
-        for i in range(len(Fa)):
-            if Fa[i] > valor_mediana:
-                return self.xi[i]
-            elif Fa[i] == valor_mediana:
-                return (self.xi[i] + self.xi[i+1]) / 2.0
-        return -1
-
     # p = partes
     def N_tiles(self, k, p):
         # 1<=k<=3
@@ -139,38 +128,15 @@ class MuestraEstadistica:
             elif Fa[i] == valor_mediana:
                 return (self.xi[i] + self.xi[i+1]) / 2.0
         return -1
+        
+    def mediana(self):
+        return self.N_tiles(1, 2)
 
     def cuartiles(self, k):
-        # 1<=k<=3
-        if k < 1:
-            k = 1
-        if k > 3:
-            k = 3
-        muestras = self.total_muestras()
-        valor_mediana = (k * muestras) / 4.0
-        Fa = self.frec_acu()
-        for i in range(len(Fa)):
-            if Fa[i] > valor_mediana:
-                return self.xi[i]
-            elif Fa[i] == valor_mediana:
-                return (self.xi[i] + self.xi[i+1]) / 2.0
-        return -1
+        return self.N_tiles(k, 4)
     
     def percentiles(self, k):
-        # 1<=k<=99
-        if k < 1:
-            k = 1
-        if k > 99:
-            k = 99
-        muestras = self.total_muestras()
-        valor_mediana = (k * muestras) / 100.0
-        Fa = self.frec_acu()
-        for i in range(len(Fa)):
-            if Fa[i] > valor_mediana:
-                return self.xi[i]
-            elif Fa[i] == valor_mediana:
-                return (self.xi[i] + self.xi[i+1]) / 2.0
-        return -1
+        return self.N_tiles(k, 100)
     
     # momento k respecto a ref
     def momento(self, k, ref = 0):
@@ -206,9 +172,9 @@ class MuestraEstadistica:
         print "----- %s --------" % titulo
         t = 0.0
         for d in lista:
-            print "%.2f, " % d,
+            print "%f, " % d,
             t += d
-        print "Total: %.2f" % t
+        print "Total: %f" % t
         
     def analisis(self):
 
@@ -226,25 +192,25 @@ class MuestraEstadistica:
 
         # valores unicos
         print "-----------------"
-        print "Media = %.2f" % self.media()
-        print "Moda = %.2f" % self.moda()
-        print "Mediana = %.2f" % self.mediana()
-        print "Cuartil 1 = %.2f" % self.cuartiles(1)
-        print "Cuartil 2 = %.2f" % self.cuartiles(2)
-        print "Cuartil 3 = %.2f" % self.cuartiles(3)
         for i in range(100):
-            print "Percentil %d = %.2f" % (i, self.percentiles(i))
-        print "Momento 8 respecto la media = %.2f" % self.momento(8, self.media())
-        print "Varianza = %.2f" % self.varianza()
-        print "Desviacion tipica = %.2f" % self.desviacion_tipica()
-        print "asimetria Fisher = %.2f" % self.asimetria_fisher()
-        print "asimetria Pearson = %.2f" % self.asimetria_pearson()
-        print "asimetria Bowley = %.2f" % self.asimetria_bowley()
-        print "Curtosis = %.2f" % self.curtosis()
+            print "Percentil %d = %f" % (i, self.percentiles(i))
+        print "Media = %f" % self.media()
+        print "Moda = %f" % self.moda()
+        print "Mediana = %f" % self.mediana()
+        print "Cuartil 1 = %f" % self.cuartiles(1)
+        print "Cuartil 2 = %f" % self.cuartiles(2)
+        print "Cuartil 3 = %f" % self.cuartiles(3)
+        print "Momento 8 respecto la media = %f" % self.momento(8, self.media())
+        print "Varianza = %f" % self.varianza()
+        print "Desviacion tipica = %f" % self.desviacion_tipica()
+        print "asimetria Fisher = %f" % self.asimetria_fisher()
+        print "asimetria Pearson = %f" % self.asimetria_pearson()
+        print "asimetria Bowley = %f" % self.asimetria_bowley()
+        print "Curtosis = %f" % self.curtosis()
 
 def main():
-    xi = [1,2,3,4,5,6]
-    fa = [20,40,60,80,100,120]
+    xi = [0,1,2,3]
+    fa = [2,3,3,2]
     s = MuestraEstadistica(xi, fa)
     s.analisis()
 
