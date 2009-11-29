@@ -1809,7 +1809,7 @@ class WiithonGUI(GtkBuilderWrapper):
                     ruta_selec = fc_extraer.get_current_folder()
 
                     extraer = False
-                    if self.core.existeExtraido(self.sel_juego.obj , ruta_selec):
+                    if self.core.existeExtraido(self.sel_juego.obj , ruta_selec, self.core.prefs.FORMATO_EXTRACT):
                         extraer = self.question(_('Desea reemplazar la iso del juego %s?') % (self.sel_juego.obj))
                     else:
                         if self.core.prefs.FORMATO_EXTRACT == 'iso':
@@ -1819,7 +1819,7 @@ class WiithonGUI(GtkBuilderWrapper):
                                 extraer = True
                         else:
                             extraer = True
-                        
+
                     if extraer:
                         # nueva ruta favorita
                         self.core.prefs.ruta_extraer_iso = ruta_selec
@@ -1828,6 +1828,7 @@ class WiithonGUI(GtkBuilderWrapper):
                         self.poolTrabajo.nuevoTrabajoExtraer(self.sel_juego.obj , fc_extraer.get_filename())
 
                 fc_extraer.destroy()
+
             else:
                 self.alert("warning" , _("No has seleccionado ningun juego"))
 
@@ -1868,11 +1869,23 @@ class WiithonGUI(GtkBuilderWrapper):
                             hayISO = len(encontradosISO) > 0
                             if hayISO:
                                 listaISO.extend(encontradosISO)
+                                
+                            encontradosWBFS =  util.rec_glob(fichero, "*.wbfs")
+                            hayWBFS = len(encontradosWBFS) > 0
+                            if hayWBFS:
+                                listaISO.extend(encontradosWBFS)
+                                
+                            encontradosWDF =  util.rec_glob(fichero, "*.wdf")
+                            hayWDF = len(encontradosWDF) > 0
+                            if hayWDF:
+                                listaISO.extend(encontradosWDF)
                             
                         elif( util.getExtension(fichero) == "rar" ):
                             listaRAR.append(fichero)
 
-                        elif( util.getExtension(fichero) == "iso" ):
+                        elif(   util.getExtension(fichero) == "iso" or 
+                                util.getExtension(fichero) == "wbfs" or 
+                                util.getExtension(fichero) == "wdf"):
                             listaISO.append(fichero)
                             
                     buffer_errorNoMetidos = _("Algunos juegos no se han introducido:\n\n")
@@ -1880,7 +1893,7 @@ class WiithonGUI(GtkBuilderWrapper):
                     for fichero in listaISO:
                             
                         ok = False
-                        idgame = util.getMagicISO(fichero)
+                        idgame = util.getMagicISO(fichero, self.core.getAutodetectarFormato(fichero))
                         if idgame is not None:
                             sql = util.decode("idgame=='%s' and idParticion=='%d'" % (idgame , self.sel_parti.obj.idParticion))
                             juego = session.query(Juego).filter(sql).first()
@@ -1893,7 +1906,7 @@ class WiithonGUI(GtkBuilderWrapper):
                         else:
                             hayNoMetidos = True
                             buffer_errorNoMetidos += _("%s no es un ISO de Wii.\n") % (fichero)
-                            
+
                         if not ok:
                             listaISO.remove(fichero)
 
@@ -2142,7 +2155,7 @@ class WiithonGUI(GtkBuilderWrapper):
     def termina_trabajo_anadir(self, fichero, DEVICE):
         
         # leer IDGAME del juego añadido
-        IDGAME = util.getMagicISO(fichero)
+        IDGAME = util.getMagicISO(fichero, self.core.getAutodetectarFormato(fichero))
 
         # consultamos al wiithon wrapper info sobre el juego con nueva IDGAME
         # lo añadimos a la lista

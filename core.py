@@ -314,31 +314,76 @@ class WiithonCORE:
 
         return salida
 
-    def anadirISO(self , DEVICE , ISO):
-        
+    def getAutodetectarFormato(self, fichero):
+
+        if( util.getExtension(fichero) == "iso" ):
+            return "iso"
+        elif( util.getExtension(fichero) == "wbfs" ):
+            return "wbfs"
+        elif( util.getExtension(fichero) == "wdf" ):
+            return "wdf"
+        else:
+            return None
+
+    def anadirISO(self , ruta_particion , fichero):
+
         # si pasa el objeto, cogemos el string que nos interesa
-        if isinstance(DEVICE, Particion):
-            DEVICE = DEVICE.device
+        if isinstance(ruta_particion, Particion):
+            ruta_particion = ruta_particion.device
+            
+        formato = self.getAutodetectarFormato(fichero)
+        if formato is not None:
+            if formato == 'iso':
+                comando = '%s -p %s add "%s"' % (config.WBFS_APP, ruta_particion, fichero)
+            elif formato == 'wbfs':
+                comando = '%s -f %s add_wbfs "%s"' % (config.WBFS_FILE, ruta_particion, fichero)
+            elif formato == 'wdf':
+                comando = '%s ADD -p %s "%s"' % (config.WWT, ruta_particion, fichero)
+            else:
+                comando = None
+            
+            if comando is not None:
+                
+                if config.DEBUG:
+                    print comando
+                
+                salida = util.call_out_file(comando)
+                return salida
 
-        comando = '%s -p %s add "%s"' % (config.WBFS_APP, DEVICE, ISO)
-        salida = util.call_out_file(comando)
-        return salida
+            else:
+                return False
+        else:
+            return False
 
-    def existeExtraido(self, juego, destino):
-        fichero = "%s.iso" % juego.title
-        fichero = fichero.replace(" ","_")
-        fichero = fichero.replace("/","_")
-        fichero = fichero.replace(":","_")
-        destino = os.path.join(destino , fichero)
-        return os.path.exists(destino)
+    def existeExtraido(self, juego, destino, formato = 'iso'):
+        if formato == 'iso':
+            fichero = "%s.iso" % juego.title
+            fichero = fichero.replace(" ","_")
+            fichero = fichero.replace("/","_")
+            fichero = fichero.replace(":","_")
+            destino = os.path.join(destino , fichero)
+            return os.path.exists(destino)
+
+        elif formato == 'wbfs':
+            fichero = "%s.wbfs" % (juego.idgame)
+            destino = os.path.join(destino , fichero)
+            return os.path.exists(destino)
+            
+        elif formato == 'wdf':
+            fichero = "%s [%s].wdf" % (juego.title, juego.idgame)
+            destino = os.path.join(destino , fichero)
+            return os.path.exists(destino)
+            
+        else:
+            return False
 
     # extrae el juego a un destino
-    def extraerJuego(self ,juego , destino = '', formato = 'iso'):
+    def extraerJuego(self ,juego , destino, formato = 'iso'):
 
         if formato == 'iso':
             comando = "%s -p %s extract %s" % (config.WBFS_APP, juego.particion.device , juego.idgame)
         elif formato == 'wbfs':
-            comando = "%s %s extract_wbfs %s %s" % (config.WBFS_FILE, juego.particion.device , juego.idgame, destino)
+            comando = '%s %s extract_wbfs %s .' % (config.WBFS_FILE, juego.particion.device , juego.idgame)
         elif formato == 'wdf':
             comando = "%s EXTRACT -p %s -o -W %s" % (config.WWT, juego.particion.device , juego.idgame)
         else:
@@ -349,6 +394,9 @@ class WiithonCORE:
             if destino != '':
                 trabajoActual = os.getcwd()
                 os.chdir( destino )
+            
+            if config.DEBUG:
+                print comando
 
             salida = util.call_out_file(comando)
 

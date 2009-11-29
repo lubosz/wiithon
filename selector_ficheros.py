@@ -29,7 +29,29 @@ class SelectorFicheros(gtk.FileChooserDialog):
 
     def crearFiltrosISOyRAR(self):
         filter = gtk.FileFilter()
-        filter.set_name(_('Imagen Wii (ISO o RAR)'))
+        filter.set_name(_('Todos los formatos'))
         filter.add_pattern('*.iso')
         filter.add_pattern('*.rar')
+        filter.add_pattern('*.wbfs')
+        filter.add_pattern('*.wdf')
         self.add_filter(filter)
+
+        filter2 = gtk.FileFilter()
+        filter2.set_name(_('Imagen Wii en formato ISO'))
+        filter2.add_pattern('*.iso')
+        self.add_filter(filter2)
+        
+        filter3 = gtk.FileFilter()
+        filter3.set_name(_('Imagen Wii comprimida en RAR'))
+        filter3.add_pattern('*.rar')
+        self.add_filter(filter3)
+        
+        filter4 = gtk.FileFilter()
+        filter4.set_name(_('Imagen Wii en formato WBFS para FAT32'))
+        filter4.add_pattern('*.wbfs')
+        self.add_filter(filter4)
+        
+        filter5 = gtk.FileFilter()
+        filter5.set_name(_('Imagen Wii en formato WDF'))
+        filter5.add_pattern('*.wdf')
+        self.add_filter(filter5)

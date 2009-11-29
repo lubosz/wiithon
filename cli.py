@@ -399,7 +399,7 @@ class WiithonCLI:
             print _("Hay mas de un juego de la Wii, deja solo 1 para eliminar la ambiguedad")
         else:# 1 juego de wii
             lector = listaParticiones[0]
-            MAGIC_DVD = util.getMagicISO(lector.device)
+            MAGIC_DVD = util.getMagicISO(lector.device, 'iso')
             SALIDA = "%s/%s.iso" % (os.getcwd(), MAGIC_DVD)
             reemplazada = False
             if (os.path.exists(SALIDA)):

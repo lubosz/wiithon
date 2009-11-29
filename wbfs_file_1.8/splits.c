@@ -191,6 +191,7 @@ int split_create(split_info_t *s, char *fname, u64 split_size, u64 total_size)
     split_init(s, fname);
     s->create_mode = 1;
 
+    /*
     // check if any file already exists
     for (i=-1; i<s->max_split; i++) {
         split_get_fname(s, i, sname);
@@ -206,6 +207,8 @@ int split_create(split_info_t *s, char *fname, u64 split_size, u64 total_size)
         split_init(s, "");
         return -1;
     }
+    */
+
     split_set_size(s, split_size, total_size);
     return 0;
 }

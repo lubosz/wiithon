@@ -226,7 +226,8 @@ class PoolTrabajo(Pool , Thread):
     def anadir(self , core ,trabajo , fichero , DEVICE):
         exito = False
 
-        idgame = util.getMagicISO(fichero)
+        formato = core.getAutodetectarFormato(fichero)
+        idgame = util.getMagicISO(fichero, formato)
 
         if (  not os.path.exists(DEVICE)):
             trabajo.error = _("La particion %s: Ya no existe") % particion.device
@@ -234,14 +235,14 @@ class PoolTrabajo(Pool , Thread):
         elif( not os.path.exists(fichero) ):
             trabajo.error = _("El archivo ISO %s: No existe") % fichero
             
-        elif idgame is None:
+        elif formato == "iso" and idgame is None:
             trabajo.error = _("El archivo ISO %s: No es un juego de Wii") % fichero
 
-        elif( util.getExtension(fichero) == "iso" ):
+        elif( formato is not None ):
             
             ########### TAREA AUXILIAR ######################
             
-            if self.poolBash is not None:
+            if  self.poolBash is not None and idgame is not None:
 
                 # vamos descargando info wiitdb
                 self.poolBash.nuevoTrabajoActualizarWiiTDB('%s?ID=%s' % (self.URL_ZIP_WIITDB, idgame))
@@ -254,14 +255,22 @@ class PoolTrabajo(Pool , Thread):
                     self.poolBash.nuevoTrabajoDescargaDisco( idgame )
 
             #################################################
-            
-            if self.callback_empieza_progreso:
-                self.callback_empieza_progreso(trabajo)
+
+            if formato == 'iso' or formato == 'wbfs':
+                if self.callback_empieza_progreso:
+                    self.callback_empieza_progreso(trabajo)
+            else:
+                if self.callback_empieza_progreso_indefinido:
+                    self.callback_empieza_progreso_indefinido(trabajo)
             
             exito = core.anadirISO(DEVICE , fichero)
 
-            if self.callback_termina_progreso:
-                self.callback_termina_progreso(trabajo)
+            if formato == 'iso' or formato == 'wbfs':
+                if self.callback_termina_progreso:
+                    self.callback_termina_progreso(trabajo)
+            else:
+                if self.callback_termina_progreso_indefinido:
+                    self.callback_termina_progreso_indefinido(trabajo)
         else:
             trabajo.error = _("%s no es un ningun juego de Wii") % (os.path.basename(fichero))
 
@@ -270,8 +279,6 @@ class PoolTrabajo(Pool , Thread):
     def extraer(self , core , trabajo , juego , destino):
         
         exito = False
-        
-        print "1111111111"
 
         if self.FORMATO_EXTRACT == 'iso' or self.FORMATO_EXTRACT == 'wbfs':
             if self.callback_empieza_progreso:
@@ -280,11 +287,7 @@ class PoolTrabajo(Pool , Thread):
             if self.callback_empieza_progreso_indefinido:
                 self.callback_empieza_progreso_indefinido(trabajo)
         
-        print "2222"
-        
         exito = core.extraerJuego(juego, destino, self.FORMATO_EXTRACT)
-        
-        print "3333"
 
         if self.callback_termina_progreso:
             self.callback_termina_progreso(trabajo)

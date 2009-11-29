@@ -53,14 +53,27 @@ def getNombreFichero(fichero):
     else:
         return fichero
 
-def getMagicISO(imagenISO):
-    if os.path.exists(imagenISO):
-        f = open(imagenISO , "r")
-        magic = f.read(6)
-        f.close()
-        if len(magic) == 6 and re.match("[A-Z0-9]{6}",magic):
-            return magic
-    return None
+def getMagicISO(imagenISO, formato):
+
+    magic = ''
+    if formato == 'iso':
+        if os.path.exists(imagenISO):
+            f = open(imagenISO , "r")
+            magic = f.read(6)
+            f.close()
+
+    elif formato == 'wbfs':
+        comando = 'hexdump "%s" -s 0x200 -n 6 -e \'6/1 "%%_u"\'' % imagenISO
+        magic = getSTDOUT(comando)
+
+    elif formato == 'wdf':
+        comando = 'hexdump "%s" -s 0x38 -n 6 -e \'6/1 "%%_u"\'' % imagenISO
+        magic = getSTDOUT(comando)
+
+    if len(magic) == 6 and re.match("[A-Z0-9]{6}",magic):
+        return magic
+    else:
+        return None
 
 def tieneCaracteresRaros(cadena , listaNegra = BLACK_LIST):
     # Nos dice si *cadena* tiene caracteres raros dados por una lista negra

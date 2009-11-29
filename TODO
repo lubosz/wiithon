@@ -11,4 +11,4 @@
 - WDF -> ISO : wiithon_wdf2iso -oq entrada.wdf -d salida.iso
 - ISO -> WDF : wiithon_iso2wdf -oq entrada.iso -d salida.wdf
 - Extract all in context menu
-- implement wdf in gui
+- Si todos los nombres propuestos son iguales, no mostrar la propuesta

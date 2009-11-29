@@ -995,7 +995,7 @@ int main(int argc, char *argv[])
                 OPT_trim = 1;
                 break;
             case 'w':
-                printf("Using OPTION -w : overwrite target iso\n");
+                //printf("Using OPTION -w : overwrite target iso\n");
                 OPT_overwrite = 1;
                 break;
             case 'h':
