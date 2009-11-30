@@ -1612,17 +1612,17 @@ msgstr "Programmet körs med felaktiga inställningar"
 msgid "Interrumpido por el usuario"
 msgstr "Avbrutet av användraren"
 
-#~ msgid "No se ha encontrado ninguna imagen ISO o RAR"
-#~ msgstr "Kunde inte hitta någon ISO- eller RAR-fil"
-
-#~ msgid "Buscar:"
-#~ msgstr "Sök:"
-
-#~ msgid "Fecha de lanzamiento: "
-#~ msgstr "Releasedatum:"
+#~ msgid "ACCESORIOS: "
+#~ msgstr "KONTROLLER:"
 
 #~ msgid "OPCIONALES: "
 #~ msgstr "VALFRIA TILLBEHÖR:"
 
-#~ msgid "ACCESORIOS: "
-#~ msgstr "KONTROLLER:"
+#~ msgid "Fecha de lanzamiento: "
+#~ msgstr "Releasedatum:"
+
+#~ msgid "Buscar:"
+#~ msgstr "Sök:"
+
+#~ msgid "No se ha encontrado ninguna imagen ISO o RAR"
+#~ msgstr "Kunde inte hitta någon ISO- eller RAR-fil"

@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: wiithon 1.0\n"
 "Report-Msgid-Bugs-To: makiolo@gmail.com\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2009-11-19 09:59+0100\n"
+"PO-Revision-Date: \n"
 "Last-Translator: Markus  <fcpower78@googlemail.com>\n"
 "Language-Team: Español <wii.sceners.linux@lists.launchpad.net>\n"
 "MIME-Version: 1.0\n"
@@ -1545,17 +1545,17 @@ msgstr "Programm läuft mit den falschen Einstellungen"
 msgid "Interrumpido por el usuario"
 msgstr "Abbruch durch Benutzer"
 
-#~ msgid "No se ha encontrado ninguna imagen ISO o RAR"
-#~ msgstr "Es wurde kein ISO oder RAR Image gefunden"
-
-#~ msgid "Buscar:"
-#~ msgstr "Suche:"
-
-#~ msgid "Fecha de lanzamiento: "
-#~ msgstr "Veröffentlicht"
+#~ msgid "ACCESORIOS: "
+#~ msgstr "ZUBEHÖR:"
 
 #~ msgid "OPCIONALES: "
 #~ msgstr "OPTIONEN:"
 
-#~ msgid "ACCESORIOS: "
-#~ msgstr "ZUBEHÖR:"
+#~ msgid "Fecha de lanzamiento: "
+#~ msgstr "Veröffentlicht"
+
+#~ msgid "Buscar:"
+#~ msgstr "Suche:"
+
+#~ msgid "No se ha encontrado ninguna imagen ISO o RAR"
+#~ msgstr "Es wurde kein ISO oder RAR Image gefunden"

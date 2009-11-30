@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: makiolo@gmail.com\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2009-11-30 06:12+0100\n"
+"PO-Revision-Date: \n"
 "Last-Translator: Ricardo Marmolejo García <makiolo@gmail.com>\n"
 "Language-Team: Español <kde-i18n-doc@kde.org>\n"
 "MIME-Version: 1.0\n"
@@ -1589,20 +1589,20 @@ msgstr "Program runs with incorrect settings"
 msgid "Interrumpido por el usuario"
 msgstr "Interrupted by user"
 
-#~ msgid "No se ha encontrado ninguna imagen ISO o RAR"
-#~ msgstr "Could not find any ISO image or RAR"
-
-#~ msgid "ISO sin comprimir"
-#~ msgstr "Uncompressed ISO"
-
-#~ msgid "Buscar:"
-#~ msgstr "Search:"
-
-#~ msgid "Fecha de lanzamiento: "
-#~ msgstr "Released: "
+#~ msgid "ACCESORIOS: "
+#~ msgstr "ACCESSORIES:"
 
 #~ msgid "OPCIONALES: "
 #~ msgstr "OPTIONAL: "
 
-#~ msgid "ACCESORIOS: "
-#~ msgstr "ACCESSORIES:"
+#~ msgid "Fecha de lanzamiento: "
+#~ msgstr "Released: "
+
+#~ msgid "Buscar:"
+#~ msgstr "Search:"
+
+#~ msgid "ISO sin comprimir"
+#~ msgstr "Uncompressed ISO"
+
+#~ msgid "No se ha encontrado ninguna imagen ISO o RAR"
+#~ msgstr "Could not find any ISO image or RAR"

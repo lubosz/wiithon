@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: makiolo@gmail.com\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2009-11-30 06:11+0100\n"
+"PO-Revision-Date: \n"
 "Last-Translator: Ricardo Marmolejo García <makiolo@gmail.com>\n"
 "Language-Team: Español <wii.sceners.linux@lists.launchpad.net>\n"
 "MIME-Version: 1.0\n"
@@ -1590,23 +1590,23 @@ msgstr "Programa ejecutado con las opciones incorrectas."
 msgid "Interrumpido por el usuario"
 msgstr "Interrumpido por el usuario"
 
-#~ msgid "No se ha encontrado ninguna imagen ISO o RAR"
-#~ msgstr "No se ha encontrado ninguna imagen ISO o RAR"
-
-#~ msgid "ISO sin comprimir"
-#~ msgstr "ISO sin comprimir"
-
-#~ msgid "Buscar:"
-#~ msgstr "Buscar:"
-
-#~ msgid "Formato ISO - Sin gestion de huecos"
-#~ msgstr "Formato ISO - Sin gestión de huecos"
-
-#~ msgid "Fecha de lanzamiento: "
-#~ msgstr "Fecha: "
+#~ msgid "ACCESORIOS: "
+#~ msgstr "ACCESORIOS: "
 
 #~ msgid "OPCIONALES: "
 #~ msgstr "OPCIONALES: "
 
-#~ msgid "ACCESORIOS: "
-#~ msgstr "ACCESORIOS: "
+#~ msgid "Fecha de lanzamiento: "
+#~ msgstr "Fecha: "
+
+#~ msgid "Formato ISO - Sin gestion de huecos"
+#~ msgstr "Formato ISO - Sin gestión de huecos"
+
+#~ msgid "Buscar:"
+#~ msgstr "Buscar:"
+
+#~ msgid "ISO sin comprimir"
+#~ msgstr "ISO sin comprimir"
+
+#~ msgid "No se ha encontrado ninguna imagen ISO o RAR"
+#~ msgstr "No se ha encontrado ninguna imagen ISO o RAR"

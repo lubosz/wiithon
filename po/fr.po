@@ -1598,20 +1598,20 @@ msgstr "Programme lancé avec des paramètres incorrects."
 msgid "Interrumpido por el usuario"
 msgstr "Interrompu par l'utilisateur"
 
-#~ msgid "No se ha encontrado ninguna imagen ISO o RAR"
-#~ msgstr "Impossible de trouver une image ISO ou RAR"
-
-#~ msgid "ISO sin comprimir"
-#~ msgstr "ISO sans compression"
-
-#~ msgid "Buscar:"
-#~ msgstr "Recherche:"
-
-#~ msgid "Fecha de lanzamiento: "
-#~ msgstr "Paru le : "
+#~ msgid "ACCESORIOS: "
+#~ msgstr "ACCESSOIRES : "
 
 #~ msgid "OPCIONALES: "
 #~ msgstr "OPTIONS : "
 
-#~ msgid "ACCESORIOS: "
-#~ msgstr "ACCESSOIRES : "
+#~ msgid "Fecha de lanzamiento: "
+#~ msgstr "Paru le : "
+
+#~ msgid "Buscar:"
+#~ msgstr "Recherche:"
+
+#~ msgid "ISO sin comprimir"
+#~ msgstr "ISO sans compression"
+
+#~ msgid "No se ha encontrado ninguna imagen ISO o RAR"
+#~ msgstr "Impossible de trouver une image ISO ou RAR"

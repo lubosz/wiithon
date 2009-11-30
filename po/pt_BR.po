@@ -1603,17 +1603,17 @@ msgstr "Programa executado com as opes incorretas."
 msgid "Interrumpido por el usuario"
 msgstr "Interrompido pelo usuário"
 
-#~ msgid "No se ha encontrado ninguna imagen ISO o RAR"
-#~ msgstr "Não foi encontrada nenhuma imagem ISO ou RAR"
-
-#~ msgid "Buscar:"
-#~ msgstr "Pesquisar:"
-
-#~ msgid "Fecha de lanzamiento: "
-#~ msgstr "Data de lançamento:"
+#~ msgid "ACCESORIOS: "
+#~ msgstr "ACCESÓRIOS: "
 
 #~ msgid "OPCIONALES: "
 #~ msgstr "OPCIONAIS:"
 
-#~ msgid "ACCESORIOS: "
-#~ msgstr "ACCESÓRIOS: "
+#~ msgid "Fecha de lanzamiento: "
+#~ msgstr "Data de lançamento:"
+
+#~ msgid "Buscar:"
+#~ msgstr "Pesquisar:"
+
+#~ msgid "No se ha encontrado ninguna imagen ISO o RAR"
+#~ msgstr "Não foi encontrada nenhuma imagem ISO ou RAR"
