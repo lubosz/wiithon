@@ -262,7 +262,7 @@ class WiithonGUI(GtkBuilderWrapper):
         self.poolBash = PoolTrabajo(
                                     self.core , self.core.prefs.NUM_HILOS ,
                                     self.callback_empieza_trabajo ,
-                                    None ,
+                                    self.callback_termina_trabajo ,
                                     None ,
                                     None ,
                                     None ,
@@ -2324,7 +2324,7 @@ class WiithonGUI(GtkBuilderWrapper):
 
     def callback_termina_trabajo(self, trabajo):
         # al final, por ser bloqueante
-        if not trabajo.exito:
+        if not trabajo.exito and trabajo.avisar:
             gobject.idle_add( self.mostrarError , trabajo.error )
         
         if config.DEBUG:

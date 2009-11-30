@@ -4,8 +4,8 @@ msgstr ""
 "Project-Id-Version: wiithon 1.20\n"
 "Report-Msgid-Bugs-To: makiolo@gmail.com\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2009-11-19 21:35+0100\n"
-"Last-Translator: Ricardo Marmolejo García <makiolo@gmail.com>\n"
+"PO-Revision-Date: 2009-11-30 01:05+0100\n"
+"Last-Translator: Victor Micó <thor9216@gmail.com>\n"
 "Language-Team: Español <wii.sceners.linux@lists.launchpad.net>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -354,10 +354,10 @@ msgstr "Total"
 #: cli.py:498
 msgid "AYUDA_CLI"
 msgstr ""
-"[USO]\n"
-"wiithon [-p /dev/sXx] [-g IDGAME] [-w /ruta/trabajo] [--pause] [-h|-l|-f|-a|-e|-r|-d|-i|-m|--covers|--discs]\n"
+"[US]\n"
+"wiithon [-p /dev/sXx] [-g IDGAME] [-w /ruta/treball] [--pause] [-h|-l|-f|-a|-e|-r|-d|-i|-m|--covers|--discs]\n"
 "\n"
-"Ejemplos:\n"
+"Exemples:\n"
 "wiithon --ls\n"
 "wiithon -m\n"
 "wiithon -r\n"
@@ -366,23 +366,23 @@ msgstr ""
 "wiithon -p /dev/sdb1 -l\n"
 "wiithon --partition /dev/sdb2 --game RXG957 --rename\n"
 "\n"
-"[CONFIGURACION]\n"
-"\t-p,--partition:\tEstablece la partición de trabajo. Si no se indica se autodetecta o pregunta.\n"
-"\t-g,--game:\tEstablece el juego de trabajo. Si no se indica se autodetecta o pregunta.\n"
-"\t-w,--work:\tEstablece el directorio de trabajo. Si no se indica se establece el directorio actual.\n"
-"\t--pause:\tPausa la aplicación al final de su ejecución\n"
+"[CONFIGURACIÓ]\n"
+"\t-p,--partition:\tEstableix la partició de traball. Si no s'indica s'autodetecta o es pregunta.\n"
+"\t-g,--game:\tEstableix el joc de traball. Si no s?indica s'autodetecta o es pregunta.\n"
+"\t-w,--work:\tEstableix el directori de trabaall. Si no s'indica s'estableix el directori actual.\n"
+"\t--pause:\tPausa la aplicació al final de la seva execució\n"
 "\n"
 "[ACCIONES]\n"
-"\t-l,--ls:\tHace un listado de juegos\n"
-"\t-f,--format:\tConvierte una partición FAT32 en WBFS\n"
-"\t-m,--massive:\tAñade recursivamente todos los ISO y RAR encontrados desde el directorio de trabajo.\n"
-"\t-a,--add:\tAñade un ISO o RAR. Se admiten expresiones regulares básicas como: *.iso o *.rar\n"
-"\t-e,--extract:\tExtrae un juego de la partición WBFS a ISO\n"
-"\t-r,--rename:\tRenombra un juego.\n"
-"\t-d,--delete:\tBorrar un  juego.\n"
-"\t-i,--install:\tInstala un juego en la partición WBFS, desde el lector de DVD. (solo backups, para originales es necesario un lector LG).\n"
-"\t--covers:\tDescarga y copia todas las carátulas al directorio de trabajo actual.\n"
-"\t--discs:\tDescarga y copia todas los disc-arts al directorio de trabajo actual."
+"\t-l,--ls:\tFà uin llistat de jocs\n"
+"\t-f,--format:\tFormata una partició FAT32 en WBFS\n"
+"\t-m,--massive:\tAfegeix recursivament tots els ISO i RAR trobats al directori de treball.\n"
+"\t-a,--add:\tAfegeix un ISO o RAR. S'admeten expresions regulars básiques com: *.iso o *.rar\n"
+"\t-e,--extract:\tExtrau un joc de la partició WBFS a ISO\n"
+"\t-r,--rename:\tReanomena un joc.\n"
+"\t-d,--delete:\tEsborra un  juego.\n"
+"\t-i,--install:\tInstal·la un joc a la partició WBFS, desde el lector de DVD. (sols backups, per a originals és necessari un lector LG).\n"
+"\t--covers:\tBaixa i copia totes les caràtules al directori de treball actual.\n"
+"\t--discs:\tBaixa i copia tots els disc-arts a l directori de treball."
 
 #: core.py:186 core.py:200
 msgid "Copiando"
@@ -514,15 +514,15 @@ msgstr "??"
 #: gui.py:845
 msgid "TRADUCIR_ADVERTENCIA_SEGURIDAD_RENAME_IDGAME"
 msgstr ""
-"!!!! ATENCIÓN !!!!!\n"
+"!!!! ATENCIÓ !!!!!\n"
 "\n"
-"Esto es una advertencia de seguridad, para advertirle de las consecuencias de renombrar el IDGAME.\n"
-"- Es bastante extraño que realmente necesite renombrar el IDGAME.\n"
-"- Si cambia el IDGAME posiblemente no encuentre las carátulas y discos correctamente.\n"
-"- La propia indústria del videojuego identifica los juegos de forma única, y por tanto no debera haber colisión.\n"
-"- El ÚNICO motivo justificado de renombrar un IDGAME sera para poder tener la posibilidad de introducir varias veces el mismo juego con distintos IDGAME. El mejor ejemplo es el de querar introducir el Guitar Hero y \"customs\" de este.\n"
+"Aquesta es una advertència de seguretat, per a fer coneixer les consequències de reanomenar l'IDGAME.\n"
+"- És prou extrany que realment siga necessari reanomenar l'IDGAME.\n"
+"- Si es canvia l'IDGAME es posible que no es troben les caràtules i els discos correctament.\n"
+"- La propia indústria dels videojocs identifica els jocs d'una manera unica, i per tant no deurien haver colisions.\n"
+"- L'ÚNIC motiu justificat per reanomenar un IDGAME serà per a poder tindre la posibilitat d'introduïr diverses vegades el mateix joc amb diferents IDGAME. El millor exemple és el de voler introduir el Guitar Hero i \"customs\" d'aquest.\n"
 "\n"
-"¿Está seguro de renombrar IDGAME?"
+"¿Seguro que vols reanomenar l'IDGAME?"
 
 #: gui.py:855 gui.py:880
 msgid "Error renombrando"
@@ -568,19 +568,19 @@ msgstr "INFORMACIÖ:"
 
 #: gui.py:1108
 msgid "actual"
-msgstr ""
+msgstr "Actual"
 
 #: gui.py:1111 gui.py:1121
 msgid "Personalizable ..."
-msgstr ""
+msgstr "Personalitzable ...."
 
 #: gui.py:1115
 msgid "NOTA: Este es el nombre que aparecera en el USB Loader."
-msgstr ""
+msgstr "NOTA: Aquest nom apareixerà a l'USB Loader"
 
 #: gui.py:1115
 msgid "Nombres propuestos por la informacion WiiTDB"
-msgstr ""
+msgstr "Noms proposars per l'informació WIITDB"
 
 #: gui.py:1496
 msgid "No se ha encontrado synopsis"
@@ -988,7 +988,7 @@ msgstr "Vols esborrar el .rar= (quan descomprimixes un rar)"
 
 #: preferencias.py:86
 msgid "Proponer un nombre de wiitdb tras anadir el juego"
-msgstr ""
+msgstr "Proposar un nom de wiitdb despres d'afegir el joc"
 
 #: preferencias.py:87
 msgid "Caratula"
@@ -1085,7 +1085,7 @@ msgstr "Proveidor de caràtules"
 
 #: preferencias.py:227
 msgid "Proveedor de discos"
-msgstr ""
+msgstr "Proveïdor de discs"
 
 #: preferencias.py:231
 #, python-format
@@ -1346,14 +1346,14 @@ msgstr "Selecciona la partició de destí:"
 #: recursos/glade/wiithon.ui.h:59
 msgid "TEXTO_LICENCIA"
 msgstr ""
-"Wiithon es software libre; puede redistribuirlo y /o modificarlo bajo los \n"
-"términos de la Licencia Pública General tal como la publica la Free Software \n"
-"Foundation; ya sea en la versión 2 de la Licencia, o(a su elección) \n"
-"cualquier versión posterior. Wiithon se distribuye con la esperanza de que \n"
-"le sea útil, pero SIN NINGUNA GARANTA; sin incluso la garantía implícita \n"
-"de MERCANTIBILIDAD o IDONEIDAD PARA UN PROPÓSITO PARTICULAR. Vea la Licencia \n"
-"Pública General de GNU para más detalles. Debera haber recibido una copia de \n"
-"la Licencia Pública General GNU junto con Wiithon; si no, escriba a la \n"
+"Wiithon és programari lliure ; el pots redistribuir i modificar baix els \n"
+"termes de la Llicencia Pùblica General aixi com publica la Free Software \n"
+"Foundation; ja siga a la versió 2 de la Llicencia, o(a la seua tria) \n"
+"qualsevol versió posterior. Wiithon es distribueix amb l'esperança de que \n"
+"et siga útil, però SENSE CAP GARANTIA; sense cap garanita implicita \n"
+"de MERCANTIBILITAT O IDONEÏTAT PER A UN PROPÒSIT PARTICULAR. Mire la Llicencia \n"
+"Pública General de GNU per a mes detalls. Deuria haver rebut una còpia de \n"
+"la Llicencia Pública General GNU juntament amb Wiithon; si no, escriga a la \n"
 "Free Software Foundation, Inc.,51 Franklin St, Fifth Floor, Boston, MA 02110-1301  USA"
 
 #: recursos/glade/wiithon.ui.h:60
@@ -1457,67 +1457,67 @@ msgstr ""
 msgid "Error al finalizar la siguiente tarea:"
 msgstr "Error al Finalitzar la següent feïna:"
 
-#: trabajo.py:574
+#: trabajo.py:575
 #, python-format
 msgid "Anadir %s a la particion %s"
 msgstr "Afegir %s a la partició %s"
 
-#: trabajo.py:576
+#: trabajo.py:577
 #, python-format
 msgid "Extraer %s a la ruta %s"
 msgstr "Extraure %s a la ruta %s"
 
-#: trabajo.py:578
+#: trabajo.py:579
 #, python-format
 msgid "Copiando el juego %s desde %s a la particion %s"
 msgstr "Copiant el joc %s desde %s a la partició %s"
 
-#: trabajo.py:580
+#: trabajo.py:581
 #, python-format
 msgid "Descargando caratula de %s"
 msgstr "Baixant caràtula de %s"
 
-#: trabajo.py:582
+#: trabajo.py:583
 #, python-format
 msgid "Descargando disco de %s"
 msgstr "Baixant disc de %s"
 
-#: trabajo.py:584
+#: trabajo.py:585
 #, python-format
 msgid "Copiando la caratula %s a la ruta %s"
 msgstr "Copiant la caràtula %s a la ruta %s"
 
-#: trabajo.py:586
+#: trabajo.py:587
 #, python-format
 msgid "Copiando el disco %s a la ruta %s"
 msgstr "Copiant el disc %s a la ruta %s"
 
-#: trabajo.py:588
+#: trabajo.py:589
 #, python-format
 msgid "Recorrer directorio %s"
 msgstr "Recorrer directori %s"
 
-#: trabajo.py:590
+#: trabajo.py:591
 #, python-format
 msgid "Descomprimir RAR %s"
 msgstr "Descomprimir RAR %s"
 
-#: trabajo.py:592
+#: trabajo.py:593
 #, python-format
 msgid "Actualizar WiiTDB desde %s"
 msgstr "Actualitza WiiTDB desde %s"
 
-#: trabajo.py:594
+#: trabajo.py:595
 #, python-format
 msgid "Editar Juego WiiTDB: %s"
 msgstr ""
 
-#: trabajo.py:596
+#: trabajo.py:597
 #, python-format
 msgid "Abrir pagina: %s"
 msgstr ""
 
-#: trabajo.py:598
+#: trabajo.py:599
 #, fuzzy
 msgid "Trabajo desconocido"
 msgstr "Format desconegut"
@@ -1592,14 +1592,11 @@ msgstr "Programa executat amb les opcions incorrectes."
 msgid "Interrumpido por el usuario"
 msgstr "Interromput per l'usuari"
 
-#~ msgid "ACCESORIOS: "
-#~ msgstr "Accesoris:"
+#~ msgid "Fecha de lanzamiento: "
+#~ msgstr "Data de llançament:"
 
 #~ msgid "OPCIONALES: "
 #~ msgstr "OPCIONALS:"
 
-#~ msgid "Fecha de lanzamiento: "
-#~ msgstr "Data de llançament:"
-
-#~ msgid "Buscar:"
-#~ msgstr "Cercar:"
+#~ msgid "ACCESORIOS: "
+#~ msgstr "Accesoris:"

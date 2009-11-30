@@ -1452,67 +1452,67 @@ msgstr "Escriba su usuario y contraseña en las preferencias. Si no dispone de u
 msgid "Error al finalizar la siguiente tarea:"
 msgstr "Error al finalizar la siguiente tarea:"
 
-#: trabajo.py:574
+#: trabajo.py:575
 #, python-format
 msgid "Anadir %s a la particion %s"
 msgstr "Añadir %s a la partición %s"
 
-#: trabajo.py:576
+#: trabajo.py:577
 #, python-format
 msgid "Extraer %s a la ruta %s"
 msgstr "Extraer %s a la ruta %s"
 
-#: trabajo.py:578
+#: trabajo.py:579
 #, python-format
 msgid "Copiando el juego %s desde %s a la particion %s"
 msgstr "Copiando el juego %s desde %s a la partición %s"
 
-#: trabajo.py:580
+#: trabajo.py:581
 #, python-format
 msgid "Descargando caratula de %s"
 msgstr "Descargando carátula de %s"
 
-#: trabajo.py:582
+#: trabajo.py:583
 #, python-format
 msgid "Descargando disco de %s"
 msgstr "Descargando disco de %s"
 
-#: trabajo.py:584
+#: trabajo.py:585
 #, python-format
 msgid "Copiando la caratula %s a la ruta %s"
 msgstr "Copiando la carátula %s a la ruta %s"
 
-#: trabajo.py:586
+#: trabajo.py:587
 #, python-format
 msgid "Copiando el disco %s a la ruta %s"
 msgstr "Copiando el disco %s a la ruta %s"
 
-#: trabajo.py:588
+#: trabajo.py:589
 #, python-format
 msgid "Recorrer directorio %s"
 msgstr "Recorrer directorio %s"
 
-#: trabajo.py:590
+#: trabajo.py:591
 #, python-format
 msgid "Descomprimir RAR %s"
 msgstr "Descomprimir RAR %s"
 
-#: trabajo.py:592
+#: trabajo.py:593
 #, python-format
 msgid "Actualizar WiiTDB desde %s"
 msgstr "Actualizar WiiTDB desde %s"
 
-#: trabajo.py:594
+#: trabajo.py:595
 #, python-format
 msgid "Editar Juego WiiTDB: %s"
 msgstr "Editar Juego WiiTDB: %s"
 
-#: trabajo.py:596
+#: trabajo.py:597
 #, python-format
 msgid "Abrir pagina: %s"
 msgstr "Abrir página: %s"
 
-#: trabajo.py:598
+#: trabajo.py:599
 msgid "Trabajo desconocido"
 msgstr "Trabajo desconocido"
 
@@ -1586,20 +1586,20 @@ msgstr "Programa ejecutado con las opciones incorrectas."
 msgid "Interrumpido por el usuario"
 msgstr "Interrumpido por el usuario"
 
-#~ msgid "ACCESORIOS: "
-#~ msgstr "ACCESORIOS: "
-
-#~ msgid "OPCIONALES: "
-#~ msgstr "OPCIONALES: "
-
-#~ msgid "Fecha de lanzamiento: "
-#~ msgstr "Fecha: "
-
-#~ msgid "Formato ISO - Sin gestion de huecos"
-#~ msgstr "Formato ISO - Sin gestión de huecos"
+#~ msgid "ISO sin comprimir"
+#~ msgstr "ISO sin comprimir"
 
 #~ msgid "Buscar:"
 #~ msgstr "Buscar:"
 
-#~ msgid "ISO sin comprimir"
-#~ msgstr "ISO sin comprimir"
+#~ msgid "Formato ISO - Sin gestion de huecos"
+#~ msgstr "Formato ISO - Sin gestión de huecos"
+
+#~ msgid "Fecha de lanzamiento: "
+#~ msgstr "Fecha: "
+
+#~ msgid "OPCIONALES: "
+#~ msgstr "OPCIONALES: "
+
+#~ msgid "ACCESORIOS: "
+#~ msgstr "ACCESORIOS: "

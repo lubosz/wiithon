@@ -209,7 +209,7 @@ class PoolTrabajo(Pool , Thread):
             
         elif( trabajo.tipo == EDITAR_JUEGO_WIITDB):
             IDGAME = trabajo.origen.idgame
-            trabajo.exito = self.editarJuegoWiiTDB(IDGAME)
+            trabajo.exito = self.editarJuegoWiiTDB(trabajo, IDGAME)
 
         elif( trabajo.tipo == VER_URL ):
             url = trabajo.origen
@@ -459,7 +459,7 @@ class PoolTrabajo(Pool , Thread):
         
         return exito
         
-    def editarJuegoWiiTDB(self, IDGAME):
+    def editarJuegoWiiTDB(self, trabajo, IDGAME):
         exito = False
         if self.USER_WIITDB != "" and self.PASS_WIITDB != "":
             try:
@@ -568,6 +568,7 @@ class Trabajo:
         self.exito = False
         self.padre = None
         self.error = "%s\n\n%s" % (_("Error al finalizar la siguiente tarea:") ,self.__repr__())
+        self.avisar = tipo is not DESCARGA_CARATULA and tipo is not DESCARGA_DISCO
  
     def __repr__(self):
         if self.tipo == ANADIR:

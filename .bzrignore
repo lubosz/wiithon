@@ -28,5 +28,4 @@ po/lokalize-scripts/
 po/proyecto_lokalize.ktp
 wiimms-wbfs-tool/.svn/
 wiimms-wbfs-tool/*.d
-wiimms-wbfs-tool/Makefile.setup
 svn-revision.*
