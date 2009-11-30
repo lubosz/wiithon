@@ -280,7 +280,7 @@ class WiithonCORE:
         lineas = util.getSTDOUT_NOERROR_iterador( comando )
         for linea in lineas:
             linea = linea.strip()
-            if( util.getExtension(linea)=="iso" ):
+            if(self.getAutodetectarFormato(linea) is not None):
                 return linea
         return None
 
@@ -341,7 +341,7 @@ class WiithonCORE:
                 comando = '%s ADD -p %s "%s"' % (config.WWT, ruta_particion, fichero)
             else:
                 comando = None
-            
+
             if comando is not None:
                 
                 if config.DEBUG:

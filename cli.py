@@ -86,7 +86,7 @@ class WiithonCLI:
     def main(self, opciones, argumentos):
         
         (NADA, LISTAR, ANADIR, ANADIR_ALL, EXTRAER, FORMATEAR, MOSTRAR_AYUDA, RENOMBRAR,
-        BORRAR, INSTALAR, CARATULAS, DISCOS)=([ "%d" % i for i in range(12) ])
+        BORRAR, INSTALAR, CARATULAS, DISCOS, MOSTRAR_VERSION)=([ "%d" % i for i in range(13) ])
         
         accion = NADA
         modo_game = AUTOMATICO
@@ -135,7 +135,7 @@ class WiithonCLI:
             elif option in ['--discs']:
                 accion = DISCOS
             elif option in ['-v', '--version']:
-                print "Wiithon version %s (rev %s)" % (config.VER, config.REV)
+                accion = MOSTRAR_VERSION
         
         # A = acciones que necesitan una particion WBFS
         # OR
@@ -194,10 +194,19 @@ class WiithonCLI:
                             print _("Buscando imagenes ISO recursivamente ... ")
                             self.encolar( util.rec_glob(archivo, "*.iso") )
                             
+                            print _("Buscando imagenes WBFS recursivamente ... ")
+                            self.encolar( util.rec_glob(archivo, "*.wbfs") )
+                            
+                            print _("Buscando imagenes WDF recursivamente ... ")
+                            self.encolar( util.rec_glob(archivo, "*.wdf") )
                             
                         elif accion == ANADIR:
-                            if(os.path.isfile(anadir_value) and (util.getExtension(anadir_value) == "iso" or util.getExtension(anadir_value) == "rar")):
-                                #anadir_value = os.path.abspath( anadir_value )
+                            if(
+                                    os.path.isfile(anadir_value) and 
+                                        (
+                                            self.core.getAutodetectarFormato(anadir_value) is not None
+                                        )
+                                    ):
                                 self.encolar( anadir_value )
                             elif( not util.tieneCaracteresRaros(anadir_value) ):
                                 self.encolar( glob.glob(anadir_value) )
@@ -206,7 +215,7 @@ class WiithonCLI:
 
                         # comun a ANADIR y ANADIR_ALL
                         if (len(self.listaFicheros) == 0):
-                            print _("No se ha encontrado ninguna imagen ISO o RAR")
+                            print _("No se ha encontrado ningun fichero en los formatos validos: %s") % "iso, rar, wbfs, wdf."
                         else:
                             self.procesar(self.sel_parti)
 
@@ -266,6 +275,9 @@ class WiithonCLI:
         # D = acciones que no necesitan nada
         elif accion == MOSTRAR_AYUDA:
             self.uso()
+            
+        elif accion == MOSTRAR_VERSION:
+            print "Wiithon version %s (rev %s)" % (config.VER, config.REV)
 
         if PAUSA:
             raw_input(_("Pulse cualquier tecla para continuar ...\n"))
@@ -347,7 +359,7 @@ class WiithonCLI:
                 ok = False
                 if( util.getExtension(fichero) == "rar" ):
                     correctos, erroneos, ok = self.procesar_rar(particion, fichero, correctos, erroneos)
-                elif( util.getExtension(fichero) == "iso" ):
+                elif(self.core.getAutodetectarFormato(fichero) is not None):
                     correctos, erroneos, ok = self.procesar_iso(particion, fichero, correctos, erroneos)
                 else:
                     erroneos.append(_("ERROR %s no es un ningun juego de Wii") % (fichero))

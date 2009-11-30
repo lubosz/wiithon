@@ -365,7 +365,7 @@ class WiithonGUI(GtkBuilderWrapper):
         
         for arg in argumentos:
             fichero = os.path.abspath(arg)
-            if(util.getExtension(fichero)=="iso"):
+            if(self.core.getAutodetectarFormato(fichero) is not None):
                 listaISO.append(fichero)
             elif(util.getExtension(fichero)=="rar"):
                 listaRAR.append(fichero)
@@ -1883,9 +1883,7 @@ class WiithonGUI(GtkBuilderWrapper):
                         elif( util.getExtension(fichero) == "rar" ):
                             listaRAR.append(fichero)
 
-                        elif(   util.getExtension(fichero) == "iso" or 
-                                util.getExtension(fichero) == "wbfs" or 
-                                util.getExtension(fichero) == "wdf"):
+                        elif(self.core.getAutodetectarFormato(fichero) is not None):
                             listaISO.append(fichero)
                             
                     buffer_errorNoMetidos = _("Algunos juegos no se han introducido:\n\n")
@@ -2214,7 +2212,7 @@ class WiithonGUI(GtkBuilderWrapper):
             if fichero.startswith("file://"):
                 fichero = fichero.replace("file://" , "")
                 if os.path.exists(fichero):
-                    if(util.getExtension(fichero)=="iso") and self.core.prefs.DRAG_AND_DROP_JUEGOS:
+                    if(self.core.getAutodetectarFormato(fichero) is not None) and self.core.prefs.DRAG_AND_DROP_JUEGOS:
                         listaISO.append(fichero)
                     elif(util.getExtension(fichero)=="rar") and self.core.prefs.DRAG_AND_DROP_JUEGOS:
                         listaRAR.append(fichero)

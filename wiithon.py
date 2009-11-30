@@ -79,6 +79,10 @@ def App():
                 pass
             elif(util.getExtension(option)=="rar"):
                 pass
+            elif(util.getExtension(option)=="wbfs"):
+                pass
+            elif(util.getExtension(option)=="wdf"):
+                pass
             elif( os.path.isdir(option) ):
                 pass
             else:

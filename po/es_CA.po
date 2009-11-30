@@ -19,7 +19,7 @@ msgstr ""
 msgid "No se ha encontrado la particion: %s"
 msgstr "No s'ha trobat la partició: %s"
 
-#: cli.py:53 gui.py:2000
+#: cli.py:53 gui.py:1998
 msgid "Lista de particiones autodetectadas : "
 msgstr "Llista de particions autodetectades : "
 
@@ -28,7 +28,7 @@ msgstr "Llista de particions autodetectades : "
 msgid "%d - Salir"
 msgstr "%d- Surt"
 
-#: cli.py:61 gui.py:2000
+#: cli.py:61 gui.py:1998
 msgid "Elige la particion WBFS con la que va a trabajar : "
 msgstr "Tria la partició WBFS amb la que traballaràs :"
 
@@ -110,248 +110,259 @@ msgstr "Cercant fitxers RAR recursivament ..."
 msgid "Buscando imagenes ISO recursivamente ... "
 msgstr "Cercant imatges ISO recursivament"
 
-#: cli.py:209
-msgid "No se ha encontrado ninguna imagen ISO o RAR"
-msgstr "No s'ha trobat cap imatge ISO o RAR"
+#: cli.py:197
+#, fuzzy
+msgid "Buscando imagenes WBFS recursivamente ... "
+msgstr "Cercant imatges ISO recursivament"
 
-#: cli.py:214
+#: cli.py:200
+#, fuzzy
+msgid "Buscando imagenes WDF recursivamente ... "
+msgstr "Cercant imatges ISO recursivament"
+
+#: cli.py:218
+#, fuzzy, python-format
+msgid "No se ha encontrado ningun fichero en los formatos validos: %s"
+msgstr "No s'ha trobat cap disc de la Wii"
+
+#: cli.py:223
 #, python-format
 msgid "Listando juegos de : %s"
 msgstr "Llistant jocs de : %s"
 
-#: cli.py:218
+#: cli.py:227
 msgid "Inserte un juego de la Wii en su lector de DVD ..."
 msgstr "Pose un joc de Wii al seu lector de DVD ..."
 
-#: cli.py:219
+#: cli.py:228
 msgid "Juegos originales, solo con lectores LG."
 msgstr "Jocs originals, sols amb lectors LG"
 
-#: cli.py:220
+#: cli.py:229
 msgid "Pulse cualquier tecla para continuar ... "
 msgstr "Prem qualsevol tecla per aa continuar ... "
 
-#: cli.py:226
+#: cli.py:235
 msgid "OK, todas las caratulas se han descargado"
 msgstr "OK, totes les caràtules s'han descarregat"
 
-#: cli.py:228
+#: cli.py:237
 msgid "ERROR, descargando alguna caratula"
 msgstr "ERROR, baixant alguna caràtula"
 
-#: cli.py:240
+#: cli.py:249
 msgid "Tarea finalizada"
 msgstr "Tasca finalitzada"
 
-#: cli.py:242 cli.py:263 gui.py:1998
+#: cli.py:251 cli.py:272 gui.py:1996
 msgid "Has conectado el disco duro? No se ha encontrado ninguna particion valida."
 msgstr "Has concetat el disc dur? No s'ha trobat cap partició vàlida."
 
-#: cli.py:250 gui.py:2003
+#: cli.py:259 gui.py:2001
 #, python-format
 msgid "Realmente, desea formatear a WBFS la particion %s? (S/N) "
 msgstr "Estàs segur que vols formatejar a WBFS la partició %s? (S/N)"
 
-#: cli.py:251 cli.py:408
+#: cli.py:260 cli.py:420
 msgid "s"
 msgstr "s"
 
-#: cli.py:253 gui.py:2007
+#: cli.py:262 gui.py:2005
 #, python-format
 msgid "%s se ha formateado correctamente"
 msgstr "%s ha sigut formatat correctament"
 
-#: cli.py:255 gui.py:2009
+#: cli.py:264 gui.py:2007
 #, python-format
 msgid "Error al formatear %s"
 msgstr "Error al formatejar %s"
 
-#: cli.py:257 cli.py:261 gui.py:2011 gui.py:2014
+#: cli.py:266 cli.py:270 gui.py:2009 gui.py:2012
 #, python-format
 msgid "No se ha formateado %s"
 msgstr "No s'ha formatejat %s"
 
-#: cli.py:260 gui.py:2014
+#: cli.py:269 gui.py:2012
 msgid "Interrumpido por el usuario."
 msgstr "Interromput per l'usuari."
 
-#: cli.py:264 gui.py:1998
+#: cli.py:273 gui.py:1996
 msgid "Comprueba que tienes la particion FAT32 montada."
 msgstr "Comprova que tens la partició FAT32 muntada."
 
-#: cli.py:271
+#: cli.py:283
 msgid "Pulse cualquier tecla para continuar ...\n"
 msgstr "Prem qualsevol tecla per a continuar ...\n"
 
-#: cli.py:285 trabajo.py:392
+#: cli.py:297 trabajo.py:392
 #, python-format
 msgid "El archivo RAR %s: No existe"
 msgstr "L'arxiu RAR %s: No existeix"
 
-#: cli.py:289 trabajo.py:396
+#: cli.py:301 trabajo.py:396
 #, python-format
 msgid "Error al descomprimrir. Ya existe %s. Si desea sobreescribirlo, modifique la opcion en preferencias."
 msgstr "Error al descomprimir. Ja existeix %s. Si voleu sobrescriure'l, modifica l'opció a preferéncies."
 
-#: cli.py:296 trabajo.py:406
+#: cli.py:308 trabajo.py:406
 #, python-format
 msgid "Error: El archivo RAR %s no contiene ninguna ISO"
 msgstr "Error: El arxiu RAR %s no conté cap ISO"
 
-#: cli.py:302 trabajo.py:412
+#: cli.py:314 trabajo.py:412
 #, python-format
 msgid "No hay 4.4GB libres para descomprimir el fichero RAR: %s en la ruta %s. Puede cambiar la ruta en preferencias."
 msgstr "No hi ha 4.4GB lliures per a descomprimir el fitxer RAR: %s a la ruta %s. Es pot canviar la ruta a les preferències."
 
-#: cli.py:317 trabajo.py:426
+#: cli.py:329 trabajo.py:426
 #, python-format
 msgid "Error al descomrpimir el RAR : %s"
 msgstr "Error al descomprimir el RAR : %s"
 
-#: cli.py:324
+#: cli.py:336
 #, python-format
 msgid "ISO %s aniadida correctamente"
 msgstr "ISO %s afegida correctament"
 
-#: cli.py:326
+#: cli.py:338
 #, python-format
 msgid "ERROR aniadiendo la ISO : %s (comprueba que sea una ISO de WII)"
 msgstr "ERROR afegint la ISO : %s (comprova que siga una ISO de Wii)"
 
-#: cli.py:345
+#: cli.py:357
 #, python-format
 msgid "Copiar .%s: %s a la particion %s"
 msgstr "Copiar .%s: %s a la partició %s"
 
-#: cli.py:353
+#: cli.py:365
 #, python-format
 msgid "ERROR %s no es un ningun juego de Wii"
 msgstr "ERROR %s no és cap joc de Wii"
 
-#: cli.py:364
+#: cli.py:376
 msgid "INFORME DE RESULTADOS"
 msgstr "INFORME DE RESULTATS"
 
-#: cli.py:369
+#: cli.py:381
 msgid "Todo metido en el HD correctamente"
 msgstr "Tot ficat en el HD correctament"
 
-#: cli.py:373
+#: cli.py:385
 msgid "Juegos correctos"
 msgstr "Jocs correctes"
 
-#: cli.py:380
+#: cli.py:392
 msgid "Juegos erroneos"
 msgstr "Jocs erronis"
 
-#: cli.py:390
+#: cli.py:402
 msgid "Buscando un Disco de Wii ..."
 msgstr "Cercant un Disc de Wii"
 
-#: cli.py:397
+#: cli.py:409
 msgid "No se ha encontrado ningun disco de la Wii"
 msgstr "No s'ha trobat cap disc de la Wii"
 
-#: cli.py:399
+#: cli.py:411
 msgid "Hay mas de un juego de la Wii, deja solo 1 para eliminar la ambiguedad"
 msgstr "Hi ha mes d'un joc de la Wii, deixa sols 1 per eliminar l'ambiguetat"
 
-#: cli.py:406
+#: cli.py:418
 #, python-format
 msgid "Ya hay una ISO en : %s"
 msgstr "Ja hi ha una ISO en : %s"
 
-#: cli.py:407
+#: cli.py:419
 msgid "Desea reemplazarla (S/N) : "
 msgstr "Vols reemplaçar-la (S/N) : "
 
-#: cli.py:412
+#: cli.py:424
 #, python-format
 msgid "Dumpeando desde %s a %s utilizando %s temporalmente"
 msgstr "Dumpejant desde %s a %s utilitzant %s temporalment"
 
-#: cli.py:413
+#: cli.py:425
 msgid "Puede llevar mucho tiempo ..."
 msgstr "Pot trigar molt de temps ..."
 
-#: cli.py:417
+#: cli.py:429
 #, python-format
 msgid "OK, el juego se ha pasado a la particion %s"
 msgstr "OK, el joc s'ha passat a la partició %s"
 
-#: cli.py:419
+#: cli.py:431
 #, python-format
 msgid "Error al pasar la ISO a la particion %s"
 msgstr "Error al pasar l'ISO a la partició %s"
 
-#: cli.py:420
+#: cli.py:432
 #, python-format
 msgid "wiithon no borra la ISO temporal: %s, puedes borrarla si no la necesitas"
 msgstr "wiithon no esborra la ISO temporal: %s, pots esborrar-la si no et fa falta"
 
-#: cli.py:422
+#: cli.py:434
 msgid "Error al dumpear la ISO"
 msgstr "Error al dumpejar l'ISO"
 
-#: cli.py:436
+#: cli.py:448
 #, python-format
 msgid "No se ha encontrado el juego: %s"
 msgstr "No s'ha trobat el joc: %s"
 
-#: cli.py:446
+#: cli.py:458
 msgid "Indique el NUM del juego : "
 msgstr "Indica el NUM del joc :"
 
-#: cli.py:456
+#: cli.py:468
 msgid "Numero fuera de rango"
 msgstr "Nombre fora de rang"
 
-#: cli.py:458
+#: cli.py:470
 msgid "El numero dado es incorrecto"
 msgstr "El nombre donat és incorrecte"
 
-#: cli.py:466 cli.py:468
+#: cli.py:478 cli.py:480
 msgid "Caratula?"
 msgstr "Caràtula?"
 
-#: cli.py:466 cli.py:468
+#: cli.py:478 cli.py:480
 msgid "SIZE"
 msgstr "MIDA"
 
-#: cli.py:466 cli.py:468
+#: cli.py:478 cli.py:480
 msgid "TITULO"
 msgstr "TITOL"
 
-#: cli.py:474
+#: cli.py:486
 msgid "SI"
 msgstr "SI"
 
-#: cli.py:476 wiitdb_schema.py:326
+#: cli.py:488 wiitdb_schema.py:326
 msgid "NO"
 msgstr "NO"
 
-#: cli.py:484
+#: cli.py:496
 #, python-format
 msgid "Presiona cualquier tecla para mostrar %d lineas mas"
 msgstr "Prem qualsevol tecla per a ensenyar %d linees mes"
 
-#: cli.py:488
+#: cli.py:500
 msgid "juegos de WII"
 msgstr "jocs de Wii"
 
-#: cli.py:492
+#: cli.py:504
 msgid "Usado"
 msgstr "Utilitzat"
 
-#: cli.py:493
+#: cli.py:505
 msgid "Libre"
 msgstr "Lliure"
 
-#: cli.py:494 gui.py:632
+#: cli.py:506 gui.py:632
 msgid "Total"
 msgstr "Total"
 
-#: cli.py:498
+#: cli.py:510
 msgid "AYUDA_CLI"
 msgstr ""
 "[US]\n"
@@ -423,7 +434,7 @@ msgstr ""
 msgid "Buscar en"
 msgstr "Cercar:"
 
-#: gui.py:392 gui.py:1094 gui.py:1753 gui.py:1795 gui.py:1940 gui.py:2276
+#: gui.py:392 gui.py:1094 gui.py:1753 gui.py:1795 gui.py:1938 gui.py:2274
 msgid "No has seleccionado ninguna particion"
 msgstr "No has sel·leccionat cap partició"
 
@@ -694,7 +705,7 @@ msgstr "Trie una imatge ISO valida per a Wii"
 msgid "Elige un directorio"
 msgstr "Trie un directori"
 
-#: gui.py:1891
+#: gui.py:1889
 msgid ""
 "Algunos juegos no se han introducido:\n"
 "\n"
@@ -702,29 +713,29 @@ msgstr ""
 "Alguns jocs no s'han introduit:\n"
 "\n"
 
-#: gui.py:1905
+#: gui.py:1903
 #, python-format
 msgid "%s ya existe en %s\n"
 msgstr "%s ja existeix a %s\n"
 
-#: gui.py:1908
+#: gui.py:1906
 #, python-format
 msgid "%s no es un ISO de Wii.\n"
 msgstr "%s no és una ISO de Wii.\n"
 
-#: gui.py:1946
+#: gui.py:1944
 msgid "Paso 1 de 2: Elige un directorio para las CARATULAS"
 msgstr "Pas 1 de 2: Tria un diretori per a les CARATULES"
 
-#: gui.py:1950
+#: gui.py:1948
 msgid "Paso 2 de 2: Elige un directorio para los DISCOS"
 msgstr "Pas 2 de 2: Tria un directori per als DISCOS"
 
-#: gui.py:1968
+#: gui.py:1966
 msgid "No tienes ningun juego"
 msgstr "No tens cap joc"
 
-#: gui.py:1975
+#: gui.py:1973
 msgid ""
 "Hay una tarea que esta bloqueando las preferencias.\n"
 "\n"
@@ -733,104 +744,104 @@ msgstr ""
 "Hi ha una tasca que està bloquejant les preferències.\n"
 "/nEspera a que acabe"
 
-#: gui.py:1987
+#: gui.py:1985
 msgid "Estas seguro de querer formatear la BDD? Se borraran tus preferencias y la informacion de los juegos"
 msgstr "Segur que vols formatejar la BDD? S'esborraran les teves preferències i l'informació dels teus jocs"
 
-#: gui.py:1992
+#: gui.py:1990
 msgid "Es recomendable que reinicie la aplicacion"
 msgstr "Es recomanable que reinìcies l'aplicació"
 
-#: gui.py:1992
+#: gui.py:1990
 msgid "La BDD ha sido formateada."
 msgstr "La BDD ha sigut formatejada."
 
-#: gui.py:2000 recursos/glade/wiithon.ui.h:34
+#: gui.py:1998 recursos/glade/wiithon.ui.h:34
 msgid "Formatear a WBFS"
 msgstr "Formatejar a WBFS"
 
-#: gui.py:2061
+#: gui.py:2059
 msgid "Seguro que deseas descargar informacion de los juegos de WiiTDB?"
 msgstr "Segur que vols baixar informació dels jocs de WiiTDB?"
 
-#: gui.py:2067
+#: gui.py:2065
 msgid "Ya estas descargando la informacion WiiTDB ..."
 msgstr "Ja estàs baixant l'informació de WiiTDB ..."
 
-#: gui.py:2076
+#: gui.py:2074
 msgid "Empezando a obtener datos de juegos desde WiiTDB"
 msgstr "Començant a obtenir dades de jocs desde WiiTDB"
 
-#: gui.py:2086
+#: gui.py:2084
 #, python-format
 msgid "%d%% - %d/%d games - %d descriptions - %d genre - %d accesories - %d companies - %d online features"
 msgstr "%d%% - %d/%d jocs - %d descripcions - %d gènere - %d accesoris - %d companyies - %d funcions en linea"
 
-#: gui.py:2110
+#: gui.py:2108
 #, python-format
 msgid "Error importando %s: %s"
 msgstr "Error important %s: %s"
 
-#: gui.py:2113
+#: gui.py:2111
 #, python-format
 msgid "Descargando WiiTDB desde %s, espere unos minutos ..."
 msgstr "Baixant WiiTDB desde %s, espereu uns segons ...."
 
-#: gui.py:2117
+#: gui.py:2115
 msgid "Empezando a descomprimir la informacion WiiTDB"
 msgstr "Començant a descomprimir l'informació WiiTDB"
 
-#: gui.py:2123
+#: gui.py:2121
 msgid "Finalizada satisfactoriamente la importacion de datos desde WiiTDB"
 msgstr "Finalitzada amb exit l'importació de dades des de WiiTDB"
 
-#: gui.py:2131
+#: gui.py:2129
 #, python-format
 msgid "Deseas borrar el archivo %s?"
 msgstr "Vols esborrar l'arxiu %s?"
 
-#: gui.py:2288
+#: gui.py:2286
 #, python-format
 msgid "Trabajando con %s, sin estimar el tiempo restante ..."
 msgstr ""
 
-#: gui.py:2292 gui.py:2331
+#: gui.py:2290 gui.py:2329
 #, python-format
 msgid "Termina: %s"
 msgstr "Finalitza: %s"
 
-#: gui.py:2317
+#: gui.py:2315
 #, python-format
 msgid "Empieza %s"
 msgstr "Comença %s"
 
-#: gui.py:2348
+#: gui.py:2346
 #, python-format
 msgid "Falla la descarga de la caratula de %s"
 msgstr "Falla la baixada de la caràtula de %s"
 
-#: gui.py:2358
+#: gui.py:2356
 #, python-format
 msgid "Falla la descarga del disco de %s"
 msgstr "Falla la baixada del disc de %s"
 
-#: gui.py:2406
+#: gui.py:2404
 msgid "Finalizando ..."
 msgstr "Finalitzant .."
 
-#: gui.py:2408
+#: gui.py:2406
 msgid "ERROR!"
 msgstr "ERROR!"
 
-#: gui.py:2416
+#: gui.py:2414
 msgid "quedan"
 msgstr "queden"
 
-#: gui.py:2432
+#: gui.py:2430
 msgid "Error en progreso"
 msgstr "Errada en progregres"
 
-#: gui.py:2440
+#: gui.py:2438
 msgid "Empezando ..."
 msgstr "Començant ..."
 
@@ -1584,13 +1595,16 @@ msgstr "Necessites tenir instalar pyGTK o GTKv2"
 msgid "Instala wiithon, no lo ejecute desde ./wiithon.py"
 msgstr "Instala wiithon, no l'executes des de ./wiithon.py"
 
-#: wiithon.py:101
+#: wiithon.py:105
 msgid "Programa ejecutado con las opciones incorrectas."
 msgstr "Programa executat amb les opcions incorrectes."
 
-#: wiithon.py:105
+#: wiithon.py:109
 msgid "Interrumpido por el usuario"
 msgstr "Interromput per l'usuari"
+
+#~ msgid "No se ha encontrado ninguna imagen ISO o RAR"
+#~ msgstr "No s'ha trobat cap imatge ISO o RAR"
 
 #~ msgid "Fecha de lanzamiento: "
 #~ msgstr "Data de llançament:"
