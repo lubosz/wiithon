@@ -1235,6 +1235,17 @@ class WiithonGUI(GtkBuilderWrapper):
             sql = util.decode('idParticion = %d' % particion.idParticion)
             self.info.arriba_num_juegos = session.query(Juego).filter(sql).count()
             self.info.abajo_num_particiones = session.query(Particion).count()
+        else:
+            total = 0
+            ocupado = 0
+            for juego in session.query(Juego):
+                ocupado += juego.size
+                total += 1
+            
+            self.info.arriba_usado = ocupado
+            self.info.arriba_total = ocupado
+            self.info.arriba_num_juegos = total
+            self.info.abajo_num_particiones = 0
 
     def refrescarInfoWiiTDB(self):
         
@@ -1379,8 +1390,8 @@ class WiithonGUI(GtkBuilderWrapper):
             self.renderEditableNombre.set_property("editable", False)
             self.renderEditableNombre.set_property("attributes", self.getEstilo_grisGrande())
 
-            self.wb_vboxProgresoEspacio.hide()
-            self.wb_labelEspacio.hide()
+            #self.wb_progresoEspacio.hide()
+            #self.wb_labelEspacio.hide()
 
             if config.REV != '':
                 self.wb_principal.set_title('Wiithon %s (rev %s)' % (config.VER, config.REV))
@@ -1395,8 +1406,8 @@ class WiithonGUI(GtkBuilderWrapper):
             self.renderEditableNombre.set_property("editable", True)
             self.renderEditableNombre.set_property("attributes", self.getEstilo_azulGrande())
             
-            self.wb_vboxProgresoEspacio.show()
-            self.wb_labelEspacio.show()
+            #self.wb_progresoEspacio.show()
+            #self.wb_labelEspacio.show()
             
             if config.REV != '':
                 self.wb_principal.set_title('Wiithon %s (rev %s) %s' % (config.VER, config.REV, self.sel_parti.obj.fabricante))

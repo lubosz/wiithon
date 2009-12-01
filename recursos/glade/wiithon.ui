@@ -109,6 +109,27 @@
               </packing>
             </child>
             <child>
+              <object class="GtkToolButton" id="tb_copiar_1_1">
+                <property name="visible">True</property>
+                <property name="tooltip_text" translatable="yes">Hace copias directas de juegos entre particiones WBFS.</property>
+                <property name="label" translatable="yes">Copia disco a disco</property>
+                <property name="icon_name">edit-copy</property>
+              </object>
+              <packing>
+                <property name="expand">False</property>
+                <property name="homogeneous">True</property>
+              </packing>
+            </child>
+            <child>
+              <object class="GtkSeparatorToolItem" id="toolbutton1">
+                <property name="visible">True</property>
+              </object>
+              <packing>
+                <property name="expand">False</property>
+                <property name="homogeneous">True</property>
+              </packing>
+            </child>
+            <child>
               <object class="GtkToolButton" id="tb_clasificar1">
                 <property name="visible">True</property>
                 <property name="visible_horizontal">False</property>
@@ -122,11 +143,12 @@
               </packing>
             </child>
             <child>
-              <object class="GtkToolButton" id="tb_copiar_SD">
+              <object class="GtkToolButton" id="tb_renombrado_masivo1">
                 <property name="visible">True</property>
-                <property name="tooltip_text" translatable="yes">Copia en 2 carpetas de destino, todo el conjunto de caratulas y de disc-art que esta siendo amacenado en los directorios de trabajo de wiithon.</property>
-                <property name="label" translatable="yes">caratulas a SD</property>
-                <property name="icon_name">insert-image</property>
+                <property name="tooltip_text" translatable="yes">Realiza conversiones de los archivos soportados por Wiithon.</property>
+                <property name="is_important">True</property>
+                <property name="label" translatable="yes">Conversor</property>
+                <property name="icon_name">emblem-shared</property>
               </object>
               <packing>
                 <property name="expand">False</property>
@@ -134,11 +156,11 @@
               </packing>
             </child>
             <child>
-              <object class="GtkToolButton" id="tb_copiar_1_1">
+              <object class="GtkToolButton" id="tb_copiar_SD">
                 <property name="visible">True</property>
-                <property name="tooltip_text" translatable="yes">Hace copias directas de juegos entre particiones WBFS.</property>
-                <property name="label" translatable="yes">Copia disco a disco</property>
-                <property name="icon_name">edit-copy</property>
+                <property name="tooltip_text" translatable="yes">Copia en 2 carpetas de destino, todo el conjunto de caratulas y de disc-art que esta siendo amacenado en los directorios de trabajo de wiithon.</property>
+                <property name="label" translatable="yes">caratulas a SD</property>
+                <property name="icon_name">insert-image</property>
               </object>
               <packing>
                 <property name="expand">False</property>
@@ -169,9 +191,30 @@
               <object class="GtkToolButton" id="tb_actualizar_wiitdb">
                 <property name="visible">True</property>
                 <property name="tooltip_text" translatable="yes">Actualiza la informacion de los juegos con BDD de Internet.</property>
-                <property name="label" translatable="yes">+INFO</property>
+                <property name="label" translatable="yes">Informacion WiiTDB</property>
                 <property name="icon_name">dialog-information</property>
                 <signal name="clicked" handler="on_tb_actualizar_wiitdb_clicked"/>
+              </object>
+              <packing>
+                <property name="expand">False</property>
+                <property name="homogeneous">True</property>
+              </packing>
+            </child>
+            <child>
+              <object class="GtkToolButton" id="tb_renombrado_masivo">
+                <property name="visible">True</property>
+                <property name="tooltip_text" translatable="yes">Renombra todos los juegos de la particion seleccionada en funcion del idioma principal y axuliar seleccionado en preferencias. Los nombres son obtenidos de la informaci&#xF3;n WiiTDB.</property>
+                <property name="label" translatable="yes">Renombrado masivo</property>
+                <property name="icon_name">tools-check-spelling</property>
+              </object>
+              <packing>
+                <property name="expand">False</property>
+                <property name="homogeneous">True</property>
+              </packing>
+            </child>
+            <child>
+              <object class="GtkSeparatorToolItem" id="toolbutton6">
+                <property name="visible">True</property>
               </object>
               <packing>
                 <property name="expand">False</property>
@@ -209,29 +252,58 @@
           </packing>
         </child>
         <child>
-          <object class="GtkHBox" id="box_progreso">
+          <object class="GtkAlignment" id="alignment2">
             <property name="visible">True</property>
+            <property name="top_padding">4</property>
+            <property name="bottom_padding">4</property>
+            <property name="right_padding">2</property>
             <child>
-              <object class="GtkLabel" id="estadoTrabajo">
+              <object class="GtkVBox" id="box_progreso">
                 <property name="visible">True</property>
-                <property name="tooltip_text" translatable="yes">Numero de tareas que esperan en la cola.</property>
-                <property name="xpad">8</property>
-                <property name="label">0 Tareas</property>
+                <property name="orientation">vertical</property>
+                <child>
+                  <object class="GtkHBox" id="hbox_progreso">
+                    <property name="height_request">24</property>
+                    <property name="visible">True</property>
+                    <child>
+                      <object class="GtkLabel" id="estadoTrabajo">
+                        <property name="visible">True</property>
+                        <property name="xpad">8</property>
+                        <property name="label">0 Tareas</property>
+                      </object>
+                      <packing>
+                        <property name="expand">False</property>
+                        <property name="position">0</property>
+                      </packing>
+                    </child>
+                    <child>
+                      <object class="GtkProgressBar" id="progreso1">
+                        <property name="visible">True</property>
+                        <property name="show_text">True</property>
+                      </object>
+                      <packing>
+                        <property name="position">1</property>
+                      </packing>
+                    </child>
+                    <child>
+                      <object class="GtkButton" id="button1">
+                        <property name="label">gtk-stop</property>
+                        <property name="visible">True</property>
+                        <property name="can_focus">True</property>
+                        <property name="receives_default">True</property>
+                        <property name="use_stock">True</property>
+                      </object>
+                      <packing>
+                        <property name="expand">False</property>
+                        <property name="position">2</property>
+                      </packing>
+                    </child>
+                  </object>
+                  <packing>
+                    <property name="position">0</property>
+                  </packing>
+                </child>
               </object>
-              <packing>
-                <property name="expand">False</property>
-                <property name="position">0</property>
-              </packing>
-            </child>
-            <child>
-              <object class="GtkProgressBar" id="progreso1">
-                <property name="visible">True</property>
-                <property name="tooltip_text" translatable="yes">Progreso de la tarea actual.</property>
-                <property name="show_text">True</property>
-              </object>
-              <packing>
-                <property name="position">1</property>
-              </packing>
             </child>
           </object>
           <packing>
@@ -257,7 +329,6 @@
                     <property name="vscrollbar_policy">automatic</property>
                     <child>
                       <object class="GtkTreeView" id="tv_partitions">
-                        <property name="height_request">100</property>
                         <property name="visible">True</property>
                         <property name="can_focus">True</property>
                       </object>
@@ -292,6 +363,41 @@ Por defecto: 160x160</property>
                   </packing>
                 </child>
                 <child>
+                  <object class="GtkHBox" id="hbox4">
+                    <property name="visible">True</property>
+                    <child>
+                      <object class="GtkToggleButton" id="boton_normal1">
+                        <property name="label" translatable="yes">Original</property>
+                        <property name="visible">True</property>
+                        <property name="can_focus">True</property>
+                        <property name="receives_default">True</property>
+                        <property name="tooltip_text" translatable="yes">Mostrar disco original</property>
+                        <property name="relief">none</property>
+                      </object>
+                      <packing>
+                        <property name="position">0</property>
+                      </packing>
+                    </child>
+                    <child>
+                      <object class="GtkToggleButton" id="boton_3d1">
+                        <property name="label" translatable="yes">Custom</property>
+                        <property name="visible">True</property>
+                        <property name="can_focus">True</property>
+                        <property name="receives_default">True</property>
+                        <property name="tooltip_text" translatable="yes">Mostrar disco customizado</property>
+                        <property name="relief">none</property>
+                      </object>
+                      <packing>
+                        <property name="position">1</property>
+                      </packing>
+                    </child>
+                  </object>
+                  <packing>
+                    <property name="expand">False</property>
+                    <property name="position">3</property>
+                  </packing>
+                </child>
+                <child>
                   <object class="GtkImage" id="img_caratula1">
                     <property name="width_request">160</property>
                     <property name="height_request">224</property>
@@ -303,7 +409,7 @@ Por defecto: 160x224</property>
                   </object>
                   <packing>
                     <property name="expand">False</property>
-                    <property name="position">3</property>
+                    <property name="position">4</property>
                   </packing>
                 </child>
                 <child>
@@ -315,6 +421,7 @@ Por defecto: 160x224</property>
                         <property name="visible">True</property>
                         <property name="can_focus">True</property>
                         <property name="receives_default">True</property>
+                        <property name="tooltip_text" translatable="yes">Mostrar caratula plana</property>
                         <property name="relief">none</property>
                       </object>
                       <packing>
@@ -327,6 +434,7 @@ Por defecto: 160x224</property>
                         <property name="visible">True</property>
                         <property name="can_focus">True</property>
                         <property name="receives_default">True</property>
+                        <property name="tooltip_text" translatable="yes">Mostrar caratula en 3D</property>
                         <property name="relief">none</property>
                       </object>
                       <packing>
@@ -339,6 +447,7 @@ Por defecto: 160x224</property>
                         <property name="visible">True</property>
                         <property name="can_focus">True</property>
                         <property name="receives_default">True</property>
+                        <property name="tooltip_text" translatable="yes">Mostrar caratula a doble cara.</property>
                         <property name="relief">none</property>
                       </object>
                       <packing>
@@ -348,7 +457,7 @@ Por defecto: 160x224</property>
                   </object>
                   <packing>
                     <property name="expand">False</property>
-                    <property name="position">4</property>
+                    <property name="position">5</property>
                   </packing>
                 </child>
               </object>
@@ -367,105 +476,74 @@ Por defecto: 160x224</property>
                     <property name="visible">True</property>
                     <property name="orientation">vertical</property>
                     <child>
-                      <object class="GtkHBox" id="hbox6">
+                      <object class="GtkAlignment" id="alignment1">
                         <property name="visible">True</property>
+                        <property name="top_padding">4</property>
+                        <property name="bottom_padding">4</property>
+                        <property name="right_padding">2</property>
                         <child>
-                          <object class="GtkHBox" id="box_busqueda">
+                          <object class="GtkHBox" id="hbox6">
+                            <property name="height_request">24</property>
                             <property name="visible">True</property>
                             <child>
-                              <placeholder/>
+                              <object class="GtkHBox" id="box_busqueda">
+                                <property name="visible">True</property>
+                                <child>
+                                  <placeholder/>
+                                </child>
+                              </object>
+                              <packing>
+                                <property name="expand">False</property>
+                                <property name="position">0</property>
+                              </packing>
                             </child>
-                          </object>
-                          <packing>
-                            <property name="expand">False</property>
-                            <property name="position">0</property>
-                          </packing>
-                        </child>
-                        <child>
-                          <object class="GtkButton" id="boton_buscar">
-                            <property name="label">gtk-find</property>
-                            <property name="visible">True</property>
-                            <property name="can_focus">True</property>
-                            <property name="receives_default">True</property>
-                            <property name="use_stock">True</property>
-                            <signal name="clicked" handler="on_boton_buscar_clicked"/>
-                          </object>
-                          <packing>
-                            <property name="expand">False</property>
-                            <property name="position">1</property>
-                          </packing>
-                        </child>
-                        <child>
-                          <object class="GtkLabel" id="label_espacio_vacio">
-                            <property name="visible">True</property>
-                          </object>
-                          <packing>
-                            <property name="position">2</property>
-                          </packing>
-                        </child>
-                        <child>
-                          <object class="GtkLabel" id="labelEspacio">
-                            <property name="visible">True</property>
-                            <property name="tooltip_text" translatable="yes">Espacio usado / Espacio total</property>
-                            <property name="xalign">0.89999997615814209</property>
-                            <property name="xpad">8</property>
-                            <property name="justify">right</property>
-                            <property name="selectable">True</property>
-                            <property name="single_line_mode">True</property>
-                          </object>
-                          <packing>
-                            <property name="expand">False</property>
-                            <property name="position">3</property>
-                          </packing>
-                        </child>
-                        <child>
-                          <object class="GtkVBox" id="vboxProgresoEspacio">
-                            <property name="visible">True</property>
-                            <property name="orientation">vertical</property>
                             <child>
-                              <object class="GtkLabel" id="label5">
-                                <property name="height_request">5</property>
+                              <object class="GtkComboBox" id="cb_generos">
+                                <property name="width_request">80</property>
                                 <property name="visible">True</property>
                               </object>
                               <packing>
-                                <property name="position">0</property>
+                                <property name="expand">False</property>
+                                <property name="position">1</property>
+                              </packing>
+                            </child>
+                            <child>
+                              <object class="GtkButton" id="boton_buscar">
+                                <property name="label">gtk-find</property>
+                                <property name="visible">True</property>
+                                <property name="can_focus">True</property>
+                                <property name="receives_default">True</property>
+                                <property name="use_stock">True</property>
+                                <signal name="clicked" handler="on_boton_buscar_clicked"/>
+                              </object>
+                              <packing>
+                                <property name="expand">False</property>
+                                <property name="position">2</property>
+                              </packing>
+                            </child>
+                            <child>
+                              <object class="GtkLabel" id="labelEspacio">
+                                <property name="visible">True</property>
+                                <property name="xalign">1</property>
+                                <property name="xpad">8</property>
+                                <property name="justify">right</property>
+                                <property name="selectable">True</property>
+                                <property name="single_line_mode">True</property>
+                              </object>
+                              <packing>
+                                <property name="position">3</property>
                               </packing>
                             </child>
                             <child>
                               <object class="GtkProgressBar" id="progresoEspacio">
                                 <property name="visible">True</property>
-                                <property name="tooltip_text" translatable="yes">Numero de juegos.</property>
                               </object>
                               <packing>
-                                <property name="position">1</property>
-                              </packing>
-                            </child>
-                            <child>
-                              <object class="GtkLabel" id="label24">
-                                <property name="height_request">5</property>
-                                <property name="visible">True</property>
-                              </object>
-                              <packing>
-                                <property name="position">2</property>
+                                <property name="expand">False</property>
+                                <property name="position">4</property>
                               </packing>
                             </child>
                           </object>
-                          <packing>
-                            <property name="expand">False</property>
-                            <property name="position">4</property>
-                          </packing>
-                        </child>
-                        <child>
-                          <object class="GtkImage" id="estadoBatch">
-                            <property name="width_request">32</property>
-                            <property name="visible">True</property>
-                            <property name="has_tooltip">True</property>
-                            <property name="tooltip_text" translatable="yes">No cierre wiithon mientras esta animacion indique actividad</property>
-                          </object>
-                          <packing>
-                            <property name="expand">False</property>
-                            <property name="position">5</property>
-                          </packing>
                         </child>
                       </object>
                       <packing>
@@ -605,9 +683,23 @@ Por defecto: 160x224</property>
                   <object class="GtkLabel" id="label_juegosSinDiscArt">
                     <property name="visible">True</property>
                     <property name="tooltip_text" translatable="yes">Numero de juegos sin caratula del disco.</property>
+                    <property name="xalign">0</property>
                   </object>
                   <packing>
                     <property name="position">3</property>
+                  </packing>
+                </child>
+                <child>
+                  <object class="GtkImage" id="estadoBatch">
+                    <property name="width_request">32</property>
+                    <property name="visible">True</property>
+                    <property name="has_tooltip">True</property>
+                    <property name="tooltip_text" translatable="yes">No cierre wiithon mientras esta animacion indique actividad</property>
+                    <property name="xalign">1</property>
+                  </object>
+                  <packing>
+                    <property name="expand">False</property>
+                    <property name="position">4</property>
                   </packing>
                 </child>
               </object>
@@ -699,6 +791,20 @@ Swedish: Magnus Johansson &lt;mange@emjay.se&gt; [sv_SE.po]
             <property name="visible">True</property>
             <property name="orientation">vertical</property>
             <child>
+              <object class="GtkLabel" id="c1on1_label5">
+                <property name="visible">True</property>
+                <property name="ypad">6</property>
+                <property name="label" translatable="yes">Copia directa entre particiones WBFS</property>
+                <attributes>
+                  <attribute name="absolute-size" value="20000"/>
+                </attributes>
+              </object>
+              <packing>
+                <property name="expand">False</property>
+                <property name="position">0</property>
+              </packing>
+            </child>
+            <child>
               <object class="GtkLabel" id="c1on1_label1">
                 <property name="visible">True</property>
                 <property name="ypad">6</property>
@@ -706,7 +812,7 @@ Swedish: Magnus Johansson &lt;mange@emjay.se&gt; [sv_SE.po]
               </object>
               <packing>
                 <property name="expand">False</property>
-                <property name="position">0</property>
+                <property name="position">1</property>
               </packing>
             </child>
             <child>
@@ -725,7 +831,7 @@ Swedish: Magnus Johansson &lt;mange@emjay.se&gt; [sv_SE.po]
                 </child>
               </object>
               <packing>
-                <property name="position">1</property>
+                <property name="position">2</property>
               </packing>
             </child>
             <child>
@@ -736,7 +842,7 @@ Swedish: Magnus Johansson &lt;mange@emjay.se&gt; [sv_SE.po]
               </object>
               <packing>
                 <property name="expand">False</property>
-                <property name="position">2</property>
+                <property name="position">3</property>
               </packing>
             </child>
           </object>
@@ -1208,5 +1314,207 @@ Swedish: Magnus Johansson &lt;mange@emjay.se&gt; [sv_SE.po]
         </child>
       </object>
     </child>
+  </object>
+  <object class="GtkDialog" id="dialogo_extraer_todo">
+    <property name="border_width">5</property>
+    <property name="title" translatable="yes">Copia directa de particion a particion</property>
+    <property name="window_position">center</property>
+    <property name="type_hint">normal</property>
+    <property name="has_separator">False</property>
+    <child internal-child="vbox">
+      <object class="GtkVBox" id="dialog-vbox7">
+        <property name="visible">True</property>
+        <property name="orientation">vertical</property>
+        <property name="spacing">2</property>
+        <child>
+          <object class="GtkVBox" id="c1on1_vbox2">
+            <property name="visible">True</property>
+            <property name="orientation">vertical</property>
+            <child>
+              <object class="GtkLabel" id="c1on1_label3">
+                <property name="visible">True</property>
+                <property name="ypad">6</property>
+                <property name="label" translatable="yes">Opciones de extraccion</property>
+                <attributes>
+                  <attribute name="absolute-size" value="20000"/>
+                </attributes>
+              </object>
+              <packing>
+                <property name="expand">False</property>
+                <property name="position">0</property>
+              </packing>
+            </child>
+            <child>
+              <placeholder/>
+            </child>
+            <child>
+              <placeholder/>
+            </child>
+            <child>
+              <placeholder/>
+            </child>
+            <child>
+              <placeholder/>
+            </child>
+            <child>
+              <placeholder/>
+            </child>
+          </object>
+          <packing>
+            <property name="position">1</property>
+          </packing>
+        </child>
+        <child internal-child="action_area">
+          <object class="GtkHButtonBox" id="dialog-action_area7">
+            <property name="visible">True</property>
+            <property name="layout_style">end</property>
+            <child>
+              <object class="GtkButton" id="c1on1_button4">
+                <property name="label">gtk-cancel</property>
+                <property name="visible">True</property>
+                <property name="can_focus">True</property>
+                <property name="receives_default">True</property>
+                <property name="use_stock">True</property>
+              </object>
+              <packing>
+                <property name="expand">False</property>
+                <property name="fill">False</property>
+                <property name="position">0</property>
+              </packing>
+            </child>
+            <child>
+              <object class="GtkButton" id="c1on1_button5">
+                <property name="label" translatable="yes">Extraer todos los juegos*</property>
+                <property name="visible">True</property>
+                <property name="can_focus">True</property>
+                <property name="receives_default">True</property>
+              </object>
+              <packing>
+                <property name="expand">False</property>
+                <property name="fill">False</property>
+                <property name="position">1</property>
+              </packing>
+            </child>
+            <child>
+              <object class="GtkButton" id="c1on1_button6">
+                <property name="label" translatable="yes">Extraer el juego seleccionado*</property>
+                <property name="visible">True</property>
+                <property name="can_focus">True</property>
+                <property name="receives_default">True</property>
+              </object>
+              <packing>
+                <property name="expand">False</property>
+                <property name="fill">False</property>
+                <property name="position">2</property>
+              </packing>
+            </child>
+          </object>
+          <packing>
+            <property name="expand">False</property>
+            <property name="pack_type">end</property>
+            <property name="position">0</property>
+          </packing>
+        </child>
+      </object>
+    </child>
+    <action-widgets>
+      <action-widget response="0">c1on1_button4</action-widget>
+      <action-widget response="2">c1on1_button5</action-widget>
+      <action-widget response="1">c1on1_button6</action-widget>
+    </action-widgets>
+  </object>
+  <object class="GtkDialog" id="dialogo_renombrar_masivo">
+    <property name="border_width">5</property>
+    <property name="title" translatable="yes">Copia directa de particion a particion</property>
+    <property name="window_position">center</property>
+    <property name="type_hint">normal</property>
+    <property name="has_separator">False</property>
+    <child internal-child="vbox">
+      <object class="GtkVBox" id="dialog-vbox9">
+        <property name="visible">True</property>
+        <property name="orientation">vertical</property>
+        <property name="spacing">2</property>
+        <child>
+          <object class="GtkVBox" id="c1on1_vbox3">
+            <property name="visible">True</property>
+            <property name="orientation">vertical</property>
+            <child>
+              <object class="GtkLabel" id="c1on1_label4">
+                <property name="visible">True</property>
+                <property name="ypad">6</property>
+                <property name="label" translatable="yes">Renombrado masivo</property>
+                <attributes>
+                  <attribute name="absolute-size" value="20000"/>
+                </attributes>
+              </object>
+              <packing>
+                <property name="expand">False</property>
+                <property name="position">0</property>
+              </packing>
+            </child>
+            <child>
+              <placeholder/>
+            </child>
+            <child>
+              <placeholder/>
+            </child>
+            <child>
+              <placeholder/>
+            </child>
+            <child>
+              <placeholder/>
+            </child>
+            <child>
+              <placeholder/>
+            </child>
+          </object>
+          <packing>
+            <property name="position">1</property>
+          </packing>
+        </child>
+        <child internal-child="action_area">
+          <object class="GtkHButtonBox" id="dialog-action_area9">
+            <property name="visible">True</property>
+            <property name="layout_style">end</property>
+            <child>
+              <object class="GtkButton" id="c1on1_button7">
+                <property name="label">gtk-cancel</property>
+                <property name="visible">True</property>
+                <property name="can_focus">True</property>
+                <property name="receives_default">True</property>
+                <property name="use_stock">True</property>
+              </object>
+              <packing>
+                <property name="expand">False</property>
+                <property name="fill">False</property>
+                <property name="position">0</property>
+              </packing>
+            </child>
+            <child>
+              <object class="GtkButton" id="c1on1_button8">
+                <property name="label" translatable="yes">Empezar</property>
+                <property name="visible">True</property>
+                <property name="can_focus">True</property>
+                <property name="receives_default">True</property>
+              </object>
+              <packing>
+                <property name="expand">False</property>
+                <property name="fill">False</property>
+                <property name="position">1</property>
+              </packing>
+            </child>
+          </object>
+          <packing>
+            <property name="expand">False</property>
+            <property name="pack_type">end</property>
+            <property name="position">0</property>
+          </packing>
+        </child>
+      </object>
+    </child>
+    <action-widgets>
+      <action-widget response="0">c1on1_button7</action-widget>
+      <action-widget response="2">c1on1_button8</action-widget>
+    </action-widgets>
   </object>
 </interface>

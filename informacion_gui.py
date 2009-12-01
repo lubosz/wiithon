@@ -54,7 +54,10 @@ class InformacionGuiPresentacion(InformacionGuiDatos):
     def representarDato(self, name, value):
 
         if name == 'arriba_total':
-            self.wb_labelEspacio.set_text("%.2f GB / %.2f GB" % (self.arriba_usado , self.arriba_total))
+            if self.arriba_usado != self.arriba_total:
+                self.wb_labelEspacio.set_text("%.2f GB / %.2f GB" % (self.arriba_usado , self.arriba_total))
+            else:
+                self.wb_labelEspacio.set_text("%.2f GB" % (self.arriba_total))
             try:
                 self.arriba_num_juegos_rel = (self.arriba_usado * 100.0 / self.arriba_total) / 100.0
             except ZeroDivisionError:
