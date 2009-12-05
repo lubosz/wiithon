@@ -365,16 +365,16 @@ msgstr "Gesamt"
 msgid "AYUDA_CLI"
 msgstr "Hilfe_CLI"
 
-#: core.py:186 core.py:200
+#: core.py:188 core.py:202
 msgid "Copiando"
 msgstr "Kopiere"
 
-#: core.py:228
+#: core.py:230
 #, python-format
 msgid "Descargando disco de %s ..."
 msgstr "Laden von Disk %s ..."
 
-#: core.py:248
+#: core.py:250
 #, python-format
 msgid "Descargando caratula de %s desde %s ..."
 msgstr ""

@@ -395,16 +395,16 @@ msgstr ""
 "\t--covers:\tBaixa i copia totes les caràtules al directori de treball actual.\n"
 "\t--discs:\tBaixa i copia tots els disc-arts a l directori de treball."
 
-#: core.py:186 core.py:200
+#: core.py:188 core.py:202
 msgid "Copiando"
 msgstr "Copiant"
 
-#: core.py:228
+#: core.py:230
 #, python-format
 msgid "Descargando disco de %s ..."
 msgstr "Baixant disc de %s ..."
 
-#: core.py:248
+#: core.py:250
 #, python-format
 msgid "Descargando caratula de %s desde %s ..."
 msgstr "Baixant caràtula de %s desde %s ..."

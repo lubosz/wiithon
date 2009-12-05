@@ -392,16 +392,16 @@ msgstr ""
 "\t--covers:\tDownload and copy all the covers to the current working directory.\n"
 "\t--discs:\tDownload and copy all the disc-ss current working directory."
 
-#: core.py:186 core.py:200
+#: core.py:188 core.py:202
 msgid "Copiando"
 msgstr "Copying"
 
-#: core.py:228
+#: core.py:230
 #, python-format
 msgid "Descargando disco de %s ..."
 msgstr "Downloading disc-art %s ..."
 
-#: core.py:248
+#: core.py:250
 #, python-format
 msgid "Descargando caratula de %s desde %s ..."
 msgstr "Downloading cover %s from %s ..."

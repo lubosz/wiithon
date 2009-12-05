@@ -394,16 +394,16 @@ msgstr ""
 "\t--covers:\tBaixa e copia todas as capas para o diretório atual.\n"
 "\t--discs:\tBaixa e copia todas as imagens de disco para o diretório de trabalho atual."
 
-#: core.py:186 core.py:200
+#: core.py:188 core.py:202
 msgid "Copiando"
 msgstr "Copiando"
 
-#: core.py:228
+#: core.py:230
 #, python-format
 msgid "Descargando disco de %s ..."
 msgstr "Baixando disco de %s ..."
 
-#: core.py:248
+#: core.py:250
 #, python-format
 msgid "Descargando caratula de %s desde %s ..."
 msgstr "Baixando capa de %s a %s ..."
