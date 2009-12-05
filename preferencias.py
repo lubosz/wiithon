@@ -66,7 +66,7 @@ class Preferencias:
                                      ('fr', _('French')),
                                      ('de', _('German')),
                                      ('nl_NL', _('Dutch')),
-                                     ('es_CA', _('Catalan')),
+                                     ('ca_ES', _('Catalan')),
                                      ('pt_BR', _('Brazilian Portuguese')),
                                      ('pt_PT', _('Portuguese')),
                                      ('sv_SE', _('Swedish'))]

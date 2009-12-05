@@ -330,11 +330,11 @@ msgstr "DIMENSIONE"
 msgid "TITULO"
 msgstr "TITOLO"
 
-#: cli.py:486
+#: cli.py:486 gui.py:977
 msgid "SI"
 msgstr "SI"
 
-#: cli.py:488 wiitdb_schema.py:326
+#: cli.py:488 gui.py:977 wiitdb_schema.py:326
 msgid "NO"
 msgstr "NO"
 
@@ -392,16 +392,16 @@ msgstr ""
 "\t--covers:\tScarica e copia tutte le copertine nella cartella di lavoro corrente.\n"
 "\t--discs:\tScarica e copia tutte le disc-art nella cartella di lavoro corrente."
 
-#: core.py:187 core.py:201
+#: core.py:191 core.py:205
 msgid "Copiando"
 msgstr "Sto copiando"
 
-#: core.py:229
+#: core.py:233
 #, python-format
 msgid "Descargando disco de %s ..."
 msgstr "Sto scaricando il gioco di %s ..."
 
-#: core.py:249
+#: core.py:253
 #, python-format
 msgid "Descargando caratula de %s desde %s ..."
 msgstr "Sto scaricando la copertina di %s da %s ..."
@@ -754,6 +754,10 @@ msgstr "Il DB è stato formattato."
 #: gui.py:2009 recursos/glade/wiithon.ui.h:38
 msgid "Formatear a WBFS"
 msgstr "Formattare in WBFS"
+
+#: gui.py:2045
+msgid "Esta funcion esta en desarrollo"
+msgstr ""
 
 #: gui.py:2070
 msgid "Seguro que deseas descargar informacion de los juegos de WiiTDB?"

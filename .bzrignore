@@ -30,3 +30,4 @@ wiimms-wbfs-tool/.svn/
 wiimms-wbfs-tool/*.d
 svn-revision.*
 wiimms-wbfs-tool/Makefile.setup
+wiimms-wbfs-tool/*/.svn

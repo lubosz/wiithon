@@ -53,6 +53,8 @@ case "$1" in
         test -e /usr/lib32/libwbfs.so && rm -f /usr/lib32/libwbfs.so
         
         test -d /usr/local/share/wiithon && rm -rf /usr/local/share/wiithon
+        
+        test -d /usr/share/locale/es_CA/LC_MESSAGES/ && rm /usr/share/locale/es_CA/LC_MESSAGES/wiithon.mo
     ;;
 
     abort-upgrade)

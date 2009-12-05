@@ -55,9 +55,9 @@ ja_JP: po/locale/ja_JP/LC_MESSAGES/wiithon.mo
 fr: po/locale/fr/LC_MESSAGES/wiithon.mo
 de: po/locale/de/LC_MESSAGES/wiithon.mo
 pt_BR: po/locale/pt_BR/LC_MESSAGES/wiithon.mo
-es_CA: po/locale/es_CA/LC_MESSAGES/wiithon.mo
+ca_ES: po/locale/ca_ES/LC_MESSAGES/wiithon.mo
 
-lang_enable: it es en fr de pt_BR es_CA
+lang_enable: it es en fr de pt_BR ca_ES
 lang_disable: da_DK fi_FI tr_TR ru_RU ko_KR sv_SE pt_PT da_DK nb_NO ja_JP
 lang: lang_enable lang_disable
 	@echo "=================================================================="
@@ -241,6 +241,8 @@ clean_old_wiithon:
 	-@$(RM) /usr/lib32/libwbfs.so
 	
 	-@$(RM) -R /usr/local/share/wiithon
+
+	-$(RM) /usr/share/locale/es_CA/LC_MESSAGES/wiithon.mo
 	
 	@echo "=================================================================="
 	@echo "Clean old installs"
@@ -281,7 +283,7 @@ delete_archives_installation:
 	-$(RM) /usr/share/locale/pt_BR/LC_MESSAGES/wiithon.mo
 	-$(RM) /usr/share/locale/ru_RU/LC_MESSAGES/wiithon.mo
 	-$(RM) /usr/share/locale/tr_TR/LC_MESSAGES/wiithon.mo
-	-$(RM) /usr/share/locale/es_CA/LC_MESSAGES/wiithon.mo
+	-$(RM) /usr/share/locale/ca_ES/LC_MESSAGES/wiithon.mo
 	
 	-$(RM) /usr/share/man/man1/wiithon.1.gz
 	-$(RM) /usr/share/man/es/man1/wiithon.1.gz
@@ -345,7 +347,7 @@ clean_gettext:
 	-$(RM) po/locale/pt_BR/LC_MESSAGES/wiithon.mo
 	-$(RM) po/locale/ru_RU/LC_MESSAGES/wiithon.mo
 	-$(RM) po/locale/tr_TR/LC_MESSAGES/wiithon.mo
-	-$(RM) po/locale/es_CA/LC_MESSAGES/wiithon.mo
+	-$(RM) po/locale/ca_ES/LC_MESSAGES/wiithon.mo
 
 clean_unrar:
 	$(MAKE) -C unrar-nonfree clean
@@ -484,8 +486,8 @@ first_time:
 	#msginit -i po/plantilla.pot -o po/fr.po --no-translator
 	# italiano
 	#msginit -i po/plantilla.pot -o po/it.po --no-translator
-	# catalan es_CA
-	#msginit -i po/plantilla.pot -o po/es_CA.po --no-translator
+	# catalan ca_ES
+	#msginit -i po/plantilla.pot -o po/ca_ES.po --no-translator
 	# portugues
 	#msginit -i po/plantilla.pot -o po/pt_PT.po --no-translator
 	# danish da_DK

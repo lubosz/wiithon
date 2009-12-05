@@ -493,8 +493,8 @@ def configurarLenguaje(inicial = 'default'):
         lang = 'pt_BR.UTF-8'
     elif inicial == 'pt_PT':
         lang = 'pt_PT.UTF-8'
-    elif inicial == 'es_CA':
-        lang = 'es_CA.UTF-8'
+    elif inicial == 'ca_ES':
+        lang = 'ca_ES.UTF-8'
 
     try:
         locale.setlocale(locale.LC_ALL, lang)

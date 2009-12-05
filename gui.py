@@ -974,7 +974,7 @@ class WiithonGUI(GtkBuilderWrapper):
         titulo = str(titulo)
         message = str(message)
         if level == 'question':
-            botones = (gtk.STOCK_YES, gtk.RESPONSE_ACCEPT, gtk.STOCK_NO, gtk.RESPONSE_REJECT)
+            botones = (str(_("SI")), gtk.RESPONSE_ACCEPT, str(_("NO")), gtk.RESPONSE_REJECT)
             const_stock_icon = gtk.STOCK_DIALOG_QUESTION
             default_response = gtk.RESPONSE_REJECT
             if titulo == '':
@@ -2042,7 +2042,7 @@ class WiithonGUI(GtkBuilderWrapper):
                 
                 if self.toggle_tipo_caratula_activo is not None:
                     self.toggle_tipo_caratula_activo.set_active(False)
-                    self.alert("warning" , "No implemented")
+                    self.alert("warning" , _("Esta funcion esta en desarrollo"))
 
                 if nuevo_cover_type == COVER_NORMAL:
                     self.toggle_tipo_caratula_activo = self.wb_boton_normal

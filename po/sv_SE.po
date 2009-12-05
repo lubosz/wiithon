@@ -332,11 +332,11 @@ msgstr "STORLEK"
 msgid "TITULO"
 msgstr "TITEL"
 
-#: cli.py:486
+#: cli.py:486 gui.py:977
 msgid "SI"
 msgstr "JA"
 
-#: cli.py:488 wiitdb_schema.py:326
+#: cli.py:488 gui.py:977 wiitdb_schema.py:326
 msgid "NO"
 msgstr "NEJ"
 
@@ -394,16 +394,16 @@ msgstr ""
 "\t--covers:\tDownload and copy all the covers to the current working directory.\n"
 "\t--discs:\tDownload and copy all the disc-ss current working directory."
 
-#: core.py:187 core.py:201
+#: core.py:191 core.py:205
 msgid "Copiando"
 msgstr "Kopierar"
 
-#: core.py:229
+#: core.py:233
 #, python-format
 msgid "Descargando disco de %s ..."
 msgstr "Laddar ner omslag %s..."
 
-#: core.py:249
+#: core.py:253
 #, python-format
 msgid "Descargando caratula de %s desde %s ..."
 msgstr "Laddar ner omslag %s ifrån %s..."
@@ -764,6 +764,10 @@ msgstr "DB har blivit formaterad"
 #: gui.py:2009 recursos/glade/wiithon.ui.h:38
 msgid "Formatear a WBFS"
 msgstr "Skapa WBFS-partition"
+
+#: gui.py:2045
+msgid "Esta funcion esta en desarrollo"
+msgstr ""
 
 #: gui.py:2070
 msgid "Seguro que deseas descargar informacion de los juegos de WiiTDB?"
