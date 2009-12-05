@@ -12,6 +12,7 @@ from threading import Thread
 import gtk
 import gettext
 import shutil
+from hachoir_core.i18n import guessBytesCharset
 
 import util
 import config
@@ -33,6 +34,10 @@ class WiithonCORE:
         salida = []
         for linea in lineas:
             cachos = linea.strip().split(config.SEPARADOR)
+            charSet = guessBytesCharset(cachos[1])
+            if charSet is not None:
+                cachos[1] = util.decode(cachos[1],charSet)
+
             idgame = util.decode(cachos[0])
             sql = util.decode("idgame=='%s' and idParticion='%s'" % (idgame, particion.idParticion))
             juego = session.query(Juego).filter(sql).first()

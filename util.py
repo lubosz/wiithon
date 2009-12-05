@@ -363,7 +363,7 @@ def esPNG(ruta):
     finally:
         f.seek(0)
 
-def decode(s, code = locale.getpreferredencoding()):
+def decode(s, code = 'utf-8'):
     try:
         return s.decode(code)
     except UnicodeDecodeError:
