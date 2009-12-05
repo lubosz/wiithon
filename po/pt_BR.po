@@ -394,16 +394,16 @@ msgstr ""
 "\t--covers:\tBaixa e copia todas as capas para o diretório atual.\n"
 "\t--discs:\tBaixa e copia todas as imagens de disco para o diretório de trabalho atual."
 
-#: core.py:188 core.py:202
+#: core.py:187 core.py:201
 msgid "Copiando"
 msgstr "Copiando"
 
-#: core.py:230
+#: core.py:229
 #, python-format
 msgid "Descargando disco de %s ..."
 msgstr "Baixando disco de %s ..."
 
-#: core.py:250
+#: core.py:249
 #, python-format
 msgid "Descargando caratula de %s desde %s ..."
 msgstr "Baixando capa de %s a %s ..."
@@ -1659,32 +1659,32 @@ msgstr "Programa executado com as opes incorretas."
 msgid "Interrumpido por el usuario"
 msgstr "Interrompido pelo usuário"
 
-#~ msgid "Numero de tareas que esperan en la cola."
-#~ msgstr "Número de tarefas que esperam na fila."
-
-#~ msgid "No se ha encontrado ninguna imagen ISO o RAR"
-#~ msgstr "Não foi encontrada nenhuma imagem ISO ou RAR"
-
-#~ msgid "Buscar:"
-#~ msgstr "Pesquisar:"
-
-#~ msgid "Fecha de lanzamiento: "
-#~ msgstr "Data de lançamento:"
-
-#~ msgid "OPCIONALES: "
-#~ msgstr "OPCIONAIS:"
-
-#~ msgid "ACCESORIOS: "
-#~ msgstr "ACCESÓRIOS: "
-
-#~ msgid "Progreso de la tarea actual."
-#~ msgstr "Progresso da tarefa atual."
-
-#~ msgid "Numero de juegos."
-#~ msgstr "Número de jogos."
+#~ msgid "+INFO"
+#~ msgstr "+INFO"
 
 #~ msgid "Espacio usado / Espacio total"
 #~ msgstr "Espaço usado / Espaço total"
 
-#~ msgid "+INFO"
-#~ msgstr "+INFO"
+#~ msgid "Numero de juegos."
+#~ msgstr "Número de jogos."
+
+#~ msgid "Progreso de la tarea actual."
+#~ msgstr "Progresso da tarefa atual."
+
+#~ msgid "ACCESORIOS: "
+#~ msgstr "ACCESÓRIOS: "
+
+#~ msgid "OPCIONALES: "
+#~ msgstr "OPCIONAIS:"
+
+#~ msgid "Fecha de lanzamiento: "
+#~ msgstr "Data de lançamento:"
+
+#~ msgid "Buscar:"
+#~ msgstr "Pesquisar:"
+
+#~ msgid "No se ha encontrado ninguna imagen ISO o RAR"
+#~ msgstr "Não foi encontrada nenhuma imagem ISO ou RAR"
+
+#~ msgid "Numero de tareas que esperan en la cola."
+#~ msgstr "Número de tarefas que esperam na fila."

@@ -392,16 +392,16 @@ msgstr ""
 "\t--covers:\tDescarga y copia todas las carátulas al directorio de trabajo actual.\n"
 "\t--discs:\tDescarga y copia todas los disc-arts al directorio de trabajo actual."
 
-#: core.py:188 core.py:202
+#: core.py:187 core.py:201
 msgid "Copiando"
 msgstr "Copiando"
 
-#: core.py:230
+#: core.py:229
 #, python-format
 msgid "Descargando disco de %s ..."
 msgstr "Descargando disco de %s ..."
 
-#: core.py:250
+#: core.py:249
 #, python-format
 msgid "Descargando caratula de %s desde %s ..."
 msgstr "Descargando carátula de %s desde %s ..."
@@ -1646,38 +1646,38 @@ msgstr "Programa ejecutado con las opciones incorrectas."
 msgid "Interrumpido por el usuario"
 msgstr "Interrumpido por el usuario"
 
-#~ msgid "Numero de tareas que esperan en la cola."
-#~ msgstr "Número de tareas que esperan en la cola."
-
-#~ msgid "No se ha encontrado ninguna imagen ISO o RAR"
-#~ msgstr "No se ha encontrado ninguna imagen ISO o RAR"
-
-#~ msgid "ISO sin comprimir"
-#~ msgstr "ISO sin comprimir"
-
-#~ msgid "Buscar:"
-#~ msgstr "Buscar:"
-
-#~ msgid "Formato ISO - Sin gestion de huecos"
-#~ msgstr "Formato ISO - Sin gestión de huecos"
-
-#~ msgid "Fecha de lanzamiento: "
-#~ msgstr "Fecha: "
-
-#~ msgid "OPCIONALES: "
-#~ msgstr "OPCIONALES: "
-
-#~ msgid "ACCESORIOS: "
-#~ msgstr "ACCESORIOS: "
-
-#~ msgid "Progreso de la tarea actual."
-#~ msgstr "Progreso de la tarea actual."
-
-#~ msgid "Numero de juegos."
-#~ msgstr "Número de juegos."
+#~ msgid "+INFO"
+#~ msgstr "+INFO"
 
 #~ msgid "Espacio usado / Espacio total"
 #~ msgstr "Espacio usado / Espacio total"
 
-#~ msgid "+INFO"
-#~ msgstr "+INFO"
+#~ msgid "Numero de juegos."
+#~ msgstr "Número de juegos."
+
+#~ msgid "Progreso de la tarea actual."
+#~ msgstr "Progreso de la tarea actual."
+
+#~ msgid "ACCESORIOS: "
+#~ msgstr "ACCESORIOS: "
+
+#~ msgid "OPCIONALES: "
+#~ msgstr "OPCIONALES: "
+
+#~ msgid "Fecha de lanzamiento: "
+#~ msgstr "Fecha: "
+
+#~ msgid "Formato ISO - Sin gestion de huecos"
+#~ msgstr "Formato ISO - Sin gestión de huecos"
+
+#~ msgid "Buscar:"
+#~ msgstr "Buscar:"
+
+#~ msgid "ISO sin comprimir"
+#~ msgstr "ISO sin comprimir"
+
+#~ msgid "No se ha encontrado ninguna imagen ISO o RAR"
+#~ msgstr "No se ha encontrado ninguna imagen ISO o RAR"
+
+#~ msgid "Numero de tareas que esperan en la cola."
+#~ msgstr "Número de tareas que esperan en la cola."

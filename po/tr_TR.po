@@ -360,16 +360,16 @@ msgstr ""
 msgid "AYUDA_CLI"
 msgstr ""
 
-#: core.py:188 core.py:202
+#: core.py:187 core.py:201
 msgid "Copiando"
 msgstr ""
 
-#: core.py:230
+#: core.py:229
 #, python-format
 msgid "Descargando disco de %s ..."
 msgstr ""
 
-#: core.py:250
+#: core.py:249
 #, python-format
 msgid "Descargando caratula de %s desde %s ..."
 msgstr ""

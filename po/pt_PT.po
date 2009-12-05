@@ -390,16 +390,16 @@ msgstr ""
 "\t--covers:\tDescarga y copia todas las carátulas al directorio de trabajo actual.\n"
 "\t--discs:\tDescarga y copia todas los disc-arts al directorio de trabajo actual."
 
-#: core.py:188 core.py:202
+#: core.py:187 core.py:201
 msgid "Copiando"
 msgstr ""
 
-#: core.py:230
+#: core.py:229
 #, python-format
 msgid "Descargando disco de %s ..."
 msgstr ""
 
-#: core.py:250
+#: core.py:249
 #, python-format
 msgid "Descargando caratula de %s desde %s ..."
 msgstr "Descargando carátula de %s desde %s ..."
@@ -1638,11 +1638,11 @@ msgstr ""
 msgid "Interrumpido por el usuario"
 msgstr ""
 
-#~ msgid "Numero de tareas que esperan en la cola."
-#~ msgstr "Número de tareas que esperan en la cola."
+#~ msgid "Numero de juegos."
+#~ msgstr "Número de juegos."
 
 #~ msgid "Fecha de lanzamiento: "
 #~ msgstr "Fecha: "
 
-#~ msgid "Numero de juegos."
-#~ msgstr "Número de juegos."
+#~ msgid "Numero de tareas que esperan en la cola."
+#~ msgstr "Número de tareas que esperan en la cola."

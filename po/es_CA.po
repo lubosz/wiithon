@@ -395,16 +395,16 @@ msgstr ""
 "\t--covers:\tBaixa i copia totes les caràtules al directori de treball actual.\n"
 "\t--discs:\tBaixa i copia tots els disc-arts a l directori de treball."
 
-#: core.py:188 core.py:202
+#: core.py:187 core.py:201
 msgid "Copiando"
 msgstr "Copiant"
 
-#: core.py:230
+#: core.py:229
 #, python-format
 msgid "Descargando disco de %s ..."
 msgstr "Baixant disc de %s ..."
 
-#: core.py:250
+#: core.py:249
 #, python-format
 msgid "Descargando caratula de %s desde %s ..."
 msgstr "Baixant caràtula de %s desde %s ..."
@@ -1659,29 +1659,29 @@ msgstr "Programa executat amb les opcions incorrectes."
 msgid "Interrumpido por el usuario"
 msgstr "Interromput per l'usuari"
 
-#~ msgid "Numero de tareas que esperan en la cola."
-#~ msgstr "Nombre de tasques que esperen a la cua"
-
-#~ msgid "No se ha encontrado ninguna imagen ISO o RAR"
-#~ msgstr "No s'ha trobat cap imatge ISO o RAR"
-
-#~ msgid "Fecha de lanzamiento: "
-#~ msgstr "Data de llançament:"
-
-#~ msgid "OPCIONALES: "
-#~ msgstr "OPCIONALS:"
-
-#~ msgid "ACCESORIOS: "
-#~ msgstr "Accesoris:"
-
-#~ msgid "Progreso de la tarea actual."
-#~ msgstr "Progrés de la tasca actual."
-
-#~ msgid "Numero de juegos."
-#~ msgstr "Nombre de jocs"
+#~ msgid "+INFO"
+#~ msgstr "+INFO"
 
 #~ msgid "Espacio usado / Espacio total"
 #~ msgstr "Espai utilitzat / Espai total"
 
-#~ msgid "+INFO"
-#~ msgstr "+INFO"
+#~ msgid "Numero de juegos."
+#~ msgstr "Nombre de jocs"
+
+#~ msgid "Progreso de la tarea actual."
+#~ msgstr "Progrés de la tasca actual."
+
+#~ msgid "ACCESORIOS: "
+#~ msgstr "Accesoris:"
+
+#~ msgid "OPCIONALES: "
+#~ msgstr "OPCIONALS:"
+
+#~ msgid "Fecha de lanzamiento: "
+#~ msgstr "Data de llançament:"
+
+#~ msgid "No se ha encontrado ninguna imagen ISO o RAR"
+#~ msgstr "No s'ha trobat cap imatge ISO o RAR"
+
+#~ msgid "Numero de tareas que esperan en la cola."
+#~ msgstr "Nombre de tasques que esperen a la cua"

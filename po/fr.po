@@ -394,16 +394,16 @@ msgstr ""
 "\t--covers:\tTélécharger et copier toutes les pochettes dans le dossier de travail actuel.\n"
 "\t--discs:\tTélécharger et copier tous les disques dans le dossier de travail actuel."
 
-#: core.py:188 core.py:202
+#: core.py:187 core.py:201
 msgid "Copiando"
 msgstr "Copie en cours"
 
-#: core.py:230
+#: core.py:229
 #, python-format
 msgid "Descargando disco de %s ..."
 msgstr "Téléchargement du disque %s ..."
 
-#: core.py:250
+#: core.py:249
 #, python-format
 msgid "Descargando caratula de %s desde %s ..."
 msgstr "Téléchargement de la jaquette %s de %s ..."
@@ -1654,35 +1654,35 @@ msgstr "Programme lancé avec des paramètres incorrects."
 msgid "Interrumpido por el usuario"
 msgstr "Interrompu par l'utilisateur"
 
-#~ msgid "Numero de tareas que esperan en la cola."
-#~ msgstr "Nombre de tâches en attente dans la file."
-
-#~ msgid "No se ha encontrado ninguna imagen ISO o RAR"
-#~ msgstr "Impossible de trouver une image ISO ou RAR"
-
-#~ msgid "ISO sin comprimir"
-#~ msgstr "ISO sans compression"
-
-#~ msgid "Buscar:"
-#~ msgstr "Recherche:"
-
-#~ msgid "Fecha de lanzamiento: "
-#~ msgstr "Paru le : "
-
-#~ msgid "OPCIONALES: "
-#~ msgstr "OPTIONS : "
-
-#~ msgid "ACCESORIOS: "
-#~ msgstr "ACCESSOIRES : "
-
-#~ msgid "Progreso de la tarea actual."
-#~ msgstr "Progression de la tâche en cours."
-
-#~ msgid "Numero de juegos."
-#~ msgstr "Nombre de jeux."
+#~ msgid "+INFO"
+#~ msgstr "+INFO"
 
 #~ msgid "Espacio usado / Espacio total"
 #~ msgstr "Espace utilisé / Espace total"
 
-#~ msgid "+INFO"
-#~ msgstr "+INFO"
+#~ msgid "Numero de juegos."
+#~ msgstr "Nombre de jeux."
+
+#~ msgid "Progreso de la tarea actual."
+#~ msgstr "Progression de la tâche en cours."
+
+#~ msgid "ACCESORIOS: "
+#~ msgstr "ACCESSOIRES : "
+
+#~ msgid "OPCIONALES: "
+#~ msgstr "OPTIONS : "
+
+#~ msgid "Fecha de lanzamiento: "
+#~ msgstr "Paru le : "
+
+#~ msgid "Buscar:"
+#~ msgstr "Recherche:"
+
+#~ msgid "ISO sin comprimir"
+#~ msgstr "ISO sans compression"
+
+#~ msgid "No se ha encontrado ninguna imagen ISO o RAR"
+#~ msgstr "Impossible de trouver une image ISO ou RAR"
+
+#~ msgid "Numero de tareas que esperan en la cola."
+#~ msgstr "Nombre de tâches en attente dans la file."
