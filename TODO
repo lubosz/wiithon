@@ -12,3 +12,5 @@
 - ISO -> WDF : wiithon_iso2wdf -oq entrada.iso -d salida.wdf
 - Extract all in context menu
 - Si todos los nombres propuestos son iguales, no mostrar la propuesta
+- setup preferred export directory in preferences
+- best fix from titles problem (UTF-8 vs ISO-8859-1)

@@ -24,8 +24,10 @@ from sqlalchemy import create_engine
 import config
 
 # Caracteres que hacen que una expresión no pueda ser expresión regular
-BLACK_LIST = "/\"\'$&|[]"
-BLACK_LIST2 = "\";`$\\\'"
+#BLACK_LIST = "/\"\'$&|[]"
+#BLACK_LIST2 = "\";`$\\\'"
+BLACK_LIST = "/\"$|[]"
+BLACK_LIST2 = "\";$\\"
 
 class NonRepeatList(list):
     def __init__(self, *args):
