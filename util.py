@@ -369,7 +369,23 @@ def decode(s, code = 'utf-8'):
     try:
         return s.decode(code)
     except UnicodeDecodeError:
-        return s
+        try:
+            text = unicode(s, 'ASCII', 'strict')
+       	    return s.decode('ASCII')
+        except UnicodeDecodeError:
+            pass
+
+        try:
+            text = unicode(s, 'ISO-8859-1', 'strict')
+            return s.decode('ISO-8859-1')
+        except UnicodeDecodeError:
+            pass
+
+        try:
+            text = unicode(s, 'ISO-8859-15', 'strict')
+            return s.decode('ISO-8859-15')
+        except UnicodeDecodeError:
+            pass
 
 class NoDeberiaPasar(Exception):
     pass
