@@ -211,7 +211,7 @@ msgstr "Error: El archivo RAR %s no contiene ninguna ISO"
 msgid "No hay 4.4GB libres para descomprimir el fichero RAR: %s en la ruta %s. Puede cambiar la ruta en preferencias."
 msgstr "No hay 4.4GB libres para descomprimir el fichero RAR: %s en la ruta %s. Puede cambiar la ruta en preferencias."
 
-#: cli.py:329 trabajo.py:426
+#: cli.py:329 trabajo.py:428
 #, python-format
 msgid "Error al descomrpimir el RAR : %s"
 msgstr "Error al descomrpimir el RAR : %s"
@@ -392,16 +392,16 @@ msgstr ""
 "\t--covers:\tDescarga y copia todas las carátulas al directorio de trabajo actual.\n"
 "\t--discs:\tDescarga y copia todas los disc-arts al directorio de trabajo actual."
 
-#: core.py:191 core.py:205
+#: core.py:186 core.py:200
 msgid "Copiando"
 msgstr "Copiando"
 
-#: core.py:233
+#: core.py:228
 #, python-format
 msgid "Descargando disco de %s ..."
 msgstr "Descargando disco de %s ..."
 
-#: core.py:253
+#: core.py:248
 #, python-format
 msgid "Descargando caratula de %s desde %s ..."
 msgstr "Descargando carátula de %s desde %s ..."
@@ -1494,89 +1494,89 @@ msgstr "%s no es un directorio"
 msgid "%s no es un archivo RAR"
 msgstr "%s no es un archivo RAR"
 
-#: trabajo.py:456
+#: trabajo.py:458
 #, python-format
 msgid "Error: Al descargar la bdd wiitdb de: %s"
 msgstr "Error: Al descargar la BDD de Internet de: %s"
 
-#: trabajo.py:458
+#: trabajo.py:460
 msgid "Error: Ocurrio un error al introducir la informacion de juegos de WiiTDB"
 msgstr "Error: Ocurrió un error al introducir la información de los juegos"
 
-#: trabajo.py:471
+#: trabajo.py:473
 msgid "Error: Al intentar identificarse en WiiTDB para editar el juego."
 msgstr "Error: Al intentar identificarse en WiiTDB para editar el juego."
 
-#: trabajo.py:473
+#: trabajo.py:475
 #, python-format
 msgid "Escriba su login y password en las preferencias. Si no dispone de uno, registrese en %s"
 msgstr "Escriba su usuario y contraseña en las preferencias. Si no dispone de uno, registrese en %s"
 
-#: trabajo.py:570
+#: trabajo.py:572
 msgid "Error al finalizar la siguiente tarea:"
 msgstr "Error al finalizar la siguiente tarea:"
 
-#: trabajo.py:575
+#: trabajo.py:577
 #, python-format
 msgid "Anadir %s a la particion %s"
 msgstr "Añadir %s a la partición %s"
 
-#: trabajo.py:577
+#: trabajo.py:579
 #, python-format
 msgid "Extraer %s a la ruta %s"
 msgstr "Extraer %s a la ruta %s"
 
-#: trabajo.py:579
+#: trabajo.py:581
 #, python-format
 msgid "Copiando el juego %s desde %s a la particion %s"
 msgstr "Copiando el juego %s desde %s a la partición %s"
 
-#: trabajo.py:581
+#: trabajo.py:583
 #, python-format
 msgid "Descargando caratula de %s"
 msgstr "Descargando carátula de %s"
 
-#: trabajo.py:583
+#: trabajo.py:585
 #, python-format
 msgid "Descargando disco de %s"
 msgstr "Descargando disco de %s"
 
-#: trabajo.py:585
+#: trabajo.py:587
 #, python-format
 msgid "Copiando la caratula %s a la ruta %s"
 msgstr "Copiando la carátula %s a la ruta %s"
 
-#: trabajo.py:587
+#: trabajo.py:589
 #, python-format
 msgid "Copiando el disco %s a la ruta %s"
 msgstr "Copiando el disco %s a la ruta %s"
 
-#: trabajo.py:589
+#: trabajo.py:591
 #, python-format
 msgid "Recorrer directorio %s"
 msgstr "Recorrer directorio %s"
 
-#: trabajo.py:591
+#: trabajo.py:593
 #, python-format
 msgid "Descomprimir RAR %s"
 msgstr "Descomprimir RAR %s"
 
-#: trabajo.py:593
+#: trabajo.py:595
 #, python-format
 msgid "Actualizar WiiTDB desde %s"
 msgstr "Actualizar WiiTDB desde %s"
 
-#: trabajo.py:595
+#: trabajo.py:597
 #, python-format
 msgid "Editar Juego WiiTDB: %s"
 msgstr "Editar Juego WiiTDB: %s"
 
-#: trabajo.py:597
+#: trabajo.py:599
 #, python-format
 msgid "Abrir pagina: %s"
 msgstr "Abrir página: %s"
 
-#: trabajo.py:599
+#: trabajo.py:601
 msgid "Trabajo desconocido"
 msgstr "Trabajo desconocido"
 
@@ -1650,38 +1650,38 @@ msgstr "Programa ejecutado con las opciones incorrectas."
 msgid "Interrumpido por el usuario"
 msgstr "Interrumpido por el usuario"
 
-#~ msgid "+INFO"
-#~ msgstr "+INFO"
-
-#~ msgid "Espacio usado / Espacio total"
-#~ msgstr "Espacio usado / Espacio total"
-
-#~ msgid "Numero de juegos."
-#~ msgstr "Número de juegos."
-
-#~ msgid "Progreso de la tarea actual."
-#~ msgstr "Progreso de la tarea actual."
-
-#~ msgid "ACCESORIOS: "
-#~ msgstr "ACCESORIOS: "
-
-#~ msgid "OPCIONALES: "
-#~ msgstr "OPCIONALES: "
-
-#~ msgid "Fecha de lanzamiento: "
-#~ msgstr "Fecha: "
-
-#~ msgid "Formato ISO - Sin gestion de huecos"
-#~ msgstr "Formato ISO - Sin gestión de huecos"
-
-#~ msgid "Buscar:"
-#~ msgstr "Buscar:"
-
-#~ msgid "ISO sin comprimir"
-#~ msgstr "ISO sin comprimir"
+#~ msgid "Numero de tareas que esperan en la cola."
+#~ msgstr "Número de tareas que esperan en la cola."
 
 #~ msgid "No se ha encontrado ninguna imagen ISO o RAR"
 #~ msgstr "No se ha encontrado ninguna imagen ISO o RAR"
 
-#~ msgid "Numero de tareas que esperan en la cola."
-#~ msgstr "Número de tareas que esperan en la cola."
+#~ msgid "ISO sin comprimir"
+#~ msgstr "ISO sin comprimir"
+
+#~ msgid "Buscar:"
+#~ msgstr "Buscar:"
+
+#~ msgid "Formato ISO - Sin gestion de huecos"
+#~ msgstr "Formato ISO - Sin gestión de huecos"
+
+#~ msgid "Fecha de lanzamiento: "
+#~ msgstr "Fecha: "
+
+#~ msgid "OPCIONALES: "
+#~ msgstr "OPCIONALES: "
+
+#~ msgid "ACCESORIOS: "
+#~ msgstr "ACCESORIOS: "
+
+#~ msgid "Progreso de la tarea actual."
+#~ msgstr "Progreso de la tarea actual."
+
+#~ msgid "Numero de juegos."
+#~ msgstr "Número de juegos."
+
+#~ msgid "Espacio usado / Espacio total"
+#~ msgstr "Espacio usado / Espacio total"
+
+#~ msgid "+INFO"
+#~ msgstr "+INFO"

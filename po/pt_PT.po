@@ -209,7 +209,7 @@ msgstr ""
 msgid "No hay 4.4GB libres para descomprimir el fichero RAR: %s en la ruta %s. Puede cambiar la ruta en preferencias."
 msgstr ""
 
-#: cli.py:329 trabajo.py:426
+#: cli.py:329 trabajo.py:428
 #, python-format
 msgid "Error al descomrpimir el RAR : %s"
 msgstr ""
@@ -390,16 +390,16 @@ msgstr ""
 "\t--covers:\tDescarga y copia todas las carátulas al directorio de trabajo actual.\n"
 "\t--discs:\tDescarga y copia todas los disc-arts al directorio de trabajo actual."
 
-#: core.py:191 core.py:205
+#: core.py:186 core.py:200
 msgid "Copiando"
 msgstr ""
 
-#: core.py:233
+#: core.py:228
 #, python-format
 msgid "Descargando disco de %s ..."
 msgstr ""
 
-#: core.py:253
+#: core.py:248
 #, python-format
 msgid "Descargando caratula de %s desde %s ..."
 msgstr "Descargando carátula de %s desde %s ..."
@@ -1486,89 +1486,89 @@ msgstr ""
 msgid "%s no es un archivo RAR"
 msgstr ""
 
-#: trabajo.py:456
+#: trabajo.py:458
 #, python-format
 msgid "Error: Al descargar la bdd wiitdb de: %s"
 msgstr "Error: Al descargar la BDD de Internet de: %s"
 
-#: trabajo.py:458
+#: trabajo.py:460
 msgid "Error: Ocurrio un error al introducir la informacion de juegos de WiiTDB"
 msgstr "Error: Ocurrió un error al introducir la información de los juegos"
 
-#: trabajo.py:471
+#: trabajo.py:473
 msgid "Error: Al intentar identificarse en WiiTDB para editar el juego."
 msgstr ""
 
-#: trabajo.py:473
+#: trabajo.py:475
 #, python-format
 msgid "Escriba su login y password en las preferencias. Si no dispone de uno, registrese en %s"
 msgstr ""
 
-#: trabajo.py:570
+#: trabajo.py:572
 msgid "Error al finalizar la siguiente tarea:"
 msgstr ""
 
-#: trabajo.py:575
+#: trabajo.py:577
 #, python-format
 msgid "Anadir %s a la particion %s"
 msgstr "Añadir %s a la partición %s"
 
-#: trabajo.py:577
+#: trabajo.py:579
 #, python-format
 msgid "Extraer %s a la ruta %s"
 msgstr "Extraer %s a la ruta %s"
 
-#: trabajo.py:579
+#: trabajo.py:581
 #, python-format
 msgid "Copiando el juego %s desde %s a la particion %s"
 msgstr "Copiando el juego %s desde %s a la partición %s"
 
-#: trabajo.py:581
+#: trabajo.py:583
 #, python-format
 msgid "Descargando caratula de %s"
 msgstr "Descargando carátula de %s"
 
-#: trabajo.py:583
+#: trabajo.py:585
 #, python-format
 msgid "Descargando disco de %s"
 msgstr ""
 
-#: trabajo.py:585
+#: trabajo.py:587
 #, python-format
 msgid "Copiando la caratula %s a la ruta %s"
 msgstr "Copiando la carátula %s a la ruta %s"
 
-#: trabajo.py:587
+#: trabajo.py:589
 #, python-format
 msgid "Copiando el disco %s a la ruta %s"
 msgstr ""
 
-#: trabajo.py:589
+#: trabajo.py:591
 #, python-format
 msgid "Recorrer directorio %s"
 msgstr ""
 
-#: trabajo.py:591
+#: trabajo.py:593
 #, python-format
 msgid "Descomprimir RAR %s"
 msgstr ""
 
-#: trabajo.py:593
+#: trabajo.py:595
 #, python-format
 msgid "Actualizar WiiTDB desde %s"
 msgstr ""
 
-#: trabajo.py:595
+#: trabajo.py:597
 #, python-format
 msgid "Editar Juego WiiTDB: %s"
 msgstr ""
 
-#: trabajo.py:597
+#: trabajo.py:599
 #, python-format
 msgid "Abrir pagina: %s"
 msgstr ""
 
-#: trabajo.py:599
+#: trabajo.py:601
 msgid "Trabajo desconocido"
 msgstr ""
 
@@ -1642,11 +1642,11 @@ msgstr ""
 msgid "Interrumpido por el usuario"
 msgstr ""
 
-#~ msgid "Numero de juegos."
-#~ msgstr "Número de juegos."
+#~ msgid "Numero de tareas que esperan en la cola."
+#~ msgstr "Número de tareas que esperan en la cola."
 
 #~ msgid "Fecha de lanzamiento: "
 #~ msgstr "Fecha: "
 
-#~ msgid "Numero de tareas que esperan en la cola."
-#~ msgstr "Número de tareas que esperan en la cola."
+#~ msgid "Numero de juegos."
+#~ msgstr "Número de juegos."

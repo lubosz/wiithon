@@ -417,6 +417,8 @@ class PoolTrabajo(Pool , Thread):
             if self.callback_empieza_progreso:
                 self.callback_empieza_progreso(trabajo)
 
+            print archivoRAR
+                
             if ( core.unpack(archivoRAR, self.ruta_extraer_rar, nombreISO, self.rar_overwrite_iso) ):
                 exito = True
                 

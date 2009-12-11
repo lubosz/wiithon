@@ -213,7 +213,7 @@ msgstr "Fel: RAR-arkivet %s innehåller ingen ISO"
 msgid "No hay 4.4GB libres para descomprimir el fichero RAR: %s en la ruta %s. Puede cambiar la ruta en preferencias."
 msgstr "Det finns inte 4,4GB fritt utrymme för att packa upp RAR-filen %s i %s. Du kan ändra målkatalog i Inställningar."
 
-#: cli.py:329 trabajo.py:426
+#: cli.py:329 trabajo.py:428
 #, python-format
 msgid "Error al descomrpimir el RAR : %s"
 msgstr "Fel vid uppackning av RAR-filen %s"
@@ -394,16 +394,16 @@ msgstr ""
 "\t--covers:\tDownload and copy all the covers to the current working directory.\n"
 "\t--discs:\tDownload and copy all the disc-ss current working directory."
 
-#: core.py:191 core.py:205
+#: core.py:186 core.py:200
 msgid "Copiando"
 msgstr "Kopierar"
 
-#: core.py:233
+#: core.py:228
 #, python-format
 msgid "Descargando disco de %s ..."
 msgstr "Laddar ner omslag %s..."
 
-#: core.py:253
+#: core.py:248
 #, python-format
 msgid "Descargando caratula de %s desde %s ..."
 msgstr "Laddar ner omslag %s ifrån %s..."
@@ -1515,89 +1515,89 @@ msgstr "%s är inte någon mapp"
 msgid "%s no es un archivo RAR"
 msgstr "%s är inte ett RAR-arkiv"
 
-#: trabajo.py:456
+#: trabajo.py:458
 #, python-format
 msgid "Error: Al descargar la bdd wiitdb de: %s"
 msgstr "Fel vid nerladdning av DB ifrån WiiTDB ifrån %s"
 
-#: trabajo.py:458
+#: trabajo.py:460
 msgid "Error: Ocurrio un error al introducir la informacion de juegos de WiiTDB"
 msgstr "Fel: Ett problem uppstod när informationen om spelen skulle läggas till"
 
-#: trabajo.py:471
+#: trabajo.py:473
 msgid "Error: Al intentar identificarse en WiiTDB para editar el juego."
 msgstr ""
 
-#: trabajo.py:473
+#: trabajo.py:475
 #, python-format
 msgid "Escriba su login y password en las preferencias. Si no dispone de uno, registrese en %s"
 msgstr ""
 
-#: trabajo.py:570
+#: trabajo.py:572
 msgid "Error al finalizar la siguiente tarea:"
 msgstr "Fel när följande aktivitet skulle avslutas:"
 
-#: trabajo.py:575
+#: trabajo.py:577
 #, python-format
 msgid "Anadir %s a la particion %s"
 msgstr "Lägger till %s till partitionen %s"
 
-#: trabajo.py:577
+#: trabajo.py:579
 #, python-format
 msgid "Extraer %s a la ruta %s"
 msgstr "Skapar en ISO av %s och lägger den i %s"
 
-#: trabajo.py:579
+#: trabajo.py:581
 #, python-format
 msgid "Copiando el juego %s desde %s a la particion %s"
 msgstr "Kopiera %s ifrån %s till partitionen %s"
 
-#: trabajo.py:581
+#: trabajo.py:583
 #, python-format
 msgid "Descargando caratula de %s"
 msgstr "Laddar ner omslag %s"
 
-#: trabajo.py:583
+#: trabajo.py:585
 #, python-format
 msgid "Descargando disco de %s"
 msgstr "Laddar ner skiva %s"
 
-#: trabajo.py:585
+#: trabajo.py:587
 #, python-format
 msgid "Copiando la caratula %s a la ruta %s"
 msgstr "Kopiera omslag %s till %s"
 
-#: trabajo.py:587
+#: trabajo.py:589
 #, python-format
 msgid "Copiando el disco %s a la ruta %s"
 msgstr "Kopiera skiva %s till %s"
 
-#: trabajo.py:589
+#: trabajo.py:591
 #, python-format
 msgid "Recorrer directorio %s"
 msgstr "Utforska %s"
 
-#: trabajo.py:591
+#: trabajo.py:593
 #, python-format
 msgid "Descomprimir RAR %s"
 msgstr "Packa upp RAR %s"
 
-#: trabajo.py:593
+#: trabajo.py:595
 #, python-format
 msgid "Actualizar WiiTDB desde %s"
 msgstr "Uppdatera WiiTDB ifrån %s"
 
-#: trabajo.py:595
+#: trabajo.py:597
 #, python-format
 msgid "Editar Juego WiiTDB: %s"
 msgstr ""
 
-#: trabajo.py:597
+#: trabajo.py:599
 #, python-format
 msgid "Abrir pagina: %s"
 msgstr ""
 
-#: trabajo.py:599
+#: trabajo.py:601
 #, fuzzy
 msgid "Trabajo desconocido"
 msgstr "Okänt format"
@@ -1672,32 +1672,32 @@ msgstr "Programmet körs med felaktiga inställningar"
 msgid "Interrumpido por el usuario"
 msgstr "Avbrutet av användraren"
 
-#~ msgid "+INFO"
-#~ msgstr "+INFO"
-
-#~ msgid "Espacio usado / Espacio total"
-#~ msgstr "Fritt utrymme / Totalt utrymme"
-
-#~ msgid "Numero de juegos."
-#~ msgstr "Spelnummer"
-
-#~ msgid "Progreso de la tarea actual."
-#~ msgstr "Status på pågående uppgift."
-
-#~ msgid "ACCESORIOS: "
-#~ msgstr "KONTROLLER:"
-
-#~ msgid "OPCIONALES: "
-#~ msgstr "VALFRIA TILLBEHÖR:"
-
-#~ msgid "Fecha de lanzamiento: "
-#~ msgstr "Releasedatum:"
-
-#~ msgid "Buscar:"
-#~ msgstr "Sök:"
+#~ msgid "Numero de tareas que esperan en la cola."
+#~ msgstr "Antal aktiviteter i kö"
 
 #~ msgid "No se ha encontrado ninguna imagen ISO o RAR"
 #~ msgstr "Kunde inte hitta någon ISO- eller RAR-fil"
 
-#~ msgid "Numero de tareas que esperan en la cola."
-#~ msgstr "Antal aktiviteter i kö"
+#~ msgid "Buscar:"
+#~ msgstr "Sök:"
+
+#~ msgid "Fecha de lanzamiento: "
+#~ msgstr "Releasedatum:"
+
+#~ msgid "OPCIONALES: "
+#~ msgstr "VALFRIA TILLBEHÖR:"
+
+#~ msgid "ACCESORIOS: "
+#~ msgstr "KONTROLLER:"
+
+#~ msgid "Progreso de la tarea actual."
+#~ msgstr "Status på pågående uppgift."
+
+#~ msgid "Numero de juegos."
+#~ msgstr "Spelnummer"
+
+#~ msgid "Espacio usado / Espacio total"
+#~ msgstr "Fritt utrymme / Totalt utrymme"
+
+#~ msgid "+INFO"
+#~ msgstr "+INFO"

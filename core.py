@@ -307,6 +307,7 @@ class WiithonCORE:
             os.chdir(destino)
 
         comando = '%s e "%s" "%s"' % (config.UNRAR_APP, nombreRAR , nombreISO)
+        print comando
         salida = util.call_out_file(comando)
 
         if destino != ".":

@@ -213,7 +213,7 @@ msgstr "Erro: O arquivo RAR %s não contém nenhuma ISO"
 msgid "No hay 4.4GB libres para descomprimir el fichero RAR: %s en la ruta %s. Puede cambiar la ruta en preferencias."
 msgstr "Não há 4.4Gb livres para descompactar o arquivo RAR %s no caminho %s. Você pode trocar o caminho nas preferências."
 
-#: cli.py:329 trabajo.py:426
+#: cli.py:329 trabajo.py:428
 #, python-format
 msgid "Error al descomrpimir el RAR : %s"
 msgstr "Erro ao descompactar o RAR : %s"
@@ -394,16 +394,16 @@ msgstr ""
 "\t--covers:\tBaixa e copia todas as capas para o diretório atual.\n"
 "\t--discs:\tBaixa e copia todas as imagens de disco para o diretório de trabalho atual."
 
-#: core.py:191 core.py:205
+#: core.py:186 core.py:200
 msgid "Copiando"
 msgstr "Copiando"
 
-#: core.py:233
+#: core.py:228
 #, python-format
 msgid "Descargando disco de %s ..."
 msgstr "Baixando disco de %s ..."
 
-#: core.py:253
+#: core.py:248
 #, python-format
 msgid "Descargando caratula de %s desde %s ..."
 msgstr "Baixando capa de %s a %s ..."
@@ -1506,89 +1506,89 @@ msgstr "%s não é um diretório"
 msgid "%s no es un archivo RAR"
 msgstr "%s não é um arquivo RAR"
 
-#: trabajo.py:456
+#: trabajo.py:458
 #, python-format
 msgid "Error: Al descargar la bdd wiitdb de: %s"
 msgstr "Erro: Ao baixar o BD wiitdb de: %s"
 
-#: trabajo.py:458
+#: trabajo.py:460
 msgid "Error: Ocurrio un error al introducir la informacion de juegos de WiiTDB"
 msgstr "Erro: Ocorreu um erro ao entrar com a informação dos jogos do WiiTDB"
 
-#: trabajo.py:471
+#: trabajo.py:473
 msgid "Error: Al intentar identificarse en WiiTDB para editar el juego."
 msgstr ""
 
-#: trabajo.py:473
+#: trabajo.py:475
 #, python-format
 msgid "Escriba su login y password en las preferencias. Si no dispone de uno, registrese en %s"
 msgstr ""
 
-#: trabajo.py:570
+#: trabajo.py:572
 msgid "Error al finalizar la siguiente tarea:"
 msgstr "Erro ao finalizar a seguinte tarefa:"
 
-#: trabajo.py:575
+#: trabajo.py:577
 #, python-format
 msgid "Anadir %s a la particion %s"
 msgstr "Adicionar %s para a partição %s"
 
-#: trabajo.py:577
+#: trabajo.py:579
 #, python-format
 msgid "Extraer %s a la ruta %s"
 msgstr "Extrair %s para o caminho %s"
 
-#: trabajo.py:579
+#: trabajo.py:581
 #, python-format
 msgid "Copiando el juego %s desde %s a la particion %s"
 msgstr "Copiando o jogo %s de %s para a partição %s"
 
-#: trabajo.py:581
+#: trabajo.py:583
 #, python-format
 msgid "Descargando caratula de %s"
 msgstr "Baixando capa de %s"
 
-#: trabajo.py:583
+#: trabajo.py:585
 #, python-format
 msgid "Descargando disco de %s"
 msgstr "Baixando disco de %s"
 
-#: trabajo.py:585
+#: trabajo.py:587
 #, python-format
 msgid "Copiando la caratula %s a la ruta %s"
 msgstr "Baixando a capa %s para o caminho %s"
 
-#: trabajo.py:587
+#: trabajo.py:589
 #, python-format
 msgid "Copiando el disco %s a la ruta %s"
 msgstr "Copiando o disco %s para o caminho %s"
 
-#: trabajo.py:589
+#: trabajo.py:591
 #, python-format
 msgid "Recorrer directorio %s"
 msgstr "Procurar diretório %s"
 
-#: trabajo.py:591
+#: trabajo.py:593
 #, python-format
 msgid "Descomprimir RAR %s"
 msgstr "Descompactar RAR %s"
 
-#: trabajo.py:593
+#: trabajo.py:595
 #, python-format
 msgid "Actualizar WiiTDB desde %s"
 msgstr "Atualizar WiiTDB a partir de %s"
 
-#: trabajo.py:595
+#: trabajo.py:597
 #, python-format
 msgid "Editar Juego WiiTDB: %s"
 msgstr ""
 
-#: trabajo.py:597
+#: trabajo.py:599
 #, python-format
 msgid "Abrir pagina: %s"
 msgstr ""
 
-#: trabajo.py:599
+#: trabajo.py:601
 #, fuzzy
 msgid "Trabajo desconocido"
 msgstr "Formato desconhecido"
@@ -1663,32 +1663,32 @@ msgstr "Programa executado com as opes incorretas."
 msgid "Interrumpido por el usuario"
 msgstr "Interrompido pelo usuário"
 
-#~ msgid "+INFO"
-#~ msgstr "+INFO"
-
-#~ msgid "Espacio usado / Espacio total"
-#~ msgstr "Espaço usado / Espaço total"
-
-#~ msgid "Numero de juegos."
-#~ msgstr "Número de jogos."
-
-#~ msgid "Progreso de la tarea actual."
-#~ msgstr "Progresso da tarefa atual."
-
-#~ msgid "ACCESORIOS: "
-#~ msgstr "ACCESÓRIOS: "
-
-#~ msgid "OPCIONALES: "
-#~ msgstr "OPCIONAIS:"
-
-#~ msgid "Fecha de lanzamiento: "
-#~ msgstr "Data de lançamento:"
-
-#~ msgid "Buscar:"
-#~ msgstr "Pesquisar:"
+#~ msgid "Numero de tareas que esperan en la cola."
+#~ msgstr "Número de tarefas que esperam na fila."
 
 #~ msgid "No se ha encontrado ninguna imagen ISO o RAR"
 #~ msgstr "Não foi encontrada nenhuma imagem ISO ou RAR"
 
-#~ msgid "Numero de tareas que esperan en la cola."
-#~ msgstr "Número de tarefas que esperam na fila."
+#~ msgid "Buscar:"
+#~ msgstr "Pesquisar:"
+
+#~ msgid "Fecha de lanzamiento: "
+#~ msgstr "Data de lançamento:"
+
+#~ msgid "OPCIONALES: "
+#~ msgstr "OPCIONAIS:"
+
+#~ msgid "ACCESORIOS: "
+#~ msgstr "ACCESÓRIOS: "
+
+#~ msgid "Progreso de la tarea actual."
+#~ msgstr "Progresso da tarefa atual."
+
+#~ msgid "Numero de juegos."
+#~ msgstr "Número de jogos."
+
+#~ msgid "Espacio usado / Espacio total"
+#~ msgstr "Espaço usado / Espaço total"
+
+#~ msgid "+INFO"
+#~ msgstr "+INFO"

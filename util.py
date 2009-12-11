@@ -119,16 +119,6 @@ def escribir(f , texto):
     f.write(texto + "\n")
     f.flush()
 
-'''
-def getUltimaLinea(fichero):
-    f = open( fichero , "r")
-    ultimaLinea = ""
-    for linea in file.readlines():
-        ultimaLinea = linea
-    f.close()
-    return ultimaLinea
-'''
-
 def try_mkdir(carpeta):
     if not os.path.exists(carpeta):
         os.mkdir(carpeta)
@@ -371,7 +361,7 @@ def decode(s, code = 'utf-8'):
     except UnicodeDecodeError:
         try:
             text = unicode(s, 'ASCII', 'strict')
-       	    return s.decode('ASCII')
+            return s.decode('ASCII')
         except UnicodeDecodeError:
             pass
 
@@ -380,7 +370,7 @@ def decode(s, code = 'utf-8'):
             return s.decode('ISO-8859-1')
         except UnicodeDecodeError:
             pass
-
+            
         try:
             text = unicode(s, 'ISO-8859-15', 'strict')
             return s.decode('ISO-8859-15')
