@@ -1,12 +1,9 @@
-wwt v0.19a r491 - 2009-11-27
-
- - New ADD option: --sync: Synchronize: remove and add until WBFS contains
-   the same discs as source list.
- - New comamnd: wwt SYNC: Abbreviation for: ADD --sync
- - New commands: wit RENAME+SETTITLE: Set ID and title of discs [EXPERIMENTAL].
- - New command: wit MOVE: move/rename iso files.
- - MAC bug fix: segmentation fault if formatting a drive.
- - Bug fix: Interrupt possible while processing a source directory.
-
 wwt v@.@@@ r@@REV-NEXT@@ - @@@@-@@-@@
- - wwt FIND -l: List all and not only WBFS partitions.
+
+ - New comamnd: wwt PHANTOM: add a phantom discs (fast, for tests only).
+ - libwbfs: I have implemented a little ID6 cache for faster disc access and
+   less IO when searching discs.
+ - CYGWIN bug fix: Using mixed reading and writing on files opened with open()
+   fails and write sometimes to wrong file positions (reproducible).
+   Switching to fopen() based IO works fine.
+ - Docu of wwt+wit RENAME+SETTITLE.

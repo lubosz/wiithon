@@ -148,6 +148,7 @@ typedef enum enumOptionsBit
 	OB_CMD_CHECK	= OB__MASK_PART|OB_REPAIR|OB_LONG,
 	OB_CMD_REPAIR	= OB_CMD_CHECK,
 	OB_CMD_EDIT	= OB_AUTO|OB_PART|OB_FORCE,
+	OB_CMD_PHANTOM	= OB_AUTO|OB_PART|OB__MASK_NO_CHK,
 	OB_CMD_TRUNCATE	= OB__MASK_PART|OB__MASK_NO_CHK,
 	OB_CMD_SYNC	= OB__MASK_PART|OB__MASK_PSEL|OB__MASK_NO_CHK
 			  |OB_RECURSE|OB_IGNORE|OB_REMOVE|OB_TRUNC,
@@ -191,6 +192,7 @@ typedef enum enumCommands
 	CMD_CHECK,
 	CMD_REPAIR,
 	CMD_EDIT,
+	CMD_PHANTOM,
 	CMD_TRUNCATE,
 
 	CMD_ADD,
@@ -325,6 +327,7 @@ CommandTab_t CommandTab[] =
 	{ CMD_CHECK,	"CHECK",	"FSCK",		OB_CMD_CHECK },
 	{ CMD_REPAIR,	"REPAIR",	0,		OB_CMD_REPAIR },
 	{ CMD_EDIT,	"EDIT",		0,		OB_CMD_EDIT },
+	{ CMD_PHANTOM,	"PHANTOM",	0,		OB_CMD_PHANTOM },
 	{ CMD_TRUNCATE,	"TRUNCATE",	"TR",		OB_CMD_TRUNCATE },
 
 	{ CMD_ADD,	"ADD",		"A",		OB_CMD_ADD },
@@ -371,8 +374,9 @@ static char help_text[] =
     "\n"
     "   FORMAT   | INIT : Format WBFS partitions.\n"
     "   CHECK    | FSCK : Check WBFS partitions.\n"
-    "   REPAIR          : Shortcut for: CHECK --rapair=all.\n"
+    "   REPAIR          : Shortcut for: CHECK --repair=fbt.\n"
     "   EDIT            : Edit block assignments (dangerous!).\n"
+    "   PHANTOM         : Add phantom discs (no content; for tests; fast).\n"
     "   TRUNCATE | TR   : Truncate WBFS partitions.\n"
     "\n"
     "   ADD      | A    : Add ISO images to WBFS partitions.\n"
@@ -459,9 +463,10 @@ static char help_text[] =
     "   LIST-*   | L*   -p part -aA -ll -H -M -U -S sort    [wbfs_partition]...\n"
     "\n"
     "   FORMAT   | INIT -s size --sector-size num --force   file|blockdev...\n"
-    "   CHECK    | FSCK -p part -aA -ll                     [wbfs_partition]...\n"
-    "   REPAIR          -p part -aA -ll                     [wbfs_partition]...\n"
+    "   CHECK    | FSCK -p part -aA -ll --repair=           [wbfs_partition]...\n"
+    "   REPAIR          -p part -aA -ll --repair=           [wbfs_partition]...\n"
     "   EDIT            -p part -a                --force   [sub_command]...\n"
+    "   PHANTOM         -p part -a                          [sub_command]...\n"
     "   TRUNCATE | TR   -p part -aA                         [wbfs_partition]...\n"
     "\n"
     "   ADD      | A    -p part -aA -iRCou -r --psel --raw  iso|wbfs|dir...\n"
@@ -600,7 +605,7 @@ enumError cmd_find()
     }
 
     const enumError err = AnalysePartitions(stderr,true,true);
-    if ( verbose < 0 )
+    if ( err || verbose < 0 )
     {
 	// if quiet: only status will be given, no print out
 	return err;
@@ -1534,6 +1539,178 @@ enumError cmd_edit()
 //
 ///////////////////////////////////////////////////////////////////////////////
 
+enumError cmd_phantom()
+{
+    if (verbose>=0)
+	print_title(stdout);
+
+    enumError err = AnalysePartitions(stdout,false,false);
+    if (err)
+	return err;
+
+    int total_add_count = 0, wbfs_count = 0, wbfs_mod_count = 0;
+
+    const bool check_it	    = ( used_options & OB_NO_CHECK ) == 0;
+    const bool ignore_check = ( used_options & OB_FORCE ) != 0;
+    const u32 max_mib = (u64)WII_MAX_SECTORS * WII_SECTOR_SIZE / MiB;
+
+    WBFS_t wbfs;
+    InitializeWBFS(&wbfs);
+    PartitionInfo_t * info;
+    for ( err = GetFirstWBFS(&wbfs,&info);
+	  !err && !SIGINT_level;
+	  err = GetNextWBFS(&wbfs,&info) )
+    {
+	wbfs_t * w = wbfs.wbfs;
+	ASSERT(w);
+
+	wbfs_count++;
+	if (verbose>=0)
+	    printf("%sWBFSv%u #%d opened: %s\n",
+		    verbose>0 ? "\n" : "",
+		    wbfs.wbfs->head->wbfs_version, wbfs_count, info->path );
+
+	if ( !info->is_checked && check_it )
+	{
+	    info->is_checked = true;
+	    if ( AutoCheckWBFS(&wbfs,ignore_check) > ERR_WARNING )
+	    {
+		ERROR0(ERR_WBFS_INVALID,"Ignore invalid WBFS: %s\n\n",info->path);
+		ResetWBFS(&wbfs);
+		continue;
+	    }
+	}
+
+	// scan WBFS for already existing phantom ids
+
+	char phantom_used[1000];
+	memset(phantom_used,0,sizeof(phantom_used));
+	int slot;
+	for ( slot = 0; slot < w->max_disc; slot++ )
+	{
+	    wbfs_disc_t * d = wbfs_open_disc_by_slot(w,slot);
+	    if (d)
+	    {
+		u8 * id6 = d->header->disc_header_copy;
+		if ( !memcmp(id6,"PHT",3) )
+		{
+		    const u32 idx = (id6[3]-'0') * 100 + (id6[4]-'0') * 10 + (id6[5]-'0');
+		    if ( idx < sizeof(phantom_used) )
+			phantom_used[idx]++;
+		}
+		wbfs_close_disc(d);
+	    }
+	}
+	
+	int wbfs_add_count = 0;
+	bool abort = false;
+	ParamList_t * param;
+	for ( param = first_param;
+	      param && !SIGINT_level && !abort;
+	      param = param->next )
+	{
+	    char *arg = param->arg;
+	    if ( !arg || !*arg )
+		continue;
+
+	    u32 stat, n1 = 1, n2 = 1, s1, s2;
+	    
+	    arg = ScanRangeU32(arg,&stat,&s1,&s2,1,10000);
+	    if ( stat && *arg == 'x' )
+	    {
+		arg++;
+		n1 = s1;
+		n2 = s2;
+		arg = ScanRangeU32(arg,&stat,&s1,&s2,0,max_mib);
+	    }
+
+	    if ( *arg == 'm' || *arg == 'M' )
+		arg++;
+	    else
+	    {
+		if ( *arg == 'g' || *arg == 'G' )
+		    arg++;
+		s1 *= 1024;
+		s2 *= 1024;
+		if ( s2 > max_mib )
+		    s2 = max_mib;
+	    }
+
+	    if ( !stat || *arg || n1 > n2 || s1 > s2 )
+	    {
+		printf(" - PHANTOM ARGUMENT IGNORED: %s\n",param->arg);
+		continue;
+	    }
+
+	    if ( testmode || verbose >= 0 )
+		printf(" - %sGENERATE %d..%d PHANTOMS with %d..%d MiB\n",
+			testmode ? "WOULD " : "", n1, n2, s1, s2 );
+
+	    u32 n = n1 + Random32(n2-n1+1);
+	    while ( !abort && n-- > 0 )
+	    {
+		u32 size = s1 + Random32(s2-s1+1);
+		u32 n_sect = (u64)size * MiB /WII_SECTOR_SIZE;
+
+		int idx;
+		for ( idx = 0; idx < sizeof(phantom_used); idx++ )
+		    if (!phantom_used[idx])
+			break;
+		if ( idx >= sizeof(phantom_used) )
+		{
+		    n = 0;
+		    continue;
+		}
+		phantom_used[idx]++;
+
+		char id6[7];
+		snprintf(id6,sizeof(id6),"PHT%03u",idx);
+		if ( testmode || verbose >= 1 )
+		    printf("   - %sGENERATE PHANTOM [%s] with %4u MiB = %u Wii sectors.\n",
+			testmode ? "WOULD " : "", id6, size, n_sect );
+		if (!testmode)
+		{
+		    if (wbfs_add_phantom(w,id6,n_sect))
+			abort = true;
+		    else
+			wbfs_add_count++;
+		}
+	    }
+	}
+
+	if ( wbfs_add_count )
+	{
+	    wbfs_mod_count++;
+	    total_add_count += wbfs_add_count;
+
+	    if (verbose>=0)
+		printf("* WBFS #%d: %d phantom%s added.\n",
+		    wbfs_count, wbfs_add_count, wbfs_add_count==1 ? "" : "s" );
+	}
+    }
+    ResetWBFS(&wbfs);
+
+    if ( verbose >= 1 )
+	printf("\n");
+
+    if ( verbose >= 0 )
+    {
+	if ( wbfs_count > 1 )
+	{
+	    printf("** %d phantom%s added, %d of %d WBFS used.\n",
+			total_add_count, total_add_count==1 ? "" : "s",
+			wbfs_mod_count, wbfs_count );
+	}
+	if ( verbose >= 1 )
+	    printf("\n");
+    }
+
+    return max_error;
+}
+
+//
+///////////////////////////////////////////////////////////////////////////////
+
 enumError cmd_truncate()
 {
     if (verbose>=0)
@@ -1667,7 +1844,7 @@ enumError exec_add ( SuperFile_t * sf, Iterator_t * it )
 	}
 	else
 	{
-	    printf(" - DISC %s [%s] already installed -> ignore\n",
+	    printf(" - DISC %s [%s] already exists -> ignore\n",
 		    sf->f.fname, sf->f.id6 );
 	    return ERR_OK;
 	}
@@ -2071,7 +2248,7 @@ enumError cmd_extract()
     if ( verbose >= 1 )
 	printf("\n");
 
-    if ( !(used_options&OB_IGNORE) )
+    if ( !(used_options&OB_IGNORE) && !SIGINT_level )
     {
 	ParamList_t * param;
 	int warn_count = 0;
@@ -2199,7 +2376,7 @@ enumError cmd_remove()
     if ( verbose >= 1 )
 	printf("\n");
 
-    if ( !(used_options&OB_IGNORE) )
+    if ( !(used_options&OB_IGNORE) && !SIGINT_level )
     {
 	ParamList_t * param;
 	int warn_count = 0;
@@ -2360,7 +2537,7 @@ enumError cmd_rename ( bool rename_id )
     if ( verbose >= 1 )
 	printf("\n");
 
-    if ( !(used_options&OB_IGNORE) )
+    if ( !(used_options&OB_IGNORE) && !SIGINT_level )
     {
 	ParamList_t * param;
 	int warn_count = 0;
@@ -2688,6 +2865,7 @@ enumError check_command ( int argc, char ** argv )
 	case CMD_CHECK:		err = cmd_check(); break;
 	case CMD_REPAIR:	err = cmd_repair(); break;
 	case CMD_EDIT:		err = cmd_edit(); break;
+	case CMD_PHANTOM:	err = cmd_phantom(); break;
 	case CMD_TRUNCATE:	err = cmd_truncate(); break;
 
 	case CMD_ADD:		err = cmd_add(); break;
@@ -2729,7 +2907,7 @@ int main ( int argc, char ** argv )
 
     if ( argc < 2 )
     {
-	printf("\n%s\nVisit %s\n\n",TITLE,URI_GBATEMP);
+	printf("\n%s\nVisit %s for more infos.\n\n",TITLE,URI_HOME);
 	hint_exit(ERR_OK);
     }
 

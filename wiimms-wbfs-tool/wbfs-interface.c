@@ -180,7 +180,7 @@ int ScanPartitions ( bool all )
 
 void AddEnvPartitions()
 {
-    TRACE("AnalysePartitions() PART1=%d, AUTO=%d, all=%d, first=%p\n",
+    TRACE("AddEnvPartitions() PART1=%d, AUTO=%d, all=%d, first=%p\n",
 	opt_part, opt_auto, opt_all, first_partition_info );
 
     if ( !first_partition_info && !opt_part && !opt_auto )
@@ -340,28 +340,25 @@ int AnalysePartitions ( FILE * outfile, bool non_found_is_ok, bool scan_wbfs )
 
     if ( !wbfs_count )
     {
-	if ( !non_found_is_ok || verbose >= 0 )
+	if ( !non_found_is_ok || verbose >= 1 )
 	    ERROR0(ERR_NO_WBFS_FOUND,"no WBFS partitions found -> abort\n");
-	if (!stat)
+	if ( !non_found_is_ok && !stat )
 	    stat = ERR_NO_WBFS_FOUND;
     }
     else if ( stat )
     {
-	fprintf(stderr,"%d WBFS partition%s found\n",
+	fprintf(outfile,"%d WBFS partition%s found\n",
 			wbfs_count, wbfs_count == 1 ? "" : "s" );
 	ERROR0(ERR_WARNING,"Abort because of read errors while scanning\n");
     }
-    else if ( opt_all && wbfs_count > 1 )
-    {
-	if ( verbose > 0 )
-	    fprintf(outfile,"%d WBFS partition%s found\n",
-			wbfs_count, wbfs_count == 1 ? "" : "s" );
-
-    }
     else if ( wbfs_count > 1 )
     {
-	stat = ERROR0(ERR_TO_MUCH_WBFS_FOUND,
+	if (!opt_all )
+	    stat = ERROR0(ERR_TO_MUCH_WBFS_FOUND,
 			"%d (more than 1) WBFS partitions found -> abort.\n",wbfs_count);
+	else if ( verbose >= 1 )
+	    fprintf(outfile,"%d WBFS partition%s found\n",
+			wbfs_count, wbfs_count == 1 ? "" : "s" );
     }
     else if ( verbose > 0 )
     {
@@ -903,6 +900,7 @@ enumError SetupWBFS ( WBFS_t * w, SuperFile_t * sf, bool print_err, int sector_s
     }
 
     TRACELINE;
+    wbfs_load_id_list(w->wbfs,1);
     CalcWBFSUsage(w);
 
  #ifdef DEBUG
@@ -2063,13 +2061,15 @@ enumError GetWDiscInfoBySlot ( WBFS_t * w, WDiscInfo_t * dinfo, u32 disc_slot )
     if ( !w || !w->wbfs || !dinfo )
 	return ERROR0(ERR_INTERNAL,0);
 
+    memset(dinfo,0,sizeof(*dinfo));
+
     u32 size4;
     const enumError err = wbfs_get_disc_info_by_slot ( w->wbfs, disc_slot,
 			    (u8*)&dinfo->dhead, sizeof(dinfo->dhead), &size4 );
 
     if (err)
     {
-	memset(dinfo,0,sizeof(*dinfo));
+	TRACE("GetWDiscInfoBySlot() err=%d, magic=%x\n",err,dinfo->dhead.magic);
 	return err;
     }
 
@@ -2216,18 +2216,18 @@ enumError CountPartitions ( SuperFile_t * sf, WDiscInfo_t * dinfo )
     if ( dinfo->pinfo )
 	return ERR_OK;
 
-    enumError err = ReadSF(sf,WD_PART_INFO_OFF,dinfo->pcount,sizeof(dinfo->pcount));
+    enumError err = ReadSF(sf,WII_PART_INFO_OFF,dinfo->pcount,sizeof(dinfo->pcount));
     if (err)
 	return err;
 
     int i, np = 0, nt = 0;
     WDPartCount_t *pc;
-    for ( i = 0, pc = dinfo->pcount; i < WD_MAX_PART_INFO; i++, pc++ )
+    for ( i = 0, pc = dinfo->pcount; i < WII_MAX_PART_INFO; i++, pc++ )
     {
 	pc->off4   = ntohl(pc->off4);
 	pc->n_part = ntohl(pc->n_part);
-	if ( pc->n_part > WD_MAX_PART_TABLE )
-	    pc->n_part = WD_MAX_PART_TABLE;
+	if ( pc->n_part > WII_MAX_PART_TABLE )
+	    pc->n_part = WII_MAX_PART_TABLE;
 	np += pc->n_part;
 	if ( pc->n_part > 0 )
 	    nt++;
@@ -2257,22 +2257,22 @@ enumError LoadPartitionInfo
 	StringCopyS(mi->info,sizeof(mi->info),"-- end of ISO file --");
     }
 
-    enumError err = ReadSF(sf,WD_REGION_OFF,&dinfo->regionset,sizeof(dinfo->regionset));
+    enumError err = ReadSF(sf,WII_REGION_OFF,&dinfo->regionset,sizeof(dinfo->regionset));
     if (err)
 	return err;
     dinfo->regionset.region = ntohl(dinfo->regionset.region);
     if (mm)
     {
-	mi = InsertMemMap(mm,WD_REGION_OFF,sizeof(dinfo->regionset));
+	mi = InsertMemMap(mm,WII_REGION_OFF,sizeof(dinfo->regionset));
 	StringCopyS(mi->info,sizeof(mi->info),"Region settings");
     }
 
-    err = ReadSF(sf,WD_PART_INFO_OFF,dinfo->pcount,sizeof(dinfo->pcount));
+    err = ReadSF(sf,WII_PART_INFO_OFF,dinfo->pcount,sizeof(dinfo->pcount));
     if (err)
 	return err;
     if (mm)
     {
-	mi = InsertMemMap(mm,WD_PART_INFO_OFF,sizeof(dinfo->pcount));
+	mi = InsertMemMap(mm,WII_PART_INFO_OFF,sizeof(dinfo->pcount));
 	StringCopyS(mi->info,sizeof(mi->info),"Partition table header");
     }
 
@@ -2285,14 +2285,14 @@ enumError LoadPartitionInfo
 	OUT_OF_MEMORY;
     WDPartInfo_t *pi = dinfo->pinfo;
 
-    WDPartTableEntry_t wdpte[WD_MAX_PART_TABLE];
+    WDPartTableEntry_t wdpte[WII_MAX_PART_TABLE];
 
     int i;
     WDPartCount_t *pc;
-    for ( i = 0, pc = dinfo->pcount; i < WD_MAX_PART_INFO; i++, pc++ )
+    for ( i = 0, pc = dinfo->pcount; i < WII_MAX_PART_INFO; i++, pc++ )
     {
 	u32 npt = pc->n_part;
-	ASSERT( npt <= WD_MAX_PART_TABLE );
+	ASSERT( npt <= WII_MAX_PART_TABLE );
 	if ( npt > 0 )
 	{
 	    err = ReadSF(sf, (off_t)pc->off4<<2, wdpte, sizeof(*wdpte)*npt);
@@ -2344,7 +2344,7 @@ enumError LoadPartitionInfo
 		    temp = ((off_t)pi->ph.cert_off4 << 2) + pi->ph.cert_size;
 		    if ( pi->size < temp )
 			pi->size = temp;
-		    temp = ((off_t)pi->ph.h3_off4 << 2) + WD_H3_SIZE;
+		    temp = ((off_t)pi->ph.h3_off4 << 2) + WII_H3_SIZE;
 		    if ( pi->size < temp )
 			pi->size = temp;
 
@@ -2369,7 +2369,7 @@ enumError LoadPartitionInfo
 
 			mi = InsertMemMap(mm,
 				pi->off + ((off_t)pi->ph.h3_off4<<2),
-				WD_H3_SIZE );
+				WII_H3_SIZE );
 			snprintf(mi->info,sizeof(mi->info),
 				"P.%d.%d: h3",i,j);
 
@@ -2778,13 +2778,9 @@ enumError ExistsWDisc ( WBFS_t * w, ccp id6 )
     if ( !w || !w->wbfs || !id6 || strlen(id6) != 6 )
 	return ERROR0(ERR_INTERNAL,0);
 
-    wbfs_disc_t * wdisc = wbfs_open_disc_by_id6(w->wbfs,(u8*)id6);
-    if (wdisc)
-    {
-	wbfs_close_disc(wdisc);
-	return ERR_OK;
-    }
-    return ERR_WDISC_NOT_FOUND;
+    return wbfs_find_slot(w->wbfs,(u8*)id6) < 0
+		? ERR_WDISC_NOT_FOUND
+		: ERR_OK;
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -2943,6 +2939,10 @@ enumError RemoveWDisc ( WBFS_t * w, ccp id6, bool free_slot_only )
 	    ERROR0(err,"Can't remove disc non existing [%s]: %s\n",
 		id6, w->sf->f.fname );
     }
+
+ #ifdef DEBUG
+    DumpWBFS(w,TRACE_FILE,15,0,0);
+ #endif
 
     // check if the disc is really removed
     if (!ExistsWDisc(w,id6))

@@ -116,6 +116,8 @@ class PoolTrabajo(Pool , Thread):
         self.PASS_WIITDB = self.core.prefs.PASS_WIITDB
         self.URL_ZIP_WIITDB = self.core.prefs.URL_ZIP_WIITDB
         self.FORMATO_EXTRACT = self.core.prefs.FORMATO_EXTRACT
+        self.tipo_caratula = self.core.prefs.tipo_caratula
+        self.tipo_disc_art = self.core.prefs.tipo_disc_art
 
     def run(self):
         self.empezar( args=(self.core,) )
@@ -164,8 +166,10 @@ class PoolTrabajo(Pool , Thread):
         elif( trabajo.tipo == DESCARGA_CARATULA ):
 
             idgame = trabajo.origen
+            tipo_caratula = trabajo.destino
+
             try:
-                trabajo.exito = self.descargarCaratula(core , idgame)
+                trabajo.exito = self.descargarCaratula(core , idgame, tipo_caratula)
 
                 if self.callback_termina_trabajo_descargar_caratula:
                     self.callback_termina_trabajo_descargar_caratula(trabajo, idgame)
@@ -175,8 +179,10 @@ class PoolTrabajo(Pool , Thread):
         elif( trabajo.tipo == DESCARGA_DISCO ):
 
             idgame = trabajo.origen
+            tipo_disc_art = trabajo.destino
+
             try:
-                trabajo.exito = self.descargarDisco(core , idgame)
+                trabajo.exito = self.descargarDisco(core , idgame, tipo_disc_art)
 
                 if self.callback_termina_trabajo_descargar_disco:
                     self.callback_termina_trabajo_descargar_disco(trabajo, idgame)
@@ -248,11 +254,11 @@ class PoolTrabajo(Pool , Thread):
                 self.poolBash.nuevoTrabajoActualizarWiiTDB('%s?ID=%s' % (self.URL_ZIP_WIITDB, idgame))
 
                 # vamos descargando caratulas
-                if not core.existeCaratula(idgame):
-                    self.poolBash.nuevoTrabajoDescargaCaratula( idgame )
+                if not core.existeCaratula(idgame, False, self.tipo_caratula):
+                    self.poolBash.nuevoTrabajoDescargaCaratula( idgame , self.tipo_caratula)
 
-                if not core.existeDisco(idgame):
-                    self.poolBash.nuevoTrabajoDescargaDisco( idgame )
+                if not core.existeDisco(idgame, False, self.tipo_disc_art):
+                    self.poolBash.nuevoTrabajoDescargaDisco( idgame , self.tipo_disc_art)
 
             #################################################
 
@@ -313,17 +319,17 @@ class PoolTrabajo(Pool , Thread):
 
         return exito
 
-    def descargarCaratula(self , core , idgame):
-        return core.descargarCaratula(idgame, self.PROVIDER_COVERS, self.WIDTH_COVERS, self.HEIGHT_COVERS)
+    def descargarCaratula(self , core , idgame, tipo_caratula):
+        return core.descargarCaratula(idgame, self.PROVIDER_COVERS, self.WIDTH_COVERS, self.HEIGHT_COVERS, tipo_caratula)
 
-    def descargarDisco(self , core , idgame):
-        return core.descargarDisco(idgame, self.PROVIDER_DISCS, self.WIDTH_DISCS, self.HEIGHT_DISCS)
+    def descargarDisco(self , core , idgame, tipo_disc_art):
+        return core.descargarDisco(idgame, self.PROVIDER_DISCS, self.WIDTH_DISCS, self.HEIGHT_DISCS, tipo_disc_art)
 
     def copiarCaratula(self , core , juego, destino):
-        return core.copiarCaratula(juego, destino)
+        return core.copiarCaratula(juego, destino, self.tipo_caratula)
 
     def copiarDisco(self , core , juego, destino):
-        return core.copiarDisco(juego, destino)
+        return core.copiarDisco(juego, destino, self.tipo_disc_art)
         
     def recorrerDirectorioYAnadir(self, core, trabajo, directorio, particion):
 
@@ -337,33 +343,49 @@ class PoolTrabajo(Pool , Thread):
 
         elif( os.path.isdir( directorio ) ):
 
-            encontradosRAR =  util.rec_glob(directorio, "*.rar")
+            listaISO = NonRepeatList()
+            listaRAR = NonRepeatList()
+            
+            encontradosRAR =  util.rec_glob(fichero, "[wii]*.rar")
             hayRAR = len(encontradosRAR) > 0
+            if hayRAR:
+                listaRAR.extend(encontradosRAR)
 
-            encontradosISO =  util.rec_glob(directorio, "*.iso")
+            encontradosISO =  util.rec_glob(fichero, "*.iso")
             hayISO = len(encontradosISO) > 0
+            if hayISO:
+                listaISO.extend(encontradosISO)
+                
+            encontradosWBFS =  util.rec_glob(fichero, "*.wbfs")
+            hayWBFS = len(encontradosWBFS) > 0
+            if hayWBFS:
+                listaISO.extend(encontradosWBFS)
+                
+            encontradosWDF =  util.rec_glob(fichero, "*.wdf")
+            hayWDF = len(encontradosWDF) > 0
+            if hayWDF:
+                listaISO.extend(encontradosWDF)
 
             ########## eliminar rar que tienen iso con el mismo nombre #######
-            for ficheroRAR in encontradosRAR:
+            for ficheroRAR in listaRAR:
                 nombre = util.getNombreFichero(ficheroRAR)
                 i = 0
                 encontrado = False
-                while not encontrado and i<len(encontradosISO):
-                    encontrado = encontradosISO[i].lower() == ("%s.iso" % nombre).lower()
+                while not encontrado and i<len(listaISO):
+                    encontrado = listaISO[i].lower() == ("%s.iso" % nombre).lower()
                     if not encontrado:
                         i += 1
                 if encontrado:
-                    print "eliminar %s" % ficheroRAR
-                    encontradosRAR.remove(ficheroRAR)
+                    listaRAR.remove(ficheroRAR)
             ##################################################################
 
             if hayISO:
-                for encontrado in encontradosISO:
+                for encontrado in listaISO:
                     trabajoAnadir = self.nuevoTrabajoAnadir( encontrado , particion.device)
                     trabajoAnadir.padre = trabajo
                     
             if hayRAR:
-                for encontrado in encontradosRAR:
+                for encontrado in listaRAR:
                     trabajoDescomprimirRAR = self.nuevoTrabajoDescomprimirRAR( encontrado , particion)
                     trabajoDescomprimirRAR.padre = trabajo
 
@@ -382,8 +404,13 @@ class PoolTrabajo(Pool , Thread):
         exito = False
         error = True
 
+        if self.ruta_extraer_rar == ".":
+            destino = os.path.dirname(archivoRAR)
+        else:
+            destino = self.ruta_extraer_rar
+
         nombreISO = core.getNombreISOenRAR(archivoRAR)        
-        rutaISO = os.path.join(self.ruta_extraer_rar, nombreISO)
+        rutaISO = os.path.join(destino, nombreISO)
 
         if( not os.path.exists(particion.device) ):
             trabajo.error = _("La particion %s: Ya no existe") % particion.device
@@ -408,18 +435,16 @@ class PoolTrabajo(Pool , Thread):
         else:
             error = False
             
-        if not util.space_for_dvd_iso_wii(self.ruta_extraer_rar):
-            trabajo.error = _("No hay 4.4GB libres para descomprimir el fichero RAR: %s en la ruta %s. Puede cambiar la ruta en preferencias.") % (archivoRAR, self.ruta_extraer_rar)
+        if not util.space_for_dvd_iso_wii(destino):
+            trabajo.error = _("No hay 4.4GB libres para descomprimir el fichero RAR: %s en la ruta %s. Puede cambiar la ruta en preferencias.") % (archivoRAR, destino)
             error = True
         
         if not error:
 
             if self.callback_empieza_progreso:
                 self.callback_empieza_progreso(trabajo)
-
-            print archivoRAR
                 
-            if ( core.unpack(archivoRAR, self.ruta_extraer_rar, nombreISO, self.rar_overwrite_iso) ):
+            if ( core.unpack(archivoRAR, destino, nombreISO, self.rar_overwrite_iso) ):
                 exito = True
                 
                 trabajoAnadir = self.nuevoTrabajoAnadir( rutaISO , particion.device)
@@ -512,11 +537,11 @@ class PoolTrabajo(Pool , Thread):
     def nuevoTrabajoClonar(self , juegos, DEVICE):
         return self.nuevoTrabajo( CLONAR , juegos, DEVICE )
 
-    def nuevoTrabajoDescargaCaratula(self , juegos):
-        return self.nuevoTrabajo( DESCARGA_CARATULA , juegos )
+    def nuevoTrabajoDescargaCaratula(self , juegos, tipo_caratula):
+        return self.nuevoTrabajo( DESCARGA_CARATULA , juegos , tipo_caratula)
 
-    def nuevoTrabajoDescargaDisco(self , juegos):
-        return self.nuevoTrabajo( DESCARGA_DISCO , juegos )
+    def nuevoTrabajoDescargaDisco(self , juegos, tipo_disc_art):
+        return self.nuevoTrabajo( DESCARGA_DISCO , juegos , tipo_disc_art)
 
     def nuevoTrabajoCopiarCaratula(self , juegos, destino):
         return self.nuevoTrabajo( COPIAR_CARATULA , juegos, destino )

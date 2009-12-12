@@ -765,6 +765,10 @@ void InitializeFile ( File_t * f )
 
     // normalize 'opt_iomode'
     opt_iomode = opt_iomode & IOM__IS_MASK | IOM_FORCE_STREAM;
+    
+ #ifdef __CYGWIN__
+    opt_iomode |= IOM_IS_WBFS;
+ #endif
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -1987,7 +1991,6 @@ enumError XAnalyseWH ( XPARM File_t * f, WDF_Head_t * wh, bool print_err )
 	    cptr->data = data;
 	    TRACE(TRACE_RDWR_FORMAT, "#F# FILL CACHE",
 		GetFD(f), GetFP(f), cptr->off, cptr->off+cptr->count, cptr->count, "" );
-	    // [2do] read direct because EOF handling
 	    const enumError stat = XReadAtF(XCALL f,cptr->off,data,cptr->count);
 	    if (stat)
 	    {
@@ -4156,6 +4159,92 @@ void PrintMemMap ( MemMap_t * mm, FILE * f, int indent )
 	if ( max_end < end )
 	    max_end = end;
     }
+}
+
+//
+///////////////////////////////////////////////////////////////////////////////
+///////////////                    random mumbers               ///////////////
+///////////////////////////////////////////////////////////////////////////////
+// thanx to Donald Knuth
+
+const u32 RANDOM32_C_ADD = 2 * 197731421; // 2 Primzahlen
+const u32 RANDOM32_COUNT_BASE = 4294967; // Primzahl == ~UINT_MAX32/1000;
+
+static int random32_a_index = -1;	// Index in die a-Tabelle
+static u32 random32_count = 1;		// Abwärts-Zähler bis zum Wechsel von a,c
+static u32 random32_a,
+	      random32_c,
+	      random32_X;		// Die letzten Werte
+
+static u32 random32_a_tab[] =		// Init-Tabelle
+{
+    0xbb40e62d, 0x3dc8f2f5, 0xdc024635, 0x7a5b6c8d,
+    0x583feb95, 0x91e06dbd, 0xa7ec03f5, 0
+};
+
+//-----------------------------------------------------------------------------
+
+u32 Random32 ( u32 max )
+{
+    if (!--random32_count)
+    {
+	// Neue Berechnung von random32_a und random32_c fällig
+
+	if ( random32_a_index < 0 )
+	{
+	    // allererste Initialisierung auf Zeitbasis
+	    Seed32Time();
+	}
+	else
+	{
+	    random32_c += RANDOM32_C_ADD;
+	    random32_a = random32_a_tab[++random32_a_index];
+	    if (!random32_a)
+	    {
+		random32_a_index = 0;
+		random32_a = random32_a_tab[0];
+	    }
+
+	    random32_count = RANDOM32_COUNT_BASE;
+	}
+    }
+
+    // Jetzt erfolgt die eigentliche Berechnung
+
+    random32_X = random32_a * random32_X + random32_c;
+
+    if (!max)
+	return random32_X;
+
+    return ( (u64)max * random32_X ) >> 32;
+}
+
+//-----------------------------------------------------------------------------
+
+u64 Seed32Time ()
+{
+    struct timeval tval;
+    gettimeofday(&tval,NULL);
+    const u64 random_time_bits = (u64) tval.tv_usec << 16 ^ tval.tv_sec;
+    return Seed32( ( random_time_bits ^ getpid() ) * 197731421u );
+}
+
+//-----------------------------------------------------------------------------
+
+u64 Seed32 ( u64 base )
+{
+    uint a_tab_len = 0;
+    while (random32_a_tab[a_tab_len])
+	a_tab_len++;
+    const u32 base32 = base / a_tab_len;
+
+    random32_a_index	= base % a_tab_len;
+    random32_a		= random32_a_tab[random32_a_index];
+    random32_c		= ( base32 & 15 ) * RANDOM32_C_ADD + 1;
+    random32_X		= base32 ^ ( base >> 32 );
+    random32_count	= RANDOM32_COUNT_BASE;
+
+    return base;
 }
 
 //

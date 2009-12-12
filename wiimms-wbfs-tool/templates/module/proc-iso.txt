@@ -37,10 +37,9 @@ plain ISO files and ISO files in WDF and WBFS containers. In detail:
       .../a.wbfs/#5     : use the image at slot #5 from 'a.wbfs' as source.
 
 
-When writing ISO files the option --wdf (default), --iso and --wbfs control
-the output format. If writing a WBFS file this WBFS is truncated and contains
-exactly one ISO image. The default file name of this WBFS is '<ID6>.wbfs'.
-
-If none of --wdf, --iso or --wbfs is set, the destination filename will be
-analysed. If the extension (ignoring case) is ".wdf", ".iso" or ".wbfs", the
-specific output format is used. The default is WDF.
+When writing ISO files the option --wdf, --iso and --wbfs control the output
+format. If writing a WBFS file this WBFS is truncated and contains exactly
+one ISO image. The default file name of this WBFS is '<ID6>.wbfs'. If none
+of --wdf, --iso or --wbfs is set, the destination filename will be analyzed.
+If the extension (ignoring case) is ".wdf", ".iso" or ".wbfs", the specific
+output format is used. The default is WDF if all other failes.

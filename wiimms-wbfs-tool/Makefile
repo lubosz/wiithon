@@ -9,7 +9,7 @@ WWT_SHORT	= wwt
 WWT_LONG	= Wiimms WBFS Tool
 WIT_SHORT	= wit
 WIT_LONG	= Wiimms ISO Tool
-VERSION		= 0.19b
+VERSION		= 0.21a
 
 ifeq ($(TERM),cygwin)
 SYSTEM		:= cygwin
@@ -22,6 +22,7 @@ include Makefile.setup
 
 URI_REPOS		= http://opensvn.wiimm.de/wii/trunk/wiimms-wbfs-tool
 URI_VIEWVC		= http://opensvn.wiimm.de/viewvc/wii/trunk/wiimms-wbfs-tool
+URI_HOME		= http://wiimm.de/wwt/
 URI_GBATEMP		= http://gbatemp.net/index.php?showtopic=182236\#entry2286365
 URI_DOWNLOAD_I386	= http://wiimm.de/x/$(DISTRIB_I386)
 URI_DOWNLOAD_CYGWIN	= http://wiimm.de/x/$(DISTRIB_CYGWIN)
@@ -182,10 +183,10 @@ all++: clean+ all titles distrib
 chmod:
 	@echo "***   chmod"
 	@mkdir -p $(DIR_LIST)
-	@chmod -f 664 *.txt *.c *.h *.edit-list Makefile* $(SCRIPTS)/* lib*/*
-	@chmod -f 664 $(TEMPLATES)/* $(MODULES)/*
+	-@chmod -f 664 *.txt *.c *.h *.edit-list Makefile* $(SCRIPTS)/* lib*/*
+	-@chmod -f 664 $(TEMPLATES)/* $(MODULES)/*
 	-@chmod -f 775 $(DIR_LIST) 2>/dev/null || true
-	@chmod -f 775 *.sh $(TEMPLATES)/*.sh $(SCRIPTS)/*.sh bin/* bin/debug/*
+	-@chmod -f 775 *.sh $(TEMPLATES)/*.sh $(SCRIPTS)/*.sh bin/* bin/debug/*
 	-@chown -f --reference=. * $(DIR_LIST)			2>/dev/null || true
 	-@chown -f --reference=. * $(TEMPLATES)/* $(MODULES)/*	2>/dev/null || true
 	-@chown -f --reference=. * bin/* work/*	$(SCRIPTS)/*	2>/dev/null || true
@@ -360,6 +361,7 @@ templates.sed: Makefile
 		's|@@DISTRIB-CYGWIN@@|$(DISTRIB_CYGWIN)|g;\n' \
 		's|@@URI-REPOS@@|$(URI_REPOS)|g;\n' \
 		's|@@URI-VIEWVC@@|$(URI_VIEWVC)|g;\n' \
+		's|@@URI-HOME@@|$(URI_HOME)|g;\n' \
 		's|@@URI-GBATEMP@@|$(URI_GBATEMP)|g;\n' \
 		's|@@URI-DOWNLOAD-I386@@|$(URI_DOWNLOAD_I386)|g;\n' \
 		's|@@URI-DOWNLOAD-CYGWIN@@|$(URI_DOWNLOAD_CYGWIN)|g;\n' \

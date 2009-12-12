@@ -1,0 +1,56 @@
+
+@@MODULE(head.txt)@@
+
+
+*******************************************************************************
+*******                              Contents                         *********
+*******************************************************************************
+
+    * Tools
+
+
+*******************************************************************************
+*******                               Tools                           *********
+*******************************************************************************
+
+* What is "WWT"?
+
+    'WWT' is an abbreviation of "Wiimms WBFS Tools". It is a collection of
+    tools to manipulate and convert WBFS and ISO files.
+    
+
+* What is "wwt"?
+
+    'wwt' is an abbreviation of "Wiimms WBFS Tool" (not 'tools'). 'wwt' was the
+    first tool of this tool set. It is developed for manipulationg WBFS files.
+    The general syntax is: wwt <command> <option>... <parameter>...
+    The importand commands are: 
+	INIT, CHECK, LIST, REPAIR, DUMP, ADD, UPDATE, EXTRACT, RENAME, SETTITLE
+
+
+* What is "wit"?
+
+    'wit' is an abbreviation of "Wiimms ISO Tool". 'wit' was the main tool for
+    manipulating and converting ISO images.
+    The general syntax is: wit <command> <option>... <parameter>...
+    The importand commands are:
+	DUMP, LIST, DIFF, COPY, SCRUB, MOVE, RENAME, SETTTILE
+
+
+* What are 'iso2wdf', 'wdf2iso' and 'iso2wbfs'
+
+    These 2 tools convert ISO and WBFS files to other formats. They have been
+    devolped before 'wit' and have an easyer interface. 'wit COPY' can do all
+    jobs of this three tools too.
+
+
+* What are 'wdf-cat' and 'wdf-dump'?
+
+    'wdf-cat' and 'wdf-dump' are tools to confirm the WDF-Conversion (see file
+    'WDF.txt' for details). 'wdf-cat' copy any files to stdout. WDF files are
+    converted. 'wdf-dump' shows the internal data structure of WDF files.
+
+
+*******************************************************************************
+*******                              END                                *******
+*******************************************************************************

@@ -155,72 +155,84 @@ class WiithonCORE:
         return salida
 
     # Nos dice si existe la caratula del juego "IDGAME"
-    def existeCaratula(self , IDGAME, borrar_si_no_es_png = False):
-        ruta = self.getRutaCaratula(IDGAME)
+    def existeCaratula(self , IDGAME, borrar_si_no_es_png = False, TYPE_COVER = util.COVER_NORMAL):
+        ruta = self.getRutaCaratula(IDGAME, TYPE_COVER)
         existe = (os.path.exists( ruta ))
         if existe and borrar_si_no_es_png and not util.esPNG(ruta):
             os.remove(ruta)
             existe = False
         return existe
 
-    def existeDisco(self , IDGAME, borrar_si_no_es_png = False):
-        ruta = self.getRutaDisco(IDGAME)
+    def existeDisco(self , IDGAME, borrar_si_no_es_png = False, TYPE_DISC_ART = util.DISC_ORIGINAL):
+        ruta = self.getRutaDisco(IDGAME, TYPE_DISC_ART)
         existe = (os.path.exists( ruta ))
         if existe and borrar_si_no_es_png and not util.esPNG(ruta):
             os.remove(ruta)
             existe = False
         return existe
 
-    def getRutaDisco(self , IDGAME):
-        return os.path.join(config.HOME_WIITHON_DISCOS , "%s.png" % (IDGAME))
+    def getRutaDisco(self , IDGAME, TYPE_DISC_ART = util.DISC_ORIGINAL):
+        if TYPE_DISC_ART == util.DISC_CUSTOM:
+            return os.path.join(config.HOME_WIITHON_DISCOS_CUSTOM , "%s.png" % (IDGAME))
+        else: # if TYPE_DISC_ART == util.DISC_ORIGINAL:
+            return os.path.join(config.HOME_WIITHON_DISCOS , "%s.png" % (IDGAME))
 
-    def getRutaCaratula(self , IDGAME):
-        return os.path.join(config.HOME_WIITHON_CARATULAS , "%s.png" % (IDGAME))
+    def getRutaCaratula(self , IDGAME, TYPE_COVER = util.COVER_NORMAL):
+        if TYPE_COVER == util.COVER_3D:
+            return os.path.join(config.HOME_WIITHON_CARATULAS_3D , "%s.png" % (IDGAME))
+        if TYPE_COVER == util.COVER_FULL:
+            return os.path.join(config.HOME_WIITHON_CARATULAS_TOTAL , "%s.png" % (IDGAME))
+        else: # if TYPE_COVER == util.COVER_NORMAL:
+            return os.path.join(config.HOME_WIITHON_CARATULAS , "%s.png" % (IDGAME))
 
-    def copiarCaratula(self , juego , destino):
+    def copiarCaratula(self , juego , destino, TYPE_COVER = util.COVER_NORMAL):
         destino = os.path.join( os.path.abspath(destino) , "%s.png" % (juego.idgame) )
-        if( self.existeCaratula(juego.idgame) ):
+        if( self.existeCaratula(juego.idgame, False, TYPE_COVER) ):
             try:
-                origen = self.getRutaCaratula(juego.idgame)
-                if config.DEBUG:
-                    print "%s %s ----> %s ... " % (_("Copiando"), origen , destino)
-                shutil.copyfile(origen, destino)
+                origen = self.getRutaCaratula(juego.idgame, TYPE_COVER)
+                if util.esPNG(origen):
+                    if config.DEBUG:
+                        print "%s %s ----> %s ... " % (_("Copiando"), origen , destino)
+                    shutil.copyfile(origen, destino)
                 return True
+
             except:
                 return False
         else:
-            return False
+            return True
 
-    def copiarDisco(self , juego , destino):
+    def copiarDisco(self , juego , destino, TYPE_DISC_ART = util.DISC_ORIGINAL):
         destino = os.path.join( os.path.abspath(destino) , "%s.png" % (juego.idgame) )
-        if( self.existeDisco(juego.idgame) ):
+        if( self.existeDisco(juego.idgame, False, TYPE_DISC_ART) ):
             try:
-                origen = self.getRutaDisco(juego.idgame)
-                if config.DEBUG:
-                    print "%s %s ----> %s ... " % (_("Copiando"), origen , destino)
-                shutil.copyfile(origen, destino)
+                origen = self.getRutaDisco(juego.idgame, TYPE_DISC_ART)
+                if util.esPNG(origen):
+                    if config.DEBUG:
+                        print "%s %s ----> %s ... " % (_("Copiando"), origen , destino)
+                    shutil.copyfile(origen, destino)
                 return True
+
             except:
                 return False
         else:
-            return False
+            return True
 
     # borrar disco
-    def borrarDisco( self , juego ):
-        if self.existeDisco( juego.idgame ):
-            os.remove( self.getRutaDisco( juego.idgame ) )
+    def borrarDisco( self , juego , TYPE_DISC_ART = util.DISC_ORIGINAL):
+        if self.existeDisco( juego.idgame , False, TYPE_DISC_ART):
+            os.remove( self.getRutaDisco( juego.idgame , TYPE_DISC_ART) )
 
     def clonarJuego(self, juego , parti_destino ):
         comando = "%s -p %s clonar %s %s" % (config.WBFS_APP , juego.particion.device , juego.idgame , parti_destino.device)
         salida = util.call_out_file(comando)
         return salida
             
-    def descargarDisco(self , IDGAME, proveedores, ancho, alto):
-        destino = self.getRutaDisco(IDGAME)
+    def descargarDisco(self , IDGAME, proveedores, ancho, alto , TYPE_DISC_ART = util.DISC_ORIGINAL):
+        destino = self.getRutaDisco(IDGAME, TYPE_DISC_ART)
         descargada = False
-        i = 0
+        i = util.get_subinterval_type_disc_art(TYPE_DISC_ART)
         while ( not descargada and i<len(proveedores) ):
-            if (self.existeDisco(IDGAME)):
+            if (self.existeDisco(IDGAME, False, TYPE_DISC_ART)):
                 raise util.YaEstaDescargado
             else:
                 try:
@@ -235,12 +247,12 @@ class WiithonCORE:
         return descargada
 
     # Descarga una caratula de "IDGAME"
-    def descargarCaratula(self , IDGAME, proveedores, ancho, alto):
-        destino = self.getRutaCaratula(IDGAME)
+    def descargarCaratula(self , IDGAME, proveedores, ancho, alto, TYPE_COVER = util.COVER_NORMAL):
+        destino = self.getRutaCaratula(IDGAME, TYPE_COVER)
         descargada = False
-        i = 0
+        i = util.get_subinterval_type_cover(TYPE_COVER)
         while ( not descargada and i<len(proveedores) ):
-            if (self.existeCaratula(IDGAME)):
+            if (self.existeCaratula(IDGAME, False, TYPE_COVER)):
                 raise util.YaEstaDescargado
             else:
                 try:
@@ -248,16 +260,17 @@ class WiithonCORE:
                     print _("Descargando caratula de %s desde %s ...") % (IDGAME, origen)
                     util.descargarImagen(origen, destino)
                     descargada = True
-                    comando = 'mogrify -resize %dx%d! "%s"' % (ancho, alto, destino)
-                    util.call_out_null(comando)
+                    if TYPE_COVER != util.COVER_FULL:
+                        comando = 'mogrify -resize %dx%d! "%s"' % (ancho, alto, destino)
+                        util.call_out_null(comando)
                 except util.ErrorDescargando:
                     i += 1
         return descargada
 
     # borrar caratula
-    def borrarCaratula( self, juego ):
-        if self.existeCaratula( juego.idgame ):
-            os.remove( self.getRutaCaratula( juego.idgame ) )
+    def borrarCaratula( self, juego , TYPE_COVER = util.COVER_NORMAL):
+        if self.existeCaratula( juego.idgame , False, TYPE_COVER):
+            os.remove( self.getRutaCaratula( juego.idgame, TYPE_COVER ) )
 
     # Descarga todos las caratulas de una lista de juegos
     def descargarTodasLasCaratulaYDiscos(self , listaJuegos):
@@ -302,16 +315,16 @@ class WiithonCORE:
         if not util.space_for_dvd_iso_wii(destino):
             return False
 
-        if destino != ".":
-            directorioActual = os.getcwd()
-            os.chdir(destino)
+        if destino == ".":
+            destino = os.path.dirname(nombreRAR)
 
-        comando = '%s e "%s" "%s"' % (config.UNRAR_APP, nombreRAR , nombreISO)
-        print comando
+        directorioActual = os.getcwd()
+        os.chdir(destino)
+
+        comando = '%s e "%s" "*%s"' % (config.UNRAR_APP, nombreRAR , nombreISO)
         salida = util.call_out_file(comando)
 
-        if destino != ".":
-            os.chdir(directorioActual)
+        os.chdir(directorioActual)
 
         return salida
 
@@ -344,9 +357,6 @@ class WiithonCORE:
                 comando = None
 
             if comando is not None:
-                
-                if config.DEBUG:
-                    print comando
                 
                 salida = util.call_out_file(comando)
                 return salida
@@ -395,9 +405,6 @@ class WiithonCORE:
             if destino != '':
                 trabajoActual = os.getcwd()
                 os.chdir( destino )
-            
-            if config.DEBUG:
-                print comando
 
             salida = util.call_out_file(comando)
 

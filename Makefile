@@ -79,6 +79,9 @@ making_directories:
 	@mkdir -p $(DESTDIR)$(PREFIX)/share/wiithon/recursos/imagenes/accesorio
 	@mkdir -p $(DESTDIR)$(PREFIX)/share/wiithon/recursos/imagenes/caratulas
 	@mkdir -p $(DESTDIR)$(PREFIX)/share/wiithon/recursos/imagenes/discos
+	@mkdir -p $(DESTDIR)$(PREFIX)/share/wiithon/recursos/imagenes/caratulas/3d
+	@mkdir -p $(DESTDIR)$(PREFIX)/share/wiithon/recursos/imagenes/caratulas/total
+	@mkdir -p $(DESTDIR)$(PREFIX)/share/wiithon/recursos/imagenes/discos/custom
 	
 recicled_old_wiithon: making_directories
 	-@mv -f ~/.wiithon/caratulas/*.png $(PREFIX)/share/wiithon/recursos/imagenes/caratulas
@@ -145,6 +148,9 @@ set_permisses:
 	 
 	chmod 777 $(DESTDIR)$(PREFIX)/share/wiithon/recursos/imagenes/caratulas
 	chmod 777 $(DESTDIR)$(PREFIX)/share/wiithon/recursos/imagenes/discos
+	chmod 777 $(DESTDIR)$(PREFIX)/share/wiithon/recursos/imagenes/caratulas/3d
+	chmod 777 $(DESTDIR)$(PREFIX)/share/wiithon/recursos/imagenes/caratulas/total
+	chmod 777 $(DESTDIR)$(PREFIX)/share/wiithon/recursos/imagenes/discos/custom
 	
 	@echo "=================================================================="
 	@echo "Permisses OK"
@@ -315,6 +321,9 @@ purge: uninstall
 	-$(RM) -R ~/.wiithon
 	-$(RM) $(PREFIX)/share/wiithon/recursos/imagenes/caratulas/*.png
 	-$(RM) $(PREFIX)/share/wiithon/recursos/imagenes/discos/*.png
+	-$(RM) $(PREFIX)/share/wiithon/recursos/imagenes/caratulas/3d/*.png
+	-$(RM) $(PREFIX)/share/wiithon/recursos/imagenes/caratulas/total/*.png
+	-$(RM) $(PREFIX)/share/wiithon/recursos/imagenes/discos/custom/*.png
 	-rmdir $(PREFIX)/share/wiithon/recursos/imagenes/caratulas
 	-rmdir $(PREFIX)/share/wiithon/recursos/imagenes/discos
 	-rmdir $(PREFIX)/share/wiithon/recursos/imagenes

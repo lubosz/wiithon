@@ -1,19 +1,19 @@
 K 25
 svn:wc:ra_dav:version-url
 V 57
-/wii/!svn/ver/495/trunk/wiimms-wbfs-tool/templates/module
+/wii/!svn/ver/518/trunk/wiimms-wbfs-tool/templates/module
 END
 head.txt
 K 25
 svn:wc:ra_dav:version-url
 V 66
-/wii/!svn/ver/382/trunk/wiimms-wbfs-tool/templates/module/head.txt
+/wii/!svn/ver/518/trunk/wiimms-wbfs-tool/templates/module/head.txt
 END
 last-history.txt
 K 25
 svn:wc:ra_dav:version-url
 V 74
-/wii/!svn/ver/495/trunk/wiimms-wbfs-tool/templates/module/last-history.txt
+/wii/!svn/ver/518/trunk/wiimms-wbfs-tool/templates/module/last-history.txt
 END
 opt-psel.txt
 K 25
@@ -43,7 +43,7 @@ content.txt
 K 25
 svn:wc:ra_dav:version-url
 V 69
-/wii/!svn/ver/382/trunk/wiimms-wbfs-tool/templates/module/content.txt
+/wii/!svn/ver/503/trunk/wiimms-wbfs-tool/templates/module/content.txt
 END
 proc-exclude.txt
 K 25
@@ -61,7 +61,7 @@ proc-iso.txt
 K 25
 svn:wc:ra_dav:version-url
 V 70
-/wii/!svn/ver/454/trunk/wiimms-wbfs-tool/templates/module/proc-iso.txt
+/wii/!svn/ver/503/trunk/wiimms-wbfs-tool/templates/module/proc-iso.txt
 END
 proc-size.txt
 K 25

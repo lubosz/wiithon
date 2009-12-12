@@ -131,7 +131,6 @@ typedef struct WDiscHeader_t
 
 //-----------------------------------------------------------------------------
 
-#define WD_REGION_OFF 0x4e000
 
 typedef struct WDRegionSet_t
 {
@@ -143,9 +142,6 @@ typedef struct WDRegionSet_t
 
 //-----------------------------------------------------------------------------
 
-#define WD_MAX_PART_INFO 4
-#define WD_PART_INFO_OFF 0x40000
-
 typedef struct WDPartCount_t
 {
 	u32 n_part;
@@ -155,8 +151,6 @@ typedef struct WDPartCount_t
 
 //-----------------------------------------------------------------------------
 
-#define WD_MAX_PART_TABLE 0x40
-
 typedef struct WDPartTableEntry_t
 {
 	u32 off4;
@@ -165,8 +159,6 @@ typedef struct WDPartTableEntry_t
 } __attribute__ ((packed)) WDPartTableEntry_t;
 
 //-----------------------------------------------------------------------------
-
-#define WD_H3_SIZE 0x18000
 
 typedef struct WDPartHead_t
 {
@@ -215,7 +207,7 @@ typedef struct WDiscInfo_t
 	WDPartInfo_t	* pinfo;	// field with 'n_part' elements
 
 	// raw data
-	WDPartCount_t	pcount[WD_MAX_PART_INFO];
+	WDPartCount_t	pcount[WII_MAX_PART_INFO];
 	WDRegionSet_t	regionset;
 
 } WDiscInfo_t;

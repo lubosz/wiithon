@@ -319,12 +319,22 @@ u32 wbfs_count_unusedblocks(wbfs_t*p);
 // [codeview]
 static int block_used(u8 *used,u32 i,u32 wblk_sz)
 
+void wbfs_load_id_list	( wbfs_t * p, int force_reload );
+    load the 'id_list' if not already done.
+    force_reload!=0 => force a reload of the id list.
+
+int wbfs_find_slot ( wbfs_t * p, u8 * disc_id );
+    returns the slot index of the specified disc or -1 if not found.
+
+void wbfs_load_freeblocks ( wbfs_t * p );
+    load the free blocks table if not already done.
+
 static u32 alloc_block ( wbfs_t * p );
     find the first free block and allocate it.
     return: block number >= 1
             ~0: no blocks free
 
-static void wbfs_free_block ( wbfs_t *p, int bl )
+static void wbfs_free_block ( wbfs_t *p, u32 bl )
     frees the block 'bl'. bl must be >= 1.
 
 // [codeview]
@@ -337,6 +347,9 @@ u32 wbfs_add_disc
     partition_selector_t sel,
     int copy_1_1
 )
+
+u32 wbfs_add_phantom ( wbfs_t *p, u8 *phantom_id, u32 wii_sectors );
+    add a phantom disc with id6 'phantom_id' and given num of wii_sectors.
 
 u32 wbfs_ren_disc ( wbfs_t * p, u8 * discid, u8 * newname )
     Set a new title (WBFS inode only) for disc with ID 'discid'

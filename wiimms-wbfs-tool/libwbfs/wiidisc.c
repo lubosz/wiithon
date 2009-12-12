@@ -365,8 +365,17 @@ u8 * wd_extract_file(wiidisc_t *d, partition_selector_t partition_type, char *pa
 void wd_build_disc_usage
 	( wiidisc_t * d, partition_selector_t selector, u8 * usage_table )
 {
+    ASSERT(d);
+    ASSERT(usage_table);
+
     d->sector_usage_table = usage_table;
     wbfs_memset(usage_table,0,WII_MAX_SECTORS);
+
+    // these sectors are always copied
+    usage_table[ 0 ] = 1;
+    usage_table[ WII_PART_INFO_OFF / WII_SECTOR_SIZE ] = 1;
+    usage_table[ WII_REGION_OFF    / WII_SECTOR_SIZE ] = 1;
+
     d->part_sel = selector;
     do_disc(d);
     d->part_sel = ALL_PARTITIONS;

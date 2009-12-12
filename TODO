@@ -1,6 +1,5 @@
 - Crear Trabajos con alta prioridad: Los trabajos generados despues de descomprimir un RAR deben saltarse toda la cola
 - Modo desatendido: sin preguntas
-- Descomprimir en "." no funciona bien
 - Repasar connect_if_need_it()
 - forzar info wiitdb de este juego
 - opción forzar descarga caratulas
@@ -14,3 +13,4 @@
 - Si todos los nombres propuestos son iguales, no mostrar la propuesta
 - setup preferred export directory in preferences
 - best fix from titles problem (UTF-8 vs ISO-8859-1)
+- Proceso de abrir web, es de alta prioridad

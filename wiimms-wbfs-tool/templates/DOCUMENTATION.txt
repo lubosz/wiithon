@@ -408,6 +408,22 @@ wwt v0.18a r465 - 2009-11-22
  - IMPORTAND BUG FIX in libwbfs/wiidisc: All scrubbing operations including
    adding to a WBFS could loose sectors.
 
+wwt v0.19a r491 - 2009-11-27
+
+ - New ADD option: --sync: Synchronize: remove and add until WBFS contains
+   the same discs as source list.
+ - New comamnd: wwt SYNC: Abbreviation for: ADD --sync
+ - New commands: wit RENAME+SETTITLE: Set ID and title of discs [EXPERIMENTAL].
+ - New command: wit MOVE: move/rename iso files.
+ - MAC bug fix: segmentation fault if formatting a drive.
+ - Bug fix: Interrupt possible while processing a source directory.
+
+wwt v0.20a r504 - 2009-12-05
+
+ - wwt FIND -l: List all instead of only WBFS partitions.
+ - Some minor bug fixes.
+ - Improved text output.
+
 @@MODULE(last-history.txt)@@
 
 

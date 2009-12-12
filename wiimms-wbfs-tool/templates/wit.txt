@@ -114,6 +114,13 @@ COMMAND: COPY|CP
  --test is set at least two times a source list with a trailing destination
  will be printed.
 
+ When writing ISO files the option --wdf, --iso and --wbfs control the output
+ format. If writing a WBFS file this WBFS is truncated and contains exactly
+ one ISO image. The default file name of this WBFS is '<ID6>.wbfs'. If none
+ of --wdf, --iso or --wbfs is set, the destination filename will be analyzed.
+ If the extension (ignoring case) is ".wdf", ".iso" or ".wbfs", the specific
+ output format is used. The default is WDF if all other failes.
+
 
  DESTINATION FILENAME
 
@@ -566,14 +573,17 @@ COMMAND: RENAME|REN  id6=[new_id6][,title] ...
     -x --exclude @file Read exclude list from file.
     -X --exclude-path file_or_dir
                        ISO file or base of directory tree -> scan their ID6
-
     -i --ignore        Ignore non existing discs without warning.
-    -I --iso           If WBFS: Change only the ISO header inside the WBFS.
-    -B --wbfs          If WBFS: Change only the WBFS inode infos.
 
- EXPERIMENTAL!
- The implementation is not testet very well.
+ This command 'RENAME' may change the ID6 and/or the title of discs. The
+ alternative command 'SETTITLE' modifies only titles. The advantage of
+ 'SETTITLE' is, that it can modify all titles with 1 sub command.
 
+ The syntax of a sub comand is: id6=[new_id6][,new_title]
+    'id6' is the ID of the disc to change.
+    The optional 'new_id6' is the new ID of the disc.
+    The optional 'new_title' is the new title of the disc.
+    
 @@MODULE(set-title.txt)@@
 
 
@@ -631,8 +641,6 @@ COMMAND: SETTITLE|ST   id6=new_title ...
 
  Change the title of discs.
 
- Change the ID6 or/and the title of discs.
-
  Options:
 
     -s --source  path  ISO file or directory with ISO files.
@@ -641,13 +649,14 @@ COMMAND: SETTITLE|ST   id6=new_title ...
     -x --exclude @file Read exclude list from file.
     -X --exclude-path file_or_dir
                        ISO file or base of directory tree -> scan their ID6
-
     -i --ignore        Ignore non existing discs without warning.
-    -I --iso           If WBFS: Change only the ISO header inside the WBFS.
-    -B --wbfs          If WBFS: Change only the WBFS inode infos.
 
- EXPERIMENTAL!
- The implementation is not testet very well.
+ This command 'SETTITLE' may change the title of discs. The alternative
+ command 'RENAME' can also change the ID of discs.
+
+ The syntax of a sub comand is: id6=new_title
+    'id6' is the ID of the disc to change. If using '+' all discs are changed.
+    The 'new_title' is the new title of the disc.
 
 @@MODULE(set-title.txt)@@
 

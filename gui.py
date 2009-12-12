@@ -32,9 +32,6 @@ from estadistica import MuestraEstadistica
 db =        util.getBDD()
 session =   util.getSesionBDD(db)
 
-# prioridades
-(COVER_NORMAL, COVER_3D, COVER_FULL)=([ "%d" % i for i in range(3) ])
-
 class WiithonGUI(GtkBuilderWrapper):
     
     activo = None
@@ -54,6 +51,12 @@ class WiithonGUI(GtkBuilderWrapper):
 
         # lista de juegos mostrados
         self.lJuegos = None
+        
+        # tipo de caratula
+        self.cover_type = None
+        
+        # tipo de disc art 
+        self.disc_art_type = None
         
         # mutex de seguridad para preferencias
         # evita problemas de concurrencia en la bdd
@@ -159,24 +162,35 @@ class WiithonGUI(GtkBuilderWrapper):
         self.wb_principal.connect("drag_data_received", self.drag_data_received_cb)
                
         # activar caratula activa
-        self.wb_boton_normal.connect("toggled", self.on_clicked_tipo_caratula, COVER_NORMAL)
-        self.wb_boton_3d.connect("toggled", self.on_clicked_tipo_caratula, COVER_3D)
-        self.wb_boton_full.connect("toggled", self.on_clicked_tipo_caratula, COVER_FULL)
+        self.wb_boton_normal.connect("toggled", self.on_clicked_tipo_caratula, util.COVER_NORMAL)
+        self.wb_boton_3d.connect("toggled", self.on_clicked_tipo_caratula, util.COVER_3D)
+        self.wb_boton_full.connect("toggled", self.on_clicked_tipo_caratula, util.COVER_FULL)
         
-        self.toggle_tipo_caratula_activo = None
         self.cover_type = self.core.prefs.tipo_caratula
-
-        if self.cover_type == COVER_3D: # 3D
+        if self.cover_type == util.COVER_3D: # 3D
             self.wb_boton_3d.set_active(True)
             self.toggle_tipo_caratula_activo = self.wb_boton_3d
             
-        elif self.cover_type == COVER_FULL: # FULL
+        elif self.cover_type == util.COVER_FULL: # FULL
             self.wb_boton_full.set_active(True)
             self.toggle_tipo_caratula_activo = self.wb_boton_full
         
         else:# NORMAL
             self.wb_boton_normal.set_active(True)
             self.toggle_tipo_caratula_activo = self.wb_boton_normal
+            
+        # activar disc-art activo
+        self.wb_boton_original.connect("toggled", self.on_clicked_tipo_disc_art, util.DISC_ORIGINAL)
+        self.wb_boton_custom.connect("toggled", self.on_clicked_tipo_disc_art, util.DISC_CUSTOM)
+        
+        self.disc_art_type = self.core.prefs.tipo_disc_art
+        if self.disc_art_type == util.DISC_CUSTOM: # CUSTOM
+            self.wb_boton_custom.set_active(True)
+            self.toggle_tipo_disc_art_activo = self.wb_boton_custom
+        
+        else:# ORIGINAL
+            self.wb_boton_original.set_active(True)
+            self.toggle_tipo_disc_art_activo = self.wb_boton_original
 
         # iniciar preferencias
         self.core.prefs.cargarPreferenciasPorDefecto(   self.wb_prefs_vbox_general,
@@ -189,13 +203,11 @@ class WiithonGUI(GtkBuilderWrapper):
         backup_preferencia_device = self.core.prefs.device_seleccionado
         backup_preferencia_idgame = self.core.prefs.idgame_seleccionado
 
-        # ocultar barra de progreso
-        #self.ocultarHBoxProgreso()
-
         self.wb_principal.set_icon_from_file(config.ICONO)
-        #self.wb_principal.maximize()
         self.wb_principal.set_size_request(1000, -1)
         self.wb_principal.show()
+        if self.core.prefs.init_minimize:
+            self.wb_principal.maximize()
 
         # conexion señales de la toolbar
         self.wb_tb_refrescar_wbfs.connect('clicked' , self.on_tb_toolbar_clicked)
@@ -209,6 +221,8 @@ class WiithonGUI(GtkBuilderWrapper):
         self.wb_tb_acerca_de.connect('clicked' , self.on_tb_toolbar_clicked)
         self.wb_tb_copiar_1_1.connect('clicked' , self.on_tb_toolbar_clicked)
         self.wb_tb_preferencias.connect('clicked' , self.on_tb_toolbar_clicked)
+        self.wb_tb_conversor.connect('clicked' , self.on_tb_toolbar_clicked)
+        self.wb_tb_renombrado_masivo.connect('clicked' , self.on_tb_toolbar_clicked)
 
         self.wb_busqueda = util.Entry(clear=True)
         self.wb_busqueda.show()
@@ -351,6 +365,9 @@ class WiithonGUI(GtkBuilderWrapper):
         if backup_preferencia_idgame != "":
             self.seleccionarFilaConValor(self.wb_tv_games, 0 , backup_preferencia_idgame)
 
+        if config.NEW_BDD_VERSION:
+            self.alert('info', _('Una actualizacion de Wiithon ha cambiado la estructura de la BDD. Se han establecido las preferencias por defecto.'))
+
         # pongo el foco en el buscador
         if( len(self.lJuegos)>0 ):
             self.wb_busqueda.grab_focus()
@@ -394,6 +411,9 @@ class WiithonGUI(GtkBuilderWrapper):
         # cerrar carga
         self.cerrar_loading()
         
+        # mostrar ventana principal
+        self.wb_principal.show()
+        
         # GO
         gtk.main()
 
@@ -433,10 +453,13 @@ class WiithonGUI(GtkBuilderWrapper):
             self.refrescarInfoWiiTDB()
             #            
             # clean png corrupts
+            # FIXME: tantas iteraciones como tipos de caratula
             query = session.query(Juego).group_by('idgame')
             for juego in query:
-                self.core.existeCaratula(juego.idgame, True)
-                self.core.existeDisco(juego.idgame, True)
+                for tipo in range(3): # 3 tipos de caratula
+                    self.core.existeCaratula(juego.idgame, True, str(tipo))
+                for tipo in range(2): # 2 tipos de disco
+                    self.core.existeDisco(juego.idgame, True, str(tipo))
             #
             # refrescar num caratulas
             self.refrescarNumCaratulas()
@@ -444,12 +467,14 @@ class WiithonGUI(GtkBuilderWrapper):
             # descargar caratulas y discos
             query = session.query(Juego).order_by('idParticion, lower(title)').group_by('idgame')
             for juego in query:
+                
+                for tipo in range(3): # 3 tipos de caratula
+                    if not self.core.existeCaratula(juego.idgame, False, str(tipo)):
+                        self.poolBash.nuevoTrabajoDescargaCaratula(juego.idgame, str(tipo))
 
-                if not self.core.existeCaratula(juego.idgame):
-                    self.poolBash.nuevoTrabajoDescargaCaratula(juego.idgame)
-
-                if not self.core.existeDisco(juego.idgame):
-                    self.poolBash.nuevoTrabajoDescargaDisco(juego.idgame)
+                for tipo in range(2): # 2 tipos de disco
+                    if not self.core.existeDisco(juego.idgame, False, str(tipo)):
+                        self.poolBash.nuevoTrabajoDescargaDisco(juego.idgame, str(tipo))
             #
             ##################################################################################
             
@@ -1269,9 +1294,9 @@ class WiithonGUI(GtkBuilderWrapper):
         juegos_sin_disc_art = 0
         
         for juego in self.lJuegos:
-            if not self.core.existeCaratula(juego.idgame):
+            if not self.core.existeCaratula(juego.idgame, False, self.cover_type):
                 juegos_sin_caratula += 1
-            if not self.core.existeDisco(juego.idgame):
+            if not self.core.existeDisco(juego.idgame, False, self.disc_art_type):
                 juegos_sin_disc_art += 1
         
         self.info.abajo_juegos_sin_caratula = juegos_sin_caratula
@@ -1435,15 +1460,15 @@ class WiithonGUI(GtkBuilderWrapper):
         if IDGAME is not None:
 
             # existe            
-            if self.core.existeCaratula(IDGAME):
-                destinoCaratula = self.core.getRutaCaratula(IDGAME)
+            if self.core.existeCaratula(IDGAME, False, self.cover_type):
+                destinoCaratula = self.core.getRutaCaratula(IDGAME, self.cover_type)
                 #   existe y esta descargando
                 if not util.esPNG(destinoCaratula):
                     destinoCaratula = os.path.join(config.WIITHON_FILES_RECURSOS_IMAGENES , "caratula.png")
                 #else:   existe y esta descargado
             # no existe        
             else:
-                self.poolBash.nuevoTrabajoDescargaCaratula( IDGAME )
+                self.poolBash.nuevoTrabajoDescargaCaratula( IDGAME , self.cover_type)
                 destinoCaratula = os.path.join(config.WIITHON_FILES_RECURSOS_IMAGENES , "caratula.png")
 
         widget_imagen.set_from_file( destinoCaratula )
@@ -1455,15 +1480,15 @@ class WiithonGUI(GtkBuilderWrapper):
         if IDGAME is not None:
 
             # existe            
-            if self.core.existeDisco(IDGAME):
-                destinoDisco = self.core.getRutaDisco(IDGAME)
+            if self.core.existeDisco(IDGAME, False, self.disc_art_type):
+                destinoDisco = self.core.getRutaDisco(IDGAME, self.disc_art_type)
                 #   existe y esta descargando
                 if not util.esPNG(destinoDisco):
                     destinoDisco = os.path.join(config.WIITHON_FILES_RECURSOS_IMAGENES , "disco.png")
                 #else:   existe y esta descargado
             # no existe        
             else:
-                self.poolBash.nuevoTrabajoDescargaDisco( IDGAME )
+                self.poolBash.nuevoTrabajoDescargaDisco( IDGAME , self.disc_art_type)
                 destinoDisco = os.path.join(config.WIITHON_FILES_RECURSOS_IMAGENES , "disco.png")
 
         widget_imagen.set_from_file( destinoDisco )
@@ -1686,8 +1711,14 @@ class WiithonGUI(GtkBuilderWrapper):
         
         if config.DEBUG:
             print "on_tb_toolbar_clicked"
+            
+        if(id_tb == self.wb_tb_conversor):
+            self.alert('warning',_('Not implemented yet'))
+            
+        elif(id_tb == self.wb_tb_renombrado_masivo):
+            self.alert('warning',_('Not implemented yet'))
         
-        if(not self.isSelectedPartition() and id_tb != self.wb_tb_copiar_SD and id_tb != self.wb_tb_acerca_de and id_tb != self.wb_tb_refrescar_wbfs and id_tb != self.wb_tb_preferencias):
+        elif(not self.isSelectedPartition() and id_tb != self.wb_tb_copiar_SD and id_tb != self.wb_tb_acerca_de and id_tb != self.wb_tb_refrescar_wbfs and id_tb != self.wb_tb_preferencias):
             self.alert("warning" , _("Tienes que seleccionar una particion WBFS para realizar esta accion"))
 
         elif(id_tb == self.wb_tb_acerca_de):
@@ -1781,11 +1812,12 @@ class WiithonGUI(GtkBuilderWrapper):
                             sql = util.decode('idgame=="%s"' % self.sel_juego.obj.idgame)
                             if session.query(Juego).filter(sql).count() == 0:
 
-                                # borrar disco
-                                self.core.borrarDisco( self.sel_juego.obj )
+                                # borrar disco FIXME borrar el disco de todos los tipos
+                                for tipo in range(2): # 2 tipos de disco
+                                    self.core.borrarDisco( self.sel_juego.obj, str(tipo) )
 
-                                # borrar caratula
-                                self.core.borrarCaratula( self.sel_juego.obj )
+                                for tipo in range(3): # 3 tipos de caratula
+                                    self.core.borrarCaratula( self.sel_juego.obj, str(tipo) )
                             
                             # actualizar valores de usado/libre/total
                             self.sel_parti.obj.refrescarEspacioLibreUsado(self.core)
@@ -1867,11 +1899,11 @@ class WiithonGUI(GtkBuilderWrapper):
                     elif(id_tb == self.wb_tb_anadir_directorio):
                         self.core.prefs.ruta_anadir_directorio = fc_anadir.get_current_folder()
 
-                    listaISO = []
-                    listaRAR = []
+                    listaISO = NonRepeatList()
+                    listaRAR = NonRepeatList()
                     for fichero in fc_anadir.get_filenames():
                         if( os.path.isdir( fichero ) ):
-                            encontradosRAR =  util.rec_glob(fichero, "*.rar")
+                            encontradosRAR =  util.rec_glob(fichero, "[wii]*.rar")
                             hayRAR = len(encontradosRAR) > 0
                             if hayRAR:
                                 listaRAR.extend(encontradosRAR)
@@ -1982,7 +2014,7 @@ class WiithonGUI(GtkBuilderWrapper):
                 self.ocultar_preferencias()
             else:
                 self.alert("error" , _("Hay una tarea que esta bloqueando las preferencias.\n\nEspere a que finalize."))
-                
+
     def ocultar_preferencias(self, actualizar_preferencias = True):
         if actualizar_preferencias:
             self.poolTrabajo.actualizarPreferencias()
@@ -2032,6 +2064,36 @@ class WiithonGUI(GtkBuilderWrapper):
         
 ############################# 3 botones caratula ###########
 
+    '''
+        self.disc_art_type
+        self.wb_boton_original
+        self.wb_boton_custom
+        self.toggle_tipo_disc_art_activo
+    '''
+    
+    def on_clicked_tipo_disc_art(self, widget, nuevo_disc_art_type):
+        
+        if self.disc_art_type != nuevo_disc_art_type:
+            
+            if widget != self.toggle_tipo_disc_art_activo:
+                
+                self.disc_art_type = nuevo_disc_art_type
+                
+                if self.toggle_tipo_disc_art_activo is not None:
+                    self.toggle_tipo_disc_art_activo.set_active(False)
+
+                if nuevo_disc_art_type == util.DISC_CUSTOM:
+                    self.toggle_tipo_disc_art_activo = self.wb_boton_custom
+                else: # elif nuevo_disc_art_type == util.DISC_ORIGINAL:
+                    self.toggle_tipo_disc_art_activo = self.wb_boton_original
+                
+                self.core.prefs.tipo_disc_art = nuevo_disc_art_type
+                
+                self.poolTrabajo.actualizarPreferencias()
+                self.poolBash.actualizarPreferencias()
+                
+                self.ponerDisco(self.sel_juego.obj.idgame, self.wb_img_disco1)
+
     def on_clicked_tipo_caratula(self, widget, nuevo_cover_type):
         
         if self.cover_type != nuevo_cover_type:
@@ -2042,16 +2104,20 @@ class WiithonGUI(GtkBuilderWrapper):
                 
                 if self.toggle_tipo_caratula_activo is not None:
                     self.toggle_tipo_caratula_activo.set_active(False)
-                    self.alert("warning" , _("Esta funcion esta en desarrollo"))
 
-                if nuevo_cover_type == COVER_NORMAL:
-                    self.toggle_tipo_caratula_activo = self.wb_boton_normal
-                elif nuevo_cover_type == COVER_3D:
+                if nuevo_cover_type == util.COVER_3D:
                     self.toggle_tipo_caratula_activo = self.wb_boton_3d
-                elif nuevo_cover_type == COVER_FULL:
+                elif nuevo_cover_type == util.COVER_FULL:
                     self.toggle_tipo_caratula_activo = self.wb_boton_full
+                else: # if nuevo_cover_type == util.COVER_NORMAL:
+                    self.toggle_tipo_caratula_activo = self.wb_boton_normal
                 
                 self.core.prefs.tipo_caratula = nuevo_cover_type
+                
+                self.poolTrabajo.actualizarPreferencias()
+                self.poolBash.actualizarPreferencias()
+                
+                self.ponerCaratula(self.sel_juego.obj.idgame, self.wb_img_caratula1)
                 
 ########## WIITDB ###########
                 
@@ -2234,13 +2300,13 @@ class WiithonGUI(GtkBuilderWrapper):
                         if self.isSelectedGame():
 
                             if self.core.prefs.DESTINO_ARRASTRE == 'C':
-                                ruta = self.core.getRutaCaratula(self.sel_juego.obj.idgame)
+                                ruta = self.core.getRutaCaratula(self.sel_juego.obj.idgame, self.cover_type)
                                 shutil.copy(fichero, ruta)
                                 comando = 'mogrify -resize %dx%d! "%s"' % (self.core.prefs.WIDTH_COVERS, self.core.prefs.HEIGHT_COVERS, ruta)
                                 util.call_out_null(comando)
                                 self.ponerCaratula(self.sel_juego.obj.idgame, self.wb_img_caratula1)
                             elif self.core.prefs.DESTINO_ARRASTRE == 'D':
-                                ruta = self.core.getRutaDisco(self.sel_juego.obj.idgame)
+                                ruta = self.core.getRutaDisco(self.sel_juego.obj.idgame, self.disc_art_type)
                                 shutil.copy(fichero, ruta)
                                 comando = 'mogrify -resize %dx%d! "%s"' % (self.core.prefs.WIDTH_DISCS, self.core.prefs.HEIGHT_DISCS, ruta)
                                 util.call_out_null(comando)
@@ -2253,13 +2319,13 @@ class WiithonGUI(GtkBuilderWrapper):
                     if self.isSelectedGame():
                         
                         if self.core.prefs.DESTINO_ARRASTRE == 'C':
-                            ruta = self.core.getRutaCaratula(self.sel_juego.obj.idgame)
+                            ruta = self.core.getRutaCaratula(self.sel_juego.obj.idgame, self.cover_type)
                             util.descargar(fichero, ruta)
                             comando = 'mogrify -resize %dx%d! "%s"' % (self.core.prefs.WIDTH_COVERS, self.core.prefs.HEIGHT_COVERS, ruta)
                             util.call_out_null(comando)
                             self.ponerCaratula(self.sel_juego.obj.idgame, self.wb_img_caratula1)
                         elif self.core.prefs.DESTINO_ARRASTRE == 'D':
-                            ruta = self.core.getRutaDisco(self.sel_juego.obj.idgame)
+                            ruta = self.core.getRutaDisco(self.sel_juego.obj.idgame, self.disc_art_type)
                             util.descargar(fichero, ruta)
                             comando = 'mogrify -resize %dx%d! "%s"' % (self.core.prefs.WIDTH_DISCS, self.core.prefs.HEIGHT_DISCS, ruta)
                             util.call_out_null(comando)

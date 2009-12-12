@@ -22,6 +22,6 @@
 
 #define URI_REPOS	"@@URI-REPOS@@/"
 #define URI_VIEWVC	"@@URI-VIEWVC@@/"
-#define URI_GBATEMP	"@@URI-GBATEMP@@"
+#define URI_HOME	"@@URI-HOME@@"
 #define URI_DOWNLOAD	"@@URI-DOWNLOAD@@"
 

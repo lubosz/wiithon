@@ -1146,9 +1146,6 @@ enumError CopySF ( SuperFile_t * in, SuperFile_t * out, u32 psel )
 	    if (err)
 		return err;
 
-	    wdisc_usage_tab[WD_PART_INFO_OFF/WII_SECTOR_SIZE] = 1;
-	    wdisc_usage_tab[WD_REGION_OFF/WII_SECTOR_SIZE] = 1;
-
 	    int idx;
 	    u64 pr_done = 0, pr_total = 0;
 	    if ( out->show_progress )
@@ -1172,9 +1169,9 @@ enumError CopySF ( SuperFile_t * in, SuperFile_t * out, u32 psel )
 		    if (err)
 			return err;
 
-		    if ( psel != ALL_PARTITIONS && off == WD_PART_INFO_OFF )
+		    if ( psel != ALL_PARTITIONS && off == WII_PART_INFO_OFF )
 		    {
-			// [2do] : rewrite code
+			// [2do] ? rewrite code 
 			wd_fix_partition_table(disc,psel,(u8*)iobuf);
 		    }
 
@@ -1528,11 +1525,6 @@ enumError DiffSF ( SuperFile_t * f1, SuperFile_t * f2, int long_count, u32 psel 
     TRACELINE;
     wd_build_disc_usage(d1,psel,wdisc_usage_tab );
     wd_build_disc_usage(d2,psel,wdisc_usage_tab2);
-
-    wdisc_usage_tab [WD_PART_INFO_OFF/WII_SECTOR_SIZE] = 1;
-    wdisc_usage_tab2[WD_PART_INFO_OFF/WII_SECTOR_SIZE] = 1;
-    wdisc_usage_tab [WD_REGION_OFF/WII_SECTOR_SIZE] = 1;
-    wdisc_usage_tab2[WD_REGION_OFF/WII_SECTOR_SIZE] = 1;
 
     int idx;
     u64 pr_done = 0, pr_total = 0;

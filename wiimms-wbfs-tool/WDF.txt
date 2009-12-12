@@ -83,8 +83,7 @@ At the moment only the tools from WWT (Wiimms WBFS Tool) will support WDFS:
  - Tool 'wdf2iso' converts WDF files into ISO images.
  - Tool 'wdf-cat' is a 'cat' like program with special handling of WDF.
 
-Announcements and discussions will be made in the GBAtemp.net forum:
-  http://gbatemp.net/index.php?showtopic=182236#entry2286365
+See http://wiimm.de/wwt/ for announcements and discussions.
 
 
 *******************************************************************************

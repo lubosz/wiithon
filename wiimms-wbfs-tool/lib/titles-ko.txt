@@ -43,5 +43,5 @@ RY2K41 = 래이맨 엽기토끼 2
 RY3K41 = 래이맨 엽기토끼 TV파티
 RYWK01 = Wii로 다함께! 말랑말랑 두뇌교실
 RZDK01 = 젤다의 전설- 황혼의 공주
-RZLP41 = cooking party
-TITLES = http://wiitdb.com (language: KO version: 20091127144834)
+SBDK08 = 바이오 하자드: 다크사이드 크로니클즈
+TITLES = http://wiitdb.com (language: KO version: 20091209163118)

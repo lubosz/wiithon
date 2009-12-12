@@ -609,7 +609,7 @@ enumError exec_dump ( SuperFile_t * sf, Iterator_t * it )
 
     int i;
     WDPartCount_t *pc = wdi.pcount;
-    for ( i = 0; i < WD_MAX_PART_INFO; i++, pc++ )
+    for ( i = 0; i < WII_MAX_PART_INFO; i++, pc++ )
 	if (pc->n_part)
 	{
 	    off_t off = (off_t)pc->off4<<2;
@@ -673,7 +673,7 @@ enumError exec_dump ( SuperFile_t * sf, Iterator_t * it )
 
 	    dump_data( pi->off, pi->ph.tmd_off4,  pi->ph.tmd_size,		"TMD:" );
 	    dump_data( pi->off, pi->ph.cert_off4, pi->ph.cert_size,		"Cert:" );
-	    dump_data( pi->off, pi->ph.h3_off4,   WD_H3_SIZE,		"H3:" );
+	    dump_data( pi->off, pi->ph.h3_off4,   WII_H3_SIZE,		"H3:" );
 	    dump_data( pi->off, pi->ph.data_off4, (off_t)pi->ph.data_size<<2, "Data:" );
 	}
 
@@ -1683,7 +1683,7 @@ int main ( int argc, char ** argv )
 
     if ( argc < 2 )
     {
-	printf("\n%s\nVisit %s\n\n",TITLE,URI_GBATEMP);
+	printf("\n%s\nVisit %s for more infos.\n\n",TITLE,URI_HOME);
 	hint_exit(ERR_OK);
     }
 

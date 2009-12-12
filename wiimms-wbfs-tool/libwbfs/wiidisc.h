@@ -33,6 +33,12 @@ enum // some constants
 
     WII_TITLE_OFF		= 0x20,
     WII_TITLE_SIZE		= 0x40,
+
+    WII_MAX_PART_INFO		=       4,
+    WII_PART_INFO_OFF		= 0x40000,
+    WII_REGION_OFF		= 0x4e000,
+    WII_MAX_PART_TABLE		=    0x40,
+    WII_H3_SIZE			= 0x18000,
 };
 
 ///////////////////////////////////////////////////////////////////////////////

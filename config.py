@@ -31,6 +31,10 @@ WIITHON_FILES_RECURSOS_IMAGENES_ACCESORIO = os.path.join(WIITHON_FILES_RECURSOS_
 
 HOME_WIITHON_CARATULAS = os.path.join(WIITHON_FILES_RECURSOS_IMAGENES , 'caratulas')
 HOME_WIITHON_DISCOS = os.path.join(WIITHON_FILES_RECURSOS_IMAGENES , 'discos')
+# new!
+HOME_WIITHON_CARATULAS_3D = os.path.join(HOME_WIITHON_CARATULAS , '3d')
+HOME_WIITHON_CARATULAS_TOTAL = os.path.join(HOME_WIITHON_CARATULAS , 'total')
+HOME_WIITHON_DISCOS_CUSTOM = os.path.join(HOME_WIITHON_DISCOS , 'custom')
 
 LOCALE = "/usr/share/locale/"
 ICONO = "/usr/share/pixmaps/wiithon.xpm"
@@ -43,19 +47,21 @@ try:
     VER, REV = util.getVersionRevision()
 except:
     VER, REV = "?", "?"
-VERS_BDD = [1,2,3] # last is active
+VERS_BDD = [1,2,3,4] # last is active
 HOME = os.environ['HOME']
 HOME_WIITHON = os.path.join(HOME , '.%s' % APP)
 HOME_WIITHON_BDD = os.path.join(HOME_WIITHON , 'bdd')
 HOME_WIITHON_LOGS = os.path.join(HOME_WIITHON , 'logs')
 HOME_WIITHON_LOGS_PROCESO = os.path.join(HOME_WIITHON_LOGS , "proceso.log")
 i = 0
+NEW_BDD_VERSION = False
 for ver in VERS_BDD:
     HOME_WIITHON_BDD_BDD = os.path.join(HOME_WIITHON_BDD, '%s_db_ver-%d.db' % (APP, ver))
     i += 1
     if i != len(VERS_BDD):
         if os.path.exists(HOME_WIITHON_BDD_BDD):
             os.remove(HOME_WIITHON_BDD_BDD)
+            NEW_BDD_VERSION = True
 
 URI_ENGINE = 'sqlite:///%s' % HOME_WIITHON_BDD_BDD
 

@@ -127,12 +127,16 @@ wbfs_t * wbfs_open_partition
 		  u32 part_lba,
 		  int reset )
 {
+    TRACE("LIBWBFS: +wbfs_open_partition()\n");
+
     //----- alloc mem
 
     wbfs_t	*p	= wbfs_malloc(sizeof(wbfs_t));
     wbfs_head_t *head	= wbfs_ioalloc(hd_sector_size?hd_sector_size:512);
     if ( !p || !head )
 	OUT_OF_MEMORY;
+
+    memset(p,0,sizeof(*p));
 
     //----- store head and parameters
 
@@ -301,6 +305,9 @@ void wbfs_sync ( wbfs_t * p )
 {
     // writes wbfs header and freeblks (if !=0) to hardisk
 
+    TRACE("LIBWBFS: +wbfs_sync(%p) wr_hds=%p, head=%p, freeblks=%p\n",
+		p, p->write_hdsector, p->head, p->freeblks );
+
     if (p->write_hdsector)
     {
 	p->write_hdsector ( p->callback_data, p->part_lba, 1, p->head );
@@ -317,6 +324,9 @@ void wbfs_sync ( wbfs_t * p )
 
 void wbfs_close ( wbfs_t * p )
 {
+    TRACE("LIBWBFS: +wbfs_close(%p) disc_open=%d, head=%p, freeblks=%p\n",
+		p, p->n_disc_open, p->head, p->freeblks );
+
     if (p->n_disc_open)
 	WBFS_ERROR("trying to close wbfs while discs still open");
 
@@ -324,6 +334,8 @@ void wbfs_close ( wbfs_t * p )
     wbfs_iofree(p->tmp_buffer);
     if (p->freeblks)
 	wbfs_iofree(p->freeblks);
+    if (p->id_list)
+	wbfs_free(p->id_list);
     wbfs_free(p);
 
  error:
@@ -336,22 +348,9 @@ wbfs_disc_t * wbfs_open_disc_by_id6 ( wbfs_t* p, u8 * discid )
 {
     ASSERT(p);
     ASSERT(discid);
-    const u32 disc_info_sz_lba = p->disc_info_sz >> p->hd_sec_sz_s;
 
-    u32 slot;
-    for ( slot = 0; slot < p->max_disc; slot++ )
-    {
-	if (p->head->disc_table[slot])
-	{
-	    p->read_hdsector(p->callback_data,
-			     p->part_lba + 1 + slot * disc_info_sz_lba,
-			     1, p->tmp_buffer );
-
-	    if ( wbfs_memcmp(discid,p->tmp_buffer,6) == 0 )
-		return wbfs_open_disc_by_slot(p,slot);
-	}
-    }
-    return 0;
+    const int slot = wbfs_find_slot(p,discid);
+    return slot < 0 ? 0 : wbfs_open_disc_by_slot(p,slot);
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -401,7 +400,11 @@ int wbfs_sync_disc_header ( wbfs_disc_t * d )
 
 void wbfs_close_disc ( wbfs_disc_t * d )
 {
-    ASSERT(d);
+    ASSERT( d );
+    ASSERT( d->header );
+    ASSERT( d->p );
+    ASSERT( d->p->n_disc_open > 0 );
+
     d->p->n_disc_open--;
     wbfs_iofree(d->header);
     wbfs_free(d);
@@ -435,7 +438,7 @@ int wbfs_rename_disc
 
     if ( change_iso_head )
     {
-	u32 wlba = ntohs(d->header->wlba_table[0]);
+	u16 wlba = ntohs(d->header->wlba_table[0]);
 	if (wlba)
 	{
 	    u8 * tmpbuf = p->tmp_buffer;
@@ -610,6 +613,68 @@ enumError wbfs_get_disc_info_by_slot
 
 ///////////////////////////////////////////////////////////////////////////////
 
+void wbfs_load_id_list ( wbfs_t * p, int force_reload )
+{
+    ASSERT(p);
+    ASSERT(p->head);
+    ASSERT(p->tmp_buffer);
+    if ( p->id_list && !force_reload )
+	return;
+
+    const int id_item_size = sizeof(*p->id_list);
+    const int id_list_size = p->max_disc * id_item_size;
+    const u32 disc_info_sz_lba = p->disc_info_sz >> p->hd_sec_sz_s;
+
+    TRACE("LIBWBFS: +wbfs_load_id_list(%p,%d) id_list_size=%u*%u=%d\n",
+		p, force_reload, p->max_disc, id_item_size, id_list_size );
+
+    if (!p->id_list)
+    {
+	p->id_list = wbfs_malloc(id_list_size);
+	if (!p->id_list)
+	    OUT_OF_MEMORY;
+    }
+    memset(p->id_list,0,id_list_size);
+
+    u32 slot;
+    for ( slot = 0; slot < p->max_disc; slot++ )
+	if (p->head->disc_table[slot])
+	{
+	    p->read_hdsector(p->callback_data,
+			     p->part_lba + 1 + slot * disc_info_sz_lba,
+			     1, p->tmp_buffer );
+	    TRACE(" - slot #%03u: %.6s\n",slot,p->tmp_buffer);
+	    memcpy(p->id_list[slot],p->tmp_buffer,id_item_size);
+	}
+}
+
+///////////////////////////////////////////////////////////////////////////////
+
+int wbfs_find_slot ( wbfs_t * p, u8 * disc_id )
+{
+    ASSERT(p);
+    TRACE("LIBWBFS: +wbfs_find_slot(%p,%.6s)\n",p,disc_id);
+
+    wbfs_load_id_list(p,0);
+    ASSERT(p->id_list);
+    
+    const int id_item_size = sizeof(*p->id_list);
+
+    u32 slot;
+    for ( slot = 0; slot < p->max_disc; slot++ )
+	if ( p->head->disc_table[slot]
+		&& !memcmp(p->id_list[slot],disc_id,id_item_size) )
+    {
+	TRACE("LIBWBFS: -wbfs_find_slot() slot=%u\n",slot);
+	return slot;
+    }
+
+    TRACE("LIBWBFS: -wbfs_find_slot() ID_NOT_FOUND\n");
+    return -1;
+}
+ 
+///////////////////////////////////////////////////////////////////////////////
+
 void wbfs_load_freeblocks ( wbfs_t * p )
 {
     if (p->freeblks)
@@ -714,8 +779,9 @@ static u32 find_last_used_block ( wbfs_t * p )
 ///////////////////////////////////////////////////////////////////////////////
 // [fbt-bug]
 
-void wbfs_free_block ( wbfs_t *p, int bl )
+void wbfs_free_block ( wbfs_t *p, u32 bl )
 {
+    //TRACE("wbfs_free_block(%u)\n",bl);
     // [fbt-bug]
     if ( bl > 0 && bl < p->n_wbfs_sec )
     {
@@ -723,13 +789,14 @@ void wbfs_free_block ( wbfs_t *p, int bl )
 	const u32 j = (bl-1) & 31;
 	const u32 v = wbfs_ntohl(p->freeblks[i]);
 	p->freeblks[i] = wbfs_htonl( v | (1<<j) );
+	//TRACE(" i=%u j=%u v=%x -> %x\n",i,j,v,p->freeblks[i]);
     }
 }
 
 ///////////////////////////////////////////////////////////////////////////////
 // [fbt-bug]
 
-void wbfs_use_block ( wbfs_t *p, int bl )
+void wbfs_use_block ( wbfs_t *p, u32 bl )
 {
     // [fbt-bug]
     if ( bl > 0 && bl < p->n_wbfs_sec )
@@ -753,7 +820,7 @@ u32 wbfs_add_disc
     int copy_1_1
 )
 {
-    int i, discn;
+    int i, slot;
     u32 tot, cur;
     u32 wii_sec_per_wbfs_sect = 1 << (p->wbfs_sec_sz_s-p->wii_sec_sz_s);
     wiidisc_t *d = 0;
@@ -789,7 +856,7 @@ u32 wbfs_add_disc
 	WBFS_ERROR("no space left on device (table full)");
 
     p->head->disc_table[i] = 1;
-    discn = i;
+    slot = i;
     wbfs_load_freeblocks(p);
 
     // build disc info
@@ -825,7 +892,7 @@ u32 wbfs_add_disc
 	    if ( bl == WBFS_NO_BLOCK )
 	    {
 		// free disc slot
-		p->head->disc_table[discn] = 0;
+		p->head->disc_table[slot] = 0;
 
 		// free already allocated blocks
 		int j;
@@ -862,7 +929,12 @@ u32 wbfs_add_disc
 
     // write disc info
     disc_info_sz_lba = p->disc_info_sz >> p->hd_sec_sz_s;
-    p->write_hdsector(p->callback_data, p->part_lba + 1 + discn * disc_info_sz_lba,disc_info_sz_lba, info);
+    p->write_hdsector(	p->callback_data,
+			p->part_lba + 1 + slot * disc_info_sz_lba,
+			disc_info_sz_lba,
+			info );
+    if (p->id_list)
+	memcpy(p->id_list[slot],info,sizeof(*p->id_list));
     wbfs_sync(p);
 
 error:
@@ -876,6 +948,92 @@ error:
 	wbfs_iofree(copy_buffer);
 
     return 0;
+}
+
+///////////////////////////////////////////////////////////////////////////////
+
+u32 wbfs_add_phantom ( wbfs_t *p, const char * phantom_id, u32 wii_sectors )
+{
+    ASSERT(p);
+    TRACE("LIBWBFS: +wbfs_add_phantom(%p,%s,%u)\n",
+	    p, phantom_id, wii_sectors );
+
+    if ( !phantom_id || !*phantom_id || !wii_sectors )
+	return 1;
+
+    if ( wii_sectors > WII_MAX_SECTORS )
+	wii_sectors = WII_MAX_SECTORS;
+    
+    const u32 wii_sec_per_wbfs_sect = 1 << (p->wbfs_sec_sz_s-p->wii_sec_sz_s);
+    wbfs_disc_info_t * info = 0;
+
+    // find a free slot.
+    int slot;
+    for ( slot = 0; slot < p->max_disc; slot++ ) 
+	if (!p->head->disc_table[slot])
+	    break;
+
+    u32 err = 0;
+    if ( slot == p->max_disc )
+    {
+	err++;
+	WBFS_ERROR("no space left on device (table full)");
+    }
+
+    p->head->disc_table[slot] = 1;
+    wbfs_load_freeblocks(p);
+
+    // build disc info
+    info = wbfs_ioalloc(p->disc_info_sz);
+    if (!info)
+	OUT_OF_MEMORY;
+    memset(info,0,p->disc_info_sz);
+    memcpy(info->disc_header_copy,phantom_id,6);
+    snprintf( (char*)info->disc_header_copy + WII_TITLE_OFF,
+	WII_TITLE_SIZE, "Phantom %.6s @ slot %u -> not a real disc, for tests only!",
+		phantom_id, slot );
+
+    const u32 max_wbfs_sect = (wii_sectors-1) / wii_sec_per_wbfs_sect + 1;
+    TRACE(" - add %u wbfs sectors to slot %u\n",max_wbfs_sect,slot);
+
+    int i;
+    for ( i = 0; i < max_wbfs_sect; i++)
+    {
+	u32 bl = alloc_block(p);
+	if ( bl == WBFS_NO_BLOCK )
+	{
+	    if (!i)
+		p->head->disc_table[slot] = 0;
+	    err++;
+	    break; // use smaller phantom
+	}
+
+	if ( i == 0 )
+	    p->write_hdsector(	p->callback_data,
+				p->part_lba + bl * (p->wbfs_sec_sz / p->hd_sec_sz),
+				1,
+				info );
+
+	info->wlba_table[i] = wbfs_htons(bl);
+    }
+
+    // write disc info
+    *(u32*)(info->disc_header_copy+24) = wbfs_ntohl(0x5D1C9EA3);
+    u32 disc_info_sz_lba = p->disc_info_sz >> p->hd_sec_sz_s;
+    p->write_hdsector(	p->callback_data,
+			p->part_lba + 1 + slot * disc_info_sz_lba,
+			disc_info_sz_lba,
+			info );
+
+    if (p->id_list)
+	memcpy(p->id_list[slot],info,sizeof(*p->id_list));
+    wbfs_sync(p);
+
+error:
+    if (info)
+	wbfs_iofree(info);
+    TRACE("LIBWBFS: -wbfs_add_phantom() return %u\n",err);
+    return err;
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -943,7 +1101,6 @@ u32 wbfs_estimate_disc
     b = (u8 *)info;
     read_src_wii_disc(callback_data, 0, 0x100, info->disc_header_copy);
 
-
     for (i = 0; i < p->n_wbfs_sec_per_disc; i++)
 	if (block_used(used, i, wii_sec_per_wbfs_sect))
 	    tot++;
@@ -965,18 +1122,26 @@ error:
 
 u32 wbfs_rm_disc ( wbfs_t * p, u8 * discid, int free_slot_only )
 {
+    TRACE("LIBWBFS: +wbfs_rm_disc(%p,%.6s,%d)\n",p,discid,free_slot_only);
+    ASSERT(p);
+    ASSERT(discid);
+    ASSERT(p->head);
+
     wbfs_disc_t *d = wbfs_open_disc_by_id6(p,discid);
     if (!d)
 	return 1;
-    int discn = d->slot;
+    int slot = d->slot;
 
+    TRACE("LIBWBFS: disc_table[slot=%d]=%d\n", slot, p->head->disc_table[slot] );
+    
     if (!free_slot_only)
     {
 	wbfs_load_freeblocks(p);
 	int i;
 	for ( i=0; i< p->n_wbfs_sec_per_disc; i++)
 	{
-	    u32 iwlba = wbfs_ntohs(d->header->wlba_table[i]);
+	    u16 iwlba = wbfs_ntohs(d->header->wlba_table[i]);
+	    //TRACE("FREE %u\n",iwlba);
 	    if (iwlba)
 		wbfs_free_block(p,iwlba);
 	}
@@ -984,14 +1149,18 @@ u32 wbfs_rm_disc ( wbfs_t * p, u8 * discid, int free_slot_only )
 	const u32 disc_info_sz_lba = p->disc_info_sz >> p->hd_sec_sz_s;
 	p->write_hdsector(
 			p->callback_data,
-			p->part_lba + 1 + discn * disc_info_sz_lba,
+			p->part_lba + 1 + slot * disc_info_sz_lba,
 			disc_info_sz_lba,
 			d->header );
     }
-
-    p->head->disc_table[discn] = 0;
     wbfs_close_disc(d);
+
+    p->head->disc_table[slot] = 0;
+    if (p->id_list)
+	memset(p->id_list[slot],0,sizeof(*p->id_list));
     wbfs_sync(p);
+
+    TRACE("LIBWBFS: -wbfs_rm_disc() return=0\n");
     return 0;
 }
 
@@ -1015,6 +1184,7 @@ u32 wbfs_trim ( wbfs_t * p )
     wbfs_sync(p);
 
     // os layer will truncate the file.
+    TRACE("LIBWBFS: -wbfs_trim() return=%u\n",max_block);
     return max_block;
 }
 

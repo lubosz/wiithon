@@ -23,11 +23,11 @@ from sqlalchemy import create_engine
 
 import config
 
-# Caracteres que hacen que una expresión no pueda ser expresión regular
-#BLACK_LIST = "/\"\'$&|[]"
-#BLACK_LIST2 = "\";`$\\\'"
 BLACK_LIST = "/\"$|[]"
 BLACK_LIST2 = "\";$\\"
+
+(DISC_ORIGINAL, DISC_CUSTOM)=([ "%d" % i for i in range(2) ])
+(COVER_NORMAL, COVER_3D, COVER_FULL)=([ "%d" % i for i in range(3) ])
 
 class NonRepeatList(list):
     def __init__(self, *args):
@@ -335,25 +335,28 @@ def getDominioYRuta(url, protocolo = 'http://'):
 import struct
 PNG_SIGNATURE='\x89\x50\x4e\x47\x0d\x0a\x1a\x0a'
 def esPNG(ruta):
-    f = file(ruta, "r")
-    data=f.read(8)
-    if data!=PNG_SIGNATURE:
-        return False # not a PNG/APNG
-    try:
-        while True:
-            buffer=f.read(8)
-            if len(buffer)!=8:
-                return False # Early EOF
-            length,type=struct.unpack('!L4s',buffer)
-            if type in ('IDAT','IEND'):
-                # acTL must come before IDAT, so if we see an IDAT this is plain PNG
-                # IEND is end of file.
-				return True
-            if type=='acTL':
-                return True
-            f.seek(length+4,1) # +4 because of the CRC (not checked)
-    finally:
-        f.seek(0)
+    if os.path.exists(ruta):
+        f = file(ruta, "r")
+        data=f.read(8)
+        if data!=PNG_SIGNATURE:
+            return False # not a PNG/APNG
+        try:
+            while True:
+                buffer=f.read(8)
+                if len(buffer)!=8:
+                    return False # Early EOF
+                length,type=struct.unpack('!L4s',buffer)
+                if type in ('IDAT','IEND'):
+                    # acTL must come before IDAT, so if we see an IDAT this is plain PNG
+                    # IEND is end of file.
+                    return True
+                if type=='acTL':
+                    return True
+                f.seek(length+4,1) # +4 because of the CRC (not checked)
+        finally:
+            f.seek(0)
+    else:
+        return False
 
 def decode(s, code = 'utf-8'):
     try:
@@ -725,3 +728,20 @@ def get_title_for_search(juego):
     title = encode_strange_characters_url(title)
 
     return title
+
+# FIXME: temporal solution
+def get_subinterval_type_disc_art(type_disc_art):
+    
+    if DISC_CUSTOM == type_disc_art:
+        return 17
+    else: # if DISC_ORIGINAL == type_disc_art
+        return 0
+
+# FIXME: temporal solution
+def get_subinterval_type_cover(type_cover):
+    if COVER_3D == type_cover:
+        return 15
+    elif COVER_FULL == type_cover:
+        return 43
+    else: # if COVER_NORMAL == type_cover
+        return 0

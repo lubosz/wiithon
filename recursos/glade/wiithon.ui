@@ -3,7 +3,6 @@
   <requires lib="gtk+" version="2.16"/>
   <!-- interface-naming-policy project-wide -->
   <object class="GtkWindow" id="principal">
-    <property name="visible">True</property>
     <property name="title">Wiithon</property>
     <child>
       <object class="GtkVBox" id="vbox_principal1">
@@ -143,7 +142,7 @@
               </packing>
             </child>
             <child>
-              <object class="GtkToolButton" id="tb_renombrado_masivo1">
+              <object class="GtkToolButton" id="tb_conversor">
                 <property name="visible">True</property>
                 <property name="tooltip_text" translatable="yes">Realiza conversiones de los archivos soportados por Wiithon.</property>
                 <property name="is_important">True</property>
@@ -366,7 +365,7 @@ Por defecto: 160x160</property>
                   <object class="GtkHBox" id="hbox4">
                     <property name="visible">True</property>
                     <child>
-                      <object class="GtkToggleButton" id="boton_normal1">
+                      <object class="GtkToggleButton" id="boton_original">
                         <property name="label" translatable="yes">Original</property>
                         <property name="visible">True</property>
                         <property name="can_focus">True</property>
@@ -379,7 +378,7 @@ Por defecto: 160x160</property>
                       </packing>
                     </child>
                     <child>
-                      <object class="GtkToggleButton" id="boton_3d1">
+                      <object class="GtkToggleButton" id="boton_custom">
                         <property name="label" translatable="yes">Custom</property>
                         <property name="visible">True</property>
                         <property name="can_focus">True</property>

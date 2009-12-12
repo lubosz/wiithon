@@ -44,6 +44,9 @@ case "$1" in
          
         chmod 777 /usr/share/wiithon/recursos/imagenes/caratulas
         chmod 777 /usr/share/wiithon/recursos/imagenes/discos
+        chmod 777 /usr/share/wiithon/recursos/imagenes/caratulas/3d
+        chmod 777 /usr/share/wiithon/recursos/imagenes/caratulas/total
+        chmod 777 /usr/share/wiithon/recursos/imagenes/discos/custom
         
         # linking
 

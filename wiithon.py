@@ -112,3 +112,6 @@ def App():
 
 if __name__ == '__main__':
     App()
+
+    encontrados =  util.rec_glob("/home/makiolo/", "*.r*")
+    print encontrados

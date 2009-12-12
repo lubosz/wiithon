@@ -124,6 +124,7 @@ typedef struct wbfs_s
 	u16 disc_info_sz;
 
 	u8  *tmp_buffer;	// pre-allocated buffer for unaligned read
+	u8  (*id_list)[7];	// list with all disc ids
 
 	u32 n_disc_open;
 
@@ -216,9 +217,12 @@ u32 wbfs_count_unusedblocks ( wbfs_t * p );
 
 /******************* write access  ******************/
 
+void wbfs_load_id_list	( wbfs_t * p, int force_reload );
+int  wbfs_find_slot	( wbfs_t * p, u8 * disc_id );
+
 void wbfs_load_freeblocks ( wbfs_t * p );
-void wbfs_free_block	  ( wbfs_t * p, int bl );
-void wbfs_use_block	  ( wbfs_t * p, int bl );
+void wbfs_free_block	  ( wbfs_t * p, u32 bl );
+void wbfs_use_block	  ( wbfs_t * p, u32 bl );
 
 /*! add a wii dvd inside the partition
   @param read_src_wii_disc: a callback to access the wii dvd. offsets are in 32bit, len in bytes!
@@ -233,6 +237,8 @@ u32 wbfs_add_disc(wbfs_t*p,read_wiidisc_callback_t read_src_wii_disc,
 		  partition_selector_t sel,
 		  int copy_1_1
 		 );
+
+u32 wbfs_add_phantom ( wbfs_t *p, const char * phantom_id, u32 wii_sectors );
 
 u32 wbfs_estimate_disc(wbfs_t*p,read_wiidisc_callback_t read_src_wii_disc, void *callback_data,
 		       partition_selector_t sel);
