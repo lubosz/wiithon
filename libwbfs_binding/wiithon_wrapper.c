@@ -368,13 +368,12 @@ int main(int argc, char *argv[])
         if(ret == 0)
         {
             printf(" ** Formated %s as FAT32 **\n" , partition);
-            printf(" ** Formating %s to WBFS **\n", partition);
         }
         else
         {
             printf(" ** Don't format. Error %d **\n" , ret);
-            noFormatear = TRUE;
         }
+        printf(" ** Formating %s to WBFS **\n", partition);
     }
 
     wbfs_t *p = wbfs_try_open_partition( partition, noFormatear );

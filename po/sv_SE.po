@@ -162,7 +162,7 @@ msgstr "Är din hårddisk ansluten eller saknar den en giltig WBFS-partition?"
 msgid "Realmente, desea formatear a WBFS la particion %s? (S/N) "
 msgstr "Är du säker på att du vill formatera partitionen %s med WBFS? Allt som finns på partitionen kommer att försvinna! (Formateringen tar en stund beroende på hur stor disk du har) (J/N)"
 
-#: cli.py:260 cli.py:420
+#: cli.py:260 cli.py:421
 msgid "s"
 msgstr "j"
 
@@ -213,155 +213,155 @@ msgstr "Fel: RAR-arkivet %s innehåller ingen ISO"
 msgid "No hay 4.4GB libres para descomprimir el fichero RAR: %s en la ruta %s. Puede cambiar la ruta en preferencias."
 msgstr "Det finns inte 4,4GB fritt utrymme för att packa upp RAR-filen %s i %s. Du kan ändra målkatalog i Inställningar."
 
-#: cli.py:329 trabajo.py:453
+#: cli.py:330 trabajo.py:453
 #, python-format
 msgid "Error al descomrpimir el RAR : %s"
 msgstr "Fel vid uppackning av RAR-filen %s"
 
-#: cli.py:336
+#: cli.py:337
 #, python-format
 msgid "ISO %s aniadida correctamente"
 msgstr "ISO %s tillagd"
 
-#: cli.py:338
+#: cli.py:339
 #, python-format
 msgid "ERROR aniadiendo la ISO : %s (comprueba que sea una ISO de WII)"
 msgstr "FEL när ISO %s skulle läggas till. (Är ISO:n ett Wii-spel?)"
 
-#: cli.py:357
+#: cli.py:358
 #, python-format
 msgid "Copiar .%s: %s a la particion %s"
 msgstr "Kopierar .%s: %s till partition %s"
 
-#: cli.py:365
+#: cli.py:366
 #, python-format
 msgid "ERROR %s no es un ningun juego de Wii"
 msgstr "FEL %s är inget Wii-spel"
 
-#: cli.py:376
+#: cli.py:377
 msgid "INFORME DE RESULTADOS"
 msgstr "RESULTATRAPPORT"
 
-#: cli.py:381
+#: cli.py:382
 msgid "Todo metido en el HD correctamente"
 msgstr "Allting har lagts till till hårddisken utan problem"
 
-#: cli.py:385
+#: cli.py:386
 msgid "Juegos correctos"
 msgstr "Bra spel"
 
-#: cli.py:392
+#: cli.py:393
 msgid "Juegos erroneos"
 msgstr "Dåligt spel"
 
-#: cli.py:402
+#: cli.py:403
 msgid "Buscando un Disco de Wii ..."
 msgstr "Söker efter Wii-skiva..."
 
-#: cli.py:409
+#: cli.py:410
 msgid "No se ha encontrado ningun disco de la Wii"
 msgstr "Hittade ingen Wii-skiva"
 
-#: cli.py:411
+#: cli.py:412
 msgid "Hay mas de un juego de la Wii, deja solo 1 para eliminar la ambiguedad"
 msgstr "Det är mer än ett Wii-spel, välj endast 1 för att förhindra tvetydighet"
 
-#: cli.py:418
+#: cli.py:419
 #, python-format
 msgid "Ya hay una ISO en : %s"
 msgstr "Det finns redan en ISO i: %s"
 
-#: cli.py:419
+#: cli.py:420
 msgid "Desea reemplazarla (S/N) : "
 msgstr "Vill du byta ut den? (J/N):"
 
-#: cli.py:424
+#: cli.py:425
 #, python-format
 msgid "Dumpeando desde %s a %s utilizando %s temporalmente"
 msgstr "Flytta tillfälligt ifrån %s till %s genom att använda %s"
 
-#: cli.py:425
+#: cli.py:426
 msgid "Puede llevar mucho tiempo ..."
 msgstr "Detta kommer att ta en stund..."
 
-#: cli.py:429
+#: cli.py:430
 #, python-format
 msgid "OK, el juego se ha pasado a la particion %s"
 msgstr "Klart, spelet har kopierats till partition %s"
 
-#: cli.py:431
+#: cli.py:432
 #, python-format
 msgid "Error al pasar la ISO a la particion %s"
 msgstr "Fel vid kopiering av ISO:n till partition %s"
 
-#: cli.py:432
+#: cli.py:433
 #, python-format
 msgid "wiithon no borra la ISO temporal: %s, puedes borrarla si no la necesitas"
 msgstr "Wiithon tog inte bort den tillfälliga ISO:n: %s, du kan själv ta bort den om du inte behöver den mer"
 
-#: cli.py:434
+#: cli.py:435
 msgid "Error al dumpear la ISO"
 msgstr "Fel vid dumpning av ISO"
 
-#: cli.py:448
+#: cli.py:449
 #, python-format
 msgid "No se ha encontrado el juego: %s"
 msgstr "Hittar inte spelet: %s"
 
-#: cli.py:458
+#: cli.py:459
 msgid "Indique el NUM del juego : "
 msgstr "Antal spel :"
 
-#: cli.py:468
+#: cli.py:469
 msgid "Numero fuera de rango"
 msgstr "Ej giltigt nummer"
 
-#: cli.py:470
+#: cli.py:471
 msgid "El numero dado es incorrecto"
 msgstr "Fel nummer"
 
-#: cli.py:478 cli.py:480
+#: cli.py:479 cli.py:481
 msgid "Caratula?"
 msgstr "Omslag?"
 
-#: cli.py:478 cli.py:480
+#: cli.py:479 cli.py:481
 msgid "SIZE"
 msgstr "STORLEK"
 
-#: cli.py:478 cli.py:480
+#: cli.py:479 cli.py:481
 msgid "TITULO"
 msgstr "TITEL"
 
-#: cli.py:486 gui.py:1002
+#: cli.py:487 gui.py:1002
 msgid "SI"
 msgstr "JA"
 
-#: cli.py:488 gui.py:1002 wiitdb_schema.py:326
+#: cli.py:489 gui.py:1002 wiitdb_schema.py:326
 msgid "NO"
 msgstr "NEJ"
 
-#: cli.py:496
+#: cli.py:497
 #, python-format
 msgid "Presiona cualquier tecla para mostrar %d lineas mas"
 msgstr "Tryck på valfri tangent för att visa fler rader av %d "
 
-#: cli.py:500
+#: cli.py:501
 msgid "juegos de WII"
 msgstr "Wii-spel"
 
-#: cli.py:504
+#: cli.py:505
 msgid "Usado"
 msgstr "Använt"
 
-#: cli.py:505
+#: cli.py:506
 msgid "Libre"
 msgstr "Ledigt"
 
-#: cli.py:506 gui.py:657
+#: cli.py:507 gui.py:657
 msgid "Total"
 msgstr "Totalt"
 
-#: cli.py:510
+#: cli.py:511
 msgid "AYUDA_CLI"
 msgstr ""
 "[USE]\n"
@@ -818,43 +818,43 @@ msgstr "Vill du ta bort arkivet %s?"
 msgid "Trabajando con %s, sin estimar el tiempo restante ..."
 msgstr ""
 
-#: gui.py:2367 gui.py:2406
+#: gui.py:2367 gui.py:2407
 #, python-format
 msgid "Termina: %s"
 msgstr "Avsluta: %s"
 
-#: gui.py:2392
+#: gui.py:2393
 #, python-format
 msgid "Empieza %s"
 msgstr "Starta %s"
 
-#: gui.py:2423
+#: gui.py:2424
 #, python-format
 msgid "Falla la descarga de la caratula de %s"
 msgstr "Misslyckades att ladda ner omslaget %s"
 
-#: gui.py:2433
+#: gui.py:2434
 #, python-format
 msgid "Falla la descarga del disco de %s"
 msgstr "Misslyckades att ladda ner skivetiketen %s"
 
-#: gui.py:2481
+#: gui.py:2482
 msgid "Finalizando ..."
 msgstr "Avslutar..."
 
-#: gui.py:2483
+#: gui.py:2484
 msgid "ERROR!"
 msgstr "FEL!"
 
-#: gui.py:2491
+#: gui.py:2492
 msgid "quedan"
 msgstr "återstår"
 
-#: gui.py:2507
+#: gui.py:2508
 msgid "Error en progreso"
 msgstr "Fel i processen"
 
-#: gui.py:2515
+#: gui.py:2516
 msgid "Empezando ..."
 msgstr "Startar..."
 

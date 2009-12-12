@@ -64,7 +64,7 @@ lang: lang_enable lang_disable
 	@echo "Languages updates!"
 	@echo "=================================================================="
 
-compile: gen_rev_now lang wiimms-wbfs-tool/wdf2iso wiimms-wbfs-tool/iso2wdf wiimms-wbfs-tool/wwt unrar-nonfree/wiithon_unrar wbfs_file_1.8/wiithon_wbfs_file libwbfs_binding/wiithon_wrapper
+compile: gen_rev_now lang wiimms-wbfs-tool/wdf2iso wiimms-wbfs-tool/iso2wdf wiimms-wbfs-tool/wwt unrar-nonfree/wiithon_unrar wbfs_file_1.9/wiithon_wbfs_file libwbfs_binding/wiithon_wrapper
 	@echo "=================================================================="
 	@echo "100% Compile OK"
 	@echo "=================================================================="
@@ -93,7 +93,7 @@ copy_archives: making_directories
 
 	cp libwbfs_binding/wiithon_wrapper $(DESTDIR)$(PREFIX)/games/
 	cp unrar-nonfree/wiithon_unrar $(DESTDIR)$(PREFIX)/games/
-	cp wbfs_file_1.8/wiithon_wbfs_file $(DESTDIR)$(PREFIX)/games/
+	cp wbfs_file_1.9/wiithon_wbfs_file $(DESTDIR)$(PREFIX)/games/
 	cp wiimms-wbfs-tool/wdf2iso $(DESTDIR)$(PREFIX)/games/wiithon_wdf2iso
 	cp wiimms-wbfs-tool/iso2wdf $(DESTDIR)$(PREFIX)/games/wiithon_iso2wdf
 	cp wiimms-wbfs-tool/wwt $(DESTDIR)$(PREFIX)/games/wiithon_wwt
@@ -333,7 +333,7 @@ purge: uninstall
 	@echo "Uninstall OK & all clean (purge covers & disc-art ...)"
 	@echo "=================================================================="
 
-clean: clean_wbfs_file_1.8 clean_libwbfs_binding clean_gettext clean_unrar clean_wdf2iso_and_iso2wdf_and_wwt
+clean: clean_wbfs_file_1.9 clean_libwbfs_binding clean_gettext clean_unrar clean_wdf2iso_and_iso2wdf_and_wwt
 	$(RM) *.pyc
 	$(RM) *~
 	$(RM) po/*~
@@ -364,14 +364,14 @@ clean_unrar:
 clean_libwbfs_binding:
 	$(MAKE) -C libwbfs_binding clean
 	
-clean_wbfs_file_1.8:
-	$(MAKE) -C wbfs_file_1.8 clean
+clean_wbfs_file_1.9:
+	$(MAKE) -C wbfs_file_1.9 clean
 	
 clean_wdf2iso_and_iso2wdf_and_wwt:
 	$(MAKE) -C wiimms-wbfs-tool clean
 	
-wbfs_file_1.8/wiithon_wbfs_file: wbfs_file_1.8/*.c wbfs_file_1.8/*.h wbfs_file_1.8/libwbfs/*.c wbfs_file_1.8/libwbfs/*.h
-	$(MAKE) -C wbfs_file_1.8
+wbfs_file_1.9/wiithon_wbfs_file: wbfs_file_1.9/*.c wbfs_file_1.9/*.h wbfs_file_1.9/libwbfs/*.c wbfs_file_1.9/libwbfs/*.h
+	$(MAKE) -C wbfs_file_1.9
 	@echo "=================================================================="
 	@echo "wbfs_file for fat32 support compile OK!"
 	@echo "=================================================================="

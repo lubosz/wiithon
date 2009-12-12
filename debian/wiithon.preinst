@@ -54,7 +54,7 @@ case "$1" in
         
         test -d /usr/local/share/wiithon && rm -rf /usr/local/share/wiithon
         
-        test -e /usr/share/locale/es_CA/LC_MESSAGES/wiithon.mo && rm /usr/share/locale/es_CA/LC_MESSAGES/wiithon.mo
+        test -e /usr/share/locale/es_CA/LC_MESSAGES/wiithon.mo && rm -f /usr/share/locale/es_CA/LC_MESSAGES/wiithon.mo
     ;;
 
     abort-upgrade)
