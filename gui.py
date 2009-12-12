@@ -223,6 +223,7 @@ class WiithonGUI(GtkBuilderWrapper):
         self.wb_tb_preferencias.connect('clicked' , self.on_tb_toolbar_clicked)
         self.wb_tb_conversor.connect('clicked' , self.on_tb_toolbar_clicked)
         self.wb_tb_renombrado_masivo.connect('clicked' , self.on_tb_toolbar_clicked)
+        self.wb_tb_donate.connect('clicked' , self.on_tb_toolbar_clicked)
 
         self.wb_busqueda = util.Entry(clear=True)
         self.wb_busqueda.show()
@@ -1714,6 +1715,11 @@ class WiithonGUI(GtkBuilderWrapper):
             
         if(id_tb == self.wb_tb_conversor):
             self.alert('warning',_('Not implemented yet'))
+            
+        elif(id_tb == self.wb_tb_donate):
+            comando = '%s "%s"' % (self.core.prefs.COMANDO_ABRIR_CARPETA, config.WIITHON_DONATE_HTML)
+            print comando
+            util.call_out_null(comando)
             
         elif(id_tb == self.wb_tb_renombrado_masivo):
             self.alert('warning',_('Not implemented yet'))

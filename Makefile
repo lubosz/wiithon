@@ -113,6 +113,7 @@ copy_archives: making_directories
 	cp recursos/imagenes/*.png $(DESTDIR)$(PREFIX)/share/wiithon/recursos/imagenes
 	cp recursos/imagenes/*.gif $(DESTDIR)$(PREFIX)/share/wiithon/recursos/imagenes
 	cp recursos/imagenes/accesorio/*.jpg $(DESTDIR)$(PREFIX)/share/wiithon/recursos/imagenes/accesorio
+	cp recursos/donate.html $(DESTDIR)$(PREFIX)/share/wiithon/recursos
 	
 	cp recursos/caratulas_fix/*.png $(DESTDIR)$(PREFIX)/share/wiithon/recursos/imagenes/caratulas
 	cp recursos/discos_fix/*.png $(DESTDIR)$(PREFIX)/share/wiithon/recursos/imagenes/discos
@@ -270,6 +271,7 @@ delete_archives_installation:
 	-$(RM) $(PREFIX)/share/wiithon/recursos/imagenes/*.png
 	-$(RM) $(PREFIX)/share/wiithon/recursos/imagenes/*.gif
 	-$(RM) $(PREFIX)/share/wiithon/recursos/imagenes/accesorio/*.jpg
+	-$(RM) $(PREFIX)/share/wiithon/recursos/donate.html
 	-rmdir $(PREFIX)/share/wiithon/recursos/imagenes/accesorio/
 	-rmdir $(PREFIX)/share/wiithon/recursos/glade/
 	

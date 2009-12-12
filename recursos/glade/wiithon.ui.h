@@ -29,6 +29,7 @@ char *s = N_("Copia en 2 carpetas de destino, todo el conjunto de caratulas y de
 char *s = N_("Copiar el juego seleccionado*");
 char *s = N_("Copiar todos los juegos*");
 char *s = N_("Custom");
+char *s = N_("Donate");
 char *s = N_("Empezar");
 char *s = N_("Extrae de la particion WBFS el juego seleccionado a una imagen ISO.");
 char *s = N_("Extraer");
