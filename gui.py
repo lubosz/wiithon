@@ -2205,7 +2205,10 @@ class WiithonGUI(GtkBuilderWrapper):
     def borrar_archivo_preguntando(self, archivo):
         if self.question(_('Deseas borrar el archivo %s?') % archivo):
             if os.path.exists(archivo):
-                os.remove(archivo)
+                if getExtension(archivo) == 'rar':
+                    util.remove_multipart_rar(archivo)
+                else:
+                    os.remove(archivo)
 
     def mostrarHBoxProgreso(self):
         self.wb_box_progreso.show()
@@ -2378,7 +2381,6 @@ class WiithonGUI(GtkBuilderWrapper):
                     gobject.idle_add( self.borrar_archivo_preguntando , fichero)
                 if rar_preguntar_borrar_rar:
                     gobject.idle_add( self.borrar_archivo_preguntando , trabajo.padre.origen)
-                    util.remove_multipart_rar(trabajo.padre.origen)
 
     # Al terminar hay que seleccionar la partición destino y el juego copiado
     def callback_termina_trabajo_copiar(self, trabajo, juego, particion):

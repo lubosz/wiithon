@@ -78,7 +78,7 @@ class Preferencias:
         self.iniciarPreferencia('string', 'COMANDO_ABRIR_WEB', defecto='gnome-open', mostrar=cargarWidget, vbox=prefs_vbox_general, label=_('Comando para abrir paginas Web'))
         self.iniciarPreferencia('bool', 'ADVERTENCIA_ACTUALIZAR_WIITDB', defecto=True, mostrar=cargarWidget, vbox=prefs_vbox_general, label=_('Mostrar una advertencia cuando no hay ninguna informacion WiiTDB'))
         self.iniciarPreferencia('bool', 'ADVERTENCIA_NO_WBFS', defecto=True, mostrar=cargarWidget, vbox=prefs_vbox_general, label=_('Mostrar una advertencia cuando no hay particiones WBFS'))
-        self.iniciarPreferencia('bool', 'init_minimize', defecto=False, mostrar=cargarWidget, vbox=prefs_vbox_general, label=_('Iniciar minimizado'))
+        self.iniciarPreferencia('bool', 'init_minimize', defecto=False, mostrar=cargarWidget, vbox=prefs_vbox_general, label=_('Iniciar maximizado'))
         self.iniciarPreferencia('bool', 'DRAG_AND_DROP_LOCAL', defecto=True, mostrar=cargarWidget, vbox=prefs_vbox_general, label=_('Permitir establecer caratulas locales por arrastre'))
         self.iniciarPreferencia('bool', 'DRAG_AND_DROP_HTTP', defecto=True, mostrar=cargarWidget, vbox=prefs_vbox_general, label=_('Permitir establecer caratulas desde http por arrastre'))
         self.iniciarPreferencia('bool', 'DRAG_AND_DROP_JUEGOS', defecto=True, mostrar=cargarWidget, vbox=prefs_vbox_general, label=_('Permitir arrastrar juegos en ISO, RAR o directorios.'))

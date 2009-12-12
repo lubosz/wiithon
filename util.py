@@ -734,7 +734,7 @@ def get_subinterval_type_disc_art(type_disc_art):
     
     if DISC_CUSTOM == type_disc_art:
         return 17
-    else: # if DISC_ORIGINAL == type_disc_art
+    else: # elif DISC_ORIGINAL == type_disc_art
         return 0
 
 # FIXME: temporal solution
@@ -743,11 +743,23 @@ def get_subinterval_type_cover(type_cover):
         return 15
     elif COVER_FULL == type_cover:
         return 43
-    else: # if COVER_NORMAL == type_cover
+    else: # elif COVER_NORMAL == type_cover
         return 0
 
-def remove_multipart_rar(rar):
-    try:
-        os.system('rm %s' % rar[0:rar.rfind('.rar',0)]+'.r[0-9][0-9]')
-    except:
-        pass
+def remove_multipart_rar(archivoRAR):
+    if getExtension(archivoRAR) == 'rar':
+        i = 0
+        stop = False
+        while not stop and i<100: # r00 to r99
+            borrar = "%s.r%.2d" % (getNombreFichero(archivoRAR) , i)
+            if os.path.exists(borrar):
+                os.remove(borrar)
+                if config.DEBUG:
+                    print "borrar %s" % borrar
+            else:
+                stop = True
+            i += 1
+        if os.path.exists(archivoRAR):
+            os.remove(archivoRAR)
+            if config.DEBUG:
+                print "borrar %s" % archivoRAR

@@ -319,13 +319,14 @@ class WiithonCLI:
             if ( self.core.unpack(archivoRAR, self.core.prefs.ruta_extraer_rar, nombreISO, self.core.prefs.rar_overwrite_iso) ):
 
                 correctos, erroneos, exito = self.procesar_iso(particion, rutaISO, correctos, erroneos)
-                
+
+                # dont ask, if want ask ---> delete                
                 if self.core.prefs.rar_preguntar_borrar_iso:
                     os.remove(rutaISO)
 
+                # dont ask, if want ask ---> delete
                 if self.core.prefs.rar_preguntar_borrar_rar:
-                    os.remove(archivoRAR)
-                    util.remove_multipart_rar(archivioRAR)
+                    util.remove_multipart_rar(archivoRAR)
             else:
                 erroneos.append(_("Error al descomrpimir el RAR : %s") % (archivoRAR))
 
