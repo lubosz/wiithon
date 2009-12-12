@@ -1310,9 +1310,6 @@ class WiithonGUI(GtkBuilderWrapper):
         
         self.info.arriba_num_tareas = self.poolTrabajo.numTrabajos
 
-        # mostrar espacio barra progreso    
-        #self.mostrarHBoxProgreso()
-
     def getBuscarJuego(self, listaJuegos, idgame):
         
         if config.DEBUG:
@@ -2095,10 +2092,9 @@ class WiithonGUI(GtkBuilderWrapper):
                 
                 self.core.prefs.tipo_disc_art = nuevo_disc_art_type
                 
-                self.poolTrabajo.actualizarPreferencias()
-                self.poolBash.actualizarPreferencias()
-                
                 self.ponerDisco(self.sel_juego.obj.idgame, self.wb_img_disco1)
+                
+                self.refrescarNumCaratulas()
 
     def on_clicked_tipo_caratula(self, widget, nuevo_cover_type):
         
@@ -2120,10 +2116,9 @@ class WiithonGUI(GtkBuilderWrapper):
                 
                 self.core.prefs.tipo_caratula = nuevo_cover_type
                 
-                self.poolTrabajo.actualizarPreferencias()
-                self.poolBash.actualizarPreferencias()
-                
                 self.ponerCaratula(self.sel_juego.obj.idgame, self.wb_img_caratula1)
+                
+                self.refrescarNumCaratulas()
                 
 ########## WIITDB ###########
                 

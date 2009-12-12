@@ -161,31 +161,30 @@ class Preferencias:
         cycle_covers += "http://wiitdb.com/wiitdb/artwork/cover3D/AU/%s.png\n"
         cycle_covers += "http://wiitdb.com/wiitdb/artwork/cover3D/US/%s.png\n"  # 25
         cycle_covers += "http://wiitdb.com/wiitdb/artwork/cover3D/JA/%s.png\n"
+        cycle_covers += "http://boxart.rowdyruff.net/3d/%s.png\n"
               
         #   - hq
         cycle_covers += "http://wiitdb.com/wiitdb/artwork/coverfullHQ/ES/%s.png\n"
         cycle_covers += "http://wiitdb.com/wiitdb/artwork/coverfullHQ/EN/%s.png\n"
-        cycle_covers += "http://wiitdb.com/wiitdb/artwork/coverfullHQ/FR/%s.png\n"
+        cycle_covers += "http://wiitdb.com/wiitdb/artwork/coverfullHQ/FR/%s.png\n"  # 30
         cycle_covers += "http://wiitdb.com/wiitdb/artwork/coverfullHQ/DE/%s.png\n"
         cycle_covers += "http://wiitdb.com/wiitdb/artwork/coverfullHQ/IT/%s.png\n"
         cycle_covers += "http://wiitdb.com/wiitdb/artwork/coverfullHQ/NL/%s.png\n"
         cycle_covers += "http://wiitdb.com/wiitdb/artwork/coverfullHQ/PT/%s.png\n"
-        cycle_covers += "http://wiitdb.com/wiitdb/artwork/coverfullHQ/AU/%s.png\n"
-        cycle_covers += "http://wiitdb.com/wiitdb/artwork/coverfullHQ/US/%s.png\n"  # 35
+        cycle_covers += "http://wiitdb.com/wiitdb/artwork/coverfullHQ/AU/%s.png\n" # 35
+        cycle_covers += "http://wiitdb.com/wiitdb/artwork/coverfullHQ/US/%s.png\n"
         cycle_covers += "http://wiitdb.com/wiitdb/artwork/coverfullHQ/JA/%s.png\n"
         
         #   - widescreen
         cycle_covers += "http://wiiboxart.t35.com/wiiboxart/images/widescreen/%s.png\n"
         cycle_covers += "http://www.wiiboxart.com/widescreen/pal/%s.png\n"
-        cycle_covers += "http://www.wiiboxart.com/widescreen/ntsc/%s.png\n"
-        cycle_covers += "http://www.wiiboxart.com/widescreen/ntscj/%s.png\n"        # 40
-        cycle_covers += "http://www.wiiboxart.com/fullcover/%s.png\n"
-        cycle_covers += "http://boxart.rowdyruff.net/3d/%s.png\n"
+        cycle_covers += "http://www.wiiboxart.com/widescreen/ntsc/%s.png\n"         # 40
+        cycle_covers += "http://www.wiiboxart.com/widescreen/ntscj/%s.png\n"
         
         #   - full
-        cycle_covers += "http://wiitdb.com/wiitdb/artwork/coverfull/ES/%s.png\n"    # 43
+        cycle_covers += "http://wiitdb.com/wiitdb/artwork/coverfull/ES/%s.png\n"    # 42
         cycle_covers += "http://wiitdb.com/wiitdb/artwork/coverfull/EN/%s.png\n"
-        cycle_covers += "http://wiiboxart.t35.com/wiiboxart/images/full/%s.png\n"
+        cycle_covers += "http://www.wiiboxart.com/fullcover/%s.png\n"
         cycle_covers += "http://wiitdb.com/wiitdb/artwork/coverfull/FR/%s.png\n"
         cycle_covers += "http://wiitdb.com/wiitdb/artwork/coverfull/DE/%s.png\n"
         cycle_covers += "http://wiitdb.com/wiitdb/artwork/coverfull/IT/%s.png\n"
@@ -194,6 +193,7 @@ class Preferencias:
         cycle_covers += "http://wiitdb.com/wiitdb/artwork/coverfull/AU/%s.png\n"
         cycle_covers += "http://wiitdb.com/wiitdb/artwork/coverfull/US/%s.png\n"
         cycle_covers += "http://wiitdb.com/wiitdb/artwork/coverfull/JA/%s.png\n"
+        cycle_covers += "http://wiiboxart.t35.com/wiiboxart/images/full/%s.png\n"
 
         self.iniciarPreferencia('memo', 'PROVIDER_COVERS', defecto=cycle_covers, mostrar=cargarWidget, vbox=prefs_vbox_caratulas, label=_('Proveedor de caratulas'))
 
@@ -216,7 +216,7 @@ class Preferencias:
         cycle_discs += "http://wiitdb.com/wiitdb/artwork/disc/US/%s.png\n"
         cycle_discs += "http://wiitdb.com/wiitdb/artwork/disc/JA/%s.png\n"                  # 15
         cycle_discs += "http://boxart.rowdyruff.net/disc/%.3s.png\n"
-        cycle_discs += "http://wiitdb.com/wiitdb/artwork/disccustom/ES/%s.png\n"
+        cycle_discs += "http://wiitdb.com/wiitdb/artwork/disccustom/ES/%s.png\n"            # 17
         cycle_discs += "http://wiitdb.com/wiitdb/artwork/disccustom/EN/%s.png\n"
         cycle_discs += "http://wiitdb.com/wiitdb/artwork/disccustom/FR/%s.png\n"
         cycle_discs += "http://wiitdb.com/wiitdb/artwork/disccustom/DE/%s.png\n"

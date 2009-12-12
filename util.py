@@ -742,7 +742,7 @@ def get_subinterval_type_cover(type_cover):
     if COVER_3D == type_cover:
         return 15
     elif COVER_FULL == type_cover:
-        return 43
+        return 42
     else: # elif COVER_NORMAL == type_cover
         return 0
 
