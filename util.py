@@ -745,3 +745,9 @@ def get_subinterval_type_cover(type_cover):
         return 43
     else: # if COVER_NORMAL == type_cover
         return 0
+
+def remove_multipart_rar(rar):
+    try:
+        os.system('rm %s' % rar[0:rar.rfind('.rar',0)]+'.r[0-9][0-9]')
+    except:
+        pass

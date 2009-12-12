@@ -325,6 +325,7 @@ class WiithonCLI:
 
                 if self.core.prefs.rar_preguntar_borrar_rar:
                     os.remove(archivoRAR)
+                    util.remove_multipart_rar(archivioRAR)
             else:
                 erroneos.append(_("Error al descomrpimir el RAR : %s") % (archivoRAR))
 
