@@ -1653,35 +1653,35 @@ msgstr "Program runs with incorrect settings"
 msgid "Interrumpido por el usuario"
 msgstr "Interrupted by user"
 
-#~ msgid "Numero de tareas que esperan en la cola."
-#~ msgstr "Number of tasks waiting in the queue."
-
-#~ msgid "No se ha encontrado ninguna imagen ISO o RAR"
-#~ msgstr "Could not find any ISO image or RAR"
-
-#~ msgid "ISO sin comprimir"
-#~ msgstr "Uncompressed ISO"
-
-#~ msgid "Buscar:"
-#~ msgstr "Search:"
-
-#~ msgid "Fecha de lanzamiento: "
-#~ msgstr "Released: "
-
-#~ msgid "OPCIONALES: "
-#~ msgstr "OPTIONAL: "
-
-#~ msgid "ACCESORIOS: "
-#~ msgstr "ACCESSORIES:"
-
-#~ msgid "Progreso de la tarea actual."
-#~ msgstr "Progress of the current task."
-
-#~ msgid "Numero de juegos."
-#~ msgstr "Games number."
+#~ msgid "+INFO"
+#~ msgstr "+INFO"
 
 #~ msgid "Espacio usado / Espacio total"
 #~ msgstr "Free space / Total space"
 
-#~ msgid "+INFO"
-#~ msgstr "+INFO"
+#~ msgid "Numero de juegos."
+#~ msgstr "Games number."
+
+#~ msgid "Progreso de la tarea actual."
+#~ msgstr "Progress of the current task."
+
+#~ msgid "ACCESORIOS: "
+#~ msgstr "ACCESSORIES:"
+
+#~ msgid "OPCIONALES: "
+#~ msgstr "OPTIONAL: "
+
+#~ msgid "Fecha de lanzamiento: "
+#~ msgstr "Released: "
+
+#~ msgid "Buscar:"
+#~ msgstr "Search:"
+
+#~ msgid "ISO sin comprimir"
+#~ msgstr "Uncompressed ISO"
+
+#~ msgid "No se ha encontrado ninguna imagen ISO o RAR"
+#~ msgstr "Could not find any ISO image or RAR"
+
+#~ msgid "Numero de tareas que esperan en la cola."
+#~ msgstr "Number of tasks waiting in the queue."

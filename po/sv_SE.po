@@ -1684,32 +1684,32 @@ msgstr "Programmet körs med felaktiga inställningar"
 msgid "Interrumpido por el usuario"
 msgstr "Avbrutet av användraren"
 
-#~ msgid "Numero de tareas que esperan en la cola."
-#~ msgstr "Antal aktiviteter i kö"
-
-#~ msgid "No se ha encontrado ninguna imagen ISO o RAR"
-#~ msgstr "Kunde inte hitta någon ISO- eller RAR-fil"
-
-#~ msgid "Buscar:"
-#~ msgstr "Sök:"
-
-#~ msgid "Fecha de lanzamiento: "
-#~ msgstr "Releasedatum:"
-
-#~ msgid "OPCIONALES: "
-#~ msgstr "VALFRIA TILLBEHÖR:"
-
-#~ msgid "ACCESORIOS: "
-#~ msgstr "KONTROLLER:"
-
-#~ msgid "Progreso de la tarea actual."
-#~ msgstr "Status på pågående uppgift."
-
-#~ msgid "Numero de juegos."
-#~ msgstr "Spelnummer"
+#~ msgid "+INFO"
+#~ msgstr "+INFO"
 
 #~ msgid "Espacio usado / Espacio total"
 #~ msgstr "Fritt utrymme / Totalt utrymme"
 
-#~ msgid "+INFO"
-#~ msgstr "+INFO"
+#~ msgid "Numero de juegos."
+#~ msgstr "Spelnummer"
+
+#~ msgid "Progreso de la tarea actual."
+#~ msgstr "Status på pågående uppgift."
+
+#~ msgid "ACCESORIOS: "
+#~ msgstr "KONTROLLER:"
+
+#~ msgid "OPCIONALES: "
+#~ msgstr "VALFRIA TILLBEHÖR:"
+
+#~ msgid "Fecha de lanzamiento: "
+#~ msgstr "Releasedatum:"
+
+#~ msgid "Buscar:"
+#~ msgstr "Sök:"
+
+#~ msgid "No se ha encontrado ninguna imagen ISO o RAR"
+#~ msgstr "Kunde inte hitta någon ISO- eller RAR-fil"
+
+#~ msgid "Numero de tareas que esperan en la cola."
+#~ msgstr "Antal aktiviteter i kö"

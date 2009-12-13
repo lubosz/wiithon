@@ -1616,29 +1616,29 @@ msgstr "Programm läuft mit den falschen Einstellungen"
 msgid "Interrumpido por el usuario"
 msgstr "Abbruch durch Benutzer"
 
-#~ msgid "Numero de tareas que esperan en la cola."
-#~ msgstr "Aufgaben in der Warteschlange."
-
-#~ msgid "No se ha encontrado ninguna imagen ISO o RAR"
-#~ msgstr "Es wurde kein ISO oder RAR Image gefunden"
-
-#~ msgid "Buscar:"
-#~ msgstr "Suche:"
-
-#~ msgid "Fecha de lanzamiento: "
-#~ msgstr "Veröffentlicht"
-
-#~ msgid "OPCIONALES: "
-#~ msgstr "OPTIONEN:"
-
-#~ msgid "ACCESORIOS: "
-#~ msgstr "ZUBEHÖR:"
-
-#~ msgid "Progreso de la tarea actual."
-#~ msgstr "Aktuelle Aufgabe"
+#~ msgid "+INFO"
+#~ msgstr "+INFO"
 
 #~ msgid "Numero de juegos."
 #~ msgstr "Anzahl der Spiele"
 
-#~ msgid "+INFO"
-#~ msgstr "+INFO"
+#~ msgid "Progreso de la tarea actual."
+#~ msgstr "Aktuelle Aufgabe"
+
+#~ msgid "ACCESORIOS: "
+#~ msgstr "ZUBEHÖR:"
+
+#~ msgid "OPCIONALES: "
+#~ msgstr "OPTIONEN:"
+
+#~ msgid "Fecha de lanzamiento: "
+#~ msgstr "Veröffentlicht"
+
+#~ msgid "Buscar:"
+#~ msgstr "Suche:"
+
+#~ msgid "No se ha encontrado ninguna imagen ISO o RAR"
+#~ msgstr "Es wurde kein ISO oder RAR Image gefunden"
+
+#~ msgid "Numero de tareas que esperan en la cola."
+#~ msgstr "Aufgaben in der Warteschlange."
