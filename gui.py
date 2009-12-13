@@ -2206,7 +2206,7 @@ class WiithonGUI(GtkBuilderWrapper):
     def borrar_archivo_preguntando(self, archivo):
         if self.question(_('Deseas borrar el archivo %s?') % archivo):
             if os.path.exists(archivo):
-                if getExtension(archivo) == 'rar':
+                if util.getExtension(archivo) == 'rar':
                     util.remove_multipart_rar(archivo)
                 else:
                     os.remove(archivo)
