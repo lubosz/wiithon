@@ -253,7 +253,7 @@ class WiithonCLI:
         # C = acciones que necesitan una particion FAT32
         elif accion == FORMATEAR:                
             listaParticiones = self.core.sincronizarParticiones(config.DETECTOR_WBFS_FAT32)
-            self.sel_parti = self.get_elegir_particion(listaParticiones)
+            self.sel_parti = self.get_elegir_particion(listaParticiones, modo_particion, device_explicito)
             if self.sel_parti is not None:
                 try:
                     respuesta = raw_input(_("Realmente, desea formatear a WBFS la particion %s? (S/N) ") % self.sel_parti)
