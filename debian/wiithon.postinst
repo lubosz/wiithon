@@ -31,6 +31,7 @@ case "$1" in
         chmod 755 /usr/share/wiithon/loading.py
         chmod 755 /usr/share/wiithon/wiithon_autodetectar*.sh
         chmod 755 /usr/share/wiithon/wiithon_debug.sh
+        chmod 755 /usr/share/wiithon/wiithon_extract.sh
         chmod 755 /usr/games/wiithon_wrapper
         chmod 755 /usr/games/wiithon_unrar
         chmod 755 /usr/games/wiithon_wbfs_file
