@@ -22,11 +22,11 @@ from util import SintaxisInvalida
 
 ###### PARA EVITAR PROBLEMAS DE RECURRENCIA ##########
 
-from sqlalchemy import pool
-from sqlalchemy.databases.firebird import dialect
-
+#from sqlalchemy import pool
+#from sqlalchemy.databases.firebird import dialect
+#
 # Force SA to use a single connection per thread
-dialect.poolclass = pool.SingletonThreadPool
+#dialect.poolclass = pool.SingletonThreadPool
 
 db =        util.getBDD()
 session =   util.getSesionBDD(db)

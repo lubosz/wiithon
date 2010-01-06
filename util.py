@@ -20,6 +20,7 @@ from gettext import gettext as _
 
 from sqlalchemy.orm import scoped_session, sessionmaker
 from sqlalchemy import create_engine
+from sqlalchemy.pool import NullPool
 
 import config
 
@@ -391,7 +392,8 @@ class SintaxisInvalida(Exception):
     pass
 
 def getBDD():
-    db = create_engine(config.URI_ENGINE)
+    #db = create_engine(config.URI_ENGINE)
+    db = create_engine(config.URI_ENGINE+'?check_same_thread=False', poolclass=NullPool)
     return db
 
 def crearBDD(metadatos):
