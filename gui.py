@@ -1142,6 +1142,7 @@ class WiithonGUI(GtkBuilderWrapper):
                                         "<b>%s</b>\n\n<small><i>%s</i></small>" % (_("Nombres propuestos por la informacion WiiTDB"), _("NOTA: Este es el nombre que aparecera en el USB Loader.")),
                                         _("Renombrar")
                                         )
+                    self.seleccionarFilaConValor(self.wb_tv_games, 0 , juego.idgame)
                     if isinstance(descripcion, JuegoDescripcion):
                         descripcion_formateada = util.quitarCaracteresRaros(descripcion.title)
                         self.editar_nombre_verificando(descripcion_formateada)
@@ -1149,6 +1150,7 @@ class WiithonGUI(GtkBuilderWrapper):
                         self.personalizar_nombre_juego_seleccionado()
 
                 else:
+                    self.seleccionarFilaConValor(self.wb_tv_games, 0 , juego.idgame)
                     self.personalizar_nombre_juego_seleccionado()
 
 
