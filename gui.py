@@ -423,6 +423,7 @@ class WiithonGUI(GtkBuilderWrapper):
         if not self.loading_cerrado:
             self.loading_cerrado = True
             os.kill(self.loading.pid, signal.SIGINT)
+            os.waitpid(self.loading.pid,0)
 
     def refrescarParticionesWBFS(self, verbose = True):
         

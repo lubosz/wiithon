@@ -21,7 +21,7 @@ function help
     echo "-p   set WBFS partition"
     echo "-l   list games from WBFS partition"
     echo "-t   set output file type: ISO, WBFS or WDF"
-    echo "-w   set working directory (if not specified is $PWD)"
+    echo "-w   set working directory (if not specified is current directory)"
     echo "-f   extract only games in filelist"
     echo "-h   this help page"
     echo
