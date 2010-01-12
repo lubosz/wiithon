@@ -183,10 +183,9 @@ try:
     import sexy
     class Entry(sexy.IconEntry):
 
-        __clipboard = gtk.Clipboard() # This is a singleton
-
         def __init__(self, clear=False, copy=False):
             sexy.IconEntry.__init__(self)
+            self.__clipboard = gtk.Clipboard() # This is a singleton
             if clear:
                 self.add_clear_button()
 

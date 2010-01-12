@@ -273,9 +273,7 @@ enumError OpenSF
 	OpenFile(&sf->f,fname,IOM_IS_IMAGE);
     sf->f.disable_errors = disable_errors;
 
- #if CACHE_ENABLED
     DefineCachedAreaISO(&sf->f,true);
- #endif
 
     return allow_non_iso
 		? SetupReadSF(sf)
@@ -398,7 +396,10 @@ void SubstFileNameSF
     };
 
     char fname[PATH_MAX*2];
-    SubstString(fname,sizeof(fname),subst_tab,fo->f.fname);
+    int conv_count;
+    SubstString(fname,sizeof(fname),subst_tab,fo->f.fname,&conv_count);
+    if ( conv_count > 0)
+	fo->f.create_directory = true;
     SetFileName(&fo->f,fname,true);
 }
 
@@ -543,7 +544,7 @@ int WrapperReadISO ( void * sf, u32 offset, u32 count, void * iobuf )
     if (SIGINT_level>1)
 	return ERR_INTERRUPT;
 
- #if CACHE_ENABLED && defined(DEBUG)
+ #if defined(DEBUG)
     {
 	TRACE("\n");
 	SuperFile_t * W = (SuperFile_t *)sf;
@@ -1671,15 +1672,40 @@ void InitializeIterator ( Iterator_t * it )
 {
     ASSERT(it);
     memset(it,0,sizeof(*it));
+    InitializeStringField(&it->source_list);
 }
 
 //-----------------------------------------------------------------------------
 
-static enumError SourceIteratorHelper ( Iterator_t * it, ccp path )
+void ResetIterator ( Iterator_t * it )
 {
     ASSERT(it);
-    ASSERT(it->func);
-    TRACE("SourceIteratorHelper(%p,%s) depth=%d/%d\n",it,path,it->depth,it->max_depth);
+    ResetStringField(&it->source_list);
+    memset(it,0,sizeof(*it));
+}
+
+//-----------------------------------------------------------------------------
+
+static enumError SourceIteratorHelper
+	( Iterator_t * it, ccp path, bool collect_fnames )
+{
+    ASSERT(it);
+    ASSERT( it->func || collect_fnames );
+    TRACE("SourceIteratorHelper(%p,%s,%d) depth=%d/%d\n",
+		it, path, collect_fnames, it->depth, it->max_depth );
+
+    if ( collect_fnames && path && *path == '-' && !path[1] )
+    {
+	TRACE(" - ADD STDIN\n");
+	InsertStringField(&it->source_list,path,false);
+	return ERR_OK;
+    }
+
+ #ifdef __CYGWIN__
+    char goodpath[PATH_MAX];
+    NormalizeFilename(goodpath,sizeof(goodpath),path);
+    path = goodpath;
+ #endif
 
     char buf[PATH_MAX+10];
 
@@ -1692,7 +1718,10 @@ static enumError SourceIteratorHelper ( Iterator_t * it, ccp path )
     if ( !stat(path,&sf.f.st) && S_ISDIR(sf.f.st.st_mode) )
     {
 	if ( it->depth >= it->max_depth )
+	{
+	    ResetSF(&sf,0);
 	    return ERR_OK;
+	}
 
 	ccp real_path = realpath(path,buf);
 	if (!real_path)
@@ -1723,7 +1752,7 @@ static enumError SourceIteratorHelper ( Iterator_t * it, ccp path )
 		    if ( n[0] != '.' )
 		    {
 			StringCopyE(dest,bufend,dent->d_name);
-			err = SourceIteratorHelper(it,buf);
+			err = SourceIteratorHelper(it,buf,collect_fnames);
 		    }
 		}
 		closedir(dir);
@@ -1733,6 +1762,7 @@ static enumError SourceIteratorHelper ( Iterator_t * it, ccp path )
 		it->depth--;
 	    }
 	}
+	ResetSF(&sf,0);
 	return err ? err : SIGINT_level ? ERR_INTERRUPT : ERR_OK;
     }
 
@@ -1741,7 +1771,10 @@ static enumError SourceIteratorHelper ( Iterator_t * it, ccp path )
     sf.f.disable_errors = it->act_non_exist != ACT_WARN;
     err = OpenSF(&sf,path,it->act_non_iso||it->act_wbfs>=ACT_ALLOW,it->open_modify);
     if ( err != ERR_OK && err != ERR_CANT_OPEN )
+    {
+    	ResetSF(&sf,0);
 	return ERR_OK;
+    }
     sf.f.disable_errors = false;
 
     ccp real_path = realpath( sf.f.path ? sf.f.path : sf.f.fname, buf );
@@ -1752,7 +1785,17 @@ static enumError SourceIteratorHelper ( Iterator_t * it, ccp path )
     if ( !IsFileOpen(&sf.f) )
     {
 	if ( it->act_non_exist >= ACT_ALLOW )
-	    return it->func(&sf,it);
+	{
+	    if (collect_fnames)
+	    {
+		InsertStringField(&it->source_list,sf.f.fname,false);
+		err = ERR_OK;
+	    }
+	    else
+		err = it->func(&sf,it);
+	    ResetSF(&sf,0);
+	    return err;
+	}
 	if ( err != ERR_CANT_OPEN && it->act_non_exist == ACT_WARN )
 	    ERROR0(ERR_CANT_OPEN, "Can't open file X: %s\n",path);
 	goto abort;
@@ -1763,6 +1806,7 @@ static enumError SourceIteratorHelper ( Iterator_t * it, ccp path )
     {
 	if ( it->act_open == ACT_WARN )
 	    printf(" - Ignore input=output: %s\n",path);
+	ResetSF(&sf,0);
 	return ERR_OK;
     }
     err = ERR_OK;
@@ -1799,7 +1843,7 @@ static enumError SourceIteratorHelper ( Iterator_t * it, ccp path )
 		    for ( i = 0; i < n_disc && err == ERR_OK; i++ )
 		    {
 			snprintf(dest,fbuf+sizeof(fbuf)-dest,"%u",i);
-			err = SourceIteratorHelper(it,fbuf);
+			err = SourceIteratorHelper(it,fbuf,collect_fnames);
 		    }
 		}
 		else
@@ -1818,7 +1862,13 @@ static enumError SourceIteratorHelper ( Iterator_t * it, ccp path )
     if ( InsertStringField(&file_done_list,real_path,false)
 	&& ( !sf.f.id6[0] || !IsExcluded(sf.f.id6) ))
     {
-	err = it->func(&sf,it);
+	if (collect_fnames)
+	{
+	    InsertStringField(&it->source_list,sf.f.fname,false);
+	    err = ERR_OK;
+	}
+	else
+	    err = it->func(&sf,it);
     }
 
  abort:
@@ -1828,10 +1878,11 @@ static enumError SourceIteratorHelper ( Iterator_t * it, ccp path )
 
 //-----------------------------------------------------------------------------
 
-enumError SourceIterator ( Iterator_t * it, bool current_dir_is_default )
+enumError SourceIterator
+	( Iterator_t * it, bool current_dir_is_default, bool collect_fnames )
 {
     ASSERT(it);
-    ASSERT(it->func);
+    ASSERT( it->func || collect_fnames );
     TRACE("SourceIterator(%p) func=%p, act=%d,%d,%d\n",
 		it, it->func,
 		it->act_non_exist, it->act_non_iso, it->act_wbfs );
@@ -1852,17 +1903,35 @@ enumError SourceIterator ( Iterator_t * it, bool current_dir_is_default )
     it->max_depth = 15;
     for ( ptr = recurse_list.field, end = ptr + recurse_list.used;
 		err == ERR_OK && !SIGINT_level && ptr < end; ptr++ )
-	err = SourceIteratorHelper(it,*ptr);
+	err = SourceIteratorHelper(it,*ptr,collect_fnames);
 
     it->depth = 0;
     it->max_depth = 1;
     for ( ptr = source_list.field, end = ptr + source_list.used;
 		err == ERR_OK && !SIGINT_level && ptr < end; ptr++ )
-	err = SourceIteratorHelper(it,*ptr);
+	err = SourceIteratorHelper(it,*ptr,collect_fnames);
 
     ResetStringField(&dir_done_list);
     ResetStringField(&file_done_list);
 
+    return err;
+}
+
+//-----------------------------------------------------------------------------
+
+enumError SourceIteratorCollected ( Iterator_t * it )
+{
+    ASSERT(it);
+    ASSERT(it->func);
+    TRACE("SourceIteratorCollected(%p) count=%d\n",it,it->source_list.used);
+
+    enumError err = ERR_OK;
+    int idx;
+    for ( idx = 0; idx < it->source_list.used; idx++ )
+    {
+	it->source_index = idx;
+	err = SourceIteratorHelper(it,it->source_list.field[idx],false);
+    }
     return err;
 }
 

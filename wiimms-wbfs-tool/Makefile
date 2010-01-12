@@ -9,7 +9,7 @@ WWT_SHORT	= wwt
 WWT_LONG	= Wiimms WBFS Tool
 WIT_SHORT	= wit
 WIT_LONG	= Wiimms ISO Tool
-VERSION		= 0.21a
+VERSION		= 0.27a
 
 ifeq ($(TERM),cygwin)
 SYSTEM		:= cygwin
@@ -23,6 +23,7 @@ include Makefile.setup
 URI_REPOS		= http://opensvn.wiimm.de/wii/trunk/wiimms-wbfs-tool
 URI_VIEWVC		= http://opensvn.wiimm.de/viewvc/wii/trunk/wiimms-wbfs-tool
 URI_HOME		= http://wiimm.de/wwt/
+URI_WDF			= http://wiimm.de/wwt/wdf/
 URI_GBATEMP		= http://gbatemp.net/index.php?showtopic=182236\#entry2286365
 URI_DOWNLOAD_I386	= http://wiimm.de/x/$(DISTRIB_I386)
 URI_DOWNLOAD_CYGWIN	= http://wiimm.de/x/$(DISTRIB_CYGWIN)
@@ -241,7 +242,7 @@ distrib+:
 	@chmod -R 664 $(DISTRIB_PATH)
 	@chmod a+x $(DISTRIB_PATH)/*.sh $(DISTRIB_PATH)/scripts/*.sh $(DISTRIB_PATH)/bin*/*
 	@chmod -R a+X $(DISTRIB_PATH)
-	-@chown -R --reference=. $(DISTRIB_PATH) >/dev/null
+#	-@chown -R --reference=. $(DISTRIB_PATH) >/dev/null
 
 	@tar -czf $(DISTRIB_PATH).tar.gz $(DISTRIB_PATH)
 
@@ -274,7 +275,7 @@ else
 	@chmod -R 664 $(DISTRIB_PATH)
 	@chmod a+x $(DISTRIB_PATH)/*.sh $(DISTRIB_PATH)/scripts/*.sh $(DISTRIB_PATH)/bin*/*
 	@chmod -R a+X $(DISTRIB_PATH)
-	-@chown -R --reference=. $(DISTRIB_PATH) >/dev/null
+#	-@chown -R --reference=. $(DISTRIB_PATH) >/dev/null
 
 	@tar -czf $(DISTRIB_PATH).tar.gz $(DISTRIB_PATH)
 endif
@@ -362,6 +363,7 @@ templates.sed: Makefile
 		's|@@URI-REPOS@@|$(URI_REPOS)|g;\n' \
 		's|@@URI-VIEWVC@@|$(URI_VIEWVC)|g;\n' \
 		's|@@URI-HOME@@|$(URI_HOME)|g;\n' \
+		's|@@URI-WDF@@|$(URI_WDF)|g;\n' \
 		's|@@URI-GBATEMP@@|$(URI_GBATEMP)|g;\n' \
 		's|@@URI-DOWNLOAD-I386@@|$(URI_DOWNLOAD_I386)|g;\n' \
 		's|@@URI-DOWNLOAD-CYGWIN@@|$(URI_DOWNLOAD_CYGWIN)|g;\n' \

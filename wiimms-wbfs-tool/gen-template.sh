@@ -36,7 +36,6 @@ do
 	#[[ $ext == edit-list ]] && continue
 	[[ $ext = "sh" || $ext = "h" ]] && dest="$fname"
 	awk "$awkprog" $src | sed -f templates.sed  >$dest
-	chmod --reference="$src" "$dest"
     fi
 done
 

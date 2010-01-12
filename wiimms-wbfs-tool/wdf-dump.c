@@ -130,7 +130,7 @@ enumError CheckOptions ( int argc, char ** argv )
 	  case 'V': version_exit();
 	  case 'h': help_exit();
 	  case 'q': verbose = -1; break;
-	  case 'v': verbose = verbose < 0 ? 1 : verbose+1; break;
+	  case 'v': verbose++; break;
 	  case 'l':
 	  case 'c': print_chunk_tab = true; break;
 

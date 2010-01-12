@@ -57,6 +57,7 @@ typedef enum enumOptions
 	OPT_PSEL,
 	OPT_RAW,
 	OPT_DEST,
+	OPT_DEST2,
 	OPT_SIZE,
 	OPT_SPLIT,
 	OPT_SPLIT_SIZE,
@@ -91,38 +92,39 @@ typedef enum enumOptionsBit
 {
 	// bitmask fo all command specific options
 
-	OB_AUTO		= 1 << OPT_AUTO,
-	OB_ALL		= 1 << OPT_ALL,
-	OB_PART		= 1 << OPT_PART,
-	OB_RECURSE	= 1 << OPT_RECURSE,
-	OB_PSEL		= 1 << OPT_PSEL,
-	OB_RAW		= 1 << OPT_RAW,
-	OB_DEST		= 1 << OPT_DEST,
-	OB_SIZE		= 1 << OPT_SIZE,
-	OB_SPLIT	= 1 << OPT_SPLIT,
-	OB_SPLIT_SIZE	= 1 << OPT_SPLIT_SIZE,
-	OB_SECTOR_SIZE	= 1 << OPT_SECTOR_SIZE,
-	OB_FORCE	= 1 << OPT_FORCE,
-	OB_NO_CHECK	= 1 << OPT_NO_CHECK,
-	OB_REPAIR	= 1 << OPT_REPAIR,
-	OB_NO_FREE	= 1 << OPT_NO_FREE,
-	OB_UPDATE	= 1 << OPT_UPDATE,
-	OB_SYNC		= 1 << OPT_SYNC,
-	OB_OVERWRITE	= 1 << OPT_OVERWRITE,
-	OB_IGNORE	= 1 << OPT_IGNORE,
-	OB_REMOVE	= 1 << OPT_REMOVE,
-	OB_TRUNC	= 1 << OPT_TRUNC,
-	OB_FAST		= 1 << OPT_FAST,
-	OB_WDF		= 1 << OPT_WDF,
-	OB_ISO		= 1 << OPT_ISO,
-	OB_WBFS		= 1 << OPT_WBFS,
-	OB_LONG		= 1 << OPT_LONG,
-	OB_MIXED	= 1 << OPT_MIXED,
-	OB_UNIQUE	= 1 << OPT_UNIQUE,
-	OB_NO_HEADER	= 1 << OPT_NO_HEADER,
-	OB_SORT		= 1 << OPT_SORT,
+	OB_AUTO		= 1llu << OPT_AUTO,
+	OB_ALL		= 1llu << OPT_ALL,
+	OB_PART		= 1llu << OPT_PART,
+	OB_RECURSE	= 1llu << OPT_RECURSE,
+	OB_PSEL		= 1llu << OPT_PSEL,
+	OB_RAW		= 1llu << OPT_RAW,
+	OB_DEST		= 1llu << OPT_DEST,
+	OB_DEST2	= 1llu << OPT_DEST2,
+	OB_SIZE		= 1llu << OPT_SIZE,
+	OB_SPLIT	= 1llu << OPT_SPLIT,
+	OB_SPLIT_SIZE	= 1llu << OPT_SPLIT_SIZE,
+	OB_SECTOR_SIZE	= 1llu << OPT_SECTOR_SIZE,
+	OB_FORCE	= 1llu << OPT_FORCE,
+	OB_NO_CHECK	= 1llu << OPT_NO_CHECK,
+	OB_REPAIR	= 1llu << OPT_REPAIR,
+	OB_NO_FREE	= 1llu << OPT_NO_FREE,
+	OB_UPDATE	= 1llu << OPT_UPDATE,
+	OB_SYNC		= 1llu << OPT_SYNC,
+	OB_OVERWRITE	= 1llu << OPT_OVERWRITE,
+	OB_IGNORE	= 1llu << OPT_IGNORE,
+	OB_REMOVE	= 1llu << OPT_REMOVE,
+	OB_TRUNC	= 1llu << OPT_TRUNC,
+	OB_FAST		= 1llu << OPT_FAST,
+	OB_WDF		= 1llu << OPT_WDF,
+	OB_ISO		= 1llu << OPT_ISO,
+	OB_WBFS		= 1llu << OPT_WBFS,
+	OB_LONG		= 1llu << OPT_LONG,
+	OB_MIXED	= 1llu << OPT_MIXED,
+	OB_UNIQUE	= 1llu << OPT_UNIQUE,
+	OB_NO_HEADER	= 1llu << OPT_NO_HEADER,
+	OB_SORT		= 1llu << OPT_SORT,
 
-	OB__MASK	= ( 1 << OPT__N_SPECIFIC ) -1,
+	OB__MASK	= ( 1llu << OPT__N_SPECIFIC ) -1,
 	OB__MASK_PART	= OB_AUTO|OB_ALL|OB_PART,
 	OB__MASK_PSEL	= OB_PSEL|OB_RAW,
 	OB__MASK_SPLIT	= OB_SPLIT|OB_SPLIT_SIZE,
@@ -155,7 +157,7 @@ typedef enum enumOptionsBit
 	OB_CMD_UPDATE	= OB_CMD_SYNC|OB_SYNC,
 	OB_CMD_ADD	= OB_CMD_UPDATE|OB_OVERWRITE|OB_UPDATE,
 	OB_CMD_EXTRACT	= OB__MASK_PART|OB__MASK_SPLIT|OB__MASK_OFT|OB__MASK_NO_CHK
-			  |OB_UNIQUE|OB_DEST|OB_FAST|OB_TRUNC
+			  |OB_UNIQUE|OB_DEST|OB_DEST2|OB_FAST|OB_TRUNC
 			  |OB_IGNORE|OB_REMOVE|OB_OVERWRITE|OB_UPDATE,
 	OB_CMD_REMOVE	= OB__MASK_PART|OB__MASK_NO_CHK|OB_UNIQUE|OB_IGNORE|OB_NO_FREE,
 	OB_CMD_RENAME	= OB__MASK_PART|OB__MASK_NO_CHK|OB_IGNORE|OB_ISO|OB_WBFS,
@@ -229,7 +231,7 @@ enum // const for long options without a short brothers
 	GETOPT_IO,
 };
 
-char short_opt[] = "hVqvPtE:x:X:T:aAr:p:d:s:zZ:fuyoiRCFWIBlMUHS:";
+char short_opt[] = "hVqvPtE:n:N:x:X:T:aAr:p:d:D:s:zZ:fuyoiRCFWIBlMUHS:";
 struct option long_opt[] =
 {
 	{ "help",		0, 0, 'h' },
@@ -239,6 +241,9 @@ struct option long_opt[] =
 	{ "progress",		0, 0, 'P' },
 	{ "test",		0, 0, 't' },
 	{ "esc",		1, 0, 'E' },
+	{ "include",		1, 0, 'n' },
+	{ "include-path",	1, 0, 'N' },
+	 { "includepath",	1, 0, 'N' },
 	{ "exclude",		1, 0, 'x' },
 	{ "exclude-path",	1, 0, 'X' },
 	 { "excludepath",	1, 0, 'X' },
@@ -246,7 +251,8 @@ struct option long_opt[] =
 	{ "utf-8",		0, 0, GETOPT_UTF8 },
 	 { "utf8",		0, 0, GETOPT_UTF8 },
 	{ "no-utf-8",		0, 0, GETOPT_NO_UTF8 },
-	{  "noutf8",		0, 0, GETOPT_NO_UTF8 },
+	 { "no-utf8",		0, 0, GETOPT_NO_UTF8 },
+	 { "noutf8",		0, 0, GETOPT_NO_UTF8 },
 
 	{ "io",			1, 0, GETOPT_IO }, // [2do] hidden option for tests
 
@@ -257,6 +263,7 @@ struct option long_opt[] =
 	{ "psel",		1, 0, GETOPT_PSEL },
 	{ "raw",		0, 0, GETOPT_RAW },
 	{ "dest",		1, 0, 'd' },
+	{ "DEST",		1, 0, 'D' },
 	{ "size",		1, 0, 's' },
 	{ "split",		0, 0, 'z' },
 	{ "split-size",		1, 0, 'Z' },
@@ -289,11 +296,12 @@ struct option long_opt[] =
 	{0,0,0,0}
 };
 
-uint used_options	= 0;
-uint env_options	= 0;
+u64  used_options	= 0;
+u64  env_options	= 0;
 int  long_count		= 0;
 int  testmode		= 0;
 ccp  opt_dest		= 0;
+bool opt_mkdir		= false;
 u64  opt_size		= 0;
 int  opt_split		= 0;
 u64  opt_split_size	= 0;
@@ -398,13 +406,22 @@ static char help_text[] =
     "   -P --progress      Print progress counter independent of verbose level.\n"
     " * -t --test          Run in test mode, modify nothing.\n"
     "   -E --esc char      Define an alternative escape character, default is '%'.\n"
+    " * -n --include id    Include oly discs with given ID4 or ID6 from operation.\n"
+    " * -n --include @file Read include list from file.\n"
+    " * -N --include-path file_or_dir\n"
+    "                      ISO file or base of directory tree -> scan their ID6.\n"
     " * -x --exclude id    Exclude discs with given ID4 or ID6 from operation.\n"
     " * -x --exclude @file Read exclude list from file.\n"
     " * -X --exclude-path file_or_dir\n"
     "                      ISO file or base of directory tree -> scan their ID6.\n"
     " * -T --titles file   Read file for disc titles. -T0 disables titles lookup.\n"
+ #ifdef __CYGWIN__
+    "      --utf-8         Enables UTF-8 support.\n"
+    "      --no-utf-8      Disables UTF-8 support (cygwin default).\n"
+ #else
     "      --utf-8         Enables UTF-8 support (default).\n"
     "      --no-utf-8      Disables UTF-8 support.\n"
+ #endif
     "\n"
     "Command specific options:\n"
     "\n"
@@ -416,8 +433,9 @@ static char help_text[] =
     "      --psel  p-type  Partition selector: (no-)game|update|channel all(=def) raw.\n"
     "      --raw           Short cut for --psel=raw.\n"
     "   -d --dest  path    Define a destination file/directory.\n"
+    "   -D --DEST  path    Like --dest, but create directory path automatically.\n"
     "   -s --size  size    Floating point size. Factors: bckKmMgGtT, default=G.\n"
-    "   -z --split         Enable output file splitting, default split size = 2 gb.\n"
+    "   -z --split         Enable output file splitting, default split size = 4 gb.\n"
     "   -Z --split-size sz Enable output file splitting and set split size.\n"
     "   --sector-size size Floating point sector size, default=512. Factors: kKmMgGtT\n"
     "   -f --force         Force operation without query.\n"
@@ -554,6 +572,16 @@ void hint_exit ( enumError err )
     printf("repair-mode: %16x\n",repair_mode);
     printf("escape-char: %02x\n",escape_char);
 
+  #elif 0 && defined __CYGWIN__ // test AllocNormalizedFilename
+
+    ParamList_t * param;
+    for ( param = first_param; param; param = param->next )
+    {
+	char * arg = AllocNormalizedFilename(param->arg);
+	printf("> %s\n",arg);
+	FreeString(arg);
+    }
+
   #elif 1 // test SubstString
 
     SubstString_t tab[] =
@@ -568,8 +596,9 @@ void hint_exit ( enumError err )
     for ( param = first_param; param; param = param->next )
     {
 	char buf[1000];
-	SubstString(buf,sizeof(buf),tab,param->arg);
-	printf("%s -> %s\n",param->arg,buf);
+	int count;
+	SubstString(buf,sizeof(buf),tab,param->arg,&count);
+	printf("%s -> %s [%d]\n",param->arg,buf,count);
     }
 
   #else // test INT
@@ -1803,8 +1832,6 @@ enumError exec_add ( SuperFile_t * sf, Iterator_t * it )
     if (SIGINT_level)
 	return ERR_INTERRUPT;
 
- #if CACHE_ENABLED
-
     enumFileType ft_test = FT_A_ISO|FT_A_SEEKABLE;
     if ( !(sf->f.ftype&FT_A_WDF) && !sf->f.seek_allowed )
     {
@@ -1814,11 +1841,6 @@ enumError exec_add ( SuperFile_t * sf, Iterator_t * it )
 
     if ( IsExcluded(sf->f.id6) || PrintErrorFT(&sf->f,ft_test) )
 	return ERR_OK;
- #else
-    AnalyseFT(&sf->f);
-    if ( IsExcluded(sf->f.id6) || PrintErrorFT(&sf->f,FT_A_ISO|FT_A_SEEKABLE) )
-	return ERR_OK;
- #endif
 
     if (!ExistsWDisc(it->wbfs,sf->f.id6))
     {
@@ -1850,17 +1872,20 @@ enumError exec_add ( SuperFile_t * sf, Iterator_t * it )
 	}
     }
 
+    snprintf(iobuf,sizeof(iobuf),"%d",it->source_list.used);
     if (testmode)
     {
 	TRACE("WOULD ADD [%s] %s\n",sf->f.id6,sf->f.fname);
-	printf(" - WOULD ADD [%s] %s:%s\n",
+	printf(" - WOULD ADD %*d/%d [%s] %s:%s\n",
+		strlen(iobuf), it->source_index+1, it->source_list.used,
 		sf->f.id6, oft_name[sf->oft], sf->f.fname );
     }
     else
     {
 	TRACE("ADD [%s] %s\n",sf->f.id6,sf->f.fname);
 	if ( verbose >= 0 || progress > 0 )
-	    printf(" - ADD [%s] %s:%s\n",
+	    printf(" - ADD %*d/%d [%s] %s:%s\n",
+			strlen(iobuf), it->source_index+1, it->source_list.used,
 			sf->f.id6, oft_name[sf->oft], sf->f.fname );
 	fflush(stdout);
 
@@ -1910,12 +1935,22 @@ enumError cmd_add()
     it.overwrite	= used_options & OB_OVERWRITE ? 1 : 0;
     it.remove_source	= used_options & OB_REMOVE ? 1 : 0;
 
+    err = SourceIterator(&it,false,true);
+    if (err)
+    {
+	ResetIterator(&it);
+	return err;
+    }
+    
     if ( used_options & OB_SYNC )
     {
 	it.func = exec_scan_id;
-	err = SourceIterator(&it,false);
+	err = SourceIteratorCollected(&it);
 	if (err)
+	{
+	    ResetIterator(&it);
 	    return err;
+	}
     }
     it.func = exec_add;
 
@@ -1951,7 +1986,9 @@ enumError cmd_add()
 	int wbfs_rm_count = 0;
 	if ( used_options & OB_SYNC )
 	{
+	    disable_exclude_db++;
 	    WDiscList_t * wlist = GenerateWDiscList(&wbfs,0);
+	    disable_exclude_db--;
 	    
 	    WDiscListItem_t * ptr = wlist->first_disc;
 	    WDiscListItem_t * end = ptr + wlist->used;
@@ -1959,16 +1996,18 @@ enumError cmd_add()
 	    {
 		TDBfind_t stat;
 		FindID(&sync_list,ptr->id6,&stat,0);
-		if ( stat != IDB_ID_FOUND )
+		if ( stat != IDB_ID_FOUND || IsExcluded(ptr->id6) )
 		{
 		    if (testmode)
 		    {
-			printf(" - WOULD REMOVE [%s]\n",ptr->id6);
+			printf(" - WOULD REMOVE [%s] %s\n",
+				ptr->id6, GetTitle(ptr->id6,ptr->name64) );
 			wbfs_rm_count++;
 		    }
 		    else
 		    {
-			printf(" - REMOVE [%s]\n",ptr->id6);
+			printf(" - REMOVE [%s] %s\n",
+				ptr->id6, GetTitle(ptr->id6,ptr->name64) );
 			if (!RemoveWDisc(&wbfs,ptr->id6,false))
 			    wbfs_rm_count++;
 		    }
@@ -1981,7 +2020,7 @@ enumError cmd_add()
 	it.wbfs = &wbfs;
 	it.open_dev = wbfs.sf->f.st.st_dev;
 	it.open_ino = wbfs.sf->f.st.st_ino;
-	err = SourceIterator(&it,false);
+	err = SourceIteratorCollected(&it);
 	if (err)
 	    break;
 
@@ -2019,6 +2058,7 @@ enumError cmd_add()
 	    }
 	}
     }
+    ResetIterator(&it);
     ResetWBFS(&wbfs);
     return max_error;
 }
@@ -2057,7 +2097,7 @@ enumError cmd_extract()
     if ( testmode > 1 )
 	return PrintParamID6();
 
-    if (!n_param)
+    if (!id6_param_found)
 	return ERROR0(ERR_MISSING_PARAM,"missing parameters\n");
 
     const int update = used_options & OB_UPDATE;
@@ -2143,9 +2183,11 @@ enumError cmd_extract()
 		    {0,0,0,0}
 		};
 		char dbuf[PATH_MAX], fbuf[PATH_MAX];
-		SubstString(dbuf,sizeof(dbuf),subst_tab,opt_dest);
+		int conv_count1, conv_count2;
+		SubstString(dbuf,sizeof(dbuf),subst_tab,opt_dest,&conv_count1);
 		oname = param->arg ? param->arg : oft == OFT_WBFS ? id6 : fo.f.fname;
-		SubstString(fbuf,sizeof(fbuf),subst_tab,oname);
+		SubstString(fbuf,sizeof(fbuf),subst_tab,oname,&conv_count2);
+		fo.f.create_directory = conv_count1 || conv_count2 || opt_mkdir;
 		GenFileName( &fo.f, dbuf, fbuf, 0, 0, 0 );
 
 		if (testmode)
@@ -2297,7 +2339,7 @@ enumError cmd_remove()
     if ( testmode > 1 )
 	return PrintParamID6();
 
-    if (!n_param)
+    if (!id6_param_found)
 	return ERROR0(ERR_MISSING_PARAM,"missing parameters\n");
 
     //----- remove discs
@@ -2343,17 +2385,28 @@ enumError cmd_remove()
 		continue;
 	    fflush(stdout);
 
-	    if (!ExistsWDisc(&wbfs,id6))
+	    if (!OpenWDiscID6(&wbfs,id6))
 	    {
+		char disc_title[WII_TITLE_SIZE+1];
+		WDiscHeader_t *dh = GetWDiscHeader(&wbfs);
+		if (dh)
+		    StringCopyS(disc_title,sizeof(disc_title),(ccp)dh->game_title);
+		else
+		    *disc_title = 0;
+		CloseWDisc(&wbfs);
+		ccp title = GetTitle(id6,disc_title);
 		param->count++;
-		if (testmode)
+		if (testmode || verbose > 0 )
 		{
 		    TRACE("WOULD %s %s @ %s\n",
 			free_slot_only ? "DROP" : "REMOVE", id6, info->path );
-		    printf(" - WOULD %s [%s]\n",
-			free_slot_only ? "DROP" : "REMOVE", id6 );
-		    wbfs_rm_count++;
+		    printf(" - %s %s [%s] %s\n",
+			testmode ? "WOULD " : "",
+			free_slot_only ? "DROP" : "REMOVE",
+			id6, title );
 		}
+		if (testmode)
+		    wbfs_rm_count++;
 		else if (RemoveWDisc(&wbfs,id6,free_slot_only))
 		    wbfs_go = false;
 		else
@@ -2486,6 +2539,7 @@ enumError cmd_rename ( bool rename_id )
 				 change_wbfs, change_iso, verbose, testmode );
 		    wbfs_mv_count++;
 		}
+		param->count++;
 		continue;
 	    }
 
@@ -2640,15 +2694,18 @@ enumError CheckOptions ( int argc, char ** argv, int is_env )
 	  case 'V': version_exit();
 	  case 'h': help_exit();
 	  case 'q': verbose = -1; break;
-	  case 'v': verbose = verbose < 0 ? 1 : verbose+1; break;
+	  case 'v': verbose++; break;
 	  case 'P': progress++; break;
 	  case 't': testmode++; break;
+	  case 'n': AtFileHelper(optarg,0,AddIncludeID); break;
+	  case 'N': AtFileHelper(optarg,0,AddIncludePath); break;
 	  case 'x': AtFileHelper(optarg,0,AddExcludeID); break;
 	  case 'X': AtFileHelper(optarg,0,AddExcludePath); break;
 	  case 'T': AtFileHelper(optarg,true,AddTitleFile); break;
 
 	  case 'A': SetOption(OPT_ALL,"all"); opt_all++; break;
 	  case 'd': SetOption(OPT_DEST,"dest"); opt_dest = optarg; break;
+	  case 'D': SetOption(OPT_DEST2,"DEST"); opt_dest = optarg; opt_mkdir = true; break;
    	  case 'z': SetOption(OPT_SPLIT,"split"); opt_split++; break;
 	  case 'f': SetOption(OPT_FORCE,"force"); break;
 	  case 'u': SetOption(OPT_UPDATE,"update"); break;

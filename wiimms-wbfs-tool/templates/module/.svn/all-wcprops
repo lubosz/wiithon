@@ -1,7 +1,7 @@
 K 25
 svn:wc:ra_dav:version-url
 V 57
-/wii/!svn/ver/518/trunk/wiimms-wbfs-tool/templates/module
+/wii/!svn/ver/579/trunk/wiimms-wbfs-tool/templates/module
 END
 head.txt
 K 25
@@ -13,7 +13,7 @@ last-history.txt
 K 25
 svn:wc:ra_dav:version-url
 V 74
-/wii/!svn/ver/518/trunk/wiimms-wbfs-tool/templates/module/last-history.txt
+/wii/!svn/ver/579/trunk/wiimms-wbfs-tool/templates/module/last-history.txt
 END
 opt-psel.txt
 K 25
@@ -49,13 +49,13 @@ proc-exclude.txt
 K 25
 svn:wc:ra_dav:version-url
 V 74
-/wii/!svn/ver/309/trunk/wiimms-wbfs-tool/templates/module/proc-exclude.txt
+/wii/!svn/ver/535/trunk/wiimms-wbfs-tool/templates/module/proc-exclude.txt
 END
 set-title.txt
 K 25
 svn:wc:ra_dav:version-url
 V 71
-/wii/!svn/ver/491/trunk/wiimms-wbfs-tool/templates/module/set-title.txt
+/wii/!svn/ver/549/trunk/wiimms-wbfs-tool/templates/module/set-title.txt
 END
 proc-iso.txt
 K 25
@@ -79,7 +79,7 @@ output-filename.txt
 K 25
 svn:wc:ra_dav:version-url
 V 77
-/wii/!svn/ver/491/trunk/wiimms-wbfs-tool/templates/module/output-filename.txt
+/wii/!svn/ver/549/trunk/wiimms-wbfs-tool/templates/module/output-filename.txt
 END
 signals.txt
 K 25

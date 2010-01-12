@@ -18,8 +18,10 @@
 
 #if defined(__CYGWIN__)
   #include <cygwin/fs.h>
+  #include <io.h>
+  //#include <locale.h>
 #elif defined(__APPLE__)
-  #include <sys/disc.h>
+  #include <sys/disk.h>
 #elif defined(__linux__)
   #include <linux/fs.h>
 #endif
@@ -47,9 +49,14 @@ volatile int verbose		= 0;
 int progress			= 0;
 SortMode sort_mode		= SORT_DEFAULT;
 RepairMode repair_mode		= REPAIR_NONE;
-bool use_utf8			= true;
 char escape_char		= '%';
 enumOFT output_file_type	= OFT_UNKNOWN;
+
+#ifdef __CYGWIN__
+ bool use_utf8			= false;
+#else
+ bool use_utf8			= true;
+#endif
 
 char iobuf[0x100000];
 
@@ -71,62 +78,62 @@ static void sig_handler ( int signum )
     fflush(stdout);
     switch(signum)
     {
-	case SIGINT:
-	case SIGTERM:
-	    SIGINT_level++;
-	    TRACE("#SIGNAL# INT/TERM, level = %d\n",SIGINT_level);
+      case SIGINT:
+      case SIGTERM:
+	SIGINT_level++;
+	TRACE("#SIGNAL# INT/TERM, level = %d\n",SIGINT_level);
 
-	    switch(SIGINT_level)
-	    {
-		case 1:
-		    fprintf(stderr,
-			"\n"
-			"\t****************************************************************\n"
-			"\t***  PROGRAM INTERRUPTED BY USER (LEVEL=%d).                  ***\n"
-			"\t***  PROGRAM WILL TERMINATE AFTER CURRENT JOB HAS FINISHED.  ***\n"
-			"\t****************************************************************\n"
-			, SIGINT_level );
-		    break;
-
-		case 2:
-		    fprintf(stderr,
-			"\n"
-			"\t*********************************************************\n"
-			"\t***  PROGRAM INTERRUPTED BY USER (LEVEL=%d).           ***\n"
-			"\t***  PROGRAM WILL TRY TO TERMINATE NOW WITH CLEANUP.  ***\n"
-			"\t*********************************************************\n"
-			, SIGINT_level );
-		    break;
-
-		default:
-		    fprintf(stderr,
-			"\n"
-			"\t*************************************************************\n"
-			"\t***  PROGRAM INTERRUPTED BY USER (LEVEL=%d).               ***\n"
-			"\t***  PROGRAM WILL TERMINATE IMMEDIATELY WITHOUT CLEANUP.  ***\n"
-			"\t*************************************************************\n"
-			, SIGINT_level );
-		    fflush(stderr);
-		    exit(ERR_INTERRUPT);
-	    }
+	switch(SIGINT_level)
+	{
+	  case 1:
+	    fprintf(stderr,
+		"\n"
+		"\t****************************************************************\n"
+		"\t***  PROGRAM INTERRUPTED BY USER (LEVEL=%d).                  ***\n"
+		"\t***  PROGRAM WILL TERMINATE AFTER CURRENT JOB HAS FINISHED.  ***\n"
+		"\t****************************************************************\n"
+		, SIGINT_level );
 	    break;
 
-	case SIGUSR1:
-	    if ( verbose >= 0 )
-		verbose--;
-	    TRACE("#SIGNAL# USR1: verbose = %d\n",verbose);
-	    fprintf(stderr,usr_msg,1,"DECREASED",verbose);
+	  case 2:
+	    fprintf(stderr,
+		"\n"
+		"\t*********************************************************\n"
+		"\t***  PROGRAM INTERRUPTED BY USER (LEVEL=%d).           ***\n"
+		"\t***  PROGRAM WILL TRY TO TERMINATE NOW WITH CLEANUP.  ***\n"
+		"\t*********************************************************\n"
+		, SIGINT_level );
 	    break;
 
-	case SIGUSR2:
-	    if ( verbose < 4 )
-		verbose++;
-	    TRACE("#SIGNAL# USR2: verbose = %d\n",verbose);
-	    fprintf(stderr,usr_msg,2,"INCREASED",verbose);
-	    break;
+	  default:
+	    fprintf(stderr,
+		"\n"
+		"\t*************************************************************\n"
+		"\t***  PROGRAM INTERRUPTED BY USER (LEVEL=%d).               ***\n"
+		"\t***  PROGRAM WILL TERMINATE IMMEDIATELY WITHOUT CLEANUP.  ***\n"
+		"\t*************************************************************\n"
+		, SIGINT_level );
+	    fflush(stderr);
+	    exit(ERR_INTERRUPT);
+	  }
+	  break;
 
-	default:
-	    TRACE("#SIGNAL# %d\n",signum);
+      case SIGUSR1:
+	if ( verbose >= 0 )
+	    verbose--;
+	TRACE("#SIGNAL# USR1: verbose = %d\n",verbose);
+	fprintf(stderr,usr_msg,1,"DECREASED",verbose);
+	break;
+
+      case SIGUSR2:
+	if ( verbose < 4 )
+	    verbose++;
+	TRACE("#SIGNAL# USR2: verbose = %d\n",verbose);
+	fprintf(stderr,usr_msg,2,"INCREASED",verbose);
+	break;
+
+      default:
+	TRACE("#SIGNAL# %d\n",signum);
     }
     fflush(stderr);
 }
@@ -203,6 +210,14 @@ void SetupLib ( int argc, char ** argv, ccp p_progname, enumProgID prid )
     ASSERT( 8 == sizeof(s64) );
 
     ASSERT( sizeof(WDiscHeader_t) == 0x100 );
+
+    //----- setup textmode for cygwin stdout+stderr 
+
+    #if defined(__CYGWIN__)
+	setmode(fileno(stdout),O_TEXT);
+	setmode(fileno(stderr),O_TEXT);
+	//setlocale(LC_ALL,"en_US.utf-8");
+    #endif
 
     //----- setup prog id
 
@@ -313,19 +328,19 @@ void SetupLib ( int argc, char ** argv, ccp p_progname, enumProgID prid )
 
     //----- setup language info
 
-    char * LC_CTYPE = getenv("LC_CTYPE");
-    if (LC_CTYPE)
+    char * lc_ctype = getenv("LC_CTYPE");
+    if (lc_ctype)
     {
-	char * LC_CTYPE_end = LC_CTYPE;
-	while ( *LC_CTYPE_end >= 'a' && *LC_CTYPE_end <= 'z' )
-	    LC_CTYPE_end++;
-	const int len = LC_CTYPE_end - LC_CTYPE;
+	char * lc_ctype_end = lc_ctype;
+	while ( *lc_ctype_end >= 'a' && *lc_ctype_end <= 'z' )
+	    lc_ctype_end++;
+	const int len = lc_ctype_end - lc_ctype;
 	if ( len > 0 )
 	{
 	    char * temp = malloc(len+1);
 	    if (!temp)
 		OUT_OF_MEMORY;
-	    memcpy(temp,LC_CTYPE,len);
+	    memcpy(temp,lc_ctype,len);
 	    temp[len] = 0;
 	    lang_info = temp;
 	    TRACE("LANG_INFO = %s\n",lang_info);
@@ -421,8 +436,10 @@ ccp GetErrorName ( int stat )
 	case ERR_TO_MUCH_WBFS_FOUND:	return "TO MUCH WBFS FOUND";
 	case ERR_WBFS_INVALID:		return "INVALID WBFS";
 
+	case ERR_ALREADY_EXISTS:	return "FILE ALREADY EXISTS";
 	case ERR_CANT_OPEN:		return "CAN'T OPEN FILE";
 	case ERR_CANT_CREATE:		return "CAN'T CREATE FILE";
+	case ERR_CANT_CREATE_DIR:	return "CAN'T CREATE DIRECTORY";
 	case ERR_WRONG_FILE_TYPE:	return "WRONG FILE TYPE";
 	case ERR_READ_FAILED:		return "READ FILE FAILED";
 	case ERR_REMOVE_FAILED:		return "REMOVE FILE FAILED";
@@ -464,8 +481,10 @@ ccp GetErrorText ( int stat )
 	case ERR_TO_MUCH_WBFS_FOUND:	return "To much WBFS found";
 	case ERR_WBFS_INVALID:		return "Invalid WBFS";
 
+	case ERR_ALREADY_EXISTS:	return "File already exists";
 	case ERR_CANT_OPEN:		return "Can't open file";
 	case ERR_CANT_CREATE:		return "Can't create file";
+	case ERR_CANT_CREATE_DIR:	return "Can't create directory";
 	case ERR_WRONG_FILE_TYPE:	return "Wrong type of file";
 	case ERR_READ_FAILED:		return "Reading from file failed";
 	case ERR_REMOVE_FAILED:		return "Removing a file failed";
@@ -782,12 +801,14 @@ enumError XResetFile ( XPARM File_t * f, bool remove_file )
     // save user settungs
     const bool open_flags	= f->open_flags;
     const bool disable_errors	= f->disable_errors;
+    const bool create_directory	= f->create_directory;
 
     InitializeFile(f);
 
     // restore user settings
     f->open_flags	= open_flags;
     f->disable_errors	= disable_errors;
+    f->create_directory	= create_directory;
 
     return stat;
 }
@@ -827,11 +848,9 @@ enumError XClearFile ( XPARM File_t * f, bool remove_file )
     FreeString(f->split_fname_format);	f->split_fname_format	= EmptyString;
     FreeString(f->split_rename_format);	f->split_rename_format	= 0;
 
- #if CACHE_ENABLED
     ASSERT(!f->is_caching);
     ASSERT(!f->cache);
     ASSERT(!f->cur_cache);
- #endif
 
     f->last_error = err;
     if ( f->max_error < err )
@@ -905,7 +924,6 @@ enumError XCloseFile ( XPARM File_t * f, bool remove_file )
 	}
     }
 
- #if CACHE_ENABLED
     f->is_caching = false;
     while (f->cache)
     {
@@ -915,7 +933,6 @@ enumError XCloseFile ( XPARM File_t * f, bool remove_file )
 	free(ptr);
     }
     f->cur_cache = 0;
- #endif
 
     f->cur_off = f->file_off = 0;
 
@@ -961,12 +978,12 @@ static enumError XOpenFileHelper
 	( XPARM File_t * f, enumIOMode iomode, int default_flags, int force_flags )
 {
     ASSERT(f);
-    TRACE("#F# OpenFileHelper(%p,%x,%x,%x) dis=%d\n",
-		f, iomode, default_flags, force_flags,f->disable_errors);
+    TRACE("#F# OpenFileHelper(%p,%x,%x,%x) dis=%d, mkdir=%d\n",
+		f, iomode, default_flags, force_flags,
+		f->disable_errors, f->create_directory );
 
  #ifdef O_LARGEFILE
     TRACE("FORCE O_LARGEFILE\n");
-    default_flags |= O_LARGEFILE;
     force_flags |= O_LARGEFILE;
  #endif
 
@@ -993,7 +1010,23 @@ static enumError XOpenFileHelper
     f->active_open_flags = f->active_open_flags & ~mode_mask | mode;
 
     if ( f->fd == -1 )
+    {
+	TRACE("open %s, create-dir=%d\n",f->fname,f->create_directory);
+     #ifdef __CYGWIN__
+	char * temp = AllocNormalizedFilename(f->fname);
+	TRACE("open %p %p %s\n",f->fname,temp,temp);
+	//FreeString(f->fname); // [2do] [memleak] -> forces a stack dump -- mhhm
+	f->fname = temp;
+     #endif
 	f->fd = open( f->fname, f->active_open_flags, 0666 );
+	if ( f->fd == -1 && f->create_directory )
+	{
+	    const enumError err = CreatePath(f->fname);
+	    if (err)
+		return err;
+	    f->fd = open( f->fname, f->active_open_flags, 0666 );
+	}
+    }
     TRACE("#F# OpenFile '%s' fd=%d, dis=%d\n", f->fname, f->fd, f->disable_errors );
 
     if ( f->fd == -1 )
@@ -1119,18 +1152,18 @@ enumError XCreateFile ( XPARM File_t * f, ccp fname, enumIOMode iomode, int over
     if (!stat(fname,&f->st))
     {
 	if ( overwrite < 0 || f->disable_errors )
-	    return ERR_CANT_CREATE;
+	    return ERR_ALREADY_EXISTS;
 
 	if (!S_ISREG(f->st.st_mode))
 	    return PrintError( XERROR0, ERR_WRONG_FILE_TYPE,
 		"Not a plain file: %s\n", fname );
 
 	if (!overwrite)
-	    return PrintError( XERROR0, ERR_CANT_CREATE,
+	    return PrintError( XERROR0, ERR_ALREADY_EXISTS,
 		"File already exists: %s\n", fname );
     }
 
-    TRACE("#F# CREATE: '%s'\n",fname);
+    TRACE("#F# CREATE: '%s' mkdir=%d\n",fname,f->create_directory);
 
     int flen = strlen(fname);
     if ( flen >= PATH_MAX )
@@ -1186,7 +1219,6 @@ enumError XCreateFile ( XPARM File_t * f, ccp fname, enumIOMode iomode, int over
     const int open_flags = O_WRONLY|O_CREAT|O_TRUNC|O_EXCL;
 
     //---------------------------------------------------------
-    // Can't use mkstep() because missing O_LARGEFILE support.
     // I have seen the glibc function __gen_tempname() ;)
     //---------------------------------------------------------
 
@@ -1211,11 +1243,12 @@ enumError XCreateFile ( XPARM File_t * f, ccp fname, enumIOMode iomode, int over
 	XXXXXX[5] = letters[v%62];
 
 	f->fname = fbuf; // temporary assignment
-	if ( XOpenFileHelper(XCALL f,iomode,open_flags,open_flags) == ERR_OK )
+	const enumError err = XOpenFileHelper(XCALL f,iomode,open_flags,open_flags);
+	if ( err == ERR_OK || err == ERR_CANT_CREATE_DIR )
 	{
 	    f->fname = strdup(fbuf);
 	    f->disable_errors = disable_errors;
-	    return f->last_error = f->max_error = ERR_OK;
+	    return f->last_error = f->max_error = err;
 	}
 	f->fname = 0;
 	XResetFile( XCALL f, false );
@@ -1249,6 +1282,7 @@ enumError XOpenStreamFile ( XPARM File_t * f )
     {
 	// flag 'b' is set for compatibilitiy only, linux ignores it
 	ccp mode = !f->is_writing ? "rb" : f->is_reading ? "r+b" : "wb";
+	TRACE("#F# open mode: '%s'\n",mode);
 	f->fp = fdopen(f->fd,mode);
 	if (!f->fp)
 	{
@@ -1286,7 +1320,7 @@ char * NormalizeFileName ( char * buf, char * end, ccp source, bool allow_slash 
 	bool skip_space = true;
 	while ( *source && dest < end )
 	{
-	    char ch = *source++;
+	    unsigned char ch = *source++;
 	    if ( ch == ':' )
 	    {
 		if (!skip_space)
@@ -1298,7 +1332,17 @@ char * NormalizeFileName ( char * buf, char * end, ccp source, bool allow_slash 
 	    else
 	    {
 		if ( isalnum(ch)
-			|| strchr("_+-=%'\"$%&,.!()[]{}<>",ch)
+			|| !use_utf8 &&
+			    (
+				   ch == 0xe4 // ä
+				|| ch == 0xf6 // ö
+				|| ch == 0xfc // ü
+				|| ch == 0xdf // ß
+				|| ch == 0xc4 // A
+				|| ch == 0xd6 // Ö
+				|| ch == 0xdc // Ü
+			    )
+			|| strchr("_+-=%'\"$%&,.!()[]{}<>ÄÖÜäöüß",ch)
 			|| ch == '/' && allow_slash )
 		{
 		    *dest++ = ch;
@@ -1576,11 +1620,9 @@ enumError XSetupSplitFile ( XPARM File_t *f, enumOFT oft, off_t split_size )
     // copy all but cache
     memcpy(first,f,sizeof(File_t));
 
- #if CACHE_ENABLED
     first->is_caching = false;
     first->cache = 0;
     first->cur_cache = 0;
- #endif
 
     const bool have_stream = f->fp != 0;
     f->fp =  0;
@@ -1790,10 +1832,8 @@ enumError XFindSplitFile ( XPARM File_t *f, uint * p_index, off_t * p_off )
 ///////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////
 
-#if CACHE_ENABLED
-
- void DefineCachedArea ( File_t * f, off_t off, size_t count )
- {
+void DefineCachedArea ( File_t * f, off_t off, size_t count )
+{
     // this whole function assumes that count is small and that the hole
     // cache size is less than MAX(size_t)
 
@@ -1851,16 +1891,12 @@ enumError XFindSplitFile ( XPARM File_t *f, uint * p_index, off_t * p_off )
     ptr->next  = *pptr;
     *pptr = ptr;
     TRACE("#F# CACHE ENTRY inserted: o=%10llx n=%9zx\n",ptr->off,ptr->count);
- }
-
-#endif // CACHE_ENABLED
+}
 
 //-----------------------------------------------------------------------------
 
-#if CACHE_ENABLED
-
- void DefineCachedAreaISO ( File_t * f, bool head_only )
- {
+void DefineCachedAreaISO ( File_t * f, bool head_only )
+{
     ASSERT(f);
     if (head_only)
     {
@@ -1871,9 +1907,7 @@ enumError XFindSplitFile ( XPARM File_t *f, uint * p_index, off_t * p_off )
 	DefineCachedArea(f,0x0000000ull,0x200000);
 	DefineCachedArea(f,0xf800000ull,0x800000);
     }
- }
-
-#endif // CACHE_ENABLED
+}
 
 ///////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////
@@ -1955,10 +1989,8 @@ enumError XAnalyseWH ( XPARM File_t * f, WDF_Head_t * wh, bool print_err )
 ///////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////
 
-#if CACHE_ENABLED
-
- static FileCache_t * XCacheHelper ( XPARM File_t * f, off_t off, size_t count )
- {
+static FileCache_t * XCacheHelper ( XPARM File_t * f, off_t off, size_t count )
+{
     // This function does the following:
     // a) look into the cahce table to find if (off,count) is part of an
     //    cache entry. I so, the result is a pointer to the first affected
@@ -2018,9 +2050,7 @@ enumError XAnalyseWH ( XPARM File_t * f, WDF_Head_t * wh, bool print_err )
     }
 
     return cptr;
- }
-
-#endif
+}
 
 ///////////////////////////////////////////////////////////////////////////////
 
@@ -2075,14 +2105,12 @@ enumError XSeekF ( XPARM File_t * f, off_t off )
     if ( off == f->file_off && f->is_writing != f->is_reading )
 	return f->last_error = ERR_OK;
 
- #if CACHE_ENABLED
     if (f->is_caching)
     {
 	FileCache_t * cptr = XCacheHelper(XCALL f,off,0);
 	if (cptr)
 	    return f->last_error; // all done
     }
- #endif // CACHE_ENABLED
 
     if (f->split_f)
     {
@@ -2116,7 +2144,6 @@ enumError XSeekF ( XPARM File_t * f, off_t off )
 	return ERR_OK;
     }
 
- #if CACHE_ENABLED
     if ( !f->seek_allowed && f->is_caching )
     {
 	fprintf(stderr,
@@ -2129,7 +2156,6 @@ enumError XSeekF ( XPARM File_t * f, off_t off )
 		"\n",
 		f->id6, off );
     }
- #endif
 
     TRACE(TRACE_SEEK_FORMAT, "#F# SeekF()",
 		GetFD(f), GetFP(f), off, off < f->max_off ? " <" : "" );
@@ -2226,8 +2252,6 @@ enumError XReadF ( XPARM File_t * f, void * iobuf, size_t count )
 {
     ASSERT(f);
 
- #if CACHE_ENABLED
-
     if (f->is_caching)
     {
 	off_t my_off = f->cur_off;
@@ -2282,8 +2306,6 @@ enumError XReadF ( XPARM File_t * f, void * iobuf, size_t count )
 		return ERR_OK;
 	}
     }
-
- #endif // CACHE_ENABLED
 
     //--------------------------------------------------
 
@@ -2356,11 +2378,15 @@ enumError XReadF ( XPARM File_t * f, void * iobuf, size_t count )
 		GetFD(f), GetFP(f), f->cur_off, f->cur_off+count, count,
 		f->cur_off < f->max_off ? " <" : "" );
 
-    if ( f->read_behind_eof && f->st.st_size )
+    if ( f->read_behind_eof && ( f->st.st_size > 0 || f->is_writing ) )
     {
 	const off_t max_read = f->st.st_size > f->file_off
 					? f->st.st_size - f->file_off
 					: 0;
+
+	TRACE("read_behind_eof=%d, st_size=%llx, count=%x, max_read=%x\n",
+		f->read_behind_eof, f->st.st_size, count, max_read );
+
 	if ( count > max_read )
 	{
 	    if ( f->read_behind_eof == 1 )
@@ -2750,6 +2776,44 @@ bool IsDirectory ( ccp fname, bool answer_if_empty )
     return !stat(fname,&st) && S_ISDIR(st.st_mode);
 }
 
+///////////////////////////////////////////////////////////////////////////////
+
+enumError CreatePath ( ccp fname )
+{
+    TRACE("CreatePath(%s)\n",fname);
+
+    char buf[PATH_MAX], *dest = buf;
+    StringCopyS(buf,sizeof(buf),fname);
+    
+    for(;;)
+    {
+	while ( *dest && *dest != '/' )
+	    dest++;
+	if (!*dest)
+	    break;
+
+	*dest = 0;
+	if ( mkdir(buf,0777) && errno != EEXIST )
+	{
+	    TRACE("CREATE-DIR: %s -> err=%d (ENOTDIR=%d)\n",buf,errno,ENOTDIR);
+	    if ( errno == ENOTDIR )
+	    {
+		while ( dest > buf && *dest != '/' )
+		    dest--;
+		if ( dest > buf )
+		    *dest = 0;
+	    }
+	    return ERROR1( ERR_CANT_CREATE_DIR,
+		errno == ENOTDIR
+			? "Not a directory: %s\n"
+			: "Can't create directory: %s\n", buf );
+	}
+	TRACE("CREATE-DIR: %s -> OK\n",buf);
+	*dest++ = '/';
+    }
+    return ERR_OK;
+}
+
 //
 ///////////////////////////////////////////////////////////////////////////////
 ///////////////               split file support                ///////////////
@@ -2804,6 +2868,80 @@ char * AllocSplitFilename ( ccp path, enumOFT oft )
     CalcSplitFilename(buf,sizeof(buf),path,oft);
     return strdup(buf);
 }
+
+//
+///////////////////////////////////////////////////////////////////////////////
+///////////////                  cygwin support                 ///////////////
+///////////////////////////////////////////////////////////////////////////////
+
+#ifdef __CYGWIN__
+
+ int NormalizeFilename ( char * buf, size_t bufsize, ccp src )
+ {
+    static char prefix[] = "/cygdrive/";
+
+    if ( bufsize < sizeof(prefix) + 5 )
+    {
+	*buf = 0;
+	return 0;
+    }
+
+    char * end = buf + bufsize - 1;
+    char * dest = buf;
+
+    if (   ( *src >= 'a' && *src <= 'z' || *src >= 'A' && *src <= 'Z' )
+	&& src[1] == ':'
+	&& ( src[2] == 0 || src[2] == '/' || src[2] == '\\' ))
+    {
+	memcpy(buf,prefix,sizeof(prefix));
+	dest = buf + sizeof(prefix)-1;
+	*dest++ = tolower(*src);
+	*dest = 0;
+	if (IsDirectory(buf,false))
+	{
+	    *dest++ = '/';
+	    src += 2;
+	    if (*src)
+		src++;
+	}
+	else
+	    dest = buf;
+    }
+    ASSERT( dest < buf + bufsize );
+
+    while ( dest < end && *src )
+	if ( *src == '\\' )
+	{
+	    *dest++ = '/';
+	    src++;
+	}
+	else
+	    *dest++ = *src++;
+
+    *dest = 0;
+    ASSERT( dest < buf + bufsize );
+    return dest - buf;
+ }
+
+#endif // __CYGWIN__
+
+///////////////////////////////////////////////////////////////////////////////
+
+#ifdef __CYGWIN__
+
+ char * AllocNormalizedFilename ( ccp source )
+ {
+    char buf[PATH_MAX];
+    const int len = NormalizeFilename(buf,sizeof(buf),source);
+    char * result = malloc(len+1);
+    if (!result)
+	OUT_OF_MEMORY;
+    memcpy(result,buf,len+1);
+    ASSERT(buf[len]==0);
+    return result;
+ }
+
+#endif // __CYGWIN__
 
 //
 ///////////////////////////////////////////////////////////////////////////////
@@ -3800,7 +3938,13 @@ void AtFileHelper ( ccp arg, int mode, int (*func) ( ccp arg, int mode ) )
 	f = stdin;
     else
     {
+     #ifdef __CYGWIN__
+	char buf[PATH_MAX];
+	NormalizeFilename(buf,sizeof(buf),arg+1);
+	f = fopen(buf,"r");
+     #else
 	f = fopen(arg+1,"r");
+     #endif
 	if (!f)
 	    func(arg,mode);
     }
@@ -3828,7 +3972,7 @@ void AtFileHelper ( ccp arg, int mode, int (*func) ( ccp arg, int mode ) )
 
 ///////////////////////////////////////////////////////////////////////////////
 
-uint n_param = 0;
+uint n_param = 0, id6_param_found = 0;
 ParamList_t * first_param = 0;
 ParamList_t ** append_param = &first_param;
 
@@ -3889,7 +4033,7 @@ int AddParam ( ccp arg, int is_temp )
 ///////////////////////////////////////////////////////////////////////////////
 
 char * SubstString
-	( char * buf, size_t bufsize, SubstString_t * tab, ccp source )
+	( char * buf, size_t bufsize, SubstString_t * tab, ccp source, int * count )
 {
     ASSERT(buf);
     ASSERT(bufsize > 1);
@@ -3897,6 +4041,7 @@ char * SubstString
     TRACE("SubstString(%s)\n",source);
 
     char tempbuf[PATH_MAX];
+    int conv_count = 0;
 
     char *dest = buf;
     char *end = buf + bufsize + 1;
@@ -3950,6 +4095,7 @@ char * SubstString
 			    p2 = slen;
 			count = p2 - p1;
 			start = ptr->str+p1;
+			conv_count++;
 		    }
 		    else
 			count = 0;
@@ -3983,6 +4129,9 @@ char * SubstString
 	    }
 	    dest = NormalizeFileName(dest,end,tempbuf,ptr->allow_slash);
 	}
+
+    if (count)
+	*count = conv_count;
     *dest = 0;
     return dest;
 }
@@ -4171,7 +4320,7 @@ const u32 RANDOM32_C_ADD = 2 * 197731421; // 2 Primzahlen
 const u32 RANDOM32_COUNT_BASE = 4294967; // Primzahl == ~UINT_MAX32/1000;
 
 static int random32_a_index = -1;	// Index in die a-Tabelle
-static u32 random32_count = 1;		// Abw�rts-Z�hler bis zum Wechsel von a,c
+static u32 random32_count = 1;		// Abwaerts-Zähler bis zum Wechsel von a,c
 static u32 random32_a,
 	      random32_c,
 	      random32_X;		// Die letzten Werte
@@ -4188,7 +4337,7 @@ u32 Random32 ( u32 max )
 {
     if (!--random32_count)
     {
-	// Neue Berechnung von random32_a und random32_c f�llig
+	// Neue Berechnung von random32_a und random32_c faellig
 
 	if ( random32_a_index < 0 )
 	{

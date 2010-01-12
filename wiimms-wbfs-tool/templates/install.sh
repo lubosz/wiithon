@@ -9,7 +9,7 @@ LIB_PATH="$BASE_PATH/share/wwt"
 BIN_FILES="@@BIN-FILES@@"
 LIB_FILES="@@LIB-FILES@@"
 
-CP_FLAGS="-p --no-preserve=ownership"
+INST_FLAGS="-p"
 
 #------------------------------------------------------------------------------
 
@@ -29,18 +29,14 @@ echo "*** install binaries to $BIN_PATH"
 
 for f in $BIN_FILES
 do
-    cp $CP_FLAGS bin/$f "$BIN_PATH/$f.tmp"
-    mv "$BIN_PATH/$f.tmp" "$BIN_PATH/$f"
-    rm -f "$BIN_PATH/$f.tmp"
+    install $INST_FLAGS bin/$f "$BIN_PATH/$f"
 done
 
 echo "*** install lib files to $LIB_PATH"
 
 for f in $LIB_FILES
 do
-    cp $CP_FLAGS lib/$f "$LIB_PATH/$f.tmp"
-    mv "$LIB_PATH/$f.tmp" "$LIB_PATH/$f"
-    rm -f "$LIB_PATH/$f.tmp"
+    install $INST_FLAGS lib/$f "$LIB_PATH/$f"
 done
 
 #------------------------------------------------------------------------------

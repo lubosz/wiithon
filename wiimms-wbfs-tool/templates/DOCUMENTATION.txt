@@ -424,6 +424,51 @@ wwt v0.20a r504 - 2009-12-05
  - Some minor bug fixes.
  - Improved text output.
 
+wwt v0.21a r520 - 2009-12-09
+
+ - New command: wwt PHANTOM: add a phantom discs (fast, for tests only).
+ - libwbfs: I have implemented a little ID6 cache for faster disc access and
+   less IO when searching discs.
+ - CYGWIN bug fix: Using mixed reading and writing on files opened with open()
+   fails and write sometimes to wrong file positions (reproducible).
+   Switching to fopen() based IO works fine.
+ - Docu of wwt+wit RENAME+SETTITLE.
+
+wwt v0.21b r524 - 2009-12-13
+
+ - Corrections of inline and offline docu.
+ - New: FAQ.txt (first steps)
+
+wwt v0.22a r535 - 2009-12-25
+
+ - New options: --include and --include-path: include only given discs.
+ - New "wit COPY" option: --update: copy only to non existing files.
+
+wwt v0.23a r544 - 2009-12-31
+
+ - Formatting will clear all inodes. That gives undelte a better chance.
+   In respect to sparse files the inodes will be read before and only zeroed
+   if non zero data is found.
+ - CYGWIN: The filenames beginning "x:/" will be replaced by "/cygdrive/x/".
+
+wwt v0.24a r549 - 2010-01-03
+
+ - Suppress a read error if reading behind end of file while creating a
+   growing wbfs (copy to wbfs file with a sinlge disc).
+ - If the destination path of a copy command contains at least 1 valid
+   %-escape conversion than the directory path will be created automatically.
+ - CYGWIN bugfix: Unclear bug while rename "x:/" to "/cygdrive/x/".
+   Now we have a small memory leak (The original filename is not freed).
+ - Script 'install.sh' use now the system command 'install'.
+
+wwt v0.25a r558 - 2010-01-04
+
+ - wwt REMOVE: Print id6 and (that's new) title of removed discs.
+ - wwt EXTRACT+REMOVE: No warning if parameters are given, but no disc found
+   because of exclude and/or include lists.
+ - New option: --DEST (-D): Works like --dest (-d), but the directory pathes
+   of the destination files will be created automatically.
+
 @@MODULE(last-history.txt)@@
 
 

@@ -79,10 +79,12 @@ COMMAND: COPY|CP
        --psel  p-type  Partition selector: (no-)game|update|channel all(=def) raw.
        --raw           Short cut for --psel=raw.
     -d --dest path     Define a destination file/directory.
-    -z --split         Enable output file splitting, default split size = 2 gb.
+    -D --DEST  path    Like --dest, but create directory path automatically.
+    -z --split         Enable output file splitting, default split size = 4 gb.
     -Z --split-size sz Enable output file splitting and set split size.
     -p --preserve      Preserve file times (atime+mtime).
     -R --remove        Remove source if operation is successful.
+    -u --update        Copy only to non existing files, ignore other.
     -o --overwrite     Overwrite existing ISO images.
     -i --ignore        Ignore non existing files/discs without warning.
 
@@ -98,14 +100,17 @@ COMMAND: COPY|CP
  The command COPY copies all given sources into the destination (directory).
  If the option --dest is not set the last parameter is used as destination.
  If exact one source file is given the destination can be a file name. If two
- or more source files given the destination must be a directory.
+ or more source files given the destination must be a directory. Option --DEST
+ is like --dest, but the directory path is created automaticaly.
 
  Each source is canidat for copying. Non ISO files are ignored with a warning.
  The option --ignore suppresses this warning. Existing files will only be
- overwrtitten if option --overwrite is set. The output file is a WDF or ISO
- if --iso is set. The output is scrubbed. The scrubbing can be controlled with
- the options --psel and --raw. If option --remove is set then the souce file
- is removed after successfull operation.
+ overwrtitten if option --overwrite is set. If option --update is set, the
+ operation will be silently ignored if the destuination file already exists.
+
+ The output file is a WDF or ISO if --iso is set. The output is scrubbed. The
+ scrubbing can be controlled with the options --psel and --raw. If option
+ --remove is set then the souce file is removed after successfull operation.
 
  The options --split and --split-size control the splitting of the output
  files. See section "Processing split options" for details.
@@ -154,7 +159,8 @@ COMMAND: DIFF|CMP
     -r --recurse path  ISO file or base of a directory tree with ISO files.
        --psel  p-type  Partition selector: (no-)game|update|channel all(=def) raw.
        --raw           Short cut for --psel=raw.
-    -d --dest path     Define a destination file/directory.
+    -d --dest  path    Define a destination file/directory.
+    -D --DEST  path    Like --dest, but create directory path automatically.
     -i --ignore        Ignore non existing files/discs without warning.
     -l --long          Print position of first mismatch.
     -ll                (--long twice): Print all mismatch positions,
@@ -172,7 +178,8 @@ COMMAND: DIFF|CMP
  The command DIFF compares all given sources agains a destination (directory).
  If the option --dest is not set the last parameter is used as destination.
  If exact one source file is given the destination can be a file name. If two
- or more source files given the destination must be a directory.
+ or more source files given the destination must be a directory. Option --DEST
+ is like --dest, but the directory path is created automaticaly.
 
  Each source is canidat for comparing. Non ISO files are ignored with a warning.
  The option --ignore suppresses this warning.
@@ -384,6 +391,10 @@ COMMAND: ID6|ID   [path]...
 
     -s --source  path  ISO file or directory with ISO files.
     -r --recurse path  ISO file or base of a directory tree with ISO files.
+    -n --include id    Include oly discs with given ID4 or ID6 from operation.
+    -n --include @file Read include list from file.
+    -N --include-path file_or_dir
+                       ISO file or base of directory tree -> scan their ID6.
     -x --exclude id    Exclude discs with given ID4 or ID6 from operation.
     -x --exclude @file Read exclude list from file.
     -X --exclude-path file_or_dir
@@ -397,8 +408,8 @@ COMMAND: ID6|ID   [path]...
 
  The command 'ID' lists the ID6 of all discs in the internal ISO database, one
  ID per row. The internal ISO database is build under control of the options
- --source, --recurse, --exclude and --exclude-path. See section "Processing
- --source and --recurse" for details.
+ --source, --recurse, --include, --include-path, --exclude and --exclude-path.
+ See section "Processing --source and --recurse" for details.
 
  If --uniqe is set each game disc with same ID6, name, size and region is only
  printed once. To determine doube entries the list is sorted by ID.
@@ -429,6 +440,10 @@ COMMAND: LIST|LS   [path]...
 
     -s --source  path  ISO file or directory with ISO files.
     -r --recurse path  ISO file or base of a directory tree with ISO files.
+    -n --include id    Include oly discs with given ID4 or ID6 from operation.
+    -n --include @file Read include list from file.
+    -N --include-path file_or_dir
+                       ISO file or base of directory tree -> scan their ID6.
     -x --exclude id    Exclude discs with given ID4 or ID6 from operation.
     -x --exclude @file Read exclude list from file.
     -X --exclude-path file_or_dir
@@ -446,8 +461,8 @@ COMMAND: LIST|LS   [path]...
 
  The command 'LIST' lists infos of all discs in the internal ISO database.
  The internal ISO database is build under control of the options --source,
- --recurse, --exclude and --exclude-path. See section "Processing --source
- and --recurse" for details.
+ --recurse, --include, --include-path, --exclude and --exclude-path.
+ See section "Processing --source and --recurse" for details.
 
  Without --long the ID and the name are printed. With option --long the ID,
  size, region and the name are printed.  The option --no-header suppress the
@@ -498,7 +513,8 @@ COMMAND: MOVE|MV
 
     -s --source  path  ISO file or directory with ISO files.
     -r --recurse path  ISO file or base of a directory tree with ISO files.
-    -d --dest path     Define a destination file/directory.
+    -d --dest  path    Define a destination file/directory.
+    -D --DEST  path    Like --dest, but create directory path automatically.
     -o --overwrite     Overwrite existing ISO images.
     -i --ignore        Ignore non existing files/discs without warning.
 
@@ -509,7 +525,8 @@ COMMAND: MOVE|MV
 
  The command MOVE moves and/or renames all given sources. If the option --dest
  is not set the last parameter is used as destination. If exact one source file
- is given the destination can be a file name.
+ is given the destination can be a file name. Option --DEST  is like --dest,
+ but the directory path is created automaticaly.
 
  Each source is canidat for moving. Non ISO files are ignored with a warning.
  The option --ignore suppresses this warning. Existing files will only be
@@ -543,6 +560,10 @@ COMMAND: REMOVE|RM   id6...
 
     -s --source  path  ISO file or directory with ISO files.
     -r --recurse path  ISO file or base of a directory tree with ISO files.
+    -n --include id    Include oly discs with given ID4 or ID6 from operation.
+    -n --include @file Read include list from file.
+    -N --include-path file_or_dir
+                       ISO file or base of directory tree -> scan their ID6.
     -x --exclude id    Exclude discs with given ID4 or ID6 from operation.
     -x --exclude @file Read exclude list from file.
     -X --exclude-path file_or_dir
@@ -569,6 +590,10 @@ COMMAND: RENAME|REN  id6=[new_id6][,title] ...
 
     -s --source  path  ISO file or directory with ISO files.
     -r --recurse path  ISO file or base of a directory tree with ISO files.
+    -n --include id    Include oly discs with given ID4 or ID6 from operation.
+    -n --include @file Read include list from file.
+    -N --include-path file_or_dir
+                       ISO file or base of directory tree -> scan their ID6.
     -x --exclude id    Exclude discs with given ID4 or ID6 from operation.
     -x --exclude @file Read exclude list from file.
     -X --exclude-path file_or_dir
@@ -600,7 +625,7 @@ COMMAND: SCRUB|SB  iso_image_path...
     -r --recurse path  ISO file or base of a directory tree with ISO files.
        --psel  p-type  Partition selector: (no-)game|update|channel all(=def) raw.
        --raw           Short cut for --psel=raw.
-    -z --split         Enable output file splitting, default split size = 2 gb.
+    -z --split         Enable output file splitting, default split size = 4 gb.
     -Z --split-size sz Enable output file splitting and set split size.
     -p --preserve      Preserve file times (atime+mtime).
 
@@ -645,6 +670,10 @@ COMMAND: SETTITLE|ST   id6=new_title ...
 
     -s --source  path  ISO file or directory with ISO files.
     -r --recurse path  ISO file or base of a directory tree with ISO files.
+    -n --include id    Include oly discs with given ID4 or ID6 from operation.
+    -n --include @file Read include list from file.
+    -N --include-path file_or_dir
+                       ISO file or base of directory tree -> scan their ID6.
     -x --exclude id    Exclude discs with given ID4 or ID6 from operation.
     -x --exclude @file Read exclude list from file.
     -X --exclude-path file_or_dir
@@ -671,8 +700,8 @@ COMMAND: TITLES   [additional_title_file]...
  Options:
 
     -T --titles file  Read file for disc titles
-       --utf-8        Enables UTF-8 support (default).
-       --no-utf-8     Disables UTF-8 support.
+       --utf-8        Enables UTF-8 support (default for non CYGWIN).
+       --no-utf-8     Disables UTF-8 support (default for CYGWIN).
 
  The section "Processing title db" explains the options in detail.
 

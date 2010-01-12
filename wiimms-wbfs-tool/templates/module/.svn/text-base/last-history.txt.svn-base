@@ -1,9 +1,17 @@
+wwt v0.26a r569 - 2010-01-05
+
+ - cygwin: stdout and stderr use windows line ending (CR+LF).
+ - Allow german umlaut in destination file names.
+ - Bug fix: Option --include-path was only proccessed if also option
+   --exclude-path was set.
+ - The local title files contain now all titles and not only the local
+   modifications. This is good for cygwin which do not support automatic
+   language detection. Just rename 'titles-XY.txt' to 'titles.txt'.
+
 wwt v@.@@@ r@@REV-NEXT@@ - @@@@-@@-@@
 
- - New comamnd: wwt PHANTOM: add a phantom discs (fast, for tests only).
- - libwbfs: I have implemented a little ID6 cache for faster disc access and
-   less IO when searching discs.
- - CYGWIN bug fix: Using mixed reading and writing on files opened with open()
-   fails and write sometimes to wrong file positions (reproducible).
-   Switching to fopen() based IO works fine.
- - Docu of wwt+wit RENAME+SETTITLE.
+ - Bug fix: Problems while creating a directory path.
+ - Option --no-utf-8 did not work, all titles were trash.
+ - Option --no-utf-8 is now the default for cygwin. This is needed to allow
+   german umlauts in filebnames.
+ - wwt ADD: Add files in alphabetic order and print iteration counter.

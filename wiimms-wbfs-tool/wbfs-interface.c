@@ -450,6 +450,7 @@ ParamList_t * CheckParamID6 ( bool unique, bool lookup_title_db )
 
     // reset list
     n_param = 0;
+    id6_param_found = 0;
     first_param = 0;
     append_param = &first_param;
 
@@ -462,6 +463,8 @@ ParamList_t * CheckParamID6 ( bool unique, bool lookup_title_db )
     {
 	int id_len;
 	param->arg = ScanID(param->id6,&id_len,param->arg);
+	if (id_len)
+	    id6_param_found++;
 
 	if ( id_len == 1 )
 	{
@@ -927,7 +930,7 @@ enumError CreateGrowingWBFS ( WBFS_t * w, SuperFile_t * sf, off_t size, int sect
     TRACELINE;
     int n_sector = (u32)( size / sector_size );
     sf->f.sector_size = sector_size;
-    sf->f.read_behind_eof = 1;
+    sf->f.read_behind_eof = 2;
 
     TRACELINE;
     ASSERT(!w->wbfs);
@@ -3061,7 +3064,7 @@ enumError RenameWDisc
 	};
 
 	char title[PATH_MAX];
-	SubstString(title,sizeof(title),subst_tab,set_title);
+	SubstString(title,sizeof(title),subst_tab,set_title,0);
 	set_title = title;
 
 	if ( testmode || verbose >= 0 )
@@ -3145,7 +3148,7 @@ int RenameISOHeader ( void * data, ccp fname,
 	};
 
 	char title[PATH_MAX];
-	SubstString(title,sizeof(title),subst_tab,set_title);
+	SubstString(title,sizeof(title),subst_tab,set_title,0);
 	set_title = title;
 
 	if ( testmode || verbose >= 0 )

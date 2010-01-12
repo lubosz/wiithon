@@ -56,8 +56,9 @@ fr: po/locale/fr/LC_MESSAGES/wiithon.mo
 de: po/locale/de/LC_MESSAGES/wiithon.mo
 pt_BR: po/locale/pt_BR/LC_MESSAGES/wiithon.mo
 ca_ES: po/locale/ca_ES/LC_MESSAGES/wiithon.mo
+gl_ES: po/locale/gl_ES/LC_MESSAGES/wiithon.mo
 
-lang_enable: it es en fr de pt_BR ca_ES
+lang_enable: it es en fr de pt_BR ca_ES gl_ES
 lang_disable: da_DK fi_FI tr_TR ru_RU ko_KR sv_SE pt_PT da_DK nb_NO ja_JP
 lang: lang_enable lang_disable
 	@echo "=================================================================="
@@ -294,6 +295,7 @@ delete_archives_installation:
 	-$(RM) /usr/share/locale/ru_RU/LC_MESSAGES/wiithon.mo
 	-$(RM) /usr/share/locale/tr_TR/LC_MESSAGES/wiithon.mo
 	-$(RM) /usr/share/locale/ca_ES/LC_MESSAGES/wiithon.mo
+	-$(RM) /usr/share/locale/gl_ES/LC_MESSAGES/wiithon.mo
 	
 	-$(RM) /usr/share/man/man1/wiithon.1.gz
 	-$(RM) /usr/share/man/es/man1/wiithon.1.gz
@@ -361,6 +363,7 @@ clean_gettext:
 	-$(RM) po/locale/ru_RU/LC_MESSAGES/wiithon.mo
 	-$(RM) po/locale/tr_TR/LC_MESSAGES/wiithon.mo
 	-$(RM) po/locale/ca_ES/LC_MESSAGES/wiithon.mo
+	-$(RM) po/locale/gl_ES/LC_MESSAGES/wiithon.mo
 
 clean_unrar:
 	$(MAKE) -C unrar-nonfree clean
@@ -476,48 +479,3 @@ ppa-new: generate_changelog
 
 ppa-upload-new:
 	dput ppa:wii.sceners.linux/wiithon ../wiithon_$(VERSION_ACTUAL)_source.changes
-
-first_time:
-	@echo ""
-
-#
-# Only for new languages
-# generar PO VACIO a partir de plantilla POT
-#initPO: po/plantilla.pot
-#	@echo "*** GETTEXT *** Creando PO"
-	# Vamos comentando los idiomas que se pretende traducir para evitar borrados
-	
-	# Castellano
-	#msginit -i po/plantilla.pot -o po/es.po --no-translator
-	# Inglés
-	#msginit -i po/plantilla.pot -o po/en.po --no-translator
-	# brasileño
-	#msginit -i po/plantilla.pot -o po/pt_BR.po --no-translator
-	# alemán
-	#msginit -i po/plantilla.pot -o po/de.po --no-translator
-	# francés
-	#msginit -i po/plantilla.pot -o po/fr.po --no-translator
-	# italiano
-	#msginit -i po/plantilla.pot -o po/it.po --no-translator
-	# catalan ca_ES
-	#msginit -i po/plantilla.pot -o po/ca_ES.po --no-translator
-	# portugues
-	#msginit -i po/plantilla.pot -o po/pt_PT.po --no-translator
-	# danish da_DK
-	#msginit -i po/plantilla.pot -o po/da_DK.po --no-translator
-	# dutch nl_NL
-	#msginit -i po/plantilla.pot -o po/nl_NL.po --no-translator
-	# finnish fi_FI
-	#msginit -i po/plantilla.pot -o po/fi_FI.po --no-translator
-	# japanese ja_JP
-	#msginit -i po/plantilla.pot -o po/ja_JP.po --no-translator
-	# korean ko_KR
-	#msginit -i po/plantilla.pot -o po/ko_KR.po --no-translator
-	# norwegian nb_NO
-	#msginit -i po/plantilla.pot -o po/nb_NO.po --no-translator
-	# russian ru_RU
-	#msginit -i po/plantilla.pot -o po/ru_RU.po --no-translator
-	# swedish sv_SE
-	#msginit -i po/plantilla.pot -o po/sv_SE.po --no-translator
-	# turkish tr_TR
-	#msginit -i po/plantilla.pot -o po/tr_TR.po --no-translator

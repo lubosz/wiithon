@@ -73,6 +73,10 @@ COMMAND: ADD|A  [iso_image_path]... [directory]...
     -o --overwrite     Overwrite existing WBFS discs.
     -i --ignore        Ignore non ISO files without warning.
     -R --remove        Remove ISO file if operation is successful.
+    -n --include id    Include oly discs with given ID4 or ID6 from operation.
+    -n --include @file Read include list from file.
+    -N --include-path file_or_dir
+                       ISO file or base of directory tree -> scan their ID6.
     -x --exclude id    Exclude discs with given ID4 or ID6 from operation.
     -x --exclude @file Read exclude list from file.
     -X --exclude-path file_or_dir
@@ -365,7 +369,8 @@ COMMAND: EXTRACT|X   id6...
     -a --auto          Search for WBFS partitions using /proc/partitions.
     -p --part  part    File of primary WBFS partition. Multiple usage allowed.
     -d --dest  path    Defines a destination file/directory.
-    -z --split         Enable output file splitting, default split size = 2 gb.
+    -D --DEST  path    Like --dest, but create directory path automatically.
+    -z --split         Enable output file splitting, default split size = 4 gb.
     -Z --split-size sz Enable output file splitting and set split size.
     -U --unique        Eliminate repeated ID6 from parameter list.
     -i --ignore        Ignore non existing discs without warning.
@@ -377,6 +382,10 @@ COMMAND: EXTRACT|X   id6...
     -I --iso           Write a plain ISO image; clears options --wdf and --wbfs.
     -B --wbfs          Write an ISO as WBFS container; clears options --wdf and --iso.
     -T --titles file   Read file for disc titles. -T0 disables titles lookup.
+    -n --include id    Include oly discs with given ID4 or ID6 from operation.
+    -n --include @file Read include list from file.
+    -N --include-path file_or_dir
+                       ISO file or base of directory tree -> scan their ID6.
     -x --exclude id    Exclude discs with given ID4 or ID6 from operation.
     -x --exclude @file Read exclude list from file.
     -X --exclude-path file_or_dir
@@ -409,6 +418,9 @@ COMMAND: EXTRACT|X   id6...
  extracted from the first one. To overwrite an existing file the option
  --overwrite must be set. The option --ignore supresses error messages
  about not found disc images.
+
+ Option --DEST is like --dest, but the directory path is created
+ automaticaly.
 
  The ISO image will be generated in an ,scrubbed' mode with holes in it.
  It will be stored as a sparse file to save disk space. The ISO file is
@@ -635,6 +647,10 @@ COMMAND: ID6|ID   [wbfs_partition]...
     -l --long          Print in long format. Multiple usage possible.
     -S --sort          Sort by: id title name file region size wbfs npart ...
     -U --unique        Print only the first disc of all with same values.
+    -n --include id    Include oly discs with given ID4 or ID6 from operation.
+    -n --include @file Read include list from file.
+    -N --include-path file_or_dir
+                       ISO file or base of directory tree -> scan their ID6.
     -x --exclude id    Exclude discs with given ID4 or ID6 from operation.
     -x --exclude @file Read exclude list from file.
     -X --exclude-path file_or_dir
@@ -685,6 +701,10 @@ COMMAND: LIST|LS   [wbfs_partition]...
     -H --no-header     Suppress printing of header and footer.
     -S --sort          Sort by: id title name file region size wbfs npart ...
     -T --titles file   Read file for disc titles. -T0 disables titles lookup.
+    -n --include id    Include oly discs with given ID4 or ID6 from operation.
+    -n --include @file Read include list from file.
+    -N --include-path file_or_dir
+                       ISO file or base of directory tree -> scan their ID6.
     -x --exclude id    Exclude discs with given ID4 or ID6 from operation.
     -x --exclude @file Read exclude list from file.
     -X --exclude-path file_or_dir
@@ -814,6 +834,10 @@ COMMAND: REMOVE|RM   id6...
     -U --unique        Eliminate repeated ID6 from parameter list.
     -i --ignore        Ignore non existing discs without warning.
        --no-free       Do not free blocks when removing a disc.
+    -n --include id    Include oly discs with given ID4 or ID6 from operation.
+    -n --include @file Read include list from file.
+    -N --include-path file_or_dir
+                       ISO file or base of directory tree -> scan their ID6.
     -x --exclude id    Exclude discs with given ID4 or ID6 from operation.
     -x --exclude @file Read exclude list from file.
     -X --exclude-path file_or_dir
@@ -929,6 +953,10 @@ COMMAND: RENAME|REN  id6=[new_id6][,title] ...
     -A --all           Use all WBFS partitions found.
     -a --auto          Search for WBFS partitions using /proc/partitions.
     -p --part  part    File of primary WBFS partition. Multiple usage allowed.
+    -n --include id    Include oly discs with given ID4 or ID6 from operation.
+    -n --include @file Read include list from file.
+    -N --include-path file_or_dir
+                       ISO file or base of directory tree -> scan their ID6.
     -x --exclude id    Exclude discs with given ID4 or ID6 from operation.
     -x --exclude @file Read exclude list from file.
     -X --exclude-path file_or_dir
@@ -1008,6 +1036,10 @@ COMMAND: SETTITLE|ST   id6=new_title ...
     -A --all           Use all WBFS partitions found.
     -a --auto          Search for WBFS partitions using /proc/partitions.
     -p --part  part    File of primary WBFS partition. Multiple usage allowed.
+    -n --include id    Include oly discs with given ID4 or ID6 from operation.
+    -n --include @file Read include list from file.
+    -N --include-path file_or_dir
+                       ISO file or base of directory tree -> scan their ID6.
     -x --exclude id    Exclude discs with given ID4 or ID6 from operation.
     -x --exclude @file Read exclude list from file.
     -X --exclude-path file_or_dir
@@ -1052,8 +1084,8 @@ COMMAND: TITLES   [additional_title_file]...
  Options:
 
     -T --titles file  Read file for disc titles
-       --utf-8        Enables UTF-8 support (default).
-       --no-utf-8     Disables UTF-8 support.
+       --utf-8        Enables UTF-8 support (default for non CYGWIN).
+       --no-utf-8     Disables UTF-8 support (default for CYGWIN).
 
  The section "Processing title db" explains the options in detail.
 
@@ -1129,8 +1161,8 @@ COMMAND: VERSION   [any_options_or_parameters]
 -p --part  @file  Special case: read partition list from 'file' ('-'=stdin).
 
 These 3 options defines how to search for WBFS partitions.
-The program generates an internal partion list. This partion list is filled
-by --part and --auto. --part may be set multiple times.
+The program generates an internal partition list. This partition list is
+filled by --part and --auto. --part may be set multiple times.
 
 Partitions set with the --part option must be existent, readable and valid WBFS
 partitions (exceptions explained in the command documentation). Partitions set
@@ -1143,7 +1175,7 @@ partition. Each line may terminate with LF or CR+LF. Handling of '@' is
 This nice feature enables shell commands like: "wwt df -p@<(ls *.wbfs)".
 
 The program terminates with an error if not exactly one valid WBFS partition is
-found. When using --all at last one partition must be found.
+found. When using --all at least one partition must be found.
 
 If neither the option --part nor --auto is set then the environment variable
 'WWT_WBFS' is searched. It contains a semicolon separated list of filenames.

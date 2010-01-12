@@ -93,8 +93,15 @@ static int LoadTitleFile ( ccp fname, bool warn )
     }
     else if (strchr(fname,'/'))
     {
+     #ifdef __CYGWIN__
+	NormalizeFilename(buf,sizeof(buf),fname);
+	f = fopen(buf,"r");
+	TRACE("#T#  - f=%p: %s\n",f,buf);
+	buf[0] = 0;
+     #else
 	f = fopen(fname,"r");
 	TRACE("#T#  - f=%p: %s\n",f,fname);
+     #endif
     }
     else
     {
@@ -167,7 +174,7 @@ static int LoadTitleFile ( ccp fname, bool warn )
 		if (use_utf8)
 		    dest = PrintUTF8Char(dest,ch);
 		else
-		    *dest++ = ch < 0xff ? 0xff : '?';
+		    *dest++ = ch < 0xff ? ch : '?';
 	    }
 	}
 	*dest = 0;
@@ -247,10 +254,45 @@ ccp GetTitle ( ccp id6, ccp default_if_failed )
 ///////////////                 exclude interface               ///////////////
 ///////////////////////////////////////////////////////////////////////////////
 
+bool include_db_enabled = false;
+ID_DB_t include_db = {0,0,0};	// include database
 ID_DB_t exclude_db = {0,0,0};	// exclude database
 
+StringField_t include_fname = {0,0,0};
 StringField_t exclude_fname = {0,0,0};
 
+int disable_exclude_db = 0;	// disable exclude db at all if > 0
+
+///////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////
+
+int AddIncludeID ( ccp arg, int unused )
+{
+    char id[7];
+    int idlen;
+    ScanID(id,&idlen,arg);
+    if ( idlen ==4 || idlen == 6 )
+	InsertID(&include_db,id,0);
+
+    include_db_enabled = true;
+    return 0;
+}
+
+///////////////////////////////////////////////////////////////////////////////
+
+int AddIncludePath ( ccp arg, int unused )
+{
+    char buf[PATH_MAX];
+    if (realpath(arg,buf))
+	arg = buf;
+
+    InsertStringField(&include_fname,arg,false);
+
+    include_db_enabled = true;
+    return 0;
+}
+
+///////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////
 
 int AddExcludeID ( ccp arg, int unused )
@@ -276,11 +318,14 @@ int AddExcludePath ( ccp arg, int unused )
 }
 
 ///////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////
 
-static void CheckExcludePath ( ccp path, StringField_t * sf, int max_dir_depth )
+static void CheckExcludePath
+	( ccp path, StringField_t * sf, ID_DB_t * db, int max_dir_depth )
 {
     TRACE("CheckExcludePath(%s,%p,%d)\n",path,sf,max_dir_depth);
     ASSERT(sf);
+    ASSERT(db);
 
     File_t f;
     InitializeFile(&f);
@@ -293,7 +338,7 @@ static void CheckExcludePath ( ccp path, StringField_t * sf, int max_dir_depth )
     if ( f.id6[0] )
     {
 	TRACE(" - exclude id %s\n",f.id6);
-	InsertID(&exclude_db,f.id6,0);
+	InsertID(db,f.id6,0);
     }
     else if ( max_dir_depth > 0 && f.ftype == FT_ID_DIR )
     {
@@ -322,7 +367,7 @@ static void CheckExcludePath ( ccp path, StringField_t * sf, int max_dir_depth )
 		    if ( n[0] != '.' )
 		    {
 			StringCopyE(dest,bufend,dent->d_name);
-			CheckExcludePath(buf,sf,max_dir_depth);
+			CheckExcludePath(buf,sf,db,max_dir_depth);
 		    }
 		}
 		closedir(dir);
@@ -335,13 +380,28 @@ static void CheckExcludePath ( ccp path, StringField_t * sf, int max_dir_depth )
 
 void SetupExcludeDB()
 {
+    TRACE("SetupExcludeDB()");
+
+    if (include_fname.used)
+    {
+	TRACELINE;
+	StringField_t sf;
+	InitializeStringField(&sf);
+	ccp * ptr = include_fname.field + include_fname.used;
+	while ( ptr-- > include_fname.field )
+	    CheckExcludePath(*ptr,&sf,&include_db,15);
+	ResetStringField(&sf);
+	ResetStringField(&include_fname);
+    }
+
     if (exclude_fname.used)
     {
+	TRACELINE;
 	StringField_t sf;
 	InitializeStringField(&sf);
 	ccp * ptr = exclude_fname.field + exclude_fname.used;
 	while ( ptr-- > exclude_fname.field )
-	    CheckExcludePath(*ptr,&sf,15);
+	    CheckExcludePath(*ptr,&sf,&exclude_db,15);
 	ResetStringField(&sf);
 	ResetStringField(&exclude_fname);
     }
@@ -358,7 +418,7 @@ void DefineExcludePath ( ccp path, int max_dir_depth )
 
     StringField_t sf;
     InitializeStringField(&sf);
-    CheckExcludePath(path,&sf,max_dir_depth);
+    CheckExcludePath(path,&sf,&exclude_db,max_dir_depth);
     ResetStringField(&sf);
 }
 
@@ -366,12 +426,23 @@ void DefineExcludePath ( ccp path, int max_dir_depth )
 
 bool IsExcluded ( ccp id6 )
 {
-    if (exclude_fname.used)
+    if ( disable_exclude_db > 0 )
+	return false;
+
+    if ( exclude_fname.used || include_fname.used )
 	SetupExcludeDB();
 
     TDBfind_t stat;
     FindID(&exclude_db,id6,&stat,0);
-    return stat == IDB_ID_FOUND || stat == IDB_ABBREV_FOUND;
+
+    if ( stat == IDB_ID_FOUND || stat == IDB_ABBREV_FOUND )
+	return true;
+
+    if (!include_db_enabled)
+	return false;
+
+    FindID(&include_db,id6,&stat,0);
+    return stat != IDB_ID_FOUND && stat != IDB_ABBREV_FOUND;
 }
 
 //

@@ -55,8 +55,9 @@ HOME_WIITHON = os.path.join(HOME , '.%s' % APP)
 HOME_WIITHON_BDD = os.path.join(HOME_WIITHON , 'bdd')
 HOME_WIITHON_LOGS = os.path.join(HOME_WIITHON , 'logs')
 HOME_WIITHON_LOGS_PROCESO = os.path.join(HOME_WIITHON_LOGS , "proceso.log")
-i = 0
+
 NEW_BDD_VERSION = False
+i = 0
 for ver in VERS_BDD:
     HOME_WIITHON_BDD_BDD = os.path.join(HOME_WIITHON_BDD, '%s_db_ver-%d.db' % (APP, ver))
     i += 1

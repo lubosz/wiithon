@@ -202,7 +202,7 @@
             <child>
               <object class="GtkToolButton" id="tb_renombrado_masivo">
                 <property name="visible">True</property>
-                <property name="tooltip_text" translatable="yes">Renombra todos los juegos de la particion seleccionada en funcion del idioma principal y axuliar seleccionado en preferencias. Los nombres son obtenidos de la informaci&#xF3;n WiiTDB.</property>
+                <property name="tooltip_text" translatable="yes">Renombra todos los juegos de la particion seleccionada en funcion del idioma principal y auxiliar seleccionado en preferencias. Los nombres son obtenidos de la informacion WiiTDB.</property>
                 <property name="label" translatable="yes">Renombrado masivo</property>
                 <property name="icon_name">tools-check-spelling</property>
               </object>
@@ -233,11 +233,11 @@
               </packing>
             </child>
             <child>
-              <object class="GtkToolButton" id="tb_acerca_de">
+              <object class="GtkToolButton" id="tb_donate">
                 <property name="visible">True</property>
-                <property name="tooltip_text" translatable="yes">Informacion sobre Wiithon</property>
-                <property name="label" translatable="yes">Acerca de ...</property>
-                <property name="icon_name">face-smirk</property>
+                <property name="tooltip_text" translatable="yes">Apoya el proyecto con donaciones!</property>
+                <property name="label" translatable="yes">Donate</property>
+                <property name="icon_name">face-angel</property>
               </object>
               <packing>
                 <property name="expand">False</property>
@@ -245,11 +245,11 @@
               </packing>
             </child>
             <child>
-              <object class="GtkToolButton" id="tb_donate">
+              <object class="GtkToolButton" id="tb_acerca_de">
                 <property name="visible">True</property>
-                <property name="is_important">True</property>
-                <property name="label" translatable="yes">Donate</property>
-                <property name="icon_name">user-offline</property>
+                <property name="tooltip_text" translatable="yes">Informacion sobre Wiithon</property>
+                <property name="label" translatable="yes">Acerca de ...</property>
+                <property name="icon_name">face-smirk</property>
               </object>
               <packing>
                 <property name="expand">False</property>
@@ -756,6 +756,7 @@ Brazilian Portuguese: Alex Ant&#xE3;o &lt;alexcarlosantao@gmail.com&gt; [pt_BR.p
 Italian: Carlo Mandelli &lt;camandel@gmail.com&gt; [it.po]
 Catal&#xE1;n: Victor Mic&#xF3; Biosca &lt;thor9216@gmail.com&gt; [ca_ES.po]
 Swedish: Magnus Johansson &lt;mange@emjay.se&gt; [sv_SE.po]
+Galician: &#xC1;lvaro Ord&#xF3;&#xF1;ez &lt;alvarito@barberberecho.es&gt; [gl_ES.po]
 </property>
     <child internal-child="vbox">
       <object class="GtkVBox" id="dialog-vbox3">
@@ -1328,7 +1329,7 @@ Swedish: Magnus Johansson &lt;mange@emjay.se&gt; [sv_SE.po]
   </object>
   <object class="GtkDialog" id="dialogo_extraer_todo">
     <property name="border_width">5</property>
-    <property name="title" translatable="yes">Copia directa de particion a particion</property>
+    <property name="title" translatable="yes">Extraer juegos</property>
     <property name="window_position">center</property>
     <property name="type_hint">normal</property>
     <property name="has_separator">False</property>
@@ -1436,7 +1437,7 @@ Swedish: Magnus Johansson &lt;mange@emjay.se&gt; [sv_SE.po]
   </object>
   <object class="GtkDialog" id="dialogo_renombrar_masivo">
     <property name="border_width">5</property>
-    <property name="title" translatable="yes">Copia directa de particion a particion</property>
+    <property name="title" translatable="yes">Renombrado masivo</property>
     <property name="window_position">center</property>
     <property name="type_hint">normal</property>
     <property name="has_separator">False</property>

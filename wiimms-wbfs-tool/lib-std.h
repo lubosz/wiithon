@@ -23,12 +23,12 @@
 #endif
 
 #if defined(TEST)
-    #undef CACHE_ENABLED
-    #define CACHE_ENABLED 1		// undef | def
+    #undef WRITE_CACHE_ENABLED
+    #define WRITE_CACHE_ENABLED 1	// undef | def
 #endif
 
-#ifndef CACHE_ENABLED
-    #define CACHE_ENABLED 1		// 0 | 1
+#ifndef WRITE_CACHE_ENABLED
+    #define WRITE_CACHE_ENABLED 0	// 0 | 1
 #endif
 
 #ifndef EXTENDED_IO_FUNC
@@ -105,10 +105,10 @@ typedef enum enumSystemID
 #define TiB (1024ull*1024*1024*1024)
 #define PiB (1024ull*1024*1024*1024*1024)
 
-#define MIN_SPARSE_HOLE_SIZE 1024 // bytes
 #define TRACE_SEEK_FORMAT "%-20.20s f=%d,%p %9llx%s\n"
 #define TRACE_RDWR_FORMAT "%-20.20s f=%d,%p %9llx..%9llx %8zx%s\n"
 
+#define MIN_SPARSE_HOLE_SIZE	4096 // bytes
 #define MAX_SPLIT_FILES		100
 #define MIN_SPLIT_SIZE		100000000
 #define ISO_SPLIT_DETECT_SIZE	(4ull*GiB)
@@ -291,18 +291,14 @@ typedef enum enumFileType
 
 //-----------------------------------------------------------------------------
 
-#if CACHE_ENABLED
-
- typedef struct FileCache_t
- {
+typedef struct FileCache_t
+{
 	off_t	off;			// file offset
 	size_t	count;			// size of cached data
 	ccp	data;			// pointer to cached data (alloced)
 	struct FileCache_t * next;	// NULL or pointer to next element
 
- } FileCache_t;
-
-#endif
+} FileCache_t;
 
 //-----------------------------------------------------------------------------
 
@@ -333,6 +329,7 @@ typedef struct File_t
 
 	int  open_flags;	// proposed open flags; if zero then ignore
 	bool disable_errors;	// don't print error messages
+	bool create_directory;	// create direcotries automatically
 
 	// error codes
 
@@ -346,14 +343,11 @@ typedef struct File_t
 	off_t max_off;	// max file offset
 	int   read_behind_eof;	// 0:disallow, 1:allow+print warning, 2:allow silently
 
- #if CACHE_ENABLED
-
-	// cache
+	// read cache
 
 	bool is_caching;	// true if cache is active
 	FileCache_t *cache;	// data cache
 	FileCache_t *cur_cache;	// pointer to current cache entry
- #endif
 
 	// split file support
 
@@ -401,11 +395,9 @@ enumError XFindSplitFile  ( XPARM File_t *f, uint * index, off_t * off );
 // copy filedesc
 void CopyFD ( File_t * dest, File_t * src );
 
-// cache support
-#if CACHE_ENABLED
- void DefineCachedArea    ( File_t * f, off_t off, size_t count );
- void DefineCachedAreaISO ( File_t * f, bool head_only );
-#endif
+// read cache support
+void DefineCachedArea    ( File_t * f, off_t off, size_t count );
+void DefineCachedAreaISO ( File_t * f, bool head_only );
 
 struct WDF_Head_t;
 enumError XAnalyseWH ( XPARM File_t * f, struct WDF_Head_t * wh, bool print_err );
@@ -458,6 +450,12 @@ bool IsFileOpen ( File_t * f );
 bool IsFileSplitted ( File_t * f );
 
 bool IsDirectory ( ccp fname, bool answer_if_empty );
+enumError CreatePath ( ccp fname );
+
+#ifdef __CYGWIN__
+    int NormalizeFilename ( char * buf, size_t bufsize, ccp source );
+    char * AllocNormalizedFilename ( ccp source );
+#endif
 
 //
 ///////////////////////////////////////////////////////////////////////////////
@@ -581,7 +579,7 @@ typedef struct ParamList_t
 
 } ParamList_t;
 
-extern uint n_param;
+extern uint n_param, id6_param_found;
 extern ParamList_t * first_param;
 extern ParamList_t ** append_param;
 
@@ -605,7 +603,8 @@ typedef struct SubstString_t
 
 } SubstString_t;
 
-char * SubstString ( char * buf, size_t bufsize, SubstString_t * tab, ccp source );
+char * SubstString
+	( char * buf, size_t bufsize, SubstString_t * tab, ccp source, int * count );
 int ScanEscapeChar ( ccp arg );
 
 //

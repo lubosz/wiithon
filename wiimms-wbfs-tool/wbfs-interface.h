@@ -446,6 +446,11 @@ typedef struct Iterator_t
 	enumAction act_wbfs;		// action for wbfs files with n(disc) != 1
 	enumAction act_open;		// action for open output files
 
+	// source file list
+	
+	StringField_t source_list;	// collect first than run
+	int source_index;		// informative: index of current file
+
 	// user defined parameters, ignores by SourceIterator()
 
 	bool scrub_it;		// SCRUB instead of COPY
@@ -455,6 +460,7 @@ typedef struct Iterator_t
 	int  long_count;	// long counter for output
 	uint done_count;	// done counter
 	uint diff_count;	// diff counter
+	uint exists_count;	// 'file alread exists' counter
 	WDiscList_t * wlist;	// pointer to WDiscList_t to collect data
 	WBFS_t * wbfs;		// open WBFS
 	dev_t open_dev;		// dev_t of open output file
@@ -465,7 +471,12 @@ typedef struct Iterator_t
 //-----------------------------------------------------------------------------
 
 void InitializeIterator ( Iterator_t * it );
-enumError SourceIterator ( Iterator_t * it, bool current_dir_is_default );
+void ResetIterator ( Iterator_t * it );
+
+enumError SourceIterator
+	( Iterator_t * it, bool current_dir_is_default, bool collect_fnames );
+
+enumError SourceIteratorCollected ( Iterator_t * it );
 
 //
 ///////////////////////////////////////////////////////////////////////////////

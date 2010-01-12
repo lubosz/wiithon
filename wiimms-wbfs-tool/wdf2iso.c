@@ -43,12 +43,13 @@
 #define NAME "wdf2iso"
 #define TITLE NAME " v" VERSION " r" REVISION " " SYSTEM " - " AUTHOR " - " DATE
 
-int  testmode = 0;
-ccp  dest = 0;
-int  opt_preserve = 0;
-int  opt_split = 0;
-u64  opt_split_size = 0;
-bool overwrite = false;
+int  testmode		= 0;
+ccp  dest		= 0;
+bool opt_mkdir		= false;
+int  opt_preserve	= 0;
+int  opt_split		= 0;
+u64  opt_split_size	= 0;
+bool overwrite		= false;
 
 //
 ///////////////////////////////////////////////////////////////////////////////
@@ -61,7 +62,7 @@ enum // const for long options without a short brothers
 	GETOPT_IO,
 };
 
-char short_opt[] = "hVqvPtd:pzZ:o";
+char short_opt[] = "hVqvPtd:D:pzZ:o";
 struct option long_opt[] =
 {
 	{ "help",	0, 0, 'h' },
@@ -73,6 +74,7 @@ struct option long_opt[] =
 	{ "psel",	1, 0, GETOPT_PSEL },
 	{ "raw",	0, 0, GETOPT_RAW },
 	{ "dest",	1, 0, 'd' },
+	{ "DEST",	1, 0, 'D' },
 	{ "preserve",	0, 0, 'p' },
 	{ "split",	0, 0, 'z' },
 	{ "split-size",	1, 0, 'Z' },
@@ -105,8 +107,9 @@ static char help_text[] =
     "      --psel  p-type    Partition selector: (no-)game|update|channel all(=def) raw.\n"
     "      --raw             Short cut for --psel=raw.\n"
     "   -d --dest  path      Existing directory or filename for the output.\n"
+    "   -D --DEST  path      Like --dest, but create directory path automatically.\n"
     "   -p --preserve        Preserve file times (atime+mtime).\n"
-    "   -z --split           Enable output file splitting, default split size = 2 gb.\n"
+    "   -z --split           Enable output file splitting, default split size = 4 gb.\n"
     "   -Z --split-size size Enable output file splitting and set split size.\n"
     "   -o --overwrite       Overwrite already existing files.\n"
     "\n";
@@ -155,10 +158,11 @@ enumError CheckOptions ( int argc, char ** argv )
 	  case 'V': version_exit();
 	  case 'h': help_exit();
 	  case 'q': verbose = -1; break;
-	  case 'v': verbose = verbose < 0 ? 1 : verbose+1; break;
+	  case 'v': verbose++; break;
 	  case 'P': progress++; break;
 	  case 't': testmode++; break;
 	  case 'd': dest = optarg; break;
+	  case 'D': dest = optarg; opt_mkdir = true; break;
 	  case 'p': opt_preserve++; break;
    	  case 'z': opt_split++; break;
 	  case 'o': overwrite = true; break;
@@ -221,6 +225,7 @@ enumError wdf2iso ( ccp fname )
     ccp outname = fi.f.outname ? fi.f.outname : fname;
     GenImageFileName(&fo.f,dest,outname,OFT_PLAIN);
     outname = fo.f.rename ? fo.f.rename : fo.f.fname;
+    fo.f.create_directory = opt_mkdir;
 
     if (testmode)
     {

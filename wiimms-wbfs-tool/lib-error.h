@@ -23,8 +23,10 @@ typedef enum enumError
 	ERR_TO_MUCH_WBFS_FOUND,
 	ERR_WBFS_INVALID,
 
+	ERR_ALREADY_EXISTS,
 	ERR_CANT_OPEN,
 	ERR_CANT_CREATE,
+	ERR_CANT_CREATE_DIR,
 	ERR_WRONG_FILE_TYPE,
 	ERR_READ_FAILED,
 	ERR_REMOVE_FAILED,
@@ -38,7 +40,7 @@ typedef enum enumError
 
 	ERR_INTERRUPT,
 
-	ERR_NOT_IMPLEMENTED, // separator: below = hard errors => exit
+	ERR_NOT_IMPLEMENTED, // separator: this+below = hard errors => exit
 
 	ERR_INTERNAL,
 	ERR_OUT_OF_MEMORY,

@@ -9,8 +9,8 @@
 
     'm' is the zero based index of the last copied character.
 
-    'c' is an optional character. If c is 'u' or 'U' then the source will be
-    converted to uppercase and if c is 'l' or 'l' to lower case.
+    'c' is an optional character. If c is 'u' then the source will be
+        converted to uppercase and if c is 'l' to lower case.
 
     'X' selects the source and is one of:
 

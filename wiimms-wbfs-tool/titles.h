@@ -78,15 +78,26 @@ ccp GetTitle ( ccp id6, ccp default_if_failed );
 ///////////////                 exclude interface               ///////////////
 ///////////////////////////////////////////////////////////////////////////////
 
+extern bool include_db_enabled;
+extern ID_DB_t include_db;	// include database
 extern ID_DB_t exclude_db;	// exclude database
 
-int AddExcludeID ( ccp arg, int unused );
-int AddExcludePath ( ccp arg, int unused );
+extern StringField_t include_fname;
+extern StringField_t exclude_fname;
+
+extern int disable_exclude_db;	// disable exclude db at all if > 0
+
+int  AddIncludeID ( ccp arg, int unused );
+int  AddIncludePath ( ccp arg, int unused );
+
+int  AddExcludeID ( ccp arg, int unused );
+int  AddExcludePath ( ccp arg, int unused );
 
 void SetupExcludeDB();
 void DefineExcludePath ( ccp path, int max_dir_depth );
 
 bool IsExcluded ( ccp id6 );
+
 
 ///////////////////////////////////////////////////////////////////////////////
 ///////////////                 low level interface             ///////////////

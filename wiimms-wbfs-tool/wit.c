@@ -57,6 +57,7 @@ typedef enum enumOptions
 	OPT_PSEL,
 	OPT_RAW,
 	OPT_DEST,
+	OPT_DEST2,
 	OPT_SPLIT,
 	OPT_SPLIT_SIZE,
 	OPT_PRESERVE,
@@ -89,6 +90,7 @@ typedef enum enumOptionsBit
 	OB_PSEL		= 1 << OPT_PSEL,
 	OB_RAW		= 1 << OPT_RAW,
 	OB_DEST		= 1 << OPT_DEST,
+	OB_DEST2	= 1 << OPT_DEST2,
 	OB_SPLIT	= 1 << OPT_SPLIT,
 	OB_SPLIT_SIZE	= 1 << OPT_SPLIT_SIZE,
 	OB_PRESERVE	= 1 << OPT_PRESERVE,
@@ -127,11 +129,11 @@ typedef enum enumOptionsBit
 	OB_CMD_DUMP	= OB_LONG,
 	OB_CMD_ID6	= OB_SORT|OB_UNIQUE,
 	OB_CMD_LIST	= OB_SORT|OB_LONG|OB_UNIQUE|OB_NO_HEADER,
-	OB_CMD_DIFF	= OB__MASK_PSEL|OB_DEST|OB__MASK_OFT|OB_IGNORE|OB_LONG,
-	OB_CMD_COPY	= OB__MASK_PSEL|OB__MASK_SPLIT|OB__MASK_OFT|OB_DEST
-			  |OB_PRESERVE|OB_IGNORE|OB_REMOVE|OB_OVERWRITE,
+	OB_CMD_DIFF	= OB__MASK_PSEL|OB_DEST|OB_DEST2|OB__MASK_OFT|OB_IGNORE|OB_LONG,
+	OB_CMD_COPY	= OB__MASK_PSEL|OB__MASK_SPLIT|OB__MASK_OFT|OB_DEST|OB_DEST2
+			  |OB_PRESERVE|OB_UPDATE|OB_IGNORE|OB_REMOVE|OB_OVERWRITE,
 	OB_CMD_SCRUB	= OB__MASK_PSEL|OB__MASK_SPLIT|OB__MASK_OFT|OB_PRESERVE|OB_IGNORE,
-	OB_CMD_MOVE	= OB_IGNORE|OB_DEST|OB_OVERWRITE|OB_IGNORE,
+	OB_CMD_MOVE	= OB_IGNORE|OB_DEST|OB_DEST2|OB_OVERWRITE|OB_IGNORE,
 	OB_CMD_REMOVE	= OB_IGNORE|OB_UNIQUE,
 	OB_CMD_RENAME	= OB_IGNORE|OB_ISO|OB_WBFS,
 	OB_CMD_SETTITLE	= OB_CMD_RENAME,
@@ -190,7 +192,7 @@ enum // const for long options without a short brothers
 	GETOPT_IO,
 };
 
-char short_opt[] = "hVqvPtE:x:X:T:s:r:d:zZ:poiRCFWIBlUHS:";
+char short_opt[] = "hVqvPtE:n:N:x:X:T:s:r:d:D:zZ:puoiRCFWIBlUHS:";
 struct option long_opt[] =
 {
 	{ "help",		0, 0, 'h' },
@@ -200,12 +202,17 @@ struct option long_opt[] =
 	{ "progress",		0, 0, 'P' },
 	{ "test",		0, 0, 't' },
 	{ "esc",		1, 0, 'E' },
+	{ "include",		1, 0, 'n' },
+	{ "include-path",	1, 0, 'N' },
+	 { "includepath",	1, 0, 'N' },
 	{ "exclude",		1, 0, 'x' },
 	{ "exclude-path",	1, 0, 'X' },
+	 { "excludepath",	1, 0, 'X' },
 	{ "titles",		1, 0, 'T' },
 	{ "utf-8",		0, 0, GETOPT_UTF8 },
 	 { "utf8",		0, 0, GETOPT_UTF8 },
 	{ "no-utf-8",		0, 0, GETOPT_NO_UTF8 },
+	 { "no-utf8",		0, 0, GETOPT_NO_UTF8 },
 	 { "noutf8",		0, 0, GETOPT_NO_UTF8 },
 
 	{ "io",			1, 0, GETOPT_IO }, // [2do] hidden option for tests
@@ -215,11 +222,13 @@ struct option long_opt[] =
 	{ "psel",		1, 0, GETOPT_PSEL },
 	{ "raw",		0, 0, GETOPT_RAW },
 	{ "dest",		1, 0, 'd' },
+	{ "DEST",		1, 0, 'D' },
 	{ "split",		0, 0, 'z' },
 	{ "split-size",		1, 0, 'Z' },
 	 { "splitsize",		1, 0, 'Z' },
 	{ "preserve",		0, 0, 'p' },
 	{ "force",		0, 0, 'f' },
+	{ "update",		0, 0, 'u' },
 	{ "overwrite",		0, 0, 'o' },
 	{ "ignore",		0, 0, 'i' },
 	{ "remove",		0, 0, 'R' },
@@ -242,6 +251,7 @@ int  long_count		= 0;
 int  ignore_count	= 0;
 int  testmode		= 0;
 ccp  opt_dest		= 0;
+bool opt_mkdir		= false;
 int  opt_split		= 0;
 u64  opt_split_size	= 0;
 
@@ -296,7 +306,7 @@ static char help_text[] =
     "   EXCLUDE         : Print the internal exclude database to stdout.\n"
     "   TITLES          : Print the internal title database to stdout.\n"
     "\n"
-    "   FILELIST | FT   : List all aource files decared by --source and --recurse.\n"
+    "   FILELIST | FL   : List all aource files decared by --source and --recurse.\n"
     "   FILETYPE | FT   : Print a status line for each source file.\n"
     "\n"
     "   DUMP     | D    : Dump the content of ISO files.\n"
@@ -324,13 +334,22 @@ static char help_text[] =
     "   -P --progress      Print progress counter independent of verbose level.\n"
     " * -t --test          Run in test mode, modify nothing.\n"
     "   -E --esc char      Define an alternative escape character, default is '%'.\n"
+    " * -n --include id    Include oly discs with given ID4 or ID6 from operation.\n"
+    " * -n --include @file Read include list from file.\n"
+    " * -N --include-path file_or_dir\n"
+    "                      ISO file or base of directory tree -> scan their ID6.\n"
     " * -x --exclude id    Exclude discs with given ID4 or ID6 from operation.\n"
     " * -x --exclude @file Read exclude list from file.\n"
     " * -X --exclude-path file_or_dir\n"
     "                      ISO file or base of directory tree -> scan their ID6.\n"
     " * -T --titles file   Read file for disc titles. -T0 disables titles lookup.\n"
+ #ifdef __CYGWIN__
+    "      --utf-8         Enables UTF-8 support.\n"
+    "      --no-utf-8      Disables UTF-8 support (cygwin default).\n"
+ #else
     "      --utf-8         Enables UTF-8 support (default).\n"
     "      --no-utf-8      Disables UTF-8 support.\n"
+ #endif
     " * -s --source  path  ISO file or directory with ISO files.\n"
     " * -r --recurse path  ISO file or base of a directory tree with ISO files.\n"
     "\n"
@@ -338,10 +357,13 @@ static char help_text[] =
     "\n"
     "      --psel  p-type  Partition selector: (no-)game|update|channel all(=def) raw.\n"
     "      --raw           Short cut for --psel=raw.\n"
-    "   -d --dest path     Define a destination file/directory.\n"
+    "   -d --dest  path    Define a destination file/directory.\n"
+    "   -D --DEST  path    Like --dest, but create directory path automatically.\n"
     "   -s --size  size    Floating point size. Factors: bckKmMgGtT, default=G.\n"
-    "   -z --split         Enable output file splitting, default split size = 2 gb.\n"
+    "   -z --split         Enable output file splitting, default split size = 4 gb.\n"
+    "   -Z --split-size sz Enable output file splitting and set split size.\n"
     "   -p --preserve      Preserve file times (atime+mtime).\n"
+    "   -u --update        Copy only to non existing files, ignore other.\n"
     "   -o --overwrite     Overwrite existing files\n"
     "   -i --ignore        Ignore non existing files/discs without warning.\n"
     "   -R --remove        Remove source files/discs if operation is successful.\n"
@@ -375,10 +397,10 @@ static char help_text[] =
     "   LIST     | LS   -lll -u -H -S   [source]...\n"
     "   LIST-*   | L*   -ll  -u -H -S   [source]...\n"
     "\n"
-    "   DIFF     | CMP  -tt     -i    --psel= [source]... [-d=]dest\n"
-    "   COPY     | CP   -tt -zZ -ipRo --psel= [source]... [-d=]dest\n"
-    "   SCRUB    | SB   -tt -zZ -ip   --psel= [source]...\n"
-    "   MOVE     | MV   -tt     -i    --psel= [source]... [-d=]dest\n"
+    "   DIFF     | CMP  -tt     -i     --psel= [source]... [-d=]dest\n"
+    "   COPY     | CP   -tt -zZ -ipRuo --psel= [source]... [-d=]dest\n"
+    "   SCRUB    | SB   -tt -zZ -ip    --psel= [source]...\n"
+    "   MOVE     | MV   -tt     -i     --psel= [source]... [-d=]dest\n"
  #ifdef TEST // [2do]
     "   REMOVE   | RM   ...             id6...\n"
  #endif
@@ -488,7 +510,9 @@ enumError cmd_filelist()
     it.act_non_exist	= ignore_count > 0 ? ACT_IGNORE : ACT_ALLOW;
     it.act_non_iso	= ignore_count > 1 ? ACT_IGNORE : ACT_ALLOW;
     it.long_count	= long_count;
-    return SourceIterator(&it,true);
+    const enumError err = SourceIterator(&it,true,false);
+    ResetIterator(&it);
+    return err;
 }
 
 //
@@ -529,7 +553,9 @@ enumError cmd_filetype()
     it.act_non_exist	= ignore_count > 0 ? ACT_IGNORE : ACT_ALLOW;
     it.act_non_iso	= ignore_count > 1 ? ACT_IGNORE : ACT_ALLOW;
     it.long_count	= long_count;
-    return SourceIterator(&it,true);
+    const enumError err = SourceIterator(&it,true,false);
+    ResetIterator(&it);
+    return err;
 }
 
 //
@@ -712,7 +738,9 @@ enumError cmd_dump()
     it.func		= exec_dump;
     it.act_wbfs		= ACT_EXPAND;
     it.long_count	= long_count;
-    return SourceIterator(&it,false);
+    const enumError err = SourceIterator(&it,false,false);
+    ResetIterator(&it);
+    return err;
 }
 
 //
@@ -773,7 +801,8 @@ enumError cmd_id6()
     it.long_count	= long_count;
     it.wlist		= &wlist;
 
-    enumError err = SourceIterator(&it,true);
+    enumError err = SourceIterator(&it,true,false);
+    ResetIterator(&it);
     if (err)
 	return err;
 
@@ -807,7 +836,8 @@ enumError cmd_list()
     it.long_count	= long_count;
     it.wlist		= &wlist;
 
-    enumError err = SourceIterator(&it,true);
+    enumError err = SourceIterator(&it,true,false);
+    ResetIterator(&it);
     if (err)
 	return err;
 
@@ -929,6 +959,7 @@ enumError exec_diff ( SuperFile_t * f1, Iterator_t * it )
 
     SuperFile_t f2;
     InitializeSF(&f2);
+    f2.f.create_directory = opt_mkdir;
 
     enumOFT oft = CalcOFT(output_file_type,opt_dest,f1->f.fname,OFT__DEFAULT);
     ccp oname = oft == OFT_WBFS && f1->f.id6[0]
@@ -1020,14 +1051,18 @@ enumError cmd_diff()
     if ( testmode > 1 )
     {
 	it.func = exec_filetype;
-	enumError err = SourceIterator(&it,false);
+	enumError err = SourceIterator(&it,false,false);
+	ResetIterator(&it);
 	printf("DESTINATION: %s\n",opt_dest);
 	return err;
     }
 
     it.func = exec_diff;
-    enumError err = SourceIterator(&it,false);
-    return err != ERR_OK ? err : it.diff_count ? ERR_DIFFER : ERR_OK;
+    enumError err = SourceIterator(&it,false,false);
+    if ( err == ERR_OK && it.diff_count )
+	err = ERR_DIFFER;
+    ResetIterator(&it);
+    return err;
 }
 
 //
@@ -1053,6 +1088,8 @@ enumError exec_copy ( SuperFile_t * fi, Iterator_t * it )
 	fo.f.fname = strdup(fi->f.fname);
     else
     {
+	TRACE("COPY, mkdir=%d\n",opt_mkdir);
+	fo.f.create_directory = opt_mkdir;
 	ccp oname = oft == OFT_WBFS && fi->f.id6[0]
 			? fi->f.id6
 			: fi->f.outname
@@ -1060,6 +1097,9 @@ enumError exec_copy ( SuperFile_t * fi, Iterator_t * it )
 				: fi->f.fname;
 	GenImageFileName(&fo.f,opt_dest,oname,oft);
 	SubstFileNameSF(&fo,fi,0);
+
+	if ( it->update && !StatFile(&fo.f.st,fo.f.fname,-1) )
+	    return ERR_OK;
     }
 
     fo.indent		= 5;
@@ -1095,6 +1135,13 @@ enumError exec_copy ( SuperFile_t * fi, Iterator_t * it )
     }
 
     enumError err = CreateFile( &fo.f, 0, IOM_IS_IMAGE, it->overwrite );
+    if ( err == ERR_ALREADY_EXISTS )
+    {
+	it->exists_count++;
+	err = ERR_OK;
+	goto abort;
+    }
+
     if (err)
 	goto abort;
 
@@ -1154,18 +1201,24 @@ enumError cmd_copy()
     it.act_non_iso	= used_options & OB_IGNORE ? ACT_IGNORE : ACT_WARN;
     it.act_wbfs		= ACT_EXPAND;
     it.overwrite	= used_options & OB_OVERWRITE ? 1 : 0;
+    it.update		= used_options & OB_UPDATE ? 1 : 0;
     it.remove_source	= used_options & OB_REMOVE ? 1 : 0;
 
     if ( testmode > 1 )
     {
 	it.func = exec_filetype;
-	enumError err = SourceIterator(&it,false);
+	enumError err = SourceIterator(&it,false,false);
+	ResetIterator(&it);
 	printf("DESTINATION: %s\n",opt_dest);
 	return err;
     }
 
     it.func = exec_copy;
-    return SourceIterator(&it,false);
+    enumError err = SourceIterator(&it,false,false);
+    if ( err == ERR_OK && it.exists_count )
+	err = ERR_ALREADY_EXISTS;
+    ResetIterator(&it);
+    return err;
 }
 
 //
@@ -1191,13 +1244,18 @@ enumError cmd_scrub()
     if ( testmode > 1 )
     {
 	it.func = exec_filetype;
-	enumError err = SourceIterator(&it,false);
+	enumError err = SourceIterator(&it,false,false);
+	ResetIterator(&it);
 	printf("DESTINATION: %s\n",opt_dest);
 	return err;
     }
 
     it.func = exec_copy;
-    return SourceIterator(&it,false);
+    enumError err = SourceIterator(&it,false,false);
+    if ( err == ERR_OK && it.exists_count )
+	err = ERR_ALREADY_EXISTS;
+    ResetIterator(&it);
+    return err;
 }
 
 //
@@ -1208,6 +1266,7 @@ enumError exec_move ( SuperFile_t * fi, Iterator_t * it )
     SuperFile_t fo;
     InitializeSF(&fo);
     fo.oft = fi->oft;
+    fo.f.create_directory = opt_mkdir;
 
     ccp oname = fi->oft == OFT_WBFS && fi->f.id6[0]
 			? fi->f.id6
@@ -1275,13 +1334,16 @@ enumError cmd_move()
     if ( testmode > 1 )
     {
 	it.func = exec_filetype;
-	enumError err = SourceIterator(&it,false);
+	enumError err = SourceIterator(&it,false,false);
+	ResetIterator(&it);
 	printf("DESTINATION: %s\n",opt_dest);
 	return err;
     }
 
     it.func = exec_move;
-    return SourceIterator(&it,false);
+    const enumError err = SourceIterator(&it,false,false);
+    ResetIterator(&it);
+    return err;
 }
 
 //
@@ -1313,7 +1375,7 @@ enumError cmd_remove()
 	return ERROR0( ERR_MISSING_PARAM, "Missing source files.\n");
 
     CheckParamID6( ( used_options & OB_UNIQUE ) != 0, false );
-    if ( !n_param )
+    if ( !id6_param_found )
 	return ERROR0(ERR_MISSING_PARAM, "Missing ID6 parameters.\n" );
 
     Iterator_t it;
@@ -1325,13 +1387,16 @@ enumError cmd_remove()
     if ( testmode > 1 )
     {
 	it.func = exec_filetype;
-	enumError err = SourceIterator(&it,false);
+	enumError err = SourceIterator(&it,false,false);
+	ResetIterator(&it);
 	printf("DESTINATION: %s\n",opt_dest);
 	return err;
     }
 
     it.func = exec_remove;
-    return SourceIterator(&it,false);
+    const enumError err = SourceIterator(&it,false,false);
+    ResetIterator(&it);
+    return err;
 }
 
 //
@@ -1354,6 +1419,7 @@ enumError exec_rename ( SuperFile_t * fi, Iterator_t * it )
 	    return ERR_OK;
 	param = plus_param;
     }
+    param->count++;
 
     bool change_wbfs	= 0 != ( used_options & OB_WBFS );
     bool change_iso	= 0 != ( used_options & OB_ISO );
@@ -1366,7 +1432,6 @@ enumError exec_rename ( SuperFile_t * fi, Iterator_t * it )
 	return RenameWDisc( fi->wbfs, param->id6, param->arg,
 			    change_wbfs, change_iso, verbose, testmode );
     }
-
 
     const int bufsize = WII_TITLE_OFF + WII_TITLE_SIZE;
     char buf[bufsize];
@@ -1413,13 +1478,18 @@ enumError cmd_rename ( bool rename_id )
     if ( testmode > 1 )
     {
 	it.func = exec_filetype;
-	enumError err = SourceIterator(&it,false);
+	enumError err = SourceIterator(&it,false,false);
+	ResetIterator(&it);
 	printf("DESTINATION: %s\n",opt_dest);
 	return err;
     }
 
     it.func = exec_rename;
-    return SourceIterator(&it,false);
+    err = SourceIterator(&it,false,false);
+    ResetIterator(&it);
+    return err;
+
+    // [2do]: not found
 }
 
 //
@@ -1463,9 +1533,11 @@ enumError CheckOptions ( int argc, char ** argv, int is_env )
 	  case 'V': version_exit();
 	  case 'h': help_exit();
 	  case 'q': verbose = -1; break;
-	  case 'v': verbose = verbose < 0 ? 1 : verbose+1; break;
+	  case 'v': verbose++; break;
 	  case 'P': progress++; break;
 	  case 't': testmode++; break;
+	  case 'n': AtFileHelper(optarg,0,AddIncludeID); break;
+	  case 'N': AtFileHelper(optarg,0,AddIncludePath); break;
 	  case 'x': AtFileHelper(optarg,0,AddExcludeID); break;
 	  case 'X': AtFileHelper(optarg,0,AddExcludePath); break;
 	  case 'T': AtFileHelper(optarg,true,AddTitleFile); break;
@@ -1474,8 +1546,10 @@ enumError CheckOptions ( int argc, char ** argv, int is_env )
 	  case GETOPT_NO_UTF8:	use_utf8 = false; break;
 
 	  case 'd': SetOption(OPT_DEST,"dest"); opt_dest = optarg; break;
+	  case 'D': SetOption(OPT_DEST2,"DEST"); opt_dest = optarg; opt_mkdir = true; break;
    	  case 'z': SetOption(OPT_SPLIT,"split"); opt_split++; break;
 	  case 'p': SetOption(OPT_PRESERVE,"preserve"); break;
+	  case 'u': SetOption(OPT_UPDATE,"update"); break;
 	  case 'o': SetOption(OPT_OVERWRITE,"overwrite"); break;
 	  case 'i': SetOption(OPT_IGNORE,"ignore"); ignore_count++; break;
 	  case 'R': SetOption(OPT_REMOVE,"remove"); break;

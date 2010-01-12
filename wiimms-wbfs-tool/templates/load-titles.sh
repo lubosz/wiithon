@@ -49,7 +49,7 @@ do
     echo "***    load titles-$lang.txt from $URI_TITLES?LANG=$LANG"
     wget -q -O- "$URI_TITLES?LANG=$LANG" | wwt titles / - >lib/titles-$lang.tmp \
 	&& test -s lib/titles-$lang.tmp \
-	&& comm -13 lib/titles.txt lib/titles-$lang.tmp >lib/titles-$lang.txt
+	&& wwt titles / lib/titles.txt lib/titles-$lang.tmp >lib/titles-$lang.txt
     rm -f lib/titles-$lang.tmp
 done
 
