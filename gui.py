@@ -1909,7 +1909,7 @@ class WiithonGUI(GtkBuilderWrapper):
                     listaRAR = NonRepeatList()
                     for fichero in fc_anadir.get_filenames():
                         if( os.path.isdir( fichero ) ):
-                            encontradosRAR =  util.rec_glob(fichero, "[wii]*.rar")
+                            encontradosRAR =  util.rec_glob(fichero, "*.rar")
                             hayRAR = len(encontradosRAR) > 0
                             if hayRAR:
                                 listaRAR.extend(encontradosRAR)
