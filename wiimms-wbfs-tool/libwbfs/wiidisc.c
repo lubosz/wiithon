@@ -116,32 +116,34 @@ static void partition_read(wiidisc_t *d,u32 offset, u8 *data, u32 len,int fake)
 
 ///////////////////////////////////////////////////////////////////////////////
 
-static u32 do_fst(wiidisc_t *d,u8 *fst, const char *names, u32 i)
+static u32 do_fst ( wiidisc_t *d, u8 *fst, const char *names, u32 i )
 { // [codeview]
+
     u32 offset;
-    u32 size;
-    const char *name;
     u32 j;
 
-    name = names + (_be32(fst + 12*i) & 0x00ffffff);
-    size = _be32(fst + 12*i + 8);
+    const u32 size = _be32(fst + 12*i + 8);
 
     if (i == 0)
     {
 	for (j = 1; j < size && !d->extracted_buffer; )
 	{
+	    TRACE("--> #%d\n",j);
 	    j = do_fst(d,fst, names, j);
+	    TRACE("<--\n");
 	}
 	return size;
     }
-    //printf("name    %s\n",name);
+
+    const char * name = names + (_be32(fst + 12*i) & 0x00ffffff);
+    TRACE("WIIDISC: NAME#%03d: %s\n",i,name);
 
     if (fst[12*i])
     {
-
-	for (j = i + 1; j < size && !d->extracted_buffer; )
+	TRACE("--> #%d %s\n",i,name);
+	for ( j = i + 1; j < size && !d->extracted_buffer; )
 	    j = do_fst(d,fst, names, j);
-
+	TRACE("<--\n");
 	return size;
     }
     else
@@ -384,8 +386,13 @@ void wd_build_disc_usage
 
 ///////////////////////////////////////////////////////////////////////////////
 
-void wd_fix_partition_table(wiidisc_t *d, partition_selector_t selector, u8* partition_table)
+void wd_fix_partition_table
+	( wiidisc_t * d , partition_selector_t selector, u8 * partition_table )
 { // [codeview]
+
+    TRACE("LIBWBFS: wd_fix_partition_table(%p,sel=%x,%p)\n",
+		d, selector, partition_table );
+
     u8 *b = partition_table;
     u32 partition_offset;
     u32 partition_type;

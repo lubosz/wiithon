@@ -390,6 +390,9 @@ void CopyWDiscInfo ( WDiscListItem_t * item, WDiscInfo_t * winfo );
 void SortWDiscList   ( WDiscList_t * wlist, enum SortMode sort_mode,
 			enum SortMode default_sort_mode, int unique );
 
+extern ccp RegionTable[];
+ccp * GetRegionInfo ( char region_code );
+
 //-----------------------------------------------------------------------------
 
 enumError OpenWDiscID6	( WBFS_t * w, ccp id6 );

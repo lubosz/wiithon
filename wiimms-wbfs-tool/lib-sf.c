@@ -644,6 +644,27 @@ int WrapperWriteSparseSF ( void * p_sf, u32 lba, u32 count, void * iobuf )
 ///////////////////////////////////////////////////////////////////////////////
 // progress and statistics
 
+void CopyProgressSF ( SuperFile_t * dest, SuperFile_t * src )
+{
+    ASSERT(dest);
+    ASSERT(src);
+
+    dest->indent			= src->indent;
+    dest->show_progress			= src->show_progress;
+    dest->show_summary			= src->show_summary;
+    dest->show_msec			= src->show_msec;
+    dest->progress_start_time		= src->progress_start_time;
+    dest->progress_last_view_sec	= src->progress_last_view_sec;
+    dest->progress_last_calc_time	= src->progress_last_calc_time;
+    dest->progress_sum_time		= src->progress_sum_time;
+    dest->progress_time_divisor		= src->progress_time_divisor;
+    dest->progress_max_wd		= src->progress_max_wd;
+    dest->progress_verb			= src->progress_verb;
+}
+
+///////////////////////////////////////////////////////////////////////////////
+
+
 void PrintProgressSF ( u64 p_done, u64 p_total, void * param )
 {
     SuperFile_t * sf = (SuperFile_t*) param;
@@ -692,14 +713,17 @@ void PrintProgressSF ( u64 p_done, u64 p_total, void * param )
 		now, sf->progress_sum_time, sf->progress_time_divisor,
 		percent, elapsed, eta, time1, time2 );
 
+	if ( !sf->progress_verb || !*sf->progress_verb )
+	    sf->progress_verb = "copied";
+
 	int wd;
 	if ( percent < 10 && view_sec < 10 )
-	    printf("%*s%3d%% done in %s (%3.1f MiB/sec)  %n\r",
-		sf->indent,"", percent, time1,
+	    printf("%*s%3d%% %s in %s (%3.1f MiB/sec)  %n\r",
+		sf->indent,"", percent, sf->progress_verb, time1,
 		(double)total * 1000 / MiB / elapsed, &wd );
 	else
-	    printf("%*s%3d%% done in %s (%3.1f MiB/sec) -> ETA %s   %n\r",
-		sf->indent,"", percent, time1,
+	    printf("%*s%3d%% %s in %s (%3.1f MiB/sec) -> ETA %s   %n\r",
+		sf->indent,"", percent, sf->progress_verb, time1,
 		(double)total * 1000 / MiB / elapsed, time2, &wd );
 
 	if ( sf->progress_max_wd < wd )
@@ -728,8 +752,11 @@ void PrintSummarySF ( SuperFile_t * sf )
 	u64 total = sf->f.bytes_read + sf->f.bytes_written;
 	if (total)
 	{
-	    snprintf(buf,sizeof(buf),"%*s%4llu MiB copied in %s, %4.1f MiB/sec",
-		sf->indent,"", (total+MiB/2)/MiB,
+	    if ( !sf->progress_verb || !*sf->progress_verb )
+		sf->progress_verb = "copied";
+
+	    snprintf(buf,sizeof(buf),"%*s%4llu MiB %s in %s, %4.1f MiB/sec",
+		sf->indent,"", (total+MiB/2)/MiB, sf->progress_verb,
 		tim, (double)total * 1000 / MiB / elapsed );
 	}
 	else
@@ -1503,6 +1530,8 @@ enumError DiffSF ( SuperFile_t * f1, SuperFile_t * f2, int long_count, u32 psel 
     ASSERT(f1->f.is_reading);
     ASSERT(f2->f.is_reading);
 
+    f1->progress_verb = f2->progress_verb = "compared";
+
     if ( psel == WHOLE_DISC )
 	return DiffRaw(f1,f2,long_count);
 
@@ -1831,20 +1860,57 @@ static enumError SourceIteratorHelper
 		InitializeWBFS(&wbfs);
 		if (!SetupWBFS(&wbfs,&sf,false,0))
 		{
-		    const int n_disc = wbfs.used_discs;
+		    const int max_disc = wbfs.wbfs->max_disc;
+		    int fw, slot;
+		    for ( slot = max_disc-1; slot >= 0
+				&& !wbfs.wbfs->head->disc_table[slot]; slot-- )
+			;
+		    char fbuf[PATH_MAX+10];
+		    snprintf(fbuf,sizeof(fbuf),"%u%n",slot,&fw);
+		    char * dest = StringCopyS(fbuf,sizeof(fbuf)-10,path);
+		    *dest++ = '/';
+
+		    if ( collect_fnames )
+		    {
+			// fast scan of wbfs
+			WDiscInfo_t wdisk;
+			InitializeWDiscInfo(&wdisk);
+			for ( slot = 0; slot < max_disc; slot++ )
+			{
+			    if ( !GetWDiscInfoBySlot(&wbfs,&wdisk,slot)
+				&& !IsExcluded(wdisk.id6) )
+			    {
+				snprintf(dest,fbuf+sizeof(fbuf)-dest,"#%0*u",fw,slot);
+				InsertStringField(&it->source_list,fbuf,false);
+			    }
+			}
+			ResetWDiscInfo(&wdisk);
+			ResetWBFS(&wbfs);
+			ResetSF(&sf,0);
+			return ERR_OK;
+		    }
+
+		    // make a copy of the disc table because we want close the wbfs
+		    u8 discbuf[512];
+		    u8 * disc_table = max_disc <= sizeof(discbuf)
+					? discbuf
+					: malloc(sizeof(discbuf));
+		    memcpy(disc_table,wbfs.wbfs->head->disc_table,max_disc);
+
 		    ResetWBFS(&wbfs);
 		    ResetSF(&sf,0);
 
-		    char fbuf[PATH_MAX+10];
-		    char * dest = StringCopyS(fbuf,PATH_MAX,path);
-		    *dest++ = '/';
-
-		    int i;
-		    for ( i = 0; i < n_disc && err == ERR_OK; i++ )
+		    for ( slot = 0; slot < max_disc && err == ERR_OK; slot++ )
 		    {
-			snprintf(dest,fbuf+sizeof(fbuf)-dest,"%u",i);
-			err = SourceIteratorHelper(it,fbuf,collect_fnames);
+			if (disc_table[slot])
+			{
+			    snprintf(dest,fbuf+sizeof(fbuf)-dest,"#%0*u",fw,slot);
+			    err = SourceIteratorHelper(it,fbuf,collect_fnames);
+			}
 		    }
+
+		    if ( disc_table != discbuf )
+			free(disc_table);
 		}
 		else
 		    ResetSF(&sf,0);
@@ -1924,6 +1990,8 @@ enumError SourceIteratorCollected ( Iterator_t * it )
     ASSERT(it);
     ASSERT(it->func);
     TRACE("SourceIteratorCollected(%p) count=%d\n",it,it->source_list.used);
+
+    ResetStringField(&file_done_list);
 
     enumError err = ERR_OK;
     int idx;

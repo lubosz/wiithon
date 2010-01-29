@@ -5,6 +5,13 @@ base=add+extract
 log=$base.log
 err=$base.err
 
+usewitcmp=0
+if [[ $1 = --witcmp ]]
+then
+    usewitcmp=1
+    shift
+fi
+
 if [[ $# == 0 ]]
 then
     cat <<- ---EOT---
@@ -50,7 +57,7 @@ then
 
 	---EOT---
 
-    echo "usage: $myname iso_file..." >&2
+    echo "usage: $myname [--witcmp] iso_file..." >&2
     echo
     exit 1
 fi
@@ -58,12 +65,14 @@ fi
 #------------------------------------------------------------------------------
 
 WWT=wwt
+WIT=wit
 WDFCAT=wdf-cat
 [[ -x ./wwt ]] && WWT=./wwt
+[[ -x ./wit ]] && WIT=./wit
 [[ -x ./wdf-cat ]] && WDFCAT=./wdf-cat
 
 errtool=
-for tool in $WWT $WDFCAT cmp
+for tool in $WWT $WIT $WDFCAT cmp
 do
     which $tool >/dev/null 2>&1 || errtool="$errtool $tool"
 done
@@ -73,6 +82,9 @@ then
     echo "$myname: missing tools in PATH:$errtool" >&2
     exit 2
 fi
+
+CMP=cmp
+((usewitcmp)) && CMP="wit cmp"
 
 #------------------------------------------------------------------------------
 
@@ -214,8 +226,13 @@ function test_it()
 	$WWT -q -p "$wbfs2" -d "$tempdir" extract --wdf --io=0 "$id6=ref.wdf" || return $ERROR
 	stop=$(get_msec); print_timer $start $stop $ref
 
-	print_stat " > %-4s cmp iso wdf" "$ref"; start=$(get_msec)
-	$WDFCAT "$tempdir/ref.wdf" | cmp --quiet "$tempdir/ref.iso" || return $ERR_WDF_ISO
+	print_stat " > %-4s $CMP iso wdf" "$ref"; start=$(get_msec)
+	if ((usewitcmp))
+	then
+	    $WIT -q cmp "$tempdir/ref.wdf" "$tempdir/ref.iso" || return $ERR_WDF_ISO
+	else
+	    $WDFCAT "$tempdir/ref.wdf" | cmp --quiet "$tempdir/ref.iso" || return $ERR_WDF_ISO
+	fi
 	stop=$(get_msec); print_timer $start $stop
 
 	#------------ JOB: ADD ISO --io=3
@@ -237,8 +254,8 @@ function test_it()
 	$WWT -qo -p "$wbfs" -d "$tempdir" extract --iso --io=3 "$id6=temp.iso" || return $ERROR
 	stop=$(get_msec); print_timer $start $stop $ref
 
-	print_stat " > %-4s cmp iso iso" "$ref"; start=$(get_msec)
-	cmp --quiet "$tempdir/ref.iso" "$tempdir/temp.iso" || return $ERR_ISO
+	print_stat " > %-4s $CMP iso iso" "$ref"; start=$(get_msec)
+	$CMP --quiet "$tempdir/ref.iso" "$tempdir/temp.iso" || return $ERR_ISO
 	stop=$(get_msec); print_timer $start $stop
 
 	#------------ JOB: EXTRACT WDF --io=3
@@ -248,8 +265,8 @@ function test_it()
 	$WWT -qo -p "$wbfs" -d "$tempdir" extract --wdf --io=3 "$id6=temp.wdf" || return $ERROR
 	stop=$(get_msec); print_timer $start $stop $ref
 
-	print_stat " > %-4s cmp wdf wdf" "$ref"; start=$(get_msec)
-	cmp --quiet "$tempdir/ref.wdf" "$tempdir/temp.wdf" || return $ERR_WDF
+	print_stat " > %-4s $CMP wdf wdf" "$ref"; start=$(get_msec)
+	$CMP --quiet "$tempdir/ref.wdf" "$tempdir/temp.wdf" || return $ERR_WDF
 	stop=$(get_msec); print_timer $start $stop
 
 	#------------ JOB: ADD WDF or ISO --io=0
@@ -280,8 +297,8 @@ function test_it()
 	$WWT -qo -p "$wbfs" -d "$tempdir" extract --wdf --io=0 "$id6=temp.wdf" || return $ERROR
 	stop=$(get_msec); print_timer $start $stop
 
-	print_stat " > %-4s cmp wdf wdf" "$ref"; start=$(get_msec)
-	cmp --quiet "$tempdir/ref.wdf" "$tempdir/temp.wdf" || return $ERR_WDF
+	print_stat " > %-4s $CMP wdf wdf" "$ref"; start=$(get_msec)
+	$CMP --quiet "$tempdir/ref.wdf" "$tempdir/temp.wdf" || return $ERR_WDF
 	stop=$(get_msec); print_timer $start $stop
 
 	#------------ JOB: ADD WDF --io=3
@@ -302,8 +319,8 @@ function test_it()
 	$WWT -qo -p "$wbfs" -d "$tempdir" extract --wdf --io=0 "$id6=temp.wdf" || return $ERROR
 	stop=$(get_msec); print_timer $start $stop
 
-	print_stat " > %-4s cmp wdf wdf" "$ref"; start=$(get_msec)
-	cmp --quiet "$tempdir/ref.wdf" "$tempdir/temp.wdf" || return $ERR_WDF
+	print_stat " > %-4s $CMP wdf wdf" "$ref"; start=$(get_msec)
+	$CMP --quiet "$tempdir/ref.wdf" "$tempdir/temp.wdf" || return $ERR_WDF
 	stop=$(get_msec); print_timer $start $stop
 
 	#------------ JOB: ADD ISO --io=0 pipe
@@ -324,8 +341,8 @@ function test_it()
 	$WWT -qo -p "$wbfs" -d "$tempdir" extract --wdf --io=0 "$id6=temp.wdf" || return $ERROR
 	stop=$(get_msec); print_timer $start $stop
 
-	print_stat " > %-4s cmp wdf wdf" "$ref"; start=$(get_msec)
-	cmp --quiet "$tempdir/ref.wdf" "$tempdir/temp.wdf" || return $ERR_WDF
+	print_stat " > %-4s $CMP wdf wdf" "$ref"; start=$(get_msec)
+	$CMP --quiet "$tempdir/ref.wdf" "$tempdir/temp.wdf" || return $ERR_WDF
 	stop=$(get_msec); print_timer $start $stop
 
 	#------------ JOB: ADD ISO --io=3 pipe
@@ -346,8 +363,8 @@ function test_it()
 	$WWT -qo -p "$wbfs" -d "$tempdir" extract --wdf --io=0 "$id6=temp.wdf" || return $ERROR
 	stop=$(get_msec); print_timer $start $stop
 
-	print_stat " > %-4s cmp wdf wdf" "$ref"; start=$(get_msec)
-	cmp --quiet "$tempdir/ref.wdf" "$tempdir/temp.wdf" || return $ERR_WDF
+	print_stat " > %-4s $CMP wdf wdf" "$ref"; start=$(get_msec)
+	$CMP --quiet "$tempdir/ref.wdf" "$tempdir/temp.wdf" || return $ERR_WDF
 	stop=$(get_msec); print_timer $start $stop
 
     fi
@@ -355,10 +372,10 @@ function test_it()
     #------------ compare with source
 
     ref="cmp"
-    print_stat " > %-4s cmp iso source($ft)" "$ref"; start=$(get_msec)
-    if [[ $ft = ISO ]]
+    print_stat " > %-4s $CMP iso source($ft)" "$ref"; start=$(get_msec)
+    if [[ $ft = ISO ]] || ((usewitcmp))
     then
-	cmp --quiet "$tempdir/ref.iso" "$1" || return $STAT_DIFF
+	$CMP --quiet "$tempdir/ref.iso" "$1" || return $STAT_DIFF
     else
 	$WDFCAT "$1" | cmp --quiet "$tempdir/ref.iso" || return $STAT_DIFF
     fi

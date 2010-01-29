@@ -469,6 +469,24 @@ wwt v0.25a r558 - 2010-01-04
  - New option: --DEST (-D): Works like --dest (-d), but the directory pathes
    of the destination files will be created automatically.
 
+wwt v0.26a r569 - 2010-01-05
+
+ - cygwin: stdout and stderr use windows line ending (CR+LF).
+ - Allow german umlaut in destination file names.
+ - Bug fix: Option --include-path was only processed if also option
+   --exclude-path was set.
+ - The local title files contain now all titles and not only the local
+   modifications. This is good for cygwin which do not support automatic
+   language detection. Just rename 'titles-XY.txt' to 'titles.txt'.
+
+wwt v0.27a r579 - 2010-01-09
+
+ - Bug fix: Problems while creating a directory path.
+ - Option --no-utf-8 did not work, all titles were trash.
+ - Option --no-utf-8 is now the default for cygwin. This is needed to allow
+   german umlauts in filebnames.
+ - wwt ADD: Add files in alphabetic order and print iteration counter.
+
 @@MODULE(last-history.txt)@@
 
 

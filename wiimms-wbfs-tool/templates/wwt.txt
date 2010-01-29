@@ -124,6 +124,7 @@ COMMAND: ADD|A  [iso_image_path]... [directory]...
  Usual ERROR/EXIT CODES:
 
     0 == OK             : all done without erros.
+    JOB_IGNORED         : a source file is ignored.
     SYNTAX ERROR        : at least on syntax error in command line found.
     MISSING PARAMETERS  : no parameters (iso images) given.
     NO WBFS FOUND       : no WBFS partiton found.
@@ -481,17 +482,19 @@ COMMAND: FILETYPE|FT  filename...
 
  Options:
 
-    -l --long         Print in long format: Print ID6 for images.
+    -l --long         Print in long format: Print ID6+SPLIT for images.
+    -ll               (--long twice) Print REGION for images.
     -i --ignore       Ignore non existing and don't print status line.
     -q --quiet        Allowed but ignored.
     -v --verbose      Allowed but ignored.
     -t --test         Allowed but ignored.
 
  The command 'FILETYPE' prints for each given file one status line like:
-    FILETYPE ID6 SPLIT FILENAME
+    FILETYPE ID6 REGION SPLIT FILENAME
  Columns 'ID6' and 'SPLIT' are only printed if option --long is set. For non
  ISO images the ID6 is '-'. If the file is splitted than column 'SPLIT' shows
- the number of split files instead of '-'.
+ the number of split files instead of '-'. Column 'REGION' is only printed if
+ option --long is set at least two times.
 
  Filetypes are:
     NO-FILE  : No file found
@@ -781,18 +784,18 @@ COMMAND: PHANTOM   [sub_command]...
        --no-check     Disable automatic check of WBFS before modifications.
 
  The PHANTOM commands adds multiple discs to WBFS partitons. The content of
- the discs is undefined, only the WBFS inode and the ISO header is written to
- WBFS. The PHANTOM command is implemented for test purposes; it can fill a WBFS
- very fast with multiple discs with random size.
+ the discs is undefined, only the WBFS inode and the ISO header (first 256
+ bytes) are written to  WBFS. The PHANTOM command is implemented for test
+ purposes; it can fill a WBFS very fast with multiple discs with random size.
 
- The ID6 of phantom discs is 'PHT###', where '###' is the lowest unused
+ The ID6 of phantom discs are 'PHT###', where '###' is the lowest unused
  decimal number.
 
- The syntax of a subcommand is:  [ NUM 'x' ] SIZE ['m'|'g']
+ The syntax of each subcommand is: [ NUM 'x' ] SIZE ['m'|'g']
 
  NUM defines a number of discs to add. NUM is a unsigned integer or a range
  like '2-5'. If a range is given, wwt add a random number of discs specified
- by this range.
+ by this range. The default number is '1'
 
  SIZE defines the size of the discs in GiB. SIZE is a unsigned integer or a
  range like '1-9'. If a range is given, wwt calculates the real size
@@ -802,13 +805,16 @@ COMMAND: PHANTOM   [sub_command]...
  Example: wwt PHANTOM 3-5x1-9
     create 3, 4 or 5 discs, each with a random size between 1 and 9 GiB.
 
- Multiple subcommand can be given. The program terminates the filling
+ Multiple subcommands are allowed. The program terminates the filling
  process automatically and without errors if the WBFS becomes full.
+ Full means that are slots are used or that no more data space is left.
+ If the data space runs out the last phantom will be cutted silently
+ so that all data blocks in the WBFS are used.
 
  Before modifying the WBFS a check (see CHECK) is done. If there are any
- problematic errors detected the WBFS is ignored. If the option --force is set,
- the test is done but the result is ignored. The option --no-check disables
- this automatic check.
+ problematic errors detected the WBFS is ignored. If the option --force is
+ set, the test is done but the result is ignored. The option --no-check
+ disables this automatic check.
 
 
  Usual ERROR/EXIT CODES:
@@ -1181,6 +1187,9 @@ If neither the option --part nor --auto is set then the environment variable
 'WWT_WBFS' is searched. It contains a semicolon separated list of filenames.
 If one ore more of this files is a valid WBFS partition it is silently added
 to the partition list and the option --all is set.
+
+If neither the option --part nor --auto is set, but option --all, than
+option --auto is set automatically.
 
 
 @@MODULE(proc-iso.txt)@@

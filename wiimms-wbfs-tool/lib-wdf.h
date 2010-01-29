@@ -99,6 +99,7 @@ typedef struct SuperFile_t
 	u64 progress_sum_time;		// sum of time weighted intervalls
 	u64 progress_time_divisor;	// divisor == sum of weights
 	u32 progress_max_wd;		// max width used for progress output
+	ccp progress_verb;		// default is "copied"
 
 	// internal values: file handling
 
@@ -167,6 +168,7 @@ int WrapperWriteDirectSF  ( void * p_sf, u32 lba,    u32 count, void * iobuf );
 int WrapperWriteSparseSF  ( void * p_sf, u32 lba,    u32 count, void * iobuf );
 
 // progress and statistics
+void CopyProgressSF ( SuperFile_t * dest, SuperFile_t * src );
 void PrintProgressSF ( u64 done, u64 total, void * param );
 void PrintSummarySF ( SuperFile_t * sf );
 

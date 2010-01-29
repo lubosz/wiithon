@@ -1,7 +1,7 @@
 K 25
 svn:wc:ra_dav:version-url
 V 57
-/wii/!svn/ver/579/trunk/wiimms-wbfs-tool/templates/module
+/wii/!svn/ver/606/trunk/wiimms-wbfs-tool/templates/module
 END
 head.txt
 K 25
@@ -13,7 +13,7 @@ last-history.txt
 K 25
 svn:wc:ra_dav:version-url
 V 74
-/wii/!svn/ver/579/trunk/wiimms-wbfs-tool/templates/module/last-history.txt
+/wii/!svn/ver/606/trunk/wiimms-wbfs-tool/templates/module/last-history.txt
 END
 opt-psel.txt
 K 25
@@ -25,7 +25,7 @@ proc-id6.txt
 K 25
 svn:wc:ra_dav:version-url
 V 70
-/wii/!svn/ver/294/trunk/wiimms-wbfs-tool/templates/module/proc-id6.txt
+/wii/!svn/ver/596/trunk/wiimms-wbfs-tool/templates/module/proc-id6.txt
 END
 proc-titles.txt
 K 25

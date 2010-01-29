@@ -11,6 +11,7 @@ typedef enum enumError
 {
 	ERR_OK,
 	ERR_DIFFER,
+	ERR_JOB_IGNORED,
 	ERR_WARNING,	// separator: below = real errors and not warnings
 
 	ERR_NO_WDF,

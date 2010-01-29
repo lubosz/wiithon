@@ -171,6 +171,13 @@ static int LoadTitleFile ( ccp fname, bool warn )
 		    *dest++ = ' ';
 		}
 
+		if ( ch >= 0x100 )
+		{
+		    const dcUnicodeTripel * trip = DecomposeUnicode(ch);
+		    if (trip)
+			ch = trip->code2;
+		}
+
 		if (use_utf8)
 		    dest = PrintUTF8Char(dest,ch);
 		else

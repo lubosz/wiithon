@@ -524,14 +524,23 @@ enumError exec_filetype ( SuperFile_t * sf, Iterator_t * it )
     ASSERT(it);
 
     ccp ftype = GetNameFT(sf->f.ftype,0);
-    if (it->long_count)
+    if ( it->long_count > 1 )
+    {
+	char split[10] = " -";
+	if ( sf->f.split_used > 1 )
+	    snprintf(split,sizeof(split),"%2d",sf->f.split_used);
+	printf("%-8s %-6s %s %s %s\n",
+		ftype, sf->f.id6[0] ? sf->f.id6 : "-",
+		*GetRegionInfo( sf->f.id6[0] ? sf->f.id6[3] : 0 ),
+		split, it->long_count > 2 ? it->real_path : sf->f.fname );
+    }
+    else if (it->long_count)
     {
 	char split[10] = " -";
 	if ( sf->f.split_used > 1 )
 	    snprintf(split,sizeof(split),"%2d",sf->f.split_used);
 	printf("%-8s %-6s %s %s\n",
-		    ftype, sf->f.id6[0] ? sf->f.id6 : "-",
-		    split, it->long_count > 1 ? it->real_path : sf->f.fname );
+		ftype, sf->f.id6[0] ? sf->f.id6 : "-", split, sf->f.fname );
     }
     else
 	printf("%-8s %s\n", ftype, sf->f.fname );
@@ -996,8 +1005,8 @@ enumError exec_diff ( SuperFile_t * f1, Iterator_t * it )
 
     if ( verbose > 0 )
     {
-	printf( "* DIFF/%s %s %s:%s -> %s:%s\n",
-		progname, raw_mode ? "RAW" : "SCRUB",
+	printf( "* DIFF/%s %s:%s -> %s:%s\n",
+		raw_mode ? "RAW" : "SCRUB",
 		oft_name[f1->oft], f1->f.fname, oft_name[f2.oft], f2.f.fname );
     }
 
@@ -1107,17 +1116,22 @@ enumError exec_copy ( SuperFile_t * fi, Iterator_t * it )
     fo.show_summary	= verbose > 0 || progress;
     fo.show_msec	= verbose > 2;
 
+    char count_buf[100];
+    snprintf(count_buf,sizeof(count_buf), "%u", it->source_list.used );
+    snprintf(count_buf,sizeof(count_buf), "%*u/%u",
+		strlen(count_buf), it->source_index+1, it->source_list.used );
+
     const bool raw_mode = partition_selector == WHOLE_DISC || !fi->f.id6[0];
     if (testmode)
     {
 	if (scrub_it)
-	    printf( "%s: WOULD %s %s:%s\n",
+	    printf( "%s: WOULD %s %s %s:%s\n",
 		progname, raw_mode ? "COPY " : "SCRUB",
-		oft_name[oft], fi->f.fname );
+		count_buf, oft_name[oft], fi->f.fname );
 	else
-	    printf( "%s: WOULD %s %s:%s -> %s:%s\n",
+	    printf( "%s: WOULD %s %s %s:%s -> %s:%s\n",
 		progname, raw_mode ? "COPY " : "SCRUB",
-		oft_name[fi->oft], fi->f.fname, oft_name[oft], fo.f.fname );
+		count_buf, oft_name[fi->oft], fi->f.fname, oft_name[oft], fo.f.fname );
 	ResetSF(&fo,0);
 	return ERR_OK;
     }
@@ -1125,13 +1139,13 @@ enumError exec_copy ( SuperFile_t * fi, Iterator_t * it )
     if ( verbose >= 0 )
     {
 	if (scrub_it)
-	    printf( "* %s %s %s %s\n",
+	    printf( "* %s %s %s %s %s\n",
 		progname, raw_mode ? "COPY " : "SCRUB",
-		oft_name[oft], fi->f.fname );
+		count_buf, oft_name[oft], fi->f.fname );
 	else
-	    printf( "* %s %s %s:%s -> %s:%s\n",
+	    printf( "* %s %s %s %s:%s -> %s:%s\n",
 		progname, raw_mode ? "COPY " : "SCRUB",
-		oft_name[fi->oft], fi->f.fname, oft_name[oft], fo.f.fname );
+		count_buf, oft_name[fi->oft], fi->f.fname, oft_name[oft], fo.f.fname );
     }
 
     enumError err = CreateFile( &fo.f, 0, IOM_IS_IMAGE, it->overwrite );
@@ -1213,10 +1227,14 @@ enumError cmd_copy()
 	return err;
     }
 
-    it.func = exec_copy;
-    enumError err = SourceIterator(&it,false,false);
-    if ( err == ERR_OK && it.exists_count )
-	err = ERR_ALREADY_EXISTS;
+    enumError err = SourceIterator(&it,false,true);
+    if ( err == ERR_OK )
+    {
+	it.func = exec_copy;
+	err = SourceIteratorCollected(&it);
+	if ( err == ERR_OK && it.exists_count )
+	    err = ERR_ALREADY_EXISTS;
+    }
     ResetIterator(&it);
     return err;
 }
@@ -1250,10 +1268,14 @@ enumError cmd_scrub()
 	return err;
     }
 
-    it.func = exec_copy;
-    enumError err = SourceIterator(&it,false,false);
-    if ( err == ERR_OK && it.exists_count )
-	err = ERR_ALREADY_EXISTS;
+    enumError err = SourceIterator(&it,false,true);
+    if ( err == ERR_OK )
+    {
+	it.func = exec_copy;
+	SourceIteratorCollected(&it);
+	if ( err == ERR_OK && it.exists_count )
+	    err = ERR_ALREADY_EXISTS;
+    }
     ResetIterator(&it);
     return err;
 }
@@ -1286,8 +1308,10 @@ enumError exec_move ( SuperFile_t * fi, Iterator_t * it )
 	{
 	    if ( testmode || verbose >= 0 )
 	    {
-		printf(" - %sMove %s:%s -> %s\n",
+		snprintf(iobuf,sizeof(iobuf), "%u", it->source_list.used );
+		printf(" - %sMove %*u/%u %s:%s -> %s\n",
 		    testmode ? "WOULD " : "",
+		    strlen(iobuf), it->source_index+1, it->source_list.used,
 		    oft_name[fo.oft], fi->f.fname, fo.f.fname );
 	    }
 
@@ -1340,8 +1364,12 @@ enumError cmd_move()
 	return err;
     }
 
-    it.func = exec_move;
-    const enumError err = SourceIterator(&it,false,false);
+    enumError err = SourceIterator(&it,false,true);
+    if ( err == ERR_OK )
+    {
+	it.func = exec_move;
+	err = SourceIteratorCollected(&it);
+    }
     ResetIterator(&it);
     return err;
 }

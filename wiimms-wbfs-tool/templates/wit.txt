@@ -335,16 +335,18 @@ COMMAND: FILETYPE|FT  [path]...
     -s --source  path  ISO file or directory with ISO files.
     -r --recurse path  ISO file or base of a directory tree with ISO files.
     -l --long          Print in long format: Print ID6 for images.
-    -ll                (--long twice) Print real path instead of given path.
+    -ll                (--long twice) Print REGION for images.
+    -lll               (--long three times) Print real path instead of given path.
     -i --ignore        Ignore non existing and don't print status line.
     -ii                (--ignore twice) Ignore all non ISO files.
 
 
  The command 'FILETYPE' prints for each file in the internal file database
  (build by the options --source and --recurse) one status line like:
-    FILETYPE ID6 filename
+    FILETYPE ID6 REGION filename
  Column 'ID6' is only printed if option --long is set. For non ISO images
- the ID6 is '-'.
+ the ID6 is '-'. Column 'REGION' is only printed if option --long is set
+ at least two times.
 
  Filetypes are:
     NO-FILE  : No file found
@@ -754,7 +756,7 @@ Option --recurse searches that directory and all subdirectories (recurse, max
 depth=15) for ISO files. Subdirectories beginning with a dot ('.') are ignored.
 
 The implementation is optimized so that a directory is only searched once.
-The option --recurse is proccessed before option --source.
+The option --recurse is processed before option --source.
 
 
 @@MODULE(proc-iso.txt)@@

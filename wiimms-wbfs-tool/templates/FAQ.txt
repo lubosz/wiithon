@@ -93,6 +93,9 @@ Under Windows go to "Setting | Systems Settings | Extended | Environment".
     First: Find out your drive with: wwt find -l
     Second: Type: wwt format /dev/your_device --force
 
+    Under Windows you can't use the drive letter. You must use device
+    specifiction "/dev/..." too. The find command print all canidates.
+
 
 *******************************************************************************
 *******                          Adding games                         *********

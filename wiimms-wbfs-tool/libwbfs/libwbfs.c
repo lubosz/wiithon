@@ -389,6 +389,8 @@ wbfs_disc_t * wbfs_open_disc_by_id6 ( wbfs_t* p, u8 * discid )
 wbfs_disc_t * wbfs_open_disc_by_slot ( wbfs_t * p, u32 slot )
 {
     ASSERT(p);
+    TRACE("LIBWBFS: wbfs_open_disc_by_slot(%p,slot=%u) max=%u, disctab=%u\n",
+		p, slot, p->max_disc, p->head->disc_table[slot] );
     if ( slot >= p->max_disc || !p->head->disc_table[slot] )
 	return 0;
 
@@ -402,10 +404,16 @@ wbfs_disc_t * wbfs_open_disc_by_slot ( wbfs_t * p, u32 slot )
 	OUT_OF_MEMORY;
 
     const u32 disc_info_sz_lba = p->disc_info_sz >> p->hd_sec_sz_s;
-    p->read_hdsector (	p->callback_data,
+    if ( p->read_hdsector (
+			p->callback_data,
 			p->part_lba + 1 + slot * disc_info_sz_lba,
 			disc_info_sz_lba,
-			d->header );
+			d->header ) )
+    {
+	wbfs_free(d);
+	return 0;
+    }
+
     p->n_disc_open++;
     return d;
 }
@@ -913,7 +921,7 @@ u32 wbfs_add_disc
 	spinner(0,tot,callback_data);
     }
 
-    for (i = 0; i < p->n_wbfs_sec_per_disc; i++)
+    for ( i = 0; i < p->n_wbfs_sec_per_disc; i++ )
     {
 	u32 bl = 0;
 	if (copy_1_1 || block_used(used, i, wii_sec_per_wbfs_sect))
@@ -937,6 +945,48 @@ u32 wbfs_add_disc
 		WBFS_ERROR("no space left on device (disc full)");
 	    }
 
+#if 1 // [2do] new disc reading -> don't read unneeded wii sectors
+
+	    u8 * dest = copy_buffer;
+	    const u32 wiimax = (i+1) * wii_sec_per_wbfs_sect;
+	    u32 subsec = 0;
+	    while ( subsec < wii_sec_per_wbfs_sect )
+	    {
+		const u32 wiisec = i * wii_sec_per_wbfs_sect + subsec;
+		if ( wiisec < WII_MAX_SECTORS && used[wiisec] )
+		{
+		    u32 wiiend = wiisec+1;
+		    while ( wiiend < wiimax && used[wiiend] )
+			wiiend++;
+		    const u32 size = ( wiiend - wiisec ) * p->wii_sec_sz;
+		    if (read_src_wii_disc(callback_data,
+				wiisec * (p->wii_sec_sz>>2), size, dest ))
+			WBFS_ERROR("error reading disc");
+
+		    dest += size;
+		    subsec += wiiend - wiisec;
+		}
+		else
+		{
+		    TRACE("LIBWBFS: FILL sec %u>%u -> %p\n",subsec,wiisec,dest);
+		    memset(dest,0,p->wii_sec_sz);
+		    dest += p->wii_sec_sz;
+		    subsec++;
+		}
+	    }
+
+	    // fix the partition table.
+	    if (i == (WII_PART_INFO_OFF >> p->wbfs_sec_sz_s))
+		wd_fix_partition_table( d, sel,
+			copy_buffer + (WII_PART_INFO_OFF & (p->wbfs_sec_sz - 1)));
+
+	    p->write_hdsector(	p->callback_data,
+				p->part_lba + bl * (p->wbfs_sec_sz / p->hd_sec_sz),
+				p->wbfs_sec_sz / p->hd_sec_sz,
+				copy_buffer );
+
+#else
+
 	    if (read_src_wii_disc( callback_data,
 				   i * (p->wbfs_sec_sz >> 2),
 				   p->wbfs_sec_sz,
@@ -950,7 +1000,7 @@ u32 wbfs_add_disc
 
 	    p->write_hdsector(p->callback_data, p->part_lba + bl * (p->wbfs_sec_sz / p->hd_sec_sz),
 			      p->wbfs_sec_sz / p->hd_sec_sz, copy_buffer);
-
+#endif
 	    if (spinner)
 		spinner(++cur,tot,callback_data);
 	}

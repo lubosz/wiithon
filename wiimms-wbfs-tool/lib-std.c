@@ -424,6 +424,7 @@ ccp GetErrorName ( int stat )
     {
 	case ERR_OK:			return "OK";
 	case ERR_DIFFER:		return "FILES DIFFER";
+	case ERR_JOB_IGNORED:		return "JOB IGNORED";
 	case ERR_WARNING:		return "WARNING";
 
 	case ERR_NO_WDF:		return "NO WDF";
@@ -469,6 +470,7 @@ ccp GetErrorText ( int stat )
     {
 	case ERR_OK:			return "Ok";
 	case ERR_DIFFER:		return "Files differ";
+	case ERR_JOB_IGNORED:		return "Job Ignored";
 	case ERR_WARNING:		return "Warning";
 
 	case ERR_NO_WDF:		return "File is not a WDF";
@@ -896,31 +898,29 @@ enumError XCloseFile ( XPARM File_t * f, bool remove_file )
     }
     else if ( !f->is_stdfile && S_ISREG(f->st.st_mode) )
     {
-	ccp path = f->path ? f->path : f->fname;
-	if ( remove_file && path && *path )
+	ccp * path = f->path ? &f->path : &f->fname;
+	if ( remove_file && *path && **path )
 	{
-	    TRACE("REMOVE: %s\n",path);
-	    unlink(path);
+	    TRACE("REMOVE: %s\n",*path);
+	    unlink(*path);
 	}
 	else if (f->rename)
 	{
-	    TRACE("RENAME: %s\n",path);
+	    TRACE("RENAME: %s\n",*path);
 	    TRACE("    TO: %s\n",f->rename);
-	    if (rename(path,f->rename))
+	    if (rename(*path,f->rename))
 	    {
 		if (!f->disable_errors)
 		    PrintError( XERROR1, ERR_CANT_CREATE,
 			"Can't create file: %s\n", f->rename );
 		if ( err < ERR_CANT_CREATE )
 		    err = ERR_CANT_CREATE;
-		unlink(path);
+		unlink(*path);
 	    }
-	    else
-	    {
-		FreeString(f->path);
-		f->path = f->rename;
-		f->rename = 0;
-	    }
+
+	    FreeString(*path);
+	    *path = f->rename;
+	    f->rename = 0;
 	}
     }
 
@@ -963,10 +963,16 @@ enumError XSetFileTime ( XPARM File_t * f, struct stat * st )
 	{
 	    File_t **end, **ptr = f->split_f;
 	    for ( end = ptr + f->split_used; ptr < end; ptr++ )
+	    {
+		TRACE("XSetFileTime(%p,%p) fname=%s\n",f,st,(*ptr)->fname);
 		utime((*ptr)->fname,&ubuf);
+	    }
 	}
 	else
+	{
+	    TRACE("XSetFileTime(%p,%p) fname=%s\n",f,st,f->fname);
 	    utime(f->fname,&ubuf);
+	}
     }
     return err;
 }
@@ -2254,6 +2260,11 @@ enumError XReadF ( XPARM File_t * f, void * iobuf, size_t count )
 
     if (f->is_caching)
     {
+	noTRACE("#C# ---\n");
+	noTRACE(TRACE_RDWR_FORMAT, "#C#   ReadF()",
+		GetFD(f), GetFP(f), f->cur_off, f->cur_off+count, count,
+		f->cur_off < f->max_off ? " <" : "" );
+
 	off_t my_off = f->cur_off;
 	while (count)
 	{
@@ -2264,6 +2275,8 @@ enumError XReadF ( XPARM File_t * f, void * iobuf, size_t count )
 		break;
 
 	    // there is an overlap
+	    TRACE("   my_off=%llx, count=%x, cptr->off=%llx, cptr->count=%x\n",
+			my_off, count, cptr->off,cptr->count );
 	    ASSERT( my_off + count > cptr->off );
 	    ASSERT( cptr->off + cptr->count > my_off );
 
@@ -2407,6 +2420,42 @@ enumError XReadF ( XPARM File_t * f, void * iobuf, size_t count )
 	}
     }
 
+#ifdef TEST // [2do]
+    bool err;
+    size_t read_count = 0;
+    if ( f->fd == -1 )
+    {
+	err = true;
+	errno = 0;
+    }
+    else if (!count)
+	err = false;
+    else if (f->fp)
+    {
+	read_count = fread(iobuf,1,count,f->fp);
+	err = read_count < count && errno;
+	iobuf = (void*)( (char*)iobuf + read_count );
+    }
+    else
+    {
+	err = false;
+	size_t size = count;
+	while (size)
+	{
+	    ssize_t rstat = read(f->fd,iobuf,size);
+	    if ( rstat <= 0 )
+	    {
+		err = rstat < 0;
+		break;
+	    }
+	    read_count += rstat;
+	    size -= rstat;
+	    iobuf = (void*)( (char*)iobuf + rstat );
+	}
+    }
+
+    if ( err || read_count < count && !f->read_behind_eof )
+#else
     bool err;
     if (f->fp)
 	err = count && fread(iobuf,count,1,f->fp) != 1;
@@ -2433,6 +2482,8 @@ enumError XReadF ( XPARM File_t * f, void * iobuf, size_t count )
     }
 
     if (err)
+#endif
+
     {
 	if ( !f->disable_errors && f->last_error != ERR_READ_FAILED )
 	    PrintError( XERROR1, ERR_READ_FAILED,
@@ -2446,11 +2497,26 @@ enumError XReadF ( XPARM File_t * f, void * iobuf, size_t count )
     }
     else
     {
+ #ifdef TEST // [2do]
+	f->read_count++;
+	f->bytes_read += read_count;
+	f->file_off += read_count;
+	if ( f->max_off < f->file_off )
+	    f->max_off = f->file_off;
+	if ( read_count < count )
+	{
+	    if (!f->st.st_size)
+		f->st.st_size = f->file_off;
+	    f->cur_off = f->file_off;
+	    return XReadAtF(XCALL f,f->file_off,iobuf,count-read_count);
+	}
+ #else
 	f->read_count++;
 	f->bytes_read += count;
 	f->file_off += count;
 	if ( f->max_off < f->file_off )
 	    f->max_off = f->file_off;
+ #endif
     }
 
     f->cur_off = f->file_off;

@@ -70,5 +70,17 @@ char *	PrintUTF8Char ( char * buf, ulong code );
 
 ///////////////////////////////////////////////////////////////////////////////
 
+typedef struct dcUnicodeTripel
+{
+	ulong code1;
+	ulong code2;
+	ulong code3;
+} dcUnicodeTripel;
+
+extern const dcUnicodeTripel TableUnicodeDecomp[];
+const dcUnicodeTripel * DecomposeUnicode ( ulong code );
+
+///////////////////////////////////////////////////////////////////////////////
+
 #endif //__LIBDC_UTF8_H
 

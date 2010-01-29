@@ -225,6 +225,10 @@ int AnalysePartitions ( FILE * outfile, bool non_found_is_ok, bool scan_wbfs )
 
     AddEnvPartitions();
 
+    // standalone --all enables --auto
+    if ( opt_all && !opt_part && !opt_auto )
+	ScanPartitions(false);
+
     int stat = ERR_OK;
     wbfs_count = 0; // number of wbfs partitions
 
@@ -1272,6 +1276,8 @@ enumError DumpWBFS
 	WDiscInfo_t dinfo;
 	for ( slot = 0; slot < w->max_disc; slot++ )
 	{
+	    noTRACE("---");
+	    noTRACE(">> SLOT = %d/%d\n",slot,w->max_disc);
 	    if ( ck && ck->disc && !ck->disc[slot].err_count )
 		continue;
 
@@ -1843,7 +1849,7 @@ enumError PrintCheckedWBFS ( CheckWBFS_t * ck, FILE * f, int indent )
 	    fprintf(f,"%*s%5u WBFS sector%s are used by 2 or more discs!\n",
 		indent,"", ck->err_bl_overlap, ck->err_bl_overlap == 1 ? "" : "s" );
 	if (ck->err_bl_invalid)
-	    fprintf(f,"%*s%5u disc%s uses invalid WBFS blocks!\n",
+	    fprintf(f,"%*s%5u invalid WBFS block reference%s found!\n",
 		indent,"", ck->err_bl_invalid, ck->err_bl_invalid == 1 ? "" : "s" );
 	if (ck->err_no_blocks)
 	    fprintf(f,"%*s%5u disc%s no valid WBFS blocks!\n",
@@ -2146,50 +2152,9 @@ void CalcWDiscInfo ( WDiscInfo_t * dinfo )
     dinfo->disc_index = 0;
     dinfo->size  = 0;
 
-    static ccp region_table[] =
-    {
-	// -> http://www.wiibrew.org/wiki/Title_Database#Region_Codes
-
-	/*A*/ "ALL ", "All",
-	/*B*/ "-?- ", "-?-",
-	/*C*/ "-?- ", "-?-",
-	/*D*/ "GERM", "German",
-	/*E*/ "NTSC", "NTSC",
-	/*F*/ "FREN", "French",
-	/*G*/ "-?- ", "-?-",
-	/*H*/ "-?- ", "-?-",
-	/*I*/ "ITAL", "Italian",
-	/*J*/ "JAPA", "Japan",
-	/*K*/ "KORE", "Korea",
-	/*L*/ "J>PL", "Japan->PAL",
-	/*M*/ "A>PL", "America->PAL",
-	/*N*/ "J>US", "Japan->USA",
-	/*O*/ "-?- ", "-?-",
-	/*P*/ "PAL ", "PAL",
-	/*Q*/ "KO/J", "Korea (japanese)",
-	/*R*/ "-?- ", "-?-",
-	/*S*/ "SPAN", "Spanish",
-	/*T*/ "KO/E", "Korea (english)",
-	/*U*/ "-?- ", "-?-",
-	/*V*/ "-?- ", "-?-",
-	/*W*/ "-?- ", "-?-",
-	/*X*/ "RF  ", "Region free",
-	/*Y*/ "-?- ", "-?-",
-	/*Z*/ "-?- ", "-?-",
-    };
-
-    const u8 region_code = dinfo->dhead.region_code;
-    if ( region_code >= 'A' && region_code <= 'Z' )
-    {
-	ccp * tptr = region_table + 2 * (region_code-'A');
-	dinfo->region4 = *tptr++;
-	dinfo->region  = *tptr;
-    }
-    else
-    {
-	dinfo->region4 = "-?- ";
-	dinfo->region  = "-?-";
-    }
+    ccp * tptr = GetRegionInfo(dinfo->dhead.region_code);
+    dinfo->region4 = *tptr++;
+    dinfo->region  = *tptr;
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -2448,10 +2413,10 @@ WDiscList_t * GenerateWDiscList ( WBFS_t * w, int part_index )
     WDiscInfo_t dinfo;
     WDiscListItem_t * item = wlist->first_disc;
 
-    int i;
-    for ( i = 0; i < w->used_discs; i++ )
+    int slot;
+    for ( slot = 0; slot < w->total_discs; slot++ )
     {
-	if ( GetWDiscInfo(w,&dinfo,i) == ERR_OK )
+	if ( GetWDiscInfoBySlot(w,&dinfo,slot) == ERR_OK )
 	{
 	    memcpy(item->id6,&dinfo.dhead.wii_disc_id,6);
 	    if (!IsExcluded(item->id6))
@@ -2520,6 +2485,52 @@ void FreeWDiscList ( WDiscList_t * wlist )
     ASSERT(wlist);
     ResetWDiscList(wlist);
     free(wlist);
+}
+
+///////////////////////////////////////////////////////////////////////////////
+
+ccp RegionTable[] =
+{
+	// -> http://www.wiibrew.org/wiki/Title_Database#Region_Codes
+
+	/*A*/ "ALL ", "All",
+	/*B*/ "-?- ", "-?-",
+	/*C*/ "-?- ", "-?-",
+	/*D*/ "GERM", "German",
+	/*E*/ "NTSC", "NTSC",
+	/*F*/ "FREN", "French",
+	/*G*/ "-?- ", "-?-",
+	/*H*/ "-?- ", "-?-",
+	/*I*/ "ITAL", "Italian",
+	/*J*/ "JAPA", "Japan",
+	/*K*/ "KORE", "Korea",
+	/*L*/ "J>PL", "Japan->PAL",
+	/*M*/ "A>PL", "America->PAL",
+	/*N*/ "J>US", "Japan->NTSC",
+	/*O*/ "-?- ", "-?-",
+	/*P*/ "PAL ", "PAL",
+	/*Q*/ "KO/J", "Korea (japanese)",
+	/*R*/ "-?- ", "-?-",
+	/*S*/ "SPAN", "Spanish",
+	/*T*/ "KO/E", "Korea (english)",
+	/*U*/ "-?- ", "-?-",
+	/*V*/ "-?- ", "-?-",
+	/*W*/ "-?- ", "-?-",
+	/*X*/ "RF  ", "Region free",
+	/*Y*/ "-?- ", "-?-",
+	/*Z*/ "-?- ", "-?-",
+
+	/*?*/ "-?- ", "-?-" // illegal region_code
+};
+
+//-----------------------------------------------------------------------------
+
+ccp * GetRegionInfo ( char region_code )
+{
+    region_code = toupper(region_code);
+    if ( region_code < 'A' || region_code > 'Z' )
+	region_code = 'Z' + 1;
+    return RegionTable + 2 * (region_code-'A');
 }
 
 //

@@ -279,7 +279,7 @@ enumError wdf_dump ( ccp fname )
 	return error(ERR_WDF_INVALID,2,fname,"Invalid data");
     }
 
-    if ( wh.chunk_n > 10000 )
+    if ( wh.chunk_n > 1000000 )
     {
 	CloseFile(&f,false);
 	return error(ERR_INTERNAL,2,fname,"Too much chunk enties");

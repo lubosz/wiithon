@@ -1363,14 +1363,15 @@ enumError cmd_edit()
     wbfs_t * w = wbfs.wbfs;
 
     printf("\n* MODIFY WBFS partition %s:\n"
-	   "  > WBFS block size:  %x/hex = %u\n"
-	   "  > WBFS block range: 1..%u\n"
-	   "  > ISO block range:  0..%u\n"
-	   "  > Number of discs:  %u\n"
-	   "  > Number of slots:  %u\n"
+	   "  > WBFS block size:  %x/hex = %u = %1.1f MiB\n"
+	   "  > WBFS block range:   1..%u\n"
+	   "  > ISO block range:    0..%u\n"
+	   "  > Number of discs:  %3u\n"
+	   "  > Number of slots:  %3u\n"
 	   "\n",
 	   info->path,
 	   w->wbfs_sec_sz, w->wbfs_sec_sz,
+	   (double)w->wbfs_sec_sz/MiB,
 	   w->n_wbfs_sec - 1, w->n_wbfs_sec_per_disc,
 	   wbfs.used_discs, w->max_disc );
 
@@ -1464,7 +1465,7 @@ enumError cmd_edit()
 			printf("  - %s%s disc %u.\n",
 				testmode ? "WOULD " : "", info, n1 );
 		    else
-			printf("  - %s%s discs %u.%u.\n",
+			printf("  - %s%s discs %u..%u.\n",
 				testmode ? "WOULD " : "", info, n1, n2 );
 		    if (!testmode)
 			while ( n1 <= n2 )
@@ -1561,6 +1562,9 @@ enumError cmd_edit()
 	putchar('\n');
     ResetCheckWBFS(&ck);
     ResetWBFS(&wbfs);
+
+    if (!(used_options&OB_FORCE))
+	printf("* Use option --force to leave the test mode.\n\n" );
 
     return ERR_OK;
 }
@@ -1868,6 +1872,8 @@ enumError exec_add ( SuperFile_t * sf, Iterator_t * it )
 	{
 	    printf(" - DISC %s [%s] already exists -> ignore\n",
 		    sf->f.fname, sf->f.id6 );
+	    if ( max_error < ERR_JOB_IGNORED )
+		max_error = ERR_JOB_IGNORED;
 	    return ERR_OK;
 	}
     }
@@ -1876,7 +1882,7 @@ enumError exec_add ( SuperFile_t * sf, Iterator_t * it )
     if (testmode)
     {
 	TRACE("WOULD ADD [%s] %s\n",sf->f.id6,sf->f.fname);
-	printf(" - WOULD ADD %*d/%d [%s] %s:%s\n",
+	printf(" - WOULD ADD %*u/%u [%s] %s:%s\n",
 		strlen(iobuf), it->source_index+1, it->source_list.used,
 		sf->f.id6, oft_name[sf->oft], sf->f.fname );
     }
@@ -1884,7 +1890,7 @@ enumError exec_add ( SuperFile_t * sf, Iterator_t * it )
     {
 	TRACE("ADD [%s] %s\n",sf->f.id6,sf->f.fname);
 	if ( verbose >= 0 || progress > 0 )
-	    printf(" - ADD %*d/%d [%s] %s:%s\n",
+	    printf(" - ADD %*u/%u [%s] %s:%s\n",
 			strlen(iobuf), it->source_index+1, it->source_list.used,
 			sf->f.id6, oft_name[sf->oft], sf->f.fname );
 	fflush(stdout);
@@ -2398,9 +2404,10 @@ enumError cmd_remove()
 		param->count++;
 		if (testmode || verbose > 0 )
 		{
-		    TRACE("WOULD %s %s @ %s\n",
+		    TRACE("%s%s %s @ %s\n",
+			testmode ? "WOULD " : "",
 			free_slot_only ? "DROP" : "REMOVE", id6, info->path );
-		    printf(" - %s %s [%s] %s\n",
+		    printf(" - %s%s [%s] %s\n",
 			testmode ? "WOULD " : "",
 			free_slot_only ? "DROP" : "REMOVE",
 			id6, title );
@@ -2638,7 +2645,17 @@ enumError cmd_filetype()
 	ccp ftype = GetNameFT( f.ftype, used_options & OB_IGNORE ? 1 : 0 );
 	if (ftype)
 	{
-	    if (long_count)
+	    if ( long_count > 1 )
+	    {
+		char split[10] = " -";
+		if ( f.split_used > 1 )
+		    snprintf(split,sizeof(split),"%2d",f.split_used);
+		printf("%-8s %-6s %4s %s %s\n",
+			ftype, f.id6[0] ? f.id6 : "-",
+			*GetRegionInfo( f.id6[0] ? f.id6[3] : 0 ),
+			split, f.fname );
+	    }
+	    else if (long_count)
 	    {
 		char split[10] = " -";
 		if ( f.split_used > 1 )

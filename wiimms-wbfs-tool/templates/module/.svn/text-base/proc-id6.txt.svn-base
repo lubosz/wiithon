@@ -31,7 +31,7 @@ The rules as overview:
     given WFS partitions. The parameter will be replaced by the complete ID6
     list. A destination filename is not defined.
 
-	Only the first occurrence will be proccessed. All other are ignord.
+	Only the first occurrence will be processed. All other are ignord.
 
     Note: '*' is the natural 'all' placeholder but must be escaped in most
           shells. Therefor the additional '+' is possible.
