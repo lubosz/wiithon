@@ -1731,32 +1731,32 @@ msgstr "Programa executado com as opes incorretas."
 msgid "Interrumpido por el usuario"
 msgstr "Interrompido pelo usuário"
 
-#~ msgid "+INFO"
-#~ msgstr "+INFO"
-
-#~ msgid "Espacio usado / Espacio total"
-#~ msgstr "Espaço usado / Espaço total"
-
-#~ msgid "Numero de juegos."
-#~ msgstr "Número de jogos."
-
-#~ msgid "Progreso de la tarea actual."
-#~ msgstr "Progresso da tarefa atual."
-
-#~ msgid "ACCESORIOS: "
-#~ msgstr "ACCESÓRIOS: "
-
-#~ msgid "OPCIONALES: "
-#~ msgstr "OPCIONAIS:"
-
-#~ msgid "Fecha de lanzamiento: "
-#~ msgstr "Data de lançamento:"
-
-#~ msgid "Buscar:"
-#~ msgstr "Pesquisar:"
+#~ msgid "Numero de tareas que esperan en la cola."
+#~ msgstr "Número de tarefas que esperam na fila."
 
 #~ msgid "No se ha encontrado ninguna imagen ISO o RAR"
 #~ msgstr "Não foi encontrada nenhuma imagem ISO ou RAR"
 
-#~ msgid "Numero de tareas que esperan en la cola."
-#~ msgstr "Número de tarefas que esperam na fila."
+#~ msgid "Buscar:"
+#~ msgstr "Pesquisar:"
+
+#~ msgid "Fecha de lanzamiento: "
+#~ msgstr "Data de lançamento:"
+
+#~ msgid "OPCIONALES: "
+#~ msgstr "OPCIONAIS:"
+
+#~ msgid "ACCESORIOS: "
+#~ msgstr "ACCESÓRIOS: "
+
+#~ msgid "Progreso de la tarea actual."
+#~ msgstr "Progresso da tarefa atual."
+
+#~ msgid "Numero de juegos."
+#~ msgstr "Número de jogos."
+
+#~ msgid "Espacio usado / Espacio total"
+#~ msgstr "Espaço usado / Espaço total"
+
+#~ msgid "+INFO"
+#~ msgstr "+INFO"
