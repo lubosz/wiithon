@@ -40,8 +40,8 @@ class ActionConversor(Action):
         if boton.get_file() != None:
 
             self.origen = boton.get_file().get_path()
-            self.formato_origen = padre.core.getAutodetectarFormato(self.origen)
-            self.padre.alert('info',self.formato_origen)
+            self.formato_origen = self.padre.core.getAutodetectarFormato(self.origen)
+            #self.padre.alert('info',self.formato_origen)
             esISO = self.formato_origen == 'iso'
             self.mostrar_resto_formulario(esISO)
             
@@ -79,10 +79,10 @@ class ActionConversor(Action):
             ok = False
 
         if ok:
-            self.padre.alert('info', '%s\nConversion realizada satisfactoriamente' % mensaje)
+            self.padre.alert('info', 'Conversion realizada satisfactoriamente')
             self.ocultar_resto_formulario()
         else:
-            self.padre.alert('error', '%s\nError al convertir' % mensaje)
+            self.padre.alert('error', 'Error al convertir.\n\nComando: %s' % mensaje)
         
     def mostrar_resto_formulario(self, esISO):
 
