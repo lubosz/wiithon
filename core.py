@@ -237,7 +237,8 @@ class WiithonCORE:
             else:
                 try:
                     origen = proveedores[i] % IDGAME
-                    print _("Descargando disco de %s ...") % (("%s (%s)") % (IDGAME, origen))
+                    if config.DEBUG:
+                        print _("Descargando disco de %s ...") % (("%s (%s)") % (IDGAME, origen))
                     util.descargarImagen(origen, destino)
                     descargada = True
                     comando = 'mogrify -resize %dx%d! "%s"' % (ancho, alto, destino)
@@ -257,7 +258,8 @@ class WiithonCORE:
             else:
                 try:
                     origen = proveedores[i] % IDGAME
-                    print _("Descargando caratula de %s desde %s ...") % (IDGAME, origen)
+                    if config.DEBUG:
+                        print _("Descargando caratula de %s desde %s ...") % (IDGAME, origen)
                     util.descargarImagen(origen, destino)
                     descargada = True
                     if TYPE_COVER != util.COVER_FULL:

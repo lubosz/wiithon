@@ -28,6 +28,7 @@ from informacion_gui import InformacionGuiPresentacion
 from selector_ficheros import SelectorFicheros
 from textview_custom import TextViewCustom
 from estadistica import MuestraEstadistica
+from conversor import ActionConversor
 
 db =        util.getBDD()
 session =   util.getSesionBDD(db)
@@ -157,10 +158,14 @@ class WiithonGUI(GtkBuilderWrapper):
         # http://www.pygtk.org/pygtk2tutorial-es/sec-DNDMethods.html
         self.wb_principal.drag_dest_set(0, [], gtk.gdk.ACTION_DEFAULT)
 
+        # señales ventana principal
         self.wb_principal.connect("drag_motion", self.drop_motion)
         self.wb_principal.connect("drag_drop", self.drag_drop)
         self.wb_principal.connect("drag_data_received", self.drag_data_received_cb)
-               
+        
+        # logica del dialogo conversor
+        actionConversor = ActionConversor(self)
+
         # activar caratula activa
         self.wb_boton_normal.connect("toggled", self.on_clicked_tipo_caratula, util.COVER_NORMAL)
         self.wb_boton_3d.connect("toggled", self.on_clicked_tipo_caratula, util.COVER_3D)
@@ -348,7 +353,7 @@ class WiithonGUI(GtkBuilderWrapper):
                 self.wb_label_juegosSinCaratula, self.wb_label_juegosSinDiscArt,
                 self.wb_estadoTrabajo)
             
-        # Animacion que define si hay actividad de la pool batch
+        # Animacion que define si hay actividad
         self.animar = Animador(     self.wb_estadoBatch,
                                     self.poolBash,
                                     self.poolTrabajo,
@@ -521,14 +526,21 @@ class WiithonGUI(GtkBuilderWrapper):
 
     def excepthook(self, exctype, excvalue, exctb):
         self.cerrar_loading()
+        
+        if config.REV != '':
+            version = 'Wiithon %s (rev %s)' % (config.VER, config.REV)
+        else:
+            version = 'Wiithon %s' % (config.VER)
+
         tbtext = ''.join(traceback.format_exception(exctype, excvalue, exctb))
         mensaje_xml = """
-        <negro><pr>%s</pr></negro><br />
+        <negro><pr>%s</pr></negro> <pr>(</pr><rojo><pr>%s</pr></rojo><pr>)</pr><br />
         <br />
         <rojo><pr>%s</pr></rojo><br />
         <negro><pr>%s</pr></negro><br />
         <u><azul><pr>%s</pr></azul></u><br />
         """  % (    _("Por favor. Informe a los desarrolladores de este error."),
+                    version,
                     util.parsear_a_XML(tbtext),
                     _('Utitice la siguiente URL para el reporte de bugs:'),
                     config.URL_BUGS)
@@ -1714,8 +1726,10 @@ class WiithonGUI(GtkBuilderWrapper):
             print "on_tb_toolbar_clicked"
             
         if(id_tb == self.wb_tb_conversor):
-            self.alert('warning',_('Not implemented yet'))
-            
+            self.alert("warning" , "Esta funcion esta en pleno desarrollo")
+            self.wb_dialogo_conversor.run()
+            self.wb_dialogo_conversor.hide()
+
         elif(id_tb == self.wb_tb_donate):
             comando = '%s "%s"' % (self.core.prefs.COMANDO_ABRIR_CARPETA, config.WIITHON_DONATE_HTML)
             print comando
@@ -2427,7 +2441,8 @@ class WiithonGUI(GtkBuilderWrapper):
                 if idgame == self.sel_juego.obj.idgame:
                     gobject.idle_add( self.ponerCaratula , idgame , self.wb_img_caratula1)
         else:
-            print _("Falla la descarga de la caratula de %s") % idgame
+            if config.DEBUG:
+                print _("Falla la descarga de la caratula de %s") % idgame
             
         gobject.idle_add( self.refrescarNumCaratulas )            
 
@@ -2437,7 +2452,8 @@ class WiithonGUI(GtkBuilderWrapper):
                 if idgame == self.sel_juego.obj.idgame:
                     gobject.idle_add( self.ponerDisco , idgame , self.wb_img_disco1)
         else:
-            print _("Falla la descarga del disco de %s") % idgame
+            if config.DEBUG:
+                print _("Falla la descarga del disco de %s") % idgame
         
         gobject.idle_add( self.refrescarNumCaratulas )
 
