@@ -482,19 +482,25 @@ COMMAND: FILETYPE|FT  filename...
 
  Options:
 
+       --psel p-type  Partition selector: (no-)game|update|channel all(=def) raw.
+       --raw          Short cut for --psel=raw.
     -l --long         Print in long format: Print ID6+SPLIT for images.
     -ll               (--long twice) Print REGION for images.
-    -i --ignore       Ignore non existing and don't print status line.
+    -i --ignore       Ignore non existing files and don't print status line.
     -q --quiet        Allowed but ignored.
     -v --verbose      Allowed but ignored.
     -t --test         Allowed but ignored.
 
  The command 'FILETYPE' prints for each given file one status line like:
-    FILETYPE ID6 REGION SPLIT FILENAME
+    FILETYPE ID6 SIZE_MIB REGION SPLIT FILENAME
  Columns 'ID6' and 'SPLIT' are only printed if option --long is set. For non
  ISO images the ID6 is '-'. If the file is splitted than column 'SPLIT' shows
- the number of split files instead of '-'. Column 'REGION' is only printed if
- option --long is set at least two times.
+ the number of split files instead of '-'. Columns 'SIZE_MIB' and 'REGION'
+ are only printed if option --long is set at least two times.
+
+ 'SIZE_MIB' is the calculatet size of a scrubbed ISO image. For this all used
+ sectors of a ISO image are counted. The usage depends of the options --psel
+ and --raw.
 
  Filetypes are:
     NO-FILE  : No file found

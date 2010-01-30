@@ -487,6 +487,18 @@ wwt v0.27a r579 - 2010-01-09
    german umlauts in filebnames.
  - wwt ADD: Add files in alphabetic order and print iteration counter.
 
+wwt v0.28a r596 - 2010-01-15
+
+ - Little optimation for libwbfs add_disc(): Read only needed wii sectors from
+   iso and fill others with zeros. This makes adding faster and avoids reading
+   behind end of file. This is needed for reading from a pipe.
+ - New error code: JOB_IGNORED: Set if a disc is ignored while adding a game.
+ - wwt ADD: adding to more than one WBFS failed since v0.27a.
+ - wit COPY+SCRUB+MOVE: Process files in alphabetic order and print iteration
+   counter.
+ - Bug fix: wwt LIST: Not all discs were shown if an invalid disc was found.
+ - Decompose unusual unicode characters (remove accents...) in title database.
+
 @@MODULE(last-history.txt)@@
 
 

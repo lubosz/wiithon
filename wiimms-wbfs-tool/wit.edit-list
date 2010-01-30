@@ -2,7 +2,7 @@ wit.[ch] ;
 lib-sf.c ;
 @wwt.edit-list
 wbfs-interface.[ch] ;
--y 1073 wit.c ;
+-y 600 wit.c ;
 -y 700 wwt.c ;
 -y 1130 wbfs-interface.c ;
 work/colin-read.dump ;

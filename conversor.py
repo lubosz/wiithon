@@ -6,10 +6,7 @@ import config
 import util
 from gtk import FileFilter
 
-class Action:
-    pass
-    
-class ActionConversor(Action):
+class ActionConversor:
     
     def __init__(self, padre):
         self.padre = padre

@@ -177,6 +177,8 @@ enumFileType AnalyseFT ( File_t * f );
 enumError XPrintErrorFT ( XPARM File_t * f, enumFileType err_mask );
 ccp GetNameFT ( enumFileType ftype, int ignore );
 enumOFT GetOFT ( SuperFile_t * sf );
+u32 CountUsedIsoBlocksSF ( SuperFile_t * sf, u32 psel );
+u32 CountUsedBlocks ( u8 * usage_tab, u32 block_size );
 
 // copy functions
 enumError CopySF	( SuperFile_t * in, SuperFile_t * out, u32 psel );

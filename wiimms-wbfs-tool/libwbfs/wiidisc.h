@@ -27,6 +27,8 @@ typedef int (*read_wiidisc_callback_t)( void *fp, u32 offset, u32 count, void* i
 enum // some constants
 {
     WII_SECTOR_SIZE		= 0x8000,
+    WII_SECTORS_PER_MIB		= 1024*1024/WII_SECTOR_SIZE,
+
     WII_SECTORS_SINGLE_LAYER	= 143432,
     WII_SECTORS_DOUBLE_LAYER	= 2 * WII_SECTORS_SINGLE_LAYER,
     WII_MAX_SECTORS		= WII_SECTORS_DOUBLE_LAYER,

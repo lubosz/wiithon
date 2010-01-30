@@ -441,7 +441,7 @@ class WiithonCORE:
             if formato_origen == 'wbfs':
                 comando = '%s "%s" convert "%s"' % (config.WBFS_FILE, origen, salida)
             elif formato_origen == 'wdf':
-                comando = '%s -oq "%s" -d "%s"' % (config.WDF_TO_ISO, origen, os.path.join(salida, '%s.iso' % util.getNombreFichero(origen)))
+                comando = '%s -oq "%s" -d "%s"' % (config.WDF_TO_ISO, origen, os.path.join(salida, '%s.iso' % util.getNombreFichero(os.path.basename(origen))))
             else:
                 comando = None
         elif formato_destino == 'wbfs':
@@ -451,14 +451,14 @@ class WiithonCORE:
                 comando = None
         elif formato_destino == 'wdf':
             if formato_origen == 'iso':
-                comando = '%s -oq "%s" -d "%s"' % (config.ISO_TO_WDF, origen, os.path.join(salida, '%s.wdf' % util.getNombreFichero(origen)))
+                comando = '%s -oq "%s" -d "%s"' % (config.ISO_TO_WDF, origen, os.path.join(salida, '%s.wdf' % util.getNombreFichero(os.path.basename(origen))))
             else:
                 comando = None
         else:
             comando = None
 
         if comando is not None:
-            ok = util.call_out_null(comando)
+            ok = util.call_out_file(comando)
         else:
             ok = False
         

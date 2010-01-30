@@ -1143,6 +1143,58 @@ enumOFT GetOFT ( SuperFile_t * sf )
 			: OFT_PLAIN;
 }
 
+///////////////////////////////////////////////////////////////////////////////
+
+u32 CountUsedIsoBlocksSF ( SuperFile_t * sf, u32 psel )
+{
+    ASSERT(sf);
+
+    size_t count = 0;
+    if ( psel == WHOLE_DISC )
+	count = sf->file_size * WII_SECTORS_PER_MIB / MiB;
+    else
+    {
+	wiidisc_t * disc = wd_open_disc(WrapperReadSF,sf);
+	if (disc)
+	{
+	    wd_build_disc_usage(disc,psel,wdisc_usage_tab);
+	    wd_close_disc(disc);
+	    int idx;
+	    for ( idx = 0; idx < sizeof(wdisc_usage_tab); idx++ )
+		if (wdisc_usage_tab[idx])
+		    count++;
+	}
+    }
+    return count;
+}
+
+///////////////////////////////////////////////////////////////////////////////
+
+u32 CountUsedBlocks ( u8 * usage_tab, u32 block_size )
+{
+    TRACE("CountUsedBlocks(%p,%u)\n",usage_tab,block_size);
+
+    ASSERT(usage_tab);
+    ASSERT(block_size>0);
+
+    u32 count = 0;
+    int i;
+    for ( i = 0; i < WII_MAX_SECTORS; i += block_size )
+    {
+	int end = i + block_size;
+	if ( end > WII_MAX_SECTORS )
+	    end = WII_MAX_SECTORS;
+	int j;
+	for ( j = i; j < end; j++ )
+	    if (usage_tab[j])
+	    {
+		count++;
+		break;
+	    }
+    }
+    return count;
+}
+
 //
 ///////////////////////////////////////////////////////////////////////////////
 ///////////////                    copy functions               ///////////////

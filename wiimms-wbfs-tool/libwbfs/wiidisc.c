@@ -370,6 +370,12 @@ void wd_build_disc_usage
     ASSERT(d);
     ASSERT(usage_table);
 
+    if ( selector == WHOLE_DISC )
+    {
+	wbfs_memset(usage_table,1,WII_MAX_SECTORS);
+	return;
+    }
+
     d->sector_usage_table = usage_table;
     wbfs_memset(usage_table,0,WII_MAX_SECTORS);
 

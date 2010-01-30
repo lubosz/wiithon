@@ -334,19 +334,26 @@ COMMAND: FILETYPE|FT  [path]...
 
     -s --source  path  ISO file or directory with ISO files.
     -r --recurse path  ISO file or base of a directory tree with ISO files.
+       --psel  p-type  Partition selector: (no-)game|update|channel all(=def) raw.
+       --raw           Short cut for --psel=raw.
+
     -l --long          Print in long format: Print ID6 for images.
     -ll                (--long twice) Print REGION for images.
-    -lll               (--long three times) Print real path instead of given path.
-    -i --ignore        Ignore non existing and don't print status line.
+    -lll               (3x --long) Print real path instead of given path.
+    -i --ignore        Ignore non existing files and don't print status line.
     -ii                (--ignore twice) Ignore all non ISO files.
 
 
  The command 'FILETYPE' prints for each file in the internal file database
  (build by the options --source and --recurse) one status line like:
-    FILETYPE ID6 REGION filename
+    FILETYPE ID6 SIZE_MIB REGION filename
  Column 'ID6' is only printed if option --long is set. For non ISO images
- the ID6 is '-'. Column 'REGION' is only printed if option --long is set
- at least two times.
+ the ID6 is '-'. Columns 'SIZE_MIB' and 'REGION' are only printed if option
+ --long is set at least two times.
+
+ 'SIZE_MIB' is the calculatet size of a scrubbed ISO image. For this all used
+ sectors of a ISO image are counted. The usage depends of the options --psel
+ and --raw.
 
  Filetypes are:
     NO-FILE  : No file found
@@ -419,6 +426,66 @@ COMMAND: ID6|ID   [path]...
  The output sort order can be set by the --sort option. Sort=none means, that
  the ID will be shown in order of the WBFS partition. The default sort order
  is 'ID'.
+
+
+ Usual ERROR/EXIT CODES:
+
+    0 == OK             : all done without erros.
+    SYNTAX ERROR        : at least on syntax error in command line found.
+    READ ERROR          : error while reading a file.
+
+
+-------------------------------------------------------------------------------
+
+COMMAND: ISOSIZE|SIZE  [path]...
+
+ Print a status line with size calculations for each file in the internal
+ database. Additional path parameters are handled like the option --source.
+
+ If neither --source nor --recurse is used and no other source is defined then
+ the default directory is searched for ISO files.
+
+ Options:
+
+    -s --source  path  ISO file or directory with ISO files.
+    -r --recurse path  ISO file or base of a directory tree with ISO files.
+       --psel  p-type  Partition selector: (no-)game|update|channel all(=def) raw.
+       --raw           Short cut for --psel=raw.
+
+    -l --long          Print in long format: Print additional SIZE_IN_MIB.
+    -ll                (--long twice) Print additional WBFS calculations.
+    -lll               (3x --long) Print real path instead of given path.
+    -H --no-header     Suppress printing of header.
+
+    -i --ignore        Ignore non existing files and don't print status line.
+    -ii                (--ignore twice) Ignore all non ISO files.
+
+
+ The command 'ISOSIZE' prints for each file in the internal file database
+ (build by the options --source and --recurse) one status line like:
+
+    ISO_BLOCKS  SIZE_IN_MIB  WBFS_FILESIZE  SIZE_IN_500G_WBFS  filename
+
+ The size is calculated for a scrubbed ISO image. For this all used sectors
+ of a ISO image are counted. The usage depends of the options --psel and --raw.
+
+ ISO_BLOCKS
+    The number of used ISO blocks. Each ISO block has a size of 32K.
+
+ SIZE_IN_MIB
+    The number of used ISO blocks in MiB. It's a rounded value ISO_BLOCKS.
+    Column SIZE_IN_MIB is only shown if the option --long is set.
+
+ WBFS_FILESIZE
+    The total size of a wbfs file that contains only 1 disc. The calculation
+    is made under the assumption that the WBFS blocks size is 2 MiB.
+    Column WBFS_FILESIZE is only shown if the --long is set at least twice.
+
+ SIZE_IN_500G_WBFS
+    The size of a ISO image as part of a WBFS with about 500g total space.
+    The calculation is made under the assumption that the WBFS blocks size
+    is 8 MiB. Column SIZE_IN_500G_WBFS is only shown if the option --long
+    is set at least twice.
 
 
  Usual ERROR/EXIT CODES:

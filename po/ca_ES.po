@@ -1729,29 +1729,29 @@ msgstr "Programa executat amb les opcions incorrectes."
 msgid "Interrumpido por el usuario"
 msgstr "Interromput per l'usuari"
 
-#~ msgid "Progreso de la tarea actual."
-#~ msgstr "Progrés de la tasca actual."
-
-#~ msgid "Numero de tareas que esperan en la cola."
-#~ msgstr "Nombre de tasques que esperen a la cua"
-
-#~ msgid "Numero de juegos."
-#~ msgstr "Nombre de jocs"
-
-#~ msgid "Espacio usado / Espacio total"
-#~ msgstr "Espai utilitzat / Espai total"
-
-#~ msgid "+INFO"
-#~ msgstr "+INFO"
-
-#~ msgid "Fecha de lanzamiento: "
-#~ msgstr "Data de llançament:"
-
-#~ msgid "OPCIONALES: "
-#~ msgstr "OPCIONALS:"
+#~ msgid "No se ha encontrado ninguna imagen ISO o RAR"
+#~ msgstr "No s'ha trobat cap imatge ISO o RAR"
 
 #~ msgid "ACCESORIOS: "
 #~ msgstr "Accesoris:"
 
-#~ msgid "No se ha encontrado ninguna imagen ISO o RAR"
-#~ msgstr "No s'ha trobat cap imatge ISO o RAR"
+#~ msgid "OPCIONALES: "
+#~ msgstr "OPCIONALS:"
+
+#~ msgid "Fecha de lanzamiento: "
+#~ msgstr "Data de llançament:"
+
+#~ msgid "+INFO"
+#~ msgstr "+INFO"
+
+#~ msgid "Espacio usado / Espacio total"
+#~ msgstr "Espai utilitzat / Espai total"
+
+#~ msgid "Numero de juegos."
+#~ msgstr "Nombre de jocs"
+
+#~ msgid "Numero de tareas que esperan en la cola."
+#~ msgstr "Nombre de tasques que esperen a la cua"
+
+#~ msgid "Progreso de la tarea actual."
+#~ msgstr "Progrés de la tasca actual."

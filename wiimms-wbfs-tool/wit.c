@@ -61,7 +61,6 @@ typedef enum enumOptions
 	OPT_SPLIT,
 	OPT_SPLIT_SIZE,
 	OPT_PRESERVE,
-	OPT_SIZE,
 	OPT_UPDATE,
 	OPT_SYNC,
 	OPT_OVERWRITE,
@@ -126,6 +125,7 @@ typedef enum enumOptionsBit
 	OB_CMD_TITLES	= 0,
 	OB_CMD_FILELIST	= OB_LONG|OB_IGNORE,
 	OB_CMD_FILETYPE	= OB_LONG|OB_IGNORE,
+	OB_CMD_ISOSIZE	= OB_LONG|OB_IGNORE|OB_NO_HEADER,
 	OB_CMD_DUMP	= OB_LONG,
 	OB_CMD_ID6	= OB_SORT|OB_UNIQUE,
 	OB_CMD_LIST	= OB_SORT|OB_LONG|OB_UNIQUE|OB_NO_HEADER,
@@ -155,6 +155,7 @@ typedef enum enumCommands
 
 	CMD_FILELIST,
 	CMD_FILETYPE,
+	CMD_ISOSIZE,
 
 	CMD_DUMP,
 	CMD_ID6,
@@ -270,6 +271,7 @@ CommandTab_t CommandTab[] =
 
 	{ CMD_FILELIST,	"FILELIST",	"FL",		OB_CMD_FILELIST },
 	{ CMD_FILETYPE,	"FILETYPE",	"FT",		OB_CMD_FILETYPE },
+	{ CMD_ISOSIZE,	"ISOSIZE",	"SIZE",		OB_CMD_ISOSIZE },
 
 	{ CMD_DUMP,	"DUMP",		"D",		OB_CMD_DUMP },
 	{ CMD_ID6,	"ID6",		"ID",		OB_CMD_ID6 },
@@ -308,6 +310,7 @@ static char help_text[] =
     "\n"
     "   FILELIST | FL   : List all aource files decared by --source and --recurse.\n"
     "   FILETYPE | FT   : Print a status line for each source file.\n"
+    "   ISOSIZE  | SIZE : Print a status line with size infos for each source file.\n"
     "\n"
     "   DUMP     | D    : Dump the content of ISO files.\n"
     "   ID6      | ID   : Print ID6 of all found ISO files.\n"
@@ -390,17 +393,18 @@ static char help_text[] =
     "   ERROR    | ERR  -l [error_code] // NO OTHER OPTIONS\n"
     "   TITLES             [additional_title_file]...\n"
     "\n"
-    "   FILELIST | FL   -l   -ii        [source]...\n"
-    "   FILETYPE | FT   -ll  -ii        [source]...\n"
-    "   DUMP     | D    -l              [source]...\n"
-    "   ID6      | ID           -U -S   [source]...\n"
-    "   LIST     | LS   -lll -u -H -S   [source]...\n"
-    "   LIST-*   | L*   -ll  -u -H -S   [source]...\n"
+    "   FILELIST | FL   -l   -ii                [source]...\n"
+    "   FILETYPE | FT   -lll -ii        --psel= [source]...\n"
+    "   ISOSIZE  | SIZE -lll -ii -H     --psel= [source]...\n"
+    "   DUMP     | D    -l                      [source]...\n"
+    "   ID6      | ID            -U -S          [source]...\n"
+    "   LIST     | LS   -lll -u  -H -S          [source]...\n"
+    "   LIST-*   | L*   -ll  -u  -H -S          [source]...\n"
     "\n"
-    "   DIFF     | CMP  -tt     -i     --psel= [source]... [-d=]dest\n"
-    "   COPY     | CP   -tt -zZ -ipRuo --psel= [source]... [-d=]dest\n"
-    "   SCRUB    | SB   -tt -zZ -ip    --psel= [source]...\n"
-    "   MOVE     | MV   -tt     -i     --psel= [source]... [-d=]dest\n"
+    "   DIFF     | CMP  -tt      -i     --psel= [source]... [-d=]dest\n"
+    "   COPY     | CP   -tt  -zZ -ipRuo --psel= [source]... [-d=]dest\n"
+    "   SCRUB    | SB   -tt  -zZ -ip    --psel= [source]...\n"
+    "   MOVE     | MV   -tt      -i     --psel= [source]... [-d=]dest\n"
  #ifdef TEST // [2do]
     "   REMOVE   | RM   ...             id6...\n"
  #endif
@@ -529,10 +533,22 @@ enumError exec_filetype ( SuperFile_t * sf, Iterator_t * it )
 	char split[10] = " -";
 	if ( sf->f.split_used > 1 )
 	    snprintf(split,sizeof(split),"%2d",sf->f.split_used);
-	printf("%-8s %-6s %s %s %s\n",
+
+	ccp region = "-   ";
+	char size[10] = "   -";
+	if (sf->f.id6[0])
+	{
+	    region = *GetRegionInfo(sf->f.id6[3]);
+	    u32 count = CountUsedIsoBlocksSF(sf,partition_selector);
+	    if (count)
+		snprintf(size,sizeof(size),"%4u",
+			(count+WII_SECTORS_PER_MIB/2)/WII_SECTORS_PER_MIB);
+	}
+
+	printf("%-8s %-6s %s %s %s %s\n",
 		ftype, sf->f.id6[0] ? sf->f.id6 : "-",
-		*GetRegionInfo( sf->f.id6[0] ? sf->f.id6[3] : 0 ),
-		split, it->long_count > 2 ? it->real_path : sf->f.fname );
+		size, region, split,
+		it->long_count > 2 ? it->real_path : sf->f.fname );
     }
     else if (it->long_count)
     {
@@ -563,6 +579,113 @@ enumError cmd_filetype()
     it.act_non_iso	= ignore_count > 1 ? ACT_IGNORE : ACT_ALLOW;
     it.long_count	= long_count;
     const enumError err = SourceIterator(&it,true,false);
+    ResetIterator(&it);
+    return err;
+}
+
+//
+///////////////////////////////////////////////////////////////////////////////
+
+enumError exec_isosize ( SuperFile_t * sf, Iterator_t * it )
+{
+    ASSERT(sf);
+    ASSERT(it);
+
+    const bool print_header = !(used_options&OB_NO_HEADER);
+
+    if ( it->long_count > 1 )
+    {
+	if ( print_header && !it->done_count++  )
+	    printf("\n"
+		"   ISO size .wbfs 500g\n"
+		"blocks  MiB   MIB WBFS  %s\n"
+		"----------------------------------------"
+			"---------------------------------------\n"
+		, it->long_count > 2 ? "real path" : "filename" );
+
+	char size[30] = "     -    -     -    -";
+	if (sf->f.id6[0])
+	{
+	    u32 count = CountUsedIsoBlocksSF(sf,partition_selector);
+	    if (count)
+	    {
+		// wbfs: size=10g => block size = 2 MiB
+		u32 wfile = 1 + CountUsedBlocks( wdisc_usage_tab,
+						2 * WII_SECTORS_PER_MIB );
+		// wbfs: size=500g => block size = 8 MiB
+		u32 w500 =  CountUsedBlocks( wdisc_usage_tab,
+						8 * WII_SECTORS_PER_MIB );
+
+		snprintf(size,sizeof(size),"%6u %4u %5u %4u",
+			count, (count+WII_SECTORS_PER_MIB/2)/WII_SECTORS_PER_MIB,
+			2*wfile, 8*w500 );
+	    }
+	}
+	printf("%s  %s\n", size, it->long_count > 2 ? it->real_path : sf->f.fname );
+    }
+    else if ( it->long_count )
+    {
+	if ( print_header && !it->done_count++  )
+	    fputs("\n"
+		"   ISO size\n"
+		"blocks  MiB  filename\n"
+		"----------------------------------------"
+			"---------------------------------------\n"
+		,stdout);
+
+	char size[20] = "     -    -";
+	if (sf->f.id6[0])
+	{
+	    u32 count = CountUsedIsoBlocksSF(sf,partition_selector);
+	    if (count)
+		snprintf(size,sizeof(size),"%6u %4u",
+			count, (count+WII_SECTORS_PER_MIB/2)/WII_SECTORS_PER_MIB);
+	}
+	printf("%s  %s\n", size, sf->f.fname );
+    }
+    else
+    {
+	if ( print_header && !it->done_count++  )
+	    fputs("\n"
+		"   ISO\n"
+		"blocks  filename\n"
+		"----------------------------------------"
+			"---------------------------------------\n"
+		,stdout);
+
+	char size[20] = "     -";
+	if (sf->f.id6[0])
+	{
+	    u32 count = CountUsedIsoBlocksSF(sf,partition_selector);
+	    if (count)
+		snprintf(size,sizeof(size),"%6u",count);
+	}
+	printf("%s  %s\n", size, sf->f.fname );
+    }
+
+    return ERR_OK;
+}
+
+//-----------------------------------------------------------------------------
+
+enumError cmd_isosize()
+{
+    ParamList_t * param;
+    for ( param = first_param; param; param = param->next )
+	AppendStringField(&source_list,param->arg,true);
+
+    Iterator_t it;
+    InitializeIterator(&it);
+    it.func		= exec_isosize;
+    it.act_non_exist	= ignore_count > 0 ? ACT_IGNORE : ACT_ALLOW;
+    it.act_non_iso	= ignore_count > 1 ? ACT_IGNORE : ACT_ALLOW;
+    it.act_wbfs		= ACT_EXPAND;
+    it.long_count	= long_count;
+    const enumError err = SourceIterator(&it,true,false);
+
+    if ( !(used_options&OB_NO_HEADER) && it.done_count )
+	putchar('\n');
+
     ResetIterator(&it);
     return err;
 }
@@ -1744,6 +1867,7 @@ enumError check_command ( int argc, char ** argv )
 
 	case CMD_FILELIST:	err = cmd_filelist(); break;
 	case CMD_FILETYPE:	err = cmd_filetype(); break;
+	case CMD_ISOSIZE:	err = cmd_isosize(); break;
 
 	case CMD_DIFF:		err = cmd_diff(); break;
 	case CMD_COPY:		err = cmd_copy(); break;

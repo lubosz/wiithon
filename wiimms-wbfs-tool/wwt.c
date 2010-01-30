@@ -2631,44 +2631,57 @@ enumError cmd_rename ( bool rename_id )
 
 enumError cmd_filetype()
 {
-    File_t f;
-    InitializeFile(&f);
+    SuperFile_t sf;
+    InitializeSF(&sf);
 
     ParamList_t * param;
     for ( param = first_param; param; param = param->next )
     {
-	ResetFile(&f,false);
-	f.disable_errors = true;
-	OpenFile(&f,param->arg,IOM_IS_IMAGE);
-	AnalyseFT(&f);
+	ResetSF(&sf,0);
+	sf.f.disable_errors = true;
+	OpenSF(&sf,param->arg,true,false);
+	AnalyseFT(&sf.f);
 
-	ccp ftype = GetNameFT( f.ftype, used_options & OB_IGNORE ? 1 : 0 );
+	ccp ftype = GetNameFT( sf.f.ftype, used_options & OB_IGNORE ? 1 : 0 );
 	if (ftype)
 	{
 	    if ( long_count > 1 )
 	    {
 		char split[10] = " -";
-		if ( f.split_used > 1 )
-		    snprintf(split,sizeof(split),"%2d",f.split_used);
-		printf("%-8s %-6s %4s %s %s\n",
-			ftype, f.id6[0] ? f.id6 : "-",
-			*GetRegionInfo( f.id6[0] ? f.id6[3] : 0 ),
-			split, f.fname );
+		if ( sf.f.split_used > 1 )
+		    snprintf(split,sizeof(split),"%2d",sf.f.split_used);
+
+		ccp region = "-   ";
+		char size[10] = "   -";
+		if (sf.f.id6[0])
+		{
+		    region = *GetRegionInfo(sf.f.id6[3]);
+		    u32 count = CountUsedIsoBlocksSF(&sf,partition_selector);
+		    if (count)
+			snprintf(size,sizeof(size),"%4u",
+				(count+WII_SECTORS_PER_MIB/2)/WII_SECTORS_PER_MIB);
+		}
+
+		printf("%-8s %-6s %s %s %s %s\n",
+			ftype, sf.f.id6[0] ? sf.f.id6 : "-",
+			size, region, split, sf.f.fname );
 	    }
 	    else if (long_count)
 	    {
 		char split[10] = " -";
-		if ( f.split_used > 1 )
-		    snprintf(split,sizeof(split),"%2d",f.split_used);
-		printf("%-8s %-6s %s %s\n", ftype, f.id6[0] ? f.id6 : "-", split, f.fname );
+		if ( sf.f.split_used > 1 )
+		    snprintf(split,sizeof(split),"%2d",sf.f.split_used);
+		printf("%-8s %-6s %s %s\n",
+			ftype, sf.f.id6[0] ? sf.f.id6 : "-",
+			split, sf.f.fname );
 	    }
 	    else
-		printf("%-8s %s\n", ftype, f.fname );
+		printf("%-8s %s\n", ftype, sf.f.fname );
 	}
-	ClearFile(&f,false);
+	CloseSF(&sf,0);
     }
 
-    ResetFile(&f,false);
+    ResetSF(&sf,0);
     return ERR_OK;
 }
 

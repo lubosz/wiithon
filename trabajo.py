@@ -531,6 +531,8 @@ class PoolTrabajo(Pool , Thread):
             self.callback_empieza_progreso(trabajo)
 
         exito = core.convertir('iso','wbfs',origen, directorio_salida)
+        if not exito:
+            trabajo.error = _('Error en la conversion de %s a WBFS') % origen
 
         if self.callback_termina_progreso:
             self.callback_termina_progreso(trabajo)
@@ -543,6 +545,8 @@ class PoolTrabajo(Pool , Thread):
             self.callback_empieza_progreso_indefinido(trabajo)
 
         exito = core.convertir('iso','wdf',origen, directorio_salida)
+        if not exito:
+            trabajo.error = _('Error en la conversion de %s a WDF') % origen
 
         if self.callback_termina_progreso_indefinido:
             self.callback_termina_progreso_indefinido(trabajo)
@@ -555,6 +559,8 @@ class PoolTrabajo(Pool , Thread):
             self.callback_empieza_progreso(trabajo)
 
         exito = core.convertir('wbfs','iso',origen, directorio_salida)
+        if not exito:
+            trabajo.error = _('Error en la conversion de %s a ISO') % origen
 
         if self.callback_termina_progreso:
             self.callback_termina_progreso(trabajo)
@@ -567,6 +573,8 @@ class PoolTrabajo(Pool , Thread):
             self.callback_empieza_progreso_indefinido(trabajo)
 
         exito = core.convertir('wdf','iso',origen, directorio_salida)
+        if not exito:
+            trabajo.error = _('Error en la conversion de %s a ISO') % origen
 
         if self.callback_termina_progreso_indefinido:
             self.callback_termina_progreso_indefinido(trabajo)

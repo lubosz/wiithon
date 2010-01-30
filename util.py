@@ -49,6 +49,7 @@ def getExtension(fichero):
     else:
         return fichero
 
+# si es una ruta -> pasarla por os.path.basename
 def getNombreFichero(fichero):
     posPunto = fichero.rfind(".")
     if posPunto != -1:

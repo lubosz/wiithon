@@ -29,6 +29,7 @@ from selector_ficheros import SelectorFicheros
 from textview_custom import TextViewCustom
 from estadistica import MuestraEstadistica
 from conversor import ActionConversor
+from extraer import ActionExtraer
 
 db =        util.getBDD()
 session =   util.getSesionBDD(db)
@@ -165,6 +166,7 @@ class WiithonGUI(GtkBuilderWrapper):
         
         # logica del dialogo conversor
         actionConversor = ActionConversor(self)
+        actionExtraer = ActionExtraer(self)
 
         # activar caratula activa
         self.wb_boton_normal.connect("toggled", self.on_clicked_tipo_caratula, util.COVER_NORMAL)
@@ -1735,9 +1737,9 @@ class WiithonGUI(GtkBuilderWrapper):
             
         elif(id_tb == self.wb_tb_renombrado_masivo):
             self.alert('warning',_('Not implemented yet'))
-        
-        elif(not self.isSelectedPartition() and id_tb != self.wb_tb_copiar_SD and id_tb != self.wb_tb_acerca_de and id_tb != self.wb_tb_refrescar_wbfs and id_tb != self.wb_tb_preferencias):
-            self.alert("warning" , _("Tienes que seleccionar una particion WBFS para realizar esta accion"))
+
+            #elif(not self.isSelectedPartition() and id_tb != self.wb_tb_copiar_SD and id_tb != self.wb_tb_acerca_de and id_tb != self.wb_tb_refrescar_wbfs and id_tb != self.wb_tb_preferencias):
+            #self.alert("warning" , _("Tienes que seleccionar una particion WBFS para realizar esta accion"))
 
         elif(id_tb == self.wb_tb_acerca_de):
             self.wb_aboutdialog.run()
@@ -1856,7 +1858,14 @@ class WiithonGUI(GtkBuilderWrapper):
                 self.alert("warning" , _("No has seleccionado ninguna particion"))
 
         elif(id_tb == self.wb_tb_extraer):
-
+            
+            if self.isSelectedPartition():
+                self.alert('warning','WARNING: In construction. Dont know if it work')
+                self.wb_dialogo_extraer.run()
+                self.wb_dialogo_extraer.hide()
+            else:
+                self.alert("warning" , _("No has seleccionado ninguna particion"))
+            '''
             if self.isSelectedGame():
 
                 fc_extraer = SelectorFicheros(
@@ -1892,9 +1901,13 @@ class WiithonGUI(GtkBuilderWrapper):
 
             else:
                 self.alert("warning" , _("No has seleccionado ningun juego"))
+            '''
 
         elif(id_tb == self.wb_tb_renombrar):
-            self.proponer_nombre_juego( self.sel_juego.obj )
+            if self.isSelectedPartition():
+                self.proponer_nombre_juego( self.sel_juego.obj )    
+            else:
+                self.alert("warning" , _("No has seleccionado ninguna particion"))
 
         elif(id_tb == self.wb_tb_anadir or id_tb == self.wb_tb_anadir_directorio):
 
