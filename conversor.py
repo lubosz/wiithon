@@ -58,32 +58,20 @@ class ActionConversor(Action):
             self.formato_destino = formato
 
     def empieza_conversion(self, boton):
-        
         if self.formato_destino == 'iso':
             if self.formato_origen == 'wbfs':
-                mensaje = '%s "%s" convert "%s"' % (config.WBFS_FILE, self.origen, self.salida)
+                self.padre.poolTrabajo.nuevoTrabajoConvertir_WBFS_ISO(self.origen, self.salida)
             elif self.formato_origen == 'wdf':
-                mensaje = '%s -oq "%s" -d "salida.iso"' % (config.WDF_TO_ISO, self.origen)
-            else:
-                mensaje = None
+                self.padre.poolTrabajo.nuevoTrabajoConvertir_WDF_ISO(self.origen, self.salida)
         elif self.formato_destino == 'wbfs':
-            mensaje = '%s "%s" convert "%s"' % (config.WBFS_FILE, self.origen, self.salida)
+            if self.formato_origen == 'iso':
+                self.padre.poolTrabajo.nuevoTrabajoConvertir_ISO_WBFS(self.origen, self.salida)
         elif self.formato_destino == 'wdf':
-            mensaje = '%s -oq "%s" -d "salida.wdf"' % (config.ISO_TO_WDF, self.origen)
-        else:
-            mensaje = None
+            if self.formato_origen == 'iso':
+                self.padre.poolTrabajo.nuevoTrabajoConvertir_ISO_WDF(self.origen, self.salida)
+            
+        self.ocultar_resto_formulario()
 
-        if mensaje is not None:
-            ok = util.call_out_screen(mensaje)
-        else:
-            ok = False
-
-        if ok:
-            self.padre.alert('info', 'Conversion realizada satisfactoriamente')
-            self.ocultar_resto_formulario()
-        else:
-            self.padre.alert('error', 'Error al convertir.\n\nComando: %s' % mensaje)
-        
     def mostrar_resto_formulario(self, esISO):
 
         self.padre.wb_frame_paso1.set_sensitive(True)

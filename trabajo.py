@@ -18,7 +18,8 @@ from util import ErrorDescargando, SesionWiiTDB
 DESCARGA_DISCO,COPIAR_CARATULA,COPIAR_DISCO,
 RECORRER_DIRECTORIO,DESCOMPRIMIR_RAR,
 ACTUALIZAR_WIITDB,EDITAR_JUEGO_WIITDB,
-VER_URL)=([ "%d" % i for i in range(12) ])
+VER_URL,CONVERSION_ISO_WBFS, CONVERSION_ISO_WDF,
+CONVERSION_WBFS_ISO,CONVERSION_WDF_ISO)=([ "%d" % i for i in range(16) ])
 
 # prioridades
 (ALTA,BAJA)=([ "%d" % i for i in range(2) ])
@@ -202,7 +203,7 @@ class PoolTrabajo(Pool , Thread):
         elif( trabajo.tipo == RECORRER_DIRECTORIO ):
             directorio = trabajo.origen
             particion = trabajo.destino
-            trabajo.exito = self.recorrerDirectorioYAnadir(core , trabajo, directorio, particion)
+            trabajo.exito = self.recorrerDirectorioYAnadir(core, trabajo, directorio, particion)
 
         elif( trabajo.tipo == DESCOMPRIMIR_RAR ):
             archivoRAR = trabajo.origen
@@ -220,6 +221,26 @@ class PoolTrabajo(Pool , Thread):
         elif( trabajo.tipo == VER_URL ):
             url = trabajo.origen
             trabajo.exito = self.abrirPagina(url)
+            
+        elif( trabajo.tipo == CONVERSION_ISO_WBFS ):
+            origen = trabajo.origen
+            directorio_salida = trabajo.destino
+            trabajo.exito = self.convertir_ISO_WBFS(core, trabajo, origen, directorio_salida)
+            
+        elif( trabajo.tipo == CONVERSION_ISO_WDF ):
+            origen = trabajo.origen
+            directorio_salida = trabajo.destino
+            trabajo.exito = self.convertir_ISO_WDF(core, trabajo, origen, directorio_salida)
+            
+        elif( trabajo.tipo == CONVERSION_WBFS_ISO ):
+            origen = trabajo.origen
+            directorio_salida = trabajo.destino
+            trabajo.exito = self.convertir_WBFS_ISO(core, trabajo, origen, directorio_salida)
+            
+        elif( trabajo.tipo == CONVERSION_WDF_ISO ):
+            origen = trabajo.origen
+            directorio_salida = trabajo.destino
+            trabajo.exito = self.convertir_WDF_ISO(core, trabajo, origen, directorio_salida)
 
         trabajo.terminado = True
 
@@ -504,6 +525,54 @@ class PoolTrabajo(Pool , Thread):
         util.call_out_null('%s "%s"' % (self.COMANDO_ABRIR_WEB, url))
         return True
 
+    def convertir_ISO_WBFS(self, core, trabajo, origen, directorio_salida):
+        
+        if self.callback_empieza_progreso:
+            self.callback_empieza_progreso(trabajo)
+
+        exito = core.convertir('iso','wbfs',origen, directorio_salida)
+
+        if self.callback_termina_progreso:
+            self.callback_termina_progreso(trabajo)
+
+        return exito
+
+    def convertir_ISO_WDF(self, core, trabajo, origen, directorio_salida):
+        
+        if self.callback_empieza_progreso_indefinido:
+            self.callback_empieza_progreso_indefinido(trabajo)
+
+        exito = core.convertir('iso','wdf',origen, directorio_salida)
+
+        if self.callback_termina_progreso_indefinido:
+            self.callback_termina_progreso_indefinido(trabajo)
+
+        return exito
+
+    def convertir_WBFS_ISO(self, core, trabajo, origen, directorio_salida):
+        
+        if self.callback_empieza_progreso:
+            self.callback_empieza_progreso(trabajo)
+
+        exito = core.convertir('wbfs','iso',origen, directorio_salida)
+
+        if self.callback_termina_progreso:
+            self.callback_termina_progreso(trabajo)
+
+        return exito
+
+    def convertir_WDF_ISO(self, core, trabajo, origen, directorio_salida):
+        
+        if self.callback_empieza_progreso_indefinido:
+            self.callback_empieza_progreso_indefinido(trabajo)
+
+        exito = core.convertir('wdf','iso',origen, directorio_salida)
+
+        if self.callback_termina_progreso_indefinido:
+            self.callback_termina_progreso_indefinido(trabajo)
+
+        return exito
+
     ######################### INTERFAZ PUBLICO #######################################
 
     def nuevoTrabajo( self , tipo , origenes , destino=None ):
@@ -564,6 +633,18 @@ class PoolTrabajo(Pool , Thread):
     def nuevoTrabajoVerPagina(self , url):
         return self.nuevoTrabajo( VER_URL , url )
 
+    def nuevoTrabajoConvertir_ISO_WBFS(self , origen, directorio_salida):
+        return self.nuevoTrabajo( CONVERSION_ISO_WBFS , origen, directorio_salida )
+
+    def nuevoTrabajoConvertir_ISO_WDF(self , origen, directorio_salida):
+        return self.nuevoTrabajo( CONVERSION_ISO_WDF , origen, directorio_salida )
+
+    def nuevoTrabajoConvertir_WBFS_ISO(self , origen, directorio_salida):
+        return self.nuevoTrabajo( CONVERSION_WBFS_ISO , origen, directorio_salida )
+
+    def nuevoTrabajoConvertir_WDF_ISO(self , origen, directorio_salida):
+        return self.nuevoTrabajo( CONVERSION_WDF_ISO , origen, directorio_salida )
+
 '''
 tipo:
     tipo de Trabajo
@@ -622,5 +703,13 @@ class Trabajo:
             return _("Editar Juego WiiTDB: %s") % (self.origen)
         elif self.tipo == VER_URL:
             return _("Abrir pagina: %s") % (self.origen)
+        elif self.tipo == CONVERSION_ISO_WBFS:
+            return _("Convirtiendo ISO -> WBFS: (%s -> %s)") % (os.path.basename(self.origen), self.destino)
+        elif self.tipo == CONVERSION_ISO_WDF:
+            return _("Convirtiendo ISO -> WDF: (%s -> %s)") % (os.path.basename(self.origen), self.destino)
+        elif self.tipo == CONVERSION_WBFS_ISO:
+            return _("Convirtiendo WBFS -> ISO: (%s -> %s)") % (os.path.basename(self.origen), self.destino)
+        elif self.tipo == CONVERSION_WDF_ISO:
+            return _("Convirtiendo WDF -> ISO: (%s -> %s)") % (os.path.basename(self.origen), self.destino)
         else:
             return _("Trabajo desconocido")

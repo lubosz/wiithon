@@ -1726,13 +1726,11 @@ class WiithonGUI(GtkBuilderWrapper):
             print "on_tb_toolbar_clicked"
             
         if(id_tb == self.wb_tb_conversor):
-            self.alert("warning" , "Esta funcion esta en pleno desarrollo")
             self.wb_dialogo_conversor.run()
             self.wb_dialogo_conversor.hide()
 
         elif(id_tb == self.wb_tb_donate):
             comando = '%s "%s"' % (self.core.prefs.COMANDO_ABRIR_CARPETA, config.WIITHON_DONATE_HTML)
-            print comando
             util.call_out_null(comando)
             
         elif(id_tb == self.wb_tb_renombrado_masivo):
