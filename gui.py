@@ -2493,6 +2493,9 @@ class HiloCalcularProgreso(Thread):
             else:
                 time.sleep(1)
         
+        # mas de 10 errores en linea seguidas -> interrumpir
+        linea_error = 0
+
         while not self.interrumpido:
             # si aún no existe el fichero que contiene los mensajes, esperamos:
             # a) a que el fichero exista
@@ -2520,6 +2523,7 @@ class HiloCalcularProgreso(Thread):
                 else:
                     try:
                         self.porcentaje = float(cachos[0])
+                        linea_error = 0
                         
                         try:
                             informativo = _("quedan")
@@ -2538,9 +2542,12 @@ class HiloCalcularProgreso(Thread):
                             # para descomprimir RAR
                             gobject.idle_add(self.actualizarLabel , "%s - %d%%" % ( self.trabajo , self.porcentaje ))
                     except ValueError:
-                        print _("Error en progreso")
-                        self.porcentaje = 100.0
-                        self.interrumpir()
+                        if config.DEBUG:
+                            print _("Error en progreso")
+                        linea_error += 1
+                        if linea_error > 10:
+                            self.porcentaje = 100.0
+                            self.interrumpir()
 
                 porcentual = self.porcentaje / 100.0
                 gobject.idle_add(self.actualizarFraccion , porcentual )

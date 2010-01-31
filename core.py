@@ -354,11 +354,15 @@ class WiithonCORE:
             elif formato == 'wbfs':
                 comando = '%s -f %s add_wbfs "%s"' % (config.WBFS_FILE, ruta_particion, fichero)
             elif formato == 'wdf':
-                comando = '%s ADD -p %s "%s"' % (config.WWT, ruta_particion, fichero)
+                comando = '%s -qP ADD -p %s "%s"' % (config.WWT, ruta_particion, fichero)
             else:
                 comando = None
 
             if comando is not None:
+                
+                print "-----------------------------"
+                print comando
+                print "-----------------------------"
                 
                 salida = util.call_out_file(comando)
                 return salida
@@ -398,7 +402,7 @@ class WiithonCORE:
         elif formato == 'wbfs':
             comando = '%s %s extract_wbfs %s .' % (config.WBFS_FILE, juego.particion.device , juego.idgame)
         elif formato == 'wdf':
-            comando = "%s EXTRACT -p %s -o -W %s" % (config.WWT, juego.particion.device , juego.idgame)
+            comando = "%s EXTRACT -qP -p %s -oW %s" % (config.WWT, juego.particion.device , juego.idgame)
         else:
             comando = None
         
@@ -441,7 +445,7 @@ class WiithonCORE:
             if formato_origen == 'wbfs':
                 comando = '%s "%s" convert "%s"' % (config.WBFS_FILE, origen, salida)
             elif formato_origen == 'wdf':
-                comando = '%s -oq "%s" -d "%s"' % (config.WDF_TO_ISO, origen, os.path.join(salida, '%s.iso' % util.getNombreFichero(os.path.basename(origen))))
+                comando = '%s -oP "%s" -d "%s"' % (config.WDF_TO_ISO, origen, os.path.join(salida, '%s.iso' % util.getNombreFichero(os.path.basename(origen))))
             else:
                 comando = None
         elif formato_destino == 'wbfs':
@@ -451,7 +455,7 @@ class WiithonCORE:
                 comando = None
         elif formato_destino == 'wdf':
             if formato_origen == 'iso':
-                comando = '%s -oq "%s" -d "%s"' % (config.ISO_TO_WDF, origen, os.path.join(salida, '%s.wdf' % util.getNombreFichero(os.path.basename(origen))))
+                comando = '%s -oP "%s" -d "%s"' % (config.ISO_TO_WDF, origen, os.path.join(salida, '%s.wdf' % util.getNombreFichero(os.path.basename(origen))))
             else:
                 comando = None
         else:

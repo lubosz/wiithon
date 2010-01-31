@@ -717,17 +717,21 @@ void PrintProgressSF ( u64 p_done, u64 p_total, void * param )
 	    sf->progress_verb = "copied";
 
 	int wd;
+	/*
 	if ( percent < 10 && view_sec < 10 )
-	    printf("%*s%3d%% %s in %s (%3.1f MiB/sec)  %n\r",
-		sf->indent,"", percent, sf->progress_verb, time1,
-		(double)total * 1000 / MiB / elapsed, &wd );
+	    printf("%*s%3d%% %s in %s (%3.1f MiB/seccccc)             %n\n", sf->indent,"", percent, sf->progress_verb, time1, (double)total * 1000 / MiB / elapsed, &wd );
 	else
-	    printf("%*s%3d%% %s in %s (%3.1f MiB/sec) -> ETA %s   %n\r",
-		sf->indent,"", percent, sf->progress_verb, time1,
-		(double)total * 1000 / MiB / elapsed, time2, &wd );
+	    printf("%*s%3d%% %s in %s (%3.1f MiB/seccccc) -> ETA %s   %n\n", sf->indent,"", percent, sf->progress_verb, time1, (double)total * 1000 / MiB / elapsed, time2, &wd );
+	*/
+	u32 h, m, s;
+    h = ((eta/1000) / 3600);
+    m = ((eta/1000) / 60) % 60;
+    s = ((eta/1000) % 60);
+	printf("%d;@;%d;@;%d;@;%d\n", percent, h, m, s);
 
 	if ( sf->progress_max_wd < wd )
 	    sf->progress_max_wd = wd;
+
 	fflush(stdout);
     }
 }
@@ -754,14 +758,18 @@ void PrintSummarySF ( SuperFile_t * sf )
 	{
 	    if ( !sf->progress_verb || !*sf->progress_verb )
 		sf->progress_verb = "copied";
+		
+		snprintf(buf,sizeof(buf),"FIN;@;0;@;0;@;0");
 
+		/*
 	    snprintf(buf,sizeof(buf),"%*s%4llu MiB %s in %s, %4.1f MiB/sec",
 		sf->indent,"", (total+MiB/2)/MiB, sf->progress_verb,
 		tim, (double)total * 1000 / MiB / elapsed );
+		*/
 	}
 	else
-	    snprintf(buf,sizeof(buf),"%*sFinished in %s",
-		sf->indent,"", tim );
+		snprintf(buf,sizeof(buf),"FIN;@;0;@;0;@;0");
+	    //snprintf(buf,sizeof(buf),"%*sFinished in %s", sf->indent,"", tim );
     }
 
     if (sf->show_progress)

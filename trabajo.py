@@ -283,21 +283,13 @@ class PoolTrabajo(Pool , Thread):
 
             #################################################
 
-            if formato == 'iso' or formato == 'wbfs':
-                if self.callback_empieza_progreso:
-                    self.callback_empieza_progreso(trabajo)
-            else:
-                if self.callback_empieza_progreso_indefinido:
-                    self.callback_empieza_progreso_indefinido(trabajo)
+            if self.callback_empieza_progreso:
+                self.callback_empieza_progreso(trabajo)
             
             exito = core.anadirISO(DEVICE , fichero)
 
-            if formato == 'iso' or formato == 'wbfs':
-                if self.callback_termina_progreso:
-                    self.callback_termina_progreso(trabajo)
-            else:
-                if self.callback_termina_progreso_indefinido:
-                    self.callback_termina_progreso_indefinido(trabajo)
+            if self.callback_termina_progreso:
+                self.callback_termina_progreso(trabajo)
         else:
             trabajo.error = _("%s no es un ningun juego de Wii") % (os.path.basename(fichero))
 
@@ -307,24 +299,16 @@ class PoolTrabajo(Pool , Thread):
         
         exito = False
 
-        if self.FORMATO_EXTRACT == 'iso' or self.FORMATO_EXTRACT == 'wbfs':
-            if self.callback_empieza_progreso:
-                self.callback_empieza_progreso(trabajo)
-        else:
-            if self.callback_empieza_progreso_indefinido:
-                self.callback_empieza_progreso_indefinido(trabajo)
+        if self.callback_empieza_progreso:
+            self.callback_empieza_progreso(trabajo)
         
         exito = core.extraerJuego(juego, destino, self.FORMATO_EXTRACT)
 
         if self.callback_termina_progreso:
             self.callback_termina_progreso(trabajo)
             
-        if self.FORMATO_EXTRACT == 'iso' or self.FORMATO_EXTRACT == 'wbfs':
-            if self.callback_termina_progreso:
-                self.callback_termina_progreso(trabajo)
-        else:
-            if self.callback_termina_progreso_indefinido:
-                self.callback_termina_progreso_indefinido(trabajo)
+        if self.callback_termina_progreso:
+            self.callback_termina_progreso(trabajo)
         
         return exito
 
@@ -504,9 +488,9 @@ class PoolTrabajo(Pool , Thread):
             trabajo.error = _("Error: Al descargar la bdd wiitdb de: %s") % (url)
         except:
             trabajo.error = _("Error: Ocurrio un error al introducir la informacion de juegos de WiiTDB")
-        
+
         return exito
-        
+
     def editarJuegoWiiTDB(self, trabajo, IDGAME):
         exito = False
         if self.USER_WIITDB != "" and self.PASS_WIITDB != "":
@@ -520,7 +504,7 @@ class PoolTrabajo(Pool , Thread):
         else:
             trabajo.error = _("Escriba su login y password en las preferencias. Si no dispone de uno, registrese en %s") % (config.URL_WIITDB)
         return exito
-        
+
     def abrirPagina(self, url):
         util.call_out_null('%s "%s"' % (self.COMANDO_ABRIR_WEB, url))
         return True
@@ -541,15 +525,15 @@ class PoolTrabajo(Pool , Thread):
 
     def convertir_ISO_WDF(self, core, trabajo, origen, directorio_salida):
         
-        if self.callback_empieza_progreso_indefinido:
-            self.callback_empieza_progreso_indefinido(trabajo)
+        if self.callback_empieza_progreso:
+            self.callback_empieza_progreso(trabajo)
 
         exito = core.convertir('iso','wdf',origen, directorio_salida)
         if not exito:
             trabajo.error = _('Error en la conversion de %s a WDF') % origen
 
-        if self.callback_termina_progreso_indefinido:
-            self.callback_termina_progreso_indefinido(trabajo)
+        if self.callback_termina_progreso:
+            self.callback_termina_progreso(trabajo)
 
         return exito
 
@@ -569,15 +553,15 @@ class PoolTrabajo(Pool , Thread):
 
     def convertir_WDF_ISO(self, core, trabajo, origen, directorio_salida):
         
-        if self.callback_empieza_progreso_indefinido:
-            self.callback_empieza_progreso_indefinido(trabajo)
+        if self.callback_empieza_progreso:
+            self.callback_empieza_progreso(trabajo)
 
         exito = core.convertir('wdf','iso',origen, directorio_salida)
         if not exito:
             trabajo.error = _('Error en la conversion de %s a ISO') % origen
 
-        if self.callback_termina_progreso_indefinido:
-            self.callback_termina_progreso_indefinido(trabajo)
+        if self.callback_termina_progreso:
+            self.callback_termina_progreso(trabajo)
 
         return exito
 
@@ -625,7 +609,7 @@ class PoolTrabajo(Pool , Thread):
 
     def nuevoTrabajoCopiarDisco(self , juegos, destino):
         return self.nuevoTrabajo( COPIAR_DISCO , juegos, destino )
-        
+
     def nuevoTrabajoRecorrerDirectorio(self , directorio, particion):
         return self.nuevoTrabajo( RECORRER_DIRECTORIO , directorio, particion )
 
@@ -634,7 +618,7 @@ class PoolTrabajo(Pool , Thread):
 
     def nuevoTrabajoActualizarWiiTDB(self , url):
         return self.nuevoTrabajo( ACTUALIZAR_WIITDB , url )
-        
+
     def nuevoTrabajoEditarJuegoWiiTDB(self , juego):
         return self.nuevoTrabajo( EDITAR_JUEGO_WIITDB , juego )
 
@@ -684,7 +668,7 @@ class Trabajo:
         self.exito = False
         self.padre = None
         self.error = "%s\n\n%s" % (_("Error al finalizar la siguiente tarea:") ,self.__repr__())
-        self.avisar = tipo is not DESCARGA_CARATULA and tipo is not DESCARGA_DISCO
+        self.avisar = (tipo is not DESCARGA_CARATULA) and (tipo is not DESCARGA_DISCO)
  
     def __repr__(self):
         if self.tipo == ANADIR:
