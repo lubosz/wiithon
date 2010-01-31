@@ -396,7 +396,7 @@ msgstr ""
 
 #: conversor.py:27
 msgid "ISO / WBFS / WDF"
-msgstr ""
+msgstr "ISO / WBFS / WDF"
 
 #: core.py:195 core.py:211
 msgid "Copiando"
@@ -1144,19 +1144,19 @@ msgstr "3D"
 
 #: recursos/glade/wiithon.ui.h:2
 msgid "<b>Paso 2: Elegir directorio de salida</b>"
-msgstr ""
+msgstr "<b>Paso 2: Elegir directorio de salida</b>"
 
 #: recursos/glade/wiithon.ui.h:3
 msgid "<b>Paso 3: Elegir formato de salida</b>"
-msgstr ""
+msgstr "<b>Paso 3: Elegir formato de salida</b>"
 
 #: recursos/glade/wiithon.ui.h:4
 msgid "<b>Paso1: Elegir archivo de origen</b>"
-msgstr ""
+msgstr "<b>Paso1: Elegir archivo de origen</b>"
 
 #: recursos/glade/wiithon.ui.h:5
 msgid "<b>Paso1: Elige cuantos juegos quieres extraer</b>"
-msgstr ""
+msgstr "<b>Paso1: Elige cuantos juegos quieres extraer</b>"
 
 #: recursos/glade/wiithon.ui.h:6
 msgid "<small><i>* = algunas opciones requieren reiniciar.</i></small>"
@@ -1255,9 +1255,8 @@ msgid "Conversor"
 msgstr "Conversor"
 
 #: recursos/glade/wiithon.ui.h:30
-#, fuzzy
 msgid "Conversor de imagenes"
-msgstr "Conversor"
+msgstr "Conversor de imagenes"
 
 #: recursos/glade/wiithon.ui.h:31
 msgid "Copia directa de particion a particion"
@@ -1292,18 +1291,16 @@ msgid "Donate"
 msgstr "Donaciones"
 
 #: recursos/glade/wiithon.ui.h:39
-#, fuzzy
 msgid "El juego seleccionado"
-msgstr "Extraer el juego seleccionado*"
+msgstr "El juego seleccionado"
 
 #: recursos/glade/wiithon.ui.h:40
 msgid "Elegir archivo de origen"
-msgstr ""
+msgstr "Elegir archivo de origen"
 
 #: recursos/glade/wiithon.ui.h:41
-#, fuzzy
 msgid "Elegir directorio de salida"
-msgstr "Recorrer directorio %s"
+msgstr "Elegir directorio de salida"
 
 #: recursos/glade/wiithon.ui.h:42
 msgid "Empezar"
@@ -1343,7 +1340,7 @@ msgstr "Herramientas y utilidades"
 
 #: recursos/glade/wiithon.ui.h:53
 msgid "ISO - Formato para grabacion. Ocupa mucho innecesariamente."
-msgstr ""
+msgstr "ISO - Formato para grabacion. Ocupa mucho innecesariamente."
 
 #: recursos/glade/wiithon.ui.h:54
 msgid "Informacion WiiTDB"
@@ -1459,9 +1456,8 @@ msgstr ""
 "Free Software Foundation, Inc.,51 Franklin St, Fifth Floor, Boston, MA 02110-1301  USA"
 
 #: recursos/glade/wiithon.ui.h:81
-#, fuzzy
 msgid "Todos los juegos"
-msgstr "Copiar todos los juegos*"
+msgstr "Todos los juegos"
 
 #: recursos/glade/wiithon.ui.h:82
 msgid "Un gestor de particiones WBFS facil de usar"
@@ -1469,11 +1465,11 @@ msgstr "Un gestor de particiones WBFS fácil de usar"
 
 #: recursos/glade/wiithon.ui.h:83
 msgid "WBFS - Loaders que usan FAT. (usa wbfs_file 1.9). No mantiene la integridad"
-msgstr ""
+msgstr "WBFS - Loaders que usan FAT. (usa wbfs_file 1.9). No mantiene la integridad"
 
 #: recursos/glade/wiithon.ui.h:85
 msgid "WDF - Buena compresion (por Dirk Clemens, Version 29-1-2010). 100% Fiable"
-msgstr ""
+msgstr "WDF - Buena compresión (por Dirk Clemens, Versión 29-1-2010). 100% Fiable"
 
 #: recursos/glade/wiithon.ui.h:86
 msgid "WiiTDB"
@@ -1569,17 +1565,17 @@ msgstr "Escriba su usuario y contraseña en las preferencias. Si no dispone de u
 #: trabajo.py:519
 #, python-format
 msgid "Error en la conversion de %s a WBFS"
-msgstr ""
+msgstr "Error en la conversión de %s a WBFS"
 
 #: trabajo.py:533
 #, python-format
 msgid "Error en la conversion de %s a WDF"
-msgstr ""
+msgstr "Error en la conversión de %s a WDF"
 
 #: trabajo.py:547 trabajo.py:561
 #, python-format
 msgid "Error en la conversion de %s a ISO"
-msgstr ""
+msgstr "Error en la conversión de %s a ISO"
 
 #: trabajo.py:670
 msgid "Error al finalizar la siguiente tarea:"
@@ -1648,22 +1644,22 @@ msgstr "Abrir página: %s"
 #: trabajo.py:699
 #, python-format
 msgid "Convirtiendo ISO -> WBFS: (%s -> %s)"
-msgstr ""
+msgstr "Convirtiendo ISO -> WBFS: (%s -> %s)"
 
 #: trabajo.py:701
 #, python-format
 msgid "Convirtiendo ISO -> WDF: (%s -> %s)"
-msgstr ""
+msgstr "Convirtiendo ISO -> WDF: (%s -> %s)"
 
 #: trabajo.py:703
 #, python-format
 msgid "Convirtiendo WBFS -> ISO: (%s -> %s)"
-msgstr ""
+msgstr "Convirtiendo WBFS -> ISO: (%s -> %s)"
 
 #: trabajo.py:705
 #, python-format
 msgid "Convirtiendo WDF -> ISO: (%s -> %s)"
-msgstr ""
+msgstr "Convirtiendo WDF -> ISO: (%s -> %s)"
 
 #: trabajo.py:707
 msgid "Trabajo desconocido"

@@ -3,6 +3,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: makiolo@gmail.com\n"
+"POT-Creation-Date: \n"
+"PO-Revision-Date: \n"
+"Last-Translator: Ricardo Marmolejo García <makiolo@gmail.com>\n"
 "Language-Team: Español <wii.sceners.linux@lists.launchpad.net>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -150,7 +153,7 @@ msgstr ""
 
 #: cli.py:251 cli.py:272 gui.py:2070
 msgid "Has conectado el disco duro? No se ha encontrado ninguna particion valida."
-msgstr "SIN TRADUCIR: ru_RU"
+msgstr ""
 
 #: cli.py:259 gui.py:2075
 #, python-format

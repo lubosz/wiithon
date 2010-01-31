@@ -12,9 +12,9 @@ class ActionConversor:
         self.padre = padre
         
         self.origen = ''
-        self.salida = ''
         self.formato_origen = ''
-        self.formato_destino = ''
+        self.salida = config.HOME
+        self.formato_destino = 'iso'
         self.padre.wb_conversor_fichero_origen.connect("selection-changed", self.cambio_archivo_origen)
         self.padre.wb_conversor_directorio_salida.connect("current-folder-changed", self.cambio_directorio_salida)
         self.padre.wb_boton_conversor_empezar.connect("clicked", self.empieza_conversion)
