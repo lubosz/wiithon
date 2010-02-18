@@ -881,6 +881,14 @@ There are some hidden options implemented for testing:
 The user can define environment variables as additional way to submit
 parameters to the tool:
 
+WWT_LANG
+
+ With 'WWT_LANG' (not 'WIT_LANG') the user can spezifiy a default language
+ for wwt and wit titles. If 'WWT_LANG' is empty 'LC_CTYPE' will be scanned.
+ The option --lang overides this default setting.
+  
+ Example: WWT_LANG="de"
+
 WIT_OPT
 
  'WIT_OPT' is scanned like a command line and before the real command line is

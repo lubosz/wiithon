@@ -162,7 +162,7 @@ msgstr "Är din hårddisk ansluten eller saknar den en giltig WBFS-partition?"
 msgid "Realmente, desea formatear a WBFS la particion %s? (S/N) "
 msgstr "Är du säker på att du vill formatera partitionen %s med WBFS? Allt som finns på partitionen kommer att försvinna! (Formateringen tar en stund beroende på hur stor disk du har) (J/N)"
 
-#: cli.py:260 cli.py:422
+#: cli.py:260 cli.py:424
 msgid "s"
 msgstr "j"
 
@@ -189,179 +189,179 @@ msgstr "Avbrutet av användaren"
 msgid "Comprueba que tienes la particion FAT32 montada."
 msgstr "Verifiera att du har monterat en FAT32-partition."
 
-#: cli.py:283
+#: cli.py:286
 msgid "Pulse cualquier tecla para continuar ...\n"
 msgstr "Tryck på valfri tangent för att fortsätta... \n"
 
-#: cli.py:297 trabajo.py:424
+#: cli.py:300 trabajo.py:424
 #, python-format
 msgid "El archivo RAR %s: No existe"
 msgstr "RAR-filen %s saknas"
 
-#: cli.py:301 trabajo.py:428
+#: cli.py:304 trabajo.py:428
 #, python-format
 msgid "Error al descomprimrir. Ya existe %s. Si desea sobreescribirlo, modifique la opcion en preferencias."
 msgstr "Fel vid uppackning! %s finns redan. Om du vill skriva över den, ändra i Inställningar."
 
-#: cli.py:308 trabajo.py:438
+#: cli.py:311 trabajo.py:438
 #, python-format
 msgid "Error: El archivo RAR %s no contiene ninguna ISO"
 msgstr "Fel: RAR-arkivet %s innehåller ingen ISO"
 
-#: cli.py:314 trabajo.py:444
+#: cli.py:317 trabajo.py:444
 #, python-format
 msgid "No hay 4.4GB libres para descomprimir el fichero RAR: %s en la ruta %s. Puede cambiar la ruta en preferencias."
 msgstr "Det finns inte 4,4GB fritt utrymme för att packa upp RAR-filen %s i %s. Du kan ändra målkatalog i Inställningar."
 
-#: cli.py:331 trabajo.py:458
+#: cli.py:334 trabajo.py:458
 #, python-format
 msgid "Error al descomrpimir el RAR : %s"
 msgstr "Fel vid uppackning av RAR-filen %s"
 
-#: cli.py:338
+#: cli.py:341
 #, python-format
 msgid "ISO %s aniadida correctamente"
 msgstr "ISO %s tillagd"
 
-#: cli.py:340
+#: cli.py:343
 #, python-format
 msgid "ERROR aniadiendo la ISO : %s (comprueba que sea una ISO de WII)"
 msgstr "FEL när ISO %s skulle läggas till. (Är ISO:n ett Wii-spel?)"
 
-#: cli.py:359
+#: cli.py:362
 #, python-format
 msgid "Copiar .%s: %s a la particion %s"
 msgstr "Kopierar .%s: %s till partition %s"
 
-#: cli.py:367
+#: cli.py:370
 #, python-format
 msgid "ERROR %s no es un ningun juego de Wii"
 msgstr "FEL %s är inget Wii-spel"
 
-#: cli.py:378
+#: cli.py:381
 msgid "INFORME DE RESULTADOS"
 msgstr "RESULTATRAPPORT"
 
-#: cli.py:383
+#: cli.py:386
 msgid "Todo metido en el HD correctamente"
 msgstr "Allting har lagts till till hårddisken utan problem"
 
-#: cli.py:387
+#: cli.py:390
 msgid "Juegos correctos"
 msgstr "Bra spel"
 
-#: cli.py:394
+#: cli.py:397
 msgid "Juegos erroneos"
 msgstr "Dåligt spel"
 
-#: cli.py:404
+#: cli.py:407
 msgid "Buscando un Disco de Wii ..."
 msgstr "Söker efter Wii-skiva..."
 
-#: cli.py:411
+#: cli.py:413
 msgid "No se ha encontrado ningun disco de la Wii"
 msgstr "Hittade ingen Wii-skiva"
 
-#: cli.py:413
+#: cli.py:415
 msgid "Hay mas de un juego de la Wii, deja solo 1 para eliminar la ambiguedad"
 msgstr "Det är mer än ett Wii-spel, välj endast 1 för att förhindra tvetydighet"
 
-#: cli.py:420
+#: cli.py:422
 #, python-format
 msgid "Ya hay una ISO en : %s"
 msgstr "Det finns redan en ISO i: %s"
 
-#: cli.py:421
+#: cli.py:423
 msgid "Desea reemplazarla (S/N) : "
 msgstr "Vill du byta ut den? (J/N):"
 
-#: cli.py:426
+#: cli.py:428
 #, python-format
 msgid "Dumpeando desde %s a %s utilizando %s temporalmente"
 msgstr "Flytta tillfälligt ifrån %s till %s genom att använda %s"
 
-#: cli.py:427
+#: cli.py:429
 msgid "Puede llevar mucho tiempo ..."
 msgstr "Detta kommer att ta en stund..."
 
-#: cli.py:431
+#: cli.py:433
 #, python-format
 msgid "OK, el juego se ha pasado a la particion %s"
 msgstr "Klart, spelet har kopierats till partition %s"
 
-#: cli.py:433
+#: cli.py:435
 #, python-format
 msgid "Error al pasar la ISO a la particion %s"
 msgstr "Fel vid kopiering av ISO:n till partition %s"
 
-#: cli.py:434
+#: cli.py:436
 #, python-format
 msgid "wiithon no borra la ISO temporal: %s, puedes borrarla si no la necesitas"
 msgstr "Wiithon tog inte bort den tillfälliga ISO:n: %s, du kan själv ta bort den om du inte behöver den mer"
 
-#: cli.py:436
+#: cli.py:438
 msgid "Error al dumpear la ISO"
 msgstr "Fel vid dumpning av ISO"
 
-#: cli.py:450
+#: cli.py:452
 #, python-format
 msgid "No se ha encontrado el juego: %s"
 msgstr "Hittar inte spelet: %s"
 
-#: cli.py:460
+#: cli.py:462
 msgid "Indique el NUM del juego : "
 msgstr "Antal spel :"
 
-#: cli.py:470
+#: cli.py:472
 msgid "Numero fuera de rango"
 msgstr "Ej giltigt nummer"
 
-#: cli.py:472
+#: cli.py:474
 msgid "El numero dado es incorrecto"
 msgstr "Fel nummer"
 
-#: cli.py:480 cli.py:482
+#: cli.py:482 cli.py:484
 msgid "Caratula?"
 msgstr "Omslag?"
 
-#: cli.py:480 cli.py:482
+#: cli.py:482 cli.py:484
 msgid "SIZE"
 msgstr "STORLEK"
 
-#: cli.py:480 cli.py:482
+#: cli.py:482 cli.py:484
 msgid "TITULO"
 msgstr "TITEL"
 
-#: cli.py:488 gui.py:1018
+#: cli.py:490 gui.py:1018
 msgid "SI"
 msgstr "JA"
 
-#: cli.py:490 gui.py:1018 wiitdb_schema.py:326
+#: cli.py:492 gui.py:1018 wiitdb_schema.py:326
 msgid "NO"
 msgstr "NEJ"
 
-#: cli.py:498
+#: cli.py:500
 #, python-format
 msgid "Presiona cualquier tecla para mostrar %d lineas mas"
 msgstr "Tryck på valfri tangent för att visa fler rader av %d "
 
-#: cli.py:502
+#: cli.py:504
 msgid "juegos de WII"
 msgstr "Wii-spel"
 
-#: cli.py:506
+#: cli.py:508
 msgid "Usado"
 msgstr "Använt"
 
-#: cli.py:507
+#: cli.py:509
 msgid "Libre"
 msgstr "Ledigt"
 
-#: cli.py:508 gui.py:673
+#: cli.py:510 gui.py:673
 msgid "Total"
 msgstr "Totalt"
 
-#: cli.py:512
+#: cli.py:514
 msgid "AYUDA_CLI"
 msgstr ""
 "[USE]\n"
@@ -1491,11 +1491,11 @@ msgid "Un gestor de particiones WBFS facil de usar"
 msgstr "Enkelt att använda WBFS Partiton Manager"
 
 #: recursos/glade/wiithon.ui.h:83
-msgid "WBFS - Loaders que usan FAT. (usa wbfs_file 1.9). No mantiene la integridad"
+msgid "WBFS - Loaders que usan FAT. (basado en wbfs_file). No mantiene la integridad"
 msgstr ""
 
 #: recursos/glade/wiithon.ui.h:85
-msgid "WDF - Buena compresion (por Dirk Clemens, Version 29-1-2010). 100% Fiable"
+msgid "WDF - Buena compresion (por Dirk Clemens). 100% Fiable"
 msgstr ""
 
 #: recursos/glade/wiithon.ui.h:86

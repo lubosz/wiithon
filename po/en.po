@@ -160,7 +160,7 @@ msgstr "Is your hard disk connected and does it have a valid WBFS partition?"
 msgid "Realmente, desea formatear a WBFS la particion %s? (S/N) "
 msgstr "Are you sure you want to format a partition WBFS %s? (Y/N) "
 
-#: cli.py:260 cli.py:422
+#: cli.py:260 cli.py:424
 msgid "s"
 msgstr "y"
 
@@ -187,179 +187,179 @@ msgstr "Interrupted by user."
 msgid "Comprueba que tienes la particion FAT32 montada."
 msgstr "Verify that you have mounted FAT32 partition."
 
-#: cli.py:283
+#: cli.py:286
 msgid "Pulse cualquier tecla para continuar ...\n"
 msgstr "Press any key to continue ... \n"
 
-#: cli.py:297 trabajo.py:424
+#: cli.py:300 trabajo.py:424
 #, python-format
 msgid "El archivo RAR %s: No existe"
 msgstr "The RAR file %s does not exist"
 
-#: cli.py:301 trabajo.py:428
+#: cli.py:304 trabajo.py:428
 #, python-format
 msgid "Error al descomprimrir. Ya existe %s. Si desea sobreescribirlo, modifique la opcion en preferencias."
 msgstr "Error decompressing. %s already exists. If you want overwrite it, change the option in preferencies."
 
-#: cli.py:308 trabajo.py:438
+#: cli.py:311 trabajo.py:438
 #, python-format
 msgid "Error: El archivo RAR %s no contiene ninguna ISO"
 msgstr "Error: RAR archive %s does not contain ISO"
 
-#: cli.py:314 trabajo.py:444
+#: cli.py:317 trabajo.py:444
 #, python-format
 msgid "No hay 4.4GB libres para descomprimir el fichero RAR: %s en la ruta %s. Puede cambiar la ruta en preferencias."
 msgstr "There are not 4.4GB free to decompress RAR file: %s in the path %s. You can change path in preferencies."
 
-#: cli.py:331 trabajo.py:458
+#: cli.py:334 trabajo.py:458
 #, python-format
 msgid "Error al descomrpimir el RAR : %s"
 msgstr "Error decompressing RAR: %s"
 
-#: cli.py:338
+#: cli.py:341
 #, python-format
 msgid "ISO %s aniadida correctamente"
 msgstr "ISO %s added successfully"
 
-#: cli.py:340
+#: cli.py:343
 #, python-format
 msgid "ERROR aniadiendo la ISO : %s (comprueba que sea una ISO de WII)"
 msgstr "ERROR adding ISO : %s (is it a Wii game ISO?)"
 
-#: cli.py:359
+#: cli.py:362
 #, python-format
 msgid "Copiar .%s: %s a la particion %s"
 msgstr "Copy .%s: %s to partition %s"
 
-#: cli.py:367
+#: cli.py:370
 #, python-format
 msgid "ERROR %s no es un ningun juego de Wii"
 msgstr "%s is not a Wii game"
 
-#: cli.py:378
+#: cli.py:381
 msgid "INFORME DE RESULTADOS"
 msgstr "REPORT OF RESULTS"
 
-#: cli.py:383
+#: cli.py:386
 msgid "Todo metido en el HD correctamente"
 msgstr "Everything has been put on the HD correctly."
 
-#: cli.py:387
+#: cli.py:390
 msgid "Juegos correctos"
 msgstr "Good games"
 
-#: cli.py:394
+#: cli.py:397
 msgid "Juegos erroneos"
 msgstr "Bad games"
 
-#: cli.py:404
+#: cli.py:407
 msgid "Buscando un Disco de Wii ..."
 msgstr "Searching Wii disc ..."
 
-#: cli.py:411
+#: cli.py:413
 msgid "No se ha encontrado ningun disco de la Wii"
 msgstr "Wii disc not found"
 
-#: cli.py:413
+#: cli.py:415
 msgid "Hay mas de un juego de la Wii, deja solo 1 para eliminar la ambiguedad"
 msgstr "There are more than one Wii game, leave only 1 to eliminate the ambiguity"
 
-#: cli.py:420
+#: cli.py:422
 #, python-format
 msgid "Ya hay una ISO en : %s"
 msgstr "There is already an ISO in : %s"
 
-#: cli.py:421
+#: cli.py:423
 msgid "Desea reemplazarla (S/N) : "
 msgstr "Do you want to replace it? (Y/N) :"
 
-#: cli.py:426
+#: cli.py:428
 #, python-format
 msgid "Dumpeando desde %s a %s utilizando %s temporalmente"
 msgstr "Dump from %s to %s using %s as temporary"
 
-#: cli.py:427
+#: cli.py:429
 msgid "Puede llevar mucho tiempo ..."
 msgstr "May take several time ..."
 
-#: cli.py:431
+#: cli.py:433
 #, python-format
 msgid "OK, el juego se ha pasado a la particion %s"
 msgstr "OK, the game has been copied to partition %s"
 
-#: cli.py:433
+#: cli.py:435
 #, python-format
 msgid "Error al pasar la ISO a la particion %s"
 msgstr "Error copying ISO to partition %s"
 
-#: cli.py:434
+#: cli.py:436
 #, python-format
 msgid "wiithon no borra la ISO temporal: %s, puedes borrarla si no la necesitas"
 msgstr "wiithon does not delete temporary ISO: %s, you can delete it if not necessary"
 
-#: cli.py:436
+#: cli.py:438
 msgid "Error al dumpear la ISO"
 msgstr "Error dumping the ISO"
 
-#: cli.py:450
+#: cli.py:452
 #, python-format
 msgid "No se ha encontrado el juego: %s"
 msgstr "Not found game: %s"
 
-#: cli.py:460
+#: cli.py:462
 msgid "Indique el NUM del juego : "
 msgstr "Number of game ? : "
 
-#: cli.py:470
+#: cli.py:472
 msgid "Numero fuera de rango"
 msgstr "Out of range"
 
-#: cli.py:472
+#: cli.py:474
 msgid "El numero dado es incorrecto"
 msgstr "Incorrect number"
 
-#: cli.py:480 cli.py:482
+#: cli.py:482 cli.py:484
 msgid "Caratula?"
 msgstr "Cover?"
 
-#: cli.py:480 cli.py:482
+#: cli.py:482 cli.py:484
 msgid "SIZE"
 msgstr "SIZE"
 
-#: cli.py:480 cli.py:482
+#: cli.py:482 cli.py:484
 msgid "TITULO"
 msgstr "TITLE"
 
-#: cli.py:488 gui.py:1018
+#: cli.py:490 gui.py:1018
 msgid "SI"
 msgstr "YES"
 
-#: cli.py:490 gui.py:1018 wiitdb_schema.py:326
+#: cli.py:492 gui.py:1018 wiitdb_schema.py:326
 msgid "NO"
 msgstr "NO"
 
-#: cli.py:498
+#: cli.py:500
 #, python-format
 msgid "Presiona cualquier tecla para mostrar %d lineas mas"
 msgstr "Press any key to show %d more lines"
 
-#: cli.py:502
+#: cli.py:504
 msgid "juegos de WII"
 msgstr "WII games"
 
-#: cli.py:506
+#: cli.py:508
 msgid "Usado"
 msgstr "Used"
 
-#: cli.py:507
+#: cli.py:509
 msgid "Libre"
 msgstr "Free"
 
-#: cli.py:508 gui.py:673
+#: cli.py:510 gui.py:673
 msgid "Total"
 msgstr "Total"
 
-#: cli.py:512
+#: cli.py:514
 msgid "AYUDA_CLI"
 msgstr ""
 "[USE]\n"
@@ -1466,11 +1466,11 @@ msgid "Un gestor de particiones WBFS facil de usar"
 msgstr "Easy to use WBFS Partition Manager"
 
 #: recursos/glade/wiithon.ui.h:83
-msgid "WBFS - Loaders que usan FAT. (usa wbfs_file 1.9). No mantiene la integridad"
+msgid "WBFS - Loaders que usan FAT. (basado en wbfs_file). No mantiene la integridad"
 msgstr ""
 
 #: recursos/glade/wiithon.ui.h:85
-msgid "WDF - Buena compresion (por Dirk Clemens, Version 29-1-2010). 100% Fiable"
+msgid "WDF - Buena compresion (por Dirk Clemens). 100% Fiable"
 msgstr ""
 
 #: recursos/glade/wiithon.ui.h:86

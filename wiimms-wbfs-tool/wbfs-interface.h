@@ -326,14 +326,17 @@ int ScanPartitionSelector ( ccp arg );
 
 void InitializeWBFS	( WBFS_t * w );
 enumError ResetWBFS	( WBFS_t * w );
-enumError SetupWBFS	( WBFS_t * w, SuperFile_t * sf, bool print_err, int sector_size );
+enumError SetupWBFS
+	( WBFS_t * w, SuperFile_t * sf, bool print_err, int sector_size, bool recover );
 enumError CreateGrowingWBFS
 			( WBFS_t * w, SuperFile_t * sf, off_t size, int sector_size );
 enumError OpenWBFS	( WBFS_t * w, ccp filename, bool print_err );
-enumError FormatWBFS	( WBFS_t * w, ccp filename, bool print_err, int sector_size );
+enumError FormatWBFS
+	( WBFS_t * w, ccp filename, bool print_err, int sector_size, bool recover );
 enumError TruncateWBFS	( WBFS_t * w );
 
 enumError CalcWBFSUsage	( WBFS_t * w );
+enumError SyncWBFS	( WBFS_t * w );
 
 enumError OpenPartWBFS	( WBFS_t * w, struct PartitionInfo_t *  info );
 enumError GetFirstWBFS	( WBFS_t * w, struct PartitionInfo_t ** info );

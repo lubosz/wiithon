@@ -277,7 +277,10 @@ class WiithonCLI:
             self.uso()
             
         elif accion == MOSTRAR_VERSION:
-            print "Wiithon version %s (rev %s)" % (config.VER, config.REV)
+            if config.REV != '':
+                print "Wiithon version %s (rev %s)" % (config.VER, config.REV)
+            else:
+                print "Wiithon version %s" % config.VER
 
         if PAUSA:
             raw_input(_("Pulse cualquier tecla para continuar ...\n"))
@@ -406,7 +409,6 @@ class WiithonCLI:
         # Le quito el ultimo salto de linea y forma la lista cortando por saltos de linea
         listaParticiones = self.core.sincronizarParticiones(config.DETECTOR_WBFS_LECTOR)
         numListaParticiones = len(listaParticiones)
-
         if(numListaParticiones<=0):
             print _("No se ha encontrado ningun disco de la Wii")
         elif(numListaParticiones > 1):
@@ -426,7 +428,7 @@ class WiithonCLI:
             print _("Dumpeando desde %s a %s utilizando %s temporalmente") % (lector, particion, SALIDA)
             print _("Puede llevar mucho tiempo ...")
             comando = "dd if=%s of=%s bs=40M conv=noerror,sync"
-            if( reemplazada or util.call_out_null(comando % (LECTOR_DVD, SALIDA)) ):
+            if( reemplazada or util.call_out_null(comando % (lector.device, SALIDA)) ):
                 if( self.core.anadirISO(particion , SALIDA) ):
                     print _("OK, el juego se ha pasado a la particion %s") % particion
                 else:

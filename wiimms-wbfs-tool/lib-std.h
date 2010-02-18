@@ -695,12 +695,12 @@ typedef enum RepairMode
 	REPAIR_RM_INVALID	= 0x010, // remove discs with invalid blocks
 	REPAIR_RM_OVERLAP	= 0x020, // remove discs with overlaped blocks
 	REPAIR_RM_FREE		= 0x040, // remove discs with free marked blocks
-	REPAIR_RM_EMPTY		= 0x080, // remove discs with no valid blocks
+	REPAIR_RM_EMPTY		= 0x080, // remove discs without any valid blocks
 	REPAIR_RM_ALL		= 0x0f0, // remove all discs with errors
 
 	REPAIR_ALL		= 0x0f1, // repair all
 
-	REPAIR__ERROR	= -1 // not a mode but an error message
+	REPAIR__ERROR		= -1 // not a mode but an error message
 
 } RepairMode;
 
@@ -739,6 +739,9 @@ extern int progress;
 extern bool use_utf8;
 extern char escape_char;
 extern char iobuf[0x100000];
+
+extern const char sep_79[80];	//  79 * '-' + NULL
+extern const char sep_200[201];	// 200 * '-' + NULL
 
 extern StringField_t source_list;
 extern StringField_t recurse_list;

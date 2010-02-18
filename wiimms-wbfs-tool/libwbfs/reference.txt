@@ -152,6 +152,10 @@ wbfs_t*wbfs_open_partition(rw_sector_callback_t read_hdsector,
 			   int hd_sector_size, int num_hd_sector, u32 partition_lba, int reset);
 
 
+ reset=0 : do not initialize partition
+ reset=1 : initialize partition
+ reset=2 : initialize partition and clear all inodes
+
 -------------------------------------------------------------------------------
 // [codeview]
 

@@ -14,19 +14,7 @@ I have updated the tool. The [url=@@URI-GBATEMP@@][b]first post with more detail
 [b]Highlights/bug fixes of this release:[/b]
 [list]
 
-[*] The [b]FILETYPE[/b] command of [b]wwt[/b] and [b]wit[/b] shows the scrubbed size of a ISO image too if the option --long is set at least twice.
-
-The calculate size is printed in MiB (like almost all size infos) and depends of the options --psel and --raw. This has a nice side effect: To find out the size of the update partition just use --psel=update.
-[color="#ffffff"].[/color]
-
-[*] The new command [b]wit ISOSIZE[/b] calculate ISO sizes in up to 4 aspects:
-[list]
-[*] Number of used ISO blocks. (ISO block=32k)
-[*] Size in MiB.
-[*] Size of a wbfs file (assume WBFS block size = 2M)
-[*] Size of a ISO as part of a WBFS with 500g (assume WBFS block size = 8M)
-[/list]
-The calculate size depends of the options --psel and --raw. This has a nice side effect: To find out the size of the update partition just use --psel=update.
+[*]
 [color="#ffffff"].[/color]
 
 [/list]

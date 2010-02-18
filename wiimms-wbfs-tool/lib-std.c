@@ -60,6 +60,17 @@ enumOFT output_file_type	= OFT_UNKNOWN;
 
 char iobuf[0x100000];
 
+const char sep_79[80] =		//  79 * '-' + NULL
+	"----------------------------------------"
+	"---------------------------------------";
+
+const char sep_200[201] =	// 200 * '-' + NULL
+	"----------------------------------------"
+	"----------------------------------------"
+	"----------------------------------------"
+	"----------------------------------------"
+	"----------------------------------------";
+
 StringField_t source_list;
 StringField_t recurse_list;
 StringField_t created_files;
@@ -209,6 +220,9 @@ void SetupLib ( int argc, char ** argv, ccp p_progname, enumProgID prid )
     ASSERT( 4 == sizeof(s32) );
     ASSERT( 8 == sizeof(s64) );
 
+    ASSERT(  79 == strlen(sep_79) );
+    ASSERT( 200 == strlen(sep_200) );
+
     ASSERT( sizeof(WDiscHeader_t) == 0x100 );
 
     //----- setup textmode for cygwin stdout+stderr 
@@ -328,22 +342,31 @@ void SetupLib ( int argc, char ** argv, ccp p_progname, enumProgID prid )
 
     //----- setup language info
 
-    char * lc_ctype = getenv("LC_CTYPE");
-    if (lc_ctype)
+    char * wwt_lang = getenv("WWT_LANG");
+    if ( wwt_lang && *wwt_lang )
     {
-	char * lc_ctype_end = lc_ctype;
-	while ( *lc_ctype_end >= 'a' && *lc_ctype_end <= 'z' )
-	    lc_ctype_end++;
-	const int len = lc_ctype_end - lc_ctype;
-	if ( len > 0 )
+	lang_info = strdup(wwt_lang);
+	TRACE("LANG_INFO = %s [WWT_LANG]\n",lang_info);
+    }
+    else
+    {
+	char * lc_ctype = getenv("LC_CTYPE");
+	if (lc_ctype)
 	{
-	    char * temp = malloc(len+1);
-	    if (!temp)
-		OUT_OF_MEMORY;
-	    memcpy(temp,lc_ctype,len);
-	    temp[len] = 0;
-	    lang_info = temp;
-	    TRACE("LANG_INFO = %s\n",lang_info);
+	    char * lc_ctype_end = lc_ctype;
+	    while ( *lc_ctype_end >= 'a' && *lc_ctype_end <= 'z' )
+		lc_ctype_end++;
+	    const int len = lc_ctype_end - lc_ctype;
+	    if ( len > 0 )
+	    {
+		char * temp = malloc(len+1);
+		if (!temp)
+		    OUT_OF_MEMORY;
+		memcpy(temp,lc_ctype,len);
+		temp[len] = 0;
+		lang_info = temp;
+		TRACE("LANG_INFO = %s\n",lang_info);
+	    }
 	}
     }
 }
@@ -2154,11 +2177,11 @@ enumError XSeekF ( XPARM File_t * f, off_t off )
     {
 	fprintf(stderr,
 		"\n"
-		"***********************************************************************\n"
-		"*****  It seems, that the caching area for the game is to small!  *****\n"
-		"*****  Please report this to the author.                          *****\n"
-		"*****  Technical data: ID=%-6s  OFF=%10llx                  *****\n"
-		"***********************************************************************\n"
+		"************************************************************************\n"
+		"*****  It seems, that the caching area for the game is too small!  *****\n"
+		"*****  Please report this to the author.                           *****\n"
+		"*****  Technical data: ID=%-6s  OFF=%10llx                   *****\n"
+		"************************************************************************\n"
 		"\n",
 		f->id6, off );
     }

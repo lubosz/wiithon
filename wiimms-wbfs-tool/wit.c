@@ -188,6 +188,7 @@ enum // const for long options without a short brothers
 	GETOPT_BASE	= 0x1000,
 	GETOPT_UTF8,
 	GETOPT_NO_UTF8,
+	GETOPT_LANG,
 	GETOPT_PSEL,
 	GETOPT_RAW,
 	GETOPT_IO,
@@ -215,6 +216,7 @@ struct option long_opt[] =
 	{ "no-utf-8",		0, 0, GETOPT_NO_UTF8 },
 	 { "no-utf8",		0, 0, GETOPT_NO_UTF8 },
 	 { "noutf8",		0, 0, GETOPT_NO_UTF8 },
+	{ "lang",		1, 0, GETOPT_LANG },
 
 	{ "io",			1, 0, GETOPT_IO }, // [2do] hidden option for tests
 
@@ -353,6 +355,7 @@ static char help_text[] =
     "      --utf-8         Enables UTF-8 support (default).\n"
     "      --no-utf-8      Disables UTF-8 support.\n"
  #endif
+    "      --lang    lang  Define the language for titles.\n"
     " * -s --source  path  ISO file or directory with ISO files.\n"
     " * -r --recurse path  ISO file or base of a directory tree with ISO files.\n"
     "\n"
@@ -527,9 +530,18 @@ enumError exec_filetype ( SuperFile_t * sf, Iterator_t * it )
     ASSERT(sf);
     ASSERT(it);
 
+    const bool print_header = !(used_options&OB_NO_HEADER);
     ccp ftype = GetNameFT(sf->f.ftype,0);
+
     if ( it->long_count > 1 )
     {
+	if ( print_header && !it->done_count++  )
+	    printf("\n"
+		"file     disc   size reg split\n"
+		"type     ID6     MIB ion   N  %s\n"
+		"%s\n",
+		it->long_count > 2 ? "real path" : "filename", sep_79 );
+
 	char split[10] = " -";
 	if ( sf->f.split_used > 1 )
 	    snprintf(split,sizeof(split),"%2d",sf->f.split_used);
@@ -545,21 +557,35 @@ enumError exec_filetype ( SuperFile_t * sf, Iterator_t * it )
 			(count+WII_SECTORS_PER_MIB/2)/WII_SECTORS_PER_MIB);
 	}
 
-	printf("%-8s %-6s %s %s %s %s\n",
+	printf("%-8s %-6s %s %s %s  %s\n",
 		ftype, sf->f.id6[0] ? sf->f.id6 : "-",
 		size, region, split,
 		it->long_count > 2 ? it->real_path : sf->f.fname );
     }
     else if (it->long_count)
     {
+	if ( print_header && !it->done_count++  )
+	    printf("\n"
+		"file     disc  split\n"
+		"type     ID6     N  filename\n"
+		"%s\n", sep_79 );
+
 	char split[10] = " -";
 	if ( sf->f.split_used > 1 )
 	    snprintf(split,sizeof(split),"%2d",sf->f.split_used);
-	printf("%-8s %-6s %s %s\n",
+	printf("%-8s %-6s %s  %s\n",
 		ftype, sf->f.id6[0] ? sf->f.id6 : "-", split, sf->f.fname );
     }
     else
+    {
+	if ( print_header && !it->done_count++  )
+	    printf("\n"
+		"file\n"
+		"type     filename\n"
+		"%s\n", sep_79 );
+
 	printf("%-8s %s\n", ftype, sf->f.fname );
+    }
 
     return ERR_OK;
 }
@@ -579,6 +605,10 @@ enumError cmd_filetype()
     it.act_non_iso	= ignore_count > 1 ? ACT_IGNORE : ACT_ALLOW;
     it.long_count	= long_count;
     const enumError err = SourceIterator(&it,true,false);
+
+    if ( !(used_options&OB_NO_HEADER) && it.done_count )
+	putchar('\n');
+
     ResetIterator(&it);
     return err;
 }
@@ -597,11 +627,10 @@ enumError exec_isosize ( SuperFile_t * sf, Iterator_t * it )
     {
 	if ( print_header && !it->done_count++  )
 	    printf("\n"
-		"   ISO size .wbfs 500g\n"
-		"blocks  MiB   MIB WBFS  %s\n"
-		"----------------------------------------"
-			"---------------------------------------\n"
-		, it->long_count > 2 ? "real path" : "filename" );
+		"   ISO  ISO .wbfs 500g\n"
+		"blocks  MiB  file WBFS  %s\n"
+		"%s\n",
+		it->long_count > 2 ? "real path" : "filename", sep_79 );
 
 	char size[30] = "     -    -     -    -";
 	if (sf->f.id6[0])
@@ -626,12 +655,10 @@ enumError exec_isosize ( SuperFile_t * sf, Iterator_t * it )
     else if ( it->long_count )
     {
 	if ( print_header && !it->done_count++  )
-	    fputs("\n"
-		"   ISO size\n"
+	    printf("\n"
+		"   ISO  ISO\n"
 		"blocks  MiB  filename\n"
-		"----------------------------------------"
-			"---------------------------------------\n"
-		,stdout);
+		"%s\n", sep_79 );
 
 	char size[20] = "     -    -";
 	if (sf->f.id6[0])
@@ -646,12 +673,10 @@ enumError exec_isosize ( SuperFile_t * sf, Iterator_t * it )
     else
     {
 	if ( print_header && !it->done_count++  )
-	    fputs("\n"
+	    printf("\n"
 		"   ISO\n"
 		"blocks  filename\n"
-		"----------------------------------------"
-			"---------------------------------------\n"
-		,stdout);
+		"%s\n", sep_79 );
 
 	char size[20] = "     -";
 	if (sf->f.id6[0])
@@ -1695,6 +1720,7 @@ enumError CheckOptions ( int argc, char ** argv, int is_env )
 
 	  case GETOPT_UTF8:	use_utf8 = true; break;
 	  case GETOPT_NO_UTF8:	use_utf8 = false; break;
+	  case GETOPT_LANG:	lang_info = optarg; break;
 
 	  case 'd': SetOption(OPT_DEST,"dest"); opt_dest = optarg; break;
 	  case 'D': SetOption(OPT_DEST2,"DEST"); opt_dest = optarg; opt_mkdir = true; break;
@@ -1836,7 +1862,7 @@ enumError check_command ( int argc, char ** argv )
 	int i;
 	for ( i=0; long_opt[i].name; i++, forbidden_mask >>= 1 )
 	    if ( forbidden_mask & 1 )
-		ERROR0(ERR_SYNTAX,"Command '%s' don't uses option --%s\n",
+		ERROR0(ERR_SYNTAX,"Command '%s' don't allow the option --%s\n",
 				cmd_ct->name1, opt_name_tab[i] );
 	hint_exit(ERR_SEMANTIC);
     }

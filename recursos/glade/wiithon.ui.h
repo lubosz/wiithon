@@ -80,8 +80,8 @@ char *s = N_("Selecciona la particion de destino:");
 char *s = N_("TEXTO_LICENCIA");
 char *s = N_("Todos los juegos");
 char *s = N_("Un gestor de particiones WBFS facil de usar");
-char *s = N_("WBFS - Loaders que usan FAT. (usa wbfs_file 1.9). No mantiene la integridad");
+char *s = N_("WBFS - Loaders que usan FAT. (basado en wbfs_file). No mantiene la integridad");
 /* xgettext:no-c-format */
-char *s = N_("WDF - Buena compresion (por Dirk Clemens, Version 29-1-2010). 100% Fiable");
+char *s = N_("WDF - Buena compresion (por Dirk Clemens). 100% Fiable");
 char *s = N_("WiiTDB");
 char *s = N_("caratulas a SD");

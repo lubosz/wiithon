@@ -62,6 +62,7 @@ typedef enum enumOptions
 	OPT_SPLIT,
 	OPT_SPLIT_SIZE,
 	OPT_SECTOR_SIZE,
+	OPT_RECOVER,
 	OPT_FORCE,
 	OPT_NO_CHECK,
 	OPT_REPAIR,
@@ -104,6 +105,7 @@ typedef enum enumOptionsBit
 	OB_SPLIT	= 1llu << OPT_SPLIT,
 	OB_SPLIT_SIZE	= 1llu << OPT_SPLIT_SIZE,
 	OB_SECTOR_SIZE	= 1llu << OPT_SECTOR_SIZE,
+	OB_RECOVER	= 1llu << OPT_RECOVER,
 	OB_FORCE	= 1llu << OPT_FORCE,
 	OB_NO_CHECK	= 1llu << OPT_NO_CHECK,
 	OB_REPAIR	= 1llu << OPT_REPAIR,
@@ -146,7 +148,7 @@ typedef enum enumOptionsBit
 	OB_CMD_DUMP	= OB__MASK_PART|OB_LONG,
 	OB_CMD_ID6	= OB__MASK_PART|OB_LONG|OB_SORT|OB_UNIQUE,
 	OB_CMD_LIST	= OB__MASK_PART|OB_SORT|OB_LONG|OB_MIXED|OB_UNIQUE|OB_NO_HEADER,
-	OB_CMD_FORMAT	= OB__MASK_SPLIT|OB_SIZE|OB_SECTOR_SIZE|OB_FORCE,
+	OB_CMD_FORMAT	= OB__MASK_SPLIT|OB_SIZE|OB_SECTOR_SIZE|OB_RECOVER|OB_FORCE,
 	OB_CMD_CHECK	= OB__MASK_PART|OB_REPAIR|OB_LONG,
 	OB_CMD_REPAIR	= OB_CMD_CHECK,
 	OB_CMD_EDIT	= OB_AUTO|OB_PART|OB_FORCE,
@@ -222,9 +224,11 @@ enum // const for long options without a short brothers
 	GETOPT_BASE	= 0x1000,
 	GETOPT_UTF8,
 	GETOPT_NO_UTF8,
+	GETOPT_LANG,
 	GETOPT_PSEL,
 	GETOPT_RAW,
 	GETOPT_SECTOR_SIZE,
+	GETOPT_RECOVER,
 	GETOPT_NO_CHECK,
 	GETOPT_REPAIR,
 	GETOPT_NO_FREE,
@@ -253,6 +257,7 @@ struct option long_opt[] =
 	{ "no-utf-8",		0, 0, GETOPT_NO_UTF8 },
 	 { "no-utf8",		0, 0, GETOPT_NO_UTF8 },
 	 { "noutf8",		0, 0, GETOPT_NO_UTF8 },
+	{ "lang",		1, 0, GETOPT_LANG },
 
 	{ "io",			1, 0, GETOPT_IO }, // [2do] hidden option for tests
 
@@ -270,6 +275,7 @@ struct option long_opt[] =
 	 { "splitsize",		1, 0, 'Z' },
 	{ "sector-size",	1, 0, GETOPT_SECTOR_SIZE },
 	 { "sectorsize",	1, 0, GETOPT_SECTOR_SIZE },
+	{ "recover",		0, 0, GETOPT_RECOVER },
 	{ "force",		0, 0, 'f' },
 	{ "no-check",		0, 0, GETOPT_NO_CHECK },
 	 { "nocheck",		0, 0, GETOPT_NO_CHECK },
@@ -422,6 +428,7 @@ static char help_text[] =
     "      --utf-8         Enables UTF-8 support (default).\n"
     "      --no-utf-8      Disables UTF-8 support.\n"
  #endif
+    "      --lang lang     Define the language for titles.\n"
     "\n"
     "Command specific options:\n"
     "\n"
@@ -438,6 +445,7 @@ static char help_text[] =
     "   -z --split         Enable output file splitting, default split size = 4 gb.\n"
     "   -Z --split-size sz Enable output file splitting and set split size.\n"
     "   --sector-size size Floating point sector size, default=512. Factors: kKmMgGtT\n"
+    "      --recover       Format a WBFS in recover mode.\n"
     "   -f --force         Force operation without query.\n"
     "      --no-check      Disable automatic check of WBFS before modificastions.\n"
     "      --repair mode   Repair: NONE, FBT, RM-(INVALID|OVERLAP|FREE|EMPTY|ALL), ALL.\n"
@@ -480,10 +488,10 @@ static char help_text[] =
     "   LIST     | LS   -p part -aA -ll -H -M -U -S sort    [wbfs_partition]...\n"
     "   LIST-*   | L*   -p part -aA -ll -H -M -U -S sort    [wbfs_partition]...\n"
     "\n"
-    "   FORMAT   | INIT -s size --sector-size num --force   file|blockdev...\n"
+    "   FORMAT   | INIT -s size --sector-size= --recover -f file|blockdev...\n"
     "   CHECK    | FSCK -p part -aA -ll --repair=           [wbfs_partition]...\n"
     "   REPAIR          -p part -aA -ll --repair=           [wbfs_partition]...\n"
-    "   EDIT            -p part -a                --force   [sub_command]...\n"
+    "   EDIT            -p part -a      --force             [sub_command]...\n"
     "   PHANTOM         -p part -a                          [sub_command]...\n"
     "   TRUNCATE | TR   -p part -aA                         [wbfs_partition]...\n"
     "\n"
@@ -725,7 +733,7 @@ enumError cmd_dump()
 
 enumError cmd_space()
 {
-    opt_all++; // -all is implied
+    opt_all++; // --auto is implied
 
     AddEnvPartitions();
     if ( !n_param && !opt_part && !opt_auto )
@@ -1119,6 +1127,7 @@ enumError cmd_format()
 
     int error_count = 0, create_count = 0, format_count = 0;
     const u32 create_size_gib = (opt_size+GiB/2)/GiB;
+    const bool recover = 0 != ( used_options & OB_RECOVER );
 
     ParamList_t * param;
     for ( param = first_param; param; param = param->next )
@@ -1214,8 +1223,66 @@ enumError cmd_format()
 
 	    WBFS_t wbfs;
 	    InitializeWBFS(&wbfs);
-	    if ( FormatWBFS(&wbfs,param->arg,true,opt_sector_size) == ERR_OK )
+	    if ( FormatWBFS(&wbfs,param->arg,true,opt_sector_size,recover) == ERR_OK )
+	    {
 		format_count++;
+		if (recover)
+		{
+		    TRACELINE;
+		    wbfs_t * w = wbfs.wbfs;
+		    ASSERT(w);
+		    ASSERT(w->head);
+		    ASSERT(w->head->disc_table);
+		    ASSERT(w->freeblks);
+		    int slot;
+		    for ( slot = 0; slot < w->max_disc; slot++ )
+			if (!w->head->disc_table[slot])
+			    w->head->disc_table[slot] = 5;
+		    memset(w->freeblks,0,w->freeblks_size4*4);
+		    SyncWBFS(&wbfs);
+
+		    CheckWBFS_t ck;
+		    InitializeCheckWBFS(&ck);
+		    TRACELINE;
+		    if (CheckWBFS(&ck,&wbfs,-1,0,0))
+		    {
+			ASSERT(ck.disc);
+			bool dirty = false;
+			for ( slot = 0; slot < w->max_disc; slot++ )
+			    if (!w->head->disc_table[slot] & 4 )
+			    {
+				CheckDisc_t * cd = ck.disc + slot;
+				if ( !cd->no_blocks
+				    || cd->bl_overlap
+				    || cd->bl_invalid )
+				{
+				    w->head->disc_table[slot] = 0;
+				    dirty = true;
+				}
+				else
+				    w->head->disc_table[slot] &= ~4;
+			    }
+
+			if (dirty)
+			{
+			    ResetCheckWBFS(&ck);
+			    SyncWBFS(&wbfs);
+			    CheckWBFS(&ck,&wbfs,-1,0,0);
+			}
+
+			TRACELINE;
+			RepairWBFS(&ck,0,REPAIR_FBT|REPAIR_RM_INVALID|REPAIR_RM_EMPTY,-1,0,0);
+			TRACELINE;
+			ResetCheckWBFS(&ck);
+			SyncWBFS(&wbfs);
+			if (CheckWBFS(&ck,&wbfs,1,stdout,1))
+			    printf(" *** Run REPAIR %s ***\n\n",param->arg);
+			else
+			    putchar('\n');
+		    }
+		    ResetCheckWBFS(&ck);
+		}
+	    }
 	    else
 		error_count++;
 	    ResetWBFS(&wbfs);
@@ -1838,10 +1905,7 @@ enumError exec_add ( SuperFile_t * sf, Iterator_t * it )
 
     enumFileType ft_test = FT_A_ISO|FT_A_SEEKABLE;
     if ( !(sf->f.ftype&FT_A_WDF) && !sf->f.seek_allowed )
-    {
 	ft_test = FT_A_ISO;
-	DefineCachedAreaISO(&sf->f,false);
-    }
 
     if ( IsExcluded(sf->f.id6) || PrintErrorFT(&sf->f,ft_test) )
 	return ERR_OK;
@@ -2634,6 +2698,26 @@ enumError cmd_filetype()
     SuperFile_t sf;
     InitializeSF(&sf);
 
+    if (!(used_options&OB_NO_HEADER))
+    {
+	if ( long_count > 1 )
+	    printf("\n"
+		"file     disc   size reg split\n"
+		"type     ID6     MIB ion   N  %s\n"
+		"%s\n",
+		long_count > 2 ? "real path" : "filename", sep_79 );
+	else if (long_count)
+	    printf("\n"
+		"file     disc  split\n"
+		"type     ID6     N  filename\n"
+		"%s\n", sep_79 );
+	else
+	    printf("\n"
+		"file\n"
+		"type     filename\n"
+		"%s\n", sep_79 );
+    }
+
     ParamList_t * param;
     for ( param = first_param; param; param = param->next )
     {
@@ -2662,7 +2746,7 @@ enumError cmd_filetype()
 				(count+WII_SECTORS_PER_MIB/2)/WII_SECTORS_PER_MIB);
 		}
 
-		printf("%-8s %-6s %s %s %s %s\n",
+		printf("%-8s %-6s %s %s %s  %s\n",
 			ftype, sf.f.id6[0] ? sf.f.id6 : "-",
 			size, region, split, sf.f.fname );
 	    }
@@ -2671,7 +2755,7 @@ enumError cmd_filetype()
 		char split[10] = " -";
 		if ( sf.f.split_used > 1 )
 		    snprintf(split,sizeof(split),"%2d",sf.f.split_used);
-		printf("%-8s %-6s %s %s\n",
+		printf("%-8s %-6s %s  %s\n",
 			ftype, sf.f.id6[0] ? sf.f.id6 : "-",
 			split, sf.f.fname );
 	    }
@@ -2682,6 +2766,10 @@ enumError cmd_filetype()
     }
 
     ResetSF(&sf,0);
+
+    if (!(used_options&OB_NO_HEADER))
+	putchar('\n');
+
     return ERR_OK;
 }
 
@@ -2755,8 +2843,10 @@ enumError CheckOptions ( int argc, char ** argv, int is_env )
 
 	  case GETOPT_UTF8:	use_utf8 = true; break;
 	  case GETOPT_NO_UTF8:	use_utf8 = false; break;
+	  case GETOPT_LANG:	lang_info = optarg; break;
 	  case GETOPT_NO_CHECK:	SetOption(OPT_NO_CHECK,"no-check"); break;
 	  case GETOPT_NO_FREE:	SetOption(OPT_NO_FREE,"no-free"); break;
+	  case GETOPT_RECOVER:	SetOption(OPT_RECOVER,"recover"); break;
 
 	  case 'a':
 	    if (!opt_auto)
@@ -2914,7 +3004,7 @@ enumError check_command ( int argc, char ** argv )
 	int i;
 	for ( i=0; long_opt[i].name; i++, forbidden_mask >>= 1 )
 	    if ( forbidden_mask & 1 )
-		ERROR0(ERR_SYNTAX,"Command '%s' don't uses option --%s\n",
+		ERROR0(ERR_SYNTAX,"Command '%s' don't allow the option --%s\n",
 				cmd_ct->name1, opt_name_tab[i] );
 	hint_exit(ERR_SEMANTIC);
     }

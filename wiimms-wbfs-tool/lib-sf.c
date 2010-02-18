@@ -207,7 +207,7 @@ enumError SetupReadWBFS ( SuperFile_t * sf )
     if (!wbfs)
 	OUT_OF_MEMORY;
     InitializeWBFS(wbfs);
-    enumError err = SetupWBFS(wbfs,sf,true,0);
+    enumError err = SetupWBFS(wbfs,sf,true,0,false);
     if (err)
 	goto abort;
 
@@ -856,7 +856,7 @@ enumFileType AnalyseFT ( File_t * f )
 	    TRACE(" - f2=WBFS\n");
 	    WBFS_t wbfs;
 	    InitializeWBFS(&wbfs);
-	    if (!SetupWBFS(&wbfs,&sf,false,0))
+	    if (!SetupWBFS(&wbfs,&sf,false,0,false))
 	    {
 		WDiscInfo_t wdisk;
 		InitializeWDiscInfo(&wdisk);
@@ -940,8 +940,6 @@ enumFileType AnalyseFT ( File_t * f )
     f->disable_errors = true;
 
     // read file header
-    const int iso_magic_off = 0x18;
-    const int iso_magic_len = 0x04;
     char buf1[HD_SECTOR_SIZE];
     char buf2[HD_SECTOR_SIZE];
     enumError err = ReadAtF(f,0,&buf1,sizeof(buf1));
@@ -994,10 +992,10 @@ enumFileType AnalyseFT ( File_t * f )
 		ConvertToHostWC(wc,wc);
 		if ( wh.split_file_index == wc->split_file_index
 		    && wc->data_size >= 6
-		    && !ReadAtF(f,wc->data_off,&buf2,iso_magic_off+iso_magic_len) )
+		    && !ReadAtF(f,wc->data_off,&buf2,WII_MAGIC_OFF+WII_MAGIC_LEN) )
 		{
 		    TRACE(" - %d bytes of first chunk loaded\n",
-				iso_magic_off + iso_magic_len );
+				WII_MAGIC_OFF + WII_MAGIC_LEN );
 		    iso_ptr = buf2;
 		}
 	    }
@@ -1012,7 +1010,7 @@ enumFileType AnalyseFT ( File_t * f )
 		iso_ptr[5]>=' ' && iso_ptr[5]<0x7f ? iso_ptr[5] : '.',
 		(u8)iso_ptr[0], (u8)iso_ptr[1], (u8)iso_ptr[2],
 		(u8)iso_ptr[3], (u8)iso_ptr[4], (u8)iso_ptr[5],
-		*(u32*)(iso_ptr + iso_magic_off) );
+		*(u32*)(iso_ptr + WII_MAGIC_OFF) );
 
 	if (!memcmp(iso_ptr,"WBFS",4))
 	{
@@ -1033,12 +1031,15 @@ enumFileType AnalyseFT ( File_t * f )
 	    ResetWBFS(&wbfs);
 	}
 	else if (CheckID6(iso_ptr)
-		&& (u8)iso_ptr[iso_magic_off+0] == 0x5d
-		&& (u8)iso_ptr[iso_magic_off+1] == 0x1c
-		&& (u8)iso_ptr[iso_magic_off+2] == 0x9e
-		&& (u8)iso_ptr[iso_magic_off+3] == 0xa3 )
+		&& (u8)iso_ptr[WII_MAGIC_OFF+0] == 0x5d
+		&& (u8)iso_ptr[WII_MAGIC_OFF+1] == 0x1c
+		&& (u8)iso_ptr[WII_MAGIC_OFF+2] == 0x9e
+		&& (u8)iso_ptr[WII_MAGIC_OFF+3] == 0xa3 )
 	{
 	    ft |= FT_ID_ISO|FT_A_ISO;
+	    if ( !(ft&FT_A_WDF) && !f->seek_allowed )
+		DefineCachedAreaISO(f,false);
+
 	    memcpy(f->id6,iso_ptr,6);
 	    f->id6[6] = 0;
 	    if ( f->st.st_size < ISO_SPLIT_DETECT_SIZE )
@@ -1918,7 +1919,7 @@ static enumError SourceIteratorHelper
 	    {
 		WBFS_t wbfs;
 		InitializeWBFS(&wbfs);
-		if (!SetupWBFS(&wbfs,&sf,false,0))
+		if (!SetupWBFS(&wbfs,&sf,false,0,false))
 		{
 		    const int max_disc = wbfs.wbfs->max_disc;
 		    int fw, slot;

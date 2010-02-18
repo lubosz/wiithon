@@ -499,6 +499,12 @@ wwt v0.28a r596 - 2010-01-15
  - Bug fix: wwt LIST: Not all discs were shown if an invalid disc was found.
  - Decompose unusual unicode characters (remove accents...) in title database.
 
+wwt v0.29a r606 - 2010-01-22
+
+ - wwt ADD: Adding a complete WBFS is optimized and much faster now.
+ - Bug fix: Option --preserve didn't work.
+ - wwt+wit FILETYPE: Print region info if option --long is set twice.
+
 @@MODULE(last-history.txt)@@
 
 

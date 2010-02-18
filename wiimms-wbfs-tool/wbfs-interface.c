@@ -357,7 +357,7 @@ int AnalysePartitions ( FILE * outfile, bool non_found_is_ok, bool scan_wbfs )
     }
     else if ( wbfs_count > 1 )
     {
-	if (!opt_all )
+	if ( !opt_all )
 	    stat = ERROR0(ERR_TO_MUCH_WBFS_FOUND,
 			"%d (more than 1) WBFS partitions found -> abort.\n",wbfs_count);
 	else if ( verbose >= 1 )
@@ -839,11 +839,13 @@ enumError ResetWBFS ( WBFS_t * w )
 
 ///////////////////////////////////////////////////////////////////////////////
 
-enumError SetupWBFS ( WBFS_t * w, SuperFile_t * sf, bool print_err, int sector_size )
+enumError SetupWBFS ( WBFS_t * w, SuperFile_t * sf,
+			bool print_err, int sector_size, bool recover )
 {
     ASSERT(w);
     ASSERT(sf);
-    TRACE("SetupWBFS(%p,%d,%d) fd=%d\n",sf,print_err,sector_size,GetFD(&sf->f));
+    TRACE("SetupWBFS(%p,%d,%d,%d) fd=%d\n",
+		sf, print_err, sector_size, recover, GetFD(&sf->f) );
 
     ResetWBFS(w);
     w->sf = sf;
@@ -863,7 +865,7 @@ enumError SetupWBFS ( WBFS_t * w, SuperFile_t * sf, bool print_err, int sector_s
     if ( sector_size > 0 )
     {
 	n_sector = (u32)( sf->f.st.st_size / sector_size );
-	reset = 1;
+	reset = recover ? 1 : 2;
     }
     else
     {
@@ -938,7 +940,7 @@ enumError CreateGrowingWBFS ( WBFS_t * w, SuperFile_t * sf, off_t size, int sect
 
     TRACELINE;
     ASSERT(!w->wbfs);
-    TRACE("CALL wbfs_open_partition(ss=%u,ns=%u,reset=1)\n",
+    TRACE("CALL wbfs_open_partition(ss=%u,ns=%u,reset=2)\n",
 		sector_size, n_sector );
     w->wbfs = wbfs_open_partition( WrapperReadSector,
 				   WrapperWriteSector,
@@ -968,10 +970,11 @@ enumError CreateGrowingWBFS ( WBFS_t * w, SuperFile_t * sf, off_t size, int sect
 ///////////////////////////////////////////////////////////////////////////////
 
 static enumError OpenWBFSHelper
-	( WBFS_t * w, ccp filename, bool print_err, int sector_size )
+	( WBFS_t * w, ccp filename, bool print_err, int sector_size, bool recover )
 {
     ASSERT(w);
-    TRACE("OpenFileWBFS(%s,%d,%d)\n",filename,print_err,sector_size);
+    TRACE("OpenFileWBFS(%s,%d,%d,%d)\n",
+		filename, print_err, sector_size, recover );
 
     SuperFile_t * sf = malloc(sizeof(SuperFile_t));
     if (!sf)
@@ -983,7 +986,7 @@ static enumError OpenWBFSHelper
 	goto abort;
     sf->f.disable_errors = false;
 
-    err = SetupWBFS(w,sf,print_err,sector_size);
+    err = SetupWBFS(w,sf,print_err,sector_size,recover);
     if (err)
 	goto abort;
 
@@ -1001,17 +1004,17 @@ static enumError OpenWBFSHelper
 
 enumError OpenWBFS ( WBFS_t * w, ccp filename, bool print_err )
 {
-    return OpenWBFSHelper(w,filename,print_err,0);
+    return OpenWBFSHelper(w,filename,print_err,0,false);
 }
 
 ///////////////////////////////////////////////////////////////////////////////
 
 enumError FormatWBFS
-	( WBFS_t * w, ccp filename, bool print_err, int sector_size )
+    ( WBFS_t * w, ccp filename, bool print_err, int sector_size, bool recover )
 {
     if ( sector_size < 512 )
 	sector_size = 512;
-    return OpenWBFSHelper(w,filename,print_err,sector_size);
+    return OpenWBFSHelper(w,filename,print_err,sector_size,recover);
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -1064,6 +1067,18 @@ enumError CalcWBFSUsage ( WBFS_t * w )
 
 ///////////////////////////////////////////////////////////////////////////////
 
+enumError SyncWBFS ( WBFS_t * w )
+{
+    ASSERT(w);
+    if (!w->wbfs)
+	return ERR_OK;
+
+    wbfs_sync(w->wbfs);
+    return CalcWBFSUsage(w);
+}
+
+///////////////////////////////////////////////////////////////////////////////
+
 enumError OpenPartWBFS ( WBFS_t * w, PartitionInfo_t * info )
 {
     ASSERT(info);
@@ -1074,7 +1089,7 @@ enumError OpenPartWBFS ( WBFS_t * w, PartitionInfo_t * info )
     }
 
     const enumError err
-	= OpenWBFSHelper(w,info->real_path,info->source==PS_PARAM,0);
+	= OpenWBFSHelper(w,info->real_path,info->source==PS_PARAM,0,0);
     if (err)
     {
 	info->part_mode = PM_WBFS_INVALID;
@@ -1527,7 +1542,7 @@ enumError CheckWBFS
 	// the old wbfs versions have calculation errors
 	//  - because a rounding error 'n_wii_sec' is sometimes to short
 	//	=> 'n_wbfs_sec' is to short
-	//	=> free blocks table may be to small
+	//	=> free blocks table may be too small
 	//  - block search uses only (n_wbfs_sec/32)*32 blocks
 
 	// this is the old buggy calcualtion
@@ -1871,6 +1886,9 @@ enumError PrintCheckedWBFS ( CheckWBFS_t * ck, FILE * f, int indent )
 enumError RepairWBFS ( CheckWBFS_t * ck, int testmode,
 	RepairMode rm, int verbose, FILE * f, int indent )
 {
+    TRACE("RepairWBFS(%p,%d,%x,%d,%p,%d)\n",
+		ck, testmode, rm, verbose, f, indent );
+
     ASSERT(ck);
     ASSERT(ck->wbfs);
     ASSERT(ck->wbfs->sf);
@@ -1880,9 +1898,12 @@ enumError RepairWBFS ( CheckWBFS_t * ck, int testmode,
     ASSERT(w);
 
     u32 repair_count = 0, sync = 0;
-    if ( testmode && verbose < 0 )
+    if (!f)
+	verbose = -1;
+    else if ( testmode && verbose < 0 )
 	verbose = 0;
 
+    TRACELINE;
     if ( rm & REPAIR_RM_ALL )
     {
 	int slot;
@@ -1914,16 +1935,20 @@ enumError RepairWBFS ( CheckWBFS_t * ck, int testmode,
 	}
     }
 
+    TRACELINE;
     if ( rm & REPAIR_FBT )
     {
+	TRACELINE;
 	if ( CalcFBT(ck) )
 	{
+	    TRACELINE;
 	    if ( verbose >= 0 )
 		fprintf(f,"%*s* %sStore fixed 'free blocks table' (%zd bytes).\n",
 		    indent,"", testmode ? "WOULD " : "", ck->fbt_size );
 
 	    if (!testmode)
 	    {
+		TRACELINE;
 		enumError err = WriteAtF( &ck->wbfs->sf->f,
 					    ck->fbt_off, ck->good_fbt, ck->fbt_size );
 		if (err)
@@ -1939,6 +1964,7 @@ enumError RepairWBFS ( CheckWBFS_t * ck, int testmode,
 	    repair_count++;
 	}
 
+	TRACELINE;
 	if ( w->head->wbfs_version < WBFS_VERSION )
 	{
 	    if ( verbose >= 0 )
@@ -1954,12 +1980,15 @@ enumError RepairWBFS ( CheckWBFS_t * ck, int testmode,
 	}
     }
 
+    TRACELINE;
     if (sync)
 	wbfs_sync(w);
 
-    if (repair_count)
+    TRACELINE;
+    if ( verbose >= 0 && repair_count )
 	fputc('\n',f);
 
+    TRACELINE;
     return ERR_OK;
 }
 

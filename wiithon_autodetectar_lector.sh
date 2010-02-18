@@ -12,7 +12,7 @@ function comprobarTienesUDEV()
 
 sleep 5
 
-for i in $(find /dev -type l -name "*cd*" -printf "/dev/%l\n" | uniq);
+for i in $(find /dev -type l -name "cd*" -printf "/dev/%l\n" | uniq);
 do
 	MAGICO=`head --bytes=6 $i 2> /dev/null`;
 	LEGIBLE=`echo $MAGICO | wc -c`;

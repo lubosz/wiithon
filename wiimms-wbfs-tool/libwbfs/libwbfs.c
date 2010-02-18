@@ -290,35 +290,38 @@ wbfs_t * wbfs_open_partition
     p->n_disc_open = 0;
     if (reset)
     {
-	// clear all disc header, but we are nice to sparse files
-	//  -> read the data first and only if not zeroed we write back
-
-	const int disc_info_sz_lba =  p->disc_info_sz >> p->hd_sec_sz_s;
-	wbfs_disc_info_t * info = wbfs_ioalloc(p->disc_info_sz);
-	if (!info)
-	    OUT_OF_MEMORY;
-
-	int slot;
-	for ( slot = 0; slot < p->max_disc; slot++ )
+	if ( reset > 1 )
 	{
-	    const int lba = p->part_lba + 1 + slot * disc_info_sz_lba;
-	    p->read_hdsector(p->callback_data,lba,disc_info_sz_lba,info);
+	    // clear all disc header, but we are nice to sparse files
+	    //  -> read the data first and only if not zeroed we write back
 
-	    const u32 * ptr = (u32*)info;
-	    const u32 * end = ptr + p->disc_info_sz/sizeof(*ptr);
-	    while ( ptr < end )
+	    const int disc_info_sz_lba =  p->disc_info_sz >> p->hd_sec_sz_s;
+	    wbfs_disc_info_t * info = wbfs_ioalloc(p->disc_info_sz);
+	    if (!info)
+		OUT_OF_MEMORY;
+
+	    int slot;
+	    for ( slot = 0; slot < p->max_disc; slot++ )
 	    {
-		if (*ptr++)
-		{
-		    memset(info,0,p->disc_info_sz);
-		    p->write_hdsector(p->callback_data,lba,disc_info_sz_lba,info);
-		    break;
-		}
-		//TRACE("%p %p %p\n",info,ptr,end);
-	    }
-	}
+		const int lba = p->part_lba + 1 + slot * disc_info_sz_lba;
+		p->read_hdsector(p->callback_data,lba,disc_info_sz_lba,info);
 
-	wbfs_iofree(info);
+		const u32 * ptr = (u32*)info;
+		const u32 * end = ptr + p->disc_info_sz/sizeof(*ptr);
+		while ( ptr < end )
+		{
+		    if (*ptr++)
+		    {
+			memset(info,0,p->disc_info_sz);
+			p->write_hdsector(p->callback_data,lba,disc_info_sz_lba,info);
+			break;
+		    }
+		    //TRACE("%p %p %p\n",info,ptr,end);
+		}
+	    }
+
+	    wbfs_iofree(info);
+	}
 	wbfs_sync(p);
     }
 
@@ -414,6 +417,14 @@ wbfs_disc_t * wbfs_open_disc_by_slot ( wbfs_t * p, u32 slot )
 	return 0;
     }
 
+    if ( !*d->header->disc_header_copy
+	|| *(u32*)(d->header->disc_header_copy+WII_MAGIC_OFF) != wbfs_htonl(WII_MAGIC) )
+    {
+	p->head->disc_table[slot] = 0;
+	wbfs_free(d);
+	return 0;
+    }
+    
     p->n_disc_open++;
     return d;
 }

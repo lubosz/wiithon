@@ -1529,7 +1529,7 @@ Galician: &#xC1;lvaro Ord&#xF3;&#xF1;ez &lt;alvarito@barberberecho.es&gt; [gl_ES
                         </child>
                         <child>
                           <object class="GtkRadioButton" id="conversor_radio_formato_wbfs">
-                            <property name="label" translatable="yes">WBFS - Loaders que usan FAT. (usa wbfs_file 1.9). No mantiene la integridad</property>
+                            <property name="label" translatable="yes">WBFS - Loaders que usan FAT. (basado en wbfs_file). No mantiene la integridad</property>
                             <property name="visible">True</property>
                             <property name="can_focus">True</property>
                             <property name="receives_default">False</property>
@@ -1542,7 +1542,7 @@ Galician: &#xC1;lvaro Ord&#xF3;&#xF1;ez &lt;alvarito@barberberecho.es&gt; [gl_ES
                         </child>
                         <child>
                           <object class="GtkRadioButton" id="conversor_radio_formato_wdf">
-                            <property name="label" translatable="yes">WDF - Buena compresion (por Dirk Clemens, Version 29-1-2010). 100% Fiable</property>
+                            <property name="label" translatable="yes">WDF - Buena compresion (por Dirk Clemens). 100% Fiable</property>
                             <property name="visible">True</property>
                             <property name="can_focus">True</property>
                             <property name="receives_default">False</property>
@@ -1704,9 +1704,9 @@ Galician: &#xC1;lvaro Ord&#xF3;&#xF1;ez &lt;alvarito@barberberecho.es&gt; [gl_ES
                     <child>
                       <object class="GtkFileChooserButton" id="extraer_directorio_salida">
                         <property name="visible">True</property>
-                        <property name="action">select-folder</property>
                         <property name="show_hidden">True</property>
                         <property name="create_folders">False</property>
+                        <property name="action">select-folder</property>
                         <property name="title" translatable="yes">Elegir directorio de salida</property>
                       </object>
                     </child>
@@ -1754,7 +1754,7 @@ Galician: &#xC1;lvaro Ord&#xF3;&#xF1;ez &lt;alvarito@barberberecho.es&gt; [gl_ES
                         </child>
                         <child>
                           <object class="GtkRadioButton" id="extraer_radio_formato_wbfs">
-                            <property name="label" translatable="yes">WBFS - Loaders que usan FAT. (usa wbfs_file 1.9). No mantiene la integridad</property>
+                            <property name="label" translatable="yes">WBFS - Loaders que usan FAT. (basado en wbfs_file). No mantiene la integridad</property>
                             <property name="visible">True</property>
                             <property name="can_focus">True</property>
                             <property name="receives_default">False</property>
@@ -1767,7 +1767,7 @@ Galician: &#xC1;lvaro Ord&#xF3;&#xF1;ez &lt;alvarito@barberberecho.es&gt; [gl_ES
                         </child>
                         <child>
                           <object class="GtkRadioButton" id="extraer_radio_formato_wdf">
-                            <property name="label" translatable="yes">WDF - Buena compresion (por Dirk Clemens, Version 29-1-2010). 100% Fiable</property>
+                            <property name="label" translatable="yes">WDF - Buena compresion (por Dirk Clemens). 100% Fiable</property>
                             <property name="visible">True</property>
                             <property name="can_focus">True</property>
                             <property name="receives_default">False</property>
