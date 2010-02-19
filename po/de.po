@@ -422,7 +422,7 @@ msgid "Una actualizacion de Wiithon ha cambiado la estructura de la BDD. Se han 
 msgstr ""
 
 #: gui.py:417 gui.py:1135 gui.py:1815 gui.py:1858 gui.py:1867 gui.py:1910
-#: gui.py:2012 gui.py:2389
+#: gui.py:2012 gui.py:2395
 msgid "No has seleccionado ninguna particion"
 msgstr "keine Partition ausgewählt"
 
@@ -761,48 +761,48 @@ msgstr ""
 msgid "Deseas borrar el archivo %s?"
 msgstr ""
 
-#: gui.py:2401
+#: gui.py:2407
 #, python-format
 msgid "Trabajando con %s, sin estimar el tiempo restante ..."
 msgstr ""
 
-#: gui.py:2405 gui.py:2444
+#: gui.py:2411 gui.py:2450
 #, python-format
 msgid "Termina: %s"
 msgstr "Fertiggestellt: %s"
 
-#: gui.py:2430
+#: gui.py:2436
 #, python-format
 msgid "Empieza %s"
 msgstr "Start: %s"
 
-#: gui.py:2462
+#: gui.py:2468
 #, python-format
 msgid "Falla la descarga de la caratula de %s"
 msgstr ""
 
-#: gui.py:2473
+#: gui.py:2479
 #, python-format
 msgid "Falla la descarga del disco de %s"
 msgstr ""
 
-#: gui.py:2524
+#: gui.py:2530
 msgid "Finalizando ..."
 msgstr "Abschließen..."
 
-#: gui.py:2526
+#: gui.py:2532
 msgid "ERROR!"
 msgstr "Fehler!"
 
-#: gui.py:2535
+#: gui.py:2541
 msgid "quedan"
 msgstr "verbleibend"
 
-#: gui.py:2552
+#: gui.py:2558
 msgid "Error en progreso"
 msgstr ""
 
-#: gui.py:2562
+#: gui.py:2568
 msgid "Empezando ..."
 msgstr "Start ..."
 
@@ -1698,43 +1698,43 @@ msgstr "Programm läuft mit den falschen Einstellungen"
 msgid "Interrumpido por el usuario"
 msgstr "Abbruch durch Benutzer"
 
-#~ msgid "Numero de tareas que esperan en la cola."
-#~ msgstr "Aufgaben in der Warteschlange."
+#~ msgid "Tienes que seleccionar una particion WBFS para realizar esta accion"
+#~ msgstr "Wählen Sie eine WBFS Partition für diese Aktion"
 
-#~ msgid "No se ha encontrado ninguna imagen ISO o RAR"
-#~ msgstr "Es wurde kein ISO oder RAR Image gefunden"
-
-#~ msgid "Buscar:"
-#~ msgstr "Suche:"
-
-#~ msgid "Fecha de lanzamiento: "
-#~ msgstr "Veröffentlicht"
-
-#~ msgid "OPCIONALES: "
-#~ msgstr "OPTIONEN:"
-
-#~ msgid "ACCESORIOS: "
-#~ msgstr "ZUBEHÖR:"
-
-#~ msgid "Progreso de la tarea actual."
-#~ msgstr "Aktuelle Aufgabe"
-
-#~ msgid "Numero de juegos."
-#~ msgstr "Anzahl der Spiele"
-
-#~ msgid "+INFO"
-#~ msgstr "+INFO"
-
-#, fuzzy
-#~ msgid "WBFS"
-#~ msgstr "WBFS?"
+#~ msgid "Elige un directorio donde extraer la ISO de %s"
+#~ msgstr "Wähle Ordner in dem die ISO %s extrahiert werden soll"
 
 #, fuzzy
 #~ msgid "Opciones de extraccion"
 #~ msgstr "Format unbekannt"
 
-#~ msgid "Elige un directorio donde extraer la ISO de %s"
-#~ msgstr "Wähle Ordner in dem die ISO %s extrahiert werden soll"
+#, fuzzy
+#~ msgid "WBFS"
+#~ msgstr "WBFS?"
 
-#~ msgid "Tienes que seleccionar una particion WBFS para realizar esta accion"
-#~ msgstr "Wählen Sie eine WBFS Partition für diese Aktion"
+#~ msgid "+INFO"
+#~ msgstr "+INFO"
+
+#~ msgid "Numero de juegos."
+#~ msgstr "Anzahl der Spiele"
+
+#~ msgid "Progreso de la tarea actual."
+#~ msgstr "Aktuelle Aufgabe"
+
+#~ msgid "ACCESORIOS: "
+#~ msgstr "ZUBEHÖR:"
+
+#~ msgid "OPCIONALES: "
+#~ msgstr "OPTIONEN:"
+
+#~ msgid "Fecha de lanzamiento: "
+#~ msgstr "Veröffentlicht"
+
+#~ msgid "Buscar:"
+#~ msgstr "Suche:"
+
+#~ msgid "No se ha encontrado ninguna imagen ISO o RAR"
+#~ msgstr "Es wurde kein ISO oder RAR Image gefunden"
+
+#~ msgid "Numero de tareas que esperan en la cola."
+#~ msgstr "Aufgaben in der Warteschlange."

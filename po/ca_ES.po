@@ -449,7 +449,7 @@ msgid "Una actualizacion de Wiithon ha cambiado la estructura de la BDD. Se han 
 msgstr ""
 
 #: gui.py:417 gui.py:1135 gui.py:1815 gui.py:1858 gui.py:1867 gui.py:1910
-#: gui.py:2012 gui.py:2389
+#: gui.py:2012 gui.py:2395
 msgid "No has seleccionado ninguna particion"
 msgstr "No has seleccionat cap partició"
 
@@ -799,48 +799,48 @@ msgstr "Finalitzada amb exit l'importació de dades des de WiiTDB"
 msgid "Deseas borrar el archivo %s?"
 msgstr "Vols esborrar l'arxiu %s?"
 
-#: gui.py:2401
+#: gui.py:2407
 #, python-format
 msgid "Trabajando con %s, sin estimar el tiempo restante ..."
 msgstr ""
 
-#: gui.py:2405 gui.py:2444
+#: gui.py:2411 gui.py:2450
 #, python-format
 msgid "Termina: %s"
 msgstr "Finalitza: %s"
 
-#: gui.py:2430
+#: gui.py:2436
 #, python-format
 msgid "Empieza %s"
 msgstr "Comença %s"
 
-#: gui.py:2462
+#: gui.py:2468
 #, python-format
 msgid "Falla la descarga de la caratula de %s"
 msgstr "Falla la baixada de la caràtula de %s"
 
-#: gui.py:2473
+#: gui.py:2479
 #, python-format
 msgid "Falla la descarga del disco de %s"
 msgstr "Falla la baixada del disc de %s"
 
-#: gui.py:2524
+#: gui.py:2530
 msgid "Finalizando ..."
 msgstr "Finalitzant .."
 
-#: gui.py:2526
+#: gui.py:2532
 msgid "ERROR!"
 msgstr "ERROR!"
 
-#: gui.py:2535
+#: gui.py:2541
 msgid "quedan"
 msgstr "queden"
 
-#: gui.py:2552
+#: gui.py:2558
 msgid "Error en progreso"
 msgstr "Errada en progregres"
 
-#: gui.py:2562
+#: gui.py:2568
 msgid "Empezando ..."
 msgstr "Començant ..."
 
@@ -1737,42 +1737,42 @@ msgstr "Programa executat amb les opcions incorrectes."
 msgid "Interrumpido por el usuario"
 msgstr "Interromput per l'usuari"
 
-#~ msgid "Progreso de la tarea actual."
-#~ msgstr "Progrés de la tasca actual."
+#~ msgid "Tienes que seleccionar una particion WBFS para realizar esta accion"
+#~ msgstr "Has de selecciona una partició WBFS per a realitzar aquesta acció"
 
-#~ msgid "Numero de tareas que esperan en la cola."
-#~ msgstr "Nombre de tasques que esperen a la cua"
+#~ msgid "Elige un directorio donde extraer la ISO de %s"
+#~ msgstr "Trie un directori on extraure l'ISO de %s"
 
-#~ msgid "Numero de juegos."
-#~ msgstr "Nombre de jocs"
-
-#~ msgid "Espacio usado / Espacio total"
-#~ msgstr "Espai utilitzat / Espai total"
-
-#~ msgid "+INFO"
-#~ msgstr "+INFO"
-
-#~ msgid "Fecha de lanzamiento: "
-#~ msgstr "Data de llançament:"
-
-#~ msgid "OPCIONALES: "
-#~ msgstr "OPCIONALS:"
-
-#~ msgid "ACCESORIOS: "
-#~ msgstr "Accesoris:"
-
-#~ msgid "No se ha encontrado ninguna imagen ISO o RAR"
-#~ msgstr "No s'ha trobat cap imatge ISO o RAR"
+#~ msgid "Extraer todos los juegos*"
+#~ msgstr "Extreure tots els jocs*"
 
 #, fuzzy
 #~ msgid "WBFS"
 #~ msgstr " WBFS?"
 
-#~ msgid "Extraer todos los juegos*"
-#~ msgstr "Extreure tots els jocs*"
+#~ msgid "No se ha encontrado ninguna imagen ISO o RAR"
+#~ msgstr "No s'ha trobat cap imatge ISO o RAR"
 
-#~ msgid "Elige un directorio donde extraer la ISO de %s"
-#~ msgstr "Trie un directori on extraure l'ISO de %s"
+#~ msgid "ACCESORIOS: "
+#~ msgstr "Accesoris:"
 
-#~ msgid "Tienes que seleccionar una particion WBFS para realizar esta accion"
-#~ msgstr "Has de selecciona una partició WBFS per a realitzar aquesta acció"
+#~ msgid "OPCIONALES: "
+#~ msgstr "OPCIONALS:"
+
+#~ msgid "Fecha de lanzamiento: "
+#~ msgstr "Data de llançament:"
+
+#~ msgid "+INFO"
+#~ msgstr "+INFO"
+
+#~ msgid "Espacio usado / Espacio total"
+#~ msgstr "Espai utilitzat / Espai total"
+
+#~ msgid "Numero de juegos."
+#~ msgstr "Nombre de jocs"
+
+#~ msgid "Numero de tareas que esperan en la cola."
+#~ msgstr "Nombre de tasques que esperen a la cua"
+
+#~ msgid "Progreso de la tarea actual."
+#~ msgstr "Progrés de la tasca actual."

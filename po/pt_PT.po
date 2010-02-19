@@ -446,7 +446,7 @@ msgid "Una actualizacion de Wiithon ha cambiado la estructura de la BDD. Se han 
 msgstr ""
 
 #: gui.py:417 gui.py:1135 gui.py:1815 gui.py:1858 gui.py:1867 gui.py:1910
-#: gui.py:2012 gui.py:2389
+#: gui.py:2012 gui.py:2395
 msgid "No has seleccionado ninguna particion"
 msgstr "No has seleccionado ninguna partición"
 
@@ -794,48 +794,48 @@ msgstr "Finalizada satisfactoriamente la importación de datos desde WiiTDB"
 msgid "Deseas borrar el archivo %s?"
 msgstr "¿Deseas borrar el archivo %s?"
 
-#: gui.py:2401
+#: gui.py:2407
 #, python-format
 msgid "Trabajando con %s, sin estimar el tiempo restante ..."
 msgstr ""
 
-#: gui.py:2405 gui.py:2444
+#: gui.py:2411 gui.py:2450
 #, python-format
 msgid "Termina: %s"
 msgstr ""
 
-#: gui.py:2430
+#: gui.py:2436
 #, python-format
 msgid "Empieza %s"
 msgstr ""
 
-#: gui.py:2462
+#: gui.py:2468
 #, python-format
 msgid "Falla la descarga de la caratula de %s"
 msgstr "Falla la descarga de la carátula de %s"
 
-#: gui.py:2473
+#: gui.py:2479
 #, python-format
 msgid "Falla la descarga del disco de %s"
 msgstr ""
 
-#: gui.py:2524
+#: gui.py:2530
 msgid "Finalizando ..."
 msgstr ""
 
-#: gui.py:2526
+#: gui.py:2532
 msgid "ERROR!"
 msgstr ""
 
-#: gui.py:2535
+#: gui.py:2541
 msgid "quedan"
 msgstr ""
 
-#: gui.py:2552
+#: gui.py:2558
 msgid "Error en progreso"
 msgstr ""
 
-#: gui.py:2562
+#: gui.py:2568
 msgid "Empezando ..."
 msgstr ""
 
@@ -1734,22 +1734,22 @@ msgstr ""
 msgid "Interrumpido por el usuario"
 msgstr ""
 
-#~ msgid "Numero de tareas que esperan en la cola."
-#~ msgstr "Número de tareas que esperan en la cola."
-
-#~ msgid "Fecha de lanzamiento: "
-#~ msgstr "Fecha: "
-
-#~ msgid "Numero de juegos."
-#~ msgstr "Número de juegos."
-
-#, fuzzy
-#~ msgid "WBFS"
-#~ msgstr "¿WBFS?"
+#~ msgid "Tienes que seleccionar una particion WBFS para realizar esta accion"
+#~ msgstr "Tienes que seleccionar una partición WBFS para realizar esta acción"
 
 #, fuzzy
 #~ msgid "Opciones de extraccion"
 #~ msgstr "Formato fecha corta"
 
-#~ msgid "Tienes que seleccionar una particion WBFS para realizar esta accion"
-#~ msgstr "Tienes que seleccionar una partición WBFS para realizar esta acción"
+#, fuzzy
+#~ msgid "WBFS"
+#~ msgstr "¿WBFS?"
+
+#~ msgid "Numero de juegos."
+#~ msgstr "Número de juegos."
+
+#~ msgid "Fecha de lanzamiento: "
+#~ msgstr "Fecha: "
+
+#~ msgid "Numero de tareas que esperan en la cola."
+#~ msgstr "Número de tareas que esperan en la cola."

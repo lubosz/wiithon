@@ -448,7 +448,7 @@ msgid "Una actualizacion de Wiithon ha cambiado la estructura de la BDD. Se han 
 msgstr "Wiithon has been updated and has changed the structure of the BDD. Preferences have been set by default."
 
 #: gui.py:417 gui.py:1135 gui.py:1815 gui.py:1858 gui.py:1867 gui.py:1910
-#: gui.py:2012 gui.py:2389
+#: gui.py:2012 gui.py:2395
 msgid "No has seleccionado ninguna particion"
 msgstr "No partition selected"
 
@@ -799,48 +799,48 @@ msgstr "Successfully completed the importation of data from WiiTDB"
 msgid "Deseas borrar el archivo %s?"
 msgstr "Do you want to delete the archive %s?"
 
-#: gui.py:2401
+#: gui.py:2407
 #, python-format
 msgid "Trabajando con %s, sin estimar el tiempo restante ..."
 msgstr "Working with %s (don't estimating the time left)"
 
-#: gui.py:2405 gui.py:2444
+#: gui.py:2411 gui.py:2450
 #, python-format
 msgid "Termina: %s"
 msgstr "Finish: %s"
 
-#: gui.py:2430
+#: gui.py:2436
 #, python-format
 msgid "Empieza %s"
 msgstr "Start %s"
 
-#: gui.py:2462
+#: gui.py:2468
 #, python-format
 msgid "Falla la descarga de la caratula de %s"
 msgstr "Failure to download the cover art %s"
 
-#: gui.py:2473
+#: gui.py:2479
 #, python-format
 msgid "Falla la descarga del disco de %s"
 msgstr "Failure downloading the disc-art %s"
 
-#: gui.py:2524
+#: gui.py:2530
 msgid "Finalizando ..."
 msgstr "Finishing ..."
 
-#: gui.py:2526
+#: gui.py:2532
 msgid "ERROR!"
 msgstr "ERROR!"
 
-#: gui.py:2535
+#: gui.py:2541
 msgid "quedan"
 msgstr "remaining"
 
-#: gui.py:2552
+#: gui.py:2558
 msgid "Error en progreso"
 msgstr "Error in progress"
 
-#: gui.py:2562
+#: gui.py:2568
 msgid "Empezando ..."
 msgstr "Starting ..."
 
@@ -1737,51 +1737,51 @@ msgstr "Program runs with incorrect settings"
 msgid "Interrumpido por el usuario"
 msgstr "Interrupted by user"
 
-#~ msgid "Numero de tareas que esperan en la cola."
-#~ msgstr "Number of tasks waiting in the queue."
+#~ msgid "Tienes que seleccionar una particion WBFS para realizar esta accion"
+#~ msgstr "You need to select a WBFS partition"
 
-#~ msgid "No se ha encontrado ninguna imagen ISO o RAR"
-#~ msgstr "Could not find any ISO image or RAR"
+#~ msgid "Elige un directorio donde extraer la ISO de %s"
+#~ msgstr "Choose a folder to extract the ISO %s"
 
-#~ msgid "ISO sin comprimir"
-#~ msgstr "Uncompressed ISO"
+#~ msgid "Extraer todos los juegos*"
+#~ msgstr "Extract all the games*"
 
-#~ msgid "Buscar:"
-#~ msgstr "Search:"
-
-#~ msgid "Fecha de lanzamiento: "
-#~ msgstr "Released: "
-
-#~ msgid "OPCIONALES: "
-#~ msgstr "OPTIONAL: "
-
-#~ msgid "ACCESORIOS: "
-#~ msgstr "ACCESSORIES:"
-
-#~ msgid "Progreso de la tarea actual."
-#~ msgstr "Progress of the current task."
-
-#~ msgid "Numero de juegos."
-#~ msgstr "Games number."
-
-#~ msgid "Espacio usado / Espacio total"
-#~ msgstr "Free space / Total space"
-
-#~ msgid "+INFO"
-#~ msgstr "+INFO"
+#~ msgid "Opciones de extraccion"
+#~ msgstr "Options extraction"
 
 #, fuzzy
 #~ msgid "WBFS"
 #~ msgstr "WBFS?"
 
-#~ msgid "Opciones de extraccion"
-#~ msgstr "Options extraction"
+#~ msgid "+INFO"
+#~ msgstr "+INFO"
 
-#~ msgid "Extraer todos los juegos*"
-#~ msgstr "Extract all the games*"
+#~ msgid "Espacio usado / Espacio total"
+#~ msgstr "Free space / Total space"
 
-#~ msgid "Elige un directorio donde extraer la ISO de %s"
-#~ msgstr "Choose a folder to extract the ISO %s"
+#~ msgid "Numero de juegos."
+#~ msgstr "Games number."
 
-#~ msgid "Tienes que seleccionar una particion WBFS para realizar esta accion"
-#~ msgstr "You need to select a WBFS partition"
+#~ msgid "Progreso de la tarea actual."
+#~ msgstr "Progress of the current task."
+
+#~ msgid "ACCESORIOS: "
+#~ msgstr "ACCESSORIES:"
+
+#~ msgid "OPCIONALES: "
+#~ msgstr "OPTIONAL: "
+
+#~ msgid "Fecha de lanzamiento: "
+#~ msgstr "Released: "
+
+#~ msgid "Buscar:"
+#~ msgstr "Search:"
+
+#~ msgid "ISO sin comprimir"
+#~ msgstr "Uncompressed ISO"
+
+#~ msgid "No se ha encontrado ninguna imagen ISO o RAR"
+#~ msgstr "Could not find any ISO image or RAR"
+
+#~ msgid "Numero de tareas que esperan en la cola."
+#~ msgstr "Number of tasks waiting in the queue."

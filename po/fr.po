@@ -448,7 +448,7 @@ msgid "Una actualizacion de Wiithon ha cambiado la estructura de la BDD. Se han 
 msgstr "Une mise à jour Wiithon a changé la structure de la BDD. Les préférences ont été définies par défaut."
 
 #: gui.py:417 gui.py:1135 gui.py:1815 gui.py:1858 gui.py:1867 gui.py:1910
-#: gui.py:2012 gui.py:2389
+#: gui.py:2012 gui.py:2395
 msgid "No has seleccionado ninguna particion"
 msgstr "Pas de partition sélectionnée"
 
@@ -799,48 +799,48 @@ msgstr "Importation de données de WiiTDB achevée avec succès"
 msgid "Deseas borrar el archivo %s?"
 msgstr "Voulez-vous supprimer le fichier %s ?"
 
-#: gui.py:2401
+#: gui.py:2407
 #, python-format
 msgid "Trabajando con %s, sin estimar el tiempo restante ..."
 msgstr "Travail avec %s, sans estimation du temps restant..."
 
-#: gui.py:2405 gui.py:2444
+#: gui.py:2411 gui.py:2450
 #, python-format
 msgid "Termina: %s"
 msgstr "Terminé : %s"
 
-#: gui.py:2430
+#: gui.py:2436
 #, python-format
 msgid "Empieza %s"
 msgstr "Démarrage : %s"
 
-#: gui.py:2462
+#: gui.py:2468
 #, python-format
 msgid "Falla la descarga de la caratula de %s"
 msgstr "Impossible de télécharger la pochette pour %s"
 
-#: gui.py:2473
+#: gui.py:2479
 #, python-format
 msgid "Falla la descarga del disco de %s"
 msgstr "Impossible de télécharger le disque pour %s"
 
-#: gui.py:2524
+#: gui.py:2530
 msgid "Finalizando ..."
 msgstr "Finalisation..."
 
-#: gui.py:2526
+#: gui.py:2532
 msgid "ERROR!"
 msgstr "ERREUR!"
 
-#: gui.py:2535
+#: gui.py:2541
 msgid "quedan"
 msgstr "reste"
 
-#: gui.py:2552
+#: gui.py:2558
 msgid "Error en progreso"
 msgstr "Erreur en cours"
 
-#: gui.py:2562
+#: gui.py:2568
 msgid "Empezando ..."
 msgstr "Démarrage en cours ..."
 
@@ -1739,18 +1739,18 @@ msgstr "Programme lancé avec des paramètres incorrects."
 msgid "Interrumpido por el usuario"
 msgstr "Interrompu par l'utilisateur"
 
-#, fuzzy
-#~ msgid "WBFS"
-#~ msgstr "WBFS?"
-
-#~ msgid "Opciones de extraccion"
-#~ msgstr "Options d'extraction"
-
-#~ msgid "Extraer todos los juegos*"
-#~ msgstr "Extraire tous les jeux*"
+#~ msgid "Tienes que seleccionar una particion WBFS para realizar esta accion"
+#~ msgstr "Vous devez sélectionner une partition WBFS pour réaliser cette action"
 
 #~ msgid "Elige un directorio donde extraer la ISO de %s"
 #~ msgstr "Choisissez le dossier dans lequel extraire l'ISO %s"
 
-#~ msgid "Tienes que seleccionar una particion WBFS para realizar esta accion"
-#~ msgstr "Vous devez sélectionner une partition WBFS pour réaliser cette action"
+#~ msgid "Extraer todos los juegos*"
+#~ msgstr "Extraire tous les jeux*"
+
+#~ msgid "Opciones de extraccion"
+#~ msgstr "Options d'extraction"
+
+#, fuzzy
+#~ msgid "WBFS"
+#~ msgstr "WBFS?"

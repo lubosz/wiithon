@@ -451,7 +451,7 @@ msgid "Una actualizacion de Wiithon ha cambiado la estructura de la BDD. Se han 
 msgstr ""
 
 #: gui.py:417 gui.py:1135 gui.py:1815 gui.py:1858 gui.py:1867 gui.py:1910
-#: gui.py:2012 gui.py:2389
+#: gui.py:2012 gui.py:2395
 msgid "No has seleccionado ninguna particion"
 msgstr "Ingen partition är vald"
 
@@ -809,48 +809,48 @@ msgstr "Informationen ifrån WiiTDB är färdiguppackad"
 msgid "Deseas borrar el archivo %s?"
 msgstr "Vill du ta bort arkivet %s?"
 
-#: gui.py:2401
+#: gui.py:2407
 #, python-format
 msgid "Trabajando con %s, sin estimar el tiempo restante ..."
 msgstr ""
 
-#: gui.py:2405 gui.py:2444
+#: gui.py:2411 gui.py:2450
 #, python-format
 msgid "Termina: %s"
 msgstr "Avsluta: %s"
 
-#: gui.py:2430
+#: gui.py:2436
 #, python-format
 msgid "Empieza %s"
 msgstr "Starta %s"
 
-#: gui.py:2462
+#: gui.py:2468
 #, python-format
 msgid "Falla la descarga de la caratula de %s"
 msgstr "Misslyckades att ladda ner omslaget %s"
 
-#: gui.py:2473
+#: gui.py:2479
 #, python-format
 msgid "Falla la descarga del disco de %s"
 msgstr "Misslyckades att ladda ner skivetiketen %s"
 
-#: gui.py:2524
+#: gui.py:2530
 msgid "Finalizando ..."
 msgstr "Avslutar..."
 
-#: gui.py:2526
+#: gui.py:2532
 msgid "ERROR!"
 msgstr "FEL!"
 
-#: gui.py:2535
+#: gui.py:2541
 msgid "quedan"
 msgstr "återstår"
 
-#: gui.py:2552
+#: gui.py:2558
 msgid "Error en progreso"
 msgstr "Fel i processen"
 
-#: gui.py:2562
+#: gui.py:2568
 msgid "Empezando ..."
 msgstr "Startar..."
 
@@ -1765,50 +1765,50 @@ msgstr "Programmet körs med felaktiga inställningar"
 msgid "Interrumpido por el usuario"
 msgstr "Avbrutet av användraren"
 
-#~ msgid "Numero de tareas que esperan en la cola."
-#~ msgstr "Antal aktiviteter i kö"
+#~ msgid "Tienes que seleccionar una particion WBFS para realizar esta accion"
+#~ msgstr "Du måste välja en WBFS-partition"
 
-#~ msgid "No se ha encontrado ninguna imagen ISO o RAR"
-#~ msgstr "Kunde inte hitta någon ISO- eller RAR-fil"
-
-#~ msgid "Buscar:"
-#~ msgstr "Sök:"
-
-#~ msgid "Fecha de lanzamiento: "
-#~ msgstr "Releasedatum:"
-
-#~ msgid "OPCIONALES: "
-#~ msgstr "VALFRIA TILLBEHÖR:"
-
-#~ msgid "ACCESORIOS: "
-#~ msgstr "KONTROLLER:"
-
-#~ msgid "Progreso de la tarea actual."
-#~ msgstr "Status på pågående uppgift."
-
-#~ msgid "Numero de juegos."
-#~ msgstr "Spelnummer"
-
-#~ msgid "Espacio usado / Espacio total"
-#~ msgstr "Fritt utrymme / Totalt utrymme"
-
-#~ msgid "+INFO"
-#~ msgstr "+INFO"
+#~ msgid "Elige un directorio donde extraer la ISO de %s"
+#~ msgstr "Välj en mapp för uppackning av ISO %s"
 
 #, fuzzy
-#~ msgid "WBFS"
-#~ msgstr "WBFS?"
+#~ msgid "Extraer todos los juegos*"
+#~ msgstr "Kopiera alla spel*"
 
 #, fuzzy
 #~ msgid "Opciones de extraccion"
 #~ msgstr "Kort datumformat"
 
 #, fuzzy
-#~ msgid "Extraer todos los juegos*"
-#~ msgstr "Kopiera alla spel*"
+#~ msgid "WBFS"
+#~ msgstr "WBFS?"
 
-#~ msgid "Elige un directorio donde extraer la ISO de %s"
-#~ msgstr "Välj en mapp för uppackning av ISO %s"
+#~ msgid "+INFO"
+#~ msgstr "+INFO"
 
-#~ msgid "Tienes que seleccionar una particion WBFS para realizar esta accion"
-#~ msgstr "Du måste välja en WBFS-partition"
+#~ msgid "Espacio usado / Espacio total"
+#~ msgstr "Fritt utrymme / Totalt utrymme"
+
+#~ msgid "Numero de juegos."
+#~ msgstr "Spelnummer"
+
+#~ msgid "Progreso de la tarea actual."
+#~ msgstr "Status på pågående uppgift."
+
+#~ msgid "ACCESORIOS: "
+#~ msgstr "KONTROLLER:"
+
+#~ msgid "OPCIONALES: "
+#~ msgstr "VALFRIA TILLBEHÖR:"
+
+#~ msgid "Fecha de lanzamiento: "
+#~ msgstr "Releasedatum:"
+
+#~ msgid "Buscar:"
+#~ msgstr "Sök:"
+
+#~ msgid "No se ha encontrado ninguna imagen ISO o RAR"
+#~ msgstr "Kunde inte hitta någon ISO- eller RAR-fil"
+
+#~ msgid "Numero de tareas que esperan en la cola."
+#~ msgstr "Antal aktiviteter i kö"

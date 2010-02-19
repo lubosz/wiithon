@@ -2274,38 +2274,44 @@ class WiithonGUI(GtkBuilderWrapper):
         # lo añadimos a la lista
         juegoNuevo = self.core.new_game_from_HDD(DEVICE, IDGAME)
         
-        # refrescar su espacio uso/libre/total
-        juegoNuevo.particion.refrescarEspacioLibreUsado(self.core)
-        
-        # limpio el filtro antes de seleccionar
-        self.wb_busqueda.set_text('')
+        # fix for #516547
+        if juegoNuevo is not None:
+            
+            # refrescar su espacio uso/libre/total
+            juegoNuevo.particion.refrescarEspacioLibreUsado(self.core)
+            
+            # limpio el filtro antes de seleccionar
+            self.wb_busqueda.set_text('')
 
-        # seleccionamos la particion y la fila del juego añadido       
-        self.seleccionarFilaConValor(self.wb_tv_partitions, 0 , juegoNuevo.particion.device)
-        self.seleccionarFilaConValor(self.wb_tv_games, 0 , juegoNuevo.idgame)
-        
-        # refrescar num juegos con info wiitdb
-        self.refrescarInfoWiiTDB()
-        
-        # pregunta arreglar nombre
-        if self.core.prefs.proponer_nombre:
-            self.proponer_nombre_juego(juegoNuevo)
+            # seleccionamos la particion y la fila del juego añadido       
+            self.seleccionarFilaConValor(self.wb_tv_partitions, 0 , juegoNuevo.particion.device)
+            self.seleccionarFilaConValor(self.wb_tv_games, 0 , juegoNuevo.idgame)
+            
+            # refrescar num juegos con info wiitdb
+            self.refrescarInfoWiiTDB()
+            
+            # pregunta arreglar nombre
+            if self.core.prefs.proponer_nombre:
+                self.proponer_nombre_juego(juegoNuevo)
 
     def termina_trabajo_copiar(self, juego , particion):
 
         # consultamos al wiithon wrapper info sobre el juego con nueva IDGAME
         # lo añadimos a la lista
         juegoNuevo = self.core.new_game_from_HDD(particion.device, juego.idgame)
+        
+        # fix for #516547
+        if juegoNuevo is not None:
 
-        # refrescar su espacio uso/libre/total
-        particion.refrescarEspacioLibreUsado(self.core)
-        
-        # limpio el filtro antes de seleccionar
-        self.wb_busqueda.set_text('')
-        
-        # seleccionamos la particion y la fila del juego añadido
-        self.seleccionarFilaConValor(self.wb_tv_partitions, 0 , juegoNuevo.particion.device)
-        self.seleccionarFilaConValor(self.wb_tv_games, 0 , juegoNuevo.idgame)
+            # refrescar su espacio uso/libre/total
+            particion.refrescarEspacioLibreUsado(self.core)
+            
+            # limpio el filtro antes de seleccionar
+            self.wb_busqueda.set_text('')
+            
+            # seleccionamos la particion y la fila del juego añadido
+            self.seleccionarFilaConValor(self.wb_tv_partitions, 0 , juegoNuevo.particion.device)
+            self.seleccionarFilaConValor(self.wb_tv_games, 0 , juegoNuevo.idgame)
 
 ############# CALLBACKS
 
