@@ -576,7 +576,7 @@ msgstr "El nou nom es massa llarg, intenta amb un text menor de %d caracteres"
 msgid "PREGUNTA:"
 msgstr "PREGUNTA:"
 
-#: gui.py:1028
+#: gui.py:1028 wiithon.py:55
 msgid "WARNING:"
 msgstr "ADVERTÈNCIA:"
 
@@ -1725,54 +1725,58 @@ msgstr "No existeix l'XML"
 msgid "Necesitas tener instalado pyGTK o GTKv2"
 msgstr "Necessites tenir instalar pyGTK o GTKv2"
 
-#: wiithon.py:51
+#: wiithon.py:65
+msgid "Ya tienes Wiithon abierto"
+msgstr ""
+
+#: wiithon.py:83
 msgid "Instala wiithon, no lo ejecute desde ./wiithon.py"
 msgstr "Instala wiithon, no l'executes des de ./wiithon.py"
 
-#: wiithon.py:105
+#: wiithon.py:137
 msgid "Programa ejecutado con las opciones incorrectas."
 msgstr "Programa executat amb les opcions incorrectes."
 
-#: wiithon.py:109
+#: wiithon.py:141
 msgid "Interrumpido por el usuario"
 msgstr "Interromput per l'usuari"
 
-#~ msgid "Tienes que seleccionar una particion WBFS para realizar esta accion"
-#~ msgstr "Has de selecciona una partició WBFS per a realitzar aquesta acció"
+#~ msgid "Progreso de la tarea actual."
+#~ msgstr "Progrés de la tasca actual."
 
-#~ msgid "Elige un directorio donde extraer la ISO de %s"
-#~ msgstr "Trie un directori on extraure l'ISO de %s"
+#~ msgid "Numero de tareas que esperan en la cola."
+#~ msgstr "Nombre de tasques que esperen a la cua"
 
-#~ msgid "Extraer todos los juegos*"
-#~ msgstr "Extreure tots els jocs*"
+#~ msgid "Numero de juegos."
+#~ msgstr "Nombre de jocs"
+
+#~ msgid "Espacio usado / Espacio total"
+#~ msgstr "Espai utilitzat / Espai total"
+
+#~ msgid "+INFO"
+#~ msgstr "+INFO"
+
+#~ msgid "Fecha de lanzamiento: "
+#~ msgstr "Data de llançament:"
+
+#~ msgid "OPCIONALES: "
+#~ msgstr "OPCIONALS:"
+
+#~ msgid "ACCESORIOS: "
+#~ msgstr "Accesoris:"
+
+#~ msgid "No se ha encontrado ninguna imagen ISO o RAR"
+#~ msgstr "No s'ha trobat cap imatge ISO o RAR"
 
 #, fuzzy
 #~ msgid "WBFS"
 #~ msgstr " WBFS?"
 
-#~ msgid "No se ha encontrado ninguna imagen ISO o RAR"
-#~ msgstr "No s'ha trobat cap imatge ISO o RAR"
+#~ msgid "Extraer todos los juegos*"
+#~ msgstr "Extreure tots els jocs*"
 
-#~ msgid "ACCESORIOS: "
-#~ msgstr "Accesoris:"
+#~ msgid "Elige un directorio donde extraer la ISO de %s"
+#~ msgstr "Trie un directori on extraure l'ISO de %s"
 
-#~ msgid "OPCIONALES: "
-#~ msgstr "OPCIONALS:"
-
-#~ msgid "Fecha de lanzamiento: "
-#~ msgstr "Data de llançament:"
-
-#~ msgid "+INFO"
-#~ msgstr "+INFO"
-
-#~ msgid "Espacio usado / Espacio total"
-#~ msgstr "Espai utilitzat / Espai total"
-
-#~ msgid "Numero de juegos."
-#~ msgstr "Nombre de jocs"
-
-#~ msgid "Numero de tareas que esperan en la cola."
-#~ msgstr "Nombre de tasques que esperen a la cua"
-
-#~ msgid "Progreso de la tarea actual."
-#~ msgstr "Progrés de la tasca actual."
+#~ msgid "Tienes que seleccionar una particion WBFS para realizar esta accion"
+#~ msgstr "Has de selecciona una partició WBFS per a realitzar aquesta acció"

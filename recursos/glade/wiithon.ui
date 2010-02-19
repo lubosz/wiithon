@@ -4,6 +4,7 @@
   <!-- interface-naming-policy project-wide -->
   <object class="GtkWindow" id="principal">
     <property name="title">Wiithon</property>
+    <property name="window_position">center-always</property>
     <child>
       <object class="GtkVBox" id="vbox_principal1">
         <property name="visible">True</property>
@@ -732,7 +733,7 @@ Por defecto: 160x224</property>
   <object class="GtkAboutDialog" id="aboutdialog">
     <property name="border_width">5</property>
     <property name="modal">True</property>
-    <property name="window_position">center</property>
+    <property name="window_position">center-on-parent</property>
     <property name="type_hint">normal</property>
     <property name="has_separator">False</property>
     <property name="program_name">Wiithon</property>
@@ -791,7 +792,7 @@ Galician: &#xC1;lvaro Ord&#xF3;&#xF1;ez &lt;alvarito@barberberecho.es&gt; [gl_ES
   <object class="GtkDialog" id="dialogo_copia_1on1">
     <property name="border_width">5</property>
     <property name="title" translatable="yes">Copia directa de particion a particion</property>
-    <property name="window_position">center</property>
+    <property name="window_position">center-on-parent</property>
     <property name="type_hint">normal</property>
     <property name="has_separator">False</property>
     <child internal-child="vbox">
@@ -938,7 +939,7 @@ Galician: &#xC1;lvaro Ord&#xF3;&#xF1;ez &lt;alvarito@barberberecho.es&gt; [gl_ES
     <property name="border_width">5</property>
     <property name="title" translatable="yes">Preferencias</property>
     <property name="modal">True</property>
-    <property name="window_position">center</property>
+    <property name="window_position">center-on-parent</property>
     <property name="icon_name">document-properties</property>
     <property name="type_hint">normal</property>
     <property name="has_separator">False</property>
@@ -1298,6 +1299,7 @@ Galician: &#xC1;lvaro Ord&#xF3;&#xF1;ez &lt;alvarito@barberberecho.es&gt; [gl_ES
   <object class="GtkDialog" id="format">
     <property name="border_width">5</property>
     <property name="modal">True</property>
+    <property name="window_position">center-on-parent</property>
     <property name="type_hint">normal</property>
     <property name="has_separator">False</property>
     <child internal-child="vbox">
@@ -1331,7 +1333,7 @@ Galician: &#xC1;lvaro Ord&#xF3;&#xF1;ez &lt;alvarito@barberberecho.es&gt; [gl_ES
   <object class="GtkDialog" id="dialogo_renombrar_masivo">
     <property name="border_width">5</property>
     <property name="title" translatable="yes">Renombrado masivo</property>
-    <property name="window_position">center</property>
+    <property name="window_position">center-on-parent</property>
     <property name="type_hint">normal</property>
     <property name="has_separator">False</property>
     <child internal-child="vbox">
@@ -1425,7 +1427,8 @@ Galician: &#xC1;lvaro Ord&#xF3;&#xF1;ez &lt;alvarito@barberberecho.es&gt; [gl_ES
   <object class="GtkDialog" id="dialogo_conversor">
     <property name="border_width">5</property>
     <property name="title" translatable="yes">Conversor de imagenes</property>
-    <property name="window_position">center</property>
+    <property name="modal">True</property>
+    <property name="window_position">center-on-parent</property>
     <property name="type_hint">normal</property>
     <property name="has_separator">False</property>
     <child internal-child="vbox">
@@ -1622,7 +1625,7 @@ Galician: &#xC1;lvaro Ord&#xF3;&#xF1;ez &lt;alvarito@barberberecho.es&gt; [gl_ES
   <object class="GtkDialog" id="dialogo_extraer">
     <property name="border_width">5</property>
     <property name="title" translatable="yes">Extraer juegos</property>
-    <property name="window_position">center</property>
+    <property name="window_position">center-on-parent</property>
     <property name="type_hint">normal</property>
     <property name="has_separator">False</property>
     <child internal-child="vbox">
@@ -1704,9 +1707,9 @@ Galician: &#xC1;lvaro Ord&#xF3;&#xF1;ez &lt;alvarito@barberberecho.es&gt; [gl_ES
                     <child>
                       <object class="GtkFileChooserButton" id="extraer_directorio_salida">
                         <property name="visible">True</property>
+                        <property name="action">select-folder</property>
                         <property name="show_hidden">True</property>
                         <property name="create_folders">False</property>
-                        <property name="action">select-folder</property>
                         <property name="title" translatable="yes">Elegir directorio de salida</property>
                       </object>
                     </child>

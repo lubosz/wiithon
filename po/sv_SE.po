@@ -581,7 +581,7 @@ msgstr "Det nya namnet är för långt, prova med ett kortare namn än %d tecken
 msgid "PREGUNTA:"
 msgstr "FRÅGA:"
 
-#: gui.py:1028
+#: gui.py:1028 wiithon.py:55
 msgid "WARNING:"
 msgstr "VARNING:"
 
@@ -1753,62 +1753,66 @@ msgstr "XML saknas"
 msgid "Necesitas tener instalado pyGTK o GTKv2"
 msgstr "Du måste installera pyGTK eller GTKv2"
 
-#: wiithon.py:51
+#: wiithon.py:65
+msgid "Ya tienes Wiithon abierto"
+msgstr ""
+
+#: wiithon.py:83
 msgid "Instala wiithon, no lo ejecute desde ./wiithon.py"
 msgstr "Du måste installera Wiithon, kör inte ifrån ./wiithon.py"
 
-#: wiithon.py:105
+#: wiithon.py:137
 msgid "Programa ejecutado con las opciones incorrectas."
 msgstr "Programmet körs med felaktiga inställningar"
 
-#: wiithon.py:109
+#: wiithon.py:141
 msgid "Interrumpido por el usuario"
 msgstr "Avbrutet av användraren"
 
-#~ msgid "Tienes que seleccionar una particion WBFS para realizar esta accion"
-#~ msgstr "Du måste välja en WBFS-partition"
+#~ msgid "Numero de tareas que esperan en la cola."
+#~ msgstr "Antal aktiviteter i kö"
 
-#~ msgid "Elige un directorio donde extraer la ISO de %s"
-#~ msgstr "Välj en mapp för uppackning av ISO %s"
+#~ msgid "No se ha encontrado ninguna imagen ISO o RAR"
+#~ msgstr "Kunde inte hitta någon ISO- eller RAR-fil"
+
+#~ msgid "Buscar:"
+#~ msgstr "Sök:"
+
+#~ msgid "Fecha de lanzamiento: "
+#~ msgstr "Releasedatum:"
+
+#~ msgid "OPCIONALES: "
+#~ msgstr "VALFRIA TILLBEHÖR:"
+
+#~ msgid "ACCESORIOS: "
+#~ msgstr "KONTROLLER:"
+
+#~ msgid "Progreso de la tarea actual."
+#~ msgstr "Status på pågående uppgift."
+
+#~ msgid "Numero de juegos."
+#~ msgstr "Spelnummer"
+
+#~ msgid "Espacio usado / Espacio total"
+#~ msgstr "Fritt utrymme / Totalt utrymme"
+
+#~ msgid "+INFO"
+#~ msgstr "+INFO"
 
 #, fuzzy
-#~ msgid "Extraer todos los juegos*"
-#~ msgstr "Kopiera alla spel*"
+#~ msgid "WBFS"
+#~ msgstr "WBFS?"
 
 #, fuzzy
 #~ msgid "Opciones de extraccion"
 #~ msgstr "Kort datumformat"
 
 #, fuzzy
-#~ msgid "WBFS"
-#~ msgstr "WBFS?"
+#~ msgid "Extraer todos los juegos*"
+#~ msgstr "Kopiera alla spel*"
 
-#~ msgid "+INFO"
-#~ msgstr "+INFO"
+#~ msgid "Elige un directorio donde extraer la ISO de %s"
+#~ msgstr "Välj en mapp för uppackning av ISO %s"
 
-#~ msgid "Espacio usado / Espacio total"
-#~ msgstr "Fritt utrymme / Totalt utrymme"
-
-#~ msgid "Numero de juegos."
-#~ msgstr "Spelnummer"
-
-#~ msgid "Progreso de la tarea actual."
-#~ msgstr "Status på pågående uppgift."
-
-#~ msgid "ACCESORIOS: "
-#~ msgstr "KONTROLLER:"
-
-#~ msgid "OPCIONALES: "
-#~ msgstr "VALFRIA TILLBEHÖR:"
-
-#~ msgid "Fecha de lanzamiento: "
-#~ msgstr "Releasedatum:"
-
-#~ msgid "Buscar:"
-#~ msgstr "Sök:"
-
-#~ msgid "No se ha encontrado ninguna imagen ISO o RAR"
-#~ msgstr "Kunde inte hitta någon ISO- eller RAR-fil"
-
-#~ msgid "Numero de tareas que esperan en la cola."
-#~ msgstr "Antal aktiviteter i kö"
+#~ msgid "Tienes que seleccionar una particion WBFS para realizar esta accion"
+#~ msgstr "Du måste välja en WBFS-partition"

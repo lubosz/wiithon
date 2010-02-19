@@ -578,7 +578,7 @@ msgstr "Novo nome é muito grande, entre com um texto menor de %d caracteres"
 msgid "PREGUNTA:"
 msgstr "PERGUNTA:"
 
-#: gui.py:1028
+#: gui.py:1028 wiithon.py:55
 msgid "WARNING:"
 msgstr "AVISO:"
 
@@ -1744,62 +1744,66 @@ msgstr "O XML não existe"
 msgid "Necesitas tener instalado pyGTK o GTKv2"
 msgstr "Precisa ter instalado pyGTK ou GTKv2"
 
-#: wiithon.py:51
+#: wiithon.py:65
+msgid "Ya tienes Wiithon abierto"
+msgstr ""
+
+#: wiithon.py:83
 msgid "Instala wiithon, no lo ejecute desde ./wiithon.py"
 msgstr "Instala o Wiithon, não execute a partir de ./wiithon.py"
 
-#: wiithon.py:105
+#: wiithon.py:137
 msgid "Programa ejecutado con las opciones incorrectas."
 msgstr "Programa executado com as opes incorretas."
 
-#: wiithon.py:109
+#: wiithon.py:141
 msgid "Interrumpido por el usuario"
 msgstr "Interrompido pelo usuário"
 
-#~ msgid "Tienes que seleccionar una particion WBFS para realizar esta accion"
-#~ msgstr "Você tem que selecionar uma partição WBFS para realizar esta ação"
+#~ msgid "Numero de tareas que esperan en la cola."
+#~ msgstr "Número de tarefas que esperam na fila."
 
-#~ msgid "Elige un directorio donde extraer la ISO de %s"
-#~ msgstr "Escolha um diretório para extrair a ISO de %s"
+#~ msgid "No se ha encontrado ninguna imagen ISO o RAR"
+#~ msgstr "Não foi encontrada nenhuma imagem ISO ou RAR"
+
+#~ msgid "Buscar:"
+#~ msgstr "Pesquisar:"
+
+#~ msgid "Fecha de lanzamiento: "
+#~ msgstr "Data de lançamento:"
+
+#~ msgid "OPCIONALES: "
+#~ msgstr "OPCIONAIS:"
+
+#~ msgid "ACCESORIOS: "
+#~ msgstr "ACCESÓRIOS: "
+
+#~ msgid "Progreso de la tarea actual."
+#~ msgstr "Progresso da tarefa atual."
+
+#~ msgid "Numero de juegos."
+#~ msgstr "Número de jogos."
+
+#~ msgid "Espacio usado / Espacio total"
+#~ msgstr "Espaço usado / Espaço total"
+
+#~ msgid "+INFO"
+#~ msgstr "+INFO"
 
 #, fuzzy
-#~ msgid "Extraer todos los juegos*"
-#~ msgstr "Copiar todos os jogos*"
+#~ msgid "WBFS"
+#~ msgstr "WBFS?"
 
 #, fuzzy
 #~ msgid "Opciones de extraccion"
 #~ msgstr "Formato desconhecido"
 
 #, fuzzy
-#~ msgid "WBFS"
-#~ msgstr "WBFS?"
+#~ msgid "Extraer todos los juegos*"
+#~ msgstr "Copiar todos os jogos*"
 
-#~ msgid "+INFO"
-#~ msgstr "+INFO"
+#~ msgid "Elige un directorio donde extraer la ISO de %s"
+#~ msgstr "Escolha um diretório para extrair a ISO de %s"
 
-#~ msgid "Espacio usado / Espacio total"
-#~ msgstr "Espaço usado / Espaço total"
-
-#~ msgid "Numero de juegos."
-#~ msgstr "Número de jogos."
-
-#~ msgid "Progreso de la tarea actual."
-#~ msgstr "Progresso da tarefa atual."
-
-#~ msgid "ACCESORIOS: "
-#~ msgstr "ACCESÓRIOS: "
-
-#~ msgid "OPCIONALES: "
-#~ msgstr "OPCIONAIS:"
-
-#~ msgid "Fecha de lanzamiento: "
-#~ msgstr "Data de lançamento:"
-
-#~ msgid "Buscar:"
-#~ msgstr "Pesquisar:"
-
-#~ msgid "No se ha encontrado ninguna imagen ISO o RAR"
-#~ msgstr "Não foi encontrada nenhuma imagem ISO ou RAR"
-
-#~ msgid "Numero de tareas que esperan en la cola."
-#~ msgstr "Número de tarefas que esperam na fila."
+#~ msgid "Tienes que seleccionar una particion WBFS para realizar esta accion"
+#~ msgstr "Você tem que selecionar uma partição WBFS para realizar esta ação"

@@ -951,7 +951,7 @@ class WiithonGUI(GtkBuilderWrapper):
         botones = (gtk.STOCK_CANCEL, gtk.RESPONSE_CANCEL, str(boton_text), gtk.RESPONSE_ACCEPT)
         default_response = gtk.RESPONSE_CANCEL
         
-        confirmar = gtk.Dialog(titulo, None,
+        confirmar = gtk.Dialog(titulo, self.wb_principal,
                         gtk.DIALOG_MODAL | gtk.DIALOG_DESTROY_WITH_PARENT,
                         botones)           
         confirmar.set_default_response(default_response)
@@ -1045,7 +1045,7 @@ class WiithonGUI(GtkBuilderWrapper):
             if titulo == '':
                 titulo = _("INFORMACION:")
         
-        confirmar = gtk.Dialog(titulo, None,
+        confirmar = gtk.Dialog(titulo, self.wb_principal,
                         #gtk.DIALOG_MODAL | gtk.DIALOG_DESTROY_WITH_PARENT,
                         gtk.DIALOG_DESTROY_WITH_PARENT,
                         botones)           

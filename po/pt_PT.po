@@ -573,7 +573,7 @@ msgstr "Nuevo nombre es demasiado largo, intente con un texto menor de %d carác
 msgid "PREGUNTA:"
 msgstr ""
 
-#: gui.py:1028
+#: gui.py:1028 wiithon.py:55
 msgid "WARNING:"
 msgstr "ADVERTENCIA:"
 
@@ -1722,34 +1722,38 @@ msgstr ""
 msgid "Necesitas tener instalado pyGTK o GTKv2"
 msgstr ""
 
-#: wiithon.py:51
+#: wiithon.py:65
+msgid "Ya tienes Wiithon abierto"
+msgstr ""
+
+#: wiithon.py:83
 msgid "Instala wiithon, no lo ejecute desde ./wiithon.py"
 msgstr ""
 
-#: wiithon.py:105
+#: wiithon.py:137
 msgid "Programa ejecutado con las opciones incorrectas."
 msgstr ""
 
-#: wiithon.py:109
+#: wiithon.py:141
 msgid "Interrumpido por el usuario"
 msgstr ""
 
-#~ msgid "Tienes que seleccionar una particion WBFS para realizar esta accion"
-#~ msgstr "Tienes que seleccionar una partición WBFS para realizar esta acción"
+#~ msgid "Numero de tareas que esperan en la cola."
+#~ msgstr "Número de tareas que esperan en la cola."
 
-#, fuzzy
-#~ msgid "Opciones de extraccion"
-#~ msgstr "Formato fecha corta"
+#~ msgid "Fecha de lanzamiento: "
+#~ msgstr "Fecha: "
+
+#~ msgid "Numero de juegos."
+#~ msgstr "Número de juegos."
 
 #, fuzzy
 #~ msgid "WBFS"
 #~ msgstr "¿WBFS?"
 
-#~ msgid "Numero de juegos."
-#~ msgstr "Número de juegos."
+#, fuzzy
+#~ msgid "Opciones de extraccion"
+#~ msgstr "Formato fecha corta"
 
-#~ msgid "Fecha de lanzamiento: "
-#~ msgstr "Fecha: "
-
-#~ msgid "Numero de tareas que esperan en la cola."
-#~ msgstr "Número de tareas que esperan en la cola."
+#~ msgid "Tienes que seleccionar una particion WBFS para realizar esta accion"
+#~ msgstr "Tienes que seleccionar una partición WBFS para realizar esta acción"

@@ -575,7 +575,7 @@ msgstr "Le nouveau nom est trop long, essayez un texte de moins de %d caractère
 msgid "PREGUNTA:"
 msgstr "QUESTION :"
 
-#: gui.py:1028
+#: gui.py:1028 wiithon.py:55
 msgid "WARNING:"
 msgstr "ATTENTION :"
 
@@ -1727,30 +1727,34 @@ msgstr "Le XML n'existe pas"
 msgid "Necesitas tener instalado pyGTK o GTKv2"
 msgstr "Requis : pyGTK or GTKv2"
 
-#: wiithon.py:51
+#: wiithon.py:65
+msgid "Ya tienes Wiithon abierto"
+msgstr ""
+
+#: wiithon.py:83
 msgid "Instala wiithon, no lo ejecute desde ./wiithon.py"
 msgstr "Vous devez installer wiithon et non l'exécuter depuis ./wiithon.py"
 
-#: wiithon.py:105
+#: wiithon.py:137
 msgid "Programa ejecutado con las opciones incorrectas."
 msgstr "Programme lancé avec des paramètres incorrects."
 
-#: wiithon.py:109
+#: wiithon.py:141
 msgid "Interrumpido por el usuario"
 msgstr "Interrompu par l'utilisateur"
-
-#~ msgid "Tienes que seleccionar una particion WBFS para realizar esta accion"
-#~ msgstr "Vous devez sélectionner une partition WBFS pour réaliser cette action"
-
-#~ msgid "Elige un directorio donde extraer la ISO de %s"
-#~ msgstr "Choisissez le dossier dans lequel extraire l'ISO %s"
-
-#~ msgid "Extraer todos los juegos*"
-#~ msgstr "Extraire tous les jeux*"
-
-#~ msgid "Opciones de extraccion"
-#~ msgstr "Options d'extraction"
 
 #, fuzzy
 #~ msgid "WBFS"
 #~ msgstr "WBFS?"
+
+#~ msgid "Opciones de extraccion"
+#~ msgstr "Options d'extraction"
+
+#~ msgid "Extraer todos los juegos*"
+#~ msgstr "Extraire tous les jeux*"
+
+#~ msgid "Elige un directorio donde extraer la ISO de %s"
+#~ msgstr "Choisissez le dossier dans lequel extraire l'ISO %s"
+
+#~ msgid "Tienes que seleccionar una particion WBFS para realizar esta accion"
+#~ msgstr "Vous devez sélectionner une partition WBFS pour réaliser cette action"
