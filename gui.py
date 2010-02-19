@@ -1492,7 +1492,7 @@ class WiithonGUI(GtkBuilderWrapper):
 
         destinoDisco = os.path.join(config.WIITHON_FILES_RECURSOS_IMAGENES , "disco.png")
 
-        if IDGAME is not None:
+        if self.isSelectedGame():
 
             # existe            
             if self.core.existeDisco(IDGAME, False, self.disc_art_type):
@@ -1737,9 +1737,6 @@ class WiithonGUI(GtkBuilderWrapper):
             
         elif(id_tb == self.wb_tb_renombrado_masivo):
             self.alert('warning',_('Not implemented yet'))
-
-            #elif(not self.isSelectedPartition() and id_tb != self.wb_tb_copiar_SD and id_tb != self.wb_tb_acerca_de and id_tb != self.wb_tb_refrescar_wbfs and id_tb != self.wb_tb_preferencias):
-            #self.alert("warning" , _("Tienes que seleccionar una particion WBFS para realizar esta accion"))
 
         elif(id_tb == self.wb_tb_acerca_de):
             self.wb_aboutdialog.run()
@@ -2267,51 +2264,75 @@ class WiithonGUI(GtkBuilderWrapper):
 
     def termina_trabajo_anadir(self, fichero, DEVICE):
         
-        # leer IDGAME del juego añadido
-        IDGAME = util.getMagicISO(fichero, self.core.getAutodetectarFormato(fichero))
+        error = False
+        try:
+            
+            # leer IDGAME del juego añadido
+            IDGAME = util.getMagicISO(fichero, self.core.getAutodetectarFormato(fichero))
+            
+            # consultamos al wiithon wrapper info sobre el juego con nueva IDGAME
+            # lo añadimos a la lista
+            juegoNuevo = self.core.new_game_from_HDD(DEVICE, IDGAME)
+            
+            # fix for #516547
+            if juegoNuevo is not None:
+                
+                # refrescar su espacio uso/libre/total
+                juegoNuevo.particion.refrescarEspacioLibreUsado(self.core)
+                
+                # limpio el filtro antes de seleccionar
+                self.wb_busqueda.set_text('')
 
-        # consultamos al wiithon wrapper info sobre el juego con nueva IDGAME
-        # lo añadimos a la lista
-        juegoNuevo = self.core.new_game_from_HDD(DEVICE, IDGAME)
-        
-        # fix for #516547
-        if juegoNuevo is not None:
-            
-            # refrescar su espacio uso/libre/total
-            juegoNuevo.particion.refrescarEspacioLibreUsado(self.core)
-            
-            # limpio el filtro antes de seleccionar
-            self.wb_busqueda.set_text('')
+                # seleccionamos la particion y la fila del juego añadido       
+                self.seleccionarFilaConValor(self.wb_tv_partitions, 0 , juegoNuevo.particion.device)
+                self.seleccionarFilaConValor(self.wb_tv_games, 0 , juegoNuevo.idgame)
+                
+                # refrescar num juegos con info wiitdb
+                self.refrescarInfoWiiTDB()
+                
+                # pregunta arreglar nombre
+                if self.core.prefs.proponer_nombre:
+                    self.proponer_nombre_juego(juegoNuevo)
+                    
+            else:
+                error = True
 
-            # seleccionamos la particion y la fila del juego añadido       
-            self.seleccionarFilaConValor(self.wb_tv_partitions, 0 , juegoNuevo.particion.device)
-            self.seleccionarFilaConValor(self.wb_tv_games, 0 , juegoNuevo.idgame)
+        except SintaxisInvalida:
+            error = True
             
-            # refrescar num juegos con info wiitdb
-            self.refrescarInfoWiiTDB()
-            
-            # pregunta arreglar nombre
-            if self.core.prefs.proponer_nombre:
-                self.proponer_nombre_juego(juegoNuevo)
+        if error:
+            self.refrescarParticionesWBFS(False)
 
     def termina_trabajo_copiar(self, juego , particion):
 
-        # consultamos al wiithon wrapper info sobre el juego con nueva IDGAME
-        # lo añadimos a la lista
-        juegoNuevo = self.core.new_game_from_HDD(particion.device, juego.idgame)
+        error = False
+        try:
         
-        # fix for #516547
-        if juegoNuevo is not None:
+            # consultamos al wiithon wrapper info sobre el juego con nueva IDGAME
+            # lo añadimos a la lista
+            juegoNuevo = self.core.new_game_from_HDD(particion.device, juego.idgame)
+            
+            # fix for #516547
+            if juegoNuevo is not None:
 
-            # refrescar su espacio uso/libre/total
-            particion.refrescarEspacioLibreUsado(self.core)
+                # refrescar su espacio uso/libre/total
+                particion.refrescarEspacioLibreUsado(self.core)
+                
+                # limpio el filtro antes de seleccionar
+                self.wb_busqueda.set_text('')
+                
+                # seleccionamos la particion y la fila del juego añadido
+                self.seleccionarFilaConValor(self.wb_tv_partitions, 0 , juegoNuevo.particion.device)
+                self.seleccionarFilaConValor(self.wb_tv_games, 0 , juegoNuevo.idgame)
+
+            else:
+                error = True
+
+        except SintaxisInvalida:
+            error = True
             
-            # limpio el filtro antes de seleccionar
-            self.wb_busqueda.set_text('')
-            
-            # seleccionamos la particion y la fila del juego añadido
-            self.seleccionarFilaConValor(self.wb_tv_partitions, 0 , juegoNuevo.particion.device)
-            self.seleccionarFilaConValor(self.wb_tv_games, 0 , juegoNuevo.idgame)
+        if error:
+            self.refrescarParticionesWBFS(False)
 
 ############# CALLBACKS
 
