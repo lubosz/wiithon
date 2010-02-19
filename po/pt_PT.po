@@ -1734,22 +1734,22 @@ msgstr ""
 msgid "Interrumpido por el usuario"
 msgstr ""
 
-#~ msgid "Tienes que seleccionar una particion WBFS para realizar esta accion"
-#~ msgstr "Tienes que seleccionar una partición WBFS para realizar esta acción"
+#~ msgid "Numero de tareas que esperan en la cola."
+#~ msgstr "Número de tareas que esperan en la cola."
 
-#, fuzzy
-#~ msgid "Opciones de extraccion"
-#~ msgstr "Formato fecha corta"
+#~ msgid "Fecha de lanzamiento: "
+#~ msgstr "Fecha: "
+
+#~ msgid "Numero de juegos."
+#~ msgstr "Número de juegos."
 
 #, fuzzy
 #~ msgid "WBFS"
 #~ msgstr "¿WBFS?"
 
-#~ msgid "Numero de juegos."
-#~ msgstr "Número de juegos."
+#, fuzzy
+#~ msgid "Opciones de extraccion"
+#~ msgstr "Formato fecha corta"
 
-#~ msgid "Fecha de lanzamiento: "
-#~ msgstr "Fecha: "
-
-#~ msgid "Numero de tareas que esperan en la cola."
-#~ msgstr "Número de tareas que esperan en la cola."
+#~ msgid "Tienes que seleccionar una particion WBFS para realizar esta accion"
+#~ msgstr "Tienes que seleccionar una partición WBFS para realizar esta acción"

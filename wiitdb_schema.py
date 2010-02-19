@@ -119,7 +119,7 @@ except:
 class RatingType(Base):
     __tablename__ = 'rating_type'
 
-    idRatingType = Column('idRatingType',   Integer, primary_key=True)
+    idRatingType = Column('idRatingType', Integer, primary_key=True)
     tipo = Column('tipo', VARCHAR(255))
     
     contenidos = relation(RatingContent)
@@ -356,10 +356,10 @@ class JuegoWIITDB(Base):
             else:
                 buffer = _("%d jugadores") %  self.input_players
         return buffer
-        
+
     def getTextFechaLanzamiento(self, core, corto = False):
         buffer = ""
-        if  self.fecha_lanzamiento != None:            
+        if  self.fecha_lanzamiento not is None:
             if corto:
                 buffer = "%s" % ( self.fecha_lanzamiento.strftime(core.prefs.FORMATO_FECHA_CORTA_WIITDB) )
             else:
@@ -367,16 +367,19 @@ class JuegoWIITDB(Base):
         else:
             buffer = _("??")
         return buffer
-        
+
     def getTextRating(self, corto = False):
         buffer = ""
-        if not corto:
-            for rating_content in  self.rating_contents:
-                buffer += "%s, " % rating_content.valor
-            buffer = "%s (%s+): %s" % ( self.rating_type.tipo,  self.rating_value.valor , buffer)
+        if self.rating_type is None or self.rating_value is None:
+            return ""
         else:
-            buffer = "%s(%s+)" % ( self.rating_type.tipo,  self.rating_value.valor)
-        return util.remove_last_separator(buffer)
+            if not corto:
+                for rating_content in self.rating_contents:
+                    buffer += "%s, " % rating_content.valor
+                buffer = "%s (%s+): %s" % ( self.rating_type.tipo,  self.rating_value.valor , buffer)
+            else:
+                buffer = "%s (%s+)" % ( self.rating_type.tipo,  self.rating_value.valor)
+            return util.remove_last_separator(buffer)
 
 try:
     Index('idUnico_juego_wiitdb', JuegoWIITDB.idgame, unique=True)

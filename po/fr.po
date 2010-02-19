@@ -1739,18 +1739,18 @@ msgstr "Programme lancé avec des paramètres incorrects."
 msgid "Interrumpido por el usuario"
 msgstr "Interrompu par l'utilisateur"
 
-#~ msgid "Tienes que seleccionar una particion WBFS para realizar esta accion"
-#~ msgstr "Vous devez sélectionner une partition WBFS pour réaliser cette action"
-
-#~ msgid "Elige un directorio donde extraer la ISO de %s"
-#~ msgstr "Choisissez le dossier dans lequel extraire l'ISO %s"
-
-#~ msgid "Extraer todos los juegos*"
-#~ msgstr "Extraire tous les jeux*"
+#, fuzzy
+#~ msgid "WBFS"
+#~ msgstr "WBFS?"
 
 #~ msgid "Opciones de extraccion"
 #~ msgstr "Options d'extraction"
 
-#, fuzzy
-#~ msgid "WBFS"
-#~ msgstr "WBFS?"
+#~ msgid "Extraer todos los juegos*"
+#~ msgstr "Extraire tous les jeux*"
+
+#~ msgid "Elige un directorio donde extraer la ISO de %s"
+#~ msgstr "Choisissez le dossier dans lequel extraire l'ISO %s"
+
+#~ msgid "Tienes que seleccionar una particion WBFS para realizar esta accion"
+#~ msgstr "Vous devez sélectionner une partition WBFS pour réaliser cette action"
