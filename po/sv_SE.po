@@ -451,7 +451,7 @@ msgid "Una actualizacion de Wiithon ha cambiado la estructura de la BDD. Se han 
 msgstr ""
 
 #: gui.py:417 gui.py:1135 gui.py:1815 gui.py:1858 gui.py:1867 gui.py:1910
-#: gui.py:2012 gui.py:2383
+#: gui.py:2012 gui.py:2389
 msgid "No has seleccionado ninguna particion"
 msgstr "Ingen partition är vald"
 
@@ -769,88 +769,88 @@ msgstr "DB har blivit formaterad"
 msgid "Formatear a WBFS"
 msgstr "Skapa WBFS-partition"
 
-#: gui.py:2165
+#: gui.py:2171
 msgid "Seguro que deseas descargar informacion de los juegos de WiiTDB?"
 msgstr "Är du säker på att du vill ladda ner spelinformation ifrån WiiTDB?"
 
-#: gui.py:2171
+#: gui.py:2177
 msgid "Ya estas descargando la informacion WiiTDB ..."
 msgstr "Laddar ner spelinformation ifrån WiiTDB..."
 
-#: gui.py:2180
+#: gui.py:2186
 msgid "Empezando a obtener datos de juegos desde WiiTDB"
 msgstr "Startar nerladdning av spelinformation ifrån WiiTDB"
 
-#: gui.py:2190
+#: gui.py:2196
 #, python-format
 msgid "%d%% - %d/%d games - %d descriptions - %d genre - %d accesories - %d companies - %d online features"
 msgstr "%d%% - %d/%d games - %d descriptions - %d genre - %d accesories - %d companies - %d online features"
 
-#: gui.py:2214
+#: gui.py:2220
 #, python-format
 msgid "Error importando %s: %s"
 msgstr "Fel vid import av %s: %s"
 
-#: gui.py:2217
+#: gui.py:2223
 #, python-format
 msgid "Descargando WiiTDB desde %s, espere unos minutos ..."
 msgstr "Laddar ner WiiTDB från %s, vänta..."
 
-#: gui.py:2221
+#: gui.py:2227
 msgid "Empezando a descomprimir la informacion WiiTDB"
 msgstr "Startar uppackning av information ifrån WiiTDB"
 
-#: gui.py:2227
+#: gui.py:2233
 msgid "Finalizada satisfactoriamente la importacion de datos desde WiiTDB"
 msgstr "Informationen ifrån WiiTDB är färdiguppackad"
 
-#: gui.py:2235
+#: gui.py:2241
 #, python-format
 msgid "Deseas borrar el archivo %s?"
 msgstr "Vill du ta bort arkivet %s?"
 
-#: gui.py:2395
+#: gui.py:2401
 #, python-format
 msgid "Trabajando con %s, sin estimar el tiempo restante ..."
 msgstr ""
 
-#: gui.py:2399 gui.py:2438
+#: gui.py:2405 gui.py:2444
 #, python-format
 msgid "Termina: %s"
 msgstr "Avsluta: %s"
 
-#: gui.py:2424
+#: gui.py:2430
 #, python-format
 msgid "Empieza %s"
 msgstr "Starta %s"
 
-#: gui.py:2456
+#: gui.py:2462
 #, python-format
 msgid "Falla la descarga de la caratula de %s"
 msgstr "Misslyckades att ladda ner omslaget %s"
 
-#: gui.py:2467
+#: gui.py:2473
 #, python-format
 msgid "Falla la descarga del disco de %s"
 msgstr "Misslyckades att ladda ner skivetiketen %s"
 
-#: gui.py:2518
+#: gui.py:2524
 msgid "Finalizando ..."
 msgstr "Avslutar..."
 
-#: gui.py:2520
+#: gui.py:2526
 msgid "ERROR!"
 msgstr "FEL!"
 
-#: gui.py:2529
+#: gui.py:2535
 msgid "quedan"
 msgstr "återstår"
 
-#: gui.py:2546
+#: gui.py:2552
 msgid "Error en progreso"
 msgstr "Fel i processen"
 
-#: gui.py:2556
+#: gui.py:2562
 msgid "Empezando ..."
 msgstr "Startar..."
 

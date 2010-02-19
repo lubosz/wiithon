@@ -359,7 +359,7 @@ class JuegoWIITDB(Base):
 
     def getTextFechaLanzamiento(self, core, corto = False):
         buffer = ""
-        if  self.fecha_lanzamiento not is None:
+        if  self.fecha_lanzamiento is not None:
             if corto:
                 buffer = "%s" % ( self.fecha_lanzamiento.strftime(core.prefs.FORMATO_FECHA_CORTA_WIITDB) )
             else:

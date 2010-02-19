@@ -1472,7 +1472,7 @@ class WiithonGUI(GtkBuilderWrapper):
         
         destinoCaratula = os.path.join(config.WIITHON_FILES_RECURSOS_IMAGENES , "caratula.png")
         
-        if IDGAME is not None:
+        if self.isSelectedGame():
 
             # existe            
             if self.core.existeCaratula(IDGAME, False, self.cover_type):
@@ -2120,7 +2120,10 @@ class WiithonGUI(GtkBuilderWrapper):
                 
                 self.core.prefs.tipo_disc_art = nuevo_disc_art_type
                 
-                self.ponerDisco(self.sel_juego.obj.idgame, self.wb_img_disco1)
+                if self.isSelectedGame():
+                    self.ponerDisco(self.sel_juego.obj.idgame, self.wb_img_disco1)
+                else:
+                    self.ponerDisco(None, self.wb_img_disco1)
                 
                 self.refrescarNumCaratulas()
 
@@ -2144,7 +2147,10 @@ class WiithonGUI(GtkBuilderWrapper):
                 
                 self.core.prefs.tipo_caratula = nuevo_cover_type
                 
-                self.ponerCaratula(self.sel_juego.obj.idgame, self.wb_img_caratula1)
+                if self.isSelectedGame():
+                    self.ponerCaratula(self.sel_juego.obj.idgame, self.wb_img_caratula1)
+                else:
+                    self.ponerCaratula(None, self.wb_img_caratula1)
                 
                 self.refrescarNumCaratulas()
                 
