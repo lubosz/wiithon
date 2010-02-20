@@ -48,7 +48,7 @@ def App():
         prefs.cargarPreferenciasPorDefecto()
         util.configurarLenguaje(prefs.APPLICATION_LANGUAGE)
         
-        comando = "pgrep -fc /usr/games/wiithon"
+        comando = "pgrep -fc python.*\/usr\/games\/wiithon"
         num_wiithonActivo = int(util.getSTDOUT(comando))
         if num_wiithonActivo > 1:
             window = gtk.Window(gtk.WINDOW_TOPLEVEL)
