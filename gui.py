@@ -18,7 +18,7 @@ import shutil
 import config
 import util
 import wiitdb_schema
-from util import NonRepeatList
+from util import NonRepeatList, SintaxisInvalida
 from builder_wrapper import GtkBuilderWrapper
 from trabajo import PoolTrabajo
 from animar import Animador
