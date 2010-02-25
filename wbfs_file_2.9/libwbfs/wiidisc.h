@@ -13,6 +13,23 @@
 // offset points 32bit words, count counts bytes
 typedef int (*read_wiidisc_callback_t)(void*fp,u32 offset,u32 count,void*iobuf);
 
+enum // some constants
+{
+    WII_SECTOR_SIZE		= 0x8000,
+    WII_SECTORS_SINGLE_LAYER	= 143432,
+    WII_SECTORS_DOUBLE_LAYER	= 2 * WII_SECTORS_SINGLE_LAYER,
+    WII_MAX_SECTORS		= WII_SECTORS_DOUBLE_LAYER,
+
+    WII_TITLE_OFF		= 0x20,
+    WII_TITLE_SIZE		= 0x40,
+
+    WII_MAX_PART_INFO		=       4,
+    WII_PART_INFO_OFF		= 0x40000,
+    WII_REGION_OFF		= 0x4e000,
+    WII_MAX_PART_TABLE		=    0x40,
+    WII_H3_SIZE			= 0x18000,
+};
+
 typedef enum{
         UPDATE_PARTITION_TYPE=0,
         GAME_PARTITION_TYPE,

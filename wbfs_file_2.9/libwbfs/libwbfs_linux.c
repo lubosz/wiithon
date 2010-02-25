@@ -65,7 +65,7 @@ static int wbfs_fwrite_sector(void *_fp,u32 lba,u32 count,void*buf)
   
 }
 
-static int get_capacity(char *file,u32 *sector_size,u32 *n_sector)
+int get_capacity(char *file,u32 *sector_size,u32 *n_sector)
 {
         int fd = open(file,O_RDONLY);
         int ret;

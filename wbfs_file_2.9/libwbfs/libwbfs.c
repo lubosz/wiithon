@@ -6,6 +6,9 @@
 #include "libwbfs.h"
 #include <time.h>
 
+//extern double spinner_bs;
+double spinner_bs = 32 * 1024;
+
 #define likely(x)       __builtin_expect(!!(x), 1)
 #define unlikely(x)     __builtin_expect(!!(x), 0)
 
@@ -32,6 +35,7 @@ static u8 size_to_shift(u32 size)
 #define read_le32_unaligned(x) ((x)[0]|((x)[1]<<8)|((x)[2]<<16)|((x)[3]<<24))
 
 void wbfs_sync(wbfs_t*p);
+int print_read_err(u32 offset, u32 count);
 
 wbfs_t*wbfs_open_hd(rw_sector_callback_t read_hdsector,
                  rw_sector_callback_t write_hdsector,
@@ -140,7 +144,9 @@ wbfs_t*wbfs_open_partition(rw_sector_callback_t read_hdsector,
 
         p->tmp_buffer = wbfs_ioalloc(p->hd_sec_sz);
         p->n_disc_open = 0;
-        wbfs_sync(p);
+		if (reset) {
+	        wbfs_sync(p);
+		}
         return p;
 error:
         wbfs_free(p);
@@ -161,7 +167,7 @@ void wbfs_sync(wbfs_t*p)
 }
 void wbfs_close(wbfs_t*p)
 {
-        wbfs_sync(p);
+        //wbfs_sync(p);
 
         if(p->n_disc_open)
                 ERROR("trying to close wbfs while discs still open");
@@ -381,7 +387,7 @@ u32 wbfs_count_usedblocks(wbfs_t*p)
 // write access
 
 
-static int block_used(u8 *used,u32 i,u32 wblk_sz)
+int block_used(u8 *used,u32 i,u32 wblk_sz)
 {
         u32 k;
         i*=wblk_sz;
@@ -443,6 +449,17 @@ u32 wbfs_add_disc(wbfs_t*p, read_wiidisc_callback_t read_src_wii_disc,
 		wd_close_disc(d);
 		d = 0;
 	}
+    #if 0
+    // debug: dump usage table
+	for (i=0; i<(int)p->n_wii_sec_per_disc; i++) {
+        if ( (i%wii_sec_per_wbfs_sect) == 0 ) {
+            printf("\n%05x : ", i);
+        }
+	    printf("%d", block_used(used,i,1));
+	}
+    printf("\n");
+    exit(0);
+    #endif
 
 	for(i=0;i<p->max_disc;i++)// find a free slot.
 		if(p->head->disc_table[i]==0)
@@ -457,7 +474,7 @@ u32 wbfs_add_disc(wbfs_t*p, read_wiidisc_callback_t read_src_wii_disc,
 	info = wbfs_ioalloc(p->disc_info_sz);
 	u8*b = (u8*)info;
 	read_src_wii_disc(callback_data,0,0x100,info->disc_header_copy);
-	//fprintf(stderr, "adding %c%c%c%c%c%c %s...\n",b[0], b[1], b[2], b[3], b[4], b[5], b + 0x20);
+	fprintf(stderr, "adding %c%c%c%c%c%c %s...\n",b[0], b[1], b[2], b[3], b[4], b[5], b + 0x20);
 
 	copy_buffer = wbfs_ioalloc(p->wii_sec_sz);
 	if(!copy_buffer)
@@ -492,7 +509,10 @@ u32 wbfs_add_disc(wbfs_t*p, read_wiidisc_callback_t read_src_wii_disc,
 		tot = num_wbfs_sect_to_copy * wii_sec_per_wbfs_sect;
 	}*/
 	int ret = 0;
-	if(spinner) spinner(0,tot);
+	if(spinner) {
+		spinner_bs = p->wii_sec_sz;
+		spinner(0,tot);
+	}
 	for(i=0; i<num_wbfs_sect_to_copy; i++){
 		u16 bl = 0;
 		if(copy_1_1 || block_used(used,i,wii_sec_per_wbfs_sect)) {
@@ -504,31 +524,56 @@ u32 wbfs_add_disc(wbfs_t*p, read_wiidisc_callback_t read_src_wii_disc,
 			for(j=0; j<wii_sec_per_wbfs_sect;j++) {
 				u32 offset = (i*(p->wbfs_sec_sz>>2)) + (j*(p->wii_sec_sz>>2));
 
-				ret = read_src_wii_disc(callback_data,offset,p->wii_sec_sz,copy_buffer);
+                int check_abort();
+                if (check_abort()) {
+                    // exit so that disc headers and alloc table are not written
+                    printf("\nABORTED\n");
+                    exit(2);
+                }
+
+				ret = read_src_wii_disc(callback_data, offset, p->wii_sec_sz, copy_buffer);
 				if (ret) {
-					if (copy_1_1 && i > p->n_wbfs_sec_per_disc / 2) {
-						// end of dual layer data
-						if (j > 0) {
-							info->wlba_table[i] = wbfs_htons(bl);
+					// error reading, check if block is really neccesary
+					u32 wii_sec = i * wii_sec_per_wbfs_sect + j;
+					if (copy_1_1) {
+						if ( (i > p->n_wbfs_sec_per_disc / 2)
+								&& (i == num_wbfs_sect_to_copy-1))
+						{
+							// end of dual layer data
+							goto zero_fill;
 						}
-						spinner(tot,tot);
-						break;
+						goto print_err;
+					} else {
+						if (block_used(used, wii_sec, 1)) {
+							print_err:
+							if (print_read_err(offset, p->wii_sec_sz) == 0) {
+								// forced
+								goto zero_fill;
+							}
+							ERROR("read error");
+						} else {
+							// zero fill
+							zero_fill:
+							memset(copy_buffer, 0, p->wii_sec_sz);
+							ret = 0;
+						}
 					}
-					ERROR("read error");
 				}
 
 				//fix the partition table
 				if(offset == (0x40000>>2))
 					wd_fix_partition_table(d, sel, copy_buffer);
-				p->write_hdsector(p->callback_data,
+				ret = p->write_hdsector(p->callback_data,
 						p->part_lba+bl*(p->wbfs_sec_sz/p->hd_sec_sz) + j*(p->wii_sec_sz/p->hd_sec_sz),
 						p->wii_sec_sz/p->hd_sec_sz, copy_buffer);
+				if (ret) {
+					ERROR("write error");
+				}
 				cur++;
 				if(spinner)
 					spinner(cur,tot);
 			}
 		}
-		if (ret) break;
 		info->wlba_table[i] = wbfs_htons(bl);
 	}
 	// write disc info
@@ -546,7 +591,7 @@ error:
 		wbfs_iofree(copy_buffer);
 	// init with all free blocks
 
-	return OK;
+	return 0;
 }
 
 u32 wbfs_rm_disc(wbfs_t*p, u8* discid)
@@ -606,6 +651,7 @@ u32 wbfs_extract_disc(wbfs_disc_t*d, rw_sector_callback_t write_dst_wii_sector,v
         if(spinner) {
             for( i=0; i< p->n_wbfs_sec_per_disc; i++)
                 if (wbfs_ntohs(d->header->wlba_table[i])) tot++;
+            spinner_bs = p->wbfs_sec_sz;
             spinner(0, tot);
         }
         for( i=0; i< p->n_wbfs_sec_per_disc; i++)
@@ -664,6 +710,32 @@ error:
         return 0;
 }
 
+static int first_warn = 1;
+
+int print_read_err(u32 offset, u32 count)
+{
+	if (force_mode) {
+		if (first_warn) {
+			printf("WARNING: error reading %d [%d] from wbfs\n", offset, count);
+			printf("Probably corrupted. Using force mode (fill with 0)\n");
+			first_warn = 0;
+		}
+		return 0;
+	} else {
+		if (first_warn) {
+			printf("ERROR: reading %d [%d] from wbfs\n", offset, count);
+			extern int OPT_part_all;
+			if (OPT_part_all) {
+				printf("Possibly corrupted. Use -g to copy only game partition\n");
+			} else {
+				printf("Probably corrupted. Use -f to force\n");
+			}
+			first_warn = 0;
+		}
+	}
+	return -1;
+}
+
 // offset is pointing 32bit words to address the whole dvd, although len is in bytes
 //int wbfs_disc_read(wbfs_disc_t*d,u32 offset, u8 *data, u32 len)
 
@@ -671,30 +743,24 @@ error:
 //int (*read_wiidisc_callback_t)(void*fp,u32 offset,u32 count,void*iobuf);
 
 // connect wiidisc to wbfs_disc
-int read_wiidisc_wbfsdisc(void*fp,u32 offset,u32 count,void*iobuf)
+int read_wiidisc_wbfsdisc(void *fp, u32 offset, u32 count, void *iobuf)
 {
 	//fprintf(stderr,"read_ww(%p, %u, %u, %p)\n", fp, offset, count, iobuf);
 	//fflush(stderr);
     int ret = wbfs_disc_read((wbfs_disc_t*)fp, offset, iobuf, count);
+    return ret;
+}
+
+// verbose/force variant
+int read_wiidisc_wbfsdisc_errcheck(void *fp, u32 offset, u32 count, void *iobuf)
+{
+    int ret = read_wiidisc_wbfsdisc(fp, offset, count, iobuf);
     if (ret) {
-        if (force_mode) {
-            static int first_warn = 1;
-            if (first_warn) {
-                printf("WARNING: error reading %d [%d] from wbfs\n", offset, count);
-                printf("Probably corrupted. Using force mode (fill with 0)\n");
-                first_warn = 0;
-            }
-            memset(iobuf, 0, count);
-            ret = 0;
-        } else {
-            printf("ERROR: reading %d [%d] from wbfs\n", offset, count);
-            extern int OPT_part_all;
-            if (OPT_part_all) {
-                printf("Possibly corrupted. Use -g to copy only game partition\n");
-            } else {
-                printf("Probably corrupted. Use -f to force\n");
-            }
-        }
+		if (print_read_err(offset, count) == 0) {
+			// forced
+			memset(iobuf, 0, count);
+			ret = 0;
+		}
     }
     return ret;
 }
@@ -704,7 +770,7 @@ int wbfs_extract_file(wbfs_disc_t*d, char *path, void **data)
         wiidisc_t *wd = 0;
         int ret = 0;
 
-        wd = wd_open_disc(read_wiidisc_wbfsdisc, d);
+        wd = wd_open_disc(read_wiidisc_wbfsdisc_errcheck, d);
         if (!wd) {
             ERROR("opening wbfs disc");
 				return -1;

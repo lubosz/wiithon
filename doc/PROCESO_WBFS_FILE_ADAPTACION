@@ -1,0 +1,50 @@
+1º Copiar las funciones en libwbfs/libwbfs.c:
+
+    #include <time.h>
+
+    void spinner(u64 x, u64 max)
+    void fatal(const char *s, ...)
+    
+2º En wbfs.c, libwbfs/libwbfs_os.h, splis.c, splits.h:
+    Comentar:
+
+    //#include "tools.h"
+    
+3º Copiar las funciones en libwbfs/libwbfs_os.h:
+
+Debajo de ialloc():
+
+    // basic data types
+    typedef unsigned char u8;
+    typedef unsigned short u16;
+    typedef unsigned int u32;
+    typedef unsigned long long u64;
+
+    #define OK 0
+    #define TRUE 0
+    #define FALSE 1
+
+4º Envolver el splits.h con:
+
+#ifndef _SPLITS_H
+#define _SPLITS_H
+
+...
+
+#endif
+
+5º Añadir al libwbfs/wiidisc.c:
+
+    #include "libwbfs.h"
+    
+6º Sustituir en libwbfs/libwbfs.c:
+
+    extern double spinner_bs;
+
+    por:
+
+    double spinner_bs = 32 * 1024;
+
+7º Reemplazos en Makefile:
+
+wbfs_file_1.X -> wbfs_file_2.9

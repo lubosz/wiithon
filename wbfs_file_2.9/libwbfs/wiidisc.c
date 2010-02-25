@@ -47,7 +47,9 @@ static void disc_read(wiidisc_t *d,u32 offset, u8 *data, u32 len)
                         blockno+=1;
                         if(len>0x8000)
                                 len-=0x8000;
-                }while(len>0x8000);
+                        else
+                                len = 0;
+                }while(len>0);
         }
 }
 
@@ -227,7 +229,7 @@ static void do_partition(wiidisc_t*d)
 	do_files(d);
 
 }
-static int test_parition_skip(u32 partition_type,partition_selector_t part_sel)
+static int test_partition_skip(u32 partition_type,partition_selector_t part_sel)
 {
         switch(part_sel)
         {
@@ -264,7 +266,7 @@ static void do_disc(wiidisc_t*d)
         }
 	for (i = 0; i < n_partitions; i++) {
                 d->partition_raw_offset = partition_offset[i];
-                if(!test_parition_skip(partition_type[i],d->part_sel))
+                if(!test_partition_skip(partition_type[i],d->part_sel))
                         do_partition(d);
 	}
         wbfs_iofree(b);
@@ -311,6 +313,12 @@ void wd_build_disc_usage(wiidisc_t *d, partition_selector_t selector, u8* usage_
 {
         d->sector_usage_table = usage_table;
         wbfs_memset(usage_table,0,143432*2);
+
+        // these sectors are always copied
+        usage_table[ 0 ] = 1;
+        usage_table[ WII_PART_INFO_OFF / WII_SECTOR_SIZE ] = 1;
+        usage_table[ WII_REGION_OFF    / WII_SECTOR_SIZE ] = 1;
+
         d->part_sel = selector;
         do_disc(d);
         d->part_sel = ALL_PARTITIONS;
@@ -335,7 +343,7 @@ void wd_fix_partition_table(wiidisc_t *d, partition_selector_t selector, u8* par
 	for (i = 0; i < n_partitions; i++){
 		partition_offset = _be32(b + 8 * i);
 		partition_type = _be32(b + 8 * i+4);
-                if(!test_parition_skip(partition_type,selector))
+                if(!test_partition_skip(partition_type,selector))
                 {
                         b32 = (u32*)(b + 8 * j);
                         b32[0] = wbfs_htonl(partition_offset);

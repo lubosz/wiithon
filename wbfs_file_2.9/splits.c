@@ -17,6 +17,20 @@
 #include "platform.h"
 
 u64 OPT_split_size = DEF_SPLIT_SIZE;
+extern int OPT_verbose;
+
+
+split_info_t* split_new()
+{
+	return calloc(1, sizeof(split_info_t));
+}
+
+void split_delete(split_info_t *s)
+{
+	//printf("split_close(%s)\n", s->fname);
+	split_close(s);
+	free(s);
+}
 
 void split_get_fname(split_info_t *s, int idx, char *fname)
 {
@@ -37,11 +51,19 @@ FILE *split_open_file(split_info_t *s, int idx)
     split_get_fname(s, idx, fname);
     char *mode = s->create_mode ? "wb+" : "rb+";
     f = fopen(fname, mode);
-    if (!f) return NULL;
+    if (!f) {
+        if (s->create_mode) {
+            printf("ERROR: creating %s\n", fname);
+            perror("fopen");
+        }
+        return NULL;
+    }
     if (idx > 0) {
-        printf("%s Split: %d %s          \n",
+        if (OPT_verbose) {
+            printf("%s Split: %d %s          \n",
                 s->create_mode ? "Create" : "Read",
                 idx, fname);
+        }
     }
     s->f[idx] = f;
     return f;
@@ -64,7 +86,7 @@ FILE *split_get_file(split_info_t *s, u32 lba, u32 *sec_count, int fill)
 {
     FILE *f;
     if (lba >= s->total_sec) {
-        printf("SPLIT: invalid sector %u / %u\n", lba, (u32)s->total_sec);
+        printf("SPLIT(%s): invalid sector %u / %u\n", s->fname, lba, (u32)s->total_sec);
         return NULL;
     }
     int idx;
@@ -202,8 +224,6 @@ int split_create(split_info_t *s, char *fname, u64 split_size, u64 total_size)
     int error = 0;
     split_init(s, fname);
     s->create_mode = 1;
-
-    /*
     // check if any file already exists
     for (i=-1; i<s->max_split; i++) {
         split_get_fname(s, i, sname);
@@ -214,13 +234,10 @@ int split_create(split_info_t *s, char *fname, u64 split_size, u64 total_size)
             error = 1;
         }
     }
-
     if (error) {
         split_init(s, "");
         return -1;
     }
-    */
-
     split_set_size(s, split_size, total_size);
     return 0;
 }
@@ -262,6 +279,45 @@ int split_open(split_info_t *s, char *fname)
 err:
     split_close(s);
     return -1;
+}
+
+int split_truncate(split_info_t *s, off64_t full_size)
+{
+    FILE *f;
+    off64_t size;
+    int i, ret;
+    char fname[1024];
+    for (i=0; i<s->max_split; i++) {
+        size = full_size;
+        if (size > (off64_t)s->split_size) {
+            size = s->split_size;
+        }
+        if (size) {
+            // truncate
+            f = split_open_file(s, i);
+            // flush & seek because we're mixing FILE/fd/fh
+            fflush(f);
+            fseeko(f, 0, SEEK_SET);
+            //printf("TRUNC %d "FMT_lld"\n", i, size);
+            ret = file_truncate(fileno(f), size);
+            if (ret) {
+                split_get_fname(s, i, fname);
+                printf("ERROR: TRUNCATE %s %d "FMT_lld"\n", fname, i, size);
+                return -1;
+            }
+        } else {
+            // remove empty
+            f = s->f[i];
+            if (f) {
+                fclose(f);
+                s->f[i] = NULL;
+            }
+            split_get_fname(s, i, fname);
+            remove(fname);
+        }
+        full_size -= size;
+    }
+    return 0;
 }
 
 
