@@ -575,7 +575,7 @@ msgstr "Le nouveau nom est trop long, essayez un texte de moins de %d caractère
 msgid "PREGUNTA:"
 msgstr "QUESTION :"
 
-#: gui.py:1028 wiithon.py:55
+#: gui.py:1028 wiithon.py:59
 msgid "WARNING:"
 msgstr "ATTENTION :"
 
@@ -1731,19 +1731,19 @@ msgstr "Le XML n'existe pas"
 msgid "Necesitas tener instalado pyGTK o GTKv2"
 msgstr "Requis : pyGTK or GTKv2"
 
-#: wiithon.py:65
+#: wiithon.py:64
 msgid "Ya tienes Wiithon abierto"
 msgstr ""
 
-#: wiithon.py:83
+#: wiithon.py:75
 msgid "Instala wiithon, no lo ejecute desde ./wiithon.py"
 msgstr "Vous devez installer wiithon et non l'exécuter depuis ./wiithon.py"
 
-#: wiithon.py:137
+#: wiithon.py:129
 msgid "Programa ejecutado con las opciones incorrectas."
 msgstr "Programme lancé avec des paramètres incorrects."
 
-#: wiithon.py:141
+#: wiithon.py:133
 msgid "Interrumpido por el usuario"
 msgstr "Interrompu par l'utilisateur"
 

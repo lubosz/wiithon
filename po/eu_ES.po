@@ -580,7 +580,7 @@ msgstr "Izen berria luzeegia da, %d karaktere baino gutxiagoko testu batez saiat
 msgid "PREGUNTA:"
 msgstr "GALDERA:"
 
-#: gui.py:1028 wiithon.py:55
+#: gui.py:1028 wiithon.py:59
 msgid "WARNING:"
 msgstr "KONTUZ:"
 
@@ -1726,18 +1726,18 @@ msgstr "Ez dago XML"
 msgid "Necesitas tener instalado pyGTK o GTKv2"
 msgstr "pyGTK edo GTKv2 instalaturik izan behar duzu"
 
-#: wiithon.py:65
+#: wiithon.py:64
 msgid "Ya tienes Wiithon abierto"
 msgstr "Dagoeneko Wiithon irekia dago"
 
-#: wiithon.py:83
+#: wiithon.py:75
 msgid "Instala wiithon, no lo ejecute desde ./wiithon.py"
 msgstr "Wiithon instalatu, ez ./wiithon.py abiarazi"
 
-#: wiithon.py:137
+#: wiithon.py:129
 msgid "Programa ejecutado con las opciones incorrectas."
 msgstr "Programa okerreko aukerekin exekutatu da."
 
-#: wiithon.py:141
+#: wiithon.py:133
 msgid "Interrumpido por el usuario"
 msgstr "Erabiltzaileak etenda."

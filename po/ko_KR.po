@@ -534,7 +534,7 @@ msgstr ""
 msgid "PREGUNTA:"
 msgstr ""
 
-#: gui.py:1028 wiithon.py:55
+#: gui.py:1028 wiithon.py:59
 msgid "WARNING:"
 msgstr ""
 
@@ -1663,18 +1663,18 @@ msgstr ""
 msgid "Necesitas tener instalado pyGTK o GTKv2"
 msgstr ""
 
-#: wiithon.py:65
+#: wiithon.py:64
 msgid "Ya tienes Wiithon abierto"
 msgstr ""
 
-#: wiithon.py:83
+#: wiithon.py:75
 msgid "Instala wiithon, no lo ejecute desde ./wiithon.py"
 msgstr ""
 
-#: wiithon.py:137
+#: wiithon.py:129
 msgid "Programa ejecutado con las opciones incorrectas."
 msgstr ""
 
-#: wiithon.py:141
+#: wiithon.py:133
 msgid "Interrumpido por el usuario"
 msgstr ""

@@ -48,32 +48,24 @@ def App():
         prefs.cargarPreferenciasPorDefecto()
         util.configurarLenguaje(prefs.APPLICATION_LANGUAGE)
         
-        comando = "pgrep -fc python.*\/usr\/games\/wiithon"
-        num_wiithonActivo = int(util.getSTDOUT(comando))
+        try:
+            comando = "pgrep -fc python.*\/usr\/games\/wiithon"
+            num_wiithonActivo = int(util.getSTDOUT(comando))
+        except: # Possible side effects -> let multiple instances
+            num_wiithonActivo = 0
+
         if num_wiithonActivo > 1:
             window = gtk.Window(gtk.WINDOW_TOPLEVEL)
             window.set_title(_("WARNING:"))
             window.set_position(gtk.WIN_POS_CENTER)
-            #window.set_default_size(600,500)
             window.connect("destroy", lambda x: gtk.main_quit())
             window.set_border_width(10)
-            
-            #button = gtk.Button(_("Cerrar"))
-            #button.connect("clicked", lambda x: gtk.main_quit())
-            
             etiqueta = gtk.Label()
             etiqueta.set_text("<b>%s.</b>" % _("Ya tienes Wiithon abierto"))
             etiqueta.set_use_markup(True)
             etiqueta.set_alignment(0.5 , 0.5)
             etiqueta.set_padding(40, 40)
-            
-            #h1 = gtk.VBox()
-            #h1.pack_start(etiqueta)
-            #h1.pack_start(button)
-            #window.add(h1)
             window.add(etiqueta)
-            #window.add(button)
-            #button.show()
             etiqueta.show()
             window.show()
             gtk.main()

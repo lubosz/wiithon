@@ -576,7 +576,7 @@ msgstr "El nou nom es massa llarg, intenta amb un text menor de %d caracteres"
 msgid "PREGUNTA:"
 msgstr "PREGUNTA:"
 
-#: gui.py:1028 wiithon.py:55
+#: gui.py:1028 wiithon.py:59
 msgid "WARNING:"
 msgstr "ADVERTÈNCIA:"
 
@@ -1729,19 +1729,19 @@ msgstr "No existeix l'XML"
 msgid "Necesitas tener instalado pyGTK o GTKv2"
 msgstr "Necessites tenir instalar pyGTK o GTKv2"
 
-#: wiithon.py:65
+#: wiithon.py:64
 msgid "Ya tienes Wiithon abierto"
 msgstr ""
 
-#: wiithon.py:83
+#: wiithon.py:75
 msgid "Instala wiithon, no lo ejecute desde ./wiithon.py"
 msgstr "Instala wiithon, no l'executes des de ./wiithon.py"
 
-#: wiithon.py:137
+#: wiithon.py:129
 msgid "Programa ejecutado con las opciones incorrectas."
 msgstr "Programa executat amb les opcions incorrectes."
 
-#: wiithon.py:141
+#: wiithon.py:133
 msgid "Interrumpido por el usuario"
 msgstr "Interromput per l'usuari"
 

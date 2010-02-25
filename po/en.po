@@ -575,7 +575,7 @@ msgstr "Rename is too long, try a name smaller than %d characters"
 msgid "PREGUNTA:"
 msgstr "Question: "
 
-#: gui.py:1028 wiithon.py:55
+#: gui.py:1028 wiithon.py:59
 msgid "WARNING:"
 msgstr "Warning: "
 
@@ -1726,19 +1726,19 @@ msgstr "XML does not exist"
 msgid "Necesitas tener instalado pyGTK o GTKv2"
 msgstr "You need pyGTK or GTKv2"
 
-#: wiithon.py:65
+#: wiithon.py:64
 msgid "Ya tienes Wiithon abierto"
 msgstr "Wiithon is already open"
 
-#: wiithon.py:83
+#: wiithon.py:75
 msgid "Instala wiithon, no lo ejecute desde ./wiithon.py"
 msgstr "You must install Wiithon, do not run from ./wiithon.py"
 
-#: wiithon.py:137
+#: wiithon.py:129
 msgid "Programa ejecutado con las opciones incorrectas."
 msgstr "Program running with incorrect preferences"
 
-#: wiithon.py:141
+#: wiithon.py:133
 msgid "Interrumpido por el usuario"
 msgstr "Interrupted by user"
 
