@@ -53,4 +53,3 @@ class Animador(Thread):
 
     def interrumpir(self):
         self.interrumpido = True
-

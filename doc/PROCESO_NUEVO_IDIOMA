@@ -1,0 +1,34 @@
+Pasos para añadir un nuevo idioma, por ejemplo: Euskera
+=========================================
+1º Ponemos el po traducido con su respectivo locale en "po/eu_ES.po"
+
+2º En el Makefile, creamos la tarea:
+
+    eu_ES: po/locale/eu_ES/LC_MESSAGES/wiithon.mo
+
+   Y añadimos la dependencia a la tarea "lang_enable" quedando:
+   lang_enable: it es en fr de pt_BR ca_ES gl_ES eu_ES
+   
+3º Para que se desinstale el idioma, añadimos la linea:
+    
+    -$(RM) /usr/share/locale/eu_ES/LC_MESSAGES/wiithon.mo
+    
+    en la tarea "delete_archives_installation"
+    
+4º Para limpiar los binarios "moo", añadimos la linea:
+
+    -$(RM) po/locale/eu_ES/LC_MESSAGES/wiithon.mo
+    
+    en la tarea "clean_gettext"
+
+5º Añadimos a la lista de tuplas APP_LANGUAGE_LISTA (que esta en preferencias.py):
+
+    ('eu_ES', _('Euskera'))
+    
+    Añadimos esta tupla:
+    - el primer elemento sera el locale sin extension po
+    - el segundo sera el nombre del idioma en ingles, metido en _() para poder ser traducido.
+
+6º Añadir/Actualizar el traductor en doc/TRANSLATORS
+
+7º Sincronizar doc/TRANSLATORS con el "Acerca de" que esta en el glade: recursos/glade/wiithon.ui

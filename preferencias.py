@@ -71,7 +71,9 @@ class Preferencias:
                                      ('pt_BR', _('Brazilian Portuguese')),
                                      ('pt_PT', _('Portuguese')),
                                      ('sv_SE', _('Swedish')),
-                                     ('gl_ES', _('Galician'))]
+                                     ('gl_ES', _('Galician')),
+                                     ('eu_ES', _('Euskera'))
+                                     ]
         self.iniciarPreferencia('select', 'APPLICATION_LANGUAGE', defecto=util.get_lang_default(APP_LANGUAGE_LISTA), mostrar=cargarWidget, vbox=prefs_vbox_general, label=_('Idioma de wiithon'), datos_lista = APP_LANGUAGE_LISTA)
         self.iniciarPreferencia('string', 'ruta_extraer_rar', defecto='/tmp', mostrar=cargarWidget, vbox=prefs_vbox_general, label=_('Ruta para extraer ficheros .rar. Para descomprimir junto al .rar escriba .'))
         self.iniciarPreferencia('int', 'NUM_HILOS', defecto=16, mostrar=cargarWidget, vbox=prefs_vbox_general, label=_('Num. Hilos para tareas de fondo'))

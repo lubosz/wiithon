@@ -898,27 +898,27 @@ msgstr "%d jeux sans disques"
 msgid "Hay %d tareas"
 msgstr "Il y a %d tâches"
 
-#: preferencias.py:64 preferencias.py:104
+#: preferencias.py:64 preferencias.py:106
 msgid "English"
 msgstr "Anglais"
 
-#: preferencias.py:65 preferencias.py:108
+#: preferencias.py:65 preferencias.py:110
 msgid "Spanish"
 msgstr "Espagnol"
 
-#: preferencias.py:66 preferencias.py:109
+#: preferencias.py:66 preferencias.py:111
 msgid "Italian"
 msgstr "Italien"
 
-#: preferencias.py:67 preferencias.py:106
+#: preferencias.py:67 preferencias.py:108
 msgid "French"
 msgstr "Français"
 
-#: preferencias.py:68 preferencias.py:107
+#: preferencias.py:68 preferencias.py:109
 msgid "German"
 msgstr "Allemand"
 
-#: preferencias.py:69 preferencias.py:110
+#: preferencias.py:69 preferencias.py:112
 msgid "Dutch"
 msgstr "Néerlandais"
 
@@ -930,7 +930,7 @@ msgstr "Catalan"
 msgid "Brazilian Portuguese"
 msgstr "Brésilien"
 
-#: preferencias.py:72 preferencias.py:111
+#: preferencias.py:72 preferencias.py:113
 msgid "Portuguese"
 msgstr "Portugais"
 
@@ -944,193 +944,197 @@ msgid "Galician"
 msgstr "Italien"
 
 #: preferencias.py:75
+msgid "Euskera"
+msgstr ""
+
+#: preferencias.py:77
 msgid "Idioma de wiithon"
 msgstr "Langue de Wiithon"
 
-#: preferencias.py:76
+#: preferencias.py:78
 msgid "Ruta para extraer ficheros .rar. Para descomprimir junto al .rar escriba ."
 msgstr "Dossier d'extraction des fichiers .rar : pour décompresser les fichiers de type .rar"
 
-#: preferencias.py:77
+#: preferencias.py:79
 msgid "Num. Hilos para tareas de fondo"
 msgstr "Nb threads pour les tâches de fond"
 
-#: preferencias.py:78
+#: preferencias.py:80
 msgid "Comando para abrir carpetas"
 msgstr "Commande pour ouvrir les dossiers"
 
-#: preferencias.py:79
+#: preferencias.py:81
 msgid "Comando para abrir paginas Web"
 msgstr "Commande pour ouvrir les pages web"
 
-#: preferencias.py:80
+#: preferencias.py:82
 msgid "Mostrar una advertencia cuando no hay ninguna informacion WiiTDB"
 msgstr "Afficher un avertissement si aucune donnée WiiTDB n'a été trouvée"
 
-#: preferencias.py:81
+#: preferencias.py:83
 msgid "Mostrar una advertencia cuando no hay particiones WBFS"
 msgstr "Afficher un avertissement su aucune partition WBFS n'a été trouvée"
 
-#: preferencias.py:82
+#: preferencias.py:84
 msgid "Iniciar maximizado"
 msgstr "Démarrage maximisé"
 
-#: preferencias.py:83
+#: preferencias.py:85
 msgid "Permitir establecer caratulas locales por arrastre"
 msgstr "Permettre le glisser-déposer"
 
-#: preferencias.py:84
+#: preferencias.py:86
 msgid "Permitir establecer caratulas desde http por arrastre"
 msgstr "Permettre le glisser-déposer http"
 
-#: preferencias.py:85
+#: preferencias.py:87
 msgid "Permitir arrastrar juegos en ISO, RAR o directorios."
 msgstr "Permettre le glisser-déposer de jeux (ISO/RAR/dossiers) dans la fenêtre"
 
-#: preferencias.py:86
+#: preferencias.py:88
 msgid "Los isos descomprimidos desde el rar remplaza imagenes iso sin preguntar."
 msgstr "Lors de la décompression d'un RAR, remplacer sans avertir"
 
-#: preferencias.py:87
+#: preferencias.py:89
 msgid "Pregunta borrar el .iso (cuando aniamos un rar)"
 msgstr "Demander si le fichier .iso doit être supprimé (après avoir ajouté un .rar)"
 
-#: preferencias.py:88
+#: preferencias.py:90
 msgid "Pregunta borrar el .rar (cuando aniamos un rar)"
 msgstr "Demander si le fichier .rar doit être supprimé (après avoir ajouté un .rar)"
 
-#: preferencias.py:89
+#: preferencias.py:91
 msgid "Proponer un nombre de wiitdb tras anadir el juego"
 msgstr "WiiTDB propose un nom (après avoir ajouté le jeu)"
 
-#: preferencias.py:90
+#: preferencias.py:92
 msgid "Caratula"
 msgstr "Pochette"
 
-#: preferencias.py:91
+#: preferencias.py:93
 msgid "Disc-art"
 msgstr "Disque"
 
-#: preferencias.py:92
+#: preferencias.py:94
 msgid "Destino del arrastre de una imagen"
 msgstr "Destination du glisser-déposer"
 
-#: preferencias.py:94
+#: preferencias.py:96
 msgid "Formato ISO - para Grabacion DVD"
 msgstr "Format ISO - pour gravure DVD"
 
-#: preferencias.py:95
+#: preferencias.py:97
 msgid "Formato WBFS - para USBLoader-FAT32"
 msgstr "Format WBFS - pour USBLoader en FAT32"
 
-#: preferencias.py:96
+#: preferencias.py:98
 msgid "Formato WDF - para Almacenamiento"
 msgstr "Format WDF - pour stockage"
 
-#: preferencias.py:98
+#: preferencias.py:100
 msgid "Formato de extraccion"
 msgstr "Format d'extraction"
 
-#: preferencias.py:101
+#: preferencias.py:103
 msgid "URL Base de datos WiiTDB"
 msgstr "URL vers la base de données WiiTDB"
 
-#: preferencias.py:102
+#: preferencias.py:104
 msgid "Formato fecha"
 msgstr "Format pour la date"
 
-#: preferencias.py:103
+#: preferencias.py:105
 msgid "Formato fecha corto"
 msgstr "Format court pour la date"
 
-#: preferencias.py:105
+#: preferencias.py:107
 msgid "Japanese"
 msgstr "Japonais"
 
-#: preferencias.py:112
+#: preferencias.py:114
 msgid "Chinese-Taiwan"
 msgstr "Chinois (Taiwan)"
 
-#: preferencias.py:113
+#: preferencias.py:115
 msgid "Chinese"
 msgstr "Chinois"
 
-#: preferencias.py:114
+#: preferencias.py:116
 msgid "Korean"
 msgstr "Coréen"
 
-#: preferencias.py:123
+#: preferencias.py:125
 msgid "Idioma principal para el synopsis"
 msgstr "Langue principale pour le synopsis"
 
-#: preferencias.py:124
+#: preferencias.py:126
 msgid "Idioma auxiliar para el synopsis"
 msgstr "Langue secondaire pour le synopsis"
 
-#: preferencias.py:125
+#: preferencias.py:127
 msgid "Usuario (para editar informacion en wiitdb.com)"
 msgstr "Nom d'utilisateur (pour éditer les informations sur wiitdb.com)"
 
-#: preferencias.py:126
+#: preferencias.py:128
 msgid "Password (para editar informacion en wiitdb.com)"
 msgstr "Mot de passe (pour éditer les informations sur wiitdb.com)"
 
-#: preferencias.py:129
+#: preferencias.py:131
 msgid "Ancho imagen caratula"
 msgstr "Pochette : largeur de l'image"
 
-#: preferencias.py:130
+#: preferencias.py:132
 msgid "Altura imagen caratula"
 msgstr "Pochette : hauteur de l'image"
 
-#: preferencias.py:131
+#: preferencias.py:133
 msgid "Ancho imagen disc-art"
 msgstr "Disque : largeur de l'image"
 
-#: preferencias.py:132
+#: preferencias.py:134
 msgid "Altura imagen disc-art"
 msgstr "Disque : hauteur de l'image"
 
-#: preferencias.py:199
+#: preferencias.py:201
 msgid "Proveedor de caratulas"
 msgstr "Fournisseur de pochettes"
 
-#: preferencias.py:230
+#: preferencias.py:232
 msgid "Proveedor de discos"
 msgstr "Fournisseur de disques"
 
-#: preferencias.py:233
+#: preferencias.py:235
 #, python-format
 msgid "URL de busqueda en Google. (%s es el nombre del juego)"
 msgstr "URL de recherche sur Google. (nom du jeu : %s)"
 
-#: preferencias.py:234
+#: preferencias.py:236
 #, python-format
 msgid "URL de busqueda en Wikipedia. (%s es el nombre del juego)"
 msgstr "URL de recherche sur Wikipedia. (nom du jeu : %s)"
 
-#: preferencias.py:235
+#: preferencias.py:237
 #, python-format
 msgid "URL de busqueda en Youtube. (%s es el nombre del juego)"
 msgstr "URL de recherche sur Youtube. (nom du jeu : %s)"
 
-#: preferencias.py:236
+#: preferencias.py:238
 #, python-format
 msgid "URL de busqueda en IGN. (%s es el nombre del juego)"
 msgstr "URL de recherche sur IGN. (nom du jeu : %s)"
 
-#: preferencias.py:237
+#: preferencias.py:239
 #, python-format
 msgid "URL de busqueda en GameSpot. (%s es el nombre del juego)"
 msgstr "URL de recherche sur GameSpot. (nom du jeu : %s)"
 
-#: preferencias.py:238
+#: preferencias.py:240
 #, python-format
 msgid "URL de busqueda en VGChartz. (%s es el nombre del juego)"
 msgstr "URL de recherche sur VGChartz. (nom du jeu : %s)"
 
-#: preferencias.py:281 preferencias.py:317 preferencias.py:335
-#: preferencias.py:357
+#: preferencias.py:283 preferencias.py:319 preferencias.py:337
+#: preferencias.py:359
 msgid "Por defecto"
 msgstr "Par défaut"
 
@@ -1743,18 +1747,18 @@ msgstr "Programme lancé avec des paramètres incorrects."
 msgid "Interrumpido por el usuario"
 msgstr "Interrompu par l'utilisateur"
 
-#, fuzzy
-#~ msgid "WBFS"
-#~ msgstr "WBFS?"
-
-#~ msgid "Opciones de extraccion"
-#~ msgstr "Options d'extraction"
-
-#~ msgid "Extraer todos los juegos*"
-#~ msgstr "Extraire tous les jeux*"
+#~ msgid "Tienes que seleccionar una particion WBFS para realizar esta accion"
+#~ msgstr "Vous devez sélectionner une partition WBFS pour réaliser cette action"
 
 #~ msgid "Elige un directorio donde extraer la ISO de %s"
 #~ msgstr "Choisissez le dossier dans lequel extraire l'ISO %s"
 
-#~ msgid "Tienes que seleccionar una particion WBFS para realizar esta accion"
-#~ msgstr "Vous devez sélectionner une partition WBFS pour réaliser cette action"
+#~ msgid "Extraer todos los juegos*"
+#~ msgstr "Extraire tous les jeux*"
+
+#~ msgid "Opciones de extraccion"
+#~ msgstr "Options d'extraction"
+
+#, fuzzy
+#~ msgid "WBFS"
+#~ msgstr "WBFS?"

@@ -57,8 +57,9 @@ de: po/locale/de/LC_MESSAGES/wiithon.mo
 pt_BR: po/locale/pt_BR/LC_MESSAGES/wiithon.mo
 ca_ES: po/locale/ca_ES/LC_MESSAGES/wiithon.mo
 gl_ES: po/locale/gl_ES/LC_MESSAGES/wiithon.mo
+eu_ES: po/locale/eu_ES/LC_MESSAGES/wiithon.mo
 
-lang_enable: it es en fr de pt_BR ca_ES gl_ES
+lang_enable: it es en fr de pt_BR ca_ES gl_ES eu_ES
 lang_disable: da_DK fi_FI tr_TR ru_RU ko_KR sv_SE pt_PT da_DK nb_NO ja_JP
 lang: lang_enable lang_disable
 	@echo "=================================================================="
@@ -296,6 +297,7 @@ delete_archives_installation:
 	-$(RM) /usr/share/locale/tr_TR/LC_MESSAGES/wiithon.mo
 	-$(RM) /usr/share/locale/ca_ES/LC_MESSAGES/wiithon.mo
 	-$(RM) /usr/share/locale/gl_ES/LC_MESSAGES/wiithon.mo
+	-$(RM) /usr/share/locale/eu_ES/LC_MESSAGES/wiithon.mo
 	
 	-$(RM) /usr/share/man/man1/wiithon.1.gz
 	-$(RM) /usr/share/man/es/man1/wiithon.1.gz
@@ -364,6 +366,7 @@ clean_gettext:
 	-$(RM) po/locale/tr_TR/LC_MESSAGES/wiithon.mo
 	-$(RM) po/locale/ca_ES/LC_MESSAGES/wiithon.mo
 	-$(RM) po/locale/gl_ES/LC_MESSAGES/wiithon.mo
+	-$(RM) po/locale/eu_ES/LC_MESSAGES/wiithon.mo
 
 clean_unrar:
 	$(MAKE) -C unrar-nonfree clean
