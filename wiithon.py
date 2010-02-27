@@ -49,7 +49,7 @@ def App():
         util.configurarLenguaje(prefs.APPLICATION_LANGUAGE)
         
         try:
-            comando = "pgrep -fc python.*\/usr\/games\/wiithon"
+            comando = "ps aux | grep /usr/games/wiithon | grep -v grep | wc -l"
             num_wiithonActivo = int(util.getSTDOUT(comando))
         except: # Possible side effects -> let multiple instances
             num_wiithonActivo = 0
