@@ -72,6 +72,11 @@ typedef enum enumOptions
 	OPT_ISO,
 	OPT_WBFS,
 	OPT_LONG,
+	OPT_ITIME,
+	OPT_MTIME,
+	OPT_CTIME,
+	OPT_ATIME,
+	OPT_TIME,
 	OPT_UNIQUE,
 	OPT_NO_HEADER,
 	OPT_SORT,
@@ -104,6 +109,11 @@ typedef enum enumOptionsBit
 	OB_ISO		= 1 << OPT_ISO,
 	OB_WBFS		= 1 << OPT_WBFS,
 	OB_LONG		= 1 << OPT_LONG,
+	OB_ITIME	= 1 << OPT_ITIME,
+	OB_MTIME	= 1 << OPT_MTIME,
+	OB_CTIME	= 1 << OPT_CTIME,
+	OB_ATIME	= 1 << OPT_ATIME,
+	OB_TIME		= 1 << OPT_TIME,
 	OB_UNIQUE	= 1 << OPT_UNIQUE,
 	OB_NO_HEADER	= 1 << OPT_NO_HEADER,
 	OB_SORT		= 1 << OPT_SORT,
@@ -112,14 +122,13 @@ typedef enum enumOptionsBit
 	OB__MASK_PSEL	= OB_PSEL|OB_RAW,
 	OB__MASK_SPLIT	= OB_SPLIT|OB_SPLIT_SIZE,
 	OB__MASK_OFT	= OB_WDF|OB_ISO|OB_WBFS,
+	OB__MASK_TIME	= OB_ITIME|OB_MTIME|OB_CTIME|OB_ATIME|OB_TIME,
 
 	// allowed options for each command
 
 	OB_CMD_HELP	= OB__MASK,
 	OB_CMD_VERSION	= OB__MASK,
-    #ifdef TEST
 	OB_CMD_TEST	= OB__MASK,
-    #endif
 	OB_CMD_ERROR	= OB_LONG|OB_NO_HEADER,
 	OB_CMD_EXCLUDE	= 0,
 	OB_CMD_TITLES	= 0,
@@ -128,7 +137,7 @@ typedef enum enumOptionsBit
 	OB_CMD_ISOSIZE	= OB_LONG|OB_IGNORE|OB_NO_HEADER,
 	OB_CMD_DUMP	= OB_LONG,
 	OB_CMD_ID6	= OB_SORT|OB_UNIQUE,
-	OB_CMD_LIST	= OB_SORT|OB_LONG|OB_UNIQUE|OB_NO_HEADER,
+	OB_CMD_LIST	= OB_SORT|OB_LONG|OB__MASK_TIME|OB_UNIQUE|OB_NO_HEADER,
 	OB_CMD_DIFF	= OB__MASK_PSEL|OB_DEST|OB_DEST2|OB__MASK_OFT|OB_IGNORE|OB_LONG,
 	OB_CMD_COPY	= OB__MASK_PSEL|OB__MASK_SPLIT|OB__MASK_OFT|OB_DEST|OB_DEST2
 			  |OB_PRESERVE|OB_UPDATE|OB_IGNORE|OB_REMOVE|OB_OVERWRITE,
@@ -146,9 +155,7 @@ typedef enum enumCommands
 {
 	CMD_HELP,
 	CMD_VERSION,
-    #ifdef TEST
 	CMD_TEST,
-    #endif
 	CMD_ERROR,
 	CMD_EXCLUDE,
 	CMD_TITLES,
@@ -162,8 +169,7 @@ typedef enum enumCommands
 	CMD_LIST,
 	CMD_LIST_L,
 	CMD_LIST_LL,
-	CMD_LIST_U,
-	CMD_LIST_LU,
+	CMD_LIST_LLL,
 
 	CMD_DIFF,
 	CMD_COPY,
@@ -191,6 +197,11 @@ enum // const for long options without a short brothers
 	GETOPT_LANG,
 	GETOPT_PSEL,
 	GETOPT_RAW,
+	GETOPT_ITIME,
+	GETOPT_MTIME,
+	GETOPT_CTIME,
+	GETOPT_ATIME,
+	GETOPT_TIME,
 	GETOPT_IO,
 };
 
@@ -240,6 +251,11 @@ struct option long_opt[] =
 	{ "iso",		0, 0, 'I' },
 	{ "wbfs",		0, 0, 'B' },
 	{ "long",		0, 0, 'l' },
+	{ "itime",		0, 0, GETOPT_ITIME },
+	{ "mtime",		0, 0, GETOPT_MTIME },
+	{ "ctime",		0, 0, GETOPT_CTIME },
+	{ "atime",		0, 0, GETOPT_ATIME },
+	{ "time",		1, 0, GETOPT_TIME },
 	{ "unique",		0, 0, 'U' },
 	{ "no-header",		0, 0, 'H' },
 	 { "noheader",		0, 0, 'H' },
@@ -248,8 +264,8 @@ struct option long_opt[] =
 	{0,0,0,0}
 };
 
-uint used_options	= 0;
-uint env_options	= 0;
+option_t used_options	= 0;
+option_t env_options	= 0;
 int  long_count		= 0;
 int  ignore_count	= 0;
 int  testmode		= 0;
@@ -264,9 +280,7 @@ CommandTab_t CommandTab[] =
 {
 	{ CMD_HELP,	"HELP",		"?",		OB_CMD_HELP },
 	{ CMD_VERSION,	"VERSION",	0,		OB_CMD_VERSION },
-    #ifdef TEST
 	{ CMD_TEST,	"TEST",		0,		OB_CMD_TEST },
-    #endif
 	{ CMD_ERROR,	"ERROR",	"ERR",		OB_CMD_ERROR },
 	{ CMD_EXCLUDE,	"EXCLUDE",	0,		OB_CMD_EXCLUDE },
 	{ CMD_TITLES,	"TITLES",	0,		OB_CMD_TITLES },
@@ -280,6 +294,7 @@ CommandTab_t CommandTab[] =
 	{ CMD_LIST,	"LIST",		"LS",		OB_CMD_LIST },
 	{ CMD_LIST_L,	"LIST-L",	"LL",		OB_CMD_LIST },
 	{ CMD_LIST_LL,	"LIST-LL",	"LLL",		OB_CMD_LIST },
+	{ CMD_LIST_LLL,	"LIST-LLL",	"LLLL",		OB_CMD_LIST },
 
 	{ CMD_DIFF,	"DIFF",		"CMP",		OB_CMD_DIFF },
 	{ CMD_COPY,	"COPY",		"CP",		OB_CMD_COPY },
@@ -319,6 +334,7 @@ static char help_text[] =
     "   LIST     | LS   : List all found ISO files.\n"
     "   LIST-L   | LL   : Same as 'LIST --long'.\n"
     "   LIST-LL  | LLL  : Same as 'LIST --long --long'.\n"
+    "   LIST-LLL | LLLL : Same as 'LIST --long --long  --long'.\n"
     "\n"
     "   DIFF     | CMP  : Compare ISO images (scrubbed or raw).\n"
     "   COPY     | CP   : Copy ISO images.\n"
@@ -373,15 +389,18 @@ static char help_text[] =
     "   -o --overwrite     Overwrite existing files\n"
     "   -i --ignore        Ignore non existing files/discs without warning.\n"
     "   -R --remove        Remove source files/discs if operation is successful.\n"
-//  " ? -C --trunc         Trunc ISO images while writing.\n"
-//  " ? -F --fast          Enables fast writing (disables searching for zero blocks).\n"
     "   -W --wdf           Write a WDF image; clears options --iso and --wbfs. (default)\n"
     "   -I --iso           Write a plain ISO image; clears options --wdf and --wbfs.\n"
     "   -B --wbfs          Write an ISO as WBFS container; clears options --wdf and --iso.\n"
     " * -l --long          Print in long format. Multiple usage possible.\n"
+    "      --itime         Abbreviation of --time=i. Use 'itime' (insertion time).\n"
+    "      --mtime         Abbreviation of --time=m. Use 'mtime' (last modification time).\n"
+    "      --ctime         Abbreviation of --time=c. Use 'ctime' (last status change time).\n"
+    "      --atime         Abbreviation of --time=a. Use 'atime' (last access time).\n"
+    " *    --time  list    Set time modes (off,i,m,c,a,date,time,min,sec,...).\n"
     "   -U --unique        Eliminate multiple entries with same ID6.\n"
     "   -H --no-header     Suppress printing of header and footer.\n"
-    "   -S --sort          Sort by: id title name file region size wbfs npart ...\n"
+    "   -S --sort  list    Sort by: id|title|name|date|file|region|size|...|asc|desc\n"
  #ifdef TEST // [test]
     "\n"
     "      --io flags      IO mode (0=open or 1=fopen) &1=WBFS &2=IMAGE.\n"
@@ -400,9 +419,9 @@ static char help_text[] =
     "   FILETYPE | FT   -lll -ii        --psel= [source]...\n"
     "   ISOSIZE  | SIZE -lll -ii -H     --psel= [source]...\n"
     "   DUMP     | D    -l                      [source]...\n"
-    "   ID6      | ID            -U -S          [source]...\n"
-    "   LIST     | LS   -lll -u  -H -S          [source]...\n"
-    "   LIST-*   | L*   -ll  -u  -H -S          [source]...\n"
+    "   ID6      | ID            -U -S=sort     [source]...\n"
+    "   LIST     | LS   -lll -u  -H -S= --time  [source]...\n"
+    "   LIST-*   | L*   -ll  -u  -H -S= --time  [source]...\n"
     "\n"
     "   DIFF     | CMP  -tt      -i     --psel= [source]... [-d=]dest\n"
     "   COPY     | CP   -tt  -zZ -ipRuo --psel= [source]... [-d=]dest\n"
@@ -472,14 +491,19 @@ void hint_exit ( enumError err )
 ///////////////////////////////////////////////////////////////////////////////
 
 // common commands of 'wwt' and 'wit'
+#define IS_WIT 1
 #include "wwt+wit-cmd.c"
 
 ///////////////////////////////////////////////////////////////////////////////
 
-#ifdef TEST
+enumError cmd_test()
+{
+ #if 1 || !defined(TEST) // test options
 
- enumError cmd_test()
- {
+    return cmd_test_options();
+
+ #else
+
     int i, max = 5;
     for ( i=1; i <= max; i++ )
     {
@@ -487,9 +511,9 @@ void hint_exit ( enumError err )
 	sleep(20);
     }
     return ERR_OK;
- }
 
-#endif
+ #endif
+}
 
 //
 ///////////////////////////////////////////////////////////////////////////////
@@ -935,6 +959,7 @@ enumError exec_collect ( SuperFile_t * sf, Iterator_t * it )
     wl->total_size_mib += item->size_mib;
 
     item->part_index = sf->f.ftype;
+    item->xtime = SelectTimeOfStat(&sf->f.st,opt_print_time);
 
     ResetWDiscInfo(&wdi);
     return ERR_OK;
@@ -1005,12 +1030,19 @@ enumError cmd_list()
     char footer[200];
     int footer_len = 0;
 
-    int max_name_wd = 9;
     WDiscListItem_t *witem, *wend = wlist.first_disc + wlist.used;
 
     const bool print_header = !(used_options&OB_NO_HEADER);
-    const bool line2 = long_count > 1;
+    const bool line2 = long_count > 2;
 
+    PrintTime_t pt;
+    int opt_time = opt_print_time;
+    if ( long_count > 1 )
+	opt_time = EnablePrintTime(opt_time);
+ printf("%x->%x\n",opt_print_time,opt_time);
+    SetupPrintTime(&pt,opt_time);
+
+    int max_name_wd = 0;
     if (print_header)
     {
 	for ( witem = wlist.first_disc; witem < wend; witem++ )
@@ -1039,14 +1071,19 @@ enumError cmd_list()
 	if (print_header)
 	{
 	    int n1, n2;
-	    printf("\nID6     MiB Reg.  %n%d discs (%d GiB)%n\n",
-		    &n1, wlist.used, (wlist.total_size_mib+512)/1024, &n2 );
+	    putchar('\n');
+	    printf("ID6   %s  MiB Reg.  %n%d discs (%d GiB)%n\n",
+		    pt.head, &n1, wlist.used,
+		    (wlist.total_size_mib+512)/1024, &n2 );
 	    max_name_wd += n1;
 	    if ( max_name_wd < n2 )
 		max_name_wd = n2;
 
 	    if (line2)
-		fputs("      n(p)  type  file path\n",stdout);
+	    {
+		fputs(pt.fill,stdout);
+		fputs("      n(p) type   path of file\n",stdout);
+	    }
 
 	    if ( max_name_wd < footer_len )
 		max_name_wd = footer_len;
@@ -1055,12 +1092,13 @@ enumError cmd_list()
 
 	for ( witem = wlist.first_disc; witem < wend; witem++ )
 	{
-	    printf("%s %4d %s  %s\n",
-		    witem->id6, witem->size_mib, witem->region4,
+	    printf("%s%s %4d %s  %s\n",
+		    witem->id6, PrintTime(&pt,witem->xtime),
+		    witem->size_mib, witem->region4,
 		    witem->title ? witem->title : witem->name64 );
 	    if (line2)
-		printf("%9d %7s  %s\n",
-		    witem->n_part, GetNameFT(witem->part_index,0),
+		printf("%s%9d %7s %s\n",
+		    pt.fill, witem->n_part, GetNameFT(witem->part_index,0),
 		    witem->fname ? witem->fname : "" );
 	}
     }
@@ -1069,8 +1107,9 @@ enumError cmd_list()
 	if (print_header)
 	{
 	    int n1, n2;
-	    printf("\nID6      %n%d discs (%d GiB)%n\n",
-		    &n1, wlist.used, (wlist.total_size_mib+512)/1024, &n2 );
+	    putchar('\n');
+	    printf("ID6    %s %n%d discs (%d GiB)%n\n",
+		    pt.head, &n1, wlist.used, (wlist.total_size_mib+512)/1024, &n2 );
 	    max_name_wd += n1;
 	    if ( max_name_wd < n2 )
 		max_name_wd = n2;
@@ -1078,7 +1117,8 @@ enumError cmd_list()
 	}
 
 	for ( witem = wlist.first_disc; witem < wend; witem++ )
-	    printf("%s %s\n", witem->id6, witem->title ? witem->title : witem->name64 );
+	    printf("%s%s  %s\n", witem->id6, PrintTime(&pt,witem->xtime),
+			witem->title ? witem->title : witem->name64 );
     }
 
     if (print_header)
@@ -1103,6 +1143,15 @@ enumError cmd_list_ll()
 {
     used_options |= OB_LONG;
     long_count += 2;
+    return cmd_list();
+}
+
+//-----------------------------------------------------------------------------
+
+enumError cmd_list_lll()
+{
+    used_options |= OB_LONG;
+    long_count += 3;
     return cmd_list();
 }
 
@@ -1267,7 +1316,7 @@ enumError exec_copy ( SuperFile_t * fi, Iterator_t * it )
     char count_buf[100];
     snprintf(count_buf,sizeof(count_buf), "%u", it->source_list.used );
     snprintf(count_buf,sizeof(count_buf), "%*u/%u",
-		strlen(count_buf), it->source_index+1, it->source_list.used );
+		(int)strlen(count_buf), it->source_index+1, it->source_list.used );
 
     const bool raw_mode = partition_selector == WHOLE_DISC || !fi->f.id6[0];
     if (testmode)
@@ -1450,7 +1499,7 @@ enumError exec_move ( SuperFile_t * fi, Iterator_t * it )
     {
 	if ( !it->overwrite && !stat(fo.f.fname,&fo.f.st) )
 	{
-	    ERROR0(ERR_CANT_CREATE,"File already exists: %s\n",fo.f.fname); 
+	    ERROR0(ERR_CANT_CREATE,"File already exists: %s\n",fo.f.fname);
 	}
 	else if (!CheckCreated(fo.f.fname,false))
 	{
@@ -1459,7 +1508,7 @@ enumError exec_move ( SuperFile_t * fi, Iterator_t * it )
 		snprintf(iobuf,sizeof(iobuf), "%u", it->source_list.used );
 		printf(" - %sMove %*u/%u %s:%s -> %s\n",
 		    testmode ? "WOULD " : "",
-		    strlen(iobuf), it->source_index+1, it->source_list.used,
+		    (int)strlen(iobuf), it->source_index+1, it->source_list.used,
 		    oft_name[fo.oft], fi->f.fname, fo.f.fname );
 	    }
 
@@ -1769,6 +1818,32 @@ enumError CheckOptions ( int argc, char ** argv, int is_env )
 	    partition_selector = WHOLE_DISC;
 	    break;
 
+	  case GETOPT_ITIME:
+	    SetOption(OPT_ITIME,"itime");
+	    opt_print_time = SetPrintTimeMode(opt_print_time,PT_USE_ITIME|PT_ENABLED);
+	    break;
+
+	  case GETOPT_MTIME:
+	    SetOption(OPT_MTIME,"mtime");
+	    opt_print_time = SetPrintTimeMode(opt_print_time,PT_USE_MTIME|PT_ENABLED);
+	    break;
+
+	  case GETOPT_CTIME:
+	    SetOption(OPT_CTIME,"ctime");
+	    opt_print_time = SetPrintTimeMode(opt_print_time,PT_USE_CTIME|PT_ENABLED);
+	    break;
+
+	  case GETOPT_ATIME:
+	    SetOption(OPT_ATIME,"atime");
+	    opt_print_time = SetPrintTimeMode(opt_print_time,PT_USE_ATIME|PT_ENABLED);
+	    break;
+
+	  case GETOPT_TIME:
+	    SetOption(OPT_TIME,"time");
+	    if ( ScanAndSetPrintTimeMode(optarg) == PT__ERROR )
+		err++;
+	    break;
+
 	  case 'Z':
 	    SetOption(OPT_SPLIT_SIZE,"split-size");
 	    if (ScanSizeOptU64(&opt_split_size,optarg,GiB,0,
@@ -1856,7 +1931,7 @@ enumError check_command ( int argc, char ** argv )
 
     TRACE("COMMAND FOUND: #%d = %s\n",cmd_ct->id,cmd_ct->name1);
 
-    uint forbidden_mask = used_options & ~cmd_ct->mode;
+    uint forbidden_mask = used_options & ~cmd_ct->opt;
     if ( forbidden_mask )
     {
 	int i;
@@ -1866,7 +1941,7 @@ enumError check_command ( int argc, char ** argv )
 				cmd_ct->name1, opt_name_tab[i] );
 	hint_exit(ERR_SEMANTIC);
     }
-    used_options |= env_options & cmd_ct->mode;
+    used_options |= env_options & cmd_ct->opt;
 
     argc -= optind+1;
     argv += optind+1;
@@ -1878,9 +1953,7 @@ enumError check_command ( int argc, char ** argv )
     switch(cmd_ct->id)
     {
 	case CMD_VERSION:	version_exit();
-    #ifdef TEST
 	case CMD_TEST:		err = cmd_test(); break;
-    #endif
 	case CMD_ERROR:		err = cmd_error(); break;
 	case CMD_EXCLUDE:	err = cmd_exclude(); break;
 	case CMD_TITLES:	err = cmd_titles(); break;
@@ -1890,6 +1963,7 @@ enumError check_command ( int argc, char ** argv )
 	case CMD_LIST:		err = cmd_list(); break;
 	case CMD_LIST_L:	err = cmd_list_l(); break;
 	case CMD_LIST_LL:	err = cmd_list_ll(); break;
+	case CMD_LIST_LLL:	err = cmd_list_lll(); break;
 
 	case CMD_FILELIST:	err = cmd_filelist(); break;
 	case CMD_FILETYPE:	err = cmd_filetype(); break;

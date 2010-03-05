@@ -757,6 +757,7 @@ Swedish: Magnus Johansson &lt;mange@emjay.se&gt; [sv_SE.po]
 Galician: &#xC1;lvaro Ord&#xF3;&#xF1;ez &lt;alvarito@barberberecho.es&gt; [gl_ES.po]
 Russian: &lt;sh00@bmail.ru&gt; [ru_RU.po]
 Euskera: Piarres Beobide &lt;pi@beobide.net&gt; [eu.po]
+Danish: Michael Munk &#xD8;stergaard &lt;mmos@stibo.com&gt; [da_DK.po]
 </property>
     <child internal-child="vbox">
       <object class="GtkVBox" id="dialog-vbox3">
@@ -1705,9 +1706,9 @@ Euskera: Piarres Beobide &lt;pi@beobide.net&gt; [eu.po]
                     <child>
                       <object class="GtkFileChooserButton" id="extraer_directorio_salida">
                         <property name="visible">True</property>
-                        <property name="create_folders">False</property>
-                        <property name="action">select-folder</property>
                         <property name="show_hidden">True</property>
+                        <property name="action">select-folder</property>
+                        <property name="create_folders">False</property>
                         <property name="title" translatable="yes">Elegir directorio de salida</property>
                       </object>
                     </child>

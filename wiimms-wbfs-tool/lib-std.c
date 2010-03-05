@@ -211,6 +211,13 @@ void SetupLib ( int argc, char ** argv, ccp p_progname, enumProgID prid )
     TRACE_SIZEOF(WDiscListItem_t);
     TRACE_SIZEOF(WDiscList_t);
 
+    TRACE_SIZEOF(wbfs_t);
+    TRACE_SIZEOF(wbfs_head_t);
+    TRACE_SIZEOF(wbfs_disc_t);
+    TRACE_SIZEOF(wbfs_disc_info_t);
+    TRACE_SIZEOF(wbfs_inode_info_t);
+    TRACE_SIZEOF(wbfs_param_t);
+
     ASSERT( 1 == sizeof(u8) );
     ASSERT( 2 == sizeof(u16) );
     ASSERT( 4 == sizeof(u32) );
@@ -224,14 +231,18 @@ void SetupLib ( int argc, char ** argv, ccp p_progname, enumProgID prid )
     ASSERT( 200 == strlen(sep_200) );
 
     ASSERT( sizeof(WDiscHeader_t) == 0x100 );
+    ASSERT( sizeof(wbfs_inode_info_t) + WBFS_INODE_INFO_OFF == 0x100 );
+    ASSERT( sizeof(wbfs_inode_info_t) == WBFS_INODE_INFO_SIZE );
 
-    //----- setup textmode for cygwin stdout+stderr 
+
+    //----- setup textmode for cygwin stdout+stderr
 
     #if defined(__CYGWIN__)
 	setmode(fileno(stdout),O_TEXT);
 	setmode(fileno(stderr),O_TEXT);
 	//setlocale(LC_ALL,"en_US.utf-8");
     #endif
+
 
     //----- setup prog id
 
@@ -245,6 +256,7 @@ void SetupLib ( int argc, char ** argv, ccp p_progname, enumProgID prid )
 	revision_id = (prid << 20) + SYSTEMID + REVISION_NUM + REVID_UNKNOWN;
     #endif
 
+
     //----- setup progname
 
     if ( argc > 0 && *argv && **argv )
@@ -255,6 +267,7 @@ void SetupLib ( int argc, char ** argv, ccp p_progname, enumProgID prid )
 
     TRACE("##PROG## REV-ID=%08x, PROG-ID=%d, PROG-NAME=%s\n",
 		revision_id, prog_id, progname );
+
 
     //----- setup signals
 
@@ -267,6 +280,7 @@ void SetupLib ( int argc, char ** argv, ccp p_progname, enumProgID prid )
 	sa.sa_handler = &sig_handler;
 	sigaction(sigtab[i],&sa,0);
     }
+
 
     //----- setup search_path
 
@@ -339,6 +353,7 @@ void SetupLib ( int argc, char ** argv, ccp p_progname, enumProgID prid )
 
     *sp = 0;
     ASSERT( sp - search_path < sizeof(search_path)/sizeof(*search_path) );
+
 
     //----- setup language info
 
@@ -782,7 +797,7 @@ enumError StatFile ( struct stat * st, ccp fname, int fd )
 		TRACE(" + st_size:    %llu\n",st->st_size);
 		lseek(fd,0,SEEK_SET);
 	    }
-	    
+
 	    if (fname)
 		close(fd);
 	}
@@ -809,7 +824,7 @@ void InitializeFile ( File_t * f )
 
     // normalize 'opt_iomode'
     opt_iomode = opt_iomode & IOM__IS_MASK | IOM_FORCE_STREAM;
-    
+
  #ifdef __CYGWIN__
     opt_iomode |= IOM_IS_WBFS;
  #endif
@@ -2873,7 +2888,7 @@ enumError CreatePath ( ccp fname )
 
     char buf[PATH_MAX], *dest = buf;
     StringCopyS(buf,sizeof(buf),fname);
-    
+
     for(;;)
     {
 	while ( *dest && *dest != '/' )
@@ -3288,6 +3303,207 @@ char * ScanID ( char * destbuf7, int * destlen, ccp source )
     if (destlen)
 	*destlen = id_start ? 6 : 0;
     return 0;
+}
+
+//
+///////////////////////////////////////////////////////////////////////////////
+///////////////                   time printing                 ///////////////
+///////////////////////////////////////////////////////////////////////////////
+
+int opt_print_time  = PT__DEFAULT;
+int opt_time_select = PT__DEFAULT & PT__USE_MASK;
+
+///////////////////////////////////////////////////////////////////////////////
+
+int ScanPrintTimeMode ( ccp arg, int prev_mode )
+{
+    #undef E
+    #undef EM
+    #define E PT_ENABLED
+    #define EM PT__ENABLED_MASK
+
+    static CommandTab_t tab[] =
+    {
+	{ PT_DISABLED,			"OFF",		"0",	EM },
+	{ PT_ENABLED,			"ON",		"1",	EM },
+
+	{ E|PT_USE_ITIME,		"I",		0,	EM|PT__USE_MASK },
+	{ E|PT_USE_MTIME,		"M",		0,	EM|PT__USE_MASK },
+	{ E|PT_USE_CTIME,		"C",		0,	EM|PT__USE_MASK },
+	{ E|PT_USE_ATIME,		"A",		0,	EM|PT__USE_MASK },
+
+	{ E|PT_PRINT_DATE,		"DATE",		0,	EM|PT__PRINT_MASK },
+	{ E|PT_PRINT_TIME,		"TIME",		"MIN",	EM|PT__PRINT_MASK },
+	{ E|PT_PRINT_SEC,		"SEC",		0,	EM|PT__PRINT_MASK },
+
+	{ E|PT_USE_ITIME|PT_PRINT_DATE,	"IDATE",	0,	EM|PT__MASK },
+	{ E|PT_USE_MTIME|PT_PRINT_DATE,	"MDATE",	0,	EM|PT__MASK },
+	{ E|PT_USE_CTIME|PT_PRINT_DATE,	"CDATE",	0,	EM|PT__MASK },
+	{ E|PT_USE_ATIME|PT_PRINT_DATE,	"ADATE",	0,	EM|PT__MASK },
+
+	{ E|PT_USE_ITIME|PT_PRINT_TIME,	"ITIME",	"IMIN",	EM|PT__MASK },
+	{ E|PT_USE_MTIME|PT_PRINT_TIME,	"MTIME",	"MMIN",	EM|PT__MASK },
+	{ E|PT_USE_CTIME|PT_PRINT_TIME,	"CTIME",	"CMIN",	EM|PT__MASK },
+	{ E|PT_USE_ATIME|PT_PRINT_TIME,	"ATIME",	"AMIN",	EM|PT__MASK },
+
+	{ E|PT_USE_ITIME|PT_PRINT_SEC,	"ISEC",		0,	EM|PT__MASK },
+	{ E|PT_USE_MTIME|PT_PRINT_SEC,	"MSEC",		0,	EM|PT__MASK },
+	{ E|PT_USE_CTIME|PT_PRINT_SEC,	"CSEC",		0,	EM|PT__MASK },
+	{ E|PT_USE_ATIME|PT_PRINT_SEC,	"ASEC",		0,	EM|PT__MASK },
+
+	{ 0,0,0,0 }
+    };
+    #undef E
+    #undef EM
+
+    const int stat = ScanCommandListMask(arg,tab);
+    if ( stat >= 0 )
+	return SetPrintTimeMode(prev_mode,stat);
+
+    ERROR0(ERR_SYNTAX,"Illegal time mode (option --time): '%s'\n",arg);
+    return PT__ERROR;
+}
+
+///////////////////////////////////////////////////////////////////////////////
+
+int ScanAndSetPrintTimeMode ( ccp argv )
+{
+    const int stat = ScanPrintTimeMode(argv,opt_print_time);
+    if ( stat >= 0 )
+	opt_print_time  = stat;
+    return stat;
+}
+
+///////////////////////////////////////////////////////////////////////////////
+
+int SetPrintTimeMode ( int prev_mode, int new_mode )
+{
+    if ( new_mode & PT__USE_MASK )
+	prev_mode = prev_mode & ~PT__USE_MASK | new_mode & PT__USE_MASK;
+
+    if ( new_mode & PT__PRINT_MASK )
+	prev_mode = prev_mode & ~PT__PRINT_MASK | new_mode & PT__PRINT_MASK;
+
+    if ( new_mode & PT__ENABLED_MASK )
+	prev_mode = prev_mode & ~PT__ENABLED_MASK | new_mode & PT__ENABLED_MASK;
+
+    return prev_mode;
+}
+
+///////////////////////////////////////////////////////////////////////////////
+
+int EnablePrintTime ( int opt_time )
+{
+    return SetPrintTimeMode(PT__DEFAULT|PT_PRINT_DATE,opt_time|PT_ENABLED);
+}
+
+///////////////////////////////////////////////////////////////////////////////
+
+void SetupPrintTime ( PrintTime_t * pt, int opt_time )
+{
+    ASSERT(pt);
+    memset(pt,0,sizeof(*pt));
+
+    switch ( opt_time & (PT__ENABLED_MASK|PT__PRINT_MASK) )
+    {
+	case PT_ENABLED|PT_PRINT_SEC:
+	    pt->wd	= 20;
+	    pt->head	= "    date      time  ";
+	    pt->fill	= "                    ";
+	    pt->undef	= " ---------- --:--:--";
+	    pt->format	= " %Y-%m-%d %H:%M:%S";
+	    break;
+
+	case PT_ENABLED|PT_PRINT_TIME:
+	    pt->wd	= 17;
+	    pt->head	= "    date     time";
+	    pt->fill	= "                 ";
+	    pt->undef	= " ---------- --:--";
+	    pt->format	= " %Y-%m-%d %H:%M";
+	    break;
+
+	case PT_ENABLED|PT_PRINT_DATE:
+	    pt->wd	= 11;
+	    pt->head	= "    date   ";
+	    pt->fill	= "           ";
+	    pt->undef	= " ----------";
+	    pt->format	= " %Y-%m-%d";
+	    break;
+
+	default:
+	    pt->wd	= 0;
+	    pt->head	= "";
+	    pt->fill	= "";
+	    pt->undef	= "";
+	    pt->format	= "";
+	    break;
+    }
+}
+
+///////////////////////////////////////////////////////////////////////////////
+
+char * PrintTime ( PrintTime_t * pt, time_t thetime )
+{
+    ASSERT(pt);
+
+    if (!pt->wd)
+	*pt->tbuf = 0;
+    else if (!thetime)
+	strncpy(pt->tbuf,pt->undef,sizeof(pt->tbuf)-1);
+    else
+    {
+	struct tm * tm = localtime(&thetime);
+	strftime(pt->tbuf,sizeof(pt->tbuf),pt->format,tm);
+    }
+    return pt->tbuf;
+}
+
+///////////////////////////////////////////////////////////////////////////////
+
+time_t SelectTimeOfInode ( wbfs_inode_info_t * iinfo, int opt_time )
+{
+    ASSERT(iinfo);
+
+    u64 tim;
+    switch ( opt_time & PT__USE_MASK )
+    {
+	case PT_USE_ITIME:
+	    tim = iinfo->itime;
+	    break;
+
+	case PT_USE_CTIME:
+	    tim = iinfo->ctime;
+	    break;
+
+	case PT_USE_ATIME:
+	    tim = iinfo->atime;
+	    break;
+
+	default:
+	    tim = iinfo->mtime;
+	    break;
+    }
+    return wbfs_ntoh64(tim);
+}
+
+///////////////////////////////////////////////////////////////////////////////
+
+time_t SelectTimeOfStat  ( struct stat * st, int opt_time )
+{
+    ASSERT(st);
+
+    switch ( opt_time & PT__USE_MASK )
+    {
+	case PT_USE_ITIME:
+	case PT_USE_CTIME:
+	    return st->st_ctime;
+
+	case PT_USE_ATIME:
+	    return st->st_atime;
+
+	default:
+	    return st->st_mtime;
+    }
 }
 
 //
@@ -3773,7 +3989,7 @@ CommandTab_t * ScanCommand ( int * p_stat, ccp arg, CommandTab_t * cmd_tab )
 
 ///////////////////////////////////////////////////////////////////////////////
 
-int ScanCommandList ( ccp arg, CommandTab_t * cmd_tab )
+int ScanCommandList ( ccp arg, CommandTab_t * cmd_tab, CommandCallbackFunc func )
 {
     ASSERT(arg);
 
@@ -3798,11 +4014,34 @@ int ScanCommandList ( ccp arg, CommandTab_t * cmd_tab )
 	if (!cptr)
 	    return -1;
 
-	if (cptr->mode)
+	if (func)
+	{
+	    result = func(cmd_buf,cmd_tab,cptr,result);
+	    if ( result < 0 )
+		return result;
+	}
+	else if (cptr->opt)
 	    result = cptr->id;
 	else
 	    result |= cptr->id;
     }
+}
+
+///////////////////////////////////////////////////////////////////////////////
+
+static int ScanCommandListMaskHelper
+	( ccp cmd_name, CommandTab_t * cmd_tab, CommandTab_t * cptr, int result )
+{
+    return cptr->opt
+		? result & ~cptr->opt | cptr->id
+		: cptr->id;
+}
+
+//-----------------------------------------------------------------------------
+
+int ScanCommandListMask ( ccp arg, CommandTab_t * cmd_tab )
+{
+    return ScanCommandList(arg,cmd_tab,ScanCommandListMaskHelper);
 }
 
 //
@@ -3814,22 +4053,29 @@ SortMode ScanSortMode ( ccp arg )
 {
     static CommandTab_t tab[] =
     {
-	{ SORT_NONE,	"NONE",		"-",	0 },
-	{ SORT_ID,	"ID",		0,	0 },
-	{ SORT_NAME,	"NAME",		"N",	0 },
-	{ SORT_TITLE,	"TITLE",	"T",	0 },
-	{ SORT_FILE,	"FILE",		"F",	0 },
-	{ SORT_SIZE,	"SIZE",		0,	0 },
-	{ SORT_REGION,	"REGION",	0,	0 },
-	{ SORT_WBFS,	"WBFS",		0,	0 },
-	{ SORT_NPART,	"NPART",	0,	0 },
-	{ SORT_DEFAULT,	"DEFAULT",	0,	0 },
+	{ SORT_NONE,	"NONE",		"-",		SORT__MASK },
+
+	{ SORT_ID,	"ID",		0,		SORT__MODE_MASK },
+	{ SORT_NAME,	"NAME",		"N",		SORT__MODE_MASK },
+	{ SORT_TITLE,	"TITLE",	"T",		SORT__MODE_MASK },
+	{ SORT_FILE,	"FILE",		"F",		SORT__MODE_MASK },
+	{ SORT_SIZE,	"SIZE",		0,		SORT__MODE_MASK },
+	{ SORT_DATE,	"DATE",		"D",		SORT__MODE_MASK },
+	{ SORT_DATE,	"TIME",		0,		SORT__MODE_MASK },
+	{ SORT_REGION,	"REGION",	"R",		SORT__MODE_MASK },
+	{ SORT_WBFS,	"WBFS",		0,		SORT__MODE_MASK },
+	{ SORT_NPART,	"NPART",	0,		SORT__MODE_MASK },
+	{ SORT_DEFAULT,	"DEFAULT",	0,		SORT__MODE_MASK },
+
+	{ 0,		"ASCENDING",	0,		SORT_REVERSE },
+	{ SORT_REVERSE,	"DESCENDING",	"REVERSE",	SORT_REVERSE },
+
 	{ 0,0,0,0 }
     };
 
-    CommandTab_t * cmd = ScanCommand(0,arg,tab);
-    if (cmd)
-	return cmd->id;
+    const int stat = ScanCommandListMask(arg,tab);
+    if ( stat >= 0 )
+	return stat;
 
     ERROR0(ERR_SYNTAX,"Illegal sort mode (option --sort): '%s'\n",arg);
     return SORT__ERROR;
@@ -3855,7 +4101,7 @@ RepairMode ScanRepairMode ( ccp arg )
 	{ 0,0,0,0 }
     };
 
-    int stat = ScanCommandList(arg,tab);
+    int stat = ScanCommandList(arg,tab,0);
     if ( stat != -1 )
 	return stat;
 

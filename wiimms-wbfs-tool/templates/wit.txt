@@ -409,7 +409,7 @@ COMMAND: ID6|ID   [path]...
     -X --exclude-path file_or_dir
                        ISO file or base of directory tree -> scan their ID6
 
-    -S --sort          Sort by: id title name file region size wbfs npart ...
+    -S --sort  list    Sort by: id|title|name|date|file|region|size|...|asc|desc
     -U --unique        Print only the first disc of all with same values.
 
     -q --quiet         Be quiet   -> list only ID6 but nothing else.
@@ -519,9 +519,14 @@ COMMAND: LIST|LS   [path]...
                        ISO file or base of directory tree -> scan their ID6
 
     -l --long          Print in long format. Multiple usage possible.
+       --itime         Abbreviation of --time=i. Use 'itime' (insertion time).\n"
+       --mtime         Abbreviation of --time=m. Use 'mtime' (last modification time).\n"
+       --ctime         Abbreviation of --time=c. Use 'ctime' (last status change time).\n"
+       --atime         Abbreviation of --time=a. Use 'atime' (last access time).\n"
+       --time  list    Set time modes (off,i,m,c,a,date,time,min,sec,...).\n"
     -U --unique        Print only the first disc if all with with same ID6.
     -H --no-header     Suppress printing of header and footer.
-    -S --sort          SSort by: id title name file region size wbfs npart ...
+    -S --sort  list    Sort by: id|title|name|date|file|region|size|...|asc|desc
     -T --titles file   Read file for disc titles. -T0 disables titles lookup.
 
     -q --quiet         Be quiet   -> list only ID6 but nothing else.
@@ -537,9 +542,32 @@ COMMAND: LIST|LS   [path]...
  size, region and the name are printed.  The option --no-header suppress the
  output of header and footer.
 
- If the option --long is given twice or more a second line with thr number
- of partitions, the file type ('ISO' or 'WDF') and the file path is printed.
- If the option --long is given three times the real path is printed.
+ Printing of timestamps is enabled by the options --time, --itime, --mtime
+ --ctime, --atime or when --long is set at least twice. --time=off disables
+ time printing. All time options (not --long) supersede the previous options.
+ The option --time take a comma separated list of the following keywords:
+
+    OFF   : Disable time printing. All other option enable time printing.
+    ON    : Enable time printing.
+
+    I     : Use itime (insertion time) for processing.
+    M     : Use mtime (last modicifaction time) for processing. (default)
+    C     : Use ctime (last staus change time) for processing.
+    A     : Use atime (last access time) for processing.
+
+    DATE  : Print time in format 'YYYY-MM-DD'. (default)
+    TIME  : Print time in format 'YYYY-MM-DD HH:MM'.
+    MIN   : Alternative keyword for 'TIME'.
+    SEC   : Print time in format 'YYYY-MM-DD HH:MM:SS'.
+
+    *DATE : Short cut for '*,DATE'. '*' is one of 'I', 'M', 'C' or 'A'.
+    *TIME : Short cut for '*,TIME'. '*' is one of 'I', 'M', 'C' or 'A'.
+    *MIN  : Alternative keywords for '*TIME'.
+    *SEC  : Short cut for '*,SEC'.  '*' is one of 'I', 'M', 'C' or 'A'.
+
+ If the option --long is given three or more times a second line with the
+ number of partitions, the file type ('ISO' or 'WDF') and the file path is
+ printed. If the option --long is given three times the real path is printed.
 
  If available the name of the title database is used. use the option -T0 to
  disable database titles.
@@ -559,11 +587,13 @@ COMMAND: LIST|LS   [path]...
 -------------------------------------------------------------------------------
 
 COMMANDS:
-    LIST-L  | LL   [source]...
-    LIST-LL | LLL  [source]...
+    LIST-L   | LL    [source]...
+    LIST-LL  | LLL   [source]...
+    LIST-LLL | LLLL  [source]...
 
  'LIST-L'   is a synonym for 'LIST --long'.
  'LIST-LL'  is a synonym for 'LIST --long --long'.
+ 'LIST-LLL' is a synonym for 'LIST --long --long --long'.
  See command 'LIST' for options and details.
 
 
@@ -677,7 +707,7 @@ COMMAND: RENAME|REN  id6=[new_id6][,title] ...
     'id6' is the ID of the disc to change.
     The optional 'new_id6' is the new ID of the disc.
     The optional 'new_title' is the new title of the disc.
-    
+
 @@MODULE(set-title.txt)@@
 
 
@@ -886,7 +916,7 @@ WWT_LANG
  With 'WWT_LANG' (not 'WIT_LANG') the user can spezifiy a default language
  for wwt and wit titles. If 'WWT_LANG' is empty 'LC_CTYPE' will be scanned.
  The option --lang overides this default setting.
-  
+
  Example: WWT_LANG="de"
 
 WIT_OPT

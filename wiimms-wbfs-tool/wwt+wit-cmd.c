@@ -82,3 +82,22 @@ enumError cmd_titles()
 
 //
 ///////////////////////////////////////////////////////////////////////////////
+
+enumError cmd_test_options()
+{
+    printf("Options (hex=dec):\n");
+ #if IS_WWT
+    printf("  size:        %16llx = %lld\n",opt_size,opt_size);
+    printf("  sector-size: %16x = %d\n",opt_sector_size,opt_sector_size);
+    printf("  repair-mode: %16x = %d\n",repair_mode,repair_mode);
+ #endif
+    printf("  split-size:  %16llx = %lld\n",opt_split_size,opt_split_size);
+    printf("  escape-char: %16x = %d\n",escape_char,escape_char);
+    printf("  print-time:  %16x = %d\n",opt_print_time,opt_print_time);
+    printf("  sort-mode:   %16x = %d\n",sort_mode,sort_mode);
+
+    return ERR_OK;
+}
+
+//
+///////////////////////////////////////////////////////////////////////////////

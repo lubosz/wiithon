@@ -1,4 +1,6 @@
-wit.[ch] ;
+wit.c ;
+wwt.c ;
+wwt+wit-cmd.c ;
 lib-sf.c ;
 @wwt.edit-list
 wbfs-interface.[ch] ;

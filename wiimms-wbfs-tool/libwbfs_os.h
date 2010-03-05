@@ -4,6 +4,7 @@
 #include <arpa/inet.h>
 #include <string.h>
 #include <stdlib.h>
+#include <time.h>
 #include "types.h"
 #include "debug.h"
 #include "lib-error.h"
@@ -29,5 +30,7 @@
 #define wbfs_memcmp(x,y,z) memcmp(x,y,z)
 #define wbfs_memcpy(x,y,z) memcpy(x,y,z)
 #define wbfs_memset(x,y,z) memset(x,y,z)
+
+#define wbfs_time() ((u64)time(0))
 
 #endif // LIBWBFS_OS_H

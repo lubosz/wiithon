@@ -60,18 +60,10 @@ void InitializeWC ( WDF_Chunk_t * wc, int n_elem )
 ///////////////        convert data to network byte order       ///////////////
 ///////////////////////////////////////////////////////////////////////////////
 
-static u64 hton64 ( u64 data )
-{
-    u64 result;
-    ((u32*)&result)[0] = htonl( (u32)(data >> 32) );
-    ((u32*)&result)[1] = htonl( (u32)data );
-    return result;
-}
-
 #undef CONV32
 #undef CONV64
 #define CONV32(var) dest->var = htonl(src->var)
-#define CONV64(var) dest->var = hton64(src->var)
+#define CONV64(var) dest->var = wbfs_hton64(src->var)
 
 ///////////////////////////////////////////////////////////////////////////////
 
@@ -118,15 +110,10 @@ void ConvertToNetworkWC ( WDF_Chunk_t * dest, WDF_Chunk_t * src )
 ///////////////         convert data to host byte order         ///////////////
 ///////////////////////////////////////////////////////////////////////////////
 
-static u64 ntoh64 ( u64 data )
-{
-    return (u64)ntohl(((u32*)&data)[0]) << 32 | ntohl(((u32*)&data)[1]);
-}
-
 #undef CONV32
 #undef CONV64
 #define CONV32(var) dest->var = ntohl(src->var)
-#define CONV64(var) dest->var = ntoh64(src->var)
+#define CONV64(var) dest->var = wbfs_ntoh64(src->var)
 
 ///////////////////////////////////////////////////////////////////////////////
 

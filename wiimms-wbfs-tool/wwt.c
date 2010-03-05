@@ -78,6 +78,11 @@ typedef enum enumOptions
 	OPT_ISO,
 	OPT_WBFS,
 	OPT_LONG,
+	OPT_ITIME,
+	OPT_MTIME,
+	OPT_CTIME,
+	OPT_ATIME,
+	OPT_TIME,
 	OPT_MIXED,
 	OPT_UNIQUE,
 	OPT_NO_HEADER,
@@ -121,6 +126,11 @@ typedef enum enumOptionsBit
 	OB_ISO		= 1llu << OPT_ISO,
 	OB_WBFS		= 1llu << OPT_WBFS,
 	OB_LONG		= 1llu << OPT_LONG,
+	OB_ITIME	= 1llu << OPT_ITIME,
+	OB_MTIME	= 1llu << OPT_MTIME,
+	OB_CTIME	= 1llu << OPT_CTIME,
+	OB_ATIME	= 1llu << OPT_ATIME,
+	OB_TIME		= 1llu << OPT_TIME,
 	OB_MIXED	= 1llu << OPT_MIXED,
 	OB_UNIQUE	= 1llu << OPT_UNIQUE,
 	OB_NO_HEADER	= 1llu << OPT_NO_HEADER,
@@ -132,14 +142,13 @@ typedef enum enumOptionsBit
 	OB__MASK_SPLIT	= OB_SPLIT|OB_SPLIT_SIZE,
 	OB__MASK_OFT	= OB_WDF|OB_ISO|OB_WBFS,
 	OB__MASK_NO_CHK	= OB_NO_CHECK|OB_FORCE,
+	OB__MASK_TIME	= OB_ITIME|OB_MTIME|OB_CTIME|OB_ATIME|OB_TIME,
 
 	// allowed options for each command
 
 	OB_CMD_HELP	= OB__MASK,
 	OB_CMD_VERSION	= OB__MASK,
-    #ifdef TEST
 	OB_CMD_TEST	= OB__MASK,
-    #endif
 	OB_CMD_ERROR	= OB_LONG|OB_NO_HEADER,
 	OB_CMD_EXCLUDE	= 0,
 	OB_CMD_TITLES	= 0,
@@ -147,7 +156,8 @@ typedef enum enumOptionsBit
 	OB_CMD_SPACE	= OB__MASK_PART|OB_LONG|OB_NO_HEADER,
 	OB_CMD_DUMP	= OB__MASK_PART|OB_LONG,
 	OB_CMD_ID6	= OB__MASK_PART|OB_LONG|OB_SORT|OB_UNIQUE,
-	OB_CMD_LIST	= OB__MASK_PART|OB_SORT|OB_LONG|OB_MIXED|OB_UNIQUE|OB_NO_HEADER,
+	OB_CMD_LIST	= OB__MASK_PART|OB_SORT|OB_LONG|OB__MASK_TIME
+			  |OB_MIXED|OB_UNIQUE|OB_NO_HEADER,
 	OB_CMD_FORMAT	= OB__MASK_SPLIT|OB_SIZE|OB_SECTOR_SIZE|OB_RECOVER|OB_FORCE,
 	OB_CMD_CHECK	= OB__MASK_PART|OB_REPAIR|OB_LONG,
 	OB_CMD_REPAIR	= OB_CMD_CHECK,
@@ -174,9 +184,7 @@ typedef enum enumCommands
 {
 	CMD_HELP,
 	CMD_VERSION,
-    #ifdef TEST
 	CMD_TEST,
-    #endif
 	CMD_ERROR,
 	CMD_EXCLUDE,
 	CMD_TITLES,
@@ -188,6 +196,7 @@ typedef enum enumCommands
 	CMD_ID6,
 	CMD_LIST,
 	CMD_LIST_L,
+	CMD_LIST_LL,
 	CMD_LIST_A,
 	CMD_LIST_M,
 	CMD_LIST_U,
@@ -227,6 +236,11 @@ enum // const for long options without a short brothers
 	GETOPT_LANG,
 	GETOPT_PSEL,
 	GETOPT_RAW,
+	GETOPT_ITIME,
+	GETOPT_MTIME,
+	GETOPT_CTIME,
+	GETOPT_ATIME,
+	GETOPT_TIME,
 	GETOPT_SECTOR_SIZE,
 	GETOPT_RECOVER,
 	GETOPT_NO_CHECK,
@@ -293,6 +307,11 @@ struct option long_opt[] =
 	{ "iso",		0, 0, 'I' },
 	{ "wbfs",		0, 0, 'B' },
 	{ "long",		0, 0, 'l' },
+	{ "itime",		0, 0, GETOPT_ITIME },
+	{ "mtime",		0, 0, GETOPT_MTIME },
+	{ "ctime",		0, 0, GETOPT_CTIME },
+	{ "atime",		0, 0, GETOPT_ATIME },
+	{ "time",		1, 0, GETOPT_TIME },
 	{ "mixed",		0, 0, 'M' },
 	{ "unique",		0, 0, 'U' },
 	{ "no-header",		0, 0, 'H' },
@@ -302,8 +321,8 @@ struct option long_opt[] =
 	{0,0,0,0}
 };
 
-u64  used_options	= 0;
-u64  env_options	= 0;
+option_t  used_options	= 0;
+option_t  env_options	= 0;
 int  long_count		= 0;
 int  testmode		= 0;
 ccp  opt_dest		= 0;
@@ -319,9 +338,7 @@ CommandTab_t CommandTab[] =
 {
 	{ CMD_HELP,	"HELP",		"?",		OB_CMD_HELP },
 	{ CMD_VERSION,	"VERSION",	0,		OB_CMD_VERSION },
-    #ifdef TEST
 	{ CMD_TEST,	"TEST",		0,		OB_CMD_TEST },
-    #endif
 	{ CMD_ERROR,	"ERROR",	"ERR",		OB_CMD_ERROR },
 	{ CMD_EXCLUDE,	"EXCLUDE",	0,		OB_CMD_EXCLUDE },
 	{ CMD_TITLES,	"TITLES",	0,		OB_CMD_TITLES },
@@ -333,6 +350,7 @@ CommandTab_t CommandTab[] =
 	{ CMD_ID6,	"ID6",		"ID",		OB_CMD_ID6 },
 	{ CMD_LIST,	"LIST",		"LS",		OB_CMD_LIST },
 	{ CMD_LIST_L,	"LIST-L",	"LL",		OB_CMD_LIST },
+	{ CMD_LIST_LL,	"LIST-LL",	"LLL",		OB_CMD_LIST },
 	{ CMD_LIST_A,	"LIST-A",	"LA",		OB_CMD_LIST },
 	{ CMD_LIST_M,	"LIST-M",	"LM",		OB_CMD_LIST },
 	{ CMD_LIST_U,	"LIST-U",	"LU",		OB_CMD_LIST },
@@ -382,9 +400,10 @@ static char help_text[] =
     "   ID6      | ID   : Print ID6 of all discs of WBFS partitions.\n"
     "   LIST     | LS   : List all discs of WBFS partitions.\n"
     "   LIST-L   | LL   : Same as 'LIST --long'.\n"
-    "   LIST-A   | LA   : Same as 'LIST --auto   --all --long'.\n"
-    "   LIST-M   | LM   : Same as 'LIST --mixed  --all --long'.\n"
-    "   LIST-U   | LU   : Same as 'LIST --unique --all --long'.\n"
+    "   LIST-LL  | LLL  : Same as 'LIST --long --long'.\n"
+    "   LIST-A   | LA   : Same as 'LIST --long --long --auto'.\n"
+    "   LIST-M   | LM   : Same as 'LIST --long --long --mixed'.\n"
+    "   LIST-U   | LU   : Same as 'LIST --long --long --unique'.\n"
     "\n"
     "   FORMAT   | INIT : Format WBFS partitions.\n"
     "   CHECK    | FSCK : Check WBFS partitions.\n"
@@ -461,10 +480,15 @@ static char help_text[] =
     "   -I --iso           Write a plain ISO image; clears options --wdf and --wbfs.\n"
     "   -B --wbfs          Write an ISO as WBFS container; clears options --wdf and --iso.\n"
     " * -l --long          Print in long format. Multiple usage possible.\n"
+    "      --itime         Abbreviation of --time=i. Use 'itime' (insertion time).\n"
+    "      --mtime         Abbreviation of --time=m. Use 'mtime' (last modification time).\n"
+    "      --ctime         Abbreviation of --time=c. Use 'ctime' (last status change time).\n"
+    "      --atime         Abbreviation of --time=a. Use 'atime' (last access time).\n"
+    " *    --time  list    Set time modes (off,i,m,c,a,date,time,min,sec,...).\n"
     "   -M --mixed         Print disc infos of all WBFS in mixed mode.\n"
     "   -U --unique        Eliminate multiple entries with same ID6.\n"
     "   -H --no-header     Suppress printing of header and footer.\n"
-    "   -S --sort          Sort by: id title name file region size wbfs npart ...\n"
+    "   -S --sort  list    Sort by: id|title|name|date|file|region|size|...|asc|desc\n"
  #ifdef TEST // [test]
     "\n"
     "      --io flags      IO mode (0=open or 1=fopen) &1=WBFS &2=IMAGE.\n"
@@ -480,30 +504,30 @@ static char help_text[] =
     "   EXCLUDE            [additional_excludes]...\n"
     "   TITLES             [additional_title_file]...\n"
     "\n"
-    "   FIND     | F    -p part -aA -ll -H                  [wbfs_partition]...\n"
-    "   SPACE    | DF   -p part -aA -l  -H                  [wbfs_partition]...\n"
-    "   DUMP     | D    -p part -aA -lll                    [wbfs_partition]...\n"
+    "   FIND     | F    -p part -aA -ll  -H                  [wbfs_partition]...\n"
+    "   SPACE    | DF   -p part -aA -l   -H                  [wbfs_partition]...\n"
+    "   DUMP     | D    -p part -aA -lll                     [wbfs_partition]...\n"
     "\n"
-    "   ID6      | ID   -p part -aA           -U -S sort    [wbfs_partition]...\n"
-    "   LIST     | LS   -p part -aA -ll -H -M -U -S sort    [wbfs_partition]...\n"
-    "   LIST-*   | L*   -p part -aA -ll -H -M -U -S sort    [wbfs_partition]...\n"
+    "   ID6      | ID   -p part -aA            -U -S?sort    [wbfs_partition]...\n"
+    "   LIST     | LS   -p part -aA -lll -H -M -U -S= --time [wbfs_partition]...\n"
+    "   LIST-*   | L*   -p part -aA -ll  -H -M -U -S= --time [wbfs_partition]...\n"
     "\n"
-    "   FORMAT   | INIT -s size --sector-size= --recover -f file|blockdev...\n"
-    "   CHECK    | FSCK -p part -aA -ll --repair=           [wbfs_partition]...\n"
-    "   REPAIR          -p part -aA -ll --repair=           [wbfs_partition]...\n"
-    "   EDIT            -p part -a      --force             [sub_command]...\n"
-    "   PHANTOM         -p part -a                          [sub_command]...\n"
-    "   TRUNCATE | TR   -p part -aA                         [wbfs_partition]...\n"
+    "   FORMAT   | INIT -s size --sector-size= --recover -f  file|blockdev...\n"
+    "   CHECK    | FSCK -p part -aA -ll --repair=            [wbfs_partition]...\n"
+    "   REPAIR          -p part -aA -ll --repair=            [wbfs_partition]...\n"
+    "   EDIT            -p part -a      --force              [sub_command]...\n"
+    "   PHANTOM         -p part -a                           [sub_command]...\n"
+    "   TRUNCATE | TR   -p part -aA                          [wbfs_partition]...\n"
     "\n"
-    "   ADD      | A    -p part -aA -iRCou -r --psel --raw  iso|wbfs|dir...\n"
-    "   UPDATE   | U    -p part -aA -iRC   -r --psel --raw  iso|wbfs|dir...\n"
-    "   SYNC            -p part -aA -iRC   -r --psel --raw  iso|wbfs|dir...\n"
-    "   EXTRACT  | X    -p part -aA -iRCou -yY -UF -d* -WIB id6...\n"
-    "   REMOVE   | RM   -p part -aA -i         -U           id6...\n"
-    "   RENAME   | REN  -p part -aA -i -IB                  id6=[new][,title]...\n"
-    "   SETTITLE | ST   -p part -aA -i -IB                  id6=title...\n"
+    "   ADD      | A    -p part -aA -iRCou -r --psel --raw   iso|wbfs|dir...\n"
+    "   UPDATE   | U    -p part -aA -iRC   -r --psel --raw   iso|wbfs|dir...\n"
+    "   SYNC            -p part -aA -iRC   -r --psel --raw   iso|wbfs|dir...\n"
+    "   EXTRACT  | X    -p part -aA -iRCou -yY -UF -d* -WIB  id6...\n"
+    "   REMOVE   | RM   -p part -aA -i         -U            id6...\n"
+    "   RENAME   | REN  -p part -aA -i -IB                   id6=[new][,title]...\n"
+    "   SETTITLE | ST   -p part -aA -i -IB                   id6=title...\n"
     "\n"
-    "   FILETYPE | FT               -i     -l               filename...\n"
+    "   FILETYPE | FT               -i     -l                filename...\n"
     "\n";
 
 
@@ -564,23 +588,18 @@ void hint_exit ( enumError err )
 ///////////////////////////////////////////////////////////////////////////////
 
 // common commands of 'wwt' and 'wit'
+#define IS_WWT 1
 #include "wwt+wit-cmd.c"
 
 ///////////////////////////////////////////////////////////////////////////////
 
-#ifdef TEST
+enumError cmd_test()
+{
+ #if 1 || !defined(TEST) // test options
 
- enumError cmd_test()
- {
-  #if 0 // test options
+    return cmd_test_options();
 
-    printf("size:        %16llx = %lld\n",opt_size,opt_size);
-    printf("split-size:  %16llx = %lld\n",opt_split_size,opt_split_size);
-    printf("sector-size: %16x = %d\n",opt_sector_size,opt_sector_size);
-    printf("repair-mode: %16x\n",repair_mode);
-    printf("escape-char: %02x\n",escape_char);
-
-  #elif 0 && defined __CYGWIN__ // test AllocNormalizedFilename
+ #elif 0 && defined __CYGWIN__ // test AllocNormalizedFilename
 
     ParamList_t * param;
     for ( param = first_param; param; param = param->next )
@@ -589,8 +608,9 @@ void hint_exit ( enumError err )
 	printf("> %s\n",arg);
 	FreeString(arg);
     }
+    return ERR_OK;
 
-  #elif 1 // test SubstString
+ #elif 1 // test SubstString
 
     SubstString_t tab[] =
     {
@@ -608,8 +628,9 @@ void hint_exit ( enumError err )
 	SubstString(buf,sizeof(buf),tab,param->arg,&count);
 	printf("%s -> %s [%d]\n",param->arg,buf,count);
     }
+    return ERR_OK;
 
-  #else // test INT
+ #else // test INT
 
     int i, max = 5;
     for ( i=1; i <= max; i++ )
@@ -617,12 +638,10 @@ void hint_exit ( enumError err )
 	fprintf(stderr,"sleep 20 sec (%d/%d)\n",i,max);
 	sleep(20);
     }
-
-  #endif
     return ERR_OK;
- }
 
-#endif
+ #endif
+}
 
 //
 ///////////////////////////////////////////////////////////////////////////////
@@ -635,6 +654,7 @@ enumError cmd_find()
 
     if (n_param)
     {
+	opt_part++;
 	opt_all++;
 	ParamList_t * param;
 	for ( param = first_param; param; param = param->next )
@@ -705,6 +725,7 @@ enumError cmd_dump()
 
     if (n_param)
     {
+	opt_part++;
 	opt_all++;
 	ParamList_t * param;
 	for ( param = first_param; param; param = param->next )
@@ -741,6 +762,7 @@ enumError cmd_space()
 
     if (n_param)
     {
+	opt_part++;
 	opt_all++;
 	ParamList_t * param;
 	for ( param = first_param; param; param = param->next )
@@ -792,6 +814,7 @@ enumError cmd_id6()
 
     if (n_param)
     {
+	opt_part++;
 	opt_all++;
 	ParamList_t * param;
 	for ( param = first_param; param; param = param->next )
@@ -945,6 +968,7 @@ enumError cmd_list()
 
     if (n_param)
     {
+	opt_part++;
 	opt_all++;
 	ParamList_t * param;
 	for ( param = first_param; param; param = param->next )
@@ -962,6 +986,12 @@ enumError cmd_list()
 
     int gt_wbfs = 0, gt_disc = 0, gt_max_disc = 0, gt_used_mib = 0, gt_free_mib = 0;
 
+    PrintTime_t pt;
+    int opt_time = opt_print_time;
+    if ( long_count > 1 )
+	opt_time = EnablePrintTime(opt_time);
+    SetupPrintTime(&pt,opt_time);
+
     WBFS_t wbfs;
     InitializeWBFS(&wbfs);
     PartitionInfo_t * info;
@@ -975,7 +1005,7 @@ enumError cmd_list()
 	    SortWDiscList(wlist,sort_mode,SORT_TITLE,false);
 	    WDiscListItem_t * witem;
 
-	    int i, max_name_wd = 9;
+	    int i, max_name_wd = 0;
 	    char footer[200];
 	    int footer_len = 0;
 
@@ -1003,9 +1033,10 @@ enumError cmd_list()
 		if (print_header)
 		{
 		    int n1, n2;
-		    printf("\nID6     MiB Reg. %n%d/%d discs (%d GiB)%n\n",
-			    &n1, wlist->used, wbfs.total_discs,
-			    (wlist->total_size_mib+512)/1024, &n2 );
+		    putchar('\n');
+		    printf("ID6   %s  MiB Reg. %n%d/%d discs (%d GiB)%n\n",
+				pt.head, &n1, wlist->used, wbfs.total_discs,
+				(wlist->total_size_mib+512)/1024, &n2 );
 		    noTRACE("N1=%d N2=%d max_name_wd=%d\n",n1,n2,max_name_wd);
 		    max_name_wd += n1;
 		    if ( max_name_wd < n2 )
@@ -1016,18 +1047,20 @@ enumError cmd_list()
 		    printf("%.*s\n", max_name_wd, LongSep);
 		}
 		for ( i = wlist->used, witem = wlist->first_disc; i-- > 0; witem++ )
-		    printf("%s %4d %s %s\n",
-			    witem->id6, witem->size_mib, witem->region4,
-			    witem->title ? witem->title : witem->name64 );
+		    printf("%s%s %4d %s %s\n",
+				witem->id6, PrintTime(&pt,witem->xtime),
+				witem->size_mib, witem->region4,
+				witem->title ? witem->title : witem->name64 );
 	    }
 	    else
 	    {
 		if (print_header)
 		{
 		    int n1, n2;
-		    printf("\nID6     %n%d/%d discs (%d GiB)%n\n",
-			    &n1, wlist->used, wbfs.total_discs,
-			    (wlist->total_size_mib+512)/1024, &n2 );
+		    putchar('\n');
+		    printf("ID6   %s  %n%d/%d discs (%d GiB)%n\n",
+				pt.head, &n1, wlist->used, wbfs.total_discs,
+				(wlist->total_size_mib+512)/1024, &n2 );
 		    noTRACE("N1=%d N2=%d max_name_wd=%d\n",n1,n2,max_name_wd);
 		    max_name_wd += n1;
 		    if ( max_name_wd < n2 )
@@ -1039,7 +1072,7 @@ enumError cmd_list()
 		}
 
 		for ( i = wlist->used, witem = wlist->first_disc; i-- > 0; witem++ )
-		    printf("%s  %s\n",witem->id6,
+		    printf("%s%s  %s\n",witem->id6, PrintTime(&pt,witem->xtime),
 				witem->title ? witem->title : witem->name64 );
 	    }
 
@@ -1076,11 +1109,21 @@ enumError cmd_list_l()
 
 ///////////////////////////////////////////////////////////////////////////////
 
+enumError cmd_list_ll()
+{
+    used_options |= OB_LONG;
+    long_count += 2;
+    return cmd_list();
+}
+
+///////////////////////////////////////////////////////////////////////////////
+
 enumError cmd_list_a()
 {
     if (!opt_auto)
 	ScanPartitions(true);
-    long_count++;
+    used_options |= OB_LONG;
+    long_count += 2;
     return cmd_list();
 }
 
@@ -1088,9 +1131,9 @@ enumError cmd_list_a()
 
 enumError cmd_list_m()
 {
-    used_options |= OB_MIXED;
+    used_options |= OB_MIXED|OB_LONG;
     opt_all++;
-    long_count++;
+    long_count += 2;
     return cmd_list();
 }
 
@@ -1098,9 +1141,9 @@ enumError cmd_list_m()
 
 enumError cmd_list_u()
 {
-    used_options |= OB_UNIQUE;
+    used_options |= OB_UNIQUE|OB_LONG;
     opt_all++;
-    long_count++;
+    long_count += 2;
     return cmd_list();
 }
 
@@ -1319,6 +1362,7 @@ enumError cmd_check()
 
     if (n_param)
     {
+	opt_part++;
 	opt_all++;
 	ParamList_t * param;
 	for ( param = first_param; param; param = param->next )
@@ -1701,7 +1745,7 @@ enumError cmd_phantom()
 		wbfs_close_disc(d);
 	    }
 	}
-	
+
 	int wbfs_add_count = 0;
 	bool abort = false;
 	ParamList_t * param;
@@ -1714,7 +1758,7 @@ enumError cmd_phantom()
 		continue;
 
 	    u32 stat, n1 = 1, n2 = 1, s1, s2;
-	    
+
 	    arg = ScanRangeU32(arg,&stat,&s1,&s2,1,10000);
 	    if ( stat && *arg == 'x' )
 	    {
@@ -1818,6 +1862,7 @@ enumError cmd_truncate()
 
     if (n_param)
     {
+	opt_part++;
 	opt_all++;
 	ParamList_t * param;
 	for ( param = first_param; param; param = param->next )
@@ -1947,7 +1992,7 @@ enumError exec_add ( SuperFile_t * sf, Iterator_t * it )
     {
 	TRACE("WOULD ADD [%s] %s\n",sf->f.id6,sf->f.fname);
 	printf(" - WOULD ADD %*u/%u [%s] %s:%s\n",
-		strlen(iobuf), it->source_index+1, it->source_list.used,
+		(int)strlen(iobuf), it->source_index+1, it->source_list.used,
 		sf->f.id6, oft_name[sf->oft], sf->f.fname );
     }
     else
@@ -1955,7 +2000,7 @@ enumError exec_add ( SuperFile_t * sf, Iterator_t * it )
 	TRACE("ADD [%s] %s\n",sf->f.id6,sf->f.fname);
 	if ( verbose >= 0 || progress > 0 )
 	    printf(" - ADD %*u/%u [%s] %s:%s\n",
-			strlen(iobuf), it->source_index+1, it->source_list.used,
+			(int)strlen(iobuf), it->source_index+1, it->source_list.used,
 			sf->f.id6, oft_name[sf->oft], sf->f.fname );
 	fflush(stdout);
 
@@ -2011,7 +2056,7 @@ enumError cmd_add()
 	ResetIterator(&it);
 	return err;
     }
-    
+
     if ( used_options & OB_SYNC )
     {
 	it.func = exec_scan_id;
@@ -2059,7 +2104,7 @@ enumError cmd_add()
 	    disable_exclude_db++;
 	    WDiscList_t * wlist = GenerateWDiscList(&wbfs,0);
 	    disable_exclude_db--;
-	    
+
 	    WDiscListItem_t * ptr = wlist->first_disc;
 	    WDiscListItem_t * end = ptr + wlist->used;
 	    for ( ; ptr < end; ptr++ )
@@ -2298,12 +2343,22 @@ enumError cmd_extract()
 		    fo.show_summary	= verbose > 0 || progress > 0;
 		    fo.show_msec	= verbose > 2;
 
+		    struct stat mtime_st, *set_time = 0;
+		    const time_t mtime = wbfs_ntoh64(dhead->iinfo.mtime);
+		    if (mtime)
+		    {
+			memset(&mtime_st,0,sizeof(mtime_st));
+			mtime_st.st_atime = mtime;
+			mtime_st.st_mtime = mtime;
+			set_time = &mtime_st;
+		    }
+
 		    if (ExtractWDisc(&wbfs,&fo))
 		    {
 			RemoveSF(&fo);
 			ERROR0(ERR_WBFS,"Can't extract disc [%s] @%s\n",id6,info->path);
 		    }
-		    else if (!ResetSF(&fo,0))
+		    else if (!ResetSF(&fo,set_time))
 		    {
 			wbfs_extract_count++;
 			param->count++;
@@ -2784,7 +2839,7 @@ void SetOption ( int opt_idx, ccp name )
 {
     if ( opt_idx > 0 && opt_idx < OPT__N_SPECIFIC )
     {
-	used_options |= 1 << opt_idx;
+	used_options |= 1ull << opt_idx;
 	opt_name_tab[opt_idx] = name;
     }
 }
@@ -2908,6 +2963,32 @@ enumError CheckOptions ( int argc, char ** argv, int is_env )
 	    partition_selector = WHOLE_DISC;
 	    break;
 
+	  case GETOPT_ITIME:
+	    SetOption(OPT_ITIME,"itime");
+	    opt_print_time = SetPrintTimeMode(opt_print_time,PT_USE_ITIME|PT_ENABLED);
+	    break;
+
+	  case GETOPT_MTIME:
+	    SetOption(OPT_MTIME,"mtime");
+	    opt_print_time = SetPrintTimeMode(opt_print_time,PT_USE_MTIME|PT_ENABLED);
+	    break;
+
+	  case GETOPT_CTIME:
+	    SetOption(OPT_CTIME,"ctime");
+	    opt_print_time = SetPrintTimeMode(opt_print_time,PT_USE_CTIME|PT_ENABLED);
+	    break;
+
+	  case GETOPT_ATIME:
+	    SetOption(OPT_ATIME,"atime");
+	    opt_print_time = SetPrintTimeMode(opt_print_time,PT_USE_ATIME|PT_ENABLED);
+	    break;
+
+	  case GETOPT_TIME:
+	    SetOption(OPT_TIME,"time");
+	    if ( ScanAndSetPrintTimeMode(optarg) == PT__ERROR )
+		err++;
+	    break;
+
 	  case GETOPT_REPAIR:
 	    {
 		SetOption(OPT_REPAIR,"repair");
@@ -2998,7 +3079,7 @@ enumError check_command ( int argc, char ** argv )
 
     TRACE("COMMAND FOUND: #%d = %s\n",cmd_ct->id,cmd_ct->name1);
 
-    uint forbidden_mask = used_options & ~cmd_ct->mode;
+    option_t forbidden_mask = used_options & ~cmd_ct->opt;
     if ( forbidden_mask )
     {
 	int i;
@@ -3008,7 +3089,7 @@ enumError check_command ( int argc, char ** argv )
 				cmd_ct->name1, opt_name_tab[i] );
 	hint_exit(ERR_SEMANTIC);
     }
-    used_options |= env_options & cmd_ct->mode;
+    used_options |= env_options & cmd_ct->opt;
 
     argc -= optind+1;
     argv += optind+1;
@@ -3020,9 +3101,7 @@ enumError check_command ( int argc, char ** argv )
     switch(cmd_ct->id)
     {
 	case CMD_VERSION:	version_exit();
-    #ifdef TEST
 	case CMD_TEST:		err = cmd_test(); break;
-    #endif
 	case CMD_ERROR:		err = cmd_error(); break;
 	case CMD_EXCLUDE:	err = cmd_exclude(); break;
 	case CMD_TITLES:	err = cmd_titles(); break;
@@ -3034,6 +3113,7 @@ enumError check_command ( int argc, char ** argv )
 	case CMD_ID6:		err = cmd_id6(); break;
 	case CMD_LIST:		err = cmd_list(); break;
 	case CMD_LIST_L:	err = cmd_list_l(); break;
+	case CMD_LIST_LL:	err = cmd_list_ll(); break;
 	case CMD_LIST_A:	err = cmd_list_a(); break;
 	case CMD_LIST_M:	err = cmd_list_m(); break;
 	case CMD_LIST_U:	err = cmd_list_u(); break;
@@ -3077,8 +3157,6 @@ int main ( int argc, char ** argv )
     TRACE_SIZEOF(TDBfind_t);
     TRACE_SIZEOF(ID_DB_t);
     TRACE_SIZEOF(ID_t);
-
-    ASSERT( OPT__N_SPECIFIC <= 32 );
 
     //----- process arguments
 

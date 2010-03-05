@@ -8,6 +8,7 @@
 #include <sys/stat.h>
 #include <unistd.h>
 #include <stdio.h>
+#include <time.h>
 
 #include "types.h"
 #include "lib-error.h"
@@ -529,6 +530,63 @@ enumError ScanSizeOptU32
 
 //
 ///////////////////////////////////////////////////////////////////////////////
+///////////////                   time printing                 ///////////////
+///////////////////////////////////////////////////////////////////////////////
+
+enum enumPrintTime
+{
+	PT_USE_ITIME		= 1,
+	PT_USE_MTIME		= 2,
+	PT_USE_CTIME		= 3,
+	PT_USE_ATIME		= 4,
+	 PT__USE_MASK		= 7,
+
+	PT_PRINT_DATE		= 0x10,
+	PT_PRINT_TIME		= 0x20,
+	PT_PRINT_SEC		= 0x30,
+	 PT__PRINT_MASK		= 0x30,
+
+	PT_ENABLED		= 0x100,
+	PT_DISABLED		= 0x200,
+	 PT__ENABLED_MASK	= PT_ENABLED|PT_DISABLED,
+
+	PT__MASK		= PT__USE_MASK | PT__PRINT_MASK | PT__ENABLED_MASK,
+	PT__DEFAULT		= PT_USE_MTIME,
+
+	PT__ERROR		= -1
+};
+
+///////////////////////////////////////////////////////////////////////////////
+
+typedef struct PrintTime_t
+{
+	int wd;		// width of date column includig leading space
+	ccp head;	// text of table header includig leading space
+	ccp fill;	// 'wd' spaces, can be used as filler
+	ccp undef;	// text for undefined times
+	ccp format;	// format for strftime
+	char tbuf[24];	// the formatted time includig leading space
+
+} PrintTime_t;
+
+///////////////////////////////////////////////////////////////////////////////
+
+extern int opt_print_time;
+
+int ScanPrintTimeMode ( ccp argv, int prev_mode );
+int ScanAndSetPrintTimeMode ( ccp argv );
+int SetPrintTimeMode ( int prev_mode, int new_mode );
+int EnablePrintTime();
+
+void SetupPrintTime ( PrintTime_t * pt, int opt_time );
+char * PrintTime ( PrintTime_t * pt, time_t thetime );
+
+struct wbfs_inode_info_s;
+time_t SelectTimeOfInode ( struct wbfs_inode_info_s * iinfo, int opt_time );
+time_t SelectTimeOfStat  ( struct stat * st, int opt_time );
+
+//
+///////////////////////////////////////////////////////////////////////////////
 ///////////////              string fields & lists              ///////////////
 ///////////////////////////////////////////////////////////////////////////////
 
@@ -665,23 +723,27 @@ void PrintMemMap ( MemMap_t * mm, FILE * f, int indent );
 
 typedef enum SortMode
 {
-	SORT_NONE,	// == 0
+	SORT_NONE,		// == 0
 	SORT_ID,
 	SORT_NAME,
 	SORT_TITLE,
 	SORT_FILE,
 	SORT_SIZE,
+	SORT_DATE,
 	SORT_REGION,
 	SORT_WBFS,
 	SORT_NPART,
 	SORT_DEFAULT,
+	 SORT__MODE_MASK	= 0x0f,
 
-	SORT__ERROR = -1 // not a mode but an error message
+	SORT_REVERSE		= 0x10,
+	SORT__MASK		= SORT_REVERSE | SORT__MODE_MASK,
+
+	SORT__ERROR		= -1 // not a mode but an error message
 
 } SortMode;
 
 extern SortMode sort_mode;
-
 SortMode ScanSortMode ( ccp arg );
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -712,17 +774,23 @@ RepairMode ScanRepairMode ( ccp arg );
 
 #define COMMAND_MAX 100
 
+typedef u64 option_t;
+
 typedef struct CommandTab_t
 {
 	int  id;
 	ccp  name1;
 	ccp  name2;
-	uint mode;	// -> allowed_options;
+	option_t opt;	// -> allowed_options;
 
 } CommandTab_t;
 
+typedef int (*CommandCallbackFunc)
+		( ccp name, CommandTab_t * tab, CommandTab_t * cmd, int result );
+
 CommandTab_t * ScanCommand ( int * stat, ccp arg, CommandTab_t * tab );
-int ScanCommandList ( ccp arg, CommandTab_t * cmd_tab );
+int ScanCommandList ( ccp arg, CommandTab_t * cmd_tab, CommandCallbackFunc func );
+int ScanCommandListMask ( ccp arg, CommandTab_t * cmd_tab );
 
 ///////////////////////////////////////////////////////////////////////////////
 ///////////////                     vars                        ///////////////

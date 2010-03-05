@@ -78,7 +78,7 @@ void TRACE_ARG_FUNC ( const char * format, va_list arg );
     #define TRACE(...) TRACE_FUNC(__VA_ARGS__)
     #define TRACE_IF(cond,...) if (cond) TRACE_FUNC(__VA_ARGS__)
     #define TRACELINE TRACE("line #%d @ %s\n",__LINE__,__FILE__)
-    #define TRACE_SIZEOF(t) TRACE_FUNC("%6d == sizeof(%s)\n",sizeof(t),#t)
+    #define TRACE_SIZEOF(t) TRACE_FUNC("%6d == %5x/hex == sizeof(%s)\n",sizeof(t),sizeof(t),#t)
 
 #else
 

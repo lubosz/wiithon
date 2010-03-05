@@ -11,6 +11,7 @@
 #include <ctype.h>
 #include <errno.h>
 #include <dirent.h>
+#include <time.h>
 
 #include "libwbfs/wiidisc.h"
 
@@ -2201,6 +2202,7 @@ void CopyWDiscInfo ( WDiscListItem_t * item, WDiscInfo_t * dinfo )
     memcpy(item->region4,dinfo->region4,4);
     item->title  = dinfo->title;
     item->n_part = dinfo->n_part;
+    item->xtime  = SelectTimeOfInode(&dinfo->dhead.iinfo,opt_print_time);
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -2388,10 +2390,25 @@ enumError LoadPartitionInfo
 
 ///////////////////////////////////////////////////////////////////////////////
 
-enumError DumpWDiscInfo
-	( WDiscInfo_t * sf, WDiscHeader_t * ih, FILE * f, int indent )
+static void DumpTimestamp ( FILE * f, int indent, ccp head, u64 xtime )
 {
-    if ( !sf || !f )
+    time_t tim = wbfs_ntoh64(xtime);
+    if (tim)
+    {
+	struct tm * tm = localtime(&tim);
+	char timbuf[40];
+	strftime(timbuf,sizeof(timbuf),"%F %T",tm);
+	fprintf(f,"%*s%-12s%s\n", indent, "", head, timbuf );
+    }
+
+}
+
+//-----------------------------------------------------------------------------
+
+enumError DumpWDiscInfo
+	( WDiscInfo_t * di, WDiscHeader_t * ih, FILE * f, int indent )
+{
+    if ( !di || !f )
 	return ERROR0(ERR_INTERNAL,0);
 
     if ( indent < 0 )
@@ -2400,22 +2417,31 @@ enumError DumpWDiscInfo
 	indent = 100;
 
     fprintf(f,"%*swbfs name:  %6s, %.64s\n",
-		indent, "", (ccp)&sf->dhead.wii_disc_id, (ccp)sf->dhead.game_title );
+		indent, "", (ccp)&di->dhead.wii_disc_id, (ccp)di->dhead.game_title );
     if (ih)
 	fprintf(f,"%*siso name:   %6s, %.64s\n",
 		indent, "", (ccp)&ih->wii_disc_id, (ccp)ih->game_title );
-    if ( ih && strcmp((ccp)&sf->dhead.wii_disc_id,(ccp)&ih->wii_disc_id) )
+    if ( ih && strcmp((ccp)&di->dhead.wii_disc_id,(ccp)&ih->wii_disc_id) )
     {
-	if (sf->title)
-	    fprintf(f,"%*swbfs title: %s\n", indent, "", (ccp)sf->title );
+	if (di->title)
+	    fprintf(f,"%*swbfs title: %s\n", indent, "", (ccp)di->title );
 	ccp title = GetTitle((ccp)&ih->wii_disc_id,0);
 	if (title)
-	    fprintf(f,"%*siso title:  %s\n", indent, "", (ccp)sf->title );
+	    fprintf(f,"%*siso title:  %s\n", indent, "", (ccp)di->title );
     }
-    else if (sf->title)
-	fprintf(f,"%*stitle:      %s\n", indent, "", (ccp)sf->title );
-    fprintf(f,"%*sregion:     %s [%s]\n", indent, "", sf->region, sf->region4 );
-    fprintf(f,"%*ssize:       %lld MiB\n", indent, "", ( sf->size + MiB/2 ) / MiB );
+    else if (di->title)
+	fprintf(f,"%*stitle:      %s\n", indent, "", (ccp)di->title );
+    fprintf(f,"%*sregion:     %s [%s]\n", indent, "", di->region, di->region4 );
+    fprintf(f,"%*ssize:       %lld MiB\n", indent, "", ( di->size + MiB/2 ) / MiB );
+
+    DumpTimestamp(f,indent,"i-time:",di->dhead.iinfo.itime);
+    DumpTimestamp(f,indent,"m-time:",di->dhead.iinfo.mtime);
+    DumpTimestamp(f,indent,"c-time:",di->dhead.iinfo.ctime);
+    DumpTimestamp(f,indent,"a-time:",di->dhead.iinfo.atime);
+
+    u32 load_count = ntohl(di->dhead.iinfo.load_count);
+    if (load_count)
+	fprintf(f,"%*sload count: %u\n", indent, "", load_count );
 
     return ERR_OK;
 }
@@ -2643,6 +2669,17 @@ static int sort_by_size ( const void * va, const void * vb )
 
 //-----------------------------------------------------------------------------
 
+static int sort_by_date ( const void * va, const void * vb )
+{
+    const WDiscListItem_t * a = (const WDiscListItem_t *)va;
+    const WDiscListItem_t * b = (const WDiscListItem_t *)vb;
+
+    const int stat = a->xtime < b->xtime ? -1 : a->xtime > b->xtime;
+    return stat ? stat : sort_by_title(va,vb);
+}
+
+//-----------------------------------------------------------------------------
+
 static int sort_by_region ( const void * va, const void * vb )
 {
     const WDiscListItem_t * a = (const WDiscListItem_t *)va;
@@ -2676,6 +2713,24 @@ static int sort_by_npart ( const void * va, const void * vb )
 
 ///////////////////////////////////////////////////////////////////////////////
 
+void ReverseWDiscList ( WDiscList_t * wlist )
+{
+    if (! wlist || wlist->used < 2 )
+	return;
+
+    ASSERT(wlist->first_disc);
+
+    WDiscListItem_t *a, *b, temp;
+    for ( a = wlist->first_disc, b = a + wlist->used-1; a < b; a++, b-- )
+    {
+	memcpy( &temp, a,     sizeof(WDiscListItem_t) );
+	memcpy( a,     b,     sizeof(WDiscListItem_t) );
+	memcpy( b,     &temp, sizeof(WDiscListItem_t) );
+    }
+}
+
+///////////////////////////////////////////////////////////////////////////////
+
 void SortWDiscList ( WDiscList_t * wlist,
 	SortMode sort_mode, SortMode default_sort_mode, int unique )
 {
@@ -2685,11 +2740,11 @@ void SortWDiscList ( WDiscList_t * wlist,
     TRACE("SortWDiscList(%p, s=%d,%d, u=%d) prev=%d\n",
 		wlist, sort_mode, default_sort_mode, unique, wlist->sort_mode );
 
-    if ( (uint)sort_mode >= SORT_DEFAULT )
+    if ( (uint)(sort_mode&SORT__MODE_MASK) >= SORT_DEFAULT )
     {
-	sort_mode = default_sort_mode;
-	if ( (uint)sort_mode >= SORT_DEFAULT )
-	    sort_mode = wlist->sort_mode;
+	sort_mode = (uint)default_sort_mode >= SORT_DEFAULT
+			? wlist->sort_mode
+			: default_sort_mode | sort_mode & SORT_REVERSE;
     }
 
     if ( wlist->used < 2 )
@@ -2700,14 +2755,15 @@ void SortWDiscList ( WDiscList_t * wlist,
 
     compare_func func = 0;
     SortMode umode = SORT_ID;
-    switch(sort_mode)
+    switch( sort_mode & SORT__MODE_MASK )
     {
 	case SORT_ID:		func = sort_by_id; break;
-	case SORT_NAME:		func = sort_by_name;   umode = SORT_NAME; break;
-	case SORT_TITLE:	func = sort_by_title;  umode = SORT_TITLE; break;
+	case SORT_NAME:		func = sort_by_name;	umode = SORT_NAME; break;
+	case SORT_TITLE:	func = sort_by_title;	umode = SORT_TITLE; break;
 	case SORT_FILE:		func = sort_by_file; break;
-	case SORT_SIZE:		func = sort_by_size;   umode = SORT_SIZE; break;
-	case SORT_REGION:	func = sort_by_region; umode = SORT_REGION; break;
+	case SORT_SIZE:		func = sort_by_size;	umode = SORT_SIZE; break;
+	case SORT_DATE:		func = sort_by_date; break;
+	case SORT_REGION:	func = sort_by_region;	umode = SORT_REGION; break;
 	case SORT_WBFS:		func = sort_by_wbfs; break;
 	case SORT_NPART:	func = sort_by_npart; break;
 	default:		break;
@@ -2745,6 +2801,8 @@ void SortWDiscList ( WDiscList_t * wlist,
     {
 	wlist->sort_mode = sort_mode;
 	qsort(wlist->first_disc,wlist->used,sizeof(*wlist->first_disc),func);
+	if ( sort_mode & SORT_REVERSE )
+	    ReverseWDiscList(wlist);
     }
 }
 
@@ -2852,12 +2910,17 @@ enumError AddWDisc ( WBFS_t * w, SuperFile_t * sf, partition_selector_t psel )
     const enumError saved_max_error = max_error;
     max_error = 0;
 
+    wbfs_param_t par;
+    memset(&par,0,sizeof(par));
+    par.read_src_wii_disc	= WrapperReadSF;
+    par.callback_data		= sf;
+    par.spinner			= sf->show_progress ? PrintProgressSF : 0;
+    par.sel			= psel;
+    par.copy_1_1		= psel == WHOLE_DISC;
+    par.iinfo.mtime		= wbfs_hton64(sf->f.st.st_mtime);
+
     enumError err = ERR_OK;
-    if ( wbfs_add_disc(w->wbfs,
-		    WrapperReadSF,
-		    sf,
-		    sf->show_progress ? PrintProgressSF : 0,
-		    psel, psel == WHOLE_DISC ))
+    if (wbfs_add_disc_param(w->wbfs,&par))
     {
 	err = ERR_WBFS;
 	if (!w->sf->f.disable_errors)
@@ -2939,6 +3002,9 @@ enumError ExtractWDisc ( WBFS_t * w, SuperFile_t * sf )
 
     if (!err)
     {
+	if ( w->sf && w->sf->f.is_writing )
+	    wbfs_sync_disc_header(w->disc);
+
 	err = max_error;
 	if ( !err && ex_stat )
 	{

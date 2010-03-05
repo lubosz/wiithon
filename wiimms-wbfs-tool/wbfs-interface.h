@@ -124,8 +124,9 @@ typedef struct WDiscHeader_t
 	u8  unused2[4];
 
 	u8  game_title[64];
+	u8  padding[0x20];
 
-	u8  padding[0xa0];	// fill up to 0x100 bytes
+	wbfs_inode_info_t iinfo;    // start at offset 0x80
 
 } __attribute__ ((packed)) WDiscHeader_t;
 
@@ -224,6 +225,7 @@ typedef struct WDiscListItem_t
 	u16  part_index;	// wbfs partition index | 0=ISO, 1=WDF
 	u16  n_part;		// number of partitions
 	ccp  fname;		// filename, alloced
+	time_t xtime;		// *time of source
 
 } WDiscListItem_t;
 
@@ -390,8 +392,9 @@ void FreeWDiscList ( WDiscList_t * wlist );
 WDiscListItem_t *  AppendWDiscList ( WDiscList_t * wlist, WDiscInfo_t * winfo );
 void CopyWDiscInfo ( WDiscListItem_t * item, WDiscInfo_t * winfo );
 
-void SortWDiscList   ( WDiscList_t * wlist, enum SortMode sort_mode,
-			enum SortMode default_sort_mode, int unique );
+void ReverseWDiscList	( WDiscList_t * wlist );
+void SortWDiscList	( WDiscList_t * wlist, enum SortMode sort_mode,
+			  enum SortMode default_sort_mode, int unique );
 
 extern ccp RegionTable[];
 ccp * GetRegionInfo ( char region_code );
@@ -453,7 +456,7 @@ typedef struct Iterator_t
 	enumAction act_open;		// action for open output files
 
 	// source file list
-	
+
 	StringField_t source_list;	// collect first than run
 	int source_index;		// informative: index of current file
 

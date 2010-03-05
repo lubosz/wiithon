@@ -600,7 +600,7 @@ COMMAND: FORMAT|INIT   filename...
        --recover        Format a WBFS in recover mode (see text).
 
     -f --force          Needed for leaving test mode and for formatting!
-      
+
     -q --quiet          Be quiet.
     -v --verbose        Be verbose.
     -t --test           Run in test mode, modify nothing.
@@ -668,7 +668,7 @@ COMMAND: ID6|ID   [wbfs_partition]...
     -a --auto          Search for WBFS partitions using /proc/partitions.
     -p --part  part    File of primary WBFS partition. Multiple usage allowed.
     -l --long          Print in long format. Multiple usage possible.
-    -S --sort          Sort by: id title name file region size wbfs npart ...
+    -S --sort  list    Sort by: id|title|name|date|file|region|size|...|asc|desc
     -U --unique        Print only the first disc of all with same values.
     -n --include id    Include oly discs with given ID4 or ID6 from operation.
     -n --include @file Read include list from file.
@@ -719,10 +719,15 @@ COMMAND: LIST|LS   [wbfs_partition]...
     -a --auto          Search for WBFS partitions using /proc/partitions.
     -p --part  part    File of primary WBFS partition. Multiple usage allowed.
     -l --long          Print in long format. Multiple usage possible.
+       --itime         Abbreviation of --time=i. Use 'itime' (insertion time).\n"
+       --mtime         Abbreviation of --time=m. Use 'mtime' (last modification time).\n"
+       --ctime         Abbreviation of --time=c. Use 'ctime' (last status change time).\n"
+       --atime         Abbreviation of --time=a. Use 'atime' (last access time).\n"
+       --time  list    Set time modes (off,i,m,c,a,date,time,min,sec,...).\n"
     -M --mixed         Print disc infos of all WBFS in mixed mode.
     -U --unique        Print only the first disc if all with with same ID6.
     -H --no-header     Suppress printing of header and footer.
-    -S --sort          Sort by: id title name file region size wbfs npart ...
+    -S --sort  list    Sort by: id|title|name|date|file|region|size|...|asc|desc
     -T --titles file   Read file for disc titles. -T0 disables titles lookup.
     -n --include id    Include oly discs with given ID4 or ID6 from operation.
     -n --include @file Read include list from file.
@@ -748,14 +753,37 @@ COMMAND: LIST|LS   [wbfs_partition]...
  size, region and the name are printed.  The option --no-header suppress the
  output of header and footer.
 
+ Printing of timestamps is enabled by the options --time, --itime, --mtime
+ --ctime, --atime or when --long is set at least twice. --time=off disables
+ time printing. All time options (not --long) supersede the previous options.
+ The option --time take a comma separated list of the following keywords:
+
+    OFF   : Disable time printing. All other option enable time printing.
+    ON    : Enable time printing.
+
+    I     : Use itime (insertion time) for processing.
+    M     : Use mtime (last modicifaction time) for processing. (default)
+    C     : Use ctime (last staus change time) for processing.
+    A     : Use atime (last access time) for processing.
+
+    DATE  : Print time in format 'YYYY-MM-DD'. (default)
+    TIME  : Print time in format 'YYYY-MM-DD HH:MM'.
+    MIN   : Alternative keyword for 'TIME'.
+    SEC   : Print time in format 'YYYY-MM-DD HH:MM:SS'.
+
+    *DATE : Short cut for '*,DATE'. '*' is one of 'I', 'M', 'C' or 'A'.
+    *TIME : Short cut for '*,TIME'. '*' is one of 'I', 'M', 'C' or 'A'.
+    *MIN  : Alternative keywords for '*TIME'.
+    *SEC  : Short cut for '*,SEC'.  '*' is one of 'I', 'M', 'C' or 'A'.
+
  With --mixed all discs of all partitions were mixed together. If --uniqe is
  set each game disc identified by ID6 is only printet once. The --mixed option
  implies the --all option. The --unique option implies the --mixed and the
  --all options.
 
- If the option --long is given twice or more in the --mixed mode then a WBFS
- table is printed at the top with a WBFS-Index ('WI') and the filename. The
- game table contains an additional column with this WBFS-Index.
+ If the option --long is set three or more time together with --mixed then a
+ WBFS table is printed at the top with a WBFS-Index ('WI') and the filename.
+ The game table contains an additional column with this WBFS-Index.
 
  The sort order can be set by the --sort option. Sort=none means, that the ID
  will be shown in order of the WBFS partition. The default sort order is
@@ -777,15 +805,17 @@ COMMAND: LIST|LS   [wbfs_partition]...
 -------------------------------------------------------------------------------
 
 COMMANDS:
-    LIST-L|LL   [wbfs_partition]...
-    LIST-A|LA   [wbfs_partition]...
-    LIST-M|LM   [wbfs_partition]...
-    LIST-U|LU   [wbfs_partition]...
+    LIST-L   | LL    [wbfs_partition]...
+    LIST-LL  | LLL   [wbfs_partition]...
+    LIST-A   | LA    [wbfs_partition]...
+    LIST-M   | LM    [wbfs_partition]...
+    LIST-U   | LU    [wbfs_partition]...
 
- 'LIST-L' is a synonym for 'LIST --long'.
- 'LIST-A' is a synonym for 'LIST --auto --all --long'.
- 'LIST-M' is a synonym for 'LIST --mixed --all --long'.
- 'LIST-U' is a synonym for 'LIST --unique --all --long'.
+ 'LIST-L'   is a synonym for 'LIST --long'.
+ 'LIST-LL'  is a synonym for 'LIST --long --long'.
+ 'LIST-A'   is a synonym for 'LIST --long --long --all --auto'.
+ 'LIST-M'   is a synonym for 'LIST --long --long --all --mixed'.
+ 'LIST-U'   is a synonym for 'LIST --long --long --all --unique'.
  See command 'LIST' for options and details.
 
 
@@ -1001,7 +1031,7 @@ COMMAND: RENAME|REN  id6=[new_id6][,title] ...
 
  The alternative command 'SETTITLE' modifies only titles. The advantage of
  'SETTITLE' is, that it can modify all titles with 1 sub command.
- 
+
  The syntax of a sub comand is: id6=[new_id6][,new_title]
     'id6' is the ID of the disc to change.
     The optional 'new_id6' is the new ID of the disc.
@@ -1082,7 +1112,7 @@ COMMAND: SETTITLE|ST   id6=new_title ...
  (the default).
 
  The alternative command 'RENAME' can also change the ID of discs.
- 
+
  The syntax of a sub comand is: id6=new_title
     'id6' is the ID of the disc to change. If using '+' all discs are changed.
     The 'new_title' is the new title of the disc.

@@ -903,27 +903,27 @@ msgstr "%d joko disko-arterik gabe"
 msgid "Hay %d tareas"
 msgstr "%d zeregin daude"
 
-#: preferencias.py:64 preferencias.py:106
+#: preferencias.py:64 preferencias.py:107
 msgid "English"
 msgstr "Ingelesa"
 
-#: preferencias.py:65 preferencias.py:110
+#: preferencias.py:65 preferencias.py:111
 msgid "Spanish"
 msgstr "Gaztelera"
 
-#: preferencias.py:66 preferencias.py:111
+#: preferencias.py:66 preferencias.py:112
 msgid "Italian"
 msgstr "Italiera"
 
-#: preferencias.py:67 preferencias.py:108
+#: preferencias.py:67 preferencias.py:109
 msgid "French"
 msgstr "Frantsesa"
 
-#: preferencias.py:68 preferencias.py:109
+#: preferencias.py:68 preferencias.py:110
 msgid "German"
 msgstr "Alemaniera"
 
-#: preferencias.py:69 preferencias.py:112
+#: preferencias.py:69 preferencias.py:113
 msgid "Dutch"
 msgstr "Nederlandera"
 
@@ -935,7 +935,7 @@ msgstr "Katalana"
 msgid "Brazilian Portuguese"
 msgstr "Brasildar Portugesa"
 
-#: preferencias.py:72 preferencias.py:113
+#: preferencias.py:72 preferencias.py:114
 msgid "Portuguese"
 msgstr "Portugesa"
 
@@ -951,194 +951,199 @@ msgstr "Galiziera"
 msgid "Euskera"
 msgstr "Euskara"
 
-#: preferencias.py:77
+#: preferencias.py:76
+#, fuzzy
+msgid "Danish"
+msgstr "Gaztelera"
+
+#: preferencias.py:78
 msgid "Idioma de wiithon"
 msgstr "Wiithon hizkuntza"
 
-#: preferencias.py:78
+#: preferencias.py:79
 msgid "Ruta para extraer ficheros .rar. Para descomprimir junto al .rar escriba ."
 msgstr ".rar fitxategiak ateratzeko bidea. .rar fitxategiaren ondoan ateratzeko . idatzi"
 
-#: preferencias.py:79
+#: preferencias.py:80
 msgid "Num. Hilos para tareas de fondo"
 msgstr "Atzealdeko zereginen hari kopurua"
 
-#: preferencias.py:80
+#: preferencias.py:81
 msgid "Comando para abrir carpetas"
 msgstr "Karpetak irekitzeko komandoa"
 
-#: preferencias.py:81
+#: preferencias.py:82
 msgid "Comando para abrir paginas Web"
 msgstr "Web orrialdeak irekitzeko komandoa"
 
-#: preferencias.py:82
+#: preferencias.py:83
 msgid "Mostrar una advertencia cuando no hay ninguna informacion WiiTDB"
 msgstr "Ohar bat bistarazi WiiTDB argibiderik ez dagoenean"
 
-#: preferencias.py:83
+#: preferencias.py:84
 msgid "Mostrar una advertencia cuando no hay particiones WBFS"
 msgstr "Ohar bat bistarazi WBFS partiziorik ez dagoenean"
 
-#: preferencias.py:84
+#: preferencias.py:85
 msgid "Iniciar maximizado"
 msgstr "Handitua abiarazi"
 
-#: preferencias.py:85
+#: preferencias.py:86
 msgid "Permitir establecer caratulas locales por arrastre"
 msgstr "Onartu karatula lokalak arrastatzen ezartzea"
 
-#: preferencias.py:86
+#: preferencias.py:87
 msgid "Permitir establecer caratulas desde http por arrastre"
 msgstr "Onartu http karatulak arrastatzen ezartzea"
 
-#: preferencias.py:87
+#: preferencias.py:88
 msgid "Permitir arrastrar juegos en ISO, RAR o directorios."
 msgstr "Onartu ISO jokoak, RAR edo direktorioak arrastatzea."
 
-#: preferencias.py:88
+#: preferencias.py:89
 msgid "Los isos descomprimidos desde el rar remplaza imagenes iso sin preguntar."
 msgstr "rar-etik ateratako iso-ek galdetu gabe ordezten dituzte iso fitxategiak."
 
-#: preferencias.py:89
+#: preferencias.py:90
 msgid "Pregunta borrar el .iso (cuando aniamos un rar)"
 msgstr "Galdetu .iso-a ezabatzea (rar bat gehitzean)"
 
-#: preferencias.py:90
+#: preferencias.py:91
 msgid "Pregunta borrar el .rar (cuando aniamos un rar)"
 msgstr "Galdetu .rar-a ezabatzea (rar bat gehitzean)"
 
-#: preferencias.py:91
+#: preferencias.py:92
 msgid "Proponer un nombre de wiitdb tras anadir el juego"
 msgstr "WiiTDB izen bat proposatu jokoa gehitu ondoren"
 
-#: preferencias.py:92
+#: preferencias.py:93
 msgid "Caratula"
 msgstr "Karatula"
 
-#: preferencias.py:93
+#: preferencias.py:94
 msgid "Disc-art"
 msgstr "Disko-artea"
 
-#: preferencias.py:94
+#: preferencias.py:95
 msgid "Destino del arrastre de una imagen"
 msgstr "Irudi baten arrastatze helburua"
 
-#: preferencias.py:96
+#: preferencias.py:97
 msgid "Formato ISO - para Grabacion DVD"
 msgstr "ISO formatua - DVD grabaketarako"
 
-#: preferencias.py:97
+#: preferencias.py:98
 msgid "Formato WBFS - para USBLoader-FAT32"
 msgstr "WBFS formatua - USBLoader-FAT32"
 
-#: preferencias.py:98
+#: preferencias.py:99
 msgid "Formato WDF - para Almacenamiento"
 msgstr "WDF formatua - Biltegiratzeko"
 
-#: preferencias.py:100
+#: preferencias.py:101
 msgid "Formato de extraccion"
 msgstr "Ateratze formatua"
 
-#: preferencias.py:103
+#: preferencias.py:104
 msgid "URL Base de datos WiiTDB"
 msgstr "WiiTDB datu-basearen URLa"
 
-#: preferencias.py:104
+#: preferencias.py:105
 msgid "Formato fecha"
 msgstr "Data formatua"
 
-#: preferencias.py:105
+#: preferencias.py:106
 msgid "Formato fecha corto"
 msgstr "Data formatu laburra"
 
-#: preferencias.py:107
+#: preferencias.py:108
 msgid "Japanese"
 msgstr "Japoniera"
 
-#: preferencias.py:114
+#: preferencias.py:115
 msgid "Chinese-Taiwan"
 msgstr "Txinera (Taiwan)"
 
-#: preferencias.py:115
+#: preferencias.py:116
 msgid "Chinese"
 msgstr "Txinera"
 
-#: preferencias.py:116
+#: preferencias.py:117
 msgid "Korean"
 msgstr "Koreera"
 
-#: preferencias.py:125
+#: preferencias.py:126
 msgid "Idioma principal para el synopsis"
 msgstr "Laburpenerako hizkuntza nagusia"
 
-#: preferencias.py:126
+#: preferencias.py:127
 msgid "Idioma auxiliar para el synopsis"
 msgstr "Laburpenerako bigarren hizkuntza"
 
-#: preferencias.py:127
+#: preferencias.py:128
 msgid "Usuario (para editar informacion en wiitdb.com)"
 msgstr "Erabiltzailea (wiitdb.com-eko informazioa aldatzeko)"
 
-#: preferencias.py:128
+#: preferencias.py:129
 msgid "Password (para editar informacion en wiitdb.com)"
 msgstr "Pasahitza (wiitdb.com-eko informazioa aldatzeko)"
 
-#: preferencias.py:131
+#: preferencias.py:132
 msgid "Ancho imagen caratula"
 msgstr "Karatula irudi zabalera"
 
-#: preferencias.py:132
+#: preferencias.py:133
 msgid "Altura imagen caratula"
 msgstr "Karatula irudi altuera"
 
-#: preferencias.py:133
+#: preferencias.py:134
 msgid "Ancho imagen disc-art"
 msgstr "Disko-arte irudi zabalera"
 
-#: preferencias.py:134
+#: preferencias.py:135
 msgid "Altura imagen disc-art"
 msgstr "Disko-arte irudi altuera"
 
-#: preferencias.py:201
+#: preferencias.py:202
 msgid "Proveedor de caratulas"
 msgstr "Karatula hornitzailea"
 
-#: preferencias.py:232
+#: preferencias.py:233
 msgid "Proveedor de discos"
 msgstr "Disko hornitzailea"
 
-#: preferencias.py:235
+#: preferencias.py:236
 #, python-format
 msgid "URL de busqueda en Google. (%s es el nombre del juego)"
 msgstr "Google bilaketa URLa. (%s jokoaren izena da)"
 
-#: preferencias.py:236
+#: preferencias.py:237
 #, python-format
 msgid "URL de busqueda en Wikipedia. (%s es el nombre del juego)"
 msgstr "Wikipedia bilaketa URLa. (%s jokoaren izena da)"
 
-#: preferencias.py:237
+#: preferencias.py:238
 #, python-format
 msgid "URL de busqueda en Youtube. (%s es el nombre del juego)"
 msgstr "Youtube bilaketa URLa. (%s jokoaren izena da)"
 
-#: preferencias.py:238
+#: preferencias.py:239
 #, python-format
 msgid "URL de busqueda en IGN. (%s es el nombre del juego)"
 msgstr "IGN bilaketa URLa. (%s jokoaren izena da)"
 
-#: preferencias.py:239
+#: preferencias.py:240
 #, python-format
 msgid "URL de busqueda en GameSpot. (%s es el nombre del juego)"
 msgstr "Gamespot bilaketa URLa. (%s jokoaren izena da)"
 
-#: preferencias.py:240
+#: preferencias.py:241
 #, python-format
 msgid "URL de busqueda en VGChartz. (%s es el nombre del juego)"
 msgstr "VGChartz bilaketa URLa. (%s jokoaren izena da)"
 
-#: preferencias.py:283 preferencias.py:319 preferencias.py:337
-#: preferencias.py:359
+#: preferencias.py:284 preferencias.py:320 preferencias.py:338
+#: preferencias.py:360
 msgid "Por defecto"
 msgstr "Lehenetsia"
 

@@ -908,27 +908,27 @@ msgstr "%d spel saknar skivetiketer"
 msgid "Hay %d tareas"
 msgstr "Det pågår %d aktiviteter"
 
-#: preferencias.py:64 preferencias.py:106
+#: preferencias.py:64 preferencias.py:107
 msgid "English"
 msgstr "Engelska"
 
-#: preferencias.py:65 preferencias.py:110
+#: preferencias.py:65 preferencias.py:111
 msgid "Spanish"
 msgstr "Spanska"
 
-#: preferencias.py:66 preferencias.py:111
+#: preferencias.py:66 preferencias.py:112
 msgid "Italian"
 msgstr "Italienska"
 
-#: preferencias.py:67 preferencias.py:108
+#: preferencias.py:67 preferencias.py:109
 msgid "French"
 msgstr "Franska"
 
-#: preferencias.py:68 preferencias.py:109
+#: preferencias.py:68 preferencias.py:110
 msgid "German"
 msgstr "Tyska"
 
-#: preferencias.py:69 preferencias.py:112
+#: preferencias.py:69 preferencias.py:113
 msgid "Dutch"
 msgstr "Hollänska"
 
@@ -942,7 +942,7 @@ msgstr "Italienska"
 msgid "Brazilian Portuguese"
 msgstr "Portugisiska"
 
-#: preferencias.py:72 preferencias.py:113
+#: preferencias.py:72 preferencias.py:114
 msgid "Portuguese"
 msgstr "Portugisiska"
 
@@ -959,201 +959,206 @@ msgstr "Italienska"
 msgid "Euskera"
 msgstr ""
 
-#: preferencias.py:77
+#: preferencias.py:76
+#, fuzzy
+msgid "Danish"
+msgstr "Spanska"
+
+#: preferencias.py:78
 #, fuzzy
 msgid "Idioma de wiithon"
 msgstr "Information om Wiithon"
 
-#: preferencias.py:78
+#: preferencias.py:79
 msgid "Ruta para extraer ficheros .rar. Para descomprimir junto al .rar escriba ."
 msgstr "Sökvägen för uppackning av \".rar\". (samma som .rar \".\")"
 
-#: preferencias.py:79
+#: preferencias.py:80
 msgid "Num. Hilos para tareas de fondo"
 msgstr "Antal trådar för  aktiviteter som pågår i bakgrunden"
 
-#: preferencias.py:80
+#: preferencias.py:81
 msgid "Comando para abrir carpetas"
 msgstr "Kommando för att öppna mappar"
 
-#: preferencias.py:81
+#: preferencias.py:82
 #, fuzzy
 msgid "Comando para abrir paginas Web"
 msgstr "Kommando för att öppna mappar"
 
-#: preferencias.py:82
+#: preferencias.py:83
 msgid "Mostrar una advertencia cuando no hay ninguna informacion WiiTDB"
 msgstr "Visa meddelande när det inte finns någon information ifrån WiiTDB"
 
-#: preferencias.py:83
+#: preferencias.py:84
 msgid "Mostrar una advertencia cuando no hay particiones WBFS"
 msgstr "Visa varning när det inte finns någon WBFS-partition"
 
-#: preferencias.py:84
+#: preferencias.py:85
 msgid "Iniciar maximizado"
 msgstr ""
 
-#: preferencias.py:85
+#: preferencias.py:86
 msgid "Permitir establecer caratulas locales por arrastre"
 msgstr "Tillåt lokal Drag&Släpp"
 
-#: preferencias.py:86
+#: preferencias.py:87
 msgid "Permitir establecer caratulas desde http por arrastre"
 msgstr "Tillåt http Drag&Släpp"
 
-#: preferencias.py:87
+#: preferencias.py:88
 msgid "Permitir arrastrar juegos en ISO, RAR o directorios."
 msgstr "Tillåt Drag&Släpp av spel (ISO/RAR/mappar) i fönstret"
 
-#: preferencias.py:88
+#: preferencias.py:89
 msgid "Los isos descomprimidos desde el rar remplaza imagenes iso sin preguntar."
 msgstr "Skriv över filer utan att fråga i samband med uppackning av RAR-arkiv"
 
-#: preferencias.py:89
+#: preferencias.py:90
 msgid "Pregunta borrar el .iso (cuando aniamos un rar)"
 msgstr "Fråga om borttagning av .iso (efter du har lagt till .rar)"
 
-#: preferencias.py:90
+#: preferencias.py:91
 msgid "Pregunta borrar el .rar (cuando aniamos un rar)"
 msgstr "Fråga om borttagning av .rar (efter du har lagt till .rar)"
 
-#: preferencias.py:91
+#: preferencias.py:92
 msgid "Proponer un nombre de wiitdb tras anadir el juego"
 msgstr "Tillåt WiiTDB att förslå ett namn (efter att spelet har lagts till)"
 
-#: preferencias.py:92
+#: preferencias.py:93
 msgid "Caratula"
 msgstr "Omslag"
 
-#: preferencias.py:93
+#: preferencias.py:94
 msgid "Disc-art"
 msgstr "Skivetiket"
 
-#: preferencias.py:94
+#: preferencias.py:95
 msgid "Destino del arrastre de una imagen"
 msgstr "Destination för Drag&Släpp"
 
-#: preferencias.py:96
+#: preferencias.py:97
 msgid "Formato ISO - para Grabacion DVD"
 msgstr ""
 
-#: preferencias.py:97
+#: preferencias.py:98
 msgid "Formato WBFS - para USBLoader-FAT32"
 msgstr ""
 
-#: preferencias.py:98
+#: preferencias.py:99
 msgid "Formato WDF - para Almacenamiento"
 msgstr ""
 
-#: preferencias.py:100
+#: preferencias.py:101
 #, fuzzy
 msgid "Formato de extraccion"
 msgstr "Kort datumformat"
 
-#: preferencias.py:103
+#: preferencias.py:104
 msgid "URL Base de datos WiiTDB"
 msgstr "URL till WiiTDB databasen"
 
-#: preferencias.py:104
+#: preferencias.py:105
 msgid "Formato fecha"
 msgstr "Datumformat"
 
-#: preferencias.py:105
+#: preferencias.py:106
 msgid "Formato fecha corto"
 msgstr "Kort datumformat"
 
-#: preferencias.py:107
+#: preferencias.py:108
 msgid "Japanese"
 msgstr "Japanska"
 
-#: preferencias.py:114
+#: preferencias.py:115
 msgid "Chinese-Taiwan"
 msgstr "Kinesiskt-Taiwan"
 
-#: preferencias.py:115
+#: preferencias.py:116
 msgid "Chinese"
 msgstr "Kinesiskt"
 
-#: preferencias.py:116
+#: preferencias.py:117
 msgid "Korean"
 msgstr "Koreanska"
 
 # Spelinformation kändes som bästa översättningen av synopsis i detta fall.
 # //MJ
-#: preferencias.py:125
+#: preferencias.py:126
 msgid "Idioma principal para el synopsis"
 msgstr "1:a handsval för spelinformation"
 
 # Spelinformation kändes som bästa översättningen av synopsis i detta fall.
 # //MJ
-#: preferencias.py:126
+#: preferencias.py:127
 msgid "Idioma auxiliar para el synopsis"
 msgstr "2:a handsval för spelinformation"
 
-#: preferencias.py:127
+#: preferencias.py:128
 msgid "Usuario (para editar informacion en wiitdb.com)"
 msgstr ""
 
-#: preferencias.py:128
+#: preferencias.py:129
 msgid "Password (para editar informacion en wiitdb.com)"
 msgstr ""
 
-#: preferencias.py:131
+#: preferencias.py:132
 msgid "Ancho imagen caratula"
 msgstr "Omslagbild bredd"
 
-#: preferencias.py:132
+#: preferencias.py:133
 msgid "Altura imagen caratula"
 msgstr "Omslagsbild höjd"
 
-#: preferencias.py:133
+#: preferencias.py:134
 msgid "Ancho imagen disc-art"
 msgstr "Skivetiket bredd"
 
-#: preferencias.py:134
+#: preferencias.py:135
 msgid "Altura imagen disc-art"
 msgstr "Skivetiket höjd"
 
-#: preferencias.py:201
+#: preferencias.py:202
 msgid "Proveedor de caratulas"
 msgstr "Ladda ner omslag ifrån följande källor"
 
-#: preferencias.py:232
+#: preferencias.py:233
 msgid "Proveedor de discos"
 msgstr "Ladda ner skivetiketer ifrån följande källor"
 
-#: preferencias.py:235
+#: preferencias.py:236
 #, python-format
 msgid "URL de busqueda en Google. (%s es el nombre del juego)"
 msgstr ""
 
-#: preferencias.py:236
+#: preferencias.py:237
 #, python-format
 msgid "URL de busqueda en Wikipedia. (%s es el nombre del juego)"
 msgstr ""
 
-#: preferencias.py:237
+#: preferencias.py:238
 #, python-format
 msgid "URL de busqueda en Youtube. (%s es el nombre del juego)"
 msgstr ""
 
-#: preferencias.py:238
+#: preferencias.py:239
 #, python-format
 msgid "URL de busqueda en IGN. (%s es el nombre del juego)"
 msgstr ""
 
-#: preferencias.py:239
+#: preferencias.py:240
 #, python-format
 msgid "URL de busqueda en GameSpot. (%s es el nombre del juego)"
 msgstr ""
 
-#: preferencias.py:240
+#: preferencias.py:241
 #, python-format
 msgid "URL de busqueda en VGChartz. (%s es el nombre del juego)"
 msgstr ""
 
-#: preferencias.py:283 preferencias.py:319 preferencias.py:337
-#: preferencias.py:359
+#: preferencias.py:284 preferencias.py:320 preferencias.py:338
+#: preferencias.py:360
 msgid "Por defecto"
 msgstr "Återställ"
 

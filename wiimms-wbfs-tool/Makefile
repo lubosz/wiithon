@@ -9,7 +9,7 @@ WWT_SHORT	= wwt
 WWT_LONG	= Wiimms WBFS Tool
 WIT_SHORT	= wit
 WIT_LONG	= Wiimms ISO Tool
-VERSION		= 0.32a
+VERSION		= 0.33a
 
 ifeq ($(TERM),cygwin)
 SYSTEM		:= cygwin
@@ -439,7 +439,7 @@ gen-wbfs:
 		| ./wwt -A -p @<(ls $(WBFS_FILE)) add @- -v
 	@echo
 	@./wwt f -l $(WBFS_FILE)
-	@./wwt ll $(WBFS_FILE)
+	@./wwt ll $(WBFS_FILE) --mtime
 
 #
 #--------------------------

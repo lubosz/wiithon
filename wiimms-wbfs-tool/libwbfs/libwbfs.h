@@ -11,12 +11,19 @@ extern "C"
 
 ///////////////////////////////////////////////////////////////////////////////
 
+typedef u64 be64_t;
 typedef u32 be32_t;
 typedef u16 be16_t;
 
 #define WBFS_MAGIC ( 'W'<<24 | 'B'<<16 | 'F'<<8 | 'S' )
 #define WBFS_VERSION 1
 #define WBFS_NO_BLOCK (~(u32)0)
+
+#define WBFS_INODE_INFO_VERSION		 1
+#define WBFS_INODE_INFO_HEAD_SIZE	12
+#define WBFS_INODE_INFO_HEAD_CMP_SIZE	10
+#define WBFS_INODE_INFO_OFF		0x80
+#define WBFS_INODE_INFO_SIZE		(0x100-WBFS_INODE_INFO_OFF)
 
 ///////////////////////////////////////////////////////////////////////////////
 
@@ -82,7 +89,7 @@ typedef struct wbfs_disc_info
 // (callback is supposed to make retries until no hopes..)
 
 typedef int (*rw_sector_callback_t)(void*fp,u32 lba,u32 count,void*iobuf);
-typedef void (*progress_callback_t)( u64 status, u64 total, void * callback_data );
+typedef void (*progress_callback_t) (u64 done, u64 total, void * callback_data );
 
 //-----------------------------------------------------------------------------
 
@@ -139,6 +146,80 @@ typedef struct wbfs_disc_s
 	int slot;			// disc slot, range= 0 .. wbfs_t::max_disc-1
 
 } wbfs_disc_t;
+
+//-----------------------------------------------------------------------------
+
+typedef struct wbfs_inode_info_s
+{
+	// A complete copy of the first WBFS_INODE_INFO_HEAD_SIZE (12) bytes of
+	// the WBFS header. The magic can be used to validate the existence of
+	// this info block. The other data are good for recovery.
+
+	be32_t magic;		// the magic (char*)"WBFS"
+	be32_t n_hd_sec;	// total number of hd_sec in this partition
+	u8  hd_sec_sz_s;	// sector size in this partition
+	u8  wbfs_sec_sz_s;	// size of a wbfs sec
+	u8  wbfs_version;	// informative version number
+	u8  head_padding;
+
+	// The version number of this data structure.
+	// This is importand for future extensions
+
+	be32_t info_version;	// == 1
+
+	// 64 bit time stamps: They are only informative but nice to have.
+	//  - itime is ths disc inserting time.
+	//    If 2 discs uses the same wbfs block a repair function knows
+	//    which one disc are newer and which is definitly bad.
+	//  - mtime is a copy of the mtime of the source file.
+	//    It is also changed if the the ISO-header is modified (renamed).
+	//    While extrating the mtime of dest file is set by this mtime.
+	//  - ctime is updated if adding, renaming.
+	//  - atime can be updated by usb loaders when loading the disc.
+
+	be64_t itime;		// the disc insertion time
+	be64_t mtime;		// the last modification time (copied from source)
+	be64_t ctime;		// the last status changed time
+	be64_t atime;		// the last access time
+
+	// An access counter for statistics only:
+	// It can be used and modified by usb loaders.
+
+	be32_t load_count;	// How many times was the disc loaded
+
+	// padding up to WBFS_INODE_INFO_SIZE bytes, always filled with zeros
+
+	u8 padding[ WBFS_INODE_INFO_SIZE - WBFS_INODE_INFO_HEAD_SIZE
+			- 2 * sizeof(be32_t)
+			- 4 * sizeof(be64_t) ];
+
+} wbfs_inode_info_t;
+
+//----- wbfs_inode_info_t helpers
+
+u64	wbfs_hton64 ( u64 data );
+u64	wbfs_ntoh64 ( u64 data );
+be64_t	wbfs_setup_inode_info
+		( wbfs_t * p, wbfs_inode_info_t * ii, int is_changed, int clear_if_invalid );
+int	wbfs_is_inode_info_valid( wbfs_t * p, wbfs_inode_info_t * ii );
+
+//-----------------------------------------------------------------------------
+
+typedef struct wbfs_param_s // function parameters
+{
+	// call back data
+	read_wiidisc_callback_t		read_src_wii_disc;
+	progress_callback_t		spinner;
+	void				*callback_data;
+
+	// partition selectors
+	partition_selector_t		sel;
+	int				copy_1_1;
+
+	// inode info
+	wbfs_inode_info_t		iinfo;
+
+} wbfs_param_t;
 
 //-----------------------------------------------------------------------------
 
@@ -231,6 +312,9 @@ void wbfs_use_block	  ( wbfs_t * p, u32 bl );
   @sel: selects which partitions to copy.
   @copy_1_1: makes a 1:1 copy, whenever a game would not use the wii disc format, and some data is hidden outside the filesystem.
  */
+
+u32 wbfs_add_disc_param ( wbfs_t * p, wbfs_param_t * par );
+
 u32 wbfs_add_disc(wbfs_t*p,read_wiidisc_callback_t read_src_wii_disc,
 		  void *callback_data,
 		  progress_callback_t spinner,
@@ -238,7 +322,7 @@ u32 wbfs_add_disc(wbfs_t*p,read_wiidisc_callback_t read_src_wii_disc,
 		  int copy_1_1
 		 );
 
-u32 wbfs_add_phantom ( wbfs_t *p, const char * phantom_id, u32 wii_sectors );
+u32 wbfs_add_phantom ( wbfs_t * p, const char * phantom_id, u32 wii_sector_count );
 
 u32 wbfs_estimate_disc(wbfs_t*p,read_wiidisc_callback_t read_src_wii_disc, void *callback_data,
 		       partition_selector_t sel);

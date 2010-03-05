@@ -903,27 +903,27 @@ msgstr "%d jogos sem imagens de disco"
 msgid "Hay %d tareas"
 msgstr "Existem %d tarefas"
 
-#: preferencias.py:64 preferencias.py:106
+#: preferencias.py:64 preferencias.py:107
 msgid "English"
 msgstr "Inglês"
 
-#: preferencias.py:65 preferencias.py:110
+#: preferencias.py:65 preferencias.py:111
 msgid "Spanish"
 msgstr "Espanhol"
 
-#: preferencias.py:66 preferencias.py:111
+#: preferencias.py:66 preferencias.py:112
 msgid "Italian"
 msgstr "Italiano"
 
-#: preferencias.py:67 preferencias.py:108
+#: preferencias.py:67 preferencias.py:109
 msgid "French"
 msgstr "Francês"
 
-#: preferencias.py:68 preferencias.py:109
+#: preferencias.py:68 preferencias.py:110
 msgid "German"
 msgstr "Alemão"
 
-#: preferencias.py:69 preferencias.py:112
+#: preferencias.py:69 preferencias.py:113
 msgid "Dutch"
 msgstr "Holandês"
 
@@ -937,7 +937,7 @@ msgstr "Italiano"
 msgid "Brazilian Portuguese"
 msgstr "Português"
 
-#: preferencias.py:72 preferencias.py:113
+#: preferencias.py:72 preferencias.py:114
 msgid "Portuguese"
 msgstr "Português"
 
@@ -954,197 +954,202 @@ msgstr "Italiano"
 msgid "Euskera"
 msgstr ""
 
-#: preferencias.py:77
+#: preferencias.py:76
+#, fuzzy
+msgid "Danish"
+msgstr "Espanhol"
+
+#: preferencias.py:78
 #, fuzzy
 msgid "Idioma de wiithon"
 msgstr "Informação sobre o Wiithon"
 
-#: preferencias.py:78
+#: preferencias.py:79
 msgid "Ruta para extraer ficheros .rar. Para descomprimir junto al .rar escriba ."
 msgstr "Caminho para extrair arquivos .rar. Para descompactar junto ao .rar escreva ."
 
-#: preferencias.py:79
+#: preferencias.py:80
 msgid "Num. Hilos para tareas de fondo"
 msgstr "Núm. de vagas para tarefas na fila"
 
-#: preferencias.py:80
+#: preferencias.py:81
 msgid "Comando para abrir carpetas"
 msgstr "Comando para abrir pastas"
 
-#: preferencias.py:81
+#: preferencias.py:82
 #, fuzzy
 msgid "Comando para abrir paginas Web"
 msgstr "Comando para abrir pastas"
 
-#: preferencias.py:82
+#: preferencias.py:83
 msgid "Mostrar una advertencia cuando no hay ninguna informacion WiiTDB"
 msgstr "Mostrar uma advertência quando não existe nenhuma informação WiiTDB"
 
-#: preferencias.py:83
+#: preferencias.py:84
 msgid "Mostrar una advertencia cuando no hay particiones WBFS"
 msgstr "Mostrar una advertência quando não existem partições WBFS"
 
-#: preferencias.py:84
+#: preferencias.py:85
 msgid "Iniciar maximizado"
 msgstr ""
 
-#: preferencias.py:85
+#: preferencias.py:86
 msgid "Permitir establecer caratulas locales por arrastre"
 msgstr "Permitir configurar localização das imagens por arraste"
 
-#: preferencias.py:86
+#: preferencias.py:87
 msgid "Permitir establecer caratulas desde http por arrastre"
 msgstr "Permitir configurar imagens de http por arraste"
 
-#: preferencias.py:87
+#: preferencias.py:88
 msgid "Permitir arrastrar juegos en ISO, RAR o directorios."
 msgstr "Permitir arrastar jogos em ISO, RAR ou diretórios."
 
-#: preferencias.py:88
+#: preferencias.py:89
 msgid "Los isos descomprimidos desde el rar remplaza imagenes iso sin preguntar."
 msgstr "As ISOs descompactadas do RAR substitui imagens ISO sem confirmação."
 
-#: preferencias.py:89
+#: preferencias.py:90
 msgid "Pregunta borrar el .iso (cuando aniamos un rar)"
 msgstr "Pergunta apagar o .iso (ao adicionar um rar)"
 
-#: preferencias.py:90
+#: preferencias.py:91
 msgid "Pregunta borrar el .rar (cuando aniamos un rar)"
 msgstr "Pergunta apagar o .rar (ao adicionar um rar)"
 
-#: preferencias.py:91
+#: preferencias.py:92
 msgid "Proponer un nombre de wiitdb tras anadir el juego"
 msgstr "Propor um nome de wiitdb ao adicionar um jogo"
 
-#: preferencias.py:92
+#: preferencias.py:93
 msgid "Caratula"
 msgstr "Capa"
 
-#: preferencias.py:93
+#: preferencias.py:94
 msgid "Disc-art"
 msgstr "Imagem do disco"
 
-#: preferencias.py:94
+#: preferencias.py:95
 msgid "Destino del arrastre de una imagen"
 msgstr "Destino de arraste de uma imagem"
 
-#: preferencias.py:96
+#: preferencias.py:97
 msgid "Formato ISO - para Grabacion DVD"
 msgstr ""
 
-#: preferencias.py:97
+#: preferencias.py:98
 msgid "Formato WBFS - para USBLoader-FAT32"
 msgstr ""
 
-#: preferencias.py:98
+#: preferencias.py:99
 msgid "Formato WDF - para Almacenamiento"
 msgstr ""
 
-#: preferencias.py:100
+#: preferencias.py:101
 #, fuzzy
 msgid "Formato de extraccion"
 msgstr "Formato desconhecido"
 
-#: preferencias.py:103
+#: preferencias.py:104
 msgid "URL Base de datos WiiTDB"
 msgstr "URL Base de dados WiiTDB"
 
-#: preferencias.py:104
+#: preferencias.py:105
 msgid "Formato fecha"
 msgstr "Formato da data"
 
-#: preferencias.py:105
+#: preferencias.py:106
 msgid "Formato fecha corto"
 msgstr "Formato curto da data"
 
-#: preferencias.py:107
+#: preferencias.py:108
 msgid "Japanese"
 msgstr "Japonês"
 
-#: preferencias.py:114
+#: preferencias.py:115
 msgid "Chinese-Taiwan"
 msgstr "Chinês-Taiwan"
 
-#: preferencias.py:115
+#: preferencias.py:116
 msgid "Chinese"
 msgstr "Chinês"
 
-#: preferencias.py:116
+#: preferencias.py:117
 msgid "Korean"
 msgstr "Coreano"
 
-#: preferencias.py:125
+#: preferencias.py:126
 msgid "Idioma principal para el synopsis"
 msgstr "Idioma principal para as sinopses"
 
-#: preferencias.py:126
+#: preferencias.py:127
 msgid "Idioma auxiliar para el synopsis"
 msgstr "Idioma auxiliar para as sinopses"
 
-#: preferencias.py:127
+#: preferencias.py:128
 msgid "Usuario (para editar informacion en wiitdb.com)"
 msgstr ""
 
-#: preferencias.py:128
+#: preferencias.py:129
 msgid "Password (para editar informacion en wiitdb.com)"
 msgstr ""
 
-#: preferencias.py:131
+#: preferencias.py:132
 msgid "Ancho imagen caratula"
 msgstr "Largura da imagem da capa"
 
-#: preferencias.py:132
+#: preferencias.py:133
 msgid "Altura imagen caratula"
 msgstr "Altura da imagem da capa"
 
-#: preferencias.py:133
+#: preferencias.py:134
 msgid "Ancho imagen disc-art"
 msgstr "Largura da imagem do disco"
 
-#: preferencias.py:134
+#: preferencias.py:135
 msgid "Altura imagen disc-art"
 msgstr "Altura da imagem do disco"
 
-#: preferencias.py:201
+#: preferencias.py:202
 msgid "Proveedor de caratulas"
 msgstr "Provedor de capas"
 
-#: preferencias.py:232
+#: preferencias.py:233
 msgid "Proveedor de discos"
 msgstr "Provedor de discos"
 
-#: preferencias.py:235
+#: preferencias.py:236
 #, python-format
 msgid "URL de busqueda en Google. (%s es el nombre del juego)"
 msgstr ""
 
-#: preferencias.py:236
+#: preferencias.py:237
 #, python-format
 msgid "URL de busqueda en Wikipedia. (%s es el nombre del juego)"
 msgstr ""
 
-#: preferencias.py:237
+#: preferencias.py:238
 #, python-format
 msgid "URL de busqueda en Youtube. (%s es el nombre del juego)"
 msgstr ""
 
-#: preferencias.py:238
+#: preferencias.py:239
 #, python-format
 msgid "URL de busqueda en IGN. (%s es el nombre del juego)"
 msgstr ""
 
-#: preferencias.py:239
+#: preferencias.py:240
 #, python-format
 msgid "URL de busqueda en GameSpot. (%s es el nombre del juego)"
 msgstr ""
 
-#: preferencias.py:240
+#: preferencias.py:241
 #, python-format
 msgid "URL de busqueda en VGChartz. (%s es el nombre del juego)"
 msgstr ""
 
-#: preferencias.py:283 preferencias.py:319 preferencias.py:337
-#: preferencias.py:359
+#: preferencias.py:284 preferencias.py:320 preferencias.py:338
+#: preferencias.py:360
 msgid "Por defecto"
 msgstr "Padrão"
 

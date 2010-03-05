@@ -2,17 +2,25 @@ The option --sort defines the sort mode for output lists.
 
   Syntax: --sort sort_mode | -S sort_mode
 
-'sort_mode' is one of the following keywords:
+'sort_mode' is a comma separated list of the following keywords:
 
-    - | NONE    : do not sort
-        ID      : sort by id
-    T | TITLE   : sort by title taken from title db
-    N | NAME    : sort by name
-    F | FILE    : sort by file name
-        SIZE    : sort by size
-        REGION  : sort by region
-        WBFS    : sort by wbfs file name
-        NPART   : sort by number of partitions
-        DEFAULT : use the default sort method for that output
+    - | NONE    : Do not sort
 
-Abbreviations are allowed as long as they are unique.
+        ID      : Sort by id
+    T | TITLE   : Sort by title taken from title db
+    N | NAME    : Sort by name of disc
+    F | FILE    : Sort by file name
+        SIZE    : Sort by size
+    D | DATE    : Sort by date
+        TIME    :   " (same as DATE)
+    R | REGION  : Sort by region
+        WBFS    : Sort by wbfs file name
+        NPART   : Sort by number of partitions
+        DEFAULT : Use the default sort method for that output
+
+    ASCENDING   : Sort in ascending order.
+    DESCENDING  : Sort in descending order (reverse).
+    REVERSE     : Alternative keyword for 'DESCEND'.
+
+The latest keyword supersedes the previous one of the same group.
+'NONE' resets all. Abbreviations are allowed as long as they are unique.

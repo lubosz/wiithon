@@ -19,14 +19,14 @@
 
     'WWT' is an abbreviation of "Wiimms WBFS Tools". It is a collection of
     tools to manipulate and convert WBFS and ISO files.
-    
+
 
 * What is "wwt"?
 
     'wwt' is an abbreviation of "Wiimms WBFS Tool" (not 'tools'). 'wwt' was the
     first tool of this tool set. It is developed for manipulationg WBFS files.
     The general syntax is: wwt <command> <option>... <parameter>...
-    The importand commands are: 
+    The importand commands are:
 	INIT, CHECK, LIST, REPAIR, DUMP, ADD, UPDATE, EXTRACT, RENAME, SETTITLE
 
 

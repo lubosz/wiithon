@@ -1,7 +1,7 @@
 K 25
 svn:wc:ra_dav:version-url
 V 57
-/wii/!svn/ver/629/trunk/wiimms-wbfs-tool/templates/module
+/wii/!svn/ver/659/trunk/wiimms-wbfs-tool/templates/module
 END
 head.txt
 K 25
@@ -13,7 +13,7 @@ last-history.txt
 K 25
 svn:wc:ra_dav:version-url
 V 74
-/wii/!svn/ver/629/trunk/wiimms-wbfs-tool/templates/module/last-history.txt
+/wii/!svn/ver/659/trunk/wiimms-wbfs-tool/templates/module/last-history.txt
 END
 opt-psel.txt
 K 25
@@ -37,7 +37,7 @@ opt-sort.txt
 K 25
 svn:wc:ra_dav:version-url
 V 70
-/wii/!svn/ver/309/trunk/wiimms-wbfs-tool/templates/module/opt-sort.txt
+/wii/!svn/ver/659/trunk/wiimms-wbfs-tool/templates/module/opt-sort.txt
 END
 content.txt
 K 25

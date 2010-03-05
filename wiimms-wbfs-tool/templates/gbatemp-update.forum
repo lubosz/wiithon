@@ -14,9 +14,55 @@ I have updated the tool. The [url=@@URI-GBATEMP@@][b]first post with more detail
 [b]Highlights/bug fixes of this release:[/b]
 [list]
 
-[*]
+[*] The WBFS inode has a space of 128 bytes for additinal information. I used this to store timestamps (itime, mtime, ctime, atime) and more. The base idea is described [url="http://gbatemp.net/index.php?act=findpost&pid=2624262"][color=#000080][b]here[/b][/color][/url].
+
+Some details for timestamps:
+[color="#ffffff"].[/color]
+[list]
+ [*] The [b]'itime'[/b] is the [b]insertion time[/b].
+ The insertion time is set only after adding a game to the WBFS.
+
+ [*] The [b]'mtime'[/b] is the [b]last modification time[/b].
+ While adding a disc it is copied from the source. Changing title or ID in the ISO header will update mtime. When extracting a ISO the mtime of the destiantion file is set to this value.
+
+ [*] The [b]'ctime'[/b] is the [b]last status change time[/b].
+ The status change time is set after adding a game or changing the ID or the title.
+
+ [*] The [b]'atime'[/b] is the [b]last access time[/b].
+ It is set when ctime is set or when extracing is finished.
+[/list]
 [color="#ffffff"].[/color]
 
+[*] The wit+wwt command LIST print one timestamp. The options --itime, --mtime, --ctime, --atime and --time=modelist deceide which time is used the output format.
+Extract of the docu:
+[pre]
+ Printing of timestamps is enabled by the options --time, --itime, --mtime
+ --ctime, --atime or when --long is set at least twice. --time=off disables
+ time printing. All time options (not --long) supersede the previous options.
+ The option --time take a comma separated list of the following keywords:
+
+    OFF   : Disable time printing. All other option enable time printing.
+    ON    : Enable time printing.
+
+    I     : Use itime (insertion time) for processing.
+    M     : Use mtime (last modicifaction time) for processing. (default)
+    C     : Use ctime (last staus change time) for processing.
+    A     : Use atime (last access time) for processing.
+
+    DATE  : Print time in format 'YYYY-MM-DD'. (default)
+    TIME  : Print time in format 'YYYY-MM-DD HH:MM'.
+    MIN   : Alternative keyword for 'TIME'.
+    SEC   : Print time in format 'YYYY-MM-DD HH:MM:SS'.
+
+    *DATE : Short cut for '*,DATE'. '*' is one of 'I', 'M', 'C' or 'A'.
+    *TIME : Short cut for '*,TIME'. '*' is one of 'I', 'M', 'C' or 'A'.
+    *MIN  : Alternative keywords for '*TIME'.
+    *SEC  : Short cut for '*,SEC'.  '*' is one of 'I', 'M', 'C' or 'A'.
+[/pre]
+[color="#ffffff"].[/color]
+
+[*] The sort option --sort accepts the new keywords 'DATE' and 'TIME' for sorting by date and 'ascending', 'descending' or 'reverse' to controll the main sort direction.
+[color="#ffffff"].[/color]
 [/list]
 
 [b]Last changes:[/b]

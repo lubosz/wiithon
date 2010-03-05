@@ -505,6 +505,17 @@ wwt v0.29a r606 - 2010-01-22
  - Bug fix: Option --preserve didn't work.
  - wwt+wit FILETYPE: Print region info if option --long is set twice.
 
+wwt v0.30a r613 - 2010-01-30
+
+ - wwt+wit FILETYPE: Print scrubbed size if option --long is set twice.
+ - New command: wit ISOSIZE: Print scrubbed ISO sizes in up to 4 aspects.
+
+wwt v0.31a r618 - 2010-01-31
+
+ - wwt+wit FILETYPE: Print table header.
+ - wwt FORMAT: new option: --recover: Format a WBFS in recover mode.
+   The recover feature is EXPERIMENTAL!
+
 @@MODULE(last-history.txt)@@
 
 

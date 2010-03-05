@@ -850,7 +850,11 @@ enumFileType AnalyseFT ( File_t * f )
 	    return f->ftype;
 
 	AnalyseFT(&sf.f);
+
 	bool ok = false;
+	WDiscInfo_t wdisk;
+	InitializeWDiscInfo(&wdisk);
+
 	if ( sf.f.ftype & FT_ID_WBFS )
 	{
 	    TRACE(" - f2=WBFS\n");
@@ -858,9 +862,6 @@ enumFileType AnalyseFT ( File_t * f )
 	    InitializeWBFS(&wbfs);
 	    if (!SetupWBFS(&wbfs,&sf,false,0,false))
 	    {
-		WDiscInfo_t wdisk;
-		InitializeWDiscInfo(&wdisk);
-
 		switch(mode)
 		{
 		    case IS_ID6:
@@ -898,7 +899,12 @@ enumFileType AnalyseFT ( File_t * f )
 	    ASSERT(!sf.f.path);
 	    sf.f.path = sf.f.fname;
 	    sf.f.fname = f->fname;
+	    sf.f.st.st_size = wdisk.size;
+	    const time_t xtime = SelectTimeOfInode(&wdisk.dhead.iinfo,opt_print_time);
+	    if (xtime)
+		sf.f.st.st_mtime = xtime;
 	    f->fname = 0;
+
 	    ResetFile(f,false);
 	    memcpy(f,&sf.f,sizeof(*f));
 	    memcpy(f->id6,id6,6);
@@ -1260,7 +1266,7 @@ enumError CopySF ( SuperFile_t * in, SuperFile_t * out, u32 psel )
 
 		    if ( psel != ALL_PARTITIONS && off == WII_PART_INFO_OFF )
 		    {
-			// [2do] ? rewrite code 
+			// [2do] ? rewrite code
 			wd_fix_partition_table(disc,psel,(u8*)iobuf);
 		    }
 
@@ -1482,7 +1488,7 @@ enumError CopyWBFSDisc ( SuperFile_t * in, SuperFile_t * out )
 	if (!copybuf)
 	    OUT_OF_MEMORY;
     }
-	
+
     SetSizeSF(out,in->file_size);
     enumError err = ERR_OK;
 

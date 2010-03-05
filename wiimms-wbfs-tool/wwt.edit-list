@@ -1,7 +1,7 @@
 wwt.c ;
 wit.c ;
-wbfs-interface.[ch] ;
 wwt+wit-cmd.c ;
+wbfs-interface.[ch] ;
 lib-std.[ch] ;
 lib-error.[ch] ;
 lib-wdf.[ch] ;

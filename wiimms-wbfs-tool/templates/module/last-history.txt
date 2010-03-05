@@ -1,17 +1,24 @@
-wwt v0.30a r613 - 2010-01-30
+wwt v0.32a r632 - 2010-02-14
 
- - wwt+wit FILETYPE: Print scrubbed size if option --long is set twice.
- - New command: wit ISOSIZE: Print scrubbed ISO sizes in up to 4 aspects.
-
-wwt v0.31a r618 - 2010-01-31
-
- - wwt+wit FILETYPE: Print table header.
- - wwt FORMAT: new option: --recover: Format a WBFS in recover mode.
-   The recover feature is EXPERIMENTAL!
-
-wwt v@.@@@ r@@REV-NEXT@@ - @@@@-@@-@@
-
- - wwt+wit: New envrionment variable: WWT_LANG: Define a default language.
+ - wwt+wit: New environment variable: WWT_LANG: Define a default language.
  - wwt+wit: New option: --lang= : Define the working language.
  - wwt FORMAT --recover: Little optimizations.
  - Bug fix: Enable cache for all commands if reading from a pipe.
+
+wwt v@.@@@ r@@REV-NEXT@@ - @@@@-@@-@@
+
+ - Support of the new extended WBFS inodes with the data records
+   'itime', 'mtime', 'ctime', 'atime' and 'load_count'.
+    - ADD updates itime, mtime, ctime and atime. mtime is taken from source.
+    - EXTRACT updates atime. mtime is copied to destination file.
+    - RENAME+SETTILE @INODE updates ctime and atime.
+    - RENAME+SETTILE @ISO updates mtime, ctime and atime.
+    - LIST may show one of the time values (-ll, --*time, --time=mode)
+    - DUMP show all times if disc dump is enabled (--long).
+ - wit+wwt LIST: The new options --itime, --mtime, --ctime, --atime 
+   and --time=modelist will force output of a time stamp. The meaning
+   of --long is changed.
+ - Option --sort= supports new modes 'DATE', 'ASCENDING' and 'DESCENDING'.
+ - New wwt command: LIST-LL or LLL: Abbreviation of 'LIST -ll'.
+ - New wit command: LIST-LLL or LLLL: Abbreviation of 'LIST -lll'.
+ - Bug fix: wit LIST: The WBFS file size was listed instead the ISO size.

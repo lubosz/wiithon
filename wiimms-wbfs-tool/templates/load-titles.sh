@@ -9,6 +9,34 @@ LANGUAGES="@@LANGUAGES@@"
 
 #------------------------------------------------------------------------------
 
+function load_and_store()
+{
+    local URI="$1"
+    local DEST="$2"
+    local ADD="$3"
+
+    echo "***    load $DEST from $URI"
+
+    if wget -q -O- "$URI" | wwt titles / - >"$DEST.tmp" && test -s "$DEST.tmp"
+    then
+	if [[ $ADD != "" ]]
+	then
+	    wwt titles / "$ADD" "$DEST.tmp" >"$DEST.tmp.2"
+	    mv "$DEST.tmp.2" "$DEST.tmp"
+	fi
+	grep -v ^TITLES "$DEST"     >"$DEST.tmp.1"
+	grep -v ^TITLES "$DEST.tmp" >"$DEST.tmp.2"
+	if ! diff -q "$DEST.tmp.1" "$DEST.tmp.2" >/dev/null
+	then
+	    echo "            => content changed!"
+	    mv "$DEST.tmp" "$DEST"
+	fi
+    fi
+    rm -f "$DEST.tmp" "$DEST.tmp.1" "$DEST.tmp.2"
+}
+
+#------------------------------------------------------------------------------
+
 make=0
 if [[ $1 = --make ]]
 then
@@ -35,22 +63,14 @@ fi
 
 mkdir -p "$LIB_PATH" lib
 
-echo "***    load titles.txt from $URI_TITLES"
-wget -q -O- $URI_TITLES | wwt titles / - >lib/titles.tmp \
-	&& test -s lib/titles.tmp \
-	&& mv lib/titles.tmp lib/titles.txt
-rm -f lib/titles.tmp
+load_and_store "$URI_TITLES" "lib/titles.txt"
 
 # load language specifig title files
 
 for lang in $LANGUAGES
 do
     LANG="$( echo $lang | awk '{print toupper($0)}' )"
-    echo "***    load titles-$lang.txt from $URI_TITLES?LANG=$LANG"
-    wget -q -O- "$URI_TITLES?LANG=$LANG" | wwt titles / - >lib/titles-$lang.tmp \
-	&& test -s lib/titles-$lang.tmp \
-	&& wwt titles / lib/titles.txt lib/titles-$lang.tmp >lib/titles-$lang.txt
-    rm -f lib/titles-$lang.tmp
+    load_and_store $URI_TITLES?LANG=$LANG "lib/titles-$lang.txt" lib/titles.txt
 done
 
 if ((!make))

@@ -59,8 +59,8 @@ ca_ES: po/locale/ca_ES/LC_MESSAGES/wiithon.mo
 gl_ES: po/locale/gl_ES/LC_MESSAGES/wiithon.mo
 eu_ES: po/locale/eu_ES/LC_MESSAGES/wiithon.mo
 
-lang_enable: it es en fr de pt_BR ca_ES gl_ES eu_ES
-lang_disable: da_DK fi_FI tr_TR ru_RU ko_KR sv_SE pt_PT da_DK nb_NO ja_JP
+lang_enable: it es en fr de pt_BR ca_ES gl_ES eu_ES da_DK
+lang_disable: fi_FI tr_TR ru_RU ko_KR sv_SE pt_PT da_DK nb_NO ja_JP
 lang: lang_enable lang_disable
 	@echo "=================================================================="
 	@echo "Languages updates!"
