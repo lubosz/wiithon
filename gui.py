@@ -2353,6 +2353,7 @@ class WiithonGUI(GtkBuilderWrapper):
         for fichero in tuplaArrastrados:
             if fichero.startswith("file://"):
                 fichero = fichero.replace("file://" , "")
+                fichero = fichero.replace("%20" , " ")
                 if os.path.exists(fichero):
                     if(self.core.getAutodetectarFormato(fichero) is not None) and self.core.prefs.DRAG_AND_DROP_JUEGOS:
                         listaISO.append(fichero)
