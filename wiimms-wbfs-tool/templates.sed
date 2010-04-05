@@ -1,7 +1,7 @@
  /^~/ d;
  s|@.@@@|0.33a|g;
- s|@@@@-@@-@@|2010-03-05|g;
- s|@@:@@:@@|03:52:10|g;
+ s|@@@@-@@-@@|2010-04-05|g;
+ s|@@:@@:@@|23:59:03|g;
  s|@@AUTHOR@@|Dirk Clemens|g;
  s|@@WWT-SHORT@@|wwt|g;
  s|@@WWT-LONG@@|Wiimms WBFS Tool|g;
@@ -11,9 +11,9 @@
  s|@@REV@@|669M|g;
  s|@@REV-NUM@@|669|g;
  s|@@REV-NEXT@@|670|g;
- s|@@BINTIME@@|1267757530|g;
- s|@@DATE@@|2010-03-05|g;
- s|@@TIME@@|03:52:10|g;
+ s|@@BINTIME@@|1270504743|g;
+ s|@@DATE@@|2010-04-05|g;
+ s|@@TIME@@|23:59:03|g;
  s|@@INSTALL-PATH@@|/usr/local|g;
  s|@@BIN-FILES@@|wwt wit wdf2iso iso2wdf iso2wbfs wdf-cat wdf-dump|g;
  s|@@LIB-FILES@@|titles.txt titles-de.txt titles-es.txt titles-fr.txt titles-it.txt titles-ja.txt titles-ko.txt titles-nl.txt titles-pt.txt|g;

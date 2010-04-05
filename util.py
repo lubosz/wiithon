@@ -15,6 +15,7 @@ import gettext
 import statvfs
 import random
 import time
+import dbus
 from threading import Thread
 from gettext import gettext as _
 
@@ -29,6 +30,8 @@ BLACK_LIST2 = "\";$\\"
 
 (DISC_ORIGINAL, DISC_CUSTOM)=([ "%d" % i for i in range(2) ])
 (COVER_NORMAL, COVER_3D, COVER_FULL)=([ "%d" % i for i in range(3) ])
+
+bus = dbus.SessionBus()
 
 class NonRepeatList(list):
     def __init__(self, *args):
@@ -765,3 +768,8 @@ def remove_multipart_rar(archivoRAR):
             os.remove(archivoRAR)
             if config.DEBUG:
                 print "borrar %s" % archivoRAR
+
+def notifyDBUS(titulo, texto, segs):	
+	notify_object = bus.get_object('org.freedesktop.Notifications','/org/freedesktop/Notifications')
+	notify_interface = dbus.Interface(notify_object,'org.freedesktop.Notifications')
+	return notify_interface.Notify("DBus Test", 0, "", titulo, texto ,'' ,{}, segs*1000 )

@@ -716,7 +716,7 @@ void PrintProgressSF ( u64 p_done, u64 p_total, void * param )
 	if ( !sf->progress_verb || !*sf->progress_verb )
 	    sf->progress_verb = "copied";
 
-	int wd;
+	int wd = 0;
 	/*
 	if ( percent < 10 && view_sec < 10 )
 	    printf("%*s%3d%% %s in %s (%3.1f MiB/seccccc)             %n\n", sf->indent,"", percent, sf->progress_verb, time1, (double)total * 1000 / MiB / elapsed, &wd );

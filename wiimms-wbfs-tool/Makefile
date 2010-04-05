@@ -91,7 +91,7 @@ DEFINES1	+= -DEXTENDED_ERRORS=1	# enable extended error messages (function,line,
 DEFINES		=  $(strip $(DEFINES1) $(MODE) $(XDEF))
 
 CFLAGS		= -fomit-frame-pointer -fno-strict-aliasing \
-		  -Wall -Wno-parentheses -Wno-unused-function -Wno-unused-result \
+		  -Wall -Wno-parentheses -Wno-unused-variable -Wno-unused-function -Wno-unused-result \
 		  -O3 -Ilibwbfs -I.
 #CFLAGS		+= -mtune=generic
 #CFLAGS		+= -march=i686 

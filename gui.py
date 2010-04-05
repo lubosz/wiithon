@@ -422,6 +422,8 @@ class WiithonGUI(GtkBuilderWrapper):
         # mostrar ventana principal
         self.wb_principal.show()
         
+        #util.notifyDBUS("%s: %s" % (_("Finalizado"),_("Actualizar base de datos")), _("Se ha actualizado la base de datos de WiiTDB") , 10)
+        
         # GO
         gtk.main()
 
@@ -1732,7 +1734,7 @@ class WiithonGUI(GtkBuilderWrapper):
             self.wb_dialogo_conversor.hide()
 
         elif(id_tb == self.wb_tb_donate):
-            comando = '%s "%s"' % (self.core.prefs.COMANDO_ABRIR_CARPETA, config.WIITHON_DONATE_HTML)
+            comando = '%s "%s"' % (self.core.prefs.COMANDO_ABRIR_WEB, config.WIITHON_DONATE_HTML)
             util.call_out_null(comando)
             
         elif(id_tb == self.wb_tb_renombrado_masivo):
@@ -2231,6 +2233,7 @@ class WiithonGUI(GtkBuilderWrapper):
             self.actualizarFraccion(1.0)
             gobject.idle_add(self.refrescarModeloJuegos, self.lJuegos)
             gobject.idle_add(self.refrescarInfoWiiTDB)
+            util.notifyDBUS("%s: %s" % (_("Finalizado"),_("Actualizar base de datos")), _("Se ha actualizado la base de datos de WiiTDB") , 10)
 
 ############# METODOS que modifican el GUI, si se llaman desde hilos, se hacen con gobject
 
@@ -2444,11 +2447,14 @@ class WiithonGUI(GtkBuilderWrapper):
                     gobject.idle_add( self.borrar_archivo_preguntando , fichero)
                 if rar_preguntar_borrar_rar:
                     gobject.idle_add( self.borrar_archivo_preguntando , trabajo.padre.origen)
+        if trabajo.exito:
+			util.notifyDBUS("%s: %s" % (_("Finalizado"),_("Anadir juego")),"%s" % trabajo , 10)
 
     # Al terminar hay que seleccionar la partición destino y el juego copiado
     def callback_termina_trabajo_copiar(self, trabajo, juego, particion):
         if trabajo.exito:
             gobject.idle_add( self.termina_trabajo_copiar , juego , particion)
+            util.notifyDBUS("%s: %s" % (_("Finalizado"),_("Copia directa entre particiones WBFS")),"%s" % trabajo , 10)
 
     def callback_nuevo_trabajo(self, trabajo):
         gobject.idle_add( self.refrescarTareasPendientes )
@@ -2465,8 +2471,9 @@ class WiithonGUI(GtkBuilderWrapper):
 
     def callback_termina_trabajo(self, trabajo):
         # al final, por ser bloqueante
-        if not trabajo.exito and trabajo.avisar:
-            gobject.idle_add( self.mostrarError , trabajo.error )
+        if trabajo.avisar:
+			if not trabajo.exito and trabajo.avisar:
+				gobject.idle_add( self.mostrarError , trabajo.error )
         
         if config.DEBUG:
             print _("Termina: %s") % trabajo
@@ -2475,10 +2482,11 @@ class WiithonGUI(GtkBuilderWrapper):
         pass
 
     def callback_termina_trabajo_extraer(self, trabajo):
-        pass
+		if trabajo.exito:
+			util.notifyDBUS("%s: %s" % (_("Finalizado"),_("Extraer juegos")),"%s" % trabajo , 10)
 
     def callback_empieza_trabajo_copiar(self, trabajo):
-        pass
+		pass
 
     def callback_termina_trabajo_descargar_caratula(self, trabajo, idgame):
         if trabajo.exito:
