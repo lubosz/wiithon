@@ -409,7 +409,8 @@ def borrarBDD(metadatos):
 
 def getSesionBDD(db):
     # con scoped se resuelven todos los problemas de concurrencia!
-    Session = scoped_session(sessionmaker(bind=db, autoflush=True, transactional=True))
+    ##Session = scoped_session(sessionmaker(bind=db, autoflush=True, transactional=True))
+    Session = scoped_session(sessionmaker(bind=db, autoflush=True))
     session = Session()
     return session
 
