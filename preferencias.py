@@ -246,7 +246,11 @@ class Preferencias:
         preferencia = session.query(Preferencia).filter(sql).first()
         if preferencia == None:
             preferencia = Preferencia(tipo, name, defecto)
-            session.save(preferencia)
+            # for compatibility with sqlalchemy
+            try:
+                session.add(preferencia)
+            except:
+                session.save(preferencia)
             session.commit()
 
         if mostrar:

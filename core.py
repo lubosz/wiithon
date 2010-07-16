@@ -46,7 +46,11 @@ class WiithonCORE:
             try:
                 juego = Juego(cachos)
                 juego.particion = particion
-                session.save(juego)
+                # for compatibility with sqlalchemy
+                try:
+                    session.add(juego)
+                except:
+                    session.save(juego)
                 salida.append(juego)
                 session.commit()
 
@@ -84,7 +88,11 @@ class WiithonCORE:
 
                 try:
                     particion = Particion(cachos)
-                    session.save(particion)
+                    # for compatibility with sqlalchemy 
+                    try:
+                        session.add(particion)
+                    except:
+                        session.save(particion)
                     listaParticiones.append(particion)
                     session.commit()
                     
@@ -131,7 +139,11 @@ class WiithonCORE:
             cachos = linea.strip().split(config.SEPARADOR)
             juego = Juego(cachos)
             juego.particion = particion
-            session.save(juego)
+            # for compatibility with sqlalchemy
+            try:
+                session.add(juego)
+            except:
+                session.save(juego)
             session.commit()
             return juego
         else:

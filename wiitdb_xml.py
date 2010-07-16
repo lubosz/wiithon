@@ -254,6 +254,10 @@ class WiiTDBXML(Thread):
 
                                             elif nodo.name == "wi-fi":
                                                 juego.wifi_players = self.leerAtributo(nodo, 'players')
+                                                try:
+                                                    int(juego.wifi_players)
+                                                except:
+                                                    juego.wifi_players = 0
                                                 
                                                 if nodo.children is not None:
                                                     nodo = nodo.children
@@ -357,7 +361,11 @@ class WiiTDBXML(Thread):
 
                                 if not saltado:
                                     if iniciado:
-                                        session.save_or_update(juego)
+                                        # for compatibility with sqlalchemy
+                                        try:
+                                            session.add(juego)
+                                        except:
+                                            session.save(juego 
                                         if self.callback_nuevo_juego:
                                             self.callback_nuevo_juego(juego)
                                     else:
@@ -391,7 +399,12 @@ class WiiTDBXML(Thread):
                                         companie = session.query(Companie).filter(sql).first()
                                         if companie == None:
                                             companie = Companie(code, name)
-                                            session.save(companie)
+                                            # for compatibility with sqlalchemy
+                                            try:
+                                                session.add(companie)
+                                            except:
+                                                session.save(companie)
+
                                             if self.callback_nuevo_companie:
                                                 self.callback_nuevo_companie(companie)
 
