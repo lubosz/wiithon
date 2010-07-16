@@ -365,7 +365,7 @@ class WiiTDBXML(Thread):
                                         try:
                                             session.add(juego)
                                         except:
-                                            session.save(juego 
+                                            session.save(juego)
                                         if self.callback_nuevo_juego:
                                             self.callback_nuevo_juego(juego)
                                     else:
