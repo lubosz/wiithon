@@ -396,16 +396,16 @@ msgstr ""
 msgid "ISO / WBFS / WDF"
 msgstr "ISO / WBFS / WDF"
 
-#: core.py:195 core.py:211
+#: core.py:207 core.py:223
 msgid "Copiando"
 msgstr "Kopierer"
 
-#: core.py:241
+#: core.py:253
 #, python-format
 msgid "Descargando disco de %s ..."
 msgstr "Henter disc-art %s ..."
 
-#: core.py:262
+#: core.py:274
 #, python-format
 msgid "Descargando caratula de %s desde %s ..."
 msgstr "Henter cover %s fra %s..."
@@ -1167,8 +1167,8 @@ msgstr "GameSpot search URL (Spil %s)"
 msgid "URL de busqueda en VGChartz. (%s es el nombre del juego)"
 msgstr "VGChartz search URL (Spil %s)"
 
-#: preferencias.py:284 preferencias.py:320 preferencias.py:338
-#: preferencias.py:360
+#: preferencias.py:288 preferencias.py:324 preferencias.py:342
+#: preferencias.py:364
 msgid "Por defecto"
 msgstr "Default"
 
@@ -1739,11 +1739,11 @@ msgstr "%d Spillere"
 msgid "Error descargando la informacion WiiTDB desde %s"
 msgstr "Fejl ved hentning af WiiTDB data fra %s"
 
-#: wiitdb_xml.py:146 wiitdb_xml.py:364 wiitdb_xml.py:367 wiitdb_xml.py:401
+#: wiitdb_xml.py:146 wiitdb_xml.py:372 wiitdb_xml.py:375 wiitdb_xml.py:414
 msgid "XML invalido"
 msgstr "Invalid XML"
 
-#: wiitdb_xml.py:417
+#: wiitdb_xml.py:430
 msgid "No existe el XML"
 msgstr "XML findes ikke"
 

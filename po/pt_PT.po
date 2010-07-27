@@ -394,16 +394,16 @@ msgstr ""
 msgid "ISO / WBFS / WDF"
 msgstr ""
 
-#: core.py:195 core.py:211
+#: core.py:207 core.py:223
 msgid "Copiando"
 msgstr ""
 
-#: core.py:241
+#: core.py:253
 #, python-format
 msgid "Descargando disco de %s ..."
 msgstr ""
 
-#: core.py:262
+#: core.py:274
 #, python-format
 msgid "Descargando caratula de %s desde %s ..."
 msgstr "Descargando carátula de %s desde %s ..."
@@ -1165,8 +1165,8 @@ msgstr ""
 msgid "URL de busqueda en VGChartz. (%s es el nombre del juego)"
 msgstr ""
 
-#: preferencias.py:284 preferencias.py:320 preferencias.py:338
-#: preferencias.py:360
+#: preferencias.py:288 preferencias.py:324 preferencias.py:342
+#: preferencias.py:364
 msgid "Por defecto"
 msgstr ""
 
@@ -1737,11 +1737,11 @@ msgstr ""
 msgid "Error descargando la informacion WiiTDB desde %s"
 msgstr "Error descargando la información WiiTDB desde %s"
 
-#: wiitdb_xml.py:146 wiitdb_xml.py:364 wiitdb_xml.py:367 wiitdb_xml.py:401
+#: wiitdb_xml.py:146 wiitdb_xml.py:372 wiitdb_xml.py:375 wiitdb_xml.py:414
 msgid "XML invalido"
 msgstr "XML inválido"
 
-#: wiitdb_xml.py:417
+#: wiitdb_xml.py:430
 msgid "No existe el XML"
 msgstr ""
 

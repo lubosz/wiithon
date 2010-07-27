@@ -401,16 +401,16 @@ msgstr ""
 msgid "ISO / WBFS / WDF"
 msgstr "ISO / WBFS / WDF"
 
-#: core.py:195 core.py:211
+#: core.py:207 core.py:223
 msgid "Copiando"
 msgstr "Kopiatzen"
 
-#: core.py:241
+#: core.py:253
 #, python-format
 msgid "Descargando disco de %s ..."
 msgstr "%s-tik diskoa deskargatzen ..."
 
-#: core.py:262
+#: core.py:274
 #, python-format
 msgid "Descargando caratula de %s desde %s ..."
 msgstr "%s-ren karatula %s-tik deskargatzen ..."
@@ -980,9 +980,8 @@ msgid "Euskera"
 msgstr "Euskara"
 
 #: preferencias.py:76
-#, fuzzy
 msgid "Danish"
-msgstr "Gaztelera"
+msgstr "Daniera"
 
 #: preferencias.py:78
 msgid "Idioma de wiithon"
@@ -1170,8 +1169,8 @@ msgstr "Gamespot bilaketa URLa. (%s jokoaren izena da)"
 msgid "URL de busqueda en VGChartz. (%s es el nombre del juego)"
 msgstr "VGChartz bilaketa URLa. (%s jokoaren izena da)"
 
-#: preferencias.py:284 preferencias.py:320 preferencias.py:338
-#: preferencias.py:360
+#: preferencias.py:288 preferencias.py:324 preferencias.py:342
+#: preferencias.py:364
 msgid "Por defecto"
 msgstr "Lehenetsia"
 
@@ -1739,11 +1738,11 @@ msgstr "%d jokalari"
 msgid "Error descargando la informacion WiiTDB desde %s"
 msgstr "Errorea WiiTDB informazioa %s-tik deskargatzean"
 
-#: wiitdb_xml.py:146 wiitdb_xml.py:364 wiitdb_xml.py:367 wiitdb_xml.py:401
+#: wiitdb_xml.py:146 wiitdb_xml.py:372 wiitdb_xml.py:375 wiitdb_xml.py:414
 msgid "XML invalido"
 msgstr "XML baliogabea"
 
-#: wiitdb_xml.py:417
+#: wiitdb_xml.py:430
 msgid "No existe el XML"
 msgstr "Ez dago XML"
 
