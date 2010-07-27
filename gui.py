@@ -415,12 +415,12 @@ class WiithonGUI(GtkBuilderWrapper):
                     
             else:
                 self.alert("warning" , _("No has seleccionado ninguna particion"))
-
-        # cerrar carga
-        self.cerrar_loading()
-        
+       
         # mostrar ventana principal
         self.wb_principal.show()
+        
+        # cerrar carga
+        self.cerrar_loading()
         
         #util.notifyDBUS("%s: %s" % (_("Finalizado"),_("Actualizar base de datos")), _("Se ha actualizado la base de datos de WiiTDB") , 10)
         
@@ -514,19 +514,32 @@ class WiithonGUI(GtkBuilderWrapper):
                         <pr>%s</pr>
                         <br />
                         <br />
+                        <azul><pr>%s</pr></azul><br />
                         <azul><pr>%s</pr></azul>
                     </b>
                     """ % (
                             _("Se ha detectado que ninguno de tus juegos disponen de informacion extra, descargada de Internet."),
                             _("Deseas descargar informacion de los juegos desde WiiTDB?"),
-                            self.core.prefs.URL_ZIP_WIITDB
+                            self.core.prefs.URL_ZIP_WIITDB,
+                            self.core.prefs.URL_SECOND_ZIP_WIITDB
                             ),
                             xml = True) ):
-                    self.poolTrabajo.nuevoTrabajoActualizarWiiTDB(self.core.prefs.URL_ZIP_WIITDB)                
+                    self.ActualizarWiiTDB()
             
         else:
             if verbose:
                 self.alert("warning" , _("No puedes refrescar las particiones mientras hay tareas sin finalizar"))
+
+    def ActualizarWiiTDB(self):
+        i = 0
+        buffer = ""
+        for juego in self.lJuegos:
+            buffer = buffer + "&ID=%s" % juego.idgame
+            i = i+1
+            if(i % 400 == 0) or (i == len(self.lJuegos)):
+                self.poolTrabajo.nuevoTrabajoActualizarWiiTDB(self.core.prefs.URL_ZIP_WIITDB + buffer)
+                self.poolTrabajo.nuevoTrabajoActualizarWiiTDB(self.core.prefs.URL_SECOND_ZIP_WIITDB + buffer)
+                buffer = ""
 
     def excepthook(self, exctype, excvalue, exctb):
         self.cerrar_loading()
@@ -538,12 +551,13 @@ class WiithonGUI(GtkBuilderWrapper):
 
         tbtext = ''.join(traceback.format_exception(exctype, excvalue, exctb))
         mensaje_xml = """
-        <negro><pr>%s</pr></negro> <pr>(</pr><rojo><pr>%s</pr></rojo><pr>)</pr><br />
+        <negro><pr>%s. %s.</pr></negro> <pr>(</pr><rojo><pr>%s</pr></rojo><pr>)</pr><br />
         <br />
         <rojo><pr>%s</pr></rojo><br />
         <negro><pr>%s</pr></negro><br />
         <u><azul><pr>%s</pr></azul></u><br />
-        """  % (    _("Por favor. Informe a los desarrolladores de este error."),
+        """  % (    _("Por favor. Informe a los desarrolladores de este error"),
+                    _("Indique brevemente que es lo que estaba haciendo, y copie todo este mensaje"),
                     version,
                     util.parsear_a_XML(tbtext),
                     _('Utitice la siguiente URL para el reporte de bugs:'),
@@ -1859,48 +1873,10 @@ class WiithonGUI(GtkBuilderWrapper):
         elif(id_tb == self.wb_tb_extraer):
             
             if self.isSelectedPartition():
-                self.alert('warning','WARNING: In construction. Dont know if it work')
                 self.wb_dialogo_extraer.run()
                 self.wb_dialogo_extraer.hide()
             else:
                 self.alert("warning" , _("No has seleccionado ninguna particion"))
-            '''
-            if self.isSelectedGame():
-
-                fc_extraer = SelectorFicheros(
-                    _('Elige un directorio donde extraer la ISO de %s') \
-                        % (self.sel_juego.obj.idgame), gtk.FILE_CHOOSER_ACTION_SELECT_FOLDER)
-                fc_extraer.addFavorite( self.core.prefs.ruta_extraer_iso )
-                
-                res = fc_extraer.run()
-                if(res == gtk.RESPONSE_OK):
-
-                    ruta_selec = fc_extraer.get_current_folder()
-
-                    extraer = False
-                    if self.core.existeExtraido(self.sel_juego.obj , ruta_selec, self.core.prefs.FORMATO_EXTRACT):
-                        extraer = self.question(_('Desea reemplazar la iso del juego %s?') % (self.sel_juego.obj))
-                    else:
-                        if self.core.prefs.FORMATO_EXTRACT == 'iso':
-                            if not util.space_for_dvd_iso_wii(ruta_selec):
-                                self.alert("warning" , _("Espacio libre insuficiente para extraer la ISO"))
-                            else:
-                                extraer = True
-                        else:
-                            extraer = True
-
-                    if extraer:
-                        # nueva ruta favorita
-                        self.core.prefs.ruta_extraer_iso = ruta_selec
-
-                        # extraer *juego* en la ruta seleccionada
-                        self.poolTrabajo.nuevoTrabajoExtraer(self.sel_juego.obj , fc_extraer.get_filename())
-
-                fc_extraer.destroy()
-
-            else:
-                self.alert("warning" , _("No has seleccionado ningun juego"))
-            '''
 
         elif(id_tb == self.wb_tb_renombrar):
             if self.isSelectedPartition():
@@ -2164,14 +2140,16 @@ class WiithonGUI(GtkBuilderWrapper):
                         <pr>%s</pr>
                         <br />
                         <br />
+                        <azul><pr>%s</pr></azul><br />
                         <azul><pr>%s</pr></azul>
                     </b>
                 """ % (
                         _("Seguro que deseas descargar informacion de los juegos de WiiTDB?"),
-                        self.core.prefs.URL_ZIP_WIITDB
+                        self.core.prefs.URL_ZIP_WIITDB,
+                        self.core.prefs.URL_SECOND_ZIP_WIITDB
                         ),
                         xml = True) ):
-                self.poolTrabajo.nuevoTrabajoActualizarWiiTDB(self.core.prefs.URL_ZIP_WIITDB)
+                self.ActualizarWiiTDB()
         else:
             self.alert("warning" , _("Ya estas descargando la informacion WiiTDB ..."))
         
@@ -2277,7 +2255,6 @@ class WiithonGUI(GtkBuilderWrapper):
             # lo añadimos a la lista
             juegoNuevo = self.core.new_game_from_HDD(DEVICE, IDGAME)
             
-            # fix for #516547
             if juegoNuevo is not None:
                 
                 # refrescar su espacio uso/libre/total
@@ -2300,9 +2277,9 @@ class WiithonGUI(GtkBuilderWrapper):
             else:
                 error = True
 
-        except SintaxisInvalida:
+        except: # SintaxisInvalida:
             error = True
-            
+
         if error:
             self.refrescarParticionesWBFS(False)
 
@@ -2331,7 +2308,7 @@ class WiithonGUI(GtkBuilderWrapper):
             else:
                 error = True
 
-        except SintaxisInvalida:
+        except: # SintaxisInvalida:
             error = True
             
         if error:
@@ -2472,8 +2449,8 @@ class WiithonGUI(GtkBuilderWrapper):
     def callback_termina_trabajo(self, trabajo):
         # al final, por ser bloqueante
         if trabajo.avisar:
-			if not trabajo.exito and trabajo.avisar:
-				gobject.idle_add( self.mostrarError , trabajo.error )
+            if not trabajo.exito and trabajo.avisar:
+                gobject.idle_add( self.mostrarError , trabajo.error )
         
         if config.DEBUG:
             print _("Termina: %s") % trabajo
@@ -2482,11 +2459,11 @@ class WiithonGUI(GtkBuilderWrapper):
         pass
 
     def callback_termina_trabajo_extraer(self, trabajo):
-		if trabajo.exito:
-			util.notifyDBUS("%s: %s" % (_("Finalizado"),_("Extraer juegos")),"%s" % trabajo , 10)
+        if trabajo.exito:
+            util.notifyDBUS("%s: %s" % (_("Finalizado"),_("Extraer juegos")),"%s" % trabajo , 10)
 
     def callback_empieza_trabajo_copiar(self, trabajo):
-		pass
+        pass
 
     def callback_termina_trabajo_descargar_caratula(self, trabajo, idgame):
         if trabajo.exito:

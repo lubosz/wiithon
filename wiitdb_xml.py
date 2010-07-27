@@ -48,7 +48,7 @@ class WiiTDBXML(Thread):
                                 ):
         Thread.__init__(self)
         self.url = url
-        self.todos = not url.find("?ID=")!=-1
+        self.todos = not url.find("?ID=") != -1
         self.destino = destino
         self.fichXML = fichXML
         self.callback_spinner = callback_spinner

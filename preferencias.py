@@ -93,17 +93,8 @@ class Preferencias:
         DESTINO_DRAG_AND_DROP =    [('C', _('Caratula')),
                                     ('D', _('Disc-art'))]
         self.iniciarPreferencia('select', 'DESTINO_ARRASTRE', defecto='C', mostrar=cargarWidget, vbox=prefs_vbox_general, label=_('Destino del arrastre de una imagen'), datos_lista = DESTINO_DRAG_AND_DROP)
-        FORMATO_EXTRACT    =        [
-                                        ('iso', _('Formato ISO - para Grabacion DVD')),
-                                        ('wbfs', _('Formato WBFS - para USBLoader-FAT32')),
-                                        ('wdf', _('Formato WDF - para Almacenamiento')),
-                                     ]
-        self.iniciarPreferencia('select', 'FORMATO_EXTRACT', defecto='iso', mostrar=cargarWidget, vbox=prefs_vbox_general, label=_('Formato de extraccion'), datos_lista = FORMATO_EXTRACT)
         
-        # wiitdb
-        self.iniciarPreferencia('string', 'URL_ZIP_WIITDB', defecto='http://wiitdb.com/wiitdb.zip', mostrar=cargarWidget, vbox=prefs_vbox_wiitdb, label=_('URL Base de datos WiiTDB'))
-        self.iniciarPreferencia('string', 'FORMATO_FECHA_WIITDB', defecto='%d/%m/%Y', mostrar=cargarWidget, vbox=prefs_vbox_wiitdb, label=_('Formato fecha'))
-        self.iniciarPreferencia('string', 'FORMATO_FECHA_CORTA_WIITDB', defecto='%Y/%m', mostrar=cargarWidget, vbox=prefs_vbox_wiitdb, label=_('Formato fecha corto'))
+        # It dont work for Chinese / Chinese-Taiwan
         WIITDB_LANGUAGE_LISTA =    [('EN', _('English')),
                                     ('JA', _('Japanese')),
                                     ('FR', _('French')),
@@ -116,13 +107,17 @@ class Preferencias:
                                     ('ZHCN', _('Chinese')),
                                     ('KO', _('Korean'))]
 
-        # It dont work for Chinese / Chinese-Taiwan
         defecto_principal = util.get_lang_default(WIITDB_LANGUAGE_LISTA).upper()
         if defecto_principal == 'EN':
             defecto_secundario = 'ES'
         else:
             defecto_secundario = 'EN'
         
+        # wiitdb
+        self.iniciarPreferencia('string', 'URL_ZIP_WIITDB', defecto='http://wiitdb.com/wiitdb.zip?LANG=%s' % defecto_principal, mostrar=cargarWidget, vbox=prefs_vbox_wiitdb, label=_('URL principal para WiiTDB'))
+        self.iniciarPreferencia('string', 'URL_SECOND_ZIP_WIITDB', defecto='http://wiitdb.com/wiitdb.zip?LANG=%s' % defecto_secundario, mostrar=cargarWidget, vbox=prefs_vbox_wiitdb, label=_('URL secundaria para WiiTDB'))
+        self.iniciarPreferencia('string', 'FORMATO_FECHA_WIITDB', defecto='%d/%m/%Y', mostrar=cargarWidget, vbox=prefs_vbox_wiitdb, label=_('Formato fecha'))
+        self.iniciarPreferencia('string', 'FORMATO_FECHA_CORTA_WIITDB', defecto='%Y/%m', mostrar=cargarWidget, vbox=prefs_vbox_wiitdb, label=_('Formato fecha corto'))        
         self.iniciarPreferencia('select', 'LANG_PRINCIPAL', defecto=defecto_principal, mostrar=cargarWidget, vbox=prefs_vbox_wiitdb, label=_('Idioma principal para el synopsis'), datos_lista = WIITDB_LANGUAGE_LISTA)
         self.iniciarPreferencia('select', 'LANG_SECUNDARIO', defecto=defecto_secundario, mostrar=cargarWidget, vbox=prefs_vbox_wiitdb, label=_('Idioma auxiliar para el synopsis'), datos_lista = WIITDB_LANGUAGE_LISTA)
         self.iniciarPreferencia('string', 'USER_WIITDB', defecto='', mostrar=cargarWidget, vbox=prefs_vbox_wiitdb, label=_('Usuario (para editar informacion en wiitdb.com)'))

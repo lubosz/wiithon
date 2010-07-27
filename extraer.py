@@ -5,6 +5,7 @@
 import config
 import util
 from gtk import FileFilter
+from trabajo import TrabajoDesc
 
 class ActionExtraer:
     
@@ -12,12 +13,12 @@ class ActionExtraer:
         self.padre = padre
         
         self.todos = False
-        self.salida = config.HOME
+        self.salida = self.padre.core.prefs.ruta_extraer_iso
         self.formato_destino = 'iso'
         
         self.padre.wb_extraer_radio_uno.connect('toggled',self.cambio_juegos_seleccionados, False)
         self.padre.wb_extraer_radio_todos.connect('toggled',self.cambio_juegos_seleccionados, True)
-
+        
         self.padre.wb_extraer_directorio_salida.connect("current-folder-changed", self.cambio_directorio_salida)
         
         self.padre.wb_extraer_radio_formato_iso.connect('toggled',self.cambio_formato_salida, 'iso')
@@ -25,50 +26,56 @@ class ActionExtraer:
         self.padre.wb_extraer_radio_formato_wdf.connect('toggled',self.cambio_formato_salida, 'wdf')
         
         self.padre.wb_boton_extraer_empezar.connect("clicked", self.empieza_conversion)
+        
+        self.padre.wb_extraer_directorio_salida.set_current_folder( self.salida )
     
     def cambio_juegos_seleccionados(self, radio, todos):
         if radio.get_active():
             self.todos = todos
 
     def cambio_directorio_salida(self, boton):
-        self.salida = boton.get_file().get_path()
+        self.padre.core.prefs.ruta_extraer_iso = self.salida = boton.get_file().get_path()
 
     def cambio_formato_salida(self, radio, formato):
         if radio.get_active():
             self.formato_destino = formato
+            
+    def extraer_juego(self, juego):
+
+        extraer = False
+        if self.padre.core.existeExtraido(juego , self.salida, self.formato_destino):
+            extraer = self.padre.question(_('Desea reemplazar la iso del juego %s?') % (juego))
+        else:
+            if self.formato_destino == 'iso':
+                if not util.space_for_dvd_iso_wii(self.salida):
+                    self.padre.alert("warning" , _("Espacio libre insuficiente para extraer la ISO"))
+                else:
+                    extraer = True
+            else:
+                extraer = True
+
+        if extraer:
+            
+            if config.DEBUG:
+                print "Extraer en %s" % self.salida
+
+            # extraer *juego* en la ruta seleccionada
+            trabajoDesc = TrabajoDesc()
+            trabajoDesc.formato_extraer = self.formato_destino
+            self.padre.poolTrabajo.nuevoTrabajoExtraer(juego , self.salida, trabajoDesc)
+
 
     def empieza_conversion(self, boton):
+        
         if not self.todos:
+
             if self.padre.isSelectedGame():
-
-                ruta_selec = self.salida
-                self.padre.core.prefs.FORMATO_EXTRACT = self.formato_destino
-
-                extraer = False
-                if self.padre.core.existeExtraido(self.padre.sel_juego.obj , ruta_selec, self.padre.core.prefs.FORMATO_EXTRACT):
-                    extraer = self.padre.question(_('Desea reemplazar la iso del juego %s?') % (self.padre.sel_juego.obj))
-                else:
-                    if self.padre.core.prefs.FORMATO_EXTRACT == 'iso':
-                        if not util.space_for_dvd_iso_wii(ruta_selec):
-                            self.padre.alert("warning" , _("Espacio libre insuficiente para extraer la ISO"))
-                        else:
-                            extraer = True
-                    else:
-                        extraer = True
-
-                if extraer:
-                    # nueva ruta favorita
-                    self.padre.core.prefs.ruta_extraer_iso = ruta_selec
-                    
-                    print "Extraer en %s" % ruta_selec
-
-                    # extraer *juego* en la ruta seleccionada
-                    self.padre.poolTrabajo.nuevoTrabajoExtraer(self.padre.sel_juego.obj , ruta_selec)
-
+                self.extraer_juego( self.padre.sel_juego.obj )
             else:
                 self.padre.alert("warning" , _("No has seleccionado ningun juego"))
         else:
-            self.padre.alert("warning" , "Sin implementar")
-            
-        self.padre.wb_dialogo_extraer.hide()
 
+            for juego in self.padre.lJuegos:
+                self.extraer_juego(juego)
+
+        self.padre.wb_dialogo_extraer.hide()

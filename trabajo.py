@@ -116,7 +116,6 @@ class PoolTrabajo(Pool , Thread):
         self.USER_WIITDB = self.core.prefs.USER_WIITDB
         self.PASS_WIITDB = self.core.prefs.PASS_WIITDB
         self.URL_ZIP_WIITDB = self.core.prefs.URL_ZIP_WIITDB
-        self.FORMATO_EXTRACT = self.core.prefs.FORMATO_EXTRACT
         self.tipo_caratula = self.core.prefs.tipo_caratula
         self.tipo_disc_art = self.core.prefs.tipo_disc_art
 
@@ -302,7 +301,7 @@ class PoolTrabajo(Pool , Thread):
         if self.callback_empieza_progreso:
             self.callback_empieza_progreso(trabajo)
         
-        exito = core.extraerJuego(juego, destino, self.FORMATO_EXTRACT)
+        exito = core.extraerJuego(juego, destino, trabajo.trabajoDesc.formato_extraer)
 
         if self.callback_termina_progreso:
             self.callback_termina_progreso(trabajo)
@@ -567,11 +566,11 @@ class PoolTrabajo(Pool , Thread):
 
     ######################### INTERFAZ PUBLICO #######################################
 
-    def nuevoTrabajo( self , tipo , origenes , destino=None ):
+    def nuevoTrabajo( self , tipo , origenes , destino=None, trabajoDesc=None ):
         if isinstance(origenes, list):
             trabajos = []
             for origen in origenes:
-                trabajo = Trabajo(tipo , origen, destino)
+                trabajo = Trabajo(tipo , origen, destino, trabajoDesc)
                 self.nuevoElemento(trabajo)
                 trabajos.append(trabajo)
 
@@ -581,7 +580,7 @@ class PoolTrabajo(Pool , Thread):
             return trabajos
 
         else:
-            trabajo = Trabajo(tipo , origenes, destino)
+            trabajo = Trabajo(tipo , origenes, destino, trabajoDesc)
             self.nuevoElemento(trabajo)
 
             if self.callback_nuevo_trabajo:
@@ -592,8 +591,8 @@ class PoolTrabajo(Pool , Thread):
     def nuevoTrabajoAnadir(self , ficheros , DEVICE):
         return self.nuevoTrabajo( ANADIR , ficheros , DEVICE )
 
-    def nuevoTrabajoExtraer(self ,juegos ,destino):
-        return self.nuevoTrabajo( EXTRAER , juegos, destino )
+    def nuevoTrabajoExtraer(self ,juegos ,destino, trabajoDesc):
+        return self.nuevoTrabajo( EXTRAER , juegos, destino, trabajoDesc )
 
     def nuevoTrabajoClonar(self , juegos, DEVICE):
         return self.nuevoTrabajo( CLONAR , juegos, DEVICE )
@@ -637,6 +636,10 @@ class PoolTrabajo(Pool , Thread):
     def nuevoTrabajoConvertir_WDF_ISO(self , origen, directorio_salida):
         return self.nuevoTrabajo( CONVERSION_WDF_ISO , origen, directorio_salida )
 
+class TrabajoDesc:
+    def __init__(self):
+        self.formato_extraer = ''
+    
 '''
 tipo:
     tipo de Trabajo
@@ -657,9 +660,8 @@ padre:
 error:
     En caso fallido, mensaje de error
 '''
-
 class Trabajo:
-    def __init__(self, tipo , origen , destino=None):
+    def __init__(self, tipo , origen , destino=None, trabajoDesc=None):
         self.tipo = tipo
         self.origen = origen
         self.destino = destino
@@ -667,14 +669,21 @@ class Trabajo:
         self.prioridad = BAJA
         self.exito = False
         self.padre = None
+        self.avisar = (tipo is not DESCARGA_CARATULA) and (tipo is not DESCARGA_DISCO) and (tipo is not ACTUALIZAR_WIITDB)
+        self.trabajoDesc = trabajoDesc
+        # siempre se define el ultimo, porque usa repr()
         self.error = "%s\n\n%s" % (_("Error al finalizar la siguiente tarea:") ,self.__repr__())
-        self.avisar = (tipo is not DESCARGA_CARATULA) and (tipo is not DESCARGA_DISCO)
  
     def __repr__(self):
         if self.tipo == ANADIR:
             return _("Anadir %s a la particion %s") % (os.path.basename(self.origen), self.destino)
         elif self.tipo == EXTRAER and isinstance(self.origen, Juego):
-            return _("Extraer %s a la ruta %s") % (self.origen.title, self.destino)
+            if (self.trabajoDesc and self.trabajoDesc.formato_extraer == 'wbfs'):
+                return _("Extraer %s a la ruta %s como WBFS") % (self.origen.title, self.destino)
+            elif (self.trabajoDesc and self.trabajoDesc.formato_extraer == 'wdf'):
+                return _("Extraer %s a la ruta %s como WDF") % (self.origen.title, self.destino)
+            else: # self.trabajoDesc.formato_extraer == 'iso':
+                return _("Extraer %s a la ruta %s como ISO") % (self.origen.title, self.destino)
         elif self.tipo == CLONAR and isinstance(self.origen, Juego):
             return _("Copiando el juego %s desde %s a la particion %s") % (self.origen.title, self.origen.particion , self.destino)
         elif self.tipo == DESCARGA_CARATULA:
@@ -690,7 +699,7 @@ class Trabajo:
         elif self.tipo == DESCOMPRIMIR_RAR:
             return _("Descomprimir RAR %s") % (os.path.basename(self.origen))
         elif self.tipo == ACTUALIZAR_WIITDB:
-            return _("Actualizar WiiTDB desde %s") % (self.origen)
+            return _("Actualizar WiiTDB desde %s ...") % (self.origen[:35])
         elif self.tipo == EDITAR_JUEGO_WIITDB:
             return _("Editar Juego WiiTDB: %s") % (self.origen)
         elif self.tipo == VER_URL:
