@@ -114,8 +114,7 @@ class Preferencias:
             defecto_secundario = 'EN'
         
         # wiitdb
-        self.iniciarPreferencia('string', 'URL_ZIP_WIITDB', defecto='http://wiitdb.com/wiitdb.zip?LANG=%s' % defecto_principal, mostrar=cargarWidget, vbox=prefs_vbox_wiitdb, label=_('URL principal para WiiTDB'))
-        self.iniciarPreferencia('string', 'URL_SECOND_ZIP_WIITDB', defecto='http://wiitdb.com/wiitdb.zip?LANG=%s' % defecto_secundario, mostrar=cargarWidget, vbox=prefs_vbox_wiitdb, label=_('URL secundaria para WiiTDB'))
+        self.iniciarPreferencia('string', 'URL_ZIP_WIITDB', defecto='http://wiitdb.com/wiitdb.zip', mostrar=cargarWidget, vbox=prefs_vbox_wiitdb, label=_('URL principal para WiiTDB'))
         self.iniciarPreferencia('string', 'FORMATO_FECHA_WIITDB', defecto='%d/%m/%Y', mostrar=cargarWidget, vbox=prefs_vbox_wiitdb, label=_('Formato fecha'))
         self.iniciarPreferencia('string', 'FORMATO_FECHA_CORTA_WIITDB', defecto='%Y/%m', mostrar=cargarWidget, vbox=prefs_vbox_wiitdb, label=_('Formato fecha corto'))        
         self.iniciarPreferencia('select', 'LANG_PRINCIPAL', defecto=defecto_principal, mostrar=cargarWidget, vbox=prefs_vbox_wiitdb, label=_('Idioma principal para el synopsis'), datos_lista = WIITDB_LANGUAGE_LISTA)

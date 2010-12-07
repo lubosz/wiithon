@@ -68,9 +68,10 @@ class WiiTDBXML(Thread):
         self.salir = False
         
     def limpiarTemporales(self):
+        
         if os.path.exists(self.destino):
             os.remove(self.destino)
-            
+                        
         if os.path.exists(self.fichXML):
             os.remove(self.fichXML)
     
@@ -95,7 +96,7 @@ class WiiTDBXML(Thread):
             descargado_y_ok = True
         except ErrorDescargando:
             self.error_importando(_("Error descargando la informacion WiiTDB desde %s") % self.url)
-            
+        
         if os.path.exists(self.fichXML) and descargado_y_ok:
             xmldoc = libxml2.parseFile(self.fichXML)
             ctxt = xmldoc.xpathNewContext()

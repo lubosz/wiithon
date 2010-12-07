@@ -514,14 +514,12 @@ class WiithonGUI(GtkBuilderWrapper):
                         <pr>%s</pr>
                         <br />
                         <br />
-                        <azul><pr>%s</pr></azul><br />
                         <azul><pr>%s</pr></azul>
                     </b>
                     """ % (
                             _("Se ha detectado que ninguno de tus juegos disponen de informacion extra, descargada de Internet."),
                             _("Deseas descargar informacion de los juegos desde WiiTDB?"),
-                            self.core.prefs.URL_ZIP_WIITDB,
-                            self.core.prefs.URL_SECOND_ZIP_WIITDB
+                            self.core.prefs.URL_ZIP_WIITDB
                             ),
                             xml = True) ):
                     self.ActualizarWiiTDB()
@@ -531,6 +529,7 @@ class WiithonGUI(GtkBuilderWrapper):
                 self.alert("warning" , _("No puedes refrescar las particiones mientras hay tareas sin finalizar"))
 
     def ActualizarWiiTDB(self):
+        """
         i = 0
         buffer = ""
         for juego in self.lJuegos:
@@ -538,8 +537,29 @@ class WiithonGUI(GtkBuilderWrapper):
             i = i+1
             if(i % 400 == 0) or (i == len(self.lJuegos)):
                 self.poolTrabajo.nuevoTrabajoActualizarWiiTDB(self.core.prefs.URL_ZIP_WIITDB + buffer)
-                self.poolTrabajo.nuevoTrabajoActualizarWiiTDB(self.core.prefs.URL_SECOND_ZIP_WIITDB + buffer)
                 buffer = ""
+        """
+        
+        session.execute("DELETE FROM juego_wiitdb WHERE 1")
+        session.execute("DELETE FROM companie WHERE 1")
+        session.execute("DELETE FROM juego_wiitdb WHERE 1")
+        session.execute("DELETE FROM companie WHERE 1")
+        session.execute("DELETE FROM rating_value WHERE 1")
+        session.execute("DELETE FROM rating_content WHERE 1")
+        session.execute("DELETE FROM rating_type WHERE 1")
+        session.execute("DELETE FROM online_features WHERE 1")
+        session.execute("DELETE FROM juego_descripcion WHERE 1")
+        session.execute("DELETE FROM rom WHERE 1")
+        session.execute("DELETE FROM genero WHERE 1")
+        session.execute("DELETE FROM accesorio WHERE 1")
+        session.execute("DELETE FROM rel_online_features_juego WHERE 1")
+        session.execute("DELETE FROM rel_rating_content_juego WHERE 1")
+        session.execute("DELETE FROM rel_juego_genero WHERE 1")
+        session.execute("DELETE FROM rel_accesorio_juego_obligatorio WHERE 1")
+        session.execute("DELETE FROM rel_accesorio_juego_opcional WHERE 1")
+        session.commit()
+        
+        self.poolTrabajo.nuevoTrabajoActualizarWiiTDB(self.core.prefs.URL_ZIP_WIITDB)
 
     def excepthook(self, exctype, excvalue, exctb):
         self.cerrar_loading()
@@ -2140,13 +2160,11 @@ class WiithonGUI(GtkBuilderWrapper):
                         <pr>%s</pr>
                         <br />
                         <br />
-                        <azul><pr>%s</pr></azul><br />
                         <azul><pr>%s</pr></azul>
                     </b>
                 """ % (
                         _("Seguro que deseas descargar informacion de los juegos de WiiTDB?"),
-                        self.core.prefs.URL_ZIP_WIITDB,
-                        self.core.prefs.URL_SECOND_ZIP_WIITDB
+                        self.core.prefs.URL_ZIP_WIITDB
                         ),
                         xml = True) ):
                 self.ActualizarWiiTDB()

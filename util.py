@@ -243,22 +243,8 @@ class ErrorDescargando(Exception):
 class YaEstaDescargado(Exception):
     pass
 
-'''
 def descargar(url, destino):
-    try:
-        mysock = urllib.urlopen(url)
-        oFile = open(destino ,'wb')
-        buffer = mysock.read()
-        oFile.write(buffer)
-        oFile.close()
-    except:
-        raise ErrorDescargando
-'''
-
-def descargar(url, destino):
-    """Copy the contents of a file from a given URL
-    to a local file.
-    """
+    '''
     try:
         webFile = urllib.urlopen(url)
         localFile = open(destino, 'w')
@@ -267,6 +253,9 @@ def descargar(url, destino):
         webFile.close()
         localFile.close()
     except:
+        raise ErrorDescargando
+    '''
+    if not call_out_null("wget %s -O %s" % (url, destino)):
         raise ErrorDescargando
 
 def descargarImagen(url, destino, type = "image/png", referer = "http://www.wiiboxart.com/pal.php"):
