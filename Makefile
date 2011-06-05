@@ -477,6 +477,6 @@ ppa-new: generate_changelog
 	#mv ../wiithon_$(VERSION_ACTUAL).tar.gz ../wiithon_$(VERSION_ACTUAL).orig.tar.gz
 	#debuild -S -sk -k0x2B5B428F -I -i --lintian-opts -Ivi
 
-ppa-upload-new:
+ppa-upload-new: ppa-new
 	dput ppa:wii.sceners.linux/wiithon ../wiithon_$(VERSION_ACTUAL)_source.changes
 
