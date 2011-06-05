@@ -13,12 +13,11 @@ ayuda: help
 help:
 	@echo
 	@echo ==================================================================
+	@echo "Step 0: \"sudo make dependencies\" (only debian distributions)"
 	@echo "step 1: \"make\""
 	@echo "step 2: \"sudo make install\""
 	@echo ""
 	@echo "Other options:"
-	@echo ""
-	@echo "Type: \"sudo make install_auto\" for install automatically"
 	@echo ""
 	@echo "Type: \"sudo make uninstall\" for uninstall"
 	@echo "Type: \"sudo make purge\" for full uninstall (covers, disc-art ...)"
@@ -27,10 +26,10 @@ help:
 runEN:
 	LANGUAGE=en wiithon
 
-install_auto: dependencias compile install permisos
+install_auto: dependencies compile install permisos
 
-dependencias:
-	$(INSTALL_PKG) libc6 libc6-dev intltool imagemagick python-gtk2 python-glade2 python-sexy python-sqlalchemy gnome-icon-theme g++
+dependencies:
+	$(INSTALL_PKG) libc6 libc6-dev intltool imagemagick python-gtk2 python-glade2 python-sqlalchemy gnome-icon-theme g++
 	-@$(INSTALL_PKG) libc6-dev-i386 libc6-i386
 	@echo "=================================================================="
 	@echo "Install depends OK"
@@ -213,7 +212,8 @@ deb_only_install:
 	sudo dpkg -i ../wiithon_$(VERSION_ACTUAL)_i386.deb
 
 ppa-inc: generate_changelog
-	debuild -S -sd -k0xB8F0176A -I -i --lintian-opts -Ivi
+	#debuild -S -sd -k0xB8F0176A -I -i --lintian-opts -Ivi
+	debuild -S -sd -k0x2B5B428F -I -i --lintian-opts -Ivi
 	
 ppa-upload: ppa-inc
 	dput ppa:wii.sceners.linux/wiithon ../wiithon_$(VERSION_ACTUAL)_source.changes
@@ -427,15 +427,12 @@ ifeq ($(shell if [ -x .bzr ]; then echo "y"; else echo "n"; fi), y)
 endif
 
 commit: clean compile gen_rev_next
+	echo "\n" >> COMMIT
 	bzr commit --file="COMMIT" && echo "" > COMMIT
 
 log:
 	bzr log --forward --short
 	
-# pull from other pc than dont can push in launchpad
-pull_pc_susana:
-	bzr pull bzr+ssh://susana@192.168.1.100/home/susana/compilado/wiithon/trunk
-
 # TRADUCCION
 # http://faq.pygtk.org/index.py?req=show&file=faq22.002.htp
 # http://misdocumentos.net/wiki/linux/locales
@@ -482,3 +479,4 @@ ppa-new: generate_changelog
 
 ppa-upload-new:
 	dput ppa:wii.sceners.linux/wiithon ../wiithon_$(VERSION_ACTUAL)_source.changes
+
