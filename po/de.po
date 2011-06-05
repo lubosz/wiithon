@@ -1762,59 +1762,59 @@ msgstr "Programm läuft mit falschen Einstellungen"
 msgid "Interrumpido por el usuario"
 msgstr "Abbruch durch Benutzer"
 
-#, fuzzy
-#~ msgid "URL secundaria para WiiTDB"
-#~ msgstr "URL Adresse für WiiTDB Daten"
+#~ msgid "Numero de tareas que esperan en la cola."
+#~ msgstr "Aufgaben in der Warteschlange."
 
-#~ msgid "Formato ISO - para Grabacion DVD"
-#~ msgstr "ISO Format für DVD Aufnahmen"
+#~ msgid "No se ha encontrado ninguna imagen ISO o RAR"
+#~ msgstr "Es wurde kein ISO oder RAR Image gefunden"
 
-#~ msgid "Formato WBFS - para USBLoader-FAT32"
-#~ msgstr "WBFS Format für USB Loader FAT32"
+#~ msgid "Buscar:"
+#~ msgstr "Suche:"
 
-#~ msgid "Formato WDF - para Almacenamiento"
-#~ msgstr "WDF Format zum Speichern"
+#~ msgid "Fecha de lanzamiento: "
+#~ msgstr "Veröffentlicht"
 
-#~ msgid "Formato de extraccion"
-#~ msgstr "Format zum Extrahieren"
+#~ msgid "OPCIONALES: "
+#~ msgstr "OPTIONEN:"
 
-#~ msgid "Tienes que seleccionar una particion WBFS para realizar esta accion"
-#~ msgstr "Wählen Sie eine WBFS Partition für diese Aktion"
+#~ msgid "ACCESORIOS: "
+#~ msgstr "ZUBEHÖR:"
 
-#~ msgid "Elige un directorio donde extraer la ISO de %s"
-#~ msgstr "Wähle Ordner in dem die ISO %s extrahiert werden soll"
+#~ msgid "Progreso de la tarea actual."
+#~ msgstr "Aktuelle Aufgabe"
 
-#, fuzzy
-#~ msgid "Opciones de extraccion"
-#~ msgstr "Format unbekannt"
+#~ msgid "Numero de juegos."
+#~ msgstr "Anzahl der Spiele"
+
+#~ msgid "+INFO"
+#~ msgstr "+INFO"
 
 #, fuzzy
 #~ msgid "WBFS"
 #~ msgstr "WBFS?"
 
-#~ msgid "+INFO"
-#~ msgstr "+INFO"
+#, fuzzy
+#~ msgid "Opciones de extraccion"
+#~ msgstr "Format unbekannt"
 
-#~ msgid "Numero de juegos."
-#~ msgstr "Anzahl der Spiele"
+#~ msgid "Elige un directorio donde extraer la ISO de %s"
+#~ msgstr "Wähle Ordner in dem die ISO %s extrahiert werden soll"
 
-#~ msgid "Progreso de la tarea actual."
-#~ msgstr "Aktuelle Aufgabe"
+#~ msgid "Tienes que seleccionar una particion WBFS para realizar esta accion"
+#~ msgstr "Wählen Sie eine WBFS Partition für diese Aktion"
 
-#~ msgid "ACCESORIOS: "
-#~ msgstr "ZUBEHÖR:"
+#~ msgid "Formato de extraccion"
+#~ msgstr "Format zum Extrahieren"
 
-#~ msgid "OPCIONALES: "
-#~ msgstr "OPTIONEN:"
+#~ msgid "Formato WDF - para Almacenamiento"
+#~ msgstr "WDF Format zum Speichern"
 
-#~ msgid "Fecha de lanzamiento: "
-#~ msgstr "Veröffentlicht"
+#~ msgid "Formato WBFS - para USBLoader-FAT32"
+#~ msgstr "WBFS Format für USB Loader FAT32"
 
-#~ msgid "Buscar:"
-#~ msgstr "Suche:"
+#~ msgid "Formato ISO - para Grabacion DVD"
+#~ msgstr "ISO Format für DVD Aufnahmen"
 
-#~ msgid "No se ha encontrado ninguna imagen ISO o RAR"
-#~ msgstr "Es wurde kein ISO oder RAR Image gefunden"
-
-#~ msgid "Numero de tareas que esperan en la cola."
-#~ msgstr "Aufgaben in der Warteschlange."
+#, fuzzy
+#~ msgid "URL secundaria para WiiTDB"
+#~ msgstr "URL Adresse für WiiTDB Daten"

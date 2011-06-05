@@ -1765,34 +1765,34 @@ msgstr "Programme lancé avec des paramètres incorrects."
 msgid "Interrumpido por el usuario"
 msgstr "Interrompu par l'utilisateur"
 
-#, fuzzy
-#~ msgid "URL secundaria para WiiTDB"
-#~ msgstr "URL vers la base de données WiiTDB"
+#~ msgid "Tienes que seleccionar una particion WBFS para realizar esta accion"
+#~ msgstr "Vous devez sélectionner une partition WBFS pour réaliser cette action"
 
-#~ msgid "Formato ISO - para Grabacion DVD"
-#~ msgstr "Format ISO - pour gravure DVD"
+#~ msgid "Elige un directorio donde extraer la ISO de %s"
+#~ msgstr "Choisissez le dossier dans lequel extraire l'ISO %s"
 
-#~ msgid "Formato WBFS - para USBLoader-FAT32"
-#~ msgstr "Format WBFS - pour USBLoader en FAT32"
+#~ msgid "Extraer todos los juegos*"
+#~ msgstr "Extraire tous les jeux*"
 
-#~ msgid "Formato WDF - para Almacenamiento"
-#~ msgstr "Format WDF - pour stockage"
-
-#~ msgid "Formato de extraccion"
-#~ msgstr "Format d'extraction"
+#~ msgid "Opciones de extraccion"
+#~ msgstr "Options d'extraction"
 
 #, fuzzy
 #~ msgid "WBFS"
 #~ msgstr "WBFS?"
 
-#~ msgid "Opciones de extraccion"
-#~ msgstr "Options d'extraction"
+#~ msgid "Formato de extraccion"
+#~ msgstr "Format d'extraction"
 
-#~ msgid "Extraer todos los juegos*"
-#~ msgstr "Extraire tous les jeux*"
+#~ msgid "Formato WDF - para Almacenamiento"
+#~ msgstr "Format WDF - pour stockage"
 
-#~ msgid "Elige un directorio donde extraer la ISO de %s"
-#~ msgstr "Choisissez le dossier dans lequel extraire l'ISO %s"
+#~ msgid "Formato WBFS - para USBLoader-FAT32"
+#~ msgstr "Format WBFS - pour USBLoader en FAT32"
 
-#~ msgid "Tienes que seleccionar una particion WBFS para realizar esta accion"
-#~ msgstr "Vous devez sélectionner une partition WBFS pour réaliser cette action"
+#~ msgid "Formato ISO - para Grabacion DVD"
+#~ msgstr "Format ISO - pour gravure DVD"
+
+#, fuzzy
+#~ msgid "URL secundaria para WiiTDB"
+#~ msgstr "URL vers la base de données WiiTDB"

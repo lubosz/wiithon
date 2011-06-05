@@ -211,13 +211,6 @@ deb_and_install: deb_sign
 deb_only_install:
 	sudo dpkg -i ../wiithon_$(VERSION_ACTUAL)_i386.deb
 
-ppa-inc: generate_changelog
-	#debuild -S -sd -k0xB8F0176A -I -i --lintian-opts -Ivi
-	debuild -S -sd -k0x2B5B428F -I -i --lintian-opts -Ivi
-	
-ppa-upload: ppa-inc
-	dput ppa:wii.sceners.linux/wiithon ../wiithon_$(VERSION_ACTUAL)_source.changes
-
 clean_old_wiithon: 
 
 	@echo "=================================================================="
@@ -468,14 +461,21 @@ po/locale/%/LC_MESSAGES/wiithon.mo: po/%.po
 	msgfmt $< -o $@
 	@rmdir $(basename $@)
 
-#
+# incrementos intermedios a la baseline
+ppa-inc: generate_changelog
+	debuild -S -sd -k0x2B5B428F -I -i --lintian-opts -Ivi
+	
+ppa-upload-inc: ppa-inc
+	dput ppa:wii.sceners.linux/wiithon ../wiithon_$(VERSION_ACTUAL)_source.changes
+
+# Solo para avanzar la baseline
 # Only need first time
-#
+# modificar doc/VERSION
 ppa-new: generate_changelog
-	debuild -S -sa -k0xB8F0176A -I -i --lintian-opts -Ivi
-	sleep 1
-	mv ../wiithon_$(VERSION_ACTUAL).tar.gz ../wiithon_$(VERSION_ACTUAL).orig.tar.gz
-	debuild -S -sk -k0xB8F0176A -I -i --lintian-opts -Ivi
+	debuild -S -sa -k0x2B5B428F -I -i --lintian-opts -Ivi
+	#sleep 1
+	#mv ../wiithon_$(VERSION_ACTUAL).tar.gz ../wiithon_$(VERSION_ACTUAL).orig.tar.gz
+	#debuild -S -sk -k0x2B5B428F -I -i --lintian-opts -Ivi
 
 ppa-upload-new:
 	dput ppa:wii.sceners.linux/wiithon ../wiithon_$(VERSION_ACTUAL)_source.changes
