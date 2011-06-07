@@ -1236,46 +1236,46 @@ msgstr "Disko-arte irudi zabalera"
 msgid "Altura imagen disc-art"
 msgstr "Disko-arte irudi altuera"
 
-#: preferencias.py:234
+#: preferencias.py:237
 msgid "Proveedor de caratulas"
 msgstr "Karatula hornitzailea"
 
-#: preferencias.py:265
+#: preferencias.py:269
 msgid "Proveedor de discos"
 msgstr "Disko hornitzailea"
 
-#: preferencias.py:268
+#: preferencias.py:272
 #, python-format
 msgid "URL de busqueda en Google. (%s es el nombre del juego)"
 msgstr "Google bilaketa URLa. (%s jokoaren izena da)"
 
-#: preferencias.py:269
+#: preferencias.py:273
 #, python-format
 msgid "URL de busqueda en Wikipedia. (%s es el nombre del juego)"
 msgstr "Wikipedia bilaketa URLa. (%s jokoaren izena da)"
 
-#: preferencias.py:270
+#: preferencias.py:274
 #, python-format
 msgid "URL de busqueda en Youtube. (%s es el nombre del juego)"
 msgstr "Youtube bilaketa URLa. (%s jokoaren izena da)"
 
-#: preferencias.py:271
+#: preferencias.py:275
 #, python-format
 msgid "URL de busqueda en IGN. (%s es el nombre del juego)"
 msgstr "IGN bilaketa URLa. (%s jokoaren izena da)"
 
-#: preferencias.py:272
+#: preferencias.py:276
 #, python-format
 msgid "URL de busqueda en GameSpot. (%s es el nombre del juego)"
 msgstr "Gamespot bilaketa URLa. (%s jokoaren izena da)"
 
-#: preferencias.py:273
+#: preferencias.py:277
 #, python-format
 msgid "URL de busqueda en VGChartz. (%s es el nombre del juego)"
 msgstr "VGChartz bilaketa URLa. (%s jokoaren izena da)"
 
-#: preferencias.py:320 preferencias.py:356 preferencias.py:374
-#: preferencias.py:396
+#: preferencias.py:324 preferencias.py:360 preferencias.py:378
+#: preferencias.py:400
 msgid "Por defecto"
 msgstr "Lehenetsia"
 
@@ -1944,14 +1944,14 @@ msgstr "Programa okerreko aukerekin exekutatu da."
 msgid "Interrumpido por el usuario"
 msgstr "Erabiltzaileak etenda."
 
-#~ msgid "URL secundaria para WiiTDB"
-#~ msgstr "WIITDB-ren bigarren URLa"
-
-#~ msgid "Formato ISO - para Grabacion DVD"
-#~ msgstr "ISO formatua - DVD grabaketarako"
+#~ msgid "Formato WDF - para Almacenamiento"
+#~ msgstr "WDF formatua - Biltegiratzeko"
 
 #~ msgid "Formato WBFS - para USBLoader-FAT32"
 #~ msgstr "WBFS formatua - USBLoader-FAT32"
 
-#~ msgid "Formato WDF - para Almacenamiento"
-#~ msgstr "WDF formatua - Biltegiratzeko"
+#~ msgid "Formato ISO - para Grabacion DVD"
+#~ msgstr "ISO formatua - DVD grabaketarako"
+
+#~ msgid "URL secundaria para WiiTDB"
+#~ msgstr "WIITDB-ren bigarren URLa"

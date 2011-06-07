@@ -1240,46 +1240,46 @@ msgstr "Disc-art bredde"
 msgid "Altura imagen disc-art"
 msgstr "Disc-art højde"
 
-#: preferencias.py:234
+#: preferencias.py:237
 msgid "Proveedor de caratulas"
 msgstr "Cover Provider"
 
-#: preferencias.py:265
+#: preferencias.py:269
 msgid "Proveedor de discos"
 msgstr "Disc-art Provider"
 
-#: preferencias.py:268
+#: preferencias.py:272
 #, python-format
 msgid "URL de busqueda en Google. (%s es el nombre del juego)"
 msgstr "Google.com search URL (Spil %s)"
 
-#: preferencias.py:269
+#: preferencias.py:273
 #, python-format
 msgid "URL de busqueda en Wikipedia. (%s es el nombre del juego)"
 msgstr "Wikipedia search URL (Spil %s)"
 
-#: preferencias.py:270
+#: preferencias.py:274
 #, python-format
 msgid "URL de busqueda en Youtube. (%s es el nombre del juego)"
 msgstr "YouTube search URL (Spil %s)"
 
-#: preferencias.py:271
+#: preferencias.py:275
 #, python-format
 msgid "URL de busqueda en IGN. (%s es el nombre del juego)"
 msgstr "IGN search URL (Spil %s)"
 
-#: preferencias.py:272
+#: preferencias.py:276
 #, python-format
 msgid "URL de busqueda en GameSpot. (%s es el nombre del juego)"
 msgstr "GameSpot search URL (Spil %s)"
 
-#: preferencias.py:273
+#: preferencias.py:277
 #, python-format
 msgid "URL de busqueda en VGChartz. (%s es el nombre del juego)"
 msgstr "VGChartz search URL (Spil %s)"
 
-#: preferencias.py:320 preferencias.py:356 preferencias.py:374
-#: preferencias.py:396
+#: preferencias.py:324 preferencias.py:360 preferencias.py:378
+#: preferencias.py:400
 msgid "Por defecto"
 msgstr "Default"
 
@@ -1951,60 +1951,60 @@ msgstr "Programmet kører med ukorrekte preferences"
 msgid "Interrumpido por el usuario"
 msgstr "Afbrudt af bruger"
 
-#~ msgid "Tienes que seleccionar una particion WBFS para realizar esta accion"
-#~ msgstr "Please select a WBFS partition"
-
-#~ msgid "Extraer todos los juegos*"
-#~ msgstr "Extract All Games*"
-
-#~ msgid "Opciones de extraccion"
-#~ msgstr "Extraction Options"
-
-#~ msgid "WBFS"
-#~ msgstr "WBFS?"
-
-#~ msgid "+INFO"
-#~ msgstr "+INFO"
-
-#~ msgid "Espacio usado / Espacio total"
-#~ msgstr "Used / Total"
-
-#~ msgid "Numero de juegos."
-#~ msgstr "GAMEID"
-
-#~ msgid "Progreso de la tarea actual."
-#~ msgstr "Task progress: "
-
-#~ msgid "ACCESORIOS: "
-#~ msgstr "Accessories: "
-
-#~ msgid "OPCIONALES: "
-#~ msgstr "Optional: "
-
-#~ msgid "Fecha de lanzamiento: "
-#~ msgstr "Released: "
-
-#~ msgid "Buscar:"
-#~ msgstr "Search: "
-
-#~ msgid "ISO sin comprimir"
-#~ msgstr "Uncompressed ISO"
-
-#~ msgid "No se ha encontrado ninguna imagen ISO o RAR"
-#~ msgstr "Could not find ISO / RAR"
-
-#~ msgid "Numero de tareas que esperan en la cola."
-#~ msgstr "Number of tasks in queue"
-
-#~ msgid "Formato WDF - para Almacenamiento"
-#~ msgstr "Format WDF - til lagerenhed"
-
-#~ msgid "Formato WBFS - para USBLoader-FAT32"
-#~ msgstr "Format WBFS - for USBLoader-FAT32"
+#, fuzzy
+#~ msgid "URL secundaria para WiiTDB"
+#~ msgstr "WiiTDB.zip DB URL"
 
 #~ msgid "Formato ISO - para Grabacion DVD"
 #~ msgstr "Format ISO - for DVD Recording"
 
-#, fuzzy
-#~ msgid "URL secundaria para WiiTDB"
-#~ msgstr "WiiTDB.zip DB URL"
+#~ msgid "Formato WBFS - para USBLoader-FAT32"
+#~ msgstr "Format WBFS - for USBLoader-FAT32"
+
+#~ msgid "Formato WDF - para Almacenamiento"
+#~ msgstr "Format WDF - til lagerenhed"
+
+#~ msgid "Numero de tareas que esperan en la cola."
+#~ msgstr "Number of tasks in queue"
+
+#~ msgid "No se ha encontrado ninguna imagen ISO o RAR"
+#~ msgstr "Could not find ISO / RAR"
+
+#~ msgid "ISO sin comprimir"
+#~ msgstr "Uncompressed ISO"
+
+#~ msgid "Buscar:"
+#~ msgstr "Search: "
+
+#~ msgid "Fecha de lanzamiento: "
+#~ msgstr "Released: "
+
+#~ msgid "OPCIONALES: "
+#~ msgstr "Optional: "
+
+#~ msgid "ACCESORIOS: "
+#~ msgstr "Accessories: "
+
+#~ msgid "Progreso de la tarea actual."
+#~ msgstr "Task progress: "
+
+#~ msgid "Numero de juegos."
+#~ msgstr "GAMEID"
+
+#~ msgid "Espacio usado / Espacio total"
+#~ msgstr "Used / Total"
+
+#~ msgid "+INFO"
+#~ msgstr "+INFO"
+
+#~ msgid "WBFS"
+#~ msgstr "WBFS?"
+
+#~ msgid "Opciones de extraccion"
+#~ msgstr "Extraction Options"
+
+#~ msgid "Extraer todos los juegos*"
+#~ msgstr "Extract All Games*"
+
+#~ msgid "Tienes que seleccionar una particion WBFS para realizar esta accion"
+#~ msgstr "Please select a WBFS partition"

@@ -728,16 +728,16 @@ def get_title_for_search(juego):
 def get_subinterval_type_disc_art(type_disc_art):
     
     if DISC_CUSTOM == type_disc_art:
-        return 17
+        return 16
     else: # elif DISC_ORIGINAL == type_disc_art
         return 0
 
 # FIXME: temporal solution
 def get_subinterval_type_cover(type_cover):
     if COVER_3D == type_cover:
-        return 15
+        return 16
     elif COVER_FULL == type_cover:
-        return 42
+        return 44
     else: # elif COVER_NORMAL == type_cover
         return 0
 

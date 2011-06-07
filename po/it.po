@@ -1238,46 +1238,46 @@ msgstr "Larghezza immagine disc-art"
 msgid "Altura imagen disc-art"
 msgstr "Altezza immagine disc-art"
 
-#: preferencias.py:234
+#: preferencias.py:237
 msgid "Proveedor de caratulas"
 msgstr "Fornitore delle copertine"
 
-#: preferencias.py:265
+#: preferencias.py:269
 msgid "Proveedor de discos"
 msgstr "Fornitore delle disc-art"
 
-#: preferencias.py:268
+#: preferencias.py:272
 #, python-format
 msgid "URL de busqueda en Google. (%s es el nombre del juego)"
 msgstr "URL di ricerca in Google (%s è il nome del gioco)"
 
-#: preferencias.py:269
+#: preferencias.py:273
 #, python-format
 msgid "URL de busqueda en Wikipedia. (%s es el nombre del juego)"
 msgstr "URL di ricerca in Wikipedia (%s è il nome del gioco)"
 
-#: preferencias.py:270
+#: preferencias.py:274
 #, python-format
 msgid "URL de busqueda en Youtube. (%s es el nombre del juego)"
 msgstr "URL di ricerca in YouTube (%s è il nome del gioco)"
 
-#: preferencias.py:271
+#: preferencias.py:275
 #, python-format
 msgid "URL de busqueda en IGN. (%s es el nombre del juego)"
 msgstr "URL di ricerca in IGN (%s è il nome del gioco)"
 
-#: preferencias.py:272
+#: preferencias.py:276
 #, python-format
 msgid "URL de busqueda en GameSpot. (%s es el nombre del juego)"
 msgstr "URL di ricerca in GameSpot (%s è il nome del gioco)"
 
-#: preferencias.py:273
+#: preferencias.py:277
 #, python-format
 msgid "URL de busqueda en VGChartz. (%s es el nombre del juego)"
 msgstr "URL di ricerca in VGCHartz (%s è il nome del gioco)"
 
-#: preferencias.py:320 preferencias.py:356 preferencias.py:374
-#: preferencias.py:396
+#: preferencias.py:324 preferencias.py:360 preferencias.py:378
+#: preferencias.py:400
 msgid "Por defecto"
 msgstr "Default"
 
@@ -1949,15 +1949,15 @@ msgstr "Programma eseguito con parametri errati."
 msgid "Interrumpido por el usuario"
 msgstr "Interrotto dall'utente"
 
-#~ msgid "Formato WDF - para Almacenamiento"
-#~ msgstr "Formato WDF - per archiviazione"
-
-#~ msgid "Formato WBFS - para USBLoader-FAT32"
-#~ msgstr "Formato WBFS - per Loader con supporto FAT32"
+#, fuzzy
+#~ msgid "URL secundaria para WiiTDB"
+#~ msgstr "URL base dati WiiTDB"
 
 #~ msgid "Formato ISO - para Grabacion DVD"
 #~ msgstr "Formato ISO - per masterizzazione DVD"
 
-#, fuzzy
-#~ msgid "URL secundaria para WiiTDB"
-#~ msgstr "URL base dati WiiTDB"
+#~ msgid "Formato WBFS - para USBLoader-FAT32"
+#~ msgstr "Formato WBFS - per Loader con supporto FAT32"
+
+#~ msgid "Formato WDF - para Almacenamiento"
+#~ msgstr "Formato WDF - per archiviazione"

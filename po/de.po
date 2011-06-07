@@ -1238,46 +1238,46 @@ msgstr "Breite des Diskbildes"
 msgid "Altura imagen disc-art"
 msgstr "Höhe des Diskbildes"
 
-#: preferencias.py:234
+#: preferencias.py:237
 msgid "Proveedor de caratulas"
 msgstr "Herkunft der Titelbilder"
 
-#: preferencias.py:265
+#: preferencias.py:269
 msgid "Proveedor de discos"
 msgstr "Herkunft der Diskbilder"
 
-#: preferencias.py:268
+#: preferencias.py:272
 #, python-format
 msgid "URL de busqueda en Google. (%s es el nombre del juego)"
 msgstr "Suchlink für Google (%s ist der Spielname)"
 
-#: preferencias.py:269
+#: preferencias.py:273
 #, python-format
 msgid "URL de busqueda en Wikipedia. (%s es el nombre del juego)"
 msgstr "Suchlink für Wikipedia (%s ist der Spielname)"
 
-#: preferencias.py:270
+#: preferencias.py:274
 #, python-format
 msgid "URL de busqueda en Youtube. (%s es el nombre del juego)"
 msgstr "Suchlink für Youtube (%s ist der Spielname)"
 
-#: preferencias.py:271
+#: preferencias.py:275
 #, python-format
 msgid "URL de busqueda en IGN. (%s es el nombre del juego)"
 msgstr "Suchlink für IGN (%s ist der Spielname)"
 
-#: preferencias.py:272
+#: preferencias.py:276
 #, python-format
 msgid "URL de busqueda en GameSpot. (%s es el nombre del juego)"
 msgstr "Suchlink für GameSpot (%s ist der Spielname)"
 
-#: preferencias.py:273
+#: preferencias.py:277
 #, python-format
 msgid "URL de busqueda en VGChartz. (%s es el nombre del juego)"
 msgstr "Suchlink für VGChartz (%s ist der Spielname)"
 
-#: preferencias.py:320 preferencias.py:356 preferencias.py:374
-#: preferencias.py:396
+#: preferencias.py:324 preferencias.py:360 preferencias.py:378
+#: preferencias.py:400
 msgid "Por defecto"
 msgstr "Vorgabe"
 
@@ -1945,53 +1945,53 @@ msgstr "Programm läuft mit falschen Einstellungen"
 msgid "Interrumpido por el usuario"
 msgstr "Abbruch durch Benutzer"
 
-#~ msgid "Numero de tareas que esperan en la cola."
-#~ msgstr "Aufgaben in der Warteschlange."
-
-#~ msgid "No se ha encontrado ninguna imagen ISO o RAR"
-#~ msgstr "Es wurde kein ISO oder RAR Image gefunden"
-
-#~ msgid "Buscar:"
-#~ msgstr "Suche:"
-
-#~ msgid "Fecha de lanzamiento: "
-#~ msgstr "Veröffentlicht"
-
-#~ msgid "OPCIONALES: "
-#~ msgstr "OPTIONEN:"
-
-#~ msgid "ACCESORIOS: "
-#~ msgstr "ZUBEHÖR:"
-
-#~ msgid "Progreso de la tarea actual."
-#~ msgstr "Aktuelle Aufgabe"
-
-#~ msgid "Numero de juegos."
-#~ msgstr "Anzahl der Spiele"
-
-#~ msgid "+INFO"
-#~ msgstr "+INFO"
-
 #, fuzzy
-#~ msgid "WBFS"
-#~ msgstr "WBFS?"
+#~ msgid "URL secundaria para WiiTDB"
+#~ msgstr "URL Adresse für WiiTDB Daten"
+
+#~ msgid "Formato ISO - para Grabacion DVD"
+#~ msgstr "ISO Format für DVD Aufnahmen"
+
+#~ msgid "Formato WBFS - para USBLoader-FAT32"
+#~ msgstr "WBFS Format für USB Loader FAT32"
+
+#~ msgid "Formato WDF - para Almacenamiento"
+#~ msgstr "WDF Format zum Speichern"
+
+#~ msgid "Tienes que seleccionar una particion WBFS para realizar esta accion"
+#~ msgstr "Wählen Sie eine WBFS Partition für diese Aktion"
 
 #, fuzzy
 #~ msgid "Opciones de extraccion"
 #~ msgstr "Format unbekannt"
 
-#~ msgid "Tienes que seleccionar una particion WBFS para realizar esta accion"
-#~ msgstr "Wählen Sie eine WBFS Partition für diese Aktion"
-
-#~ msgid "Formato WDF - para Almacenamiento"
-#~ msgstr "WDF Format zum Speichern"
-
-#~ msgid "Formato WBFS - para USBLoader-FAT32"
-#~ msgstr "WBFS Format für USB Loader FAT32"
-
-#~ msgid "Formato ISO - para Grabacion DVD"
-#~ msgstr "ISO Format für DVD Aufnahmen"
-
 #, fuzzy
-#~ msgid "URL secundaria para WiiTDB"
-#~ msgstr "URL Adresse für WiiTDB Daten"
+#~ msgid "WBFS"
+#~ msgstr "WBFS?"
+
+#~ msgid "+INFO"
+#~ msgstr "+INFO"
+
+#~ msgid "Numero de juegos."
+#~ msgstr "Anzahl der Spiele"
+
+#~ msgid "Progreso de la tarea actual."
+#~ msgstr "Aktuelle Aufgabe"
+
+#~ msgid "ACCESORIOS: "
+#~ msgstr "ZUBEHÖR:"
+
+#~ msgid "OPCIONALES: "
+#~ msgstr "OPTIONEN:"
+
+#~ msgid "Fecha de lanzamiento: "
+#~ msgstr "Veröffentlicht"
+
+#~ msgid "Buscar:"
+#~ msgstr "Suche:"
+
+#~ msgid "No se ha encontrado ninguna imagen ISO o RAR"
+#~ msgstr "Es wurde kein ISO oder RAR Image gefunden"
+
+#~ msgid "Numero de tareas que esperan en la cola."
+#~ msgstr "Aufgaben in der Warteschlange."

@@ -1259,46 +1259,46 @@ msgstr "Skivetiket bredd"
 msgid "Altura imagen disc-art"
 msgstr "Skivetiket höjd"
 
-#: preferencias.py:234
+#: preferencias.py:237
 msgid "Proveedor de caratulas"
 msgstr "Ladda ner omslag ifrån följande källor"
 
-#: preferencias.py:265
+#: preferencias.py:269
 msgid "Proveedor de discos"
 msgstr "Ladda ner skivetiketer ifrån följande källor"
 
-#: preferencias.py:268
+#: preferencias.py:272
 #, python-format
 msgid "URL de busqueda en Google. (%s es el nombre del juego)"
 msgstr ""
 
-#: preferencias.py:269
+#: preferencias.py:273
 #, python-format
 msgid "URL de busqueda en Wikipedia. (%s es el nombre del juego)"
 msgstr ""
 
-#: preferencias.py:270
+#: preferencias.py:274
 #, python-format
 msgid "URL de busqueda en Youtube. (%s es el nombre del juego)"
 msgstr ""
 
-#: preferencias.py:271
+#: preferencias.py:275
 #, python-format
 msgid "URL de busqueda en IGN. (%s es el nombre del juego)"
 msgstr ""
 
-#: preferencias.py:272
+#: preferencias.py:276
 #, python-format
 msgid "URL de busqueda en GameSpot. (%s es el nombre del juego)"
 msgstr ""
 
-#: preferencias.py:273
+#: preferencias.py:277
 #, python-format
 msgid "URL de busqueda en VGChartz. (%s es el nombre del juego)"
 msgstr ""
 
-#: preferencias.py:320 preferencias.py:356 preferencias.py:374
-#: preferencias.py:396
+#: preferencias.py:324 preferencias.py:360 preferencias.py:378
+#: preferencias.py:400
 msgid "Por defecto"
 msgstr "Återställ"
 
@@ -1977,51 +1977,51 @@ msgstr "Programmet körs med felaktiga inställningar"
 msgid "Interrumpido por el usuario"
 msgstr "Avbrutet av användraren"
 
-#~ msgid "Tienes que seleccionar una particion WBFS para realizar esta accion"
-#~ msgstr "Du måste välja en WBFS-partition"
+#, fuzzy
+#~ msgid "URL secundaria para WiiTDB"
+#~ msgstr "URL till WiiTDB databasen"
+
+#~ msgid "Numero de tareas que esperan en la cola."
+#~ msgstr "Antal aktiviteter i kö"
+
+#~ msgid "No se ha encontrado ninguna imagen ISO o RAR"
+#~ msgstr "Kunde inte hitta någon ISO- eller RAR-fil"
+
+#~ msgid "Buscar:"
+#~ msgstr "Sök:"
+
+#~ msgid "Fecha de lanzamiento: "
+#~ msgstr "Releasedatum:"
+
+#~ msgid "OPCIONALES: "
+#~ msgstr "VALFRIA TILLBEHÖR:"
+
+#~ msgid "ACCESORIOS: "
+#~ msgstr "KONTROLLER:"
+
+#~ msgid "Progreso de la tarea actual."
+#~ msgstr "Status på pågående uppgift."
+
+#~ msgid "Numero de juegos."
+#~ msgstr "Spelnummer"
+
+#~ msgid "Espacio usado / Espacio total"
+#~ msgstr "Fritt utrymme / Totalt utrymme"
+
+#~ msgid "+INFO"
+#~ msgstr "+INFO"
 
 #, fuzzy
-#~ msgid "Extraer todos los juegos*"
-#~ msgstr "Kopiera alla spel*"
+#~ msgid "WBFS"
+#~ msgstr "WBFS?"
 
 #, fuzzy
 #~ msgid "Opciones de extraccion"
 #~ msgstr "Kort datumformat"
 
 #, fuzzy
-#~ msgid "WBFS"
-#~ msgstr "WBFS?"
+#~ msgid "Extraer todos los juegos*"
+#~ msgstr "Kopiera alla spel*"
 
-#~ msgid "+INFO"
-#~ msgstr "+INFO"
-
-#~ msgid "Espacio usado / Espacio total"
-#~ msgstr "Fritt utrymme / Totalt utrymme"
-
-#~ msgid "Numero de juegos."
-#~ msgstr "Spelnummer"
-
-#~ msgid "Progreso de la tarea actual."
-#~ msgstr "Status på pågående uppgift."
-
-#~ msgid "ACCESORIOS: "
-#~ msgstr "KONTROLLER:"
-
-#~ msgid "OPCIONALES: "
-#~ msgstr "VALFRIA TILLBEHÖR:"
-
-#~ msgid "Fecha de lanzamiento: "
-#~ msgstr "Releasedatum:"
-
-#~ msgid "Buscar:"
-#~ msgstr "Sök:"
-
-#~ msgid "No se ha encontrado ninguna imagen ISO o RAR"
-#~ msgstr "Kunde inte hitta någon ISO- eller RAR-fil"
-
-#~ msgid "Numero de tareas que esperan en la cola."
-#~ msgstr "Antal aktiviteter i kö"
-
-#, fuzzy
-#~ msgid "URL secundaria para WiiTDB"
-#~ msgstr "URL till WiiTDB databasen"
+#~ msgid "Tienes que seleccionar una particion WBFS para realizar esta accion"
+#~ msgstr "Du måste välja en WBFS-partition"

@@ -1242,46 +1242,46 @@ msgstr "Ample imatge disc-art"
 msgid "Altura imagen disc-art"
 msgstr "Altura imatge disc-art"
 
-#: preferencias.py:234
+#: preferencias.py:237
 msgid "Proveedor de caratulas"
 msgstr "Proveïdor de caràtules"
 
-#: preferencias.py:265
+#: preferencias.py:269
 msgid "Proveedor de discos"
 msgstr "Proveïdor de discs"
 
-#: preferencias.py:268
+#: preferencias.py:272
 #, python-format
 msgid "URL de busqueda en Google. (%s es el nombre del juego)"
 msgstr ""
 
-#: preferencias.py:269
+#: preferencias.py:273
 #, python-format
 msgid "URL de busqueda en Wikipedia. (%s es el nombre del juego)"
 msgstr ""
 
-#: preferencias.py:270
+#: preferencias.py:274
 #, python-format
 msgid "URL de busqueda en Youtube. (%s es el nombre del juego)"
 msgstr ""
 
-#: preferencias.py:271
+#: preferencias.py:275
 #, python-format
 msgid "URL de busqueda en IGN. (%s es el nombre del juego)"
 msgstr ""
 
-#: preferencias.py:272
+#: preferencias.py:276
 #, python-format
 msgid "URL de busqueda en GameSpot. (%s es el nombre del juego)"
 msgstr ""
 
-#: preferencias.py:273
+#: preferencias.py:277
 #, python-format
 msgid "URL de busqueda en VGChartz. (%s es el nombre del juego)"
 msgstr ""
 
-#: preferencias.py:320 preferencias.py:356 preferencias.py:374
-#: preferencias.py:396
+#: preferencias.py:324 preferencias.py:360 preferencias.py:378
+#: preferencias.py:400
 msgid "Por defecto"
 msgstr "Per defecte"
 
@@ -1950,43 +1950,43 @@ msgstr "Programa executat amb les opcions incorrectes."
 msgid "Interrumpido por el usuario"
 msgstr "Interromput per l'usuari"
 
-#~ msgid "Tienes que seleccionar una particion WBFS para realizar esta accion"
-#~ msgstr "Has de selecciona una partició WBFS per a realitzar aquesta acció"
+#, fuzzy
+#~ msgid "URL secundaria para WiiTDB"
+#~ msgstr "URL Base de dades WiiTDB"
 
-#~ msgid "Extraer todos los juegos*"
-#~ msgstr "Extreure tots els jocs*"
+#~ msgid "Progreso de la tarea actual."
+#~ msgstr "Progrés de la tasca actual."
+
+#~ msgid "Numero de tareas que esperan en la cola."
+#~ msgstr "Nombre de tasques que esperen a la cua"
+
+#~ msgid "Numero de juegos."
+#~ msgstr "Nombre de jocs"
+
+#~ msgid "Espacio usado / Espacio total"
+#~ msgstr "Espai utilitzat / Espai total"
+
+#~ msgid "+INFO"
+#~ msgstr "+INFO"
+
+#~ msgid "Fecha de lanzamiento: "
+#~ msgstr "Data de llançament:"
+
+#~ msgid "OPCIONALES: "
+#~ msgstr "OPCIONALS:"
+
+#~ msgid "ACCESORIOS: "
+#~ msgstr "Accesoris:"
+
+#~ msgid "No se ha encontrado ninguna imagen ISO o RAR"
+#~ msgstr "No s'ha trobat cap imatge ISO o RAR"
 
 #, fuzzy
 #~ msgid "WBFS"
 #~ msgstr " WBFS?"
 
-#~ msgid "No se ha encontrado ninguna imagen ISO o RAR"
-#~ msgstr "No s'ha trobat cap imatge ISO o RAR"
+#~ msgid "Extraer todos los juegos*"
+#~ msgstr "Extreure tots els jocs*"
 
-#~ msgid "ACCESORIOS: "
-#~ msgstr "Accesoris:"
-
-#~ msgid "OPCIONALES: "
-#~ msgstr "OPCIONALS:"
-
-#~ msgid "Fecha de lanzamiento: "
-#~ msgstr "Data de llançament:"
-
-#~ msgid "+INFO"
-#~ msgstr "+INFO"
-
-#~ msgid "Espacio usado / Espacio total"
-#~ msgstr "Espai utilitzat / Espai total"
-
-#~ msgid "Numero de juegos."
-#~ msgstr "Nombre de jocs"
-
-#~ msgid "Numero de tareas que esperan en la cola."
-#~ msgstr "Nombre de tasques que esperen a la cua"
-
-#~ msgid "Progreso de la tarea actual."
-#~ msgstr "Progrés de la tasca actual."
-
-#, fuzzy
-#~ msgid "URL secundaria para WiiTDB"
-#~ msgstr "URL Base de dades WiiTDB"
+#~ msgid "Tienes que seleccionar una particion WBFS para realizar esta accion"
+#~ msgstr "Has de selecciona una partició WBFS per a realitzar aquesta acció"

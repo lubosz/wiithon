@@ -1237,46 +1237,46 @@ msgstr "Disque : largeur de l'image"
 msgid "Altura imagen disc-art"
 msgstr "Disque : hauteur de l'image"
 
-#: preferencias.py:234
+#: preferencias.py:237
 msgid "Proveedor de caratulas"
 msgstr "Fournisseur de pochettes"
 
-#: preferencias.py:265
+#: preferencias.py:269
 msgid "Proveedor de discos"
 msgstr "Fournisseur de disques"
 
-#: preferencias.py:268
+#: preferencias.py:272
 #, python-format
 msgid "URL de busqueda en Google. (%s es el nombre del juego)"
 msgstr "URL de recherche sur Google. (nom du jeu : %s)"
 
-#: preferencias.py:269
+#: preferencias.py:273
 #, python-format
 msgid "URL de busqueda en Wikipedia. (%s es el nombre del juego)"
 msgstr "URL de recherche sur Wikipedia. (nom du jeu : %s)"
 
-#: preferencias.py:270
+#: preferencias.py:274
 #, python-format
 msgid "URL de busqueda en Youtube. (%s es el nombre del juego)"
 msgstr "URL de recherche sur Youtube. (nom du jeu : %s)"
 
-#: preferencias.py:271
+#: preferencias.py:275
 #, python-format
 msgid "URL de busqueda en IGN. (%s es el nombre del juego)"
 msgstr "URL de recherche sur IGN. (nom du jeu : %s)"
 
-#: preferencias.py:272
+#: preferencias.py:276
 #, python-format
 msgid "URL de busqueda en GameSpot. (%s es el nombre del juego)"
 msgstr "URL de recherche sur GameSpot. (nom du jeu : %s)"
 
-#: preferencias.py:273
+#: preferencias.py:277
 #, python-format
 msgid "URL de busqueda en VGChartz. (%s es el nombre del juego)"
 msgstr "URL de recherche sur VGChartz. (nom du jeu : %s)"
 
-#: preferencias.py:320 preferencias.py:356 preferencias.py:374
-#: preferencias.py:396
+#: preferencias.py:324 preferencias.py:360 preferencias.py:378
+#: preferencias.py:400
 msgid "Por defecto"
 msgstr "Par défaut"
 
@@ -1949,28 +1949,28 @@ msgstr "Programme lancé avec des paramètres incorrects."
 msgid "Interrumpido por el usuario"
 msgstr "Interrompu par l'utilisateur"
 
-#~ msgid "Tienes que seleccionar una particion WBFS para realizar esta accion"
-#~ msgstr "Vous devez sélectionner une partition WBFS pour réaliser cette action"
+#, fuzzy
+#~ msgid "URL secundaria para WiiTDB"
+#~ msgstr "URL vers la base de données WiiTDB"
 
-#~ msgid "Extraer todos los juegos*"
-#~ msgstr "Extraire tous les jeux*"
+#~ msgid "Formato ISO - para Grabacion DVD"
+#~ msgstr "Format ISO - pour gravure DVD"
 
-#~ msgid "Opciones de extraccion"
-#~ msgstr "Options d'extraction"
+#~ msgid "Formato WBFS - para USBLoader-FAT32"
+#~ msgstr "Format WBFS - pour USBLoader en FAT32"
+
+#~ msgid "Formato WDF - para Almacenamiento"
+#~ msgstr "Format WDF - pour stockage"
 
 #, fuzzy
 #~ msgid "WBFS"
 #~ msgstr "WBFS?"
 
-#~ msgid "Formato WDF - para Almacenamiento"
-#~ msgstr "Format WDF - pour stockage"
+#~ msgid "Opciones de extraccion"
+#~ msgstr "Options d'extraction"
 
-#~ msgid "Formato WBFS - para USBLoader-FAT32"
-#~ msgstr "Format WBFS - pour USBLoader en FAT32"
+#~ msgid "Extraer todos los juegos*"
+#~ msgstr "Extraire tous les jeux*"
 
-#~ msgid "Formato ISO - para Grabacion DVD"
-#~ msgstr "Format ISO - pour gravure DVD"
-
-#, fuzzy
-#~ msgid "URL secundaria para WiiTDB"
-#~ msgstr "URL vers la base de données WiiTDB"
+#~ msgid "Tienes que seleccionar una particion WBFS para realizar esta accion"
+#~ msgstr "Vous devez sélectionner une partition WBFS pour réaliser cette action"

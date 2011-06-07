@@ -1232,46 +1232,46 @@ msgstr ""
 msgid "Altura imagen disc-art"
 msgstr ""
 
-#: preferencias.py:234
+#: preferencias.py:237
 msgid "Proveedor de caratulas"
 msgstr "Proveedor de carátulas"
 
-#: preferencias.py:265
-msgid "Proveedor de discos"
-msgstr ""
-
-#: preferencias.py:268
-#, python-format
-msgid "URL de busqueda en Google. (%s es el nombre del juego)"
-msgstr ""
-
 #: preferencias.py:269
-#, python-format
-msgid "URL de busqueda en Wikipedia. (%s es el nombre del juego)"
-msgstr ""
-
-#: preferencias.py:270
-#, python-format
-msgid "URL de busqueda en Youtube. (%s es el nombre del juego)"
-msgstr ""
-
-#: preferencias.py:271
-#, python-format
-msgid "URL de busqueda en IGN. (%s es el nombre del juego)"
+msgid "Proveedor de discos"
 msgstr ""
 
 #: preferencias.py:272
 #, python-format
-msgid "URL de busqueda en GameSpot. (%s es el nombre del juego)"
+msgid "URL de busqueda en Google. (%s es el nombre del juego)"
 msgstr ""
 
 #: preferencias.py:273
 #, python-format
+msgid "URL de busqueda en Wikipedia. (%s es el nombre del juego)"
+msgstr ""
+
+#: preferencias.py:274
+#, python-format
+msgid "URL de busqueda en Youtube. (%s es el nombre del juego)"
+msgstr ""
+
+#: preferencias.py:275
+#, python-format
+msgid "URL de busqueda en IGN. (%s es el nombre del juego)"
+msgstr ""
+
+#: preferencias.py:276
+#, python-format
+msgid "URL de busqueda en GameSpot. (%s es el nombre del juego)"
+msgstr ""
+
+#: preferencias.py:277
+#, python-format
 msgid "URL de busqueda en VGChartz. (%s es el nombre del juego)"
 msgstr ""
 
-#: preferencias.py:320 preferencias.py:356 preferencias.py:374
-#: preferencias.py:396
+#: preferencias.py:324 preferencias.py:360 preferencias.py:378
+#: preferencias.py:400
 msgid "Por defecto"
 msgstr ""
 
@@ -1939,22 +1939,22 @@ msgstr ""
 msgid "Interrumpido por el usuario"
 msgstr ""
 
-#~ msgid "Tienes que seleccionar una particion WBFS para realizar esta accion"
-#~ msgstr "Tienes que seleccionar una partición WBFS para realizar esta acción"
+#~ msgid "Numero de tareas que esperan en la cola."
+#~ msgstr "Número de tareas que esperan en la cola."
 
-#, fuzzy
-#~ msgid "Opciones de extraccion"
-#~ msgstr "Formato fecha corta"
+#~ msgid "Fecha de lanzamiento: "
+#~ msgstr "Fecha: "
+
+#~ msgid "Numero de juegos."
+#~ msgstr "Número de juegos."
 
 #, fuzzy
 #~ msgid "WBFS"
 #~ msgstr "¿WBFS?"
 
-#~ msgid "Numero de juegos."
-#~ msgstr "Número de juegos."
+#, fuzzy
+#~ msgid "Opciones de extraccion"
+#~ msgstr "Formato fecha corta"
 
-#~ msgid "Fecha de lanzamiento: "
-#~ msgstr "Fecha: "
-
-#~ msgid "Numero de tareas que esperan en la cola."
-#~ msgstr "Número de tareas que esperan en la cola."
+#~ msgid "Tienes que seleccionar una particion WBFS para realizar esta accion"
+#~ msgstr "Tienes que seleccionar una partición WBFS para realizar esta acción"
