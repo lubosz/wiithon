@@ -462,21 +462,21 @@ po/locale/%/LC_MESSAGES/wiithon.mo: po/%.po
 	@rmdir $(basename $@)
 
 # incrementos intermedios a la baseline
-ppa-inc: generate_changelog
+inc-ppa: generate_changelog
 	debuild -S -sd -k0x2B5B428F -I -i --lintian-opts -Ivi
 	
-ppa-upload-inc: ppa-inc
+ppa-upload-inc: inc-ppa
 	dput ppa:wii.sceners.linux/wiithon ../wiithon_$(VERSION_ACTUAL)_source.changes
 
 # Solo para avanzar la baseline
 # Only need first time
 # modificar doc/VERSION
-ppa-new: generate_changelog
+new-ppa: generate_changelog
 	debuild -S -sa -k0x2B5B428F -I -i --lintian-opts -Ivi
 	#sleep 1
 	#mv ../wiithon_$(VERSION_ACTUAL).tar.gz ../wiithon_$(VERSION_ACTUAL).orig.tar.gz
 	#debuild -S -sk -k0x2B5B428F -I -i --lintian-opts -Ivi
 
-ppa-upload-new: ppa-new
+ppa-upload-new: new-ppa
 	dput ppa:wii.sceners.linux/wiithon ../wiithon_$(VERSION_ACTUAL)_source.changes
 
