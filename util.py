@@ -561,7 +561,7 @@ def space_for_dvd_iso_wii(path):
     return ((fs[statvfs.F_BSIZE]*fs[statvfs.F_BAVAIL]/1024) >= 4693504)
 
 def esImagen(fichero):
-    return (getExtension(fichero)=="png") or (getExtension(fichero)=="jpg") or (getExtension(fichero)=="gif") or (getExtension(fichero)=="jpeg")
+    return  (getExtension(fichero)=="png") or (getExtension(fichero)=="jpg") or (getExtension(fichero)=="gif") or (getExtension(fichero)=="jpeg")
 
 ## check user group and permissions
 def check_gids():
@@ -737,7 +737,7 @@ def get_subinterval_type_cover(type_cover):
     if COVER_3D == type_cover:
         return 16
     elif COVER_FULL == type_cover:
-        return 44
+        return 34
     else: # elif COVER_NORMAL == type_cover
         return 0
 

@@ -2,5 +2,5 @@
 
 vim COMMIT
 make commit
-bzr push
+bzr push lp:wiithon
 

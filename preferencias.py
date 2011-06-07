@@ -86,9 +86,9 @@ class Preferencias:
         self.iniciarPreferencia('bool', 'ADVERTENCIA_ACTUALIZAR_WIITDB', defecto=True, mostrar=cargarWidget, vbox=prefs_vbox_general, label=_('Mostrar una advertencia cuando no hay ninguna informacion WiiTDB'))
         self.iniciarPreferencia('bool', 'ADVERTENCIA_NO_WBFS', defecto=True, mostrar=cargarWidget, vbox=prefs_vbox_general, label=_('Mostrar una advertencia cuando no hay particiones WBFS'))
         self.iniciarPreferencia('bool', 'init_minimize', defecto=False, mostrar=cargarWidget, vbox=prefs_vbox_general, label=_('Iniciar maximizado'))
-        self.iniciarPreferencia('bool', 'DRAG_AND_DROP_LOCAL', defecto=True, mostrar=cargarWidget, vbox=prefs_vbox_general, label=_('Permitir establecer caratulas locales por arrastre'))
-        self.iniciarPreferencia('bool', 'DRAG_AND_DROP_HTTP', defecto=True, mostrar=cargarWidget, vbox=prefs_vbox_general, label=_('Permitir establecer caratulas desde http por arrastre'))
-        self.iniciarPreferencia('bool', 'DRAG_AND_DROP_JUEGOS', defecto=True, mostrar=cargarWidget, vbox=prefs_vbox_general, label=_('Permitir arrastrar juegos en ISO, RAR o directorios.'))
+        #self.iniciarPreferencia('bool', 'DRAG_AND_DROP_LOCAL', defecto=True, mostrar=cargarWidget, vbox=prefs_vbox_general, label=_('Permitir establecer caratulas locales por arrastre'))
+        #self.iniciarPreferencia('bool', 'DRAG_AND_DROP_HTTP', defecto=True, mostrar=cargarWidget, vbox=prefs_vbox_general, label=_('Permitir establecer caratulas desde http por arrastre'))
+        #self.iniciarPreferencia('bool', 'DRAG_AND_DROP_JUEGOS', defecto=True, mostrar=cargarWidget, vbox=prefs_vbox_general, label=_('Permitir arrastrar juegos en ISO, RAR o directorios.'))
         self.iniciarPreferencia('bool', 'rar_overwrite_iso', defecto=True, mostrar=cargarWidget, vbox=prefs_vbox_general, label=_('Los isos descomprimidos desde el rar remplaza imagenes iso sin preguntar.'))
         self.iniciarPreferencia('bool', 'rar_preguntar_borrar_iso', defecto=True, mostrar=cargarWidget, vbox=prefs_vbox_general, label=_('Pregunta borrar el .iso (cuando aniamos un rar)'))
         self.iniciarPreferencia('bool', 'rar_preguntar_borrar_rar', defecto=False, mostrar=cargarWidget, vbox=prefs_vbox_general, label=_('Pregunta borrar el .rar (cuando aniamos un rar)'))
@@ -173,7 +173,7 @@ class Preferencias:
         cycle_covers += "http://www.wiiboxart.com/pal/%s.png\n"
         cycle_covers += "http://boxart.rowdyruff.net/flat/%s.png\n"
         cycle_covers += "http://wiitdb.com/wiitdb/artwork/cover/FR/%s.png\n"
-        cycle_covers += "http://wiitdb.com/wiitdb/artwork/cover/DE/%s.png\n"
+        cycle_covers += "http://wiitdb.com/wiitdb/artwork/cover/DE/%s.png\n"    # 5
         cycle_covers += "http://wiitdb.com/wiitdb/artwork/cover/IT/%s.png\n"
         cycle_covers += "http://wiitdb.com/wiitdb/artwork/cover/NL/%s.png\n"
         cycle_covers += "http://wiitdb.com/wiitdb/artwork/cover/PT/%s.png\n"
@@ -200,39 +200,40 @@ class Preferencias:
         cycle_covers += "http://wiitdb.com/wiitdb/artwork/cover3D/JA/%s.png\n"
         cycle_covers += "http://wiitdb.com/wiitdb/artwork/cover3D/other/%s.png\n"
         cycle_covers += "http://boxart.rowdyruff.net/3d/%s.png\n"
-              
-        #   - hq
-        cycle_covers += "http://wiitdb.com/wiitdb/artwork/coverfullHQ/ES/%s.png\n" # 30
-        cycle_covers += "http://wiitdb.com/wiitdb/artwork/coverfullHQ/EN/%s.png\n"
-        cycle_covers += "http://wiitdb.com/wiitdb/artwork/coverfullHQ/FR/%s.png\n" 
-        cycle_covers += "http://wiitdb.com/wiitdb/artwork/coverfullHQ/DE/%s.png\n"
-        cycle_covers += "http://wiitdb.com/wiitdb/artwork/coverfullHQ/IT/%s.png\n"
-        cycle_covers += "http://wiitdb.com/wiitdb/artwork/coverfullHQ/NL/%s.png\n" # 35
-        cycle_covers += "http://wiitdb.com/wiitdb/artwork/coverfullHQ/PT/%s.png\n"
-        cycle_covers += "http://wiitdb.com/wiitdb/artwork/coverfullHQ/AU/%s.png\n"
-        cycle_covers += "http://wiitdb.com/wiitdb/artwork/coverfullHQ/US/%s.png\n"
-        cycle_covers += "http://wiitdb.com/wiitdb/artwork/coverfullHQ/JA/%s.png\n"
-        
+                     
         #   - widescreen
-        cycle_covers += "http://www.wiiboxart.com/widescreen/pal/%s.png\n"   # 40
+        cycle_covers += "http://www.wiiboxart.com/widescreen/pal/%s.png\n"   # 30
         cycle_covers += "http://www.wiiboxart.com/widescreen/ntsc/%s.png\n"
         cycle_covers += "http://www.wiiboxart.com/widescreen/ntscj/%s.png\n"
         cycle_covers += "http://wiiboxart.t35.com/wiiboxart/images/widescreen/%s.png\n"
+               
+        #   - full HD
+        cycle_covers += "http://wiitdb.com/wiitdb/artwork/coverfullHQ/ES/%s.png\n" # 34
+        cycle_covers += "http://wiitdb.com/wiitdb/artwork/coverfullHQ/EN/%s.png\n"  # 35
+        cycle_covers += "http://wiitdb.com/wiitdb/artwork/coverfullHQ/FR/%s.png\n" 
+        cycle_covers += "http://wiitdb.com/wiitdb/artwork/coverfullHQ/DE/%s.png\n"
+        cycle_covers += "http://wiitdb.com/wiitdb/artwork/coverfullHQ/IT/%s.png\n"
+        cycle_covers += "http://wiitdb.com/wiitdb/artwork/coverfullHQ/NL/%s.png\n" # 39
+        cycle_covers += "http://wiitdb.com/wiitdb/artwork/coverfullHQ/PT/%s.png\n"  # 40
+        cycle_covers += "http://wiitdb.com/wiitdb/artwork/coverfullHQ/AU/%s.png\n"
+        cycle_covers += "http://wiitdb.com/wiitdb/artwork/coverfullHQ/US/%s.png\n"
+        cycle_covers += "http://wiitdb.com/wiitdb/artwork/coverfullHQ/JA/%s.png\n"
+        cycle_covers += "http://wiitdb.com/wiitdb/artwork/coverfullHQ/other/%s.png\n"
         
-        #   - full
+        #   - full normal
         cycle_covers += "http://wiitdb.com/wiitdb/artwork/coverfull/ES/%s.png\n"
-        cycle_covers += "http://wiitdb.com/wiitdb/artwork/coverfull/EN/%s.png\n"    # 45
+        cycle_covers += "http://wiitdb.com/wiitdb/artwork/coverfull/EN/%s.png\n"    # 46
         cycle_covers += "http://www.wiiboxart.com/fullcover/%s.png\n"
         cycle_covers += "http://wiitdb.com/wiitdb/artwork/coverfull/FR/%s.png\n"
         cycle_covers += "http://wiitdb.com/wiitdb/artwork/coverfull/DE/%s.png\n"
         cycle_covers += "http://wiitdb.com/wiitdb/artwork/coverfull/IT/%s.png\n"
-        cycle_covers += "http://wiitdb.com/wiitdb/artwork/coverfull/NL/%s.png\n"    # 50
+        cycle_covers += "http://wiitdb.com/wiitdb/artwork/coverfull/NL/%s.png\n"    # 51
         cycle_covers += "http://wiitdb.com/wiitdb/artwork/coverfull/PT/%s.png\n"
         cycle_covers += "http://wiitdb.com/wiitdb/artwork/coverfull/AU/%s.png\n"
         cycle_covers += "http://wiitdb.com/wiitdb/artwork/coverfull/US/%s.png\n"
-        cycle_covers += "http://wiitdb.com/wiitdb/artwork/coverfull/JA/%s.png\n"
-        cycle_covers += "http://wiitdb.com/wiitdb/artwork/coverfull/other/%s.png\n"  # 55
-        cycle_covers += "http://wiiboxart.t35.com/wiiboxart/images/full/%s.png\n"
+        cycle_covers += "http://wiitdb.com/wiitdb/artwork/coverfull/JA/%s.png\n"     # 55
+        cycle_covers += "http://wiitdb.com/wiitdb/artwork/coverfull/other/%s.png\n"  # 56
+        cycle_covers += "http://wiiboxart.t35.com/wiiboxart/images/full/%s.png\n"    # 57
 
         self.iniciarPreferencia('memo', 'PROVIDER_COVERS', defecto=cycle_covers, mostrar=cargarWidget, vbox=prefs_vbox_caratulas, label=_('Proveedor de caratulas'))
 

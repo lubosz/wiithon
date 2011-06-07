@@ -426,9 +426,6 @@ class WiithonGUI(GtkBuilderWrapper):
         
         # GO
         gtk.main()
-        
-        # cerrar carga
-        self.cerrar_loading()
 
     def cerrar_loading(self):
         if not self.loading_cerrado:
@@ -478,7 +475,9 @@ class WiithonGUI(GtkBuilderWrapper):
             self.refrescarNumCaratulas()
             #
             # descargar caratulas y discos
-            query = session.query(Juego).order_by('idParticion, lower(title)').group_by('idgame')
+            #query = session.query(Juego).order_by('idParticion, lower(title)').group_by('idgame')
+            query = session.query(Juego).group_by('idgame')
+            # FIXME: comprender este cambio
             for juego in query:
                 
                 for tipo in range(3): # 3 tipos de caratula
@@ -490,6 +489,8 @@ class WiithonGUI(GtkBuilderWrapper):
                         self.poolBash.nuevoTrabajoDescargaDisco(juego.idgame, str(tipo))
             #
             ##################################################################################
+
+            self.cerrar_loading()
             
             # si no hay particion -> modal que da 2 opciones:
             # 1º Ver base de datos
@@ -497,16 +498,12 @@ class WiithonGUI(GtkBuilderWrapper):
 
             if (self.core.prefs.ADVERTENCIA_NO_WBFS and len(self.lParti) == 0):
                 
-                self.cerrar_loading()
-                
                 if util.check_gids():
                     self.alert("warning" , _("No hay particiones WBFS, se muestran los juegos de la ultima sesion."))
                 else:
                     self.alert("warning" , _("No puede acceder a las particiones porque el usuario que se puso en marcha wiithon no pertenecen al grupo \"disk\", se muestran los juegos de la ultima sesion."))
 
             elif (self.core.prefs.ADVERTENCIA_ACTUALIZAR_WIITDB and (len(self.lJuegos) > 0) and self.info.abajo_num_juegos_wiitdb == 0):
-
-                self.cerrar_loading()
 
                 if (self.question("""
                     <b>
@@ -2459,64 +2456,127 @@ class WiithonGUI(GtkBuilderWrapper):
             if fichero.startswith("file://"):
                 fichero = fichero.replace("file://" , "")
                 fichero = fichero.replace("%20" , " ")
+                
+                #print fichero
+                
                 if os.path.exists(fichero):
-                    if(self.core.getAutodetectarFormato(fichero) is not None) and self.core.prefs.DRAG_AND_DROP_JUEGOS:
+                    
+                    if(self.core.getAutodetectarFormato(fichero) is not None):
+                        # and self.core.prefs.DRAG_AND_DROP_JUEGOS
+                    
                         listaISO.append(fichero)
-                    elif(util.getExtension(fichero)=="rar") and self.core.prefs.DRAG_AND_DROP_JUEGOS:
+                        
+                    elif(util.getExtension(fichero)=="rar"):
+                        # and self.core.prefs.DRAG_AND_DROP_JUEGOS
+                    
                         listaRAR.append(fichero)
-                    elif( os.path.isdir( fichero ) ) and self.core.prefs.DRAG_AND_DROP_JUEGOS:
+                        
+                    elif( os.path.isdir( fichero ) ):
+                        # and self.core.prefs.DRAG_AND_DROP_JUEGOS
+                    
                         listaDirectorios.append(fichero)
-                    elif(util.esImagen(fichero) and self.core.prefs.DRAG_AND_DROP_LOCAL): # Arrastrar imagenes (png, jpg, gif) desde el escritorio
+                        
+                    elif( util.esImagen(fichero) ):
+                        # and self.core.prefs.DRAG_AND_DROP_LOCAL) # Arrastrar imagenes (png, jpg, gif) desde el escritorio
 
                         if self.isSelectedGame():
 
                             if self.core.prefs.DESTINO_ARRASTRE == 'C':
                                 ruta = self.core.getRutaCaratula(self.sel_juego.obj.idgame, self.cover_type)
-                                shutil.copy(fichero, ruta)
-                                comando = 'mogrify -resize %dx%d! "%s"' % (self.core.prefs.WIDTH_COVERS, self.core.prefs.HEIGHT_COVERS, ruta)
-                                util.call_out_null(comando)
-                                self.ponerCaratula(self.sel_juego.obj.idgame, self.wb_img_caratula1)
+                                
+                                # si no se copia a si mismo
+                                if fichero != ruta:
+                                    
+                                    yaExiste = self.core.existeCaratula(self.sel_juego.obj.idgame, False, self.cover_type)
+                                    if yaExiste:
+                                        os.remove(ruta)
+                                                                    
+                                    shutil.copy(fichero, ruta)
+
+                                    if self.cover_type == util.COVER_FULL:
+                                        #comando = 'mogrify -resize %dx%d! "%s"' % (1024, 680, ruta)
+                                        comando = 'mogrify -resize %dx%d! "%s"' % (512, 340, ruta)
+                                    else:
+                                        comando = 'mogrify -resize %dx%d! "%s"' % (self.core.prefs.WIDTH_COVERS, self.core.prefs.HEIGHT_COVERS, ruta)                            
+                                    
+                                    util.call_out_null(comando)
+                                    self.ponerCaratula(self.sel_juego.obj.idgame, self.wb_img_caratula1)
+                                
                             elif self.core.prefs.DESTINO_ARRASTRE == 'D':
                                 ruta = self.core.getRutaDisco(self.sel_juego.obj.idgame, self.disc_art_type)
-                                shutil.copy(fichero, ruta)
-                                comando = 'mogrify -resize %dx%d! "%s"' % (self.core.prefs.WIDTH_DISCS, self.core.prefs.HEIGHT_DISCS, ruta)
-                                util.call_out_null(comando)
-                                self.ponerDisco(self.sel_juego.obj.idgame, self.wb_img_disco1)
+                                
+                                # si no se copia a si mismo
+                                if fichero != ruta:
+                                    
+                                    yaExiste = self.core.existeDisco(self.sel_juego.obj.idgame, False, self.disc_art_type)
+                                    if yaExiste:
+                                        os.remove(ruta)
+                                    
+                                    shutil.copy(fichero, ruta)
+                                    comando = 'mogrify -resize %dx%d! "%s"' % (self.core.prefs.WIDTH_DISCS, self.core.prefs.HEIGHT_DISCS, ruta)
+                                    util.call_out_null(comando)
+                                    self.ponerDisco(self.sel_juego.obj.idgame, self.wb_img_disco1)
 
             elif fichero.startswith("http://"):
-                # Arrastrar imagenes (png, jpg, gif) desde el navegador
-                if(util.esImagen(fichero) and self.core.prefs.DRAG_AND_DROP_HTTP):
+                
+                #print fichero
+                
+                # Arrastrar imagenes (png, jpg, jpeg, gif) desde el navegador
+                if( util.esImagen(fichero) ):
+                    # and self.core.prefs.DRAG_AND_DROP_HTTP)
                     
                     if self.isSelectedGame():
                         
                         if self.core.prefs.DESTINO_ARRASTRE == 'C':
+                            
                             ruta = self.core.getRutaCaratula(self.sel_juego.obj.idgame, self.cover_type)
+                            
+                            yaExiste = self.core.existeCaratula(self.sel_juego.obj.idgame, False, self.cover_type)
+                            if yaExiste:
+                                os.remove(ruta)
+
                             util.descargar(fichero, ruta)
-                            comando = 'mogrify -resize %dx%d! "%s"' % (self.core.prefs.WIDTH_COVERS, self.core.prefs.HEIGHT_COVERS, ruta)
+                            
+                            if self.cover_type == util.COVER_FULL:
+                                #comando = 'mogrify -resize %dx%d! "%s"' % (1024, 680, ruta)
+                                comando = 'mogrify -resize %dx%d! "%s"' % (512, 340, ruta)
+                            else:
+                                comando = 'mogrify -resize %dx%d! "%s"' % (self.core.prefs.WIDTH_COVERS, self.core.prefs.HEIGHT_COVERS, ruta)                            
+                                
                             util.call_out_null(comando)
                             self.ponerCaratula(self.sel_juego.obj.idgame, self.wb_img_caratula1)
+                            
                         elif self.core.prefs.DESTINO_ARRASTRE == 'D':
+                            
                             ruta = self.core.getRutaDisco(self.sel_juego.obj.idgame, self.disc_art_type)
+                            
+                            yaExiste = self.core.existeDisco(self.sel_juego.obj.idgame, False, self.disc_art_type)
+                            if yaExiste:
+                                os.remove(ruta)
+                            
                             util.descargar(fichero, ruta)
                             comando = 'mogrify -resize %dx%d! "%s"' % (self.core.prefs.WIDTH_DISCS, self.core.prefs.HEIGHT_DISCS, ruta)
                             util.call_out_null(comando)
                             self.ponerDisco(self.sel_juego.obj.idgame, self.wb_img_disco1)
 
-        if len(listaISO) > 0 or len(listaRAR) > 0 or len(listaDirectorios) > 0:
+        if (len(listaISO) > 0) or (len(listaRAR) > 0) or (len(listaDirectorios) > 0):
 
             if self.isSelectedPartition():
 
                 if len(listaISO) > 0:
-                    listaISO.sort()
-                    self.poolTrabajo.nuevoTrabajoAnadir( listaISO , self.sel_parti.obj.device)
+                    #listaISO.sort()
+                    for nodoISO in listaISO:
+                        self.poolTrabajo.nuevoTrabajoAnadir( nodoISO , self.sel_parti.obj.device)
                     
                 if len(listaRAR) > 0:
-                    listaRAR.sort()
-                    self.poolTrabajo.nuevoTrabajoDescomprimirRAR( listaRAR , self.sel_parti.obj)
+                    #listaRAR.sort()
+                    for nodoRAR in listaRAR:
+                        self.poolTrabajo.nuevoTrabajoDescomprimirRAR( nodoRAR , self.sel_parti.obj)
 
                 if len(listaDirectorios) > 0:
-                    listaDirectorios.sort()
-                    self.poolTrabajo.nuevoTrabajoRecorrerDirectorio( listaDirectorios , self.sel_parti.obj)                
+                    #listaDirectorios.sort()
+                    for nodoDirectorio in listaDirectorios:
+                        self.poolTrabajo.nuevoTrabajoRecorrerDirectorio( nodoDirectorio , self.sel_parti.obj)                
                     
             else:
                 self.alert("warning" , _("No has seleccionado ninguna particion"))
