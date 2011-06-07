@@ -412,7 +412,7 @@ class WiithonCORE:
         if formato == 'iso':
             comando = "%s -p %s extract %s" % (config.WBFS_APP, juego.particion.device , juego.idgame)
         elif formato == 'wbfs':
-            comando = '%s %s extract_wbfs %s .' % (config.WBFS_FILE, juego.particion.device , juego.idgame)
+            comando = '%s %s extract_wbfs %s . %s' % (config.WBFS_FILE, juego.particion.device , juego.idgame, self.prefs.FORMATO_WBFS_SALIDA)
         elif formato == 'wdf':
             comando = "%s EXTRACT -qP -p %s -oW %s" % (config.WWT, juego.particion.device , juego.idgame)
         else:
@@ -424,6 +424,7 @@ class WiithonCORE:
                 trabajoActual = os.getcwd()
                 os.chdir( destino )
 
+            print comando
             salida = util.call_out_file(comando)
 
             if destino != '':

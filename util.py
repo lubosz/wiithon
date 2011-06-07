@@ -763,3 +763,18 @@ def notifyDBUS(titulo, texto, segs):
 	notify_object = bus.get_object('org.freedesktop.Notifications','/org/freedesktop/Notifications')
 	notify_interface = dbus.Interface(notify_object,'org.freedesktop.Notifications')
 	return notify_interface.Notify("DBus Test", 0, "", titulo, texto ,'' ,{}, segs*1000 )
+
+def getNombreTipoCaratula(tipo_caratula):
+    if tipo_caratula == COVER_3D:
+        return _("3D cover")
+    if tipo_caratula == COVER_FULL:
+        return _("Full cover")
+    else: # if tipo_caratula == COVER_NORMAL:
+        return _("Normal cover")
+
+def getNombreTipoDisco(tipo_disc_art):
+    if tipo_disc_art == DISC_CUSTOM:
+        return _("Custom disc")
+    else: # if tipo_disc_art == DISC_ORIGINAL:
+        return _("Original disc")
+

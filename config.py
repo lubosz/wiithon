@@ -49,7 +49,7 @@ try:
     VER, REV = util.getVersionRevision()
 except:
     VER, REV = "?", "?"
-VERS_BDD = [1,2,3,4,5] # last is active
+VERS_BDD = [1,2,3,4,5,6] # last is active
 HOME = os.environ['HOME']
 HOME_WIITHON = os.path.join(HOME , '.%s' % APP)
 HOME_WIITHON_BDD = os.path.join(HOME_WIITHON , 'bdd')

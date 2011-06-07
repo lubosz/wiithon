@@ -365,7 +365,7 @@ class JuegoWIITDB(Base):
             else:
                 buffer = "%s" % ( self.fecha_lanzamiento.strftime(core.prefs.FORMATO_FECHA_WIITDB) )
         else:
-            buffer = _("??")
+            buffer = core.prefs.FORMATO_FECHA_DESCONOCIDA
         return buffer
 
     def getTextRating(self, corto = False):
@@ -465,27 +465,27 @@ class Particion(Base):
     def __repr__(self):
         return "%s %s (%.0f GB)" % (self.device, self.fabricante, self.total)
         
-    def getColorForeground(self):
+    def getColorForeground(self, core):
         
         numColores = 3
 
         if (((self.idParticion - 1) % numColores) == 0):
-            return "black"
+            return core.prefs.COLOR_FOREGROUND1
         elif (((self.idParticion - 1) % numColores) == 1):
-            return "darkblue"
+            return core.prefs.COLOR_FOREGROUND2
         else:#if (((self.idParticion - 1) % numColores) == 2):
-            return "darkgreen"
+            return core.prefs.COLOR_FOREGROUND3
 
-    def getColorBackground(self):
+    def getColorBackground(self, core):
 
         numColores = 3
 
         if (((self.idParticion - 1) % numColores) == 0):
-            return "white"
+            return core.prefs.COLOR_BACKGROUND1
         elif (((self.idParticion - 1) % numColores) == 1):
-            return "white"
+            return core.prefs.COLOR_BACKGROUND2
         else:#if (((self.idParticion - 1) % numColores) == 2):
-            return "white"
+            return core.prefs.COLOR_BACKGROUND3
             
     def refrescarEspacioLibreUsado(self, core):
         cachos = core.getEspacioLibreUsado(self)

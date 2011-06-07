@@ -192,12 +192,14 @@ class PoolTrabajo(Pool , Thread):
         elif( trabajo.tipo == COPIAR_CARATULA ):
             juego = trabajo.origen
             destino = trabajo.destino
-            trabajo.exito = self.copiarCaratula(core , juego, destino)
+            tipo_caratula = trabajo.trabajoDesc
+            trabajo.exito = self.copiarCaratula(core , juego, destino, tipo_caratula)
 
         elif( trabajo.tipo == COPIAR_DISCO ):
             juego = trabajo.origen
             destino = trabajo.destino
-            trabajo.exito = self.copiarDisco(core , juego , destino)
+            tipo_disc_art = trabajo.trabajoDesc
+            trabajo.exito = self.copiarDisco(core , juego , destino, tipo_disc_art)
 
         elif( trabajo.tipo == RECORRER_DIRECTORIO ):
             directorio = trabajo.origen
@@ -329,11 +331,11 @@ class PoolTrabajo(Pool , Thread):
     def descargarDisco(self , core , idgame, tipo_disc_art):
         return core.descargarDisco(idgame, self.PROVIDER_DISCS, self.WIDTH_DISCS, self.HEIGHT_DISCS, tipo_disc_art)
 
-    def copiarCaratula(self , core , juego, destino):
-        return core.copiarCaratula(juego, destino, self.tipo_caratula)
+    def copiarCaratula(self , core , juego, destino, tipo_caratula):
+        return core.copiarCaratula(juego, destino, tipo_caratula)
 
-    def copiarDisco(self , core , juego, destino):
-        return core.copiarDisco(juego, destino, self.tipo_disc_art)
+    def copiarDisco(self , core , juego, destino, tipo_disc_art):
+        return core.copiarDisco(juego, destino, tipo_disc_art)
         
     def recorrerDirectorioYAnadir(self, core, trabajo, directorio, particion):
 
@@ -603,11 +605,11 @@ class PoolTrabajo(Pool , Thread):
     def nuevoTrabajoDescargaDisco(self , juegos, tipo_disc_art):
         return self.nuevoTrabajo( DESCARGA_DISCO , juegos , tipo_disc_art)
 
-    def nuevoTrabajoCopiarCaratula(self , juegos, destino):
-        return self.nuevoTrabajo( COPIAR_CARATULA , juegos, destino )
+    def nuevoTrabajoCopiarCaratula(self , juegos, destino, tipo_caratula):
+        return self.nuevoTrabajo( COPIAR_CARATULA , juegos, destino, tipo_caratula )
 
-    def nuevoTrabajoCopiarDisco(self , juegos, destino):
-        return self.nuevoTrabajo( COPIAR_DISCO , juegos, destino )
+    def nuevoTrabajoCopiarDisco(self , juegos, destino, tipo_disc_art):
+        return self.nuevoTrabajo( COPIAR_DISCO , juegos, destino, tipo_disc_art )
 
     def nuevoTrabajoRecorrerDirectorio(self , directorio, particion):
         return self.nuevoTrabajo( RECORRER_DIRECTORIO , directorio, particion )

@@ -78,6 +78,9 @@ class Preferencias:
         self.iniciarPreferencia('select', 'APPLICATION_LANGUAGE', defecto=util.get_lang_default(APP_LANGUAGE_LISTA), mostrar=cargarWidget, vbox=prefs_vbox_general, label=_('Idioma de wiithon'), datos_lista = APP_LANGUAGE_LISTA)
         self.iniciarPreferencia('string', 'ruta_extraer_rar', defecto='/tmp', mostrar=cargarWidget, vbox=prefs_vbox_general, label=_('Ruta para extraer ficheros .rar. Para descomprimir junto al .rar escriba .'))
         self.iniciarPreferencia('int', 'NUM_HILOS', defecto=16, mostrar=cargarWidget, vbox=prefs_vbox_general, label=_('Num. Hilos para tareas de fondo'))
+        ORDEN_INICIAL_LISTA =    [('F', _('Por fecha')),
+                                  ('N', _('Por nombre'))]
+        self.iniciarPreferencia('select', 'ORDEN_INICIAL', defecto='F', mostrar=cargarWidget, vbox=prefs_vbox_general, label=_('Orden inicial'), datos_lista = ORDEN_INICIAL_LISTA)
         self.iniciarPreferencia('string', 'COMANDO_ABRIR_CARPETA', defecto='gnome-open', mostrar=cargarWidget, vbox=prefs_vbox_general, label=_('Comando para abrir carpetas'))
         self.iniciarPreferencia('string', 'COMANDO_ABRIR_WEB', defecto='gnome-open', mostrar=cargarWidget, vbox=prefs_vbox_general, label=_('Comando para abrir paginas Web'))
         self.iniciarPreferencia('bool', 'ADVERTENCIA_ACTUALIZAR_WIITDB', defecto=True, mostrar=cargarWidget, vbox=prefs_vbox_general, label=_('Mostrar una advertencia cuando no hay ninguna informacion WiiTDB'))
@@ -113,10 +116,45 @@ class Preferencias:
         else:
             defecto_secundario = 'EN'
         
+        
+        FORMATOS_WBFS_LISTA =    [
+                            ('-l f0', _('IDGAME.wbfs')),
+                            ('-l f1', _('IDGAME_TITLE.wbfs')),
+                            ('-l f2', _('TITLE [IDGAME].wbfs')),
+                            ('-l d0', _('IDGAME/IDGAME.wbfs')),
+                            ('-l d1', _('IDGAME_TITLE/IDGAME.wbfs')),
+                            ('-l d2', _('TITLE [IDGAME]/IDGAME.wbfs'))
+                            ]
+        self.iniciarPreferencia('select', 'FORMATO_WBFS_SALIDA', defecto='-l f0', mostrar=cargarWidget, vbox=prefs_vbox_general, label=_('Formato de salida de la extraccion WBFS'), datos_lista = FORMATOS_WBFS_LISTA)
+        
+        
+        COLORES_LISTA =    [('darkred', _('Dark Red')),
+                            ('darkgreen', _('Dark Green')),
+                            ('darkblue', _('Dark Blue')),
+                            
+                            
+                            # Need do a decent color list with good palette of colors
+                            ('#FF0000', _('Red')),
+                            ('#00FF00', _('Green')),
+                            ('#0000FF', _('Blue')),
+                            ('white', _('White')),
+                            ('black', _('Black'))
+                            
+                            
+                            ]
+
+        self.iniciarPreferencia('select', 'COLOR_BACKGROUND1', defecto='white', mostrar=cargarWidget, vbox=prefs_vbox_general, label=_('Color de fondo de la particion 1'), datos_lista = COLORES_LISTA)
+        self.iniciarPreferencia('select', 'COLOR_BACKGROUND2', defecto='white', mostrar=cargarWidget, vbox=prefs_vbox_general, label=_('Color de fondo de la particion 2'), datos_lista = COLORES_LISTA)
+        self.iniciarPreferencia('select', 'COLOR_BACKGROUND3', defecto='white', mostrar=cargarWidget, vbox=prefs_vbox_general, label=_('Color de fondo de la particion 3'), datos_lista = COLORES_LISTA)
+        self.iniciarPreferencia('select', 'COLOR_FOREGROUND1', defecto='black', mostrar=cargarWidget, vbox=prefs_vbox_general, label=_('Color de la letra de la particion 1'), datos_lista = COLORES_LISTA)
+        self.iniciarPreferencia('select', 'COLOR_FOREGROUND2', defecto='darkgreen', mostrar=cargarWidget, vbox=prefs_vbox_general, label=_('Color de la letra de la particion 2'), datos_lista = COLORES_LISTA)
+        self.iniciarPreferencia('select', 'COLOR_FOREGROUND3', defecto='darkblue', mostrar=cargarWidget, vbox=prefs_vbox_general, label=_('Color de la letra de la particion 3'), datos_lista = COLORES_LISTA)
+
         # wiitdb
         self.iniciarPreferencia('string', 'URL_ZIP_WIITDB', defecto='http://wiitdb.com/wiitdb.zip', mostrar=cargarWidget, vbox=prefs_vbox_wiitdb, label=_('URL principal para WiiTDB'))
         self.iniciarPreferencia('string', 'FORMATO_FECHA_WIITDB', defecto='%d/%m/%Y', mostrar=cargarWidget, vbox=prefs_vbox_wiitdb, label=_('Formato fecha'))
         self.iniciarPreferencia('string', 'FORMATO_FECHA_CORTA_WIITDB', defecto='%Y/%m', mostrar=cargarWidget, vbox=prefs_vbox_wiitdb, label=_('Formato fecha corto'))        
+        self.iniciarPreferencia('string', 'FORMATO_FECHA_DESCONOCIDA', defecto='1900/01', mostrar=cargarWidget, vbox=prefs_vbox_wiitdb, label=_('Fecha desconocida'))
         self.iniciarPreferencia('select', 'LANG_PRINCIPAL', defecto=defecto_principal, mostrar=cargarWidget, vbox=prefs_vbox_wiitdb, label=_('Idioma principal para el synopsis'), datos_lista = WIITDB_LANGUAGE_LISTA)
         self.iniciarPreferencia('select', 'LANG_SECUNDARIO', defecto=defecto_secundario, mostrar=cargarWidget, vbox=prefs_vbox_wiitdb, label=_('Idioma auxiliar para el synopsis'), datos_lista = WIITDB_LANGUAGE_LISTA)
         self.iniciarPreferencia('string', 'USER_WIITDB', defecto='', mostrar=cargarWidget, vbox=prefs_vbox_wiitdb, label=_('Usuario (para editar informacion en wiitdb.com)'))

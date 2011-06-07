@@ -1,4 +1,4 @@
-<?xml version="1.0"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <interface>
   <requires lib="gtk+" version="2.16"/>
   <!-- interface-naming-policy project-wide -->
@@ -8,7 +8,6 @@
     <child>
       <object class="GtkVBox" id="vbox_principal1">
         <property name="visible">True</property>
-        <property name="orientation">vertical</property>
         <child>
           <object class="GtkToolbar" id="toolbar1">
             <property name="visible">True</property>
@@ -157,10 +156,9 @@
             </child>
             <child>
               <object class="GtkToolButton" id="tb_copiar_SD">
-                <property name="visible">True</property>
                 <property name="tooltip_text" translatable="yes">Copia en 2 carpetas de destino, todo el conjunto de caratulas y de disc-art que esta siendo amacenado en los directorios de trabajo de wiithon.</property>
                 <property name="label" translatable="yes">caratulas a SD</property>
-                <property name="icon_name">insert-image</property>
+                <property name="icon_name">media-floppy</property>
               </object>
               <packing>
                 <property name="expand">False</property>
@@ -272,7 +270,6 @@
             <child>
               <object class="GtkVBox" id="box_progreso">
                 <property name="visible">True</property>
-                <property name="orientation">vertical</property>
                 <child>
                   <object class="GtkHBox" id="hbox_progreso">
                     <property name="height_request">24</property>
@@ -328,9 +325,8 @@
             <property name="can_focus">True</property>
             <child>
               <object class="GtkVBox" id="vbox2">
-                <property name="width_request">160</property>
+                <property name="width_request">200</property>
                 <property name="visible">True</property>
-                <property name="orientation">vertical</property>
                 <child>
                   <object class="GtkScrolledWindow" id="scrolledwindow5">
                     <property name="visible">True</property>
@@ -350,6 +346,19 @@
                   </packing>
                 </child>
                 <child>
+                  <object class="GtkButton" id="button4">
+                    <property name="label" translatable="yes">Disc-art to Folder</property>
+                    <property name="visible">True</property>
+                    <property name="can_focus">True</property>
+                    <property name="receives_default">True</property>
+                    <signal name="clicked" handler="on_button_copiar_discos"/>
+                  </object>
+                  <packing>
+                    <property name="expand">False</property>
+                    <property name="position">1</property>
+                  </packing>
+                </child>
+                <child>
                   <object class="GtkImage" id="img_disco1">
                     <property name="width_request">160</property>
                     <property name="height_request">160</property>
@@ -361,15 +370,7 @@ Por defecto: 160x160</property>
                   </object>
                   <packing>
                     <property name="expand">False</property>
-                    <property name="position">1</property>
-                  </packing>
-                </child>
-                <child>
-                  <object class="GtkHSeparator" id="hseparator4">
-                    <property name="visible">True</property>
-                  </object>
-                  <packing>
-                    <property name="expand">False</property>
+                    <property name="padding">10</property>
                     <property name="position">2</property>
                   </packing>
                 </child>
@@ -409,18 +410,52 @@ Por defecto: 160x160</property>
                   </packing>
                 </child>
                 <child>
+                  <object class="GtkHSeparator" id="hseparator4">
+                    <property name="visible">True</property>
+                  </object>
+                  <packing>
+                    <property name="expand">False</property>
+                    <property name="padding">13</property>
+                    <property name="position">4</property>
+                  </packing>
+                </child>
+                <child>
+                  <object class="GtkHSeparator" id="hseparator3">
+                    <property name="visible">True</property>
+                  </object>
+                  <packing>
+                    <property name="expand">False</property>
+                    <property name="position">5</property>
+                  </packing>
+                </child>
+                <child>
+                  <object class="GtkButton" id="button5">
+                    <property name="label" translatable="yes">Covers to Folder</property>
+                    <property name="visible">True</property>
+                    <property name="can_focus">True</property>
+                    <property name="receives_default">True</property>
+                    <property name="yalign">0.50999999046325684</property>
+                    <signal name="clicked" handler="on_button_copiar_caratulas"/>
+                  </object>
+                  <packing>
+                    <property name="expand">False</property>
+                    <property name="position">6</property>
+                  </packing>
+                </child>
+                <child>
                   <object class="GtkImage" id="img_caratula1">
                     <property name="width_request">160</property>
                     <property name="height_request">224</property>
                     <property name="visible">True</property>
                     <property name="tooltip_text" translatable="yes">Caratula del juego.
 Por defecto: 160x224</property>
-                    <property name="stock">gtk-new</property>
+                    <property name="stock">gtk-select-all</property>
                     <property name="icon-size">6</property>
                   </object>
                   <packing>
                     <property name="expand">False</property>
-                    <property name="position">4</property>
+                    <property name="padding">10</property>
+                    <property name="position">7</property>
                   </packing>
                 </child>
                 <child>
@@ -468,7 +503,7 @@ Por defecto: 160x224</property>
                   </object>
                   <packing>
                     <property name="expand">False</property>
-                    <property name="position">5</property>
+                    <property name="position">8</property>
                   </packing>
                 </child>
               </object>
@@ -479,13 +514,10 @@ Por defecto: 160x224</property>
             </child>
             <child>
               <object class="GtkVBox" id="vbox_central">
-                <property name="width_request">620</property>
                 <property name="visible">True</property>
-                <property name="orientation">vertical</property>
                 <child>
                   <object class="GtkVBox" id="vbox7">
                     <property name="visible">True</property>
-                    <property name="orientation">vertical</property>
                     <child>
                       <object class="GtkAlignment" id="alignment1">
                         <property name="visible">True</property>
@@ -572,7 +604,6 @@ Por defecto: 160x224</property>
                   <object class="GtkVPaned" id="vpaned1">
                     <property name="visible">True</property>
                     <property name="can_focus">True</property>
-                    <property name="orientation">vertical</property>
                     <child>
                       <object class="GtkHPaned" id="hpaned2">
                         <property name="height_request">272</property>
@@ -732,7 +763,6 @@ Por defecto: 160x224</property>
     <property name="modal">True</property>
     <property name="window_position">center</property>
     <property name="type_hint">normal</property>
-    <property name="has_separator">False</property>
     <property name="program_name">Wiithon</property>
     <property name="version">1.2</property>
     <property name="copyright">GNU GENERAL PUBLIC LICENSE Version 3</property>
@@ -740,29 +770,28 @@ Por defecto: 160x224</property>
     <property name="website">https://launchpad.net/wiithon</property>
     <property name="website_label">https://launchpad.net/wiithon</property>
     <property name="license" translatable="yes">TEXTO_LICENCIA</property>
-    <property name="authors">Desarrolladores Activos: 	Ricardo Marmolejo Garc&#xED;a, Carlo Mandelli
+    <property name="authors">Desarrolladores Activos: 	Ricardo Marmolejo García, Carlo Mandelli
 Desarrolladores Inactivos: 	Jose Luis Segura
 </property>
     <property name="documenters"></property>
-    <property name="translator_credits">Spanish: Ricardo Marmolejo Garc&#xED;a &lt;makiolo@gmail.com&gt; [es.po]
-Franc&#xE9;s: carel &lt;carel.foobar@free.fr&gt; [fr.po]
+    <property name="translator_credits">Spanish: Ricardo Marmolejo García &lt;makiolo@gmail.com&gt; [es.po]
+Francés: carel &lt;carel.foobar@free.fr&gt; [fr.po]
 English: Michael Fleisher &lt;man.united.glory.glory@gmail.com&gt; [en.po]
 Dutch: Koen Maes &lt;whacker@gmail.com&gt; [nl_NL.po]
 German: Speedygonzales (Markus Gewiss) &lt;markus@foto-engels.de&gt; [de.po]
 Portuguese: a.k.a. "Pakatus" &lt;nfernandes@gmail.com&gt; [pt_PT.po]
-Brazilian Portuguese: Alex Ant&#xE3;o &lt;alexcarlosantao@gmail.com&gt; [pt_BR.po]
+Brazilian Portuguese: Alex Antão &lt;alexcarlosantao@gmail.com&gt; [pt_BR.po]
 Italian: Carlo Mandelli &lt;camandel@gmail.com&gt; [it.po]
-Catal&#xE1;n: Victor Mic&#xF3; Biosca &lt;thor9216@gmail.com&gt; [ca_ES.po]
+Catalán: Victor Micó Biosca &lt;thor9216@gmail.com&gt; [ca_ES.po]
 Swedish: Magnus Johansson &lt;mange@emjay.se&gt; [sv_SE.po]
-Galician: &#xC1;lvaro Ord&#xF3;&#xF1;ez &lt;alvarito@barberberecho.es&gt; [gl_ES.po]
+Galician: Álvaro Ordóñez &lt;alvarito@barberberecho.es&gt; [gl_ES.po]
 Russian: &lt;sh00@bmail.ru&gt; [ru_RU.po]
 Euskera: Piarres Beobide &lt;pi@beobide.net&gt; [eu.po]
-Danish: Michael Munk &#xD8;stergaard &lt;mmos@stibo.com&gt; [da_DK.po]
+Danish: Michael Munk Østergaard &lt;mmos@stibo.com&gt; [da_DK.po]
 </property>
     <child internal-child="vbox">
       <object class="GtkVBox" id="dialog-vbox3">
         <property name="visible">True</property>
-        <property name="orientation">vertical</property>
         <property name="spacing">2</property>
         <child>
           <object class="GtkLabel" id="label234729478">
@@ -793,16 +822,13 @@ Danish: Michael Munk &#xD8;stergaard &lt;mmos@stibo.com&gt; [da_DK.po]
     <property name="title" translatable="yes">Copia directa de particion a particion</property>
     <property name="window_position">center</property>
     <property name="type_hint">normal</property>
-    <property name="has_separator">False</property>
     <child internal-child="vbox">
       <object class="GtkVBox" id="c1on1_dialog-vbox2">
         <property name="visible">True</property>
-        <property name="orientation">vertical</property>
         <property name="spacing">2</property>
         <child>
           <object class="GtkVBox" id="c1on1_vbox1">
             <property name="visible">True</property>
-            <property name="orientation">vertical</property>
             <child>
               <object class="GtkLabel" id="c1on1_label5">
                 <property name="visible">True</property>
@@ -934,18 +960,16 @@ Danish: Michael Munk &#xD8;stergaard &lt;mmos@stibo.com&gt; [da_DK.po]
   </object>
   <object class="GtkDialog" id="prefs">
     <property name="width_request">800</property>
-    <property name="height_request">600</property>
+    <property name="height_request">850</property>
     <property name="border_width">5</property>
     <property name="title" translatable="yes">Preferencias</property>
     <property name="modal">True</property>
     <property name="window_position">center</property>
     <property name="icon_name">document-properties</property>
     <property name="type_hint">normal</property>
-    <property name="has_separator">False</property>
     <child internal-child="vbox">
       <object class="GtkVBox" id="prefs_dialog-vbox3">
         <property name="visible">True</property>
-        <property name="orientation">vertical</property>
         <property name="spacing">2</property>
         <child>
           <object class="GtkNotebook" id="prefs_notebook1">
@@ -954,11 +978,9 @@ Danish: Michael Munk &#xD8;stergaard &lt;mmos@stibo.com&gt; [da_DK.po]
             <child>
               <object class="GtkVBox" id="prefs_vbox1">
                 <property name="visible">True</property>
-                <property name="orientation">vertical</property>
                 <child>
                   <object class="GtkVBox" id="prefs_vbox_general">
                     <property name="visible">True</property>
-                    <property name="orientation">vertical</property>
                     <child>
                       <placeholder/>
                     </child>
@@ -995,11 +1017,9 @@ Danish: Michael Munk &#xD8;stergaard &lt;mmos@stibo.com&gt; [da_DK.po]
             <child>
               <object class="GtkVBox" id="prefs_vbox2">
                 <property name="visible">True</property>
-                <property name="orientation">vertical</property>
                 <child>
                   <object class="GtkVBox" id="prefs_vbox_caratulas">
                     <property name="visible">True</property>
-                    <property name="orientation">vertical</property>
                     <child>
                       <placeholder/>
                     </child>
@@ -1040,11 +1060,9 @@ Danish: Michael Munk &#xD8;stergaard &lt;mmos@stibo.com&gt; [da_DK.po]
             <child>
               <object class="GtkVBox" id="prefs_vbox3">
                 <property name="visible">True</property>
-                <property name="orientation">vertical</property>
                 <child>
                   <object class="GtkVBox" id="prefs_vbox_wiitdb">
                     <property name="visible">True</property>
-                    <property name="orientation">vertical</property>
                     <child>
                       <placeholder/>
                     </child>
@@ -1085,7 +1103,6 @@ Danish: Michael Munk &#xD8;stergaard &lt;mmos@stibo.com&gt; [da_DK.po]
             <child>
               <object class="GtkVBox" id="prefs_vbox_buscadores">
                 <property name="visible">True</property>
-                <property name="orientation">vertical</property>
                 <child>
                   <placeholder/>
                 </child>
@@ -1107,11 +1124,10 @@ Danish: Michael Munk &#xD8;stergaard &lt;mmos@stibo.com&gt; [da_DK.po]
             <child>
               <object class="GtkVBox" id="vbox1">
                 <property name="visible">True</property>
-                <property name="orientation">vertical</property>
                 <child>
                   <object class="GtkTable" id="table1">
                     <property name="visible">True</property>
-                    <property name="n_rows">5</property>
+                    <property name="n_rows">9</property>
                     <property name="n_columns">2</property>
                     <property name="column_spacing">8</property>
                     <property name="row_spacing">8</property>
@@ -1168,6 +1184,93 @@ Danish: Michael Munk &#xD8;stergaard &lt;mmos@stibo.com&gt; [da_DK.po]
                       </packing>
                     </child>
                     <child>
+                      <object class="GtkButton" id="button_abrir_carpeta_caratulas3d">
+                        <property name="label" translatable="yes">Abrir carpeta de caratulas 3D</property>
+                        <property name="visible">True</property>
+                        <property name="can_focus">True</property>
+                        <property name="receives_default">True</property>
+                        <signal name="clicked" handler="on_button_abrir_carpeta_caratulas_3d_clicked"/>
+                      </object>
+                      <packing>
+                        <property name="left_attach">1</property>
+                        <property name="right_attach">2</property>
+                        <property name="top_attach">2</property>
+                        <property name="bottom_attach">3</property>
+                        <property name="y_options">GTK_EXPAND</property>
+                      </packing>
+                    </child>
+                    <child>
+                      <object class="GtkLabel" id="label10">
+                        <property name="visible">True</property>
+                        <property name="xalign">0</property>
+                        <property name="xpad">5</property>
+                        <property name="label" translatable="yes">Abre la carpeta donde se almacenan las caratulas 3D descargadas</property>
+                        <property name="single_line_mode">True</property>
+                      </object>
+                      <packing>
+                        <property name="top_attach">2</property>
+                        <property name="bottom_attach">3</property>
+                      </packing>
+                    </child>
+                    <child>
+                      <object class="GtkButton" id="button_abrir_carpeta_caratulas_completas">
+                        <property name="label" translatable="yes">Abrir carpetas de caratulas completas</property>
+                        <property name="visible">True</property>
+                        <property name="can_focus">True</property>
+                        <property name="receives_default">True</property>
+                        <signal name="clicked" handler="on_button_abrir_carpeta_caratulas_completas_clicked"/>
+                      </object>
+                      <packing>
+                        <property name="left_attach">1</property>
+                        <property name="right_attach">2</property>
+                        <property name="top_attach">3</property>
+                        <property name="bottom_attach">4</property>
+                        <property name="y_options">GTK_EXPAND</property>
+                      </packing>
+                    </child>
+                    <child>
+                      <object class="GtkButton" id="button_abrir_carpeta_discart_custom">
+                        <property name="label" translatable="yes">Abrir carpeta de disc-art custom</property>
+                        <property name="visible">True</property>
+                        <property name="can_focus">True</property>
+                        <property name="receives_default">True</property>
+                        <signal name="clicked" handler="on_button_abrir_carpeta_disart_custom_clicked"/>
+                      </object>
+                      <packing>
+                        <property name="left_attach">1</property>
+                        <property name="right_attach">2</property>
+                        <property name="top_attach">4</property>
+                        <property name="bottom_attach">5</property>
+                        <property name="y_options">GTK_EXPAND</property>
+                      </packing>
+                    </child>
+                    <child>
+                      <object class="GtkLabel" id="label14">
+                        <property name="visible">True</property>
+                        <property name="xalign">0</property>
+                        <property name="xpad">5</property>
+                        <property name="label" translatable="yes">Abre la carpeta donde se almacenan las caratulas completas a doble cara</property>
+                        <property name="single_line_mode">True</property>
+                      </object>
+                      <packing>
+                        <property name="top_attach">3</property>
+                        <property name="bottom_attach">4</property>
+                      </packing>
+                    </child>
+                    <child>
+                      <object class="GtkLabel" id="label15">
+                        <property name="visible">True</property>
+                        <property name="xalign">0</property>
+                        <property name="xpad">5</property>
+                        <property name="label" translatable="yes">Abre la carpeta donde se almacenan las disc-art customizados</property>
+                        <property name="single_line_mode">True</property>
+                      </object>
+                      <packing>
+                        <property name="top_attach">4</property>
+                        <property name="bottom_attach">5</property>
+                      </packing>
+                    </child>
+                    <child>
                       <object class="GtkButton" id="button_formatear_wbfs">
                         <property name="label" translatable="yes">Formatear a WBFS</property>
                         <property name="visible">True</property>
@@ -1178,8 +1281,8 @@ Danish: Michael Munk &#xD8;stergaard &lt;mmos@stibo.com&gt; [da_DK.po]
                       <packing>
                         <property name="left_attach">1</property>
                         <property name="right_attach">2</property>
-                        <property name="top_attach">3</property>
-                        <property name="bottom_attach">4</property>
+                        <property name="top_attach">7</property>
+                        <property name="bottom_attach">8</property>
                         <property name="y_options">GTK_EXPAND</property>
                       </packing>
                     </child>
@@ -1193,8 +1296,8 @@ Danish: Michael Munk &#xD8;stergaard &lt;mmos@stibo.com&gt; [da_DK.po]
                         <property name="wrap">True</property>
                       </object>
                       <packing>
-                        <property name="top_attach">3</property>
-                        <property name="bottom_attach">4</property>
+                        <property name="top_attach">7</property>
+                        <property name="bottom_attach">8</property>
                       </packing>
                     </child>
                     <child>
@@ -1203,8 +1306,8 @@ Danish: Michael Munk &#xD8;stergaard &lt;mmos@stibo.com&gt; [da_DK.po]
                       </object>
                       <packing>
                         <property name="right_attach">2</property>
-                        <property name="top_attach">2</property>
-                        <property name="bottom_attach">3</property>
+                        <property name="top_attach">5</property>
+                        <property name="bottom_attach">7</property>
                       </packing>
                     </child>
                     <child>
@@ -1218,8 +1321,8 @@ Danish: Michael Munk &#xD8;stergaard &lt;mmos@stibo.com&gt; [da_DK.po]
                       <packing>
                         <property name="left_attach">1</property>
                         <property name="right_attach">2</property>
-                        <property name="top_attach">4</property>
-                        <property name="bottom_attach">5</property>
+                        <property name="top_attach">8</property>
+                        <property name="bottom_attach">9</property>
                         <property name="y_options">GTK_EXPAND</property>
                       </packing>
                     </child>
@@ -1233,8 +1336,8 @@ Danish: Michael Munk &#xD8;stergaard &lt;mmos@stibo.com&gt; [da_DK.po]
                         <property name="wrap">True</property>
                       </object>
                       <packing>
-                        <property name="top_attach">4</property>
-                        <property name="bottom_attach">5</property>
+                        <property name="top_attach">8</property>
+                        <property name="bottom_attach">9</property>
                       </packing>
                     </child>
                   </object>
@@ -1300,11 +1403,9 @@ Danish: Michael Munk &#xD8;stergaard &lt;mmos@stibo.com&gt; [da_DK.po]
     <property name="modal">True</property>
     <property name="window_position">center</property>
     <property name="type_hint">normal</property>
-    <property name="has_separator">False</property>
     <child internal-child="vbox">
       <object class="GtkVBox" id="format_vbox">
         <property name="visible">True</property>
-        <property name="orientation">vertical</property>
         <property name="spacing">2</property>
         <child>
           <placeholder/>
@@ -1334,16 +1435,13 @@ Danish: Michael Munk &#xD8;stergaard &lt;mmos@stibo.com&gt; [da_DK.po]
     <property name="title" translatable="yes">Renombrado masivo</property>
     <property name="window_position">center</property>
     <property name="type_hint">normal</property>
-    <property name="has_separator">False</property>
     <child internal-child="vbox">
       <object class="GtkVBox" id="dialog-vbox9">
         <property name="visible">True</property>
-        <property name="orientation">vertical</property>
         <property name="spacing">2</property>
         <child>
           <object class="GtkVBox" id="c1on1_vbox3">
             <property name="visible">True</property>
-            <property name="orientation">vertical</property>
             <child>
               <object class="GtkLabel" id="c1on1_label4">
                 <property name="visible">True</property>
@@ -1429,16 +1527,13 @@ Danish: Michael Munk &#xD8;stergaard &lt;mmos@stibo.com&gt; [da_DK.po]
     <property name="modal">True</property>
     <property name="window_position">center</property>
     <property name="type_hint">normal</property>
-    <property name="has_separator">False</property>
     <child internal-child="vbox">
       <object class="GtkVBox" id="dialog-vbox10">
         <property name="visible">True</property>
-        <property name="orientation">vertical</property>
         <property name="spacing">2</property>
         <child>
           <object class="GtkVBox" id="vbox3">
             <property name="visible">True</property>
-            <property name="orientation">vertical</property>
             <child>
               <object class="GtkFrame" id="frame_paso1">
                 <property name="visible">True</property>
@@ -1515,7 +1610,6 @@ Danish: Michael Munk &#xD8;stergaard &lt;mmos@stibo.com&gt; [da_DK.po]
                     <child>
                       <object class="GtkVBox" id="vbox4">
                         <property name="visible">True</property>
-                        <property name="orientation">vertical</property>
                         <child>
                           <object class="GtkRadioButton" id="conversor_radio_formato_iso">
                             <property name="label" translatable="yes">ISO - Formato para grabacion. Ocupa mucho innecesariamente.</property>
@@ -1626,16 +1720,13 @@ Danish: Michael Munk &#xD8;stergaard &lt;mmos@stibo.com&gt; [da_DK.po]
     <property name="title" translatable="yes">Extraer juegos</property>
     <property name="window_position">center</property>
     <property name="type_hint">normal</property>
-    <property name="has_separator">False</property>
     <child internal-child="vbox">
       <object class="GtkVBox" id="dialog-vbox12">
         <property name="visible">True</property>
-        <property name="orientation">vertical</property>
         <property name="spacing">2</property>
         <child>
           <object class="GtkVBox" id="vbox5">
             <property name="visible">True</property>
-            <property name="orientation">vertical</property>
             <child>
               <object class="GtkFrame" id="frame_paso4">
                 <property name="visible">True</property>
@@ -1648,7 +1739,6 @@ Danish: Michael Munk &#xD8;stergaard &lt;mmos@stibo.com&gt; [da_DK.po]
                     <child>
                       <object class="GtkVBox" id="vbox8">
                         <property name="visible">True</property>
-                        <property name="orientation">vertical</property>
                         <child>
                           <object class="GtkRadioButton" id="extraer_radio_uno">
                             <property name="label" translatable="yes">El juego seleccionado</property>
@@ -1706,8 +1796,8 @@ Danish: Michael Munk &#xD8;stergaard &lt;mmos@stibo.com&gt; [da_DK.po]
                     <child>
                       <object class="GtkFileChooserButton" id="extraer_directorio_salida">
                         <property name="visible">True</property>
-                        <property name="create_folders">False</property>
                         <property name="action">select-folder</property>
+                        <property name="create_folders">False</property>
                         <property name="show_hidden">True</property>
                         <property name="title" translatable="yes">Elegir directorio de salida</property>
                       </object>
@@ -1740,7 +1830,6 @@ Danish: Michael Munk &#xD8;stergaard &lt;mmos@stibo.com&gt; [da_DK.po]
                     <child>
                       <object class="GtkVBox" id="vbox6">
                         <property name="visible">True</property>
-                        <property name="orientation">vertical</property>
                         <child>
                           <object class="GtkRadioButton" id="extraer_radio_formato_iso">
                             <property name="label" translatable="yes">ISO - Formato para grabacion. Ocupa mucho innecesariamente.</property>
