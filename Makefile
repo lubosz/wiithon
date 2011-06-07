@@ -473,9 +473,9 @@ ppa-upload-inc: inc-ppa
 # modificar doc/VERSION
 new-ppa: generate_changelog
 	debuild -S -sa -k0x2B5B428F -I -i --lintian-opts -Ivi
-	#sleep 1
-	#mv ../wiithon_$(VERSION_ACTUAL).tar.gz ../wiithon_$(VERSION_ACTUAL).orig.tar.gz
-	#debuild -S -sk -k0x2B5B428F -I -i --lintian-opts -Ivi
+	sleep 1
+	mv ../wiithon_$(VERSION_ACTUAL).tar.gz ../wiithon_$(VERSION_ACTUAL).orig.tar.gz
+	debuild -S -sk -k0x2B5B428F -I -i --lintian-opts -Ivi
 
 ppa-upload-new: new-ppa
 	dput ppa:wii.sceners.linux/wiithon ../wiithon_$(VERSION_ACTUAL)_source.changes

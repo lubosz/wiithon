@@ -1924,28 +1924,28 @@ msgstr "Programa ejecutado con las opciones incorrectas."
 msgid "Interrumpido por el usuario"
 msgstr "Interrumpido por el usuario"
 
-#, fuzzy
-#~ msgid "URL secundaria para WiiTDB"
-#~ msgstr "URL Base de datos WiiTDB"
+#~ msgid "Tienes que seleccionar una particion WBFS para realizar esta accion"
+#~ msgstr "Tienes que seleccionar una partición WBFS para realizar esta acción"
 
-#~ msgid "Formato ISO - para Grabacion DVD"
-#~ msgstr "Formato ISO - para Grabación DVD"
+#~ msgid "Extraer todos los juegos*"
+#~ msgstr "Extraer todos los juegos*"
 
-#~ msgid "Formato WBFS - para USBLoader-FAT32"
-#~ msgstr "Formato WBFS - para USBLoader-FAT32"
-
-#~ msgid "Formato WDF - para Almacenamiento"
-#~ msgstr "Formato WDF - para Almacenamiento"
+#~ msgid "Opciones de extraccion"
+#~ msgstr "Opciones de extracción"
 
 #, fuzzy
 #~ msgid "WBFS"
 #~ msgstr "¿WBFS?"
 
-#~ msgid "Opciones de extraccion"
-#~ msgstr "Opciones de extracción"
+#~ msgid "Formato WDF - para Almacenamiento"
+#~ msgstr "Formato WDF - para Almacenamiento"
 
-#~ msgid "Extraer todos los juegos*"
-#~ msgstr "Extraer todos los juegos*"
+#~ msgid "Formato WBFS - para USBLoader-FAT32"
+#~ msgstr "Formato WBFS - para USBLoader-FAT32"
 
-#~ msgid "Tienes que seleccionar una particion WBFS para realizar esta accion"
-#~ msgstr "Tienes que seleccionar una partición WBFS para realizar esta acción"
+#~ msgid "Formato ISO - para Grabacion DVD"
+#~ msgstr "Formato ISO - para Grabación DVD"
+
+#, fuzzy
+#~ msgid "URL secundaria para WiiTDB"
+#~ msgstr "URL Base de datos WiiTDB"

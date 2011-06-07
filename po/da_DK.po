@@ -1951,60 +1951,60 @@ msgstr "Programmet kører med ukorrekte preferences"
 msgid "Interrumpido por el usuario"
 msgstr "Afbrudt af bruger"
 
-#, fuzzy
-#~ msgid "URL secundaria para WiiTDB"
-#~ msgstr "WiiTDB.zip DB URL"
-
-#~ msgid "Formato ISO - para Grabacion DVD"
-#~ msgstr "Format ISO - for DVD Recording"
-
-#~ msgid "Formato WBFS - para USBLoader-FAT32"
-#~ msgstr "Format WBFS - for USBLoader-FAT32"
-
-#~ msgid "Formato WDF - para Almacenamiento"
-#~ msgstr "Format WDF - til lagerenhed"
-
-#~ msgid "Numero de tareas que esperan en la cola."
-#~ msgstr "Number of tasks in queue"
-
-#~ msgid "No se ha encontrado ninguna imagen ISO o RAR"
-#~ msgstr "Could not find ISO / RAR"
-
-#~ msgid "ISO sin comprimir"
-#~ msgstr "Uncompressed ISO"
-
-#~ msgid "Buscar:"
-#~ msgstr "Search: "
-
-#~ msgid "Fecha de lanzamiento: "
-#~ msgstr "Released: "
-
-#~ msgid "OPCIONALES: "
-#~ msgstr "Optional: "
-
-#~ msgid "ACCESORIOS: "
-#~ msgstr "Accessories: "
-
-#~ msgid "Progreso de la tarea actual."
-#~ msgstr "Task progress: "
-
-#~ msgid "Numero de juegos."
-#~ msgstr "GAMEID"
-
-#~ msgid "Espacio usado / Espacio total"
-#~ msgstr "Used / Total"
-
-#~ msgid "+INFO"
-#~ msgstr "+INFO"
-
-#~ msgid "WBFS"
-#~ msgstr "WBFS?"
-
-#~ msgid "Opciones de extraccion"
-#~ msgstr "Extraction Options"
+#~ msgid "Tienes que seleccionar una particion WBFS para realizar esta accion"
+#~ msgstr "Please select a WBFS partition"
 
 #~ msgid "Extraer todos los juegos*"
 #~ msgstr "Extract All Games*"
 
-#~ msgid "Tienes que seleccionar una particion WBFS para realizar esta accion"
-#~ msgstr "Please select a WBFS partition"
+#~ msgid "Opciones de extraccion"
+#~ msgstr "Extraction Options"
+
+#~ msgid "WBFS"
+#~ msgstr "WBFS?"
+
+#~ msgid "+INFO"
+#~ msgstr "+INFO"
+
+#~ msgid "Espacio usado / Espacio total"
+#~ msgstr "Used / Total"
+
+#~ msgid "Numero de juegos."
+#~ msgstr "GAMEID"
+
+#~ msgid "Progreso de la tarea actual."
+#~ msgstr "Task progress: "
+
+#~ msgid "ACCESORIOS: "
+#~ msgstr "Accessories: "
+
+#~ msgid "OPCIONALES: "
+#~ msgstr "Optional: "
+
+#~ msgid "Fecha de lanzamiento: "
+#~ msgstr "Released: "
+
+#~ msgid "Buscar:"
+#~ msgstr "Search: "
+
+#~ msgid "ISO sin comprimir"
+#~ msgstr "Uncompressed ISO"
+
+#~ msgid "No se ha encontrado ninguna imagen ISO o RAR"
+#~ msgstr "Could not find ISO / RAR"
+
+#~ msgid "Numero de tareas que esperan en la cola."
+#~ msgstr "Number of tasks in queue"
+
+#~ msgid "Formato WDF - para Almacenamiento"
+#~ msgstr "Format WDF - til lagerenhed"
+
+#~ msgid "Formato WBFS - para USBLoader-FAT32"
+#~ msgstr "Format WBFS - for USBLoader-FAT32"
+
+#~ msgid "Formato ISO - para Grabacion DVD"
+#~ msgstr "Format ISO - for DVD Recording"
+
+#, fuzzy
+#~ msgid "URL secundaria para WiiTDB"
+#~ msgstr "WiiTDB.zip DB URL"
