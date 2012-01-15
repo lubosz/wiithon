@@ -760,9 +760,12 @@ def remove_multipart_rar(archivoRAR):
                 print "borrar %s" % archivoRAR
 
 def notifyDBUS(titulo, texto, segs):	
-	notify_object = bus.get_object('org.freedesktop.Notifications','/org/freedesktop/Notifications')
-	notify_interface = dbus.Interface(notify_object,'org.freedesktop.Notifications')
-	return notify_interface.Notify("DBus Test", 0, "", titulo, texto ,'' ,{}, segs*1000 )
+    try:
+	    notify_object = bus.get_object('org.freedesktop.Notifications','/org/freedesktop/Notifications')
+	    notify_interface = dbus.Interface(notify_object,'org.freedesktop.Notifications')
+	    return notify_interface.Notify("DBus Test", 0, "", titulo, texto ,'' ,{}, segs*1000 )
+    except:
+        pass
 
 def getNombreTipoCaratula(tipo_caratula):
     if tipo_caratula == COVER_3D:

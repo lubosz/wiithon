@@ -76,6 +76,6 @@ class ActionExtraer:
         else:
 
             for juego in self.padre.lJuegos:
-                self.extraer_juego(juego)
+                self.extraer_juego(juego[0])
 
         self.padre.wb_dialogo_extraer.hide()
