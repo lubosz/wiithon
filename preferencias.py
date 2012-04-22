@@ -168,37 +168,37 @@ class Preferencias:
 
         cycle_covers = ""
         #   - flat
-        cycle_covers += "http://wiitdb.com/wiitdb/artwork/cover/ES/%s.png\n"    # 0
-        cycle_covers += "http://wiitdb.com/wiitdb/artwork/cover/EN/%s.png\n"
+        cycle_covers += "http://art.gametdb.com/wii/cover/ES/%s.png\n"    # 0
+        cycle_covers += "http://art.gametdb.com/wii/cover/EN/%s.png\n"
         cycle_covers += "http://www.wiiboxart.com/pal/%s.png\n"
         cycle_covers += "http://boxart.rowdyruff.net/flat/%s.png\n"
-        cycle_covers += "http://wiitdb.com/wiitdb/artwork/cover/FR/%s.png\n"
-        cycle_covers += "http://wiitdb.com/wiitdb/artwork/cover/DE/%s.png\n"    # 5
-        cycle_covers += "http://wiitdb.com/wiitdb/artwork/cover/IT/%s.png\n"
-        cycle_covers += "http://wiitdb.com/wiitdb/artwork/cover/NL/%s.png\n"
-        cycle_covers += "http://wiitdb.com/wiitdb/artwork/cover/PT/%s.png\n"
-        cycle_covers += "http://wiitdb.com/wiitdb/artwork/cover/AU/%s.png\n"
-        cycle_covers += "http://wiitdb.com/wiitdb/artwork/cover/US/%s.png\n"    # 10
-        cycle_covers += "http://wiitdb.com/wiitdb/artwork/cover/JA/%s.png\n"
-        cycle_covers += "http://wiitdb.com/wiitdb/artwork/cover/other/%s.png\n"
+        cycle_covers += "http://art.gametdb.com/wii/cover/FR/%s.png\n"
+        cycle_covers += "http://art.gametdb.com/wii/cover/DE/%s.png\n"    # 5
+        cycle_covers += "http://art.gametdb.com/wii/cover/IT/%s.png\n"
+        cycle_covers += "http://art.gametdb.com/wii/cover/NL/%s.png\n"
+        cycle_covers += "http://art.gametdb.com/wii/cover/PT/%s.png\n"
+        cycle_covers += "http://art.gametdb.com/wii/cover/AU/%s.png\n"
+        cycle_covers += "http://art.gametdb.com/wii/cover/US/%s.png\n"    # 10
+        cycle_covers += "http://art.gametdb.com/wii/cover/JA/%s.png\n"
+        cycle_covers += "http://art.gametdb.com/wii/cover/other/%s.png\n"
         cycle_covers += "http://wiiboxart.t35.com/wiiboxart/images/2d/%s.png\n"
         cycle_covers += "http://www.wiiboxart.com/ntsc/%s.png\n"
         cycle_covers += "http://www.wiiboxart.com/ntscj/%s.png\n"
         
         #   - 3d
-        cycle_covers += "http://wiitdb.com/wiitdb/artwork/cover3D/ES/%s.png\n"  # 16
-        cycle_covers += "http://wiitdb.com/wiitdb/artwork/cover3D/EN/%s.png\n"
+        cycle_covers += "http://art.gametdb.com/wii/cover3D/ES/%s.png\n"  # 16
+        cycle_covers += "http://art.gametdb.com/wii/cover3D/EN/%s.png\n"
         cycle_covers += "http://www.wiiboxart.com/3d/160/225/%s.png\n"
         cycle_covers += "http://wiiboxart.t35.com/wiiboxart/images/3d/%s.png\n"
-        cycle_covers += "http://wiitdb.com/wiitdb/artwork/cover3D/FR/%s.png\n"
-        cycle_covers += "http://wiitdb.com/wiitdb/artwork/cover3D/DE/%s.png\n"  # 21
-        cycle_covers += "http://wiitdb.com/wiitdb/artwork/cover3D/IT/%s.png\n"
-        cycle_covers += "http://wiitdb.com/wiitdb/artwork/cover3D/NL/%s.png\n"
-        cycle_covers += "http://wiitdb.com/wiitdb/artwork/cover3D/PT/%s.png\n"
-        cycle_covers += "http://wiitdb.com/wiitdb/artwork/cover3D/AU/%s.png\n"
-        cycle_covers += "http://wiitdb.com/wiitdb/artwork/cover3D/US/%s.png\n"  # 26
-        cycle_covers += "http://wiitdb.com/wiitdb/artwork/cover3D/JA/%s.png\n"
-        cycle_covers += "http://wiitdb.com/wiitdb/artwork/cover3D/other/%s.png\n"
+        cycle_covers += "http://art.gametdb.com/wii/cover3D/FR/%s.png\n"
+        cycle_covers += "http://art.gametdb.com/wii/cover3D/DE/%s.png\n"  # 21
+        cycle_covers += "http://art.gametdb.com/wii/cover3D/IT/%s.png\n"
+        cycle_covers += "http://art.gametdb.com/wii/cover3D/NL/%s.png\n"
+        cycle_covers += "http://art.gametdb.com/wii/cover3D/PT/%s.png\n"
+        cycle_covers += "http://art.gametdb.com/wii/cover3D/AU/%s.png\n"
+        cycle_covers += "http://art.gametdb.com/wii/cover3D/US/%s.png\n"  # 26
+        cycle_covers += "http://art.gametdb.com/wii/cover3D/JA/%s.png\n"
+        cycle_covers += "http://art.gametdb.com/wii/cover3D/other/%s.png\n"
         cycle_covers += "http://boxart.rowdyruff.net/3d/%s.png\n"
                      
         #   - widescreen
@@ -208,65 +208,65 @@ class Preferencias:
         cycle_covers += "http://wiiboxart.t35.com/wiiboxart/images/widescreen/%s.png\n"
                
         #   - full HD
-        cycle_covers += "http://wiitdb.com/wiitdb/artwork/coverfullHQ/ES/%s.png\n" # 34
-        cycle_covers += "http://wiitdb.com/wiitdb/artwork/coverfullHQ/EN/%s.png\n"  # 35
-        cycle_covers += "http://wiitdb.com/wiitdb/artwork/coverfullHQ/FR/%s.png\n" 
-        cycle_covers += "http://wiitdb.com/wiitdb/artwork/coverfullHQ/DE/%s.png\n"
-        cycle_covers += "http://wiitdb.com/wiitdb/artwork/coverfullHQ/IT/%s.png\n"
-        cycle_covers += "http://wiitdb.com/wiitdb/artwork/coverfullHQ/NL/%s.png\n" # 39
-        cycle_covers += "http://wiitdb.com/wiitdb/artwork/coverfullHQ/PT/%s.png\n"  # 40
-        cycle_covers += "http://wiitdb.com/wiitdb/artwork/coverfullHQ/AU/%s.png\n"
-        cycle_covers += "http://wiitdb.com/wiitdb/artwork/coverfullHQ/US/%s.png\n"
-        cycle_covers += "http://wiitdb.com/wiitdb/artwork/coverfullHQ/JA/%s.png\n"
-        cycle_covers += "http://wiitdb.com/wiitdb/artwork/coverfullHQ/other/%s.png\n"
+        cycle_covers += "http://art.gametdb.com/wii/coverfullHQ/ES/%s.png\n" # 34
+        cycle_covers += "http://art.gametdb.com/wii/coverfullHQ/EN/%s.png\n"  # 35
+        cycle_covers += "http://art.gametdb.com/wii/coverfullHQ/FR/%s.png\n" 
+        cycle_covers += "http://art.gametdb.com/wii/coverfullHQ/DE/%s.png\n"
+        cycle_covers += "http://art.gametdb.com/wii/coverfullHQ/IT/%s.png\n"
+        cycle_covers += "http://art.gametdb.com/wii/coverfullHQ/NL/%s.png\n" # 39
+        cycle_covers += "http://art.gametdb.com/wii/coverfullHQ/PT/%s.png\n"  # 40
+        cycle_covers += "http://art.gametdb.com/wii/coverfullHQ/AU/%s.png\n"
+        cycle_covers += "http://art.gametdb.com/wii/coverfullHQ/US/%s.png\n"
+        cycle_covers += "http://art.gametdb.com/wii/coverfullHQ/JA/%s.png\n"
+        cycle_covers += "http://art.gametdb.com/wii/coverfullHQ/other/%s.png\n"
         
         #   - full normal
-        cycle_covers += "http://wiitdb.com/wiitdb/artwork/coverfull/ES/%s.png\n"
-        cycle_covers += "http://wiitdb.com/wiitdb/artwork/coverfull/EN/%s.png\n"    # 46
+        cycle_covers += "http://art.gametdb.com/wii/coverfull/ES/%s.png\n"
+        cycle_covers += "http://art.gametdb.com/wii/coverfull/EN/%s.png\n"    # 46
         cycle_covers += "http://www.wiiboxart.com/fullcover/%s.png\n"
-        cycle_covers += "http://wiitdb.com/wiitdb/artwork/coverfull/FR/%s.png\n"
-        cycle_covers += "http://wiitdb.com/wiitdb/artwork/coverfull/DE/%s.png\n"
-        cycle_covers += "http://wiitdb.com/wiitdb/artwork/coverfull/IT/%s.png\n"
-        cycle_covers += "http://wiitdb.com/wiitdb/artwork/coverfull/NL/%s.png\n"    # 51
-        cycle_covers += "http://wiitdb.com/wiitdb/artwork/coverfull/PT/%s.png\n"
-        cycle_covers += "http://wiitdb.com/wiitdb/artwork/coverfull/AU/%s.png\n"
-        cycle_covers += "http://wiitdb.com/wiitdb/artwork/coverfull/US/%s.png\n"
-        cycle_covers += "http://wiitdb.com/wiitdb/artwork/coverfull/JA/%s.png\n"     # 55
-        cycle_covers += "http://wiitdb.com/wiitdb/artwork/coverfull/other/%s.png\n"  # 56
+        cycle_covers += "http://art.gametdb.com/wii/coverfull/FR/%s.png\n"
+        cycle_covers += "http://art.gametdb.com/wii/coverfull/DE/%s.png\n"
+        cycle_covers += "http://art.gametdb.com/wii/coverfull/IT/%s.png\n"
+        cycle_covers += "http://art.gametdb.com/wii/coverfull/NL/%s.png\n"    # 51
+        cycle_covers += "http://art.gametdb.com/wii/coverfull/PT/%s.png\n"
+        cycle_covers += "http://art.gametdb.com/wii/coverfull/AU/%s.png\n"
+        cycle_covers += "http://art.gametdb.com/wii/coverfull/US/%s.png\n"
+        cycle_covers += "http://art.gametdb.com/wii/coverfull/JA/%s.png\n"     # 55
+        cycle_covers += "http://art.gametdb.com/wii/coverfull/other/%s.png\n"  # 56
         cycle_covers += "http://wiiboxart.t35.com/wiiboxart/images/full/%s.png\n"    # 57
 
         self.iniciarPreferencia('memo', 'PROVIDER_COVERS', defecto=cycle_covers, mostrar=cargarWidget, vbox=prefs_vbox_caratulas, label=_('Proveedor de caratulas'))
 
         cycle_discs = ""
         #   - disc & disccustom
-        cycle_discs += "http://wiitdb.com/wiitdb/artwork/disc/ES/%s.png\n"                  # 0
-        cycle_discs += "http://wiitdb.com/wiitdb/artwork/disc/EN/%s.png\n"
+        cycle_discs += "http://art.gametdb.com/wii/disc/ES/%s.png\n"                  # 0
+        cycle_discs += "http://art.gametdb.com/wii/disc/EN/%s.png\n"
         cycle_discs += "http://www.wiiboxart.com/diskart/160/160/%.3s.png\n"
         cycle_discs += "http://wiiboxart.t35.com/wiiboxart/images/disc/hidef/%s.png\n"
         cycle_discs += "http://wiiboxart.t35.com/wiiboxart/images/disc/standard/%s.png\n"
         cycle_discs += "http://wiiboxart.t35.com/wiiboxart/images/disc/regional/%s.png\n"   # 5
         cycle_discs += "http://www.wiiboxart.com/discs/%.3s.png\n"
-        cycle_discs += "http://wiitdb.com/wiitdb/artwork/disc/FR/%s.png\n"
-        cycle_discs += "http://wiitdb.com/wiitdb/artwork/disc/DE/%s.png\n"
-        cycle_discs += "http://wiitdb.com/wiitdb/artwork/disc/IT/%s.png\n"
-        cycle_discs += "http://wiitdb.com/wiitdb/artwork/disc/NL/%s.png\n"                  # 10
-        cycle_discs += "http://wiitdb.com/wiitdb/artwork/disc/PT/%s.png\n"
-        cycle_discs += "http://wiitdb.com/wiitdb/artwork/disc/AU/%s.png\n"
-        cycle_discs += "http://wiitdb.com/wiitdb/artwork/disc/US/%s.png\n"
-        cycle_discs += "http://wiitdb.com/wiitdb/artwork/disc/JA/%s.png\n"
-        cycle_discs += "http://wiitdb.com/wiitdb/artwork/disc/other/%s.png\n"               # 15
+        cycle_discs += "http://art.gametdb.com/wii/disc/FR/%s.png\n"
+        cycle_discs += "http://art.gametdb.com/wii/disc/DE/%s.png\n"
+        cycle_discs += "http://art.gametdb.com/wii/disc/IT/%s.png\n"
+        cycle_discs += "http://art.gametdb.com/wii/disc/NL/%s.png\n"                  # 10
+        cycle_discs += "http://art.gametdb.com/wii/disc/PT/%s.png\n"
+        cycle_discs += "http://art.gametdb.com/wii/disc/AU/%s.png\n"
+        cycle_discs += "http://art.gametdb.com/wii/disc/US/%s.png\n"
+        cycle_discs += "http://art.gametdb.com/wii/disc/JA/%s.png\n"
+        cycle_discs += "http://art.gametdb.com/wii/disc/other/%s.png\n"               # 15
         
-        cycle_discs += "http://wiitdb.com/wiitdb/artwork/disccustom/ES/%s.png\n"            # 16
-        cycle_discs += "http://wiitdb.com/wiitdb/artwork/disccustom/EN/%s.png\n"
-        cycle_discs += "http://wiitdb.com/wiitdb/artwork/disccustom/FR/%s.png\n"
-        cycle_discs += "http://wiitdb.com/wiitdb/artwork/disccustom/DE/%s.png\n"            # 19
-        cycle_discs += "http://wiitdb.com/wiitdb/artwork/disccustom/IT/%s.png\n"
-        cycle_discs += "http://wiitdb.com/wiitdb/artwork/disccustom/NL/%s.png\n"
-        cycle_discs += "http://wiitdb.com/wiitdb/artwork/disccustom/PT/%s.png\n"
-        cycle_discs += "http://wiitdb.com/wiitdb/artwork/disccustom/AU/%s.png\n"
-        cycle_discs += "http://wiitdb.com/wiitdb/artwork/disccustom/US/%s.png\n"            # 24
-        cycle_discs += "http://wiitdb.com/wiitdb/artwork/disccustom/JA/%s.png\n"            # 25
-        cycle_discs += "http://wiitdb.com/wiitdb/artwork/disccustom/other/%s.png\n"            # 26
+        cycle_discs += "http://art.gametdb.com/wii/disccustom/ES/%s.png\n"            # 16
+        cycle_discs += "http://art.gametdb.com/wii/disccustom/EN/%s.png\n"
+        cycle_discs += "http://art.gametdb.com/wii/disccustom/FR/%s.png\n"
+        cycle_discs += "http://art.gametdb.com/wii/disccustom/DE/%s.png\n"            # 19
+        cycle_discs += "http://art.gametdb.com/wii/disccustom/IT/%s.png\n"
+        cycle_discs += "http://art.gametdb.com/wii/disccustom/NL/%s.png\n"
+        cycle_discs += "http://art.gametdb.com/wii/disccustom/PT/%s.png\n"
+        cycle_discs += "http://art.gametdb.com/wii/disccustom/AU/%s.png\n"
+        cycle_discs += "http://art.gametdb.com/wii/disccustom/US/%s.png\n"            # 24
+        cycle_discs += "http://art.gametdb.com/wii/disccustom/JA/%s.png\n"            # 25
+        cycle_discs += "http://art.gametdb.com/wii/disccustom/other/%s.png\n"            # 26
         self.iniciarPreferencia('memo', 'PROVIDER_DISCS', defecto=cycle_discs, mostrar=cargarWidget, vbox=prefs_vbox_caratulas, label=_('Proveedor de discos'))
         
         # Buscadores

@@ -258,23 +258,22 @@ def descargar(url, destino):
     if not call_out_null("wget %s -O %s" % (url, destino)):
         raise ErrorDescargando
 
-def descargarImagen(url, destino, type = "image/png", referer = "http://www.wiiboxart.com/pal.php"):
+def descargarImagen(url, destino, type = "image/png"):
     try:
         dominio, ruta_imagen = getDominioYRuta(url)
         
         conn = httplib.HTTPConnection(dominio)
 
+        VER, REV = getVersionRevision()
+        useragent = "wiithon %s r%s" % (VER, REV)
+
         params = None
         headers =   {
                         "Host": dominio,
-                        "User-Agent": "Mozilla/5.0 (X11; U; Linux i686; es-ES; rv:1.9.0.11) Gecko/2009060310 Ubuntu/8.10 (intrepid) Firefox/3.0.11",
+                        "User-Agent": useragent,
                         "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8",
-                        "Accept-Language": "es-es,es;q=0.8,en-us;q=0.5,en;q=0.3",
                         "Accept-Encoding": "gzip,deflate",
                         "Accept-Charset": "ISO-8859-1,utf-8;q=0.7,*;q=0.7",
-                        #"Keep-Alive": "300",
-                        #"Connection": "keep-alive",
-                        "Referer": referer
                     }
         
         conn.request ("GET", '/%s' % (ruta_imagen), params, headers)
