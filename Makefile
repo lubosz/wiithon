@@ -474,6 +474,7 @@ inc-ppa: generate_changelog
 	
 ppa-upload-inc: inc-ppa
 	dput ppa:wii.sceners.linux/wiithon ../wiithon_$(VERSION_ACTUAL)_source.changes
+	dput ppa:~makiolo/ubuntu/ppa/trusty ../wiithon_$(VERSION_ACTUAL)_source.changes
 
 # Solo para avanzar la baseline
 # Only need first time
@@ -486,4 +487,5 @@ new-ppa: generate_changelog
 
 ppa-upload-new: new-ppa
 	dput ppa:wii.sceners.linux/wiithon ../wiithon_$(VERSION_ACTUAL)_source.changes
+	dput ppa:~makiolo/ubuntu/ppa/trusty ../wiithon_$(VERSION_ACTUAL)_source.changes
 
