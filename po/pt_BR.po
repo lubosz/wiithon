@@ -1956,60 +1956,60 @@ msgstr "Programa executado com as opes incorretas."
 msgid "Interrumpido por el usuario"
 msgstr "Interrompido pelo usuário"
 
-#~ msgid "Permitir establecer caratulas locales por arrastre"
-#~ msgstr "Permitir configurar localização das imagens por arraste"
-
-#~ msgid "Permitir establecer caratulas desde http por arrastre"
-#~ msgstr "Permitir configurar imagens de http por arraste"
-
-#~ msgid "Permitir arrastrar juegos en ISO, RAR o directorios."
-#~ msgstr "Permitir arrastar jogos em ISO, RAR ou diretórios."
+#~ msgid "Tienes que seleccionar una particion WBFS para realizar esta accion"
+#~ msgstr "Você tem que selecionar uma partição WBFS para realizar esta ação"
 
 #, fuzzy
-#~ msgid "URL secundaria para WiiTDB"
-#~ msgstr "URL Base de dados WiiTDB"
-
-#~ msgid "Numero de tareas que esperan en la cola."
-#~ msgstr "Número de tarefas que esperam na fila."
-
-#~ msgid "No se ha encontrado ninguna imagen ISO o RAR"
-#~ msgstr "Não foi encontrada nenhuma imagem ISO ou RAR"
-
-#~ msgid "Buscar:"
-#~ msgstr "Pesquisar:"
-
-#~ msgid "Fecha de lanzamiento: "
-#~ msgstr "Data de lançamento:"
-
-#~ msgid "OPCIONALES: "
-#~ msgstr "OPCIONAIS:"
-
-#~ msgid "ACCESORIOS: "
-#~ msgstr "ACCESÓRIOS: "
-
-#~ msgid "Progreso de la tarea actual."
-#~ msgstr "Progresso da tarefa atual."
-
-#~ msgid "Numero de juegos."
-#~ msgstr "Número de jogos."
-
-#~ msgid "Espacio usado / Espacio total"
-#~ msgstr "Espaço usado / Espaço total"
-
-#~ msgid "+INFO"
-#~ msgstr "+INFO"
-
-#, fuzzy
-#~ msgid "WBFS"
-#~ msgstr "WBFS?"
+#~ msgid "Extraer todos los juegos*"
+#~ msgstr "Copiar todos os jogos*"
 
 #, fuzzy
 #~ msgid "Opciones de extraccion"
 #~ msgstr "Formato desconhecido"
 
 #, fuzzy
-#~ msgid "Extraer todos los juegos*"
-#~ msgstr "Copiar todos os jogos*"
+#~ msgid "WBFS"
+#~ msgstr "WBFS?"
 
-#~ msgid "Tienes que seleccionar una particion WBFS para realizar esta accion"
-#~ msgstr "Você tem que selecionar uma partição WBFS para realizar esta ação"
+#~ msgid "+INFO"
+#~ msgstr "+INFO"
+
+#~ msgid "Espacio usado / Espacio total"
+#~ msgstr "Espaço usado / Espaço total"
+
+#~ msgid "Numero de juegos."
+#~ msgstr "Número de jogos."
+
+#~ msgid "Progreso de la tarea actual."
+#~ msgstr "Progresso da tarefa atual."
+
+#~ msgid "ACCESORIOS: "
+#~ msgstr "ACCESÓRIOS: "
+
+#~ msgid "OPCIONALES: "
+#~ msgstr "OPCIONAIS:"
+
+#~ msgid "Fecha de lanzamiento: "
+#~ msgstr "Data de lançamento:"
+
+#~ msgid "Buscar:"
+#~ msgstr "Pesquisar:"
+
+#~ msgid "No se ha encontrado ninguna imagen ISO o RAR"
+#~ msgstr "Não foi encontrada nenhuma imagem ISO ou RAR"
+
+#~ msgid "Numero de tareas que esperan en la cola."
+#~ msgstr "Número de tarefas que esperam na fila."
+
+#, fuzzy
+#~ msgid "URL secundaria para WiiTDB"
+#~ msgstr "URL Base de dados WiiTDB"
+
+#~ msgid "Permitir arrastrar juegos en ISO, RAR o directorios."
+#~ msgstr "Permitir arrastar jogos em ISO, RAR ou diretórios."
+
+#~ msgid "Permitir establecer caratulas desde http por arrastre"
+#~ msgstr "Permitir configurar imagens de http por arraste"
+
+#~ msgid "Permitir establecer caratulas locales por arrastre"
+#~ msgstr "Permitir configurar localização das imagens por arraste"

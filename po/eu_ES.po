@@ -1932,23 +1932,23 @@ msgstr "Programa okerreko aukerekin exekutatu da."
 msgid "Interrumpido por el usuario"
 msgstr "Erabiltzaileak etenda."
 
-#~ msgid "Permitir establecer caratulas locales por arrastre"
-#~ msgstr "Onartu karatula lokalak arrastatzen ezartzea"
-
-#~ msgid "Permitir establecer caratulas desde http por arrastre"
-#~ msgstr "Onartu http karatulak arrastatzen ezartzea"
-
-#~ msgid "Permitir arrastrar juegos en ISO, RAR o directorios."
-#~ msgstr "Onartu ISO jokoak, RAR edo direktorioak arrastatzea."
-
-#~ msgid "Formato WDF - para Almacenamiento"
-#~ msgstr "WDF formatua - Biltegiratzeko"
-
-#~ msgid "Formato WBFS - para USBLoader-FAT32"
-#~ msgstr "WBFS formatua - USBLoader-FAT32"
+#~ msgid "URL secundaria para WiiTDB"
+#~ msgstr "WIITDB-ren bigarren URLa"
 
 #~ msgid "Formato ISO - para Grabacion DVD"
 #~ msgstr "ISO formatua - DVD grabaketarako"
 
-#~ msgid "URL secundaria para WiiTDB"
-#~ msgstr "WIITDB-ren bigarren URLa"
+#~ msgid "Formato WBFS - para USBLoader-FAT32"
+#~ msgstr "WBFS formatua - USBLoader-FAT32"
+
+#~ msgid "Formato WDF - para Almacenamiento"
+#~ msgstr "WDF formatua - Biltegiratzeko"
+
+#~ msgid "Permitir arrastrar juegos en ISO, RAR o directorios."
+#~ msgstr "Onartu ISO jokoak, RAR edo direktorioak arrastatzea."
+
+#~ msgid "Permitir establecer caratulas desde http por arrastre"
+#~ msgstr "Onartu http karatulak arrastatzen ezartzea"
+
+#~ msgid "Permitir establecer caratulas locales por arrastre"
+#~ msgstr "Onartu karatula lokalak arrastatzen ezartzea"

@@ -1937,37 +1937,37 @@ msgstr "Programme lancé avec des paramètres incorrects."
 msgid "Interrumpido por el usuario"
 msgstr "Interrompu par l'utilisateur"
 
-#~ msgid "Permitir establecer caratulas locales por arrastre"
-#~ msgstr "Permettre le glisser-déposer"
+#~ msgid "Tienes que seleccionar una particion WBFS para realizar esta accion"
+#~ msgstr "Vous devez sélectionner une partition WBFS pour réaliser cette action"
 
-#~ msgid "Permitir establecer caratulas desde http por arrastre"
-#~ msgstr "Permettre le glisser-déposer http"
+#~ msgid "Extraer todos los juegos*"
+#~ msgstr "Extraire tous les jeux*"
 
-#~ msgid "Permitir arrastrar juegos en ISO, RAR o directorios."
-#~ msgstr "Permettre le glisser-déposer de jeux (ISO/RAR/dossiers) dans la fenêtre"
-
-#, fuzzy
-#~ msgid "URL secundaria para WiiTDB"
-#~ msgstr "URL vers la base de données WiiTDB"
-
-#~ msgid "Formato ISO - para Grabacion DVD"
-#~ msgstr "Format ISO - pour gravure DVD"
-
-#~ msgid "Formato WBFS - para USBLoader-FAT32"
-#~ msgstr "Format WBFS - pour USBLoader en FAT32"
-
-#~ msgid "Formato WDF - para Almacenamiento"
-#~ msgstr "Format WDF - pour stockage"
+#~ msgid "Opciones de extraccion"
+#~ msgstr "Options d'extraction"
 
 #, fuzzy
 #~ msgid "WBFS"
 #~ msgstr "WBFS?"
 
-#~ msgid "Opciones de extraccion"
-#~ msgstr "Options d'extraction"
+#~ msgid "Formato WDF - para Almacenamiento"
+#~ msgstr "Format WDF - pour stockage"
 
-#~ msgid "Extraer todos los juegos*"
-#~ msgstr "Extraire tous les jeux*"
+#~ msgid "Formato WBFS - para USBLoader-FAT32"
+#~ msgstr "Format WBFS - pour USBLoader en FAT32"
 
-#~ msgid "Tienes que seleccionar una particion WBFS para realizar esta accion"
-#~ msgstr "Vous devez sélectionner une partition WBFS pour réaliser cette action"
+#~ msgid "Formato ISO - para Grabacion DVD"
+#~ msgstr "Format ISO - pour gravure DVD"
+
+#, fuzzy
+#~ msgid "URL secundaria para WiiTDB"
+#~ msgstr "URL vers la base de données WiiTDB"
+
+#~ msgid "Permitir arrastrar juegos en ISO, RAR o directorios."
+#~ msgstr "Permettre le glisser-déposer de jeux (ISO/RAR/dossiers) dans la fenêtre"
+
+#~ msgid "Permitir establecer caratulas desde http por arrastre"
+#~ msgstr "Permettre le glisser-déposer http"
+
+#~ msgid "Permitir establecer caratulas locales por arrastre"
+#~ msgstr "Permettre le glisser-déposer"
