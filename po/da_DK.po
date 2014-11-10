@@ -1842,25 +1842,25 @@ msgstr "Konvertering af WDF -> ISO: (%s -> %s)"
 msgid "Trabajo desconocido"
 msgstr "Ukendt format"
 
-#: util.py:769
+#: util.py:771
 msgid "3D cover"
 msgstr ""
 
-#: util.py:771
+#: util.py:773
 msgid "Full cover"
 msgstr ""
 
-#: util.py:773
+#: util.py:775
 #, fuzzy
 msgid "Normal cover"
 msgstr "Normal"
 
-#: util.py:777
+#: util.py:779
 #, fuzzy
 msgid "Custom disc"
 msgstr "Tilrette"
 
-#: util.py:779
+#: util.py:781
 #, fuzzy
 msgid "Original disc"
 msgstr "Original"
@@ -1939,69 +1939,69 @@ msgstr "Programmet kører med ukorrekte preferences"
 msgid "Interrumpido por el usuario"
 msgstr "Afbrudt af bruger"
 
-#~ msgid "Tienes que seleccionar una particion WBFS para realizar esta accion"
-#~ msgstr "Please select a WBFS partition"
+#~ msgid "Permitir establecer caratulas locales por arrastre"
+#~ msgstr "Tillad lokal Drag & Drop "
 
-#~ msgid "Extraer todos los juegos*"
-#~ msgstr "Extract All Games*"
+#~ msgid "Permitir establecer caratulas desde http por arrastre"
+#~ msgstr "Tillad http Drag & Drop "
 
-#~ msgid "Opciones de extraccion"
-#~ msgstr "Extraction Options"
-
-#~ msgid "WBFS"
-#~ msgstr "WBFS?"
-
-#~ msgid "+INFO"
-#~ msgstr "+INFO"
-
-#~ msgid "Espacio usado / Espacio total"
-#~ msgstr "Used / Total"
-
-#~ msgid "Numero de juegos."
-#~ msgstr "GAMEID"
-
-#~ msgid "Progreso de la tarea actual."
-#~ msgstr "Task progress: "
-
-#~ msgid "ACCESORIOS: "
-#~ msgstr "Accessories: "
-
-#~ msgid "OPCIONALES: "
-#~ msgstr "Optional: "
-
-#~ msgid "Fecha de lanzamiento: "
-#~ msgstr "Released: "
-
-#~ msgid "Buscar:"
-#~ msgstr "Search: "
-
-#~ msgid "ISO sin comprimir"
-#~ msgstr "Uncompressed ISO"
-
-#~ msgid "No se ha encontrado ninguna imagen ISO o RAR"
-#~ msgstr "Could not find ISO / RAR"
-
-#~ msgid "Numero de tareas que esperan en la cola."
-#~ msgstr "Number of tasks in queue"
-
-#~ msgid "Formato WDF - para Almacenamiento"
-#~ msgstr "Format WDF - til lagerenhed"
-
-#~ msgid "Formato WBFS - para USBLoader-FAT32"
-#~ msgstr "Format WBFS - for USBLoader-FAT32"
-
-#~ msgid "Formato ISO - para Grabacion DVD"
-#~ msgstr "Format ISO - for DVD Recording"
+#~ msgid "Permitir arrastrar juegos en ISO, RAR o directorios."
+#~ msgstr "Tillad Drag & Drop af spil (ISO/RAR/directory) i vindue "
 
 #, fuzzy
 #~ msgid "URL secundaria para WiiTDB"
 #~ msgstr "WiiTDB.zip DB URL"
 
-#~ msgid "Permitir arrastrar juegos en ISO, RAR o directorios."
-#~ msgstr "Tillad Drag & Drop af spil (ISO/RAR/directory) i vindue "
+#~ msgid "Formato ISO - para Grabacion DVD"
+#~ msgstr "Format ISO - for DVD Recording"
 
-#~ msgid "Permitir establecer caratulas desde http por arrastre"
-#~ msgstr "Tillad http Drag & Drop "
+#~ msgid "Formato WBFS - para USBLoader-FAT32"
+#~ msgstr "Format WBFS - for USBLoader-FAT32"
 
-#~ msgid "Permitir establecer caratulas locales por arrastre"
-#~ msgstr "Tillad lokal Drag & Drop "
+#~ msgid "Formato WDF - para Almacenamiento"
+#~ msgstr "Format WDF - til lagerenhed"
+
+#~ msgid "Numero de tareas que esperan en la cola."
+#~ msgstr "Number of tasks in queue"
+
+#~ msgid "No se ha encontrado ninguna imagen ISO o RAR"
+#~ msgstr "Could not find ISO / RAR"
+
+#~ msgid "ISO sin comprimir"
+#~ msgstr "Uncompressed ISO"
+
+#~ msgid "Buscar:"
+#~ msgstr "Search: "
+
+#~ msgid "Fecha de lanzamiento: "
+#~ msgstr "Released: "
+
+#~ msgid "OPCIONALES: "
+#~ msgstr "Optional: "
+
+#~ msgid "ACCESORIOS: "
+#~ msgstr "Accessories: "
+
+#~ msgid "Progreso de la tarea actual."
+#~ msgstr "Task progress: "
+
+#~ msgid "Numero de juegos."
+#~ msgstr "GAMEID"
+
+#~ msgid "Espacio usado / Espacio total"
+#~ msgstr "Used / Total"
+
+#~ msgid "+INFO"
+#~ msgstr "+INFO"
+
+#~ msgid "WBFS"
+#~ msgstr "WBFS?"
+
+#~ msgid "Opciones de extraccion"
+#~ msgstr "Extraction Options"
+
+#~ msgid "Extraer todos los juegos*"
+#~ msgstr "Extract All Games*"
+
+#~ msgid "Tienes que seleccionar una particion WBFS para realizar esta accion"
+#~ msgstr "Please select a WBFS partition"

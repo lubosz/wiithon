@@ -1836,25 +1836,25 @@ msgstr "Konvertiere WDF -> ISO: (%s -> %s)"
 msgid "Trabajo desconocido"
 msgstr "Unbekanntes Format"
 
-#: util.py:769
+#: util.py:771
 msgid "3D cover"
 msgstr ""
 
-#: util.py:771
+#: util.py:773
 msgid "Full cover"
 msgstr ""
 
-#: util.py:773
+#: util.py:775
 #, fuzzy
 msgid "Normal cover"
 msgstr "Normal"
 
-#: util.py:777
+#: util.py:779
 #, fuzzy
 msgid "Custom disc"
 msgstr "Nachgemacht"
 
-#: util.py:779
+#: util.py:781
 #, fuzzy
 msgid "Original disc"
 msgstr "Original"
@@ -1933,62 +1933,62 @@ msgstr "Programm läuft mit falschen Einstellungen"
 msgid "Interrumpido por el usuario"
 msgstr "Abbruch durch Benutzer"
 
-#~ msgid "Numero de tareas que esperan en la cola."
-#~ msgstr "Aufgaben in der Warteschlange."
+#~ msgid "Permitir establecer caratulas locales por arrastre"
+#~ msgstr "Lokales Drag&Drop erlauben"
 
-#~ msgid "No se ha encontrado ninguna imagen ISO o RAR"
-#~ msgstr "Es wurde kein ISO oder RAR Image gefunden"
+#~ msgid "Permitir establecer caratulas desde http por arrastre"
+#~ msgstr "Drag&Drop per http erlauben"
 
-#~ msgid "Buscar:"
-#~ msgstr "Suche:"
-
-#~ msgid "Fecha de lanzamiento: "
-#~ msgstr "Veröffentlicht"
-
-#~ msgid "OPCIONALES: "
-#~ msgstr "OPTIONEN:"
-
-#~ msgid "ACCESORIOS: "
-#~ msgstr "ZUBEHÖR:"
-
-#~ msgid "Progreso de la tarea actual."
-#~ msgstr "Aktuelle Aufgabe"
-
-#~ msgid "Numero de juegos."
-#~ msgstr "Anzahl der Spiele"
-
-#~ msgid "+INFO"
-#~ msgstr "+INFO"
-
-#, fuzzy
-#~ msgid "WBFS"
-#~ msgstr "WBFS?"
-
-#, fuzzy
-#~ msgid "Opciones de extraccion"
-#~ msgstr "Format unbekannt"
-
-#~ msgid "Tienes que seleccionar una particion WBFS para realizar esta accion"
-#~ msgstr "Wählen Sie eine WBFS Partition für diese Aktion"
-
-#~ msgid "Formato WDF - para Almacenamiento"
-#~ msgstr "WDF Format zum Speichern"
-
-#~ msgid "Formato WBFS - para USBLoader-FAT32"
-#~ msgstr "WBFS Format für USB Loader FAT32"
-
-#~ msgid "Formato ISO - para Grabacion DVD"
-#~ msgstr "ISO Format für DVD Aufnahmen"
+#~ msgid "Permitir arrastrar juegos en ISO, RAR o directorios."
+#~ msgstr "Drag&Drop von Spielen (ISO, RAR oder Ordner) erlauben."
 
 #, fuzzy
 #~ msgid "URL secundaria para WiiTDB"
 #~ msgstr "URL Adresse für WiiTDB Daten"
 
-#~ msgid "Permitir arrastrar juegos en ISO, RAR o directorios."
-#~ msgstr "Drag&Drop von Spielen (ISO, RAR oder Ordner) erlauben."
+#~ msgid "Formato ISO - para Grabacion DVD"
+#~ msgstr "ISO Format für DVD Aufnahmen"
 
-#~ msgid "Permitir establecer caratulas desde http por arrastre"
-#~ msgstr "Drag&Drop per http erlauben"
+#~ msgid "Formato WBFS - para USBLoader-FAT32"
+#~ msgstr "WBFS Format für USB Loader FAT32"
 
-#~ msgid "Permitir establecer caratulas locales por arrastre"
-#~ msgstr "Lokales Drag&Drop erlauben"
+#~ msgid "Formato WDF - para Almacenamiento"
+#~ msgstr "WDF Format zum Speichern"
+
+#~ msgid "Tienes que seleccionar una particion WBFS para realizar esta accion"
+#~ msgstr "Wählen Sie eine WBFS Partition für diese Aktion"
+
+#, fuzzy
+#~ msgid "Opciones de extraccion"
+#~ msgstr "Format unbekannt"
+
+#, fuzzy
+#~ msgid "WBFS"
+#~ msgstr "WBFS?"
+
+#~ msgid "+INFO"
+#~ msgstr "+INFO"
+
+#~ msgid "Numero de juegos."
+#~ msgstr "Anzahl der Spiele"
+
+#~ msgid "Progreso de la tarea actual."
+#~ msgstr "Aktuelle Aufgabe"
+
+#~ msgid "ACCESORIOS: "
+#~ msgstr "ZUBEHÖR:"
+
+#~ msgid "OPCIONALES: "
+#~ msgstr "OPTIONEN:"
+
+#~ msgid "Fecha de lanzamiento: "
+#~ msgstr "Veröffentlicht"
+
+#~ msgid "Buscar:"
+#~ msgstr "Suche:"
+
+#~ msgid "No se ha encontrado ninguna imagen ISO o RAR"
+#~ msgstr "Es wurde kein ISO oder RAR Image gefunden"
+
+#~ msgid "Numero de tareas que esperan en la cola."
+#~ msgstr "Aufgaben in der Warteschlange."

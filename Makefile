@@ -35,6 +35,13 @@ dependencies:
 	@echo "Install depends OK"
 	@echo "=================================================================="
 
+dependencies_extra: dependencies
+	$(INSTALL_PKG) devscripts	
+	@echo "=================================================================="
+	@echo "Install extra depends OK"
+	@echo "=================================================================="
+
+
 fuzzyies:
 	-@grep -n fuzzy po/*.po
 
@@ -463,7 +470,7 @@ po/locale/%/LC_MESSAGES/wiithon.mo: po/%.po
 
 # incrementos intermedios a la baseline
 inc-ppa: generate_changelog
-	debuild -S -sd -k0x2B5B428F -I -i --lintian-opts -Ivi
+	debuild -S -sd -k0x840EA408 -I -i --lintian-opts -Ivi
 	
 ppa-upload-inc: inc-ppa
 	dput ppa:wii.sceners.linux/wiithon ../wiithon_$(VERSION_ACTUAL)_source.changes
@@ -472,10 +479,10 @@ ppa-upload-inc: inc-ppa
 # Only need first time
 # modificar doc/VERSION
 new-ppa: generate_changelog
-	debuild -S -sa -k0x2B5B428F -I -i --lintian-opts -Ivi
+	debuild -S -sa -k0x840EA408 -I -i --lintian-opts -Ivi
 	sleep 1
 	mv ../wiithon_$(VERSION_ACTUAL).tar.gz ../wiithon_$(VERSION_ACTUAL).orig.tar.gz
-	debuild -S -sk -k0x2B5B428F -I -i --lintian-opts -Ivi
+	debuild -S -sk -k0x840EA408 -I -i --lintian-opts -Ivi
 
 ppa-upload-new: new-ppa
 	dput ppa:wii.sceners.linux/wiithon ../wiithon_$(VERSION_ACTUAL)_source.changes
