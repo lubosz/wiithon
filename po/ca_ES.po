@@ -1844,23 +1844,23 @@ msgstr ""
 msgid "Trabajo desconocido"
 msgstr "Treball desconegut"
 
-#: util.py:771
+#: util.py:775
 msgid "3D cover"
 msgstr ""
 
-#: util.py:773
+#: util.py:777
 msgid "Full cover"
 msgstr ""
 
-#: util.py:775
+#: util.py:779
 msgid "Normal cover"
 msgstr ""
 
-#: util.py:779
+#: util.py:783
 msgid "Custom disc"
 msgstr ""
 
-#: util.py:781
+#: util.py:785
 msgid "Original disc"
 msgstr ""
 
@@ -1938,52 +1938,52 @@ msgstr "Programa executat amb les opcions incorrectes."
 msgid "Interrumpido por el usuario"
 msgstr "Interromput per l'usuari"
 
-#~ msgid "Permitir establecer caratulas locales por arrastre"
-#~ msgstr "Permetre establir caràtules locals arrosegant"
+#~ msgid "Tienes que seleccionar una particion WBFS para realizar esta accion"
+#~ msgstr "Has de selecciona una partició WBFS per a realitzar aquesta acció"
 
-#~ msgid "Permitir establecer caratulas desde http por arrastre"
-#~ msgstr "Permetre establir caràtules des de http arrosegant"
-
-#~ msgid "Permitir arrastrar juegos en ISO, RAR o directorios."
-#~ msgstr "Permet arrosegar jocs en ISO, RAR, o directoris."
-
-#, fuzzy
-#~ msgid "URL secundaria para WiiTDB"
-#~ msgstr "URL Base de dades WiiTDB"
-
-#~ msgid "Progreso de la tarea actual."
-#~ msgstr "Progrés de la tasca actual."
-
-#~ msgid "Numero de tareas que esperan en la cola."
-#~ msgstr "Nombre de tasques que esperen a la cua"
-
-#~ msgid "Numero de juegos."
-#~ msgstr "Nombre de jocs"
-
-#~ msgid "Espacio usado / Espacio total"
-#~ msgstr "Espai utilitzat / Espai total"
-
-#~ msgid "+INFO"
-#~ msgstr "+INFO"
-
-#~ msgid "Fecha de lanzamiento: "
-#~ msgstr "Data de llançament:"
-
-#~ msgid "OPCIONALES: "
-#~ msgstr "OPCIONALS:"
-
-#~ msgid "ACCESORIOS: "
-#~ msgstr "Accesoris:"
-
-#~ msgid "No se ha encontrado ninguna imagen ISO o RAR"
-#~ msgstr "No s'ha trobat cap imatge ISO o RAR"
+#~ msgid "Extraer todos los juegos*"
+#~ msgstr "Extreure tots els jocs*"
 
 #, fuzzy
 #~ msgid "WBFS"
 #~ msgstr " WBFS?"
 
-#~ msgid "Extraer todos los juegos*"
-#~ msgstr "Extreure tots els jocs*"
+#~ msgid "No se ha encontrado ninguna imagen ISO o RAR"
+#~ msgstr "No s'ha trobat cap imatge ISO o RAR"
 
-#~ msgid "Tienes que seleccionar una particion WBFS para realizar esta accion"
-#~ msgstr "Has de selecciona una partició WBFS per a realitzar aquesta acció"
+#~ msgid "ACCESORIOS: "
+#~ msgstr "Accesoris:"
+
+#~ msgid "OPCIONALES: "
+#~ msgstr "OPCIONALS:"
+
+#~ msgid "Fecha de lanzamiento: "
+#~ msgstr "Data de llançament:"
+
+#~ msgid "+INFO"
+#~ msgstr "+INFO"
+
+#~ msgid "Espacio usado / Espacio total"
+#~ msgstr "Espai utilitzat / Espai total"
+
+#~ msgid "Numero de juegos."
+#~ msgstr "Nombre de jocs"
+
+#~ msgid "Numero de tareas que esperan en la cola."
+#~ msgstr "Nombre de tasques que esperen a la cua"
+
+#~ msgid "Progreso de la tarea actual."
+#~ msgstr "Progrés de la tasca actual."
+
+#, fuzzy
+#~ msgid "URL secundaria para WiiTDB"
+#~ msgstr "URL Base de dades WiiTDB"
+
+#~ msgid "Permitir arrastrar juegos en ISO, RAR o directorios."
+#~ msgstr "Permet arrosegar jocs en ISO, RAR, o directoris."
+
+#~ msgid "Permitir establecer caratulas desde http por arrastre"
+#~ msgstr "Permetre establir caràtules des de http arrosegant"
+
+#~ msgid "Permitir establecer caratulas locales por arrastre"
+#~ msgstr "Permetre establir caràtules locals arrosegant"

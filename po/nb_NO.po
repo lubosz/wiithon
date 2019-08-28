@@ -1754,23 +1754,23 @@ msgstr ""
 msgid "Trabajo desconocido"
 msgstr ""
 
-#: util.py:771
+#: util.py:775
 msgid "3D cover"
 msgstr ""
 
-#: util.py:773
+#: util.py:777
 msgid "Full cover"
 msgstr ""
 
-#: util.py:775
+#: util.py:779
 msgid "Normal cover"
 msgstr ""
 
-#: util.py:779
+#: util.py:783
 msgid "Custom disc"
 msgstr ""
 
-#: util.py:781
+#: util.py:785
 msgid "Original disc"
 msgstr ""
 
