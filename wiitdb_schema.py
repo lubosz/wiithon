@@ -420,7 +420,7 @@ class Juego(Base):
         
     def getJuegoWIITDB(self):
         sql = util.decode("juego_wiitdb.idgame=='%s'" % (self.idgame))
-        return session.query(JuegoWIITDB).filter(sql).first()
+        return session.query(JuegoWIITDB).filter(util.sql_text(sql)).first()
 
 class Particion(Base):
     __tablename__ = 'particion'

@@ -135,14 +135,14 @@ class WiiTDBXML(Thread):
                                                 idgame = nodo.content
                                                 
                                                 sql = util.decode('idgame == "%s"' % idgame)
-                                                juego_wbfs = session.query(Juego).filter(sql).first()
+                                                juego_wbfs = session.query(Juego).filter(util.sql_text(sql)).first()
                                                 # si no los tienes y estas descargando en masivo -> se lo salta
                                                 saltado = juego_wbfs is None and self.todos
                                                 
                                                 if not saltado:
                                                     sql = util.decode("idgame=='%s'" % (idgame))
                                                     try:
-                                                        juego = session.query(JuegoWIITDB).filter(sql).first()
+                                                        juego = session.query(JuegoWIITDB).filter(util.sql_text(sql)).first()
                                                     except:
                                                         self.error_importando(_("XML invalido"))
 
@@ -161,7 +161,7 @@ class WiiTDBXML(Thread):
                                                 lang = self.leerAtributo(nodo, 'lang')
 
                                                 sql = util.decode("lang=='%s' and idJuegoWIITDB='%s'" % (lang, juego.idJuegoWIITDB))
-                                                descripcion = session.query(JuegoDescripcion).filter(sql).first()
+                                                descripcion = session.query(JuegoDescripcion).filter(util.sql_text(sql)).first()
                                                 if descripcion == None:
                                                     descripcion = JuegoDescripcion(lang)
                                                     if self.callback_nuevo_descripcion:
@@ -205,7 +205,7 @@ class WiiTDBXML(Thread):
                                                 for valor in valores.split(","):
                                                     valor = valor.strip().replace("'","`")
                                                     sql = util.decode("nombre=='%s'" % (valor))
-                                                    genero = session.query(Genero).filter(sql).first()
+                                                    genero = session.query(Genero).filter(util.sql_text(sql)).first()
                                                     if genero == None:
                                                         genero = Genero(valor)
                                                         if self.callback_nuevo_genero:
@@ -217,7 +217,7 @@ class WiiTDBXML(Thread):
                                                 # crear un tipo de rating si es nuevo
                                                 tipo = self.leerAtributo(nodo, 'type')
                                                 sql = util.decode("tipo=='%s'" % (tipo))
-                                                rating_type = session.query(RatingType).filter(sql).first()
+                                                rating_type = session.query(RatingType).filter(util.sql_text(sql)).first()
                                                 if rating_type == None:
                                                     rating_type = RatingType(tipo)
                                                     
@@ -226,7 +226,7 @@ class WiiTDBXML(Thread):
                                                 # crea una relacion si es un nuevo valor del tipo
                                                 valor = self.leerAtributo(nodo, 'value')
                                                 sql = util.decode("idRatingType=='%s' and valor=='%s'" % (rating_type.idRatingType , valor))
-                                                rating_value = session.query(RatingValue).filter(sql).first()
+                                                rating_value = session.query(RatingValue).filter(util.sql_text(sql)).first()
                                                 if rating_value == None:
                                                     rating_value = RatingValue(valor)
                                                     rating_type.valores.append(rating_value)
@@ -243,7 +243,7 @@ class WiiTDBXML(Thread):
                                                                     valor = valor.strip()
                                                                     sql = util.decode("idRatingType=='%s' and valor=='%s'" %
                                                                                                 (rating_type.idRatingType, valor))
-                                                                    rating_content = session.query(RatingContent).filter(sql).first()
+                                                                    rating_content = session.query(RatingContent).filter(util.sql_text(sql)).first()
                                                                     if rating_content == None:
                                                                         rating_content = RatingContent(valor)
                                                                         rating_type.contenidos.append(rating_content)
@@ -269,7 +269,7 @@ class WiiTDBXML(Thread):
                                                                 for valor in valores.split(","):
                                                                     valor = valor.strip()
                                                                     sql = util.decode("valor=='%s'" % (valor))
-                                                                    online_feature = session.query(OnlineFeatures).filter(sql).first()
+                                                                    online_feature = session.query(OnlineFeatures).filter(util.sql_text(sql)).first()
                                                                     if online_feature == None:
                                                                         online_feature = OnlineFeatures(valor)
                                                                         if self.callback_nuevo_online_feature:
@@ -326,7 +326,7 @@ class WiiTDBXML(Thread):
                                                                         nombre = "microphone"
 
                                                                     sql = util.decode("nombre=='%s'" % (nombre))
-                                                                    accesorio = session.query(Accesorio).filter(sql).first()
+                                                                    accesorio = session.query(Accesorio).filter(util.sql_text(sql)).first()
                                                                     if accesorio == None:
                                                                         accesorio = Accesorio(nombre)
                                                                         if self.callback_nuevo_accesorio:
@@ -397,7 +397,7 @@ class WiiTDBXML(Thread):
                                         code = self.leerAtributo(nodo, 'code')
                                         name = self.leerAtributo(nodo, 'name')
                                         sql = util.decode("code=='%s'" % (code))
-                                        companie = session.query(Companie).filter(sql).first()
+                                        companie = session.query(Companie).filter(util.sql_text(sql)).first()
                                         if companie == None:
                                             companie = Companie(code, name)
                                             # for compatibility with sqlalchemy

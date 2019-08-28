@@ -19,6 +19,7 @@ import dbus
 from threading import Thread
 from gettext import gettext as _
 
+import sqlalchemy
 from sqlalchemy.orm import scoped_session, sessionmaker
 from sqlalchemy import create_engine
 from sqlalchemy.pool import NullPool
@@ -401,6 +402,9 @@ def getSesionBDD(db):
     Session = scoped_session(sessionmaker(bind=db, autoflush=True))
     session = Session()
     return session
+
+def sql_text(string):
+	return sqlalchemy.text(string)
 
 def call_out_file(comando):
     if config.DEBUG:

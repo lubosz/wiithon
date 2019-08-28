@@ -280,7 +280,7 @@ class Preferencias:
     # indicar el vbox que inicia la preferencia
     def iniciarPreferencia(self, tipo, name, defecto = '', mostrar = False, vbox = None, label = '', datos_lista = None):
         sql = util.decode("preferencias.campo=='%s'" % name)
-        preferencia = session.query(Preferencia).filter(sql).first()
+        preferencia = session.query(Preferencia).filter(util.sql_text(sql)).first()
         if preferencia == None:
             preferencia = Preferencia(tipo, name, defecto)
             # for compatibility with sqlalchemy
@@ -438,7 +438,7 @@ class Preferencias:
     def __setattr__(self, name, value):
 
         sql = util.decode("preferencias.campo=='%s'" % name)
-        preferencia = session.query(Preferencia).filter(sql).first()
+        preferencia = session.query(Preferencia).filter(util.sql_text(sql)).first()
 
         if preferencia != None:
             
@@ -469,7 +469,7 @@ class Preferencias:
         retorno = None
         
         sql = util.decode("preferencias.campo=='%s'" % name)
-        preferencia = session.query(Preferencia).filter(sql).first()
+        preferencia = session.query(Preferencia).filter(util.sql_text(sql)).first()
 
         if preferencia != None:
             

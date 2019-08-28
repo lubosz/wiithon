@@ -928,7 +928,7 @@ class WiithonGUI(GtkBuilderWrapper):
                 exp_reg = "[A-Z0-9]{6}"
                 if (len(nuevoIDGAME) == 6) and re.match(exp_reg,nuevoIDGAME):
                     sql = util.decode('idgame=="%s" and idParticion=="%d"' % (nuevoIDGAME , self.sel_parti.obj.idParticion))
-                    juego = session.query(Juego).filter(sql).first()
+                    juego = session.query(Juego).filter(util.sql_text(sql)).first()
                     if juego == None:
                         if ( self.question(_('TRADUCIR_ADVERTENCIA_SEGURIDAD_RENAME_IDGAME') , ('\n%s => %s') % (self.sel_juego.obj.idgame , nuevoIDGAME)) ):
                             if self.core.renombrarIDGAME( self.sel_juego.obj , nuevoIDGAME ):
@@ -1260,10 +1260,10 @@ class WiithonGUI(GtkBuilderWrapper):
         ordenaEnFecha = (self.core.prefs.ORDEN_INICIAL == 'F')
         
         if ordenaEnFecha:
-            query = session.query(Juego).filter(sql)
+            query = session.query(Juego).filter(util.sql_text(sql))
         else:
             # ordenar por nombre
-            query = session.query(Juego).filter(sql).order_by('lower(title)')
+            query = session.query(Juego).filter(util.sql_text(sql)).order_by('lower(title)')
         
         # juego, playersWifi, playersLocal, fecha, rating, info
         for juego in query:
@@ -1346,7 +1346,7 @@ class WiithonGUI(GtkBuilderWrapper):
             self.info.arriba_total = particion.total
 
             sql = util.decode('idParticion = %d' % particion.idParticion)
-            self.info.arriba_num_juegos = session.query(Juego).filter(sql).count()
+            self.info.arriba_num_juegos = session.query(Juego).filter(util.sql_text(sql)).count()
             self.info.abajo_num_particiones = session.query(Particion).count()
         else:
             total = 0
@@ -1850,9 +1850,9 @@ class WiithonGUI(GtkBuilderWrapper):
                             
                             # cada juego del origen se busca en la lista de juegos de destino
                             sql = util.decode('idParticion = %d' % parti_origen.idParticion)
-                            for juego in session.query(Juego).filter(sql):
+                            for juego in session.query(Juego).filter(util.sql_text(sql)):
                                 sql = util.decode('idgame = "%s" and idParticion = %d' % (juego.idgame, parti_destino.idParticion))
-                                juegoDestino = session.query(Juego).filter(sql).first()
+                                juegoDestino = session.query(Juego).filter(util.sql_text(sql)).first()
                                 if juegoDestino is None:
                                     juegosParaClonar.append( juego )
                                 else:
@@ -1903,7 +1903,7 @@ class WiithonGUI(GtkBuilderWrapper):
                             
                             # borrar caratulas no usadas
                             sql = util.decode('idgame=="%s"' % self.sel_juego.obj.idgame)
-                            if session.query(Juego).filter(sql).count() == 0:
+                            if session.query(Juego).filter(util.sql_text(sql)).count() == 0:
 
                                 # borrar disco FIXME borrar el disco de todos los tipos
                                 for tipo in range(2): # 2 tipos de disco
@@ -2003,7 +2003,7 @@ class WiithonGUI(GtkBuilderWrapper):
                         idgame = util.getMagicISO(fichero, self.core.getAutodetectarFormato(fichero))
                         if idgame is not None:
                             sql = util.decode("idgame=='%s' and idParticion=='%d'" % (idgame , self.sel_parti.obj.idParticion))
-                            juego = session.query(Juego).filter(sql).first()
+                            juego = session.query(Juego).filter(util.sql_text(sql)).first()
                             if juego is None:
                                 ok = True
 
