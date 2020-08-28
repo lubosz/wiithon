@@ -1912,37 +1912,37 @@ msgstr "Programa ejecutado con las opciones incorrectas."
 msgid "Interrumpido por el usuario"
 msgstr "Interrumpido por el usuario"
 
-#~ msgid "Tienes que seleccionar una particion WBFS para realizar esta accion"
-#~ msgstr "Tienes que seleccionar una partición WBFS para realizar esta acción"
+#~ msgid "Permitir establecer caratulas locales por arrastre"
+#~ msgstr "Permite Drag&Drop en local"
 
-#~ msgid "Extraer todos los juegos*"
-#~ msgstr "Extraer todos los juegos*"
+#~ msgid "Permitir establecer caratulas desde http por arrastre"
+#~ msgstr "Permite Drag&Drop por HTTP"
 
-#~ msgid "Opciones de extraccion"
-#~ msgstr "Opciones de extracción"
-
-#, fuzzy
-#~ msgid "WBFS"
-#~ msgstr "¿WBFS?"
-
-#~ msgid "Formato WDF - para Almacenamiento"
-#~ msgstr "Formato WDF - para Almacenamiento"
-
-#~ msgid "Formato WBFS - para USBLoader-FAT32"
-#~ msgstr "Formato WBFS - para USBLoader-FAT32"
-
-#~ msgid "Formato ISO - para Grabacion DVD"
-#~ msgstr "Formato ISO - para Grabación DVD"
+#~ msgid "Permitir arrastrar juegos en ISO, RAR o directorios."
+#~ msgstr "Permite arrastrar juegos (ISO/RAR/directorios) a la ventana"
 
 #, fuzzy
 #~ msgid "URL secundaria para WiiTDB"
 #~ msgstr "URL Base de datos WiiTDB"
 
-#~ msgid "Permitir arrastrar juegos en ISO, RAR o directorios."
-#~ msgstr "Permite arrastrar juegos (ISO/RAR/directorios) a la ventana"
+#~ msgid "Formato ISO - para Grabacion DVD"
+#~ msgstr "Formato ISO - para Grabación DVD"
 
-#~ msgid "Permitir establecer caratulas desde http por arrastre"
-#~ msgstr "Permite Drag&Drop por HTTP"
+#~ msgid "Formato WBFS - para USBLoader-FAT32"
+#~ msgstr "Formato WBFS - para USBLoader-FAT32"
 
-#~ msgid "Permitir establecer caratulas locales por arrastre"
-#~ msgstr "Permite Drag&Drop en local"
+#~ msgid "Formato WDF - para Almacenamiento"
+#~ msgstr "Formato WDF - para Almacenamiento"
+
+#, fuzzy
+#~ msgid "WBFS"
+#~ msgstr "¿WBFS?"
+
+#~ msgid "Opciones de extraccion"
+#~ msgstr "Opciones de extracción"
+
+#~ msgid "Extraer todos los juegos*"
+#~ msgstr "Extraer todos los juegos*"
+
+#~ msgid "Tienes que seleccionar una particion WBFS para realizar esta accion"
+#~ msgstr "Tienes que seleccionar una partición WBFS para realizar esta acción"

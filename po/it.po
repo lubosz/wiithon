@@ -1909,24 +1909,24 @@ msgstr "Programma eseguito con parametri errati."
 msgid "Interrumpido por el usuario"
 msgstr "Interrotto dall'utente"
 
-#~ msgid "Formato WDF - para Almacenamiento"
-#~ msgstr "Formato WDF - per archiviazione"
+#~ msgid "Permitir establecer caratulas locales por arrastre"
+#~ msgstr "Permette di impostare le copertine locali tramite trascinamento"
 
-#~ msgid "Formato WBFS - para USBLoader-FAT32"
-#~ msgstr "Formato WBFS - per Loader con supporto FAT32"
+#~ msgid "Permitir establecer caratulas desde http por arrastre"
+#~ msgstr "Permette di impostare le copertine da http tramite trascinamento"
 
-#~ msgid "Formato ISO - para Grabacion DVD"
-#~ msgstr "Formato ISO - per masterizzazione DVD"
+#~ msgid "Permitir arrastrar juegos en ISO, RAR o directorios."
+#~ msgstr "Permette il trascinamento dei giochi in ISO, RAR o cartelle."
 
 #, fuzzy
 #~ msgid "URL secundaria para WiiTDB"
 #~ msgstr "URL base dati WiiTDB"
 
-#~ msgid "Permitir arrastrar juegos en ISO, RAR o directorios."
-#~ msgstr "Permette il trascinamento dei giochi in ISO, RAR o cartelle."
+#~ msgid "Formato ISO - para Grabacion DVD"
+#~ msgstr "Formato ISO - per masterizzazione DVD"
 
-#~ msgid "Permitir establecer caratulas desde http por arrastre"
-#~ msgstr "Permette di impostare le copertine da http tramite trascinamento"
+#~ msgid "Formato WBFS - para USBLoader-FAT32"
+#~ msgstr "Formato WBFS - per Loader con supporto FAT32"
 
-#~ msgid "Permitir establecer caratulas locales por arrastre"
-#~ msgstr "Permette di impostare le copertine locali tramite trascinamento"
+#~ msgid "Formato WDF - para Almacenamiento"
+#~ msgstr "Formato WDF - per archiviazione"
