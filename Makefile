@@ -203,11 +203,12 @@ install4ppa: copy_archives
 
 generate_changelog:
 	@ln -sf $(shell pwd)/recursos/bazaar-plugins/gnulog.py ~/.bazaar/plugins/gnulog.py
-	#bzr log --log-format 'gnu' | sed -e "s/\(<.*@[^.]*\)>/\1\.fake>/g" > debian/changelog
+	bzr log --log-format 'gnu' | sed -e "s/\(<.*@[^.]*\)>/\1\.fake>/g" > debian/changelog
 	bzr log --gnu-changelog | sed -e "s/\(<.*@[^.]*\)>/\1\.fake>/g" > debian/changelog
 	@$(RM) ~/.bazaar/plugins/gnulog.py
 
-deb: generate_changelog
+deb:
+	#generate_changelog
 	debuild -b -uc -us -tc --lintian-opts -Ivi
 
 deb_sign: deb
