@@ -1927,34 +1927,34 @@ msgstr ""
 msgid "Interrumpido por el usuario"
 msgstr ""
 
-#~ msgid "Permitir establecer caratulas locales por arrastre"
-#~ msgstr "Permite Drag&Drop en local"
+#~ msgid "Desea reemplazar la iso del juego %s?"
+#~ msgstr "¿Desea reemplazar la iso del juego %s?"
 
-#~ msgid "Permitir establecer caratulas desde http por arrastre"
-#~ msgstr "Permite Drag&Drop por HTTP"
-
-#~ msgid "Permitir arrastrar juegos en ISO, RAR o directorios."
-#~ msgstr "Permite arrastrar juegos (ISO/RAR/directorios) a la ventana"
-
-#~ msgid "Numero de tareas que esperan en la cola."
-#~ msgstr "Número de tareas que esperan en la cola."
-
-#~ msgid "Fecha de lanzamiento: "
-#~ msgstr "Fecha: "
-
-#~ msgid "Numero de juegos."
-#~ msgstr "Número de juegos."
-
-#, fuzzy
-#~ msgid "WBFS"
-#~ msgstr "¿WBFS?"
+#~ msgid "Tienes que seleccionar una particion WBFS para realizar esta accion"
+#~ msgstr "Tienes que seleccionar una partición WBFS para realizar esta acción"
 
 #, fuzzy
 #~ msgid "Opciones de extraccion"
 #~ msgstr "Formato fecha corta"
 
-#~ msgid "Tienes que seleccionar una particion WBFS para realizar esta accion"
-#~ msgstr "Tienes que seleccionar una partición WBFS para realizar esta acción"
+#, fuzzy
+#~ msgid "WBFS"
+#~ msgstr "¿WBFS?"
 
-#~ msgid "Desea reemplazar la iso del juego %s?"
-#~ msgstr "¿Desea reemplazar la iso del juego %s?"
+#~ msgid "Numero de juegos."
+#~ msgstr "Número de juegos."
+
+#~ msgid "Fecha de lanzamiento: "
+#~ msgstr "Fecha: "
+
+#~ msgid "Numero de tareas que esperan en la cola."
+#~ msgstr "Número de tareas que esperan en la cola."
+
+#~ msgid "Permitir arrastrar juegos en ISO, RAR o directorios."
+#~ msgstr "Permite arrastrar juegos (ISO/RAR/directorios) a la ventana"
+
+#~ msgid "Permitir establecer caratulas desde http por arrastre"
+#~ msgstr "Permite Drag&Drop por HTTP"
+
+#~ msgid "Permitir establecer caratulas locales por arrastre"
+#~ msgstr "Permite Drag&Drop en local"

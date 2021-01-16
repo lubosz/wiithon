@@ -1933,65 +1933,65 @@ msgstr "Programm läuft mit falschen Einstellungen"
 msgid "Interrumpido por el usuario"
 msgstr "Abbruch durch Benutzer"
 
-#~ msgid "Permitir establecer caratulas locales por arrastre"
-#~ msgstr "Lokales Drag&Drop erlauben"
+#~ msgid "Desea reemplazar la iso del juego %s?"
+#~ msgstr "Möchten Sie das Spiel (ISO) %s ersetzen?"
 
-#~ msgid "Permitir establecer caratulas desde http por arrastre"
-#~ msgstr "Drag&Drop per http erlauben"
+#~ msgid "Numero de tareas que esperan en la cola."
+#~ msgstr "Aufgaben in der Warteschlange."
 
-#~ msgid "Permitir arrastrar juegos en ISO, RAR o directorios."
-#~ msgstr "Drag&Drop von Spielen (ISO, RAR oder Ordner) erlauben."
+#~ msgid "No se ha encontrado ninguna imagen ISO o RAR"
+#~ msgstr "Es wurde kein ISO oder RAR Image gefunden"
 
-#, fuzzy
-#~ msgid "URL secundaria para WiiTDB"
-#~ msgstr "URL Adresse für WiiTDB Daten"
+#~ msgid "Buscar:"
+#~ msgstr "Suche:"
 
-#~ msgid "Formato ISO - para Grabacion DVD"
-#~ msgstr "ISO Format für DVD Aufnahmen"
+#~ msgid "Fecha de lanzamiento: "
+#~ msgstr "Veröffentlicht"
 
-#~ msgid "Formato WBFS - para USBLoader-FAT32"
-#~ msgstr "WBFS Format für USB Loader FAT32"
+#~ msgid "OPCIONALES: "
+#~ msgstr "OPTIONEN:"
 
-#~ msgid "Formato WDF - para Almacenamiento"
-#~ msgstr "WDF Format zum Speichern"
+#~ msgid "ACCESORIOS: "
+#~ msgstr "ZUBEHÖR:"
 
-#~ msgid "Tienes que seleccionar una particion WBFS para realizar esta accion"
-#~ msgstr "Wählen Sie eine WBFS Partition für diese Aktion"
+#~ msgid "Progreso de la tarea actual."
+#~ msgstr "Aktuelle Aufgabe"
 
-#, fuzzy
-#~ msgid "Opciones de extraccion"
-#~ msgstr "Format unbekannt"
+#~ msgid "Numero de juegos."
+#~ msgstr "Anzahl der Spiele"
+
+#~ msgid "+INFO"
+#~ msgstr "+INFO"
 
 #, fuzzy
 #~ msgid "WBFS"
 #~ msgstr "WBFS?"
 
-#~ msgid "+INFO"
-#~ msgstr "+INFO"
+#, fuzzy
+#~ msgid "Opciones de extraccion"
+#~ msgstr "Format unbekannt"
 
-#~ msgid "Numero de juegos."
-#~ msgstr "Anzahl der Spiele"
+#~ msgid "Tienes que seleccionar una particion WBFS para realizar esta accion"
+#~ msgstr "Wählen Sie eine WBFS Partition für diese Aktion"
 
-#~ msgid "Progreso de la tarea actual."
-#~ msgstr "Aktuelle Aufgabe"
+#~ msgid "Formato WDF - para Almacenamiento"
+#~ msgstr "WDF Format zum Speichern"
 
-#~ msgid "ACCESORIOS: "
-#~ msgstr "ZUBEHÖR:"
+#~ msgid "Formato WBFS - para USBLoader-FAT32"
+#~ msgstr "WBFS Format für USB Loader FAT32"
 
-#~ msgid "OPCIONALES: "
-#~ msgstr "OPTIONEN:"
+#~ msgid "Formato ISO - para Grabacion DVD"
+#~ msgstr "ISO Format für DVD Aufnahmen"
 
-#~ msgid "Fecha de lanzamiento: "
-#~ msgstr "Veröffentlicht"
+#, fuzzy
+#~ msgid "URL secundaria para WiiTDB"
+#~ msgstr "URL Adresse für WiiTDB Daten"
 
-#~ msgid "Buscar:"
-#~ msgstr "Suche:"
+#~ msgid "Permitir arrastrar juegos en ISO, RAR o directorios."
+#~ msgstr "Drag&Drop von Spielen (ISO, RAR oder Ordner) erlauben."
 
-#~ msgid "No se ha encontrado ninguna imagen ISO o RAR"
-#~ msgstr "Es wurde kein ISO oder RAR Image gefunden"
+#~ msgid "Permitir establecer caratulas desde http por arrastre"
+#~ msgstr "Drag&Drop per http erlauben"
 
-#~ msgid "Numero de tareas que esperan en la cola."
-#~ msgstr "Aufgaben in der Warteschlange."
-
-#~ msgid "Desea reemplazar la iso del juego %s?"
-#~ msgstr "Möchten Sie das Spiel (ISO) %s ersetzen?"
+#~ msgid "Permitir establecer caratulas locales por arrastre"
+#~ msgstr "Lokales Drag&Drop erlauben"
