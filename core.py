@@ -35,7 +35,7 @@ class WiithonCORE:
             cachos = linea.strip().split(config.SEPARADOR)
             idgame = util.decode(cachos[0])
             sql = util.decode("idgame=='%s' and idParticion='%s'" % (idgame, particion.idParticion))
-            juego = session.query(Juego).filter(sql).first()
+            juego = session.query(Juego).filter(util.sql_text(sql)).first()
             if juego is not None:
                 # el juego ya existe, se borra
                 session.delete(juego)
@@ -76,7 +76,7 @@ class WiithonCORE:
 
                     # borrar TODOS los juegos de esta particion
                     query = session.query(Juego)
-                    query = query.filter("idParticion = %d" % particion.idParticion)
+                    query = query.filter(util.sql_text("idParticion = %d" % particion.idParticion))
                     for juego in query:
                         session.delete(juego)
                         
@@ -104,14 +104,14 @@ class WiithonCORE:
             # borrar TODOS los juegos que no sean de las particiones encontradas
             query = session.query(Juego)
             for particion in listaParticiones:
-                query = query.filter("idParticion <> %d" % particion.idParticion)
+                query = query.filter(util.sql_text("idParticion <> %d" % particion.idParticion))
             for juego in query:
                 session.delete(juego)
             
             # borrar TODAS las particiones que no sean de las particiones encontradas    
             query = session.query(Particion)
             for particion in listaParticiones:
-                query = query.filter("idParticion <> %d" % particion.idParticion)
+                query = query.filter(util.sql_text("idParticion <> %d" % particion.idParticion))
             for particion in query:
                 session.delete(particion)
             
@@ -122,12 +122,12 @@ class WiithonCORE:
 
     def getParticion(self, DEVICE):
         sql = util.decode("device=='%s'" % (DEVICE))
-        particion = session.query(Particion).filter(sql).first()
+        particion = session.query(Particion).filter(util.sql_text(sql)).first()
         return particion
 
     def getJuego(self, DEVICE, IDGAME):
         sql = util.decode("particion.device='%s' and juego.idgame=='%s'" % (DEVICE, IDGAME))
-        for juego, particion in session.query(Juego,Particion).filter(sql):
+        for juego, particion in session.query(Juego,Particion).filter(util.sql_text(sql)):
             return juego
         return None
 

@@ -23,7 +23,7 @@ msgstr ""
 msgid "No se ha encontrado la particion: %s"
 msgstr "Ez da partizioa aurkitu: %s"
 
-#: cli.py:53 gui.py:2150
+#: cli.py:53 gui.py:2154
 msgid "Lista de particiones autodetectadas : "
 msgstr "Atzemandako partizioen zerrenda: "
 
@@ -32,7 +32,7 @@ msgstr "Atzemandako partizioen zerrenda: "
 msgid "%d - Salir"
 msgstr "%d - Irten"
 
-#: cli.py:61 gui.py:2150
+#: cli.py:61 gui.py:2154
 msgid "Elige la particion WBFS con la que va a trabajar : "
 msgstr "Hautatu lan egiteko WBFS partizioa:"
 
@@ -63,7 +63,7 @@ msgstr "%s jokoa behar bezala aterata"
 msgid "ERROR extrayendo la ISO de %s"
 msgstr "Errorea %s-ko ISOa ateratzean"
 
-#: cli.py:163 gui.py:1202
+#: cli.py:163 gui.py:1203
 #, python-format
 msgid "Renombrar el juego %s."
 msgstr "%s jokoa berrizendatu."
@@ -95,9 +95,9 @@ msgstr "%s jokoa behar bezala ezabatu da"
 msgid "ERROR borrando el juego"
 msgstr "Errorea jokoa ezabatzean"
 
-#: cli.py:179 extraer.py:75 gui.py:654 gui.py:660 gui.py:666 gui.py:672
-#: gui.py:678 gui.py:684 gui.py:690 gui.py:696 gui.py:1790 gui.py:1847
-#: gui.py:1928
+#: cli.py:179 extraer.py:78 gui.py:655 gui.py:661 gui.py:667 gui.py:673
+#: gui.py:679 gui.py:685 gui.py:691 gui.py:697 gui.py:1794 gui.py:1851
+#: gui.py:1932
 msgid "No has seleccionado ningun juego"
 msgstr "Ez duzu jokorik hautatu"
 
@@ -156,11 +156,11 @@ msgstr "ERROREA, karatula deskargatzean"
 msgid "Tarea finalizada"
 msgstr "Zeregina amaitua"
 
-#: cli.py:251 cli.py:272 gui.py:2148
+#: cli.py:251 cli.py:272 gui.py:2152
 msgid "Has conectado el disco duro? No se ha encontrado ninguna particion valida."
 msgstr "Disko gogorra konektatu al duzu? Ez da partizio erabilgarririk topatu."
 
-#: cli.py:259 gui.py:2153
+#: cli.py:259 gui.py:2157
 #, python-format
 msgid "Realmente, desea formatear a WBFS la particion %s? (S/N) "
 msgstr "Benetan %s partizioa WBFS gisa formateatu nahi duzu? (B/E)"
@@ -169,26 +169,26 @@ msgstr "Benetan %s partizioa WBFS gisa formateatu nahi duzu? (B/E)"
 msgid "s"
 msgstr "b"
 
-#: cli.py:262 gui.py:2157
+#: cli.py:262 gui.py:2161
 #, python-format
 msgid "%s se ha formateado correctamente"
 msgstr "%s behar bezala formateatu da"
 
-#: cli.py:264 gui.py:2159
+#: cli.py:264 gui.py:2163
 #, python-format
 msgid "Error al formatear %s"
 msgstr "Errorea %s formateatzean"
 
-#: cli.py:266 cli.py:270 gui.py:2161 gui.py:2164
+#: cli.py:266 cli.py:270 gui.py:2165 gui.py:2168
 #, python-format
 msgid "No se ha formateado %s"
 msgstr "Ez da %s formateatu"
 
-#: cli.py:269 gui.py:2164
+#: cli.py:269 gui.py:2168
 msgid "Interrumpido por el usuario."
 msgstr "Erabiltzaileak etenda."
 
-#: cli.py:273 gui.py:2148
+#: cli.py:273 gui.py:2152
 msgid "Comprueba que tienes la particion FAT32 montada."
 msgstr "Egiaztatu FAT32 partizioa muntaturik duzula."
 
@@ -335,11 +335,11 @@ msgstr "TAMAINA"
 msgid "TITULO"
 msgstr "TITULUA"
 
-#: cli.py:490 gui.py:1065
+#: cli.py:490 gui.py:1066
 msgid "SI"
 msgstr "BAI"
 
-#: cli.py:492 gui.py:1065 wiitdb_schema.py:326
+#: cli.py:492 gui.py:1066 wiitdb_schema.py:326
 msgid "NO"
 msgstr "EZ"
 
@@ -360,7 +360,7 @@ msgstr "Erabilia"
 msgid "Libre"
 msgstr "Libre"
 
-#: cli.py:510 gui.py:708
+#: cli.py:510 gui.py:709
 msgid "Total"
 msgstr "Guztira"
 
@@ -397,7 +397,7 @@ msgstr ""
 "\t--covers:\tKaratula guztiak deskargatu eta lan direktorioan kopiatzen ditu.\n"
 "\t--discs:\tDisko-arte guztiak deskargatu eta lan direktorioan kopiatzen ditu."
 
-#: conversor.py:27
+#: conversor.py:29
 msgid "ISO / WBFS / WDF"
 msgstr "ISO / WBFS / WDF"
 
@@ -415,129 +415,129 @@ msgstr "%s-tik diskoa deskargatzen ..."
 msgid "Descargando caratula de %s desde %s ..."
 msgstr "%s-ren karatula %s-tik deskargatzen ..."
 
-#: extraer.py:47
+#: extraer.py:48
 #, python-format
-msgid "Desea reemplazar la iso del juego %s?"
-msgstr "%s jokoaren ISOa ordeztu nahi duzu?"
+msgid "La ISO del juego %s ya existe. ¿Desea reemplazarlo?"
+msgstr ""
 
-#: extraer.py:51
+#: extraer.py:52
 msgid "Espacio libre insuficiente para extraer la ISO"
 msgstr "Ez dago ISO irudiz ateratzeko behar haina leku librerik"
 
-#: gui.py:94 gui.py:1204 recursos/glade/wiithon.ui.h:86
+#: gui.py:96 gui.py:1205 recursos/glade/wiithon.ui.h:86
 msgid "Renombrar"
 msgstr "Berrizendatu"
 
-#: gui.py:97 recursos/glade/wiithon.ui.h:52
+#: gui.py:99 recursos/glade/wiithon.ui.h:52
 msgid "Extraer"
 msgstr "Atera"
 
-#: gui.py:100
+#: gui.py:102
 msgid "Copiar a otra particion"
 msgstr "Kopiatu beste partizio batera"
 
-#: gui.py:106
+#: gui.py:108
 msgid "Ver Juego en WiiTDB"
 msgstr "Jokoa WiiTDB-en ikusi"
 
-#: gui.py:109
+#: gui.py:111
 msgid "Editar Juego en WiiTDB"
 msgstr "Jokoa WiiTDB-en editatu"
 
-#: gui.py:112 gui.py:115 gui.py:118 gui.py:121 gui.py:124 gui.py:127
+#: gui.py:114 gui.py:117 gui.py:120 gui.py:123 gui.py:126 gui.py:129
 msgid "Buscar en"
 msgstr "Bilatu "
 
-#: gui.py:380
+#: gui.py:382
 msgid "Una actualizacion de Wiithon ha cambiado la estructura de la BDD. Se han establecido las preferencias por defecto."
 msgstr "Wiithon bertsio-berritze bat datu-base egitura aldatu du. Lehenetsitako hobespenak ezarri dira."
 
-#: gui.py:420 gui.py:1182 gui.py:1888 gui.py:1931 gui.py:1939 gui.py:1945
-#: gui.py:2047 gui.py:2582
+#: gui.py:422 gui.py:1183 gui.py:1892 gui.py:1935 gui.py:1943 gui.py:1949
+#: gui.py:2051 gui.py:2586
 msgid "No has seleccionado ninguna particion"
 msgstr "Ez duzu partiziorik hautatu"
 
-#: gui.py:502
+#: gui.py:503
 msgid "No hay particiones WBFS, se muestran los juegos de la ultima sesion."
 msgstr "Ez dago WBFS partiziorik, azken saioko jokoak erakutsiko dira."
 
-#: gui.py:504
+#: gui.py:505
 msgid "No puede acceder a las particiones porque el usuario que se puso en marcha wiithon no pertenecen al grupo \"disk\", se muestran los juegos de la ultima sesion."
 msgstr "Ezin dira partizioak ebatzi wiithon abiarazi duen erabiltzailea ez da \"disk\" taldeko partaide eta, azken saioko jokoak erakutsiko dira."
 
-#: gui.py:519
+#: gui.py:520
 msgid "Se ha detectado que ninguno de tus juegos disponen de informacion extra, descargada de Internet."
 msgstr "Zure jokoek Internetetik deskargatutako informazio gehigarririk ez dutela atzeman da."
 
-#: gui.py:520
+#: gui.py:521
 msgid "Deseas descargar informacion de los juegos desde WiiTDB?"
 msgstr "Joko argibideak WiiTDB-tik deskargatu nahi dituzu?"
 
-#: gui.py:528
+#: gui.py:529
 msgid "No puedes refrescar las particiones mientras hay tareas sin finalizar"
 msgstr "Ezin dira partizioak freskatu amaitzeko zereginak dauden bitartean"
 
-#: gui.py:578
+#: gui.py:579
 msgid "Por favor. Informe a los desarrolladores de este error"
 msgstr "Mesedez garatzaileei errore honen berri eman."
 
-#: gui.py:579
+#: gui.py:580
 msgid "Indique brevemente que es lo que estaba haciendo, y copie todo este mensaje"
 msgstr "Zehaztu laburki zer egiten ari zinen eta mezu oso hau kopiatu"
 
-#: gui.py:582
+#: gui.py:583
 msgid "Utitice la siguiente URL para el reporte de bugs:"
 msgstr "Programa-erroreen berri emateko URL hau erabili:"
 
-#: gui.py:707
+#: gui.py:708
 msgid "Dispositivo"
 msgstr "Gailua"
 
-#: gui.py:760
+#: gui.py:761
 msgid "BDD"
 msgstr "BDD"
 
-#: gui.py:761
+#: gui.py:762
 msgid "WBFS?"
 msgstr "WBFS?"
 
-#: gui.py:763
+#: gui.py:764
 msgid "TODOS"
 msgstr "DENAK"
 
-#: gui.py:784
+#: gui.py:785
 msgid "IDGAME"
 msgstr "IDGAME"
 
-#: gui.py:785
+#: gui.py:786
 msgid "Nombre"
 msgstr "Izena"
 
-#: gui.py:786
+#: gui.py:787
 msgid "Size"
 msgstr "Tamaina"
 
-#: gui.py:787
+#: gui.py:788
 msgid "Online?"
 msgstr "Sarean?"
 
-#: gui.py:788
+#: gui.py:789
 msgid "Local"
 msgstr "Lokala"
 
-#: gui.py:789
+#: gui.py:790
 msgid "Fecha"
 msgstr "Data"
 
-#: gui.py:790
+#: gui.py:791
 msgid "Rating"
 msgstr "Balorazioa"
 
-#: gui.py:791
+#: gui.py:792
 msgid "Particion"
 msgstr "Partizioa"
 
-#: gui.py:933
+#: gui.py:934
 msgid "TRADUCIR_ADVERTENCIA_SEGURIDAD_RENAME_IDGAME"
 msgstr ""
 "!!!! KONTUZ !!!!!\n"
@@ -550,169 +550,169 @@ msgstr ""
 "\n"
 "¿Ziur zaude IDGAME berrizendatu nahi duzula?"
 
-#: gui.py:943 gui.py:968
+#: gui.py:944 gui.py:969
 msgid "Error renombrando"
 msgstr "Errorea berrizendatzerakoan"
 
-#: gui.py:945
+#: gui.py:946
 msgid "Ya hay un juego con ese IDGAME"
 msgstr "Dagoeneko badago IDGAME hori duen joko bat"
 
-#: gui.py:947
+#: gui.py:948
 msgid "Error: La longitud del IDGAME debe ser 6, y solo puede contener letras y numeros"
 msgstr "Errorea: IDGAME luzera 6 izan behar da eta letra eta zenbakiak bakarrik eduki ditzake"
 
-#: gui.py:970
+#: gui.py:971
 #, python-format
 msgid "Se han detectado caracteres no validos: %s"
 msgstr "Karaktere baliogabeak atzeman dira: %s"
 
-#: gui.py:972
+#: gui.py:973
 #, python-format
 msgid "Nuevo nombre es demasiado largo, intente con un texto menor de %d caracteres"
 msgstr "Izen berria luzeegia da, %d karaktere baino gutxiagoko testu batez saiatu"
 
-#: gui.py:1069
+#: gui.py:1070
 msgid "PREGUNTA:"
 msgstr "GALDERA:"
 
-#: gui.py:1075 wiithon.py:59
+#: gui.py:1076 wiithon.py:59
 msgid "WARNING:"
 msgstr "KONTUZ:"
 
-#: gui.py:1081
+#: gui.py:1082
 msgid "ERROR:"
 msgstr "ERROREA:"
 
-#: gui.py:1087
+#: gui.py:1088
 msgid "AUTENTIFICACION:"
 msgstr "AUTENTIFIKAZIOA:"
 
-#: gui.py:1093
+#: gui.py:1094
 msgid "INFORMACION:"
 msgstr "ARGIBIDEAK:"
 
-#: gui.py:1196
+#: gui.py:1197
 msgid "actual"
 msgstr "orain"
 
-#: gui.py:1199 gui.py:1210
+#: gui.py:1200 gui.py:1211
 msgid "Personalizable ..."
 msgstr "Pertsonalizagarria ..."
 
-#: gui.py:1203
+#: gui.py:1204
 msgid "NOTA: Este es el nombre que aparecera en el USB Loader."
 msgstr "OHARRA: Hau da USB kargatzailean agertzen den izena."
 
-#: gui.py:1203
+#: gui.py:1204
 msgid "Nombres propuestos por la informacion WiiTDB"
 msgstr "WiiTDB argibideak proposaturiko izenak"
 
-#: gui.py:1274
+#: gui.py:1278
 msgid "+Info"
 msgstr "+Info"
 
-#: gui.py:1276
+#: gui.py:1280
 msgid "??"
 msgstr "??"
 
-#: gui.py:1623
+#: gui.py:1627
 msgid "No se ha encontrado synopsis"
 msgstr "Ez da laburpenik topatu"
 
-#: gui.py:1648
+#: gui.py:1652
 msgid "juegos"
 msgstr "jokoak"
 
-#: gui.py:1650
+#: gui.py:1654
 msgid "juego"
 msgstr "jokoa"
 
-#: gui.py:1709
+#: gui.py:1713
 msgid "GENERO: "
 msgstr "GENEROA:"
 
-#: gui.py:1710
+#: gui.py:1714
 msgid "Desarrolador/Editorial: "
 msgstr "Garatzaile/Editoriala:"
 
-#: gui.py:1711
+#: gui.py:1715
 msgid "Num. jugadores en off-line: "
 msgstr "Saren kanpoko jokalari kopurua:"
 
-#: gui.py:1712
+#: gui.py:1716
 msgid "Capacidad On-line: "
 msgstr "Sare bidezko gaitasuna:"
 
-#: gui.py:1713
+#: gui.py:1717
 msgid "Clasificacion parental: "
 msgstr "Guraso klasifikazioa:"
 
-#: gui.py:1730 gui.py:1746 gui.py:1783
+#: gui.py:1734 gui.py:1750 gui.py:1787
 msgid "DESCRIPCION: "
 msgstr "AZALPENA:"
 
-#: gui.py:1746 gui.py:1783
+#: gui.py:1750 gui.py:1787
 msgid "Sin descripcion."
 msgstr "Azalpen gabea."
 
-#: gui.py:1760
+#: gui.py:1764
 msgid "No hay datos de este juego. Intente actualizar la base de datos de WiiTDB."
 msgstr "Ez dago joko honen daturik. Saiatu WiiTDB datu-basea eguneratzen."
 
-#: gui.py:1815
+#: gui.py:1819
 msgid "Not implemented yet"
 msgstr "Oraindik inplementatu gabe"
 
-#: gui.py:1844
+#: gui.py:1848
 #, python-format
 msgid "Desea copiar el juego %s a la particion %s?"
 msgstr "%s jokoa %s partiziora kopiatu nahi duzu?"
 
-#: gui.py:1861
+#: gui.py:1865
 msgid "Se van a copiar los siguientes juegos a"
 msgstr "Hurrengo jokoak hona kopiatu dira: "
 
-#: gui.py:1868 gui.py:1876
+#: gui.py:1872 gui.py:1880
 msgid "juegos mas"
 msgstr "joko gehiago"
 
-#: gui.py:1870
+#: gui.py:1874
 msgid "A continuacion se listan los juego que NO van a ser copiados por ya estar en la particion de destino"
 msgstr "Jarraian helburu partizioan dagoeneko badaudelako kopiatuko EZ diren jokoak zerrendatzen dira"
 
-#: gui.py:1878
+#: gui.py:1882
 msgid "Empezar a copiar?"
 msgstr "Kopiatzen hasi?"
 
-#: gui.py:1884
+#: gui.py:1888
 #, python-format
 msgid "No hay nada que copiar a %s"
 msgstr "Ez dago %s-ra kopiatzeko ezer"
 
-#: gui.py:1886
+#: gui.py:1890
 msgid "Debes tener al menos 2 particiones WBFS para hacer copias 1:1"
 msgstr "Behintzat 2 WBFS partizio behar dituzu 1:1 kopiak egiteko"
 
-#: gui.py:1896
+#: gui.py:1900
 #, python-format
 msgid "Quieres borrar el juego: %s?"
 msgstr "Joko hau ezabatu nahi duzu: %s?"
 
-#: gui.py:1925
+#: gui.py:1929
 #, python-format
 msgid "Error borrando el juego %s"
 msgstr "Errorea %s jokoa borratzean"
 
-#: gui.py:1952
+#: gui.py:1956
 msgid "Elige una imagen ISO valida para Wii"
 msgstr "Wii-re baliozko ISO bat hautatu"
 
-#: gui.py:1958
+#: gui.py:1962
 msgid "Elige un directorio"
 msgstr "Hautatu direktorio bat"
 
-#: gui.py:1998
+#: gui.py:2002
 msgid ""
 "Algunos juegos no se han introducido:\n"
 "\n"
@@ -720,29 +720,29 @@ msgstr ""
 "Zenbait joko ez dira sartu:\n"
 "\n"
 
-#: gui.py:2012
+#: gui.py:2016
 #, python-format
 msgid "%s ya existe en %s\n"
 msgstr "%s badago dagoeneko %s-n\n"
 
-#: gui.py:2015
+#: gui.py:2019
 #, python-format
 msgid "%s no es un ISO de Wii.\n"
 msgstr "%s ez da Wii ISO bat.\n"
 
-#: gui.py:2053
+#: gui.py:2057
 msgid "Paso 1 de 2: Elige un directorio para las CARATULAS"
 msgstr "1 urratsa 2-tik: Hautatu direktorio bat KARATULENTZAT"
 
-#: gui.py:2057
+#: gui.py:2061
 msgid "Paso 2 de 2: Elige un directorio para los DISCOS"
 msgstr "2 urratsa 2-tik: Hautatu direktorio bat DISKOENTZAT"
 
-#: gui.py:2079
+#: gui.py:2083
 msgid "No tienes ningun juego"
 msgstr "Ez duzu jokorik"
 
-#: gui.py:2086
+#: gui.py:2090
 msgid ""
 "Hay una tarea que esta bloqueando las preferencias.\n"
 "\n"
@@ -752,138 +752,138 @@ msgstr ""
 "\n"
 "Itxoin amaitu arte."
 
-#: gui.py:2090
+#: gui.py:2094
 #, python-format
 msgid "Elige un directorio para copiar el disco de tipo %s"
 msgstr ""
 
-#: gui.py:2109
+#: gui.py:2113
 #, python-format
 msgid "Elige un directorio para copiar la caratula activa de tipo %s"
 msgstr ""
 
-#: gui.py:2137
+#: gui.py:2141
 msgid "Estas seguro de querer formatear la BDD? Se borraran tus preferencias y la informacion de los juegos"
 msgstr "Ziur zaude datu-basea formateatu nahi duzula? Zure hobespenak eta jokoen argibideak ezabatuko dira"
 
-#: gui.py:2142
+#: gui.py:2146
 msgid "Es recomendable que reinicie la aplicacion"
 msgstr "Gomendagarria da aplikazioa berrabiaraztea"
 
-#: gui.py:2142
+#: gui.py:2146
 msgid "La BDD ha sido formateada."
 msgstr "Datu-basea formateatua izan da."
 
-#: gui.py:2150 recursos/glade/wiithon.ui.h:55
+#: gui.py:2154 recursos/glade/wiithon.ui.h:55
 msgid "Formatear a WBFS"
 msgstr "WBFS gisa formateatu"
 
-#: gui.py:2269
+#: gui.py:2273
 msgid "Seguro que deseas descargar informacion de los juegos de WiiTDB?"
 msgstr "Ziur joko argibideak WiiTDB-tik deskargatu nahi dituzula?"
 
-#: gui.py:2275
+#: gui.py:2279
 msgid "Ya estas descargando la informacion WiiTDB ..."
 msgstr "Dagoeneko WiiTDB argibideak deskargatzen ari zara ..."
 
-#: gui.py:2284
+#: gui.py:2288
 msgid "Empezando a obtener datos de juegos desde WiiTDB"
 msgstr "Jokoen datuak WiiTDB-tik deskargatzen hasten"
 
-#: gui.py:2294
+#: gui.py:2298
 #, python-format
 msgid "%d%% - %d/%d games - %d descriptions - %d genre - %d accesories - %d companies - %d online features"
 msgstr "%d%% - %d/%d joko - %d azalpen - %d genero - %d gehigarri - %d konpainia - %d sare bidezko ezaugarri"
 
-#: gui.py:2318
+#: gui.py:2322
 #, python-format
 msgid "Error importando %s: %s"
 msgstr "Errorea %s inportatzean: %s"
 
-#: gui.py:2321
+#: gui.py:2325
 #, python-format
 msgid "Descargando WiiTDB desde %s, espere unos minutos ..."
 msgstr "WiiTDB %s-tik deskargatzen, itxoin minutu batzuek .."
 
-#: gui.py:2325
+#: gui.py:2329
 msgid "Empezando a descomprimir la informacion WiiTDB"
 msgstr "WiiTDB-ko informazioa deskonprimitzen hasten"
 
-#: gui.py:2331
+#: gui.py:2335
 msgid "Finalizada satisfactoriamente la importacion de datos desde WiiTDB"
 msgstr "WiiTDB-ko datu inportatzea behar bezala amaitu da"
 
-#: gui.py:2336
+#: gui.py:2340
 msgid "Actualizar base de datos"
 msgstr "Datu-basea eguneratu"
 
-#: gui.py:2336 gui.py:2620 gui.py:2626 gui.py:2655
+#: gui.py:2340 gui.py:2624 gui.py:2630 gui.py:2659
 msgid "Finalizado"
 msgstr "Amaitua"
 
-#: gui.py:2336
+#: gui.py:2340
 msgid "Se ha actualizado la base de datos de WiiTDB"
 msgstr "WiiTDB datu-basea eguneratu da"
 
-#: gui.py:2341
+#: gui.py:2345
 #, python-format
 msgid "Deseas borrar el archivo %s?"
 msgstr "%s fitxategia ezabatu nahi duzu?"
 
-#: gui.py:2599
+#: gui.py:2603
 #, python-format
 msgid "Trabajando con %s, sin estimar el tiempo restante ..."
 msgstr "%s-rekin lanean, falta den denbora kalkulatu gabe ..."
 
-#: gui.py:2603 gui.py:2648
+#: gui.py:2607 gui.py:2652
 #, python-format
 msgid "Termina: %s"
 msgstr "Amaiera: %s"
 
-#: gui.py:2620
+#: gui.py:2624
 msgid "Anadir juego"
 msgstr "Gehitu jokoa"
 
-#: gui.py:2626 recursos/glade/wiithon.ui.h:38
+#: gui.py:2630 recursos/glade/wiithon.ui.h:38
 msgid "Copia directa entre particiones WBFS"
 msgstr "WBFS partizio arteko kopia zuzena"
 
-#: gui.py:2633
+#: gui.py:2637
 #, python-format
 msgid "Empieza %s"
 msgstr "Hasiera: %s"
 
-#: gui.py:2655 recursos/glade/wiithon.ui.h:53
+#: gui.py:2659 recursos/glade/wiithon.ui.h:53
 msgid "Extraer juegos"
 msgstr "Atera jokoak"
 
-#: gui.py:2667
+#: gui.py:2671
 #, python-format
 msgid "Falla la descarga de la caratula de %s"
 msgstr "Huts %s karatula deskargatzean"
 
-#: gui.py:2678
+#: gui.py:2682
 #, python-format
 msgid "Falla la descarga del disco de %s"
 msgstr "Huts %s diskoa deskargatzean"
 
-#: gui.py:2730
+#: gui.py:2734
 msgid "Finalizando ..."
 msgstr "Amaitzen ..."
 
-#: gui.py:2732
+#: gui.py:2736
 msgid "ERROR!"
 msgstr "ERROREA!"
 
-#: gui.py:2741
+#: gui.py:2745
 msgid "quedan"
 msgstr "falta dira"
 
-#: gui.py:2758
+#: gui.py:2762
 msgid "Error en progreso"
 msgstr "Errorea aurrerapenean"
 
-#: gui.py:2770
+#: gui.py:2774
 msgid "Empezando ..."
 msgstr "Hasten ..."
 
@@ -1835,25 +1835,25 @@ msgstr "WDF -> ISO bihurtzen: (%s -> %s)"
 msgid "Trabajo desconocido"
 msgstr "Zeregin ezezaguna"
 
-#: util.py:771
+#: util.py:776
 msgid "3D cover"
 msgstr ""
 
-#: util.py:773
+#: util.py:778
 msgid "Full cover"
 msgstr ""
 
-#: util.py:775
+#: util.py:780
 #, fuzzy
 msgid "Normal cover"
 msgstr "Normala"
 
-#: util.py:779
+#: util.py:784
 #, fuzzy
 msgid "Custom disc"
 msgstr "Pertsonalizatua"
 
-#: util.py:781
+#: util.py:786
 #, fuzzy
 msgid "Original disc"
 msgstr "Jatorrizkoa"
@@ -1952,3 +1952,6 @@ msgstr "Erabiltzaileak etenda."
 
 #~ msgid "URL secundaria para WiiTDB"
 #~ msgstr "WIITDB-ren bigarren URLa"
+
+#~ msgid "Desea reemplazar la iso del juego %s?"
+#~ msgstr "%s jokoaren ISOa ordeztu nahi duzu?"

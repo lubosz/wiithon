@@ -58,6 +58,13 @@ case "$1" in
         ln -sf /usr/games/wiithon_wdf2iso /usr/share/wiithon/wiithon_wdf2iso
         ln -sf /usr/games/wiithon_iso2wdf /usr/share/wiithon/wiithon_iso2wdf
         ln -sf /usr/games/wiithon_wwt /usr/share/wiithon/wiithon_wwt
+
+        # TODO: Fix for ubuntu 20.04 LTS. Need update code from python/gtk/glade 2 to 3
+        dpkg -i /usr/share/wiithon/recursos/python2_pkgs/multiarch-support_2.27-3ubuntu1.2_amd64.deb
+        dpkg -i /usr/share/wiithon/recursos/python2_pkgs/python-cairo_1.16.2-2ubuntu2_amd64.deb
+        dpkg -i /usr/share/wiithon/recursos/python2_pkgs/python-gobject-2_2.28.6-14ubuntu1_amd64.deb
+        dpkg -i /usr/share/wiithon/recursos/python2_pkgs/python-gtk2_2.24.0-5.1ubuntu2_amd64.deb
+        dpkg -i /usr/share/wiithon/recursos/python2_pkgs/python-glade2_2.24.0-5.1ubuntu2_amd64.deb
         
         if [ -x /usr/bin/update-menus ] ; then update-menus ; fi
 

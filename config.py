@@ -49,7 +49,7 @@ try:
     VER, REV = util.getVersionRevision()
 except:
     VER, REV = "?", "?"
-VERS_BDD = [1,2,3,4,5,6] # last is active
+VERS_BDD = [1,2,3,4,5,6,7] # last is active
 HOME = os.environ['HOME']
 HOME_WIITHON = os.path.join(HOME , '.%s' % APP)
 HOME_WIITHON_BDD = os.path.join(HOME_WIITHON , 'bdd')
@@ -105,7 +105,7 @@ SIZE_IMAGE_ACCESORIOS = 80
 URL_BUGS = "https://bugs.launchpad.net/wiithon/+filebug"
 
 # URL WIITDB
-URL_WIITDB = "wiitdb.com"
+URL_WIITDB = "gametdb.com"
 
 # LANGUAGE IF DONT AUTODETECT
 LANGUAGE_WIITHON_DEFAULT = 'en'

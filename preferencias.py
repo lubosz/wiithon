@@ -81,8 +81,8 @@ class Preferencias:
         ORDEN_INICIAL_LISTA =    [('F', _('Por fecha')),
                                   ('N', _('Por nombre'))]
         self.iniciarPreferencia('select', 'ORDEN_INICIAL', defecto='F', mostrar=cargarWidget, vbox=prefs_vbox_general, label=_('Orden inicial'), datos_lista = ORDEN_INICIAL_LISTA)
-        self.iniciarPreferencia('string', 'COMANDO_ABRIR_CARPETA', defecto='gnome-open', mostrar=cargarWidget, vbox=prefs_vbox_general, label=_('Comando para abrir carpetas'))
-        self.iniciarPreferencia('string', 'COMANDO_ABRIR_WEB', defecto='gnome-open', mostrar=cargarWidget, vbox=prefs_vbox_general, label=_('Comando para abrir paginas Web'))
+        self.iniciarPreferencia('string', 'COMANDO_ABRIR_CARPETA', defecto='xdg-open', mostrar=cargarWidget, vbox=prefs_vbox_general, label=_('Comando para abrir carpetas'))
+        self.iniciarPreferencia('string', 'COMANDO_ABRIR_WEB', defecto='xdg-open', mostrar=cargarWidget, vbox=prefs_vbox_general, label=_('Comando para abrir paginas Web'))
         self.iniciarPreferencia('bool', 'ADVERTENCIA_ACTUALIZAR_WIITDB', defecto=True, mostrar=cargarWidget, vbox=prefs_vbox_general, label=_('Mostrar una advertencia cuando no hay ninguna informacion WiiTDB'))
         self.iniciarPreferencia('bool', 'ADVERTENCIA_NO_WBFS', defecto=True, mostrar=cargarWidget, vbox=prefs_vbox_general, label=_('Mostrar una advertencia cuando no hay particiones WBFS'))
         self.iniciarPreferencia('bool', 'init_minimize', defecto=False, mostrar=cargarWidget, vbox=prefs_vbox_general, label=_('Iniciar maximizado'))
@@ -125,7 +125,7 @@ class Preferencias:
                             ('-l d1', _('IDGAME_TITLE/IDGAME.wbfs')),
                             ('-l d2', _('TITLE [IDGAME]/IDGAME.wbfs'))
                             ]
-        self.iniciarPreferencia('select', 'FORMATO_WBFS_SALIDA', defecto='-l f0', mostrar=cargarWidget, vbox=prefs_vbox_general, label=_('Formato de salida de la extraccion WBFS'), datos_lista = FORMATOS_WBFS_LISTA)
+        self.iniciarPreferencia('select', 'FORMATO_WBFS_SALIDA', defecto='-l f1', mostrar=cargarWidget, vbox=prefs_vbox_general, label=_('Formato de salida de la extraccion WBFS'), datos_lista = FORMATOS_WBFS_LISTA)
         
         
         COLORES_LISTA =    [('darkred', _('Dark Red')),
@@ -151,7 +151,7 @@ class Preferencias:
         self.iniciarPreferencia('select', 'COLOR_FOREGROUND3', defecto='darkblue', mostrar=cargarWidget, vbox=prefs_vbox_general, label=_('Color de la letra de la particion 3'), datos_lista = COLORES_LISTA)
 
         # wiitdb
-        self.iniciarPreferencia('string', 'URL_ZIP_WIITDB', defecto='http://wiitdb.com/wiitdb.zip', mostrar=cargarWidget, vbox=prefs_vbox_wiitdb, label=_('URL principal para WiiTDB'))
+        self.iniciarPreferencia('string', 'URL_ZIP_WIITDB', defecto='http://gametdb.com/wiitdb.zip', mostrar=cargarWidget, vbox=prefs_vbox_wiitdb, label=_('URL principal para WiiTDB'))
         self.iniciarPreferencia('string', 'FORMATO_FECHA_WIITDB', defecto='%d/%m/%Y', mostrar=cargarWidget, vbox=prefs_vbox_wiitdb, label=_('Formato fecha'))
         self.iniciarPreferencia('string', 'FORMATO_FECHA_CORTA_WIITDB', defecto='%Y/%m', mostrar=cargarWidget, vbox=prefs_vbox_wiitdb, label=_('Formato fecha corto'))        
         self.iniciarPreferencia('string', 'FORMATO_FECHA_DESCONOCIDA', defecto='1900/01', mostrar=cargarWidget, vbox=prefs_vbox_wiitdb, label=_('Fecha desconocida'))
@@ -280,7 +280,7 @@ class Preferencias:
     # indicar el vbox que inicia la preferencia
     def iniciarPreferencia(self, tipo, name, defecto = '', mostrar = False, vbox = None, label = '', datos_lista = None):
         sql = util.decode("preferencias.campo=='%s'" % name)
-        preferencia = session.query(Preferencia).filter(sql).first()
+        preferencia = session.query(Preferencia).filter(util.sql_text(sql)).first()
         if preferencia == None:
             preferencia = Preferencia(tipo, name, defecto)
             # for compatibility with sqlalchemy
@@ -438,7 +438,7 @@ class Preferencias:
     def __setattr__(self, name, value):
 
         sql = util.decode("preferencias.campo=='%s'" % name)
-        preferencia = session.query(Preferencia).filter(sql).first()
+        preferencia = session.query(Preferencia).filter(util.sql_text(sql)).first()
 
         if preferencia != None:
             
@@ -469,7 +469,7 @@ class Preferencias:
         retorno = None
         
         sql = util.decode("preferencias.campo=='%s'" % name)
-        preferencia = session.query(Preferencia).filter(sql).first()
+        preferencia = session.query(Preferencia).filter(util.sql_text(sql)).first()
 
         if preferencia != None:
             

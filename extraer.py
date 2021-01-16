@@ -34,7 +34,8 @@ class ActionExtraer:
             self.todos = todos
 
     def cambio_directorio_salida(self, boton):
-        self.padre.core.prefs.ruta_extraer_iso = self.salida = boton.get_file().get_path()
+        self.salida = boton.get_file().get_path()
+        self.padre.core.prefs.ruta_extraer_iso = self.salida
 
     def cambio_formato_salida(self, radio, formato):
         if radio.get_active():
@@ -44,7 +45,7 @@ class ActionExtraer:
 
         extraer = False
         if self.padre.core.existeExtraido(juego , self.salida, self.formato_destino):
-            extraer = self.padre.question(_('Desea reemplazar la iso del juego %s?') % (juego))
+            extraer = self.padre.question(_('La ISO del juego %s ya existe. ¿Desea reemplazarlo?') % (juego))
         else:
             if self.formato_destino == 'iso':
                 if not util.space_for_dvd_iso_wii(self.salida):
@@ -66,6 +67,8 @@ class ActionExtraer:
 
 
     def empieza_conversion(self, boton):
+
+        self.salida = self.padre.wb_extraer_directorio_salida.get_file().get_path()
         
         if not self.todos:
 

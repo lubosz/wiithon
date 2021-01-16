@@ -22,6 +22,8 @@ class ActionConversor:
         self.padre.wb_conversor_radio_formato_iso.connect('toggled',self.cambio_formato_salida, 'iso')
         self.padre.wb_conversor_radio_formato_wbfs.connect('toggled',self.cambio_formato_salida, 'wbfs')
         self.padre.wb_conversor_radio_formato_wdf.connect('toggled',self.cambio_formato_salida, 'wdf')
+
+        self.padre.wb_conversor_directorio_salida.set_current_folder(self.salida)
         
         filter = FileFilter()
         filter.set_name(_('ISO / WBFS / WDF'))
@@ -48,13 +50,18 @@ class ActionConversor:
 
     # gtk.FileChooserButton
     def cambio_directorio_salida(self, boton):
-        self.salida = boton.get_file().get_path()
+        if boton.get_file() is not None:
+            self.salida = boton.get_file().get_path()
 
     def cambio_formato_salida(self, radio, formato):
         if radio.get_active():
             self.formato_destino = formato
 
     def empieza_conversion(self, boton):
+
+        self.origen = self.padre.wb_conversor_fichero_origen.get_file().get_path()
+        self.salida = self.padre.wb_conversor_directorio_salida.get_file().get_path()
+
         if self.formato_destino == 'iso':
             if self.formato_origen == 'wbfs':
                 self.padre.poolTrabajo.nuevoTrabajoConvertir_WBFS_ISO(self.origen, self.salida)

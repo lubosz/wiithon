@@ -15,10 +15,10 @@ import gettext
 import statvfs
 import random
 import time
-import dbus
 from threading import Thread
 from gettext import gettext as _
 
+import sqlalchemy
 from sqlalchemy.orm import scoped_session, sessionmaker
 from sqlalchemy import create_engine
 from sqlalchemy.pool import NullPool
@@ -30,8 +30,6 @@ BLACK_LIST2 = "\";$\\"
 
 (DISC_ORIGINAL, DISC_CUSTOM)=([ "%d" % i for i in range(2) ])
 (COVER_NORMAL, COVER_3D, COVER_FULL)=([ "%d" % i for i in range(3) ])
-
-bus = dbus.SessionBus()
 
 class NonRepeatList(list):
     def __init__(self, *args):
@@ -402,6 +400,9 @@ def getSesionBDD(db):
     session = Session()
     return session
 
+def sql_text(string):
+	return sqlalchemy.text(string)
+
 def call_out_file(comando):
     if config.DEBUG:
         print comando
@@ -760,9 +761,13 @@ def remove_multipart_rar(archivoRAR):
 
 def notifyDBUS(titulo, texto, segs):	
     try:
-	    notify_object = bus.get_object('org.freedesktop.Notifications','/org/freedesktop/Notifications')
-	    notify_interface = dbus.Interface(notify_object,'org.freedesktop.Notifications')
-	    return notify_interface.Notify("DBus Test", 0, "", titulo, texto ,'' ,{}, segs*1000 )
+        '''
+        bus = SessionBus()
+        notifications = bus.get('.Notifications')
+        return notifications.Notify('DBus Test', 0, 'dialog-information', titulo, texto, [], {}, segs*1000)
+        '''
+        # Disabling dbus notifications, problems with pydbus (incompatible gboject vs gobject2)
+        pass
     except:
         pass
 

@@ -29,8 +29,15 @@ runEN:
 install_auto: dependencies compile install permisos
 
 dependencies:
-	$(INSTALL_PKG) libc6 libc6-dev intltool imagemagick python-gtk2 python-glade2 python-sqlalchemy gnome-icon-theme g++
+	$(INSTALL_PKG) libcanberra-gtk-module libcanberra-gtk0
+	$(INSTALL_PKG) python-libxml2 devscripts
+	$(INSTALL_PKG) libc6 libc6-dev intltool imagemagick python python-sqlalchemy gnome-icon-theme g++
 	-@$(INSTALL_PKG) libc6-dev-i386 libc6-i386
+	dpkg -i python2_pkgs/multiarch-support_2.27-3ubuntu1.2_amd64.deb
+	dpkg -i python2_pkgs/python-cairo_1.16.2-2ubuntu2_amd64.deb
+	dpkg -i python2_pkgs/python-gobject-2_2.28.6-14ubuntu1_amd64.deb
+	dpkg -i python2_pkgs/python-gtk2_2.24.0-5.1ubuntu2_amd64.deb
+	dpkg -i python2_pkgs/python-glade2_2.24.0-5.1ubuntu2_amd64.deb
 	@echo "=================================================================="
 	@echo "Install depends OK"
 	@echo "=================================================================="
@@ -90,7 +97,8 @@ making_directories:
 	@mkdir -p $(DESTDIR)$(PREFIX)/share/wiithon/recursos/imagenes/caratulas/3d
 	@mkdir -p $(DESTDIR)$(PREFIX)/share/wiithon/recursos/imagenes/caratulas/total
 	@mkdir -p $(DESTDIR)$(PREFIX)/share/wiithon/recursos/imagenes/discos/custom
-	
+	@mkdir -p $(DESTDIR)$(PREFIX)/share/wiithon/recursos/python2_pkg
+
 recicled_old_wiithon: making_directories
 	-@mv -f ~/.wiithon/caratulas/*.png $(PREFIX)/share/wiithon/recursos/imagenes/caratulas
 	-@mv -f ~/.wiithon/discos/*.png $(PREFIX)/share/wiithon/recursos/imagenes/discos
@@ -135,6 +143,8 @@ copy_archives: making_directories
 	cp wiithon_usuario.desktop $(DESTDIR)/usr/share/applications/
 	cp -R po/locale/ $(DESTDIR)/usr/share/
 	cp -R po/man/ $(DESTDIR)/usr/share/
+
+	cp python2_pkgs/*.deb $(DESTDIR)$(PREFIX)/share/wiithon/recursos/python2_pkg
 	
 	@echo "=================================================================="
 	@echo "Copy archives OK"
@@ -202,9 +212,7 @@ install4ppa: copy_archives
 	@echo "=================================================================="
 
 generate_changelog:
-	@ln -sf $(shell pwd)/recursos/bazaar-plugins/gnulog.py ~/.bazaar/plugins/gnulog.py
-	bzr log --log-format 'gnu' | sed -e "s/\(<.*@[^.]*\)>/\1\.fake>/g" > debian/changelog
-	@$(RM) ~/.bazaar/plugins/gnulog.py
+	bzr log --gnu-changelog | sed -e "s/\(<.*@[^.]*\)>/\1\.fake>/g" > debian/changelog
 
 deb: generate_changelog
 	debuild -b -uc -us -tc --lintian-opts -Ivi

@@ -1,0 +1,2518 @@
+2014-11-10  Ricardo Marmolejo García  <makiolo@gmail.com>
+
+	
+
+2014-11-10  Ricardo Marmolejo García  <makiolo@gmail.com>
+
+	
+
+2014-11-10  Ricardo Marmolejo García  <makiolo@gmail.com>
+
+	
+
+2014-11-10  Ricardo Marmolejo García  <makiolo@gmail.com>
+
+	Update to Ubuntu 14.04 LTS
+
+2012-04-22  Carlo Mandelli  <camandel@gmail.com>
+
+	fix for bug #986871 
+
+2012-01-22  Carlo Mandelli  <camandel@gmail.com>
+
+	fixed revision number
+
+2012-01-15  Carlo Mandelli  <camandel@gmail.com>
+
+	fix for Bug #813686 
+
+2011-06-18  Carlo Mandelli  <camandel@gmail.com>
+
+	Italian translation updated
+
+2011-06-08  Ricardo  <makiolo@gmail.com>
+
+	Probando incremente en el deb
+
+2011-06-07  Ricardo  <makiolo@gmail.com>
+
+	Problem with fucking debuild
+	need increment to 1.26, no new features really. I am learning about packaging
+
+2011-06-07  Ricardo  <makiolo@gmail.com>
+
+	Subidas urls nuevas de wiitdb
+
+2011-06-07  Ricardo  <makiolo@gmail.com>
+
+	Probando el formato de salida WBFS. Me funciona OK
+
+2011-06-07  Ricardo  <makiolo@gmail.com>
+
+	New easy form to copy covers & discs
+	Let change colors from main table (foreground & background) limited to 3 partitions.
+	Now initial order is "by date", can change it in preferences.
+	New preference for "Unknown date", Default: 1900/01
+	In tools and utils can open 5 types of folders in cover & disc-art
+	Other changes ... dont remenber :D
+	
+	Sorry for me semi-abandonment
+	
+	I want feedback, report bugs & translations
+	
+	Ricardo
+
+2011-06-05  Ricardo  <makiolo@gmail.com>
+
+	last test :D
+
+2011-06-05  Ricardo  <makiolo@gmail.com>
+
+	Solucionando el problema por el que no podía subir paquetes.
+
+2011-06-05  Ricardo  <makiolo@gmail.com>
+
+	
+
+2010-12-07  Ricardo Marmolejo García  <makiolo@gmail.com>
+
+	Testing for upload debs ...
+
+2010-12-07  Ricardo Marmolejo García  <makiolo@gmail.com>
+
+	Traducción a euskera
+	corregido el bug de wiitdb (ahora descarga todo!, es más lento, pero funciona muy bien)
+
+2010-07-27  Ricardo Marmolejo García  <makiolo@gmail.com>
+
+	Wiithon Extract All with gui, need test.
+	
+	Primeros intentos para descargar solo los juegos que realmente tienes
+
+2010-07-27  Ricardo Marmolejo García  <makiolo@gmail.com>
+
+	German update & deb upload!
+
+2010-07-16  Carlo Mandelli  <camandel@gmail.com>
+
+	corrected syntax error in last commit
+
+2010-07-16  Carlo Mandelli  <camandel@gmail.com>
+
+	fix for bug #584236
+	fix for bug #575406
+	added python-dbus as prereq in deb package
+
+2010-07-14  Carlo Mandelli  <camandel@gmail.com>
+
+	try to fix #575406 
+
+2010-04-06  Ricardo Marmolejo García  <makiolo@gmail.com>
+
+	Testing dbus.
+	Need test!
+	It is a message when finish add/extract/copy/update db
+
+2010-03-21  Carel Foobar  <carel.foobar@free.fr>
+
+	french lang updated
+
+2010-03-10  Carlo Mandelli  <camandel@gmail.com>
+
+	German translation updated (thanks to Gordin)
+
+2010-03-05  Carlo Mandelli  <camandel@gmail.com>
+
+	fix for bug #531527
+
+2010-03-05  Ricardo Marmolejo García  <makiolo@gmail.com>
+
+	new language: Danish 
+	update wiims
+
+2010-02-27  Carlo Mandelli  <camandel@gmail.com>
+
+	fix for bug #526580 (revert to use grep)
+
+2010-02-25  Ricardo Marmolejo García  <makiolo@gmail.com>
+
+	Update wbfs_file_1.9 to wbfs_file_2.9 (need testing)
+
+2010-02-25  Ricardo Marmolejo García  <makiolo@gmail.com>
+
+	mini fix for #526580.
+	
+	Carlo, kinu say that pgrep dont understand parameter "c" ... Replace -fc for -f -c ?
+
+2010-02-25  Ricardo Marmolejo García  <makiolo@gmail.com>
+
+	- Remake translate English by Michael
+	- Traducido a Euskera por Piarres
+
+2010-02-24  Carlo Mandelli  <camandel@gmail.com>
+
+	updated german translation (thanks to Lutz Bender)
+	fix for Bug #514917 
+
+2010-02-20  Carlo Mandelli  <camandel@gmail.com>
+
+	instances check only on python process 
+
+2010-02-20  Carlo Mandelli  <camandel@gmail.com>
+
+	mini fix to check multiple wiithon instances
+
+2010-02-20  Carlo Mandelli  <camandel@gmail.com>
+
+	update italian translation
+
+2010-02-19  Ricardo Marmolejo García  <makiolo@gmail.com>
+
+	fix for bug #514917
+
+2010-02-19  Ricardo Marmolejo García  <makiolo@gmail.com>
+
+	dont let multiple instances of wiithon
+
+2010-02-19  Ricardo Marmolejo García  <makiolo@gmail.com>
+
+	fix for bug #516547
+
+2010-02-19  Ricardo Marmolejo García  <makiolo@gmail.com>
+
+	Corregidos pequeños bugs
+
+2010-02-19  Ricardo Marmolejo García  <makiolo@gmail.com>
+
+	fix #517099
+
+2010-02-19  Ricardo Marmolejo García  <makiolo@gmail.com>
+
+	fix #515413
+
+2010-01-31  Ricardo Marmolejo García  <makiolo@gmail.com>
+
+	Acentos en español
+
+2010-01-31  Ricardo Marmolejo García  <makiolo@gmail.com>
+
+	show progress in operations with wdf
+
+2010-01-30  Ricardo Marmolejo García  <makiolo@gmail.com>
+
+	Converter 100%. need translations
+	Starting mass extract.
+
+2010-01-30  Ricardo Marmolejo García  <makiolo@gmail.com>
+
+	Converter integreted in pool works
+
+2010-01-29  Ricardo Marmolejo García  <makiolo@gmail.com>
+
+	remove bin
+
+2010-01-29  Ricardo Marmolejo García  <makiolo@gmail.com>
+
+	mini fix in converter
+
+2010-01-29  Ricardo Marmolejo García  <makiolo@gmail.com>
+
+	First version of conversor in 2-3 hours :D
+
+2010-01-29  Ricardo Marmolejo García  <makiolo@gmail.com>
+
+	Updated wiimms
+
+2010-01-27  Carlo Mandelli  <camandel@gmail.com>
+
+	fix for bug #496976 
+
+2010-01-12  Ricardo Marmolejo García  <makiolo@gmail.com>
+
+	Añadido Gallego
+	Actualizada librería WDF
+
+2010-01-06  Carlo Mandelli  <camandel@gmail.com>
+
+	try to fix for problems on threads and pools on sqlalchemy
+
+2010-01-06  Carlo Mandelli  <camandel@gmail.com>
+
+	fix for Bug #499904 
+
+2010-01-06  Carlo Mandelli  <camandel@gmail.com>
+
+	removed defunct process (loading.py)
+	fixed help message in script wiithon_extract.sh
+
+2010-01-03  Carlo Mandelli  <camandel@gmail.com>
+
+	added script wiithon_extract.sh for partial or total games extracton (bug #501858)
+
+2009-12-29  Carlo Mandelli  <camandel@gmail.com>
+
+	fix for bug #499907
+
+2009-12-13  Ricardo Marmolejo García  <makiolo@gmail.com>
+
+	bug #496198 = shame
+	Carlo, you are good person ;P
+
+2009-12-13  Carel Foobar  <carel.foobar@free.fr>
+
+	french updated
+
+2009-12-13  Carlo Mandelli  <camandel@gmail.com>
+
+	updated italian translation
+
+2009-12-13  Carlo Mandelli  <camandel@gmail.com>
+
+	fix for bug #496198
+
+2009-12-12  Ricardo Marmolejo García  <makiolo@gmail.com>
+
+	refrescar barra de estado cuando cambias el tipo de caratula
+
+2009-12-12  Ricardo Marmolejo García  <makiolo@gmail.com>
+
+	olvide incluir la carpeta del 1.9
+	Incluido un html para meter los botones de donación paypal. (Carlo pon el tuyo si lo tienes)
+
+2009-12-12  Ricardo Marmolejo García  <makiolo@gmail.com>
+
+	Change function bug #488110
+	Me equivoque en la preferencia 'minimizar' en lugar de 'maximizar'
+	Algunas traducciones en ingles
+
+2009-12-12  Ricardo Marmolejo García  <makiolo@gmail.com>
+
+	Cuando formateo a WBFS, formatear a FAT32 es opcional
+	Actualizado el wbfs_file_1.8 a wbfs_file_1.9
+
+2009-12-12  Carlo Mandelli  <camandel@gmail.com>
+
+	fix for bug #488110 
+
+2009-12-12  Carlo Mandelli  <camandel@gmail.com>
+
+	fix for bug #495915
+
+2009-12-12  Carlo Mandelli  <camandel@gmail.com>
+
+	updated italian translation
+
+2009-12-12  Ricardo Marmolejo García  <makiolo@gmail.com>
+
+	Corregido un bug por el cual algunos archivos RAR no se descomprimian.
+	Ahora funciona bien cuando ponemos ".", descomprime junto al rar, antes lo hacía en el directorio de trabajo. (HOME)
+	Soporte para distintos tipos de caratula
+	Ahora la ventana esta oculta y se muestra el terminar la carga
+	Definiendo que esta sin implementar
+	wiimms-wbfs-tool updated!
+	Aumentos el numero de hilos de 8 a 16
+	La función de copiar a la SD, verifica que los ficheros de origen sean PNG válidos.
+	Cuando copias a la SD ya no da errores por el hecho de no tener la carátula.
+	Otros cambios menores
+
+2009-12-11  Ricardo Marmolejo García  <makiolo@gmail.com>
+
+	ident problem
+	upload debs
+
+2009-12-09  Carlo Mandelli  <camandel@gmail.com>
+
+	fix for bug #491149 without hachoir_core.i18n (by _tus_)
+
+2009-12-06  Carlo Mandelli  <camandel@gmail.com>
+
+	- working on titles problem
+
+2009-12-05  Ricardo Marmolejo García  <makiolo@gmail.com>
+
+	catalan update
+
+2009-12-05  Carlo Mandelli  <camandel@gmail.com>
+
+	Please, test with ISO8859-1
+
+2009-12-05  Carlo Mandelli  <camandel@gmail.com>
+
+	trying to fix bug #491149. Test please
+
+2009-12-05  Carlo Mandelli  <camandel@gmail.com>
+
+	fix for bug #491149 (patch provided by _tus_)
+
+2009-12-03  Carlo Mandelli  <camandel@gmail.com>
+
+	updated italian translation
+
+2009-12-01  Ricardo Marmolejo García  <makiolo@gmail.com>
+
+	Añadidos botones de futuras implementaciones al glade
+	Mostrar espacio usado y numero de juegos cuando no hay particiones WBFS
+
+2009-11-30  Ricardo Marmolejo García  <makiolo@gmail.com>
+
+	fix po
+
+2009-11-30  Ricardo Marmolejo García  <makiolo@gmail.com>
+
+	Fixed in cli
+
+2009-11-30  Ricardo Marmolejo García  <makiolo@gmail.com>
+
+	Traducción al catalan al 100%
+	Corregido un problema que no avisaba de no tener login  y password en wiitdb
+
+2009-11-30  Ricardo Marmolejo García  <makiolo@gmail.com>
+
+	3 formats in add & extract
+
+2009-11-29  Ricardo Marmolejo García  <makiolo@gmail.com>
+
+	More fast render
+
+2009-11-28  Ricardo Marmolejo García  <makiolo@gmail.com>
+
+	implement WDF in extract
+
+2009-11-28  Ricardo Marmolejo García  <makiolo@gmail.com>
+
+	!! sorry stupid commit :D
+
+2009-11-28  Ricardo Marmolejo García  <makiolo@gmail.com>
+
+	forget files...
+
+2009-11-28  Ricardo Marmolejo García  <makiolo@gmail.com>
+
+	clean code
+	other changes ...
+
+2009-11-28  Ricardo Marmolejo García  <makiolo@gmail.com>
+
+	Add preinst
+	Clean code libwbfs
+	Add iso2wdf & wdf2iso
+
+2009-11-28  Carlo Mandelli  <camandel@gmail.com>
+
+	add --version option
+	add script to create a log to open a bug
+	updated italian translation
+
+2009-11-28  Carel Foobar  <carel.foobar@free.fr>
+
+	french updated
+
+2009-11-28  Ricardo Marmolejo García  <makiolo@gmail.com>
+
+	Very much innecessary code in wbfs_file
+	Eliminate dependency with libssl-dev
+	Eliminate warnings
+
+2009-11-27  Ricardo Marmolejo García  <makiolo@gmail.com>
+
+	try bugfix Bug #488351
+
+2009-11-27  Ricardo Marmolejo García  <makiolo@gmail.com>
+
+	Solo busca cuando damos al botón / ENTER o se queda vacio.
+	Empezando a plantear mas tipos de caratulas
+	Integrado la utilidad wbfs_file, sin estimación de tiempo restante. Falta implementarlo como conversor de ISO <--> WBFS
+	Añadido check "wiithon_wrapper -p /dev/sdxY check IDGAME" de la revisión 6
+	Mas cambios
+	Dejo cosas sin acabar.
+
+2009-11-26  Carel Foobar  <carel.foobar@free.fr>
+
+	french updated
+
+2009-11-25  Carlo Mandelli  <camandel@gmail.com>
+
+	updated italian translation
+
+2009-11-25  Carlo Mandelli  <camandel@gmail.com>
+
+	fix bug #487894
+
+2009-11-25  Ricardo Marmolejo García  <makiolo@gmail.com>
+
+	try fix bug #488130
+
+2009-11-25  Ricardo Marmolejo García  <makiolo@gmail.com>
+
+	fix uncaught exception problem in check_gids.
+
+2009-11-24  Ricardo Marmolejo García  <makiolo@gmail.com>
+
+	- Poner idioma principal y auxiliar basandose en el lenguage del sistema. NEED TEST
+
+2009-11-24  Ricardo Marmolejo García  <makiolo@gmail.com>
+
+	New Language Swedish by Magnus Johansson. good work!
+
+2009-11-24  Ricardo Marmolejo García  <makiolo@gmail.com>
+
+	Tiendo máximo del loading.
+	Problemas con acentos en codificar la url
+
+2009-11-24  Ricardo Marmolejo García  <makiolo@gmail.com>
+
+	Bug fix in loading.py (avoid import config because try connect with db)
+
+2009-11-24  Ricardo Marmolejo García  <makiolo@gmail.com>
+
+	Makefile minichange
+
+2009-11-24  Susana Rodríguez Díaz-Pavón  <susana@susana-portatil.fake>
+
+	Fix change language in preferences
+	Need test if it autodetect language default correctly. (In spanish works...)
+
+2009-11-22  Ricardo Marmolejo García  <makiolo@gmail.com>
+
+	GLADE dont translate
+
+2009-11-22  Carlo Mandelli  <camandel@gmail.com>
+
+	fix to translate buttons and context menus
+
+2009-11-22  Carlo Mandelli  <camandel@gmail.com>
+
+	updated english translation
+
+2009-11-22  Carlo Mandelli  <camandel@gmail.com>
+
+	setup application language in preferencies
+
+2009-11-22  Carlo Mandelli  <camandel@gmail.com>
+
+	italian translation updated
+
+2009-11-22  Ricardo Marmolejo García  <makiolo@gmail.com>
+
+	Bug limpiando antiguas instalaciones
+	Problema en la codificación de la url
+	Empezando a implemtar prioridades en los trabajos
+
+2009-11-22  Ricardo Marmolejo García  <makiolo@gmail.com>
+
+	2 buscadores más: GameSpot y VGChartz
+	Login / Password para editar información
+	Corregido un problema de 1.1 en que a veces no descargaba la nueva información wiitdb
+	Eliminado Timeout en barra de progreso al finalizar trabajos. (Esto tengo que repasarlo)
+	Otros cambios menores
+
+2009-11-22  Ricardo Marmolejo García  <makiolo@gmail.com>
+
+	Las tareas cortas aparecen en la barra de progreso
+	Ver juego en WiiTDB
+	Buscar juego en buscadores: Google, Wikipedia, Youtube e IGN
+
+2009-11-21  Ricardo Marmolejo García  <makiolo@gmail.com>
+
+	Testing "Editar Juego WiiTDB" en el menú contextual. NEED TEST.
+	Esto debería identificar como usuario Wiithon_1_21 en la web automáticamente.
+
+2009-11-21  Ricardo Marmolejo García  <makiolo@gmail.com>
+
+	- Actualizados traductores y autores
+	- Evitar synopsys en blanco
+
+2009-11-21  Ricardo Marmolejo García  <makiolo@gmail.com>
+
+	Cleaning .svn
+
+2009-11-21  Ricardo Marmolejo García  <makiolo@gmail.com>
+
+	Best with os.kill ...
+
+2009-11-21  Ricardo Marmolejo García  <makiolo@gmail.com>
+
+	best only ... SIGINT with kill
+
+2009-11-21  Ricardo Marmolejo García  <makiolo@gmail.com>
+
+	Test fix for python 2.5
+
+2009-11-20  Ricardo Marmolejo García  <makiolo@gmail.com>
+
+	Permisos corregidos!
+
+2009-11-20  Ricardo Marmolejo García  <makiolo@gmail.com>
+
+	Puesto mutex en InformacionGuiDatos, (por seguridad).
+
+2009-11-20  Ricardo Marmolejo García  <makiolo@gmail.com>
+
+	Progreso:
+	- Multiples bucles gtk en el mismo hilo es conflictivo
+	- Lo he hecho como subproceso y funciona perfecto
+
+2009-11-19  Ricardo Marmolejo García  <makiolo@gmail.com>
+
+	Update translate:
+	de by Markus Gewiss
+	es_CA by Victor Mico
+
+2009-11-19  Carlo Mandelli  <camandel@gmail.com>
+
+	added "no comment on commit" to remove lintian warnings
+
+2009-11-19  Ricardo Marmolejo García  <makiolo@gmail.com>
+
+	Muestra un gif durante la carga
+
+2009-11-19  Ricardo Marmolejo García  <makiolo@gmail.com>
+
+	Cleaning wiimms
+
+2009-11-19  Ricardo Marmolejo García  <makiolo@gmail.com>
+
+	Añadido la extensión "jpeg" al drag&drop
+
+2009-11-19  Ricardo Marmolejo García  <makiolo@gmail.com>
+
+	- Add test nautilus wiithon extension (DONT WORK)
+	- Add Wiimms WBFS Tool (Rev. 455). Update with "svn update"
+
+2009-11-19  Ricardo Marmolejo García  <makiolo@gmail.com>
+
+	- Implementadas manpages(solo español e ingles)
+	- Evitando warnings en el changelog
+
+2009-11-18  Carel Foobar  <carel.foobar@free.fr>
+
+	updated fr.po, refreshed icons
+
+2009-11-18  carel.foobar@free.fr
+
+	updated fr.po, refreshed icons
+
+2009-11-18  Ricardo Marmolejo García  <makiolo@gmail.com>
+
+	100% fr.po by Carel Foobar
+	Limpia caracteres raros de los nombres propuestos
+
+2009-11-17  Ricardo Marmolejo García  <makiolo@gmail.com>
+
+	Cleaning code and fix
+
+2009-11-17  Ricardo Marmolejo García  <makiolo@gmail.com>
+
+	- Only import your games (very fast now).
+	- Limpia png corruptos al empezar.
+	- Primeras ideas del tamaño de los tags. Esta sin acabar ...
+
+2009-11-17  Ricardo Marmolejo García  <makiolo@gmail.com>
+
+	Try fix Bug #483861
+	Changed Gtk 2.14 -> to Gtk 2.16
+
+2009-11-16  Ricardo Marmolejo García  <makiolo@gmail.com>
+
+	pt_BR 100%
+
+2009-11-16  Ricardo Marmolejo García  <makiolo@gmail.com>
+
+	He activado el fuzzy en la mezcla de strings.
+	
+	- subo Francés al 83% (by Carel)
+
+2009-11-15  Carlo Mandelli  <camandel@gmail.com>
+
+	small fix in en.po
+
+2009-11-14  Ricardo Marmolejo García  <makiolo@gmail.com>
+
+	mini-fix in it.po
+
+2009-11-14  Carlo Mandelli  <camandel@gmail.com>
+
+	updated italian translation
+
+2009-11-14  Ricardo Marmolejo García  <makiolo@gmail.com>
+
+	100% english pero traducido de google principalmente. (necesita repaso)
+	Pruebas con la frecuencia absoluta de cada tag.
+
+2009-11-14  Ricardo Marmolejo García  <makiolo@gmail.com>
+
+	Propone nombres para renombrar.
+
+2009-11-13  Carlo Mandelli  <camandel@gmail.com>
+
+	updated english translation
+
+2009-11-13  Ricardo Marmolejo García  <makiolo@gmail.com>
+
+	clean code preferences
+
+2009-11-13  Ricardo Marmolejo García  <makiolo@gmail.com>
+
+	Format FAT32 -> WBFS is now GUI! (before only CLI)
+
+2009-11-13  Carlo Mandelli  <camandel@gmail.com>
+
+	en.po updated (60%)
+
+2009-11-13  Ricardo Marmolejo García  <makiolo@gmail.com>
+
+	Pequeños fixes
+	Completadas tareas del TODO (solo queda 1, además de traducir en.po)
+
+2009-11-12  Carlo Mandelli  <camandel@gmail.com>
+
+	added missed dependency
+
+2009-11-12  Ricardo Marmolejo García  <makiolo@gmail.com>
+
+	- postrm with real purge -> PURGE if you want delete covers & disc-arts
+	- Nuevos proveedores
+	- Versiones de BDD
+	- More mini-fix
+
+2009-11-11  Carlo Mandelli  <camandel@gmail.com>
+
+	small fixes
+
+2009-11-11  Carlo Mandelli  <camandel@gmail.com>
+
+	fix for "apt-get --purge remove"
+
+2009-11-11  Ricardo Marmolejo García  <makiolo@gmail.com>
+
+	- Traducido a portugués brasileño (por Alex Carlos)
+	- Corregidos problemas en el contador de caratulas sin descargar
+	- Corregido problema de recurrencia en la bdd
+	- Añadido proveedor de de disc-art como ciclo
+	- Añadido http://boxart.rowdyruff.net como proveedor
+	- Añadido http://wiiboxart.t35.com como proveedor
+
+2009-11-10  Ricardo Marmolejo García  <makiolo@gmail.com>
+
+	bug fixed in permisses (only in deb)
+	new bug detected: dont work purge (see TODO)
+
+2009-11-09  Carlo Mandelli  <camandel@gmail.com>
+
+	updated italian translation
+
+2009-11-09  Ricardo Marmolejo García  <makiolo@gmail.com>
+
+	Fabricante en titulo
+	gtk.Label en los selectores de archivos.
+	Otros cambios menores ...
+	
+	Carlo:
+	Esto es la guía de estilo de python:
+	http://www.python.org/dev/peps/pep-0008/
+	
+	Configura tu editor para tabulaciones de 4 espacios.
+	No debemos mezclar tabulaciones con espacios.
+
+2009-11-09  Ricardo Marmolejo García  <makiolo@gmail.com>
+
+	Corregidos problemas en barra de estado
+
+2009-11-09  Ricardo Marmolejo García  <makiolo@gmail.com>
+
+	Now lintion have 1 whilist & 2 normal (no manpage).
+
+2009-11-09  Ricardo Marmolejo García  <makiolo@gmail.com>
+
+	Changed PREFIX from /usr/local yo /usr
+
+2009-11-08  Ricardo Marmolejo García  <makiolo@gmail.com>
+
+	new file status of translations
+	
+	Carlo: ok, i realizaré ese cambio, estudiaré las consecuencias.
+	A priori se me ocurre que la tarea de clean_old_wiithon será muy grande ...
+
+2009-11-08  Carlo Mandelli  <camandel@gmail.com>
+
+	others two small fixes (lintian warnings)
+
+2009-11-08  Carlo Mandelli  <camandel@gmail.com>
+
+	fixed lintian errors and warnings.
+	Ricardo, what do you think about change PREFIX from /usr/local to /usr (like standard applications)?
+
+2009-11-08  Ricardo Marmolejo García  <makiolo@gmail.com>
+
+	Delete old translations
+
+2009-11-08  Ricardo Marmolejo García  <makiolo@gmail.com>
+
+	Exclude 2 first lines :D
+
+2009-11-08  Ricardo Marmolejo García  <makiolo@gmail.com>
+
+	borrando POT-Creation-Date & PO... para evitar conflictos
+
+2009-11-08  Carlo Mandelli  <camandel@gmail.com>
+
+	check filesystem type (WBFS and FAT) on ALL disks/partitions
+
+2009-11-08  Ricardo Marmolejo García  <makiolo@gmail.com>
+
+	Sync doc/REVISION <-> really revision in launchpad but ugly code, but works.
+
+2009-11-08  Ricardo Marmolejo García  <makiolo@gmail.com>
+
+	mini update
+
+2009-11-08  Ricardo Marmolejo García  <makiolo@gmail.com>
+
+	warning in return ignored (wiithon_wrapper)
+	Starting translation "en.po"
+	
+	Carlo, bonita actualización:
+	En el awk del for por que pones "loo" en lugar de "loop" ?
+	Para dar soporte a lectores de tarjeta, deberías añadir mmc, los devices son del estilo /dev/mmcblk...
+	Parece ser que algunas distribuciones de Linux, cuando un disco duro solo tiene 1 partición, no la llama /dev/sda1 sino /dev/sda.
+	En conclusión, no he tenido tiempo de mirarlo concienzudamente, pero pienso que es mejor no filtrar demasiado, incluso plantearse leer el /proc/partitions entero, ya que el verdadero filtro esta en que el MAGIC sea "WBFS".
+
+2009-11-08  Carlo Mandelli  <camandel@gmail.com>
+
+	modify fake email address in changelog to remove lintian errors
+
+2009-11-08  Carlo Mandelli  <camandel@gmail.com>
+
+	reduced forks number in autodetectar_lector.sh
+
+2009-11-08  Carlo Mandelli  <camandel@gmail.com>
+
+	fixed error in it.po file
+
+2009-11-08  Carlo Mandelli  <camandel@gmail.com>
+
+	if wiithon doesn't found a WBFS partition, it check if user is in disk group 
+
+2009-11-07  Carlo Mandelli  <camandel@gmail.com>
+
+	start working on check user permission if partition = 0
+
+2009-11-07  Carlo Mandelli  <camandel@gmail.com>
+
+	updated italian translation
+
+2009-11-07  Carlo Mandelli  <camandel@gmail.com>
+
+	reduced forks number in autodetectar scripts
+	replaced udevinfo with udevadm command
+
+2009-11-07  Ricardo Marmolejo García  <makiolo@gmail.com>
+
+	Bug arregaldo cuando hay más de 1 particion
+	Bug al mostrar el contenido de REVISION
+
+2009-11-07  Ricardo Marmolejo García  <makiolo@gmail.com>
+
+	- Acabado Formatear WBFS (el GUI llama al CLI). Se hará todo GUI para prox versión 1.2
+	- Revision en titulo y about
+	- es.po update
+	- Cambios menores
+
+2009-11-07  Ricardo Marmolejo García  <makiolo@gmail.com>
+
+	In 64 gcc-multilib changed from Build-Depends To Depends.
+	traucción al catalán, enviada por Victor Micó Biosca
+	cli arreglado.
+	
+	Carlo:
+	Debes traducir los siguientes msgid de tu it.po:
+	AYUDA_CLI
+	TRADUCIR_ADVERTENCIA_SEGURIDAD_RENAME_IDGAME
+	TEXTO_LICENCIA
+	
+	Estos son textos largos, los puedes encontrar en "es.po"
+
+2009-11-06  Carlo Mandelli  <camandel@gmail.com>
+
+	update TODO list
+
+2009-11-06  Carlo Mandelli  <camandel@gmail.com>
+
+	resolved conflict in module name
+
+2009-11-06  Ricardo Marmolejo García  <makiolo@gmail.com>
+
+	cleaning test. it compile ok in 64
+
+2009-11-06  Ricardo Marmolejo García  <makiolo@gmail.com>
+
+	Makefile changed.
+
+2009-11-06  Ricardo Marmolejo García  <makiolo@gmail.com>
+
+	revert control
+
+2009-11-06  Ricardo Marmolejo García  <makiolo@gmail.com>
+
+	ia32-libs lib32z1-dev lib32bz2-dev
+	...
+
+2009-11-06  Ricardo Marmolejo García  <makiolo@gmail.com>
+
+	testing w ia32-libs-dev
+
+2009-11-06  Ricardo Marmolejo García  <makiolo@gmail.com>
+
+	BUILD !!! plz ...
+	;D
+
+2009-11-06  Ricardo Marmolejo García  <makiolo@gmail.com>
+
+	Probando si da menos problemas en 64 compilar wiithon_wrapper sin enlazar a libwbfs.so
+
+2009-11-06  Ricardo Marmolejo García  <makiolo@gmail.com>
+
+	revert "es.po" ...
+
+2009-11-06  Ricardo Marmolejo García  <makiolo@gmail.com>
+
+	Borrando carpetas innecesarias.
+	Borrando string antiguos
+	Añadiendo un modulo que hecho para estadistica.
+
+2009-11-06  Ricardo Marmolejo García  <makiolo@gmail.com>
+
+	Eliminando cabezeras que generan cambios en el repositorio, por solo compilar.
+
+2009-11-06  Ricardo Marmolejo García  <makiolo@gmail.com>
+
+	Carlo: las truaducciones que he puesto en launchpad no son definitivos, estoy testeando, es más fiable que sigas haciendolo editando el po.
+	
+	En mi ubuntu 64 me compila en cross compiler, es decir me lo compila para 64 con punteros de 32 y funciona perfecto, pero cuando subo el paquete a ubuntu, compila OK pero lo compila para 32 con punteros de 32, por tanto lo detecto como binario desconocido. Estoy probando con mtune, march ...
+	
+	He cambiado en las traducciones para que apararezcan las lineas, esto generará más commit grandes para cambios pequeños, pero es útil. Tambien esta el tema de los fuzzy, que lo tengo desactivado.
+
+2009-11-05  Carlo Mandelli  <camandel@gmail.com>
+
+	fix in delete description
+
+2009-11-05  Carlo Mandelli  <camandel@gmail.com>
+
+	added description under delete icon
+
+2009-11-05  Carlo Mandelli  <camandel@gmail.com>
+
+	updated italian translation
+
+2009-11-04  Carlo Mandelli  <camandel@gmail.com>
+
+	updated italian translation (not 100%)
+
+2009-11-04  Ricardo Marmolejo García  <makiolo@gmail.com>
+
+	Pienso que no compila en amd64 por la dependencia "gcc-multilib"
+	Pequeños detalles
+
+2009-11-04  Ricardo Marmolejo García  <makiolo@gmail.com>
+
+	Testing in ubuntu 64 ... it compile ok but launchpad fail .... try delete gcc & libc6-i386, only libc6-i386-dev & intltool
+
+2009-11-04  Ricardo Marmolejo García  <makiolo@gmail.com>
+
+	- - proponer actualizar juegos wiitdb
+	- - repasar contadores de barra de estado
+	- - permitir cambiar preferencias como checkbox
+
+2009-11-03  Ricardo Marmolejo García  <makiolo@gmail.com>
+
+	Dependencias de construcción corregidas.
+
+2009-11-03  Ricardo Marmolejo García  <makiolo@gmail.com>
+
+	Definiendo ultimos objetivos en el TODO
+
+2009-11-02  Ricardo Marmolejo García  <makiolo@gmail.com>
+
+	- Añadido soporte a catalán
+
+2009-11-02  Ricardo Marmolejo García  <makiolo@gmail.com>
+
+	Centralizando todas las referencias a la versión en:
+	doc/VERSION (ahora es un script de python)
+
+2009-11-02  Ricardo Marmolejo García  <makiolo@gmail.com>
+
+	More easy upload now ...
+
+2009-11-02  Carlo Mandelli  <camandel@gmail.com>
+
+	"make deb" fails without debian/changelog
+
+2009-11-02  Ricardo Marmolejo García  <makiolo@gmail.com>
+
+	fix build in amd64
+
+2009-11-02  Ricardo Marmolejo García  <makiolo@gmail.com>
+
+	test upload finish
+
+2009-11-02  Ricardo Marmolejo García  <makiolo@gmail.com>
+
+	dont work ...
+
+2009-11-02  Ricardo Marmolejo García  <makiolo@gmail.com>
+
+	return -> 1.11
+
+2009-11-02  Ricardo Marmolejo García  <makiolo@gmail.com>
+
+	fucking launchpad ...
+
+2009-11-02  Ricardo Marmolejo García  <makiolo@gmail.com>
+
+	cambiamos a 1.15
+
+2009-11-02  Ricardo Marmolejo García  <makiolo@gmail.com>
+
+	testing upload 3
+
+2009-11-01  Ricardo Marmolejo García  <makiolo@gmail.com>
+
+	testing upload 2
+
+2009-11-01  Ricardo Marmolejo García  <makiolo@gmail.com>
+
+	testing update PPA
+
+2009-11-01  Ricardo Marmolejo García  <makiolo@gmail.com>
+
+	Versión inicial para el PPA
+
+2009-11-01  Ricardo Marmolejo García  <makiolo@gmail.com>
+
+	Borrar debian/changelog del repositorio
+	Editando el gnulog.py
+	Otras cosillas
+
+2009-11-01  Carlo Mandelli  <camandel@gmail.com>
+
+	generate .deb with debuild
+	changelog not yet Debian Policy compliant
+
+2009-11-01  Ricardo Marmolejo García  <makiolo@gmail.com>
+
+	Pequeños cambios, me tengo que ir a estudiar ;P
+
+2009-11-01  Ricardo Marmolejo García  <makiolo@gmail.com>
+
+	Mi changelog genera los días de la semana y nombre del mes en Español. ¿Esto es válido?
+	He intentado ejecutandolo como LANGUAGE=en bzr log -v --log-format 'gnu' > debian/changelog
+	
+	El repositorio parece que ya funciona, pero borraré el paquete y lo volveré a subir con changelog, ... etc...
+
+2009-11-01  Carlo Mandelli  <camandel@gmail.com>
+
+	updated italian translation
+
+2009-11-01  Carlo Mandelli  <camandel@gmail.com>
+
+	removed last lintian warning from sources
+
+2009-11-01  Carlo Mandelli  <camandel@gmail.com>
+
+	added modified bazaar plugin to generate changelog file (draft)
+
+2009-11-01  Ricardo Marmolejo García  <makiolo@gmail.com>
+
+	mini-fixed
+
+2009-11-01  Ricardo Marmolejo García  <makiolo@gmail.com>
+
+	Thx Carlo!
+	cleaning ...
+	I subi el deb, pero pone que tardara 10 horas ..., mira esto:
+	https://launchpad.net/~wii.sceners.linux/+archive/wiithon
+	
+	La primera subida será full. Y las siguientes son incrementos de la full. Corrigeme si me equivico.
+	
+	Tambien hay que averiguar alguna forma de generar el debian/changelog a partir de la salida del bzr log.
+
+2009-10-31  Carlo Mandelli  <camandel@gmail.com>
+
+	cleanup lintian errors from .deb
+
+2009-10-31  Carlo Mandelli  <camandel@gmail.com>
+
+	cleanup lintian errors
+
+2009-10-31  Carlo Mandelli  <camandel@gmail.com>
+
+	removed directory .bzr from source file
+
+2009-10-31  Carlo Mandelli  <camandel@gmail.com>
+
+	added rule and control file
+
+2009-10-31  Carlo Mandelli  <camandel@gmail.com>
+
+	added "make ppa" to create source and binary for PPA
+
+2009-10-31  Carlo Mandelli  <camandel@gmail.com>
+
+	first draft to create PPA
+
+2009-10-31  Ricardo Marmolejo García  <makiolo@gmail.com>
+
+	Ahora podemos ver los juegos de la ultima sesion sin el disco wbfs.
+
+2009-10-31  Ricardo Marmolejo García  <makiolo@gmail.com>
+
+	control in 2.16!
+
+2009-10-31  Ricardo Marmolejo García  <makiolo@gmail.com>
+
+	Pequeños cambios, entre ellos adaptarlo para ubuntu 9.10
+	Ahora GTK vuelve a ser 2.16+
+
+2009-10-30  Carlo Mandelli  <camandel@gmail.com>
+
+	small fix (label duplicated)
+
+2009-10-30  Ricardo Marmolejo García  <makiolo@gmail.com>
+
+	Aumentando la calidad del desarrollo
+
+2009-10-29  Ricardo Marmolejo García  <makiolo@gmail.com>
+
+	mejor comando de unzip
+	nuevos tags pseudo-html
+	preparando la seccion herramientas y utilidades
+	ahora se puede enviar mensajes en xml al alert()
+	como consecuencia el excepthook, hace referencia a la web de bugs del proyecto wiithon
+	algun otro cambio sin importancia.
+
+2009-10-26  Carlo Mandelli  <camandel@gmail.com>
+
+	updated italian translation
+
+2009-10-26  Ricardo Marmolejo García  <makiolo@gmail.com>
+
+	implementado un sistema "excepthook" para aumentar la robusted.
+
+2009-10-26  Ricardo Marmolejo García  <makiolo@gmail.com>
+
+	Probando que ocurre si subo un DEB
+
+2009-10-26  Ricardo Marmolejo García  <makiolo@gmail.com>
+
+	fix bug
+
+2009-10-26  Ricardo Marmolejo García  <makiolo@gmail.com>
+
+	Implementada la funcion de Carlo (check 4.4gb free) a la hora de descomprimir .rar
+
+2009-10-25  Carlo Mandelli  <camandel@gmail.com>
+
+	check for 4.4 GB of free space before to extract ISO
+
+2009-10-25  Carlo Mandelli  <camandel@gmail.com>
+
+	updated italian translation
+
+2009-10-25  Carlo Mandelli  <camandel@gmail.com>
+
+	updated italian translation
+
+2009-10-25  Ricardo Marmolejo García  <makiolo@gmail.com>
+
+	Documentando el generar deb
+
+2009-10-25  Ricardo Marmolejo García  <makiolo@gmail.com>
+
+	Traduciendo es
+
+2009-10-24  Ricardo Marmolejo García  <makiolo@gmail.com>
+
+	i wrote VIM ... :D
+
+2009-10-24  Ricardo Marmolejo García  <makiolo@gmail.com>
+
+	bug fixed (thx carlo)
+	I uncommit your 266 sorry, i had conflicts.
+
+2009-10-24  Ricardo Marmolejo García  <makiolo@gmail.com>
+
+	bug fixed (thx carlo)
+
+2009-10-24  Ricardo Marmolejo García  <makiolo@gmail.com>
+
+	Arreglado muchos bugs pequeños, especialmente el de al finalizar de añadir iso o finalizar una clonación.
+
+2009-10-23  Ricardo Marmolejo García  <makiolo@gmail.com>
+
+	Pequeño fix para generar el DEB
+
+2009-10-23  Ricardo Marmolejo García  <makiolo@gmail.com>
+
+	Accesorios en jpg ..
+	Muchos cambios internos
+	Me queda pendiente con la copia 1:1
+
+2009-10-22  Ricardo Marmolejo García  <makiolo@gmail.com>
+
+	BIG BUG fixed!!
+
+2009-10-22  Carlo Mandelli  <camandel@gmail.com>
+
+	- updated italian translation
+
+2009-10-20  Ricardo Marmolejo García  <makiolo@gmail.com>
+
+	upload with bugs known
+
+2009-10-19  Carlo Mandelli  <camandel@gmail.com>
+
+	- display instructions after install deb package
+	- fixes in Makefile
+
+2009-10-18  Carlo Mandelli  <camandel@gmail.com>
+
+	- added primary and secondary language for synopsis in preferences
+
+2009-10-18  Ricardo Marmolejo García  <makiolo@gmail.com>
+
+	Ok Carlo ;P, i am testing ...
+
+2009-10-18  Ricardo Marmolejo García  <makiolo@gmail.com>
+
+	Agregando usuario al grupo disk
+
+2009-10-18  Ricardo Marmolejo García  <makiolo@gmail.com>
+
+	Probando debconf
+
+2009-10-17  Carlo Mandelli  <camandel@gmail.com>
+
+	- fix in online feature description
+
+2009-10-17  Carlo Mandelli  <camandel@gmail.com>
+
+	- removed last comma and colon at the end of the line (wiitdb informations)
+	- updated italian translation
+
+2009-10-17  Carlo Mandelli  <camandel@gmail.com>
+
+	- updated italian translation
+	- small fix on credits
+
+2009-10-16  Carlo Mandelli  <camandel@gmail.com>
+
+	updated it.po
+
+2009-10-16  Ricardo Marmolejo García  <makiolo@gmail.com>
+
+	- Pequeños detalles
+
+2009-10-16  Ricardo Marmolejo García  <makiolo@gmail.com>
+
+	- continuo con las preferencias
+	- actualizado it.po
+
+2009-10-15  Ricardo Marmolejo García  <makiolo@gmail.com>
+
+	- Solucionado importante bug de concurrencia en 2.5
+	- Un bug al mostrar la fecha
+	- Ahora se puede modificar la fecha corta y la fecha larga por preferencias
+
+2009-10-15  Ricardo Marmolejo García  <makiolo@gmail.com>
+
+	Fallo en la dependencia del mogrify
+
+2009-10-15  Ricardo Marmolejo García  <makiolo@gmail.com>
+
+	Pequeños arreglos
+
+2009-10-15  Ricardo Marmolejo García  <makiolo@gmail.com>
+
+	Intentando bajar los requisitos a gtk 2.14 para que funcione en ubuntu 8.10
+
+2009-10-14  Ricardo Marmolejo García  <makiolo@gmail.com>
+
+	Fix DEB, (dont tested in x64)
+
+2009-10-14  Ricardo Marmolejo García  <makiolo@gmail.com>
+
+	No ejecutaba.
+
+2009-10-14  Ricardo Marmolejo García  <makiolo@gmail.com>
+
+	Ignoramos warnings de momento ...
+
+2009-10-14  Ricardo Marmolejo García  <makiolo@gmail.com>
+
+	deb broken ...
+
+2009-10-14  Ricardo Marmolejo García  <makiolo@gmail.com>
+
+	- Preferencias 30%
+	- CLI 70%
+	- Testing 0%
+
+2009-10-14  Ricardo Marmolejo García  <makiolo@gmail.com>
+
+	- mini-fix al crear un deb
+
+2009-10-14  Ricardo Marmolejo García  <makiolo@gmail.com>
+
+	- Patches for generate deb.
+	- Fix for wiithon CLI (wiithon -c) (70%)
+
+2009-10-12  Ricardo Marmolejo García  <makiolo@gmail.com>
+
+	- Create deb by debian style (by Carlo Mantelli)
+	- Estudiando la posibilidad de cambiar el idioma "on fly"
+	- Preparando la preferencia de ciclo de proveedores de caratulas
+
+2009-10-10  Ricardo Marmolejo García  <makiolo@gmail.com>
+
+	Empiezo a ponerme con las preferencias.
+	Una vez acabadas, haré pruebas y lanzaré 1.1
+
+2009-10-10  Ricardo Marmolejo García  <makiolo@gmail.com>
+
+	100% !!! nice update ;P
+
+2009-10-10  Ricardo Marmolejo García  <makiolo@gmail.com>
+
+	Plantillas acabando al 80%
+
+2009-10-10  Ricardo Marmolejo García  <makiolo@gmail.com>
+
+	AWESOME render de gtk+xml+pango.
+	Muchas posibilidades como pseudo render html
+	sistema de alertas 100%
+	Trabajando en la plantilla de mostrar info de juegos 30%
+
+2009-10-09  Ricardo Marmolejo García  <makiolo@gmail.com>
+
+	
+
+2009-10-09  Ricardo Marmolejo García  <makiolo@gmail.com>
+
+	Nuevo sistema de alertas! (90%)
+
+2009-10-09  Ricardo Marmolejo García  <makiolo@gmail.com>
+
+	patch by Calo Mantelli
+
+2009-10-09  Ricardo Marmolejo García  <makiolo@gmail.com>
+
+	Actualizado it.po
+	En python 2.5 se usa la llamada al sistema "unzip" en lugar del modulo zipfile
+	Limpiando mucho código fuente
+	Cambios menores que seguramente introduzcan algún bug sin importancia
+
+2009-10-08  Ricardo Marmolejo García  <makiolo@gmail.com>
+
+	Parche de Carlo Mandelli modificado para sqlalchemy 0.4.x & 0.5.x
+
+2009-10-08  Ricardo Marmolejo García  <makiolo@gmail.com>
+
+	Corregidos los bugs de bdd locked.
+	Creada clase SelectorFicheros y una abstracción de la info del GUI
+
+2009-10-03  Ricardo Marmolejo García  <makiolo@gmail.com>
+
+	Mas cambios.
+	Corregido problema con la concurrencia
+
+2009-10-02  Ricardo Marmolejo García  <makiolo@gmail.com>
+
+	Bug corregido al actualizar de wiitdb
+
+2009-10-02  Ricardo Marmolejo García  <makiolo@gmail.com>
+
+	Siguo corrigiendo bugs
+
+2009-09-27  Ricardo Marmolejo García  <makiolo@gmail.com>
+
+	Depurando codigo
+
+2009-09-25  Ricardo Marmolejo García  <makiolo@gmail.com>
+
+	Algunos cambios
+
+2009-09-25  Ricardo Marmolejo García  <makiolo@gmail.com>
+
+	- Update Translate IT
+	- Listar juegos mezclando particiones
+	- Corrigiendo un bug en el sinner, al clonar
+
+2009-09-22  Ricardo Marmolejo García  <makiolo@gmail.com>
+
+	- Update italian translate
+	- Muchos cambios:
+	Tengo un bug al finalizar de descargar de WiiTDB
+	En el TODO he apuntado un par de prioridades a corto plazo
+
+2009-09-21  Ricardo Marmolejo García  <makiolo@gmail.com>
+
+	- Importante actualización: RAR, WiiTDB, etc...
+
+2009-09-19  Ricardo Marmolejo García  <makiolo@gmail.com>
+
+	- Restructurando algunos archivos
+	- Corregido un problema al refrescar
+	- 2 bugs conocidos, al renombrar IDGAME y necesario un repack en el alert (hacer una pila de mensajes)
+
+2009-09-19  Ricardo Marmolejo García  <makiolo@gmail.com>
+
+	- Añadir y Extraer funcionan perfectamente
+	- Aún quedn muchos casos de uso bugeados
+	- Empezando a hacer la ventana para actualizacion de wiitdb
+
+2009-09-18  Ricardo Marmolejo García  <makiolo@gmail.com>
+
+	-Traducción a italiano por Carlo Mandelli <camandel@gmail.com>
+	Gracias!, pero esto esta en desarrollo y puede cambiar. (No creo que mucho)
+	
+	- Corregidos problemas de recurrencia por instanciar más de un "session"
+
+2009-09-18  Ricardo Marmolejo García  <makiolo@gmail.com>
+
+	Rehecho de 0 el spinner, espero con esto que se calculen mejor los tiempo estimados para las tareas.
+	borrada def redimensionarParticionWBFS(self , DEVICE):
+
+2009-09-08  Ricardo Marmolejo García  <makiolo@gmail.com>
+
+	Añadiendo unrar-nonfree, para integrarlo en wiithon de mejor forma.
+
+2009-09-07  Ricardo Marmolejo García  <makiolo@gmail.com>
+
+	Tras el parón del verano:
+	Muchos cambios, digamos que ahora al menos ejecuta xD
+	Se esta rediseñando wiithon muy seriamente para obtener un diseño mucho más mantenible.
+
+2009-07-28  Ricardo Marmolejo García  <makiolo@gmail.com>
+
+	Lo subo petado.
+	Rediseñando la relación N:M entre juegos y particiones
+
+2009-07-27  Ricardo Marmolejo García  <makiolo@gmail.com>
+
+	Importador WIITDB acabado, empezamos con la capa de presentación de datos.
+
+2009-07-24  Ricardo Marmolejo García  <makiolo@gmail.com>
+
+	Ya esta casí acabado el núcleo del importador de WiiTDB, solo faltan los géneros.
+
+2009-07-22  Ricardo Marmolejo García  <makiolo@gmail.com>
+
+	Actualizando la ficha de un juego
+
+2009-07-21  Ricardo Marmolejo García  <makiolo@gmail.com>
+
+	implementado esquema (diagrama de entidad relación) doc/esquema.pdf
+
+2009-07-19  Ricardo Marmolejo García  <makiolo@gmail.com>
+
+	Continuo depurando
+
+2009-07-19  Ricardo Marmolejo García  <makiolo@gmail.com>
+
+	Toda la noche con el sqlalchemy.
+	Relaciones 1:N
+	Relaciones N:M
+
+2009-07-16  Ricardo Marmolejo García  <makiolo@gmail.com>
+
+	Extinguiendo HOME.conf
+	Limpiando código
+	Evitando join con la tabla de juegos de wiitdb
+	Preparando el perfil al doble click
+
+2009-07-12  Ricardo Marmolejo García  <makiolo@gmail.com>
+
+	Solucionado problema con el path / renombrando
+
+2009-07-12  Ricardo Marmolejo García  <makiolo@gmail.com>
+
+	Commit muy serio, rediseño importante, aparecen las clases: Particion y Fila_TreeView.
+	Paralelamente obtengo los primeros resultados de leer información del XML de wiitdb (por consola de momento)
+
+2009-07-10  Ricardo Marmolejo García  <makiolo@gmail.com>
+
+	Toda la noche peleandome con el alquemy, lo subo con algún bug conocido
+
+2009-07-10  Susana  <susana@Susana-Ubuntu.fake>
+
+	Probanco COMMIT, des otro PC
+
+2009-07-10  Ricardo Marmolejo García  <makiolo@gmail.com>
+
+	Implementando XML (para exportar WIITDB)
+
+2009-07-07  Ricardo Marmolejo García  <makiolo@gmail.com>
+
+	Descarga caratulas en orden
+	Bug corregido: parpadeo durante el scrool
+
+2009-07-06  Ricardo Marmolejo García  <makiolo@gmail.com>
+
+	Empezando a implementar libwbfs_binding, instala en /usr/lib/libwbfs.so
+	Antes de formatear en WBFS, formatea a FAT32
+	Barra de estado en el glade para informar de variadas cosas
+	Necesitamos preferencias para configurar en un futuro los proveedores de caratulas
+	Haciendo pruebas con dumpeo desde DVD
+	cambios menores
+
+2009-07-01  Ricardo Marmolejo García  <makiolo@gmail.com>
+
+	Imprescindible actualización, había dejado de funcionar la descarga de discos y caratulas debido a que la web proveedora a cambiado de hosting e incluso de formato.
+	La url nueva es : http://www.wiiboxart.com/pal.php
+	Parece ser que ahora, para el disco solo hay que dar las 3 primeras letras, antes las 6.
+	Otro cambio importante es que han modificado la programación, obligando a que supuestamente vengas de "http://www.wiiboxart.com/pal.php", si vienes de cualquier otro sitio o no facilitas un "Referer", los mamones te meten banner de google al canto.
+	Por tanto he metido funciones que comprueba los mimes e integridad del png.
+	wget deja de ser dependencia, ahora lo hago con httplib, mucho más potente. Gracias a esta librería he metido las cabezeras Referer:"http://www.wiiboxart.com/pal.php" que permiten saltarse su mini-seguridad.
+	Por último, despues de hablar sobre la versión de GTK de wiithon, hemos decidido usar GTK 2.14+, irnos a versiones inferiores nos limitan el desarrollo.
+	
+	NUEVA FUNCIÓN / CARACTERÍSTICA
+	------------------------------
+	Actualmente si arrastramos un "iso" dentro de la ventana este es puesto en cola para ser añadido.
+	Además ahora si arrastramos un "jpg", "png", o "gif" este es guardado en ~/.wiithon/caratulas realizando conversiones y redimensiones automáticamente. Y por supuesto se muestra la nueva caratula arrastrada.
+
+2009-06-30  Ricardo Marmolejo García  <makiolo@gmail.com>
+
+	- Reducida dependencia de GTK de 2.14 a 2.12
+
+2009-06-29  Ricardo Marmolejo García  <makiolo@gmail.com>
+
+	Cambio para que compile en 64bits
+	Cambios menores de traducción
+
+2009-06-29  Ricardo Marmolejo García  <makiolo@gmail.com>
+
+	Makefile bien hecho
+
+2009-06-29  Ricardo Marmolejo García  <makiolo@gmail.com>
+
+	He creado un wiithon_wrapper que enlaza con libwbfs.so
+	Cuando ejecutamos wiithon en local, sin instalar, (./wiithon.py) utiliza el wrapper de libwbfs_binding
+
+2009-06-28  Ricardo Marmolejo García  <makiolo@gmail.com>
+
+	Bug corregido en dependencias
+
+2009-06-28  Ricardo Marmolejo García  <makiolo@gmail.com>
+
+	Elimina cualquier diferencia entre instalar compilando o no. Lo estoy complicando demasiado por evitar la dependencia de intltool
+
+2009-06-28  Ricardo Marmolejo García  <makiolo@gmail.com>
+
+	Haciendo casos de prueba con maquinas virtuales
+
+2009-06-28  Ricardo Marmolejo García  <makiolo@gmail.com>
+
+	Más mejores en el makefile
+
+2009-06-28  Ricardo Marmolejo García  <makiolo@gmail.com>
+
+	El makefile aún instalaba el recien borrado fichero "mensaje.py"
+
+2009-06-28  Ricardo Marmolejo García  <makiolo@gmail.com>
+
+	Copiar Juego a veces no se mostraba en algunas versiones de GTK debido al uso innecesario de show()
+	Evitada la dependencia de glib
+
+2009-06-28  Ricardo Marmolejo García  <makiolo@gmail.com>
+
+	Mejoras en el makefile
+
+2009-06-28  Ricardo Marmolejo García  <makiolo@gmail.com>
+
+	Cambios menores
+
+2009-06-28  Ricardo Marmolejo García  <makiolo@gmail.com>
+
+	Pequeños variaciones.
+	Añadidas 2 frases para traducir (pendientes.)
+
+2009-06-28  Ricardo Marmolejo García  <makiolo@gmail.com>
+
+	Muchos cambios en el Makefile, para intentar tener el mismo Makefile en trunk y en stable
+
+2009-06-26  Ricardo Marmolejo García  <makiolo@gmail.com>
+
+	Cambiado adduser por gpasswd
+
+2009-06-25  Ricardo Marmolejo García  <makiolo@gmail.com>
+
+	Pequeños fixes en la traducción pt_BR
+
+2009-06-25  Ricardo Marmolejo García  <makiolo@gmail.com>
+
+	- Traducido a: Portugues-Brasileño
+
+2009-06-25  Ricardo Marmolejo García  <makiolo@gmail.com>
+
+	Cambiado Makefile un poco más
+
+2009-06-25  Ricardo Marmolejo García  <makiolo@gmail.com>
+
+	Borrados comentarios en los PO
+
+2009-06-25  Ricardo Marmolejo García  <makiolo@gmail.com>
+
+	Extraida ayuda del CLI
+	Cambios menores
+
+2009-06-25  Ricardo Marmolejo García  <makiolo@gmail.com>
+
+	Pequeños cambios en el wrapper: cammbiado wbfs_try_open por wbfs_try_open_partition, excepto para autodetección.
+
+2009-06-25  Ricardo Marmolejo García  <makiolo@gmail.com>
+
+	Preparando wiithon para ser traducido en 16 idiomas
+	Adaptado para para ser ejecutado en local (./wiithon.py)
+	Eliminada una ordenación redundante en getListaJuegos()
+
+2009-06-24  José-Luis Segura Lucas  <josel.segura@gmail.com>
+
+	Creado lo necesario para compilar la librería para usarla de forma dinámica y así reutilizarla (así lo necesita un binding para C en Python)
+
+2009-06-22  José Luis Segura Lucas  <josel.segura@gmail.com>
+
+	Subido Makefile que deberá tener similar un libwbfs limpito
+
+2009-06-22  José-Luis Segura Lucas  <josel.segura@gmail.com>
+
+	Commit inicial de binding de libwbfs
+
+2009-06-20  Ricardo Marmolejo García  <makiolo@gmail.com>
+
+	Wiithon 1.0
+	- Actualizado el icono Wiithon a fondo blanco
+	- Cambios menores
+
+2009-06-20  Ricardo Marmolejo García  <makiolo@gmail.com>
+
+	Preparando el merge a stable
+	Actualizada documentación
+	Modificada versión de función copia 1:1, basado en wbfsGUI v14.1 antes v12
+
+2009-06-20  Ricardo Marmolejo García  <makiolo@gmail.com>
+
+	Iba quitado una seguridad de wiithon_wrapper en que se permitian copiar juego 1on1 en discos de distinto tamaño de sactor.
+	Ahora la he vuelto a poner, ya que por lo visto puede producir colisión.
+
+2009-06-19  Ricardo Marmolejo García  <makiolo@gmail.com>
+
+	Traducido al 100% como buenamente he podido xD
+
+2009-06-19  José-Luis Segura Lucas  <josel.segura@gmail.com>
+
+	bugfix en wiithon_wrapper... ¡
+
+2009-06-19  Ricardo Marmolejo García  <makiolo@gmail.com>
+
+	Versión final -> fase de pruebas
+	Mirate lo del buscador, linea 447 del gui.py
+	Como detalle final, estaría bien poner el entry del buscador amarillo(o destacado de alguna forma) cuando hay algo escrito
+
+2009-06-18  Ricardo Marmolejo García  <makiolo@gmail.com>
+
+	Modificado libwbfs
+	Bastante arreglos
+	Muestras errores en forma de alert (no se acumulan los alert)
+
+2009-06-18  Ricardo Marmolejo García  <makiolo@gmail.com>
+
+	Terminado boton para refresco de particiones en caliente
+
+2009-06-17  Ricardo Marmolejo García  <makiolo@gmail.com>
+
+	algunos arreglos
+	implementado copia 1on1 de todo el disco
+
+2009-06-17  Ricardo Marmolejo García  <makiolo@gmail.com>
+
+	Commit para mantenernos sincronizados
+
+2009-06-17  Ricardo Marmolejo García  <makiolo@gmail.com>
+
+	Eliminados IDGAME preferido y partición preferida de preferencias.
+
+2009-06-17  José-Luis Segura Lucas  <josel.segura@gmail.com>
+
+	Bug en el gui.py
+
+2009-06-17  Ricardo Marmolejo García  <makiolo@gmail.com>
+
+	Rediseño muy serio de Threads, ahora lo hago por callbacks ya que el invento de la cola se estaba volviendo dificil de mantener.
+	trabajo, gui y core cambiados. Algún mini bug en wiithon_wrapper solucionado con "fflush" para obligar a volcar a stdout
+
+2009-06-15  Ricardo Marmolejo García  <makiolo@gmail.com>
+
+	Esta de puta madre el drag&drop, prácticamente no funcionaba muy bien debido a que los archivos vienen como file:///home/user/file.iso
+	He arreglado la señal para que se comporte como hablamos.
+
+2009-06-15  José-Luis Segura Lucas  <josel.segura@gmail.com>
+
+	Ya tenemos DnD en la interfaz. Quien añada  los ficheros (lo suyo sería en core.py) debe comprobar que son ISOs y que son válidas
+
+2009-06-15  Ricardo Marmolejo García  <makiolo@gmail.com>
+
+	Arreglado lo de los enlaces simbolicos
+	Pequeños arreglos en la traducción (hay que traducir todo lo nuevo)
+	Para subir los cambios hazlo con "make commit", si hay en algún fuzzy en algún po NO TE DEJA, esto lo hago así porque es una buena forma de ahorrarnos conflictos.
+
+2009-06-15  José-Luis Segura Lucas  <josel.segura@gmail.com>
+
+	Conseguido 9.19 en config.py :D
+
+2009-06-15  José-Luis Segura Lucas  <josel.segura@gmail.com>
+
+	Tonteando para subir el builder_wrapper a un 10 en pylint :D y así de paso pruebo los commits
+
+2009-06-15  José-Luis Segura Lucas  <josel.segura@gmail.com>
+
+	Algunos cambios en comentarios y en algunas líneas en blanco para mejrorar legibilidad
+
+2009-06-15  Ricardo Marmolejo García  <makiolo@gmail.com>
+
+	Terminada algunas comprobaciones en renombrar IDGAME que le dan total robuztez a esa parte.
+	Más cambios menores
+
+2009-06-14  Ricardo Marmolejo García  <makiolo@gmail.com>
+
+	Copia 1on1 acabado, a falta de alguna comprobación
+	He integrado el menu contextual, queda de pm, hay que añadir una opción más fácil para la copia 1on1, en lugar de lo que te comenté, por ejemplo "Copiar a otra partición"
+	Solo queda como funcionalidad princiapl, el drag&drop, no descartes que te diga otro drag&drop para el 1on1:
+	El drag&drop sería para copiar juegos a otras particiones, y tendría que detectar el arrastrar una fila desde juegos hacía una fila de particiones.
+	Investiga el drag&drop con código de pruebas fuera del gui, ya que voy hacer una limpia de código y renombrar muchas variables que no tienen sentido.
+	
+	Por cierto por último, he visto el conflicto que has tenido con los po, para evitarlo en el futuro, antes de subir un commit (y metiendo frases nuevas o modificando las existentes) comprueba que el en.po y el es.po no tenga frases en fuzzy.
+	
+	Un saludo, ya queda poco xD
+
+2009-06-14  Ricardo Marmolejo García  <makiolo@gmail.com>
+
+	Finalmente voy a implementar la copia 1on1 para la versión inmediata.
+	Es necesario el menú contextual.
+	Renombrado la carpeta wbfs_src a "wiithon_wrapper"
+	Ya funciona la copia 1on1 con el wrapper, he tenido que modificar partes de la labrería libwbfs.
+	Muchos cambios menores que he olvidado documentar,
+
+2009-06-13  Ricardo Marmolejo García  <makiolo@gmail.com>
+
+	Nuevo Wrapper entre Wiithon y libwbfs llamado "wiithon_wrapper"
+	Con este wrapper es más fácil añadir funcionalidades, ya que el código de Kibrikk se me hacía inteligible
+	He añadido una primera funcionalidad:
+	- Renombrar IDGAME (para custum games del guitar hero principalmente)
+	- Funciona bien, pero esto puede traer algún bug
+
+2009-06-12  Ricardo Marmolejo García  <makiolo@gmail.com>
+
+	Corregido fallo en un import
+
+2009-06-12  José Luis Segura Lucas  <josel.segura@gmail.com>
+
+	Modificados los import más acordes con la guía de estilo de Python
+
+2009-06-11  Ricardo Marmolejo García  <makiolo@gmail.com>
+
+	- uninstall no es dependencia de install (ver doc/INSTALAR)
+	- archivos movidos y/o eliminados
+
+2009-06-11  Ricardo Marmolejo García  <makiolo@gmail.com>
+
+	Pequeños cambios acumulados
+
+2009-06-11  José-Luis Segura Lucas  <josel.segura@gmail.com>
+
+	Cambiado 'permisos' en el Makefile
+
+2009-06-11  José-Luis Segura Lucas  <josel.segura@gmail.com>
+
+	Cambios en el Makefile (en pruebas)
+
+2009-06-11  José Luis Segura Lucas  <josel.segura@gmail.com>
+
+	Generalizando reglas del Makefile
+
+2009-06-11  Ricardo Marmolejo García  <makiolo@gmail.com>
+
+	- Eliminado el chekeo de juegos, del wbfs , del core y del cli
+
+2009-06-11  Sergio Padrino  <sergio@sergio-desktop.fake>
+
+	* Finalizada la traducción al inglés
+
+2009-06-10  Ricardo Marmolejo García  <makiolo@gmail.com>
+
+	Ordenados muchos ficheros, bastantes movidos a doc/
+
+2009-06-10  Ricardo Marmolejo García  <makiolo@gmail.com>
+
+	Pequeño arreglo para KDE
+
+2009-06-10  Ricardo Marmolejo García  <makiolo@gmail.com>
+
+	- Para que rule en KDE he hecho python-sexy obligatorio
+
+2009-06-10  Ricardo Marmolejo García  <makiolo@gmail.com>
+
+	Wiithon ya no necesita ser root
+
+2009-06-10  Ricardo Marmolejo García  <makiolo@gmail.com>
+
+	El problema esta resuelto, el problema fue el quitar la cabezera totalmente, he dejado la codificación, nombre de proyecto y poco más y problema resuelto.
+
+2009-06-10  Ricardo Marmolejo García  <makiolo@gmail.com>
+
+	- Añadido y funcionando bien, la tarea "purge" al Makefile
+	- Cuando se ejcuta wiithon en modo cli, ahora se le avisa al usuario si no lo ejecuta como root
+	- he detectado un problemas con caracteres NO ASCII, (en la corrección de castellano)
+	- Cambios menores
+
+2009-06-10  Ricardo Marmolejo García  <makiolo@gmail.com>
+
+	- en.po lo he dejado listo para ser traducido
+	- He resuelto todos los warning que daba el xgettext al extraer strings
+	- Para evitar conflictos de versiones, he quitado el header con "--omit-header", tambien se pueden quitar los comentarios, aunque en principio los vamos a dejar.
+
+2009-06-10  Ricardo Marmolejo García  <makiolo@gmail.com>
+
+	Quito que el nombre renombrado sea decodificado a iso-8859-1
+
+2009-06-10  Ricardo Marmolejo García  <makiolo@gmail.com>
+
+	Algunos bugs pequeños
+	He quitado el acuerdo -> discutir sobre ello
+	He evitado todo warning. --> Necesitamos un icono
+	Cambios menores
+
+2009-06-09  Ricardo Marmolejo García  <makiolo@gmail.com>
+
+	Hay excepciones feas en la pool, no se porque algunas veces los hilos no pueden ejecutar "time.sleep", he probado quitando que sean threads daemon, pero creo que sigue igual.
+	He corregido una linea del wbfs.c en el que reservaba 6 bytes estaticamente para el idgame, deberian ser 7 para el nulo \0
+
+2009-06-09  Ricardo Marmolejo García  <makiolo@gmail.com>
+
+	Se me olvido añadir un archivo movido al repo
+
+2009-06-09  Ricardo Marmolejo García  <makiolo@gmail.com>
+
+	Todos los WBFS Manager basados en las primeras versiones de libwbfs tienen fallos calculando el espacio ocupado por un juego, y el espacio ocupado y libre del total.
+	He modificado el "wbfs.c" y alguno más para solucionar esto.
+
+2009-06-09  Ricardo Marmolejo García  <makiolo@gmail.com>
+
+	No funcionaba el acerca de: -En código llamabas a "aboutdialog1" y en el glade se llamaba "aboutdialog" , He editado el código
+
+2009-06-09  Ricardo Marmolejo García  <makiolo@gmail.com>
+
+	Añadida señal "changed" el entry de busqueda
+
+2009-06-09  José-Luis Segura Lucas  <josel.segura@gmail.com>
+
+	modificado instalar.txt
+
+2009-06-09  José-Luis Segura Lucas  <josel.segura@gmail.com>
+
+	* Borrado acercade.ui.h (se había olvidado).
+	* Recuperado el soporte para usar sexy si está instalado
+	* El Entry de búsqeuda debe añadirse ahroa en código directamente
+
+2009-06-09  José-Luis Segura Lucas  <josel.segura@gmail.com>
+
+	Arreglado un IndentationError
+
+2009-06-09  José-Luis Segura Lucas  <josel.segura@gmail.com>
+
+	* sustituidos en todos los .py los \t por "    ". He hecho make run y funciona
+	* Añadidos los coding: utf-8 donde faltaba
+	* Se suben los .po "actualizados". Hay que buscar la forma de que no cambien solo por generarlos
+
+2009-06-09  José-Luis Segura Lucas  <josel.segura@gmail.com>
+
+	Merge
+
+2009-06-09  Ricardo Marmolejo García  <makiolo@gmail.com>
+
+	Nuevo LIBWBFS! commit peligroso
+
+2009-06-09  José-Luis Segura Lucas  <josel.segura@gmail.com>
+
+	Modificado el Makefile y los .po
+
+2009-06-08  José-Luis Segura Lucas  <josel.segura@gmail.com>
+
+	* Cambios en los .po (número de línea de dónde saca algunas msgid)
+	* Cambios en gui.py para usar el "acercade" sacado directamente del GUI principal
+	* Eliminado acercade.ui, ya que se mete en el wiithon.ui
+	* Lo anterior en wiithon.ui y wiithon.ui.h
+
+2009-06-08  Ricardo Marmolejo García  <makiolo@gmail.com>
+
+	Icono animado que representa que esta ocupado
+	Corregido un bug cuando al renombrar metiamos algún caracter extraño
+	Ahora muestra las tareas pendientes
+
+2009-06-07  Ricardo Marmolejo García  <makiolo@gmail.com>
+
+	Hecha barra de progreso para calcular espacio ocupado en disco
+
+2009-06-07  José Luis Segura Lucas  <josel.segura@gmail.com>
+
+	* Añadidas líneas estándares para la condificación de los ficheros
+
+2009-06-07  Ricardo Marmolejo García  <makiolo@gmail.com>
+
+	- Aligerando el core.
+	- Metiendo casi todas las frases a traducir.
+
+2009-06-05  Ricardo Marmolejo García  <makiolo@gmail.com>
+
+	Buscador terminado.
+	Tengo que modificar la pool para preferentemente utilizar objetos "Juego" en lugar del IDGAME
+	Solo quedan 2 funcionalidades para sacar una release:
+	- Mostrar el total de juegos
+	- Mostrar espacio libre / ocupado en la partición (mediante barras de progreso estáticas)
+
+2009-06-04  Ricardo Marmolejo García  <makiolo@gmail.com>
+
+	Buscador y base de datos xD asi en un momento
+	Tiene bugs pero esta bastante avanzado
+
+2009-06-04  Ricardo Marmolejo García  <makiolo@gmail.com>
+
+	Preferencias persistentes, todas las rutas de los FileChooser, juego y partición seleccionado.
+	Cambiado todo el protocolo entre el pool de trabajo y el GUI. (hay que mejorarlo más)
+
+2009-06-03  Ricardo Marmolejo García  <makiolo@gmail.com>
+
+	Actualizado icono Wiithon, hay que hacer más de diferentes tamaños
+
+2009-06-03  Ricardo Marmolejo García  <makiolo@gmail.com>
+
+	Añadido parametro -c, equivalente a --no-gui
+	Añadidas bastantes frases del cli para traducir, aun quedan bastantes.
+	El hilo que calcula el progreso no se interrumpia bien
+	Añadidos filtros a Nuevo: *.iso y *.rar
+	Antes de cerrar, se espera a que terminen los procesos de bash (sin interrumpir)
+
+2009-06-03  Ricardo Marmolejo García  <makiolo@gmail.com>
+
+	Muchos detalles:
+	Hay que ser root o cerrara previo error.
+	Descarga caratulas y discos de juegos recien añadidos
+	Ahora pregunta en que carpeta extraer, antes se iba a HOME.
+	Corregido un bug en el que iba dejado sin arrancar la revisión anterior.
+	Nuevas frases metidas a i18n
+	Las caratulas pueden ser descargas de 3 tipos : normal|panoramica|3d Antes estaba normal por defecto, ahora he puesto normal
+	Otros cambios menores
+
+2009-06-02  Ricardo Marmolejo García  <makiolo@gmail.com>
+
+	Redimensionar caratulas a 160x225 por 160x224, si no, no funciona en el loader GX
+	Además se resuelve un problema con un parametro de mogrify, parece ser que -resize 160x224 mantiene el aspect ratio, pero me interesar ignorar el aspect ya que de otra forma no funciona en el usb loader, sin documentar (o no lo vi) di con la solución en google, hay que poner una puta admiración: -resize 160x224!
+	Ahora solo instala las dependencias con apt-get mediante "sudo make install_auto". La tarea "sudo make install" funciona igual que antes, de forma que no se detecta la falta de alguna dependencia.
+	Cambios para copiar a SD no solo caratulas, sino también discos
+
+2009-06-02  Ricardo Marmolejo García  <makiolo@gmail.com>
+
+	intltool vuelve como dependencia ya que de otra forma tendríamos que subir los MOO al repositorio, lo que generaría continuos conflictos, por los cambios de fecha.
+	He añadido "make dependencias" que a su vez depende de install.
+	En principio con 1 paso "sudo make install" hace todo
+
+2009-06-02  makiolo  <makiolo@makiolo-virtual.fake>
+
+	Ocultando barra "Más información", es posible que la consola, etc ... lo deje para otra fase, y así sacar una versión funcional y estable lo antes posible.
+
+2009-06-02  Ricardo Marmolejo García  <makiolo@gmail.com>
+
+	Adaptando para que se vea bien a 800x600
+	Cambiadas dependencias
+
+2009-06-02  makiolo  <makiolo@makiolo-virtual.fake>
+
+	Pequeños detalles.
+	Ya se muestra un acceso directo en:
+	
+	Aplicaiones -> Oficina -> Wiithon
+	
+	Comprobado y funcionando en GNOME y KDE
+
+2009-06-02  makiolo  <makiolo@makiolo-virtual.fake>
+
+	modificado desktop desde KDE
+	Eliminada dependencia con intltool, solo regenero lenguajes en un run (pero no en un install)
+
+2009-06-02  Ricardo Marmolejo García  <makiolo@gmail.com>
+
+	Poniendo icono en barra de inicio
+
+2009-06-01  Ricardo Marmolejo García  <makiolo@gmail.com>
+
+	Detalles en la traducción, y me tomo un descanso con wiithon, que debería estar estudiando ;D
+
+2009-06-01  makiolo  <makiolo@makiolo-virtual.fake>
+
+	Ya funciona el lenguaje en KDE (en GNOME ya rulaba)
+
+2009-06-01  Ricardo Marmolejo García  <makiolo@gmail.com>
+
+	Traducido a ingles (muchos fallos, hay que ir actualizando ...)
+	Editado el texto INSTALAR.txt
+
+2009-05-31  Ricardo Marmolejo García  <makiolo@gmail.com>
+
+	Más pruebas, algún bug corregido
+
+2009-05-31  makiolo  <makiolo@makiolo-virtual.fake>
+
+	Commiteando desde KDE
+
+2009-05-31  Ricardo Marmolejo García  <makiolo@gmail.com>
+
+	El "make commit" me estaba regenerando los PO
+
+2009-05-31  Ricardo Marmolejo García  <makiolo@gmail.com>
+
+	Pruebas de traducción
+
+2009-05-31  Ricardo Marmolejo García  <makiolo@gmail.com>
+
+	Ya traduce GLADE, en principio todos los problemas de traducción los tengo asimilados y solucionados.
+	Otros cambios
+	Ver TRADUCCION.txt (sobre como traducir)
+
+2009-05-31  Ricardo Marmolejo García  <makiolo@gmail.com>
+
+	- Implementado Copiar caratulas a SD
+	- Implementado el Renombrar
+	- Todos los botones de las toolbars funcionan a falta de algunos bugs
+	- Otros cambios ...
+
+2009-05-31  Ricardo Marmolejo García  <makiolo@gmail.com>
+
+	Mejorando el pool, 2 hilos:
+	1 hilo de tareas principales (añadir, extraer ...)
+	2 hilo bash tareas secundarias (descarga caratulas ...)
+	Reordenando el código
+
+2009-05-30  Ricardo Marmolejo García  <makiolo@gmail.com>
+
+	
+
+2009-05-30  Ricardo Marmolejo García  <makiolo@gmail.com>
+
+	Error en algunos distribuciones de linux detectando particiones
+
+2009-05-30  Ricardo Marmolejo García  <makiolo@gmail.com>
+
+	Las particiones aceptan /dev/loop0, /dev/loop1 ... /dev/loopN
+
+2009-05-30  Ricardo Marmolejo García  <makiolo@gmail.com>
+
+	Cambiando versión
+
+2009-05-30  Sergio Padrino  <sergio@sergio-desktop.fake>
+
+	esto es una prueba para empezar a trastear con bazaar XDD
+
+2009-05-29  Ricardo Marmolejo García  <makiolo@gmail.com>
+
+	Otra vez renombrado wiithon.xml a wiithon.ui (creo k es la extensión que recomienda el team GTK)
+	Muchos cambios ... Ya tengo mejor definida una "pool de trabajos genericos"
+
+2009-05-26  Ricardo Marmolejo García  <makiolo@gmail.com>
+
+	Investigando ordenación con : http://www.pygtk.org/pygtk2reference/class-gtktreesortable.html#method-gtktreesortable--set-sort-column-id
+	Se pueden reordenar las columnas (arrastrando)
+	Solo se expande la columna titulo
+	Ya se como se muestran las flechitas para indicar al usuario como esta ordenado. (columna1.set_sort_indicator(True))
+
+2009-05-21  Ricardo Marmolejo García  <makiolo@gmail.com>
+
+	Rediseñado gui, lo de los tags no lo veo buena forma, por eso te preguntaba,
+	si no se puede o es demasiado complejo metemos 2 treeviews como antes ....
+	
+	Ver el TODO o el dashboard
+
+2009-05-20  José Luis Segura Lucas  <josel.segura@gmail.com>
+
+	_ = gettext.gettext -> from gettext import gettext as _
+
+2009-05-19  Ricardo Marmolejo García  <makiolo@gmail.com>
+
+	- Nuevo caratula de disco desconocido, más acorde con la caratula
+
+2009-05-19  Ricardo Marmolejo García  <makiolo@gmail.com>
+
+	- Mi 8.10 solo tiene GTK 2.14 en los repositorios, por tanto, he puesto el xml (builder) en 2.14, por tanto con ayuda de un "except TypeError:" detecto la excepción y aviso al usuario de que para visualizarlo necesita GTK 2.16 o superior
+	- He vuelto a cambiar los iconos
+	- He renombrado el wiithon.glade a wiithon.xml (asocia esa extension a glade-3 si no te importa)
+	- Hay que traducir wiithon a ingles editando po/en.po
+
+2009-05-19  José-Luis Segura Lucas  <josel.segura@gmail.com>
+
+	Usando GTKBuilder, cambio de cadenas y más
+
+2009-05-19  José-Luis Segura Lucas  <josel.segura@gmail.com>
+
+	Usando python-sexy, si está instalado
+
+2009-05-19  Ricardo Marmolejo García  <makiolo@gmail.com>
+
+	Más cambios con el gettext, solucionado el problema de definir _() en todo el proyecto.
+	Más cambios de glade e hilos ...
+
+2009-05-19  Ricardo Marmolejo García  <makiolo@gmail.com>
+
+	Cambio importante para el desarrollo:
+	Bajate la última versión de glade-3 (svn), para trabajar con la el gui nuevo basado en gtk.Builder, que es el sustituto de glade.
+	He hecho más cambios con lo de traducir wiithon
+
+2009-05-19  Ricardo Marmolejo García  <makiolo@gmail.com>
+
+	Cambio el glade
+	Bastantes cambios en Makefile
+
+2009-05-18  Ricardo Marmolejo García  <makiolo@gmail.com>
+
+	Se me olvidaban unos archivos
+
+2009-05-18  Ricardo Marmolejo García  <makiolo@gmail.com>
+
+	Cambiadas las rutas de las traducciones.
+	Traduce todo excepto glade
+
+2009-05-18  Ricardo Marmolejo García  <makiolo@gmail.com>
+
+	- primeros intentos para implementar gettext
+
+2009-05-17  Ricardo Marmolejo García  <makiolo@gmail.com>
+
+	Muchos cambios, funciona bien el añadir, con barra de progreso gestionada por hilos, las hilos se comunican mediante un productor-consumidor
+	cambiada función extract de wbfs
+
+2009-05-14  Ricardo Marmolejo García  <makiolo@gmail.com>
+
+	- Primeras pruebas de implantación de concurrencia en wiithon
+	- Comunicación entre wiithon y wbfs mediante un fichero temporal
+
+2009-05-13  José-Luis Segura Lucas  <josel.segura@gmail.com>
+
+	Modificación: la cola la inicializa el constructor (objeto propio del objeto, no de la clase)
+
+2009-05-13  Ricardo Marmolejo García  <makiolo@gmail.com>
+
+	- He hecho la clase Pool (piscina de trabajadores)
+	- Además he testeado a implementarla en un hilo, de forma que sabemos si el pool ha finalizado consultando la vida del hilo (isAlive() o is_alive())
+	- Todas las llamadas a subprocesos a partir de ahora se harán con subprocess.Popen o subprocess.call
+
+2009-05-11  Ricardo Marmolejo García  <makiolo@gmail.com>
+
+	- buscarParticiones es trabajo del CORE, no de ningún GUI o CLI, por tanto debe hacerse en el propio constructor, y tal vez cancelar la construcción del core en caso de que no se encuentren particiones.
+
+2009-05-11  José-Luis Segura Lucas  <josel.segura@gmail.com>
+
+	Cambios (un poco de todo)
+
+2009-05-11  José-Luis Segura Lucas  <josel.segura@gmail.com>
+
+	Mini cambio en el core (una variable que no existe) y cambio en la interfaz para usar paned que mola más
+
+2009-05-11  Ricardo Marmolejo García  <makiolo@gmail.com>
+
+	- Bastantes cambios.
+	- El GUI ya lista juegos y particiones en GTK
+	- Se muestran a la izquierda la caratula y disco guardadas en .wiithon/.../
+	- Descarga CARATULAS Y DISCOS al arrancar (hay que separarlo en un hilo que no bloquee)
+	- Nueva clase WiithonCLI y actualizado el Makefile
+	- He tratado de dejar el CLI igual que antes (pasando el parametro -p o --no-gui)
+	- Hay que ir definiendo que va a CLI o GUI o CORE
+	- He eliminado muchas variables supuestamente globales del CORE
+	- He documentado todo mucho más
+	- Definitivamente desaparece zenity
+	- Las cargas de TreeView las hagas en 2 pasos , vista y modelo, siguiendo un poco MVC
+	- He rediseñado bastantes cosillas (mirar el wiithon.py)
+	- Aunque esta claro que ibamos dicho de olvidar los schemas, he creado unos schemas que me estan funcionando perfectamente en 8.10, (aún no he actualizado por falta de tiempo xD)
+	- Más cosillas de menor importancía
+
+2009-05-09  Ricardo Marmolejo García  <makiolo@gmail.com>
+
+	- repasando los ultimos COMMIT's
+
+2009-05-09  José Luis Segura Lucas  <josel.segura@gmail.com>
+
+	Más cambios:
+	* Ahora la comprobación del acuerdo la hace el "programa" y no el "core".
+	Hay que aligerar el "core" lo más posible para que se encargue solo de
+	su deber: toquetear en WBFS, como abstracció del programa wbfs que es
+	
+	* La interfaz gráfica ahora tiene un método "question" que llama a "alert"
+	para hacer preguntas y devuelve el resultado
+	
+	* El constructor de "core" ahora no hace apenas nada, solo inicializar
+	el Observable y poco más. Las cosas que tenía antes ahora están en
+	core.main
+
+2009-05-09  José Luis Segura Lucas  <josel.segura@gmail.com>
+
+	Algunos cambios:
+	* Ahora la interfaz se suscribe a si misma al core (en un futuro el core no conocerá a su interfaz/interfaces)
+	* Eliminado método comprobarExistencia y usado en su lugar os.path.exist directamente (evitamos una llamada de más)
+	* El método uso ahora es del "programa" y no del core. No hará falta instanciar el core (y comprobar si se está de acuerdo con todo) para poder mostrar la ayuda
+	* Modificada la forma de recoger opciones. Ahora al core solo se le pasarán las que realmente le incumban (por ejemplo, no -h, no --no-gui...)
+
+2009-05-09  José Luis Segura Lucas  <josel.segura@gmail.com>
+
+	Pequeño error en el observer
+
+2009-05-08  José-Luis Segura Lucas  <josel.segura@gmail.com>
+
+	Quitado algún AttributeError más. He quitado los cambios de modo de los archivos del home de whiithon porque causaban problemas con permisos/propietarios
+
+2009-05-08  José-Luis Segura Lucas  <josel.segura@gmail.com>
+
+	Modificados algunos errores y quitando de dónde veo la AttributeError si es menester
+
+2009-05-08  Ricardo Marmolejo García  <makiolo@gmail.com>
+
+	- Primeras pruebas para integrar SQLAlchemy, un ORM basado en sqllite
+
+2009-05-07  Ricardo Marmolejo García  <makiolo@gmail.com>
+
+	- Elimino stacktrace, buscaba una forma e imprimir la traza a pesar de capturar la excepción
+
+2009-05-07  Ricardo Marmolejo García  <makiolo@gmail.com>
+
+	- Pqueños cambios
+	- util.py peta
+
+2009-05-07  José Luis Segura Lucas  <josel.segura@gmail.com>
+
+	uso del observer
+
+2009-05-07  José-Luis Segura Lucas  <josel.segura@gmail.com>
+
+	Añadida clase Observable para heredar de ella cuando queramos. Ahora el core hereda de Observable (todo está en pruebas para eso)
+
+2009-05-07  José Luis Segura Lucas  <josel.segura@gmail.com>
+
+	- Añadida la ruta de wbfs al config.py
+	- Ahora se usa gksudo para lanzar wbfs
+	- Ejemplo de como recuperar si hemos ejecutado o no como sudo en getListaJuegos
+
+2009-05-07  Ricardo Marmolejo García  <makiolo@gmail.com>
+
+	- Actualizado Makefile para poner config
+	- Desintala el acuerdo viejo
+	- Añadido log al makefile
+	- Los scripts de bash les he puesto extension ".sh"
+	- He encontrado mas funciones sin self
+	- He repasado lo que has hecho en los ultimos commits (esta de pm)
+	- Estoy trasteando con la barra de progreso
+	- En el acuerdo se crea ~/.wiithon/ PERO pertenece a root (FIXME)
+
+2009-05-07  José-Luis Segura Lucas  <joseluis@colisseum.fake>
+
+	Pequeño cambio
+
+2009-05-07  José-Luis Segura Lucas  <joseluis@colisseum.fake>
+
+	Mejoras en la configuración de las rutas del programa
+
+2009-05-06  José-Luis Segura Lucas  <josel.segura@gmail.com>
+
+	Cambios. Hay que cambiar algunas variables en Core.main()
+
+2009-05-06  José-Luis Segura Lucas  <josel.segura@gmail.com>
+
+	Más cambios
+
+2009-05-06  José-Luis Segura Lucas  <josel.segura@gmail.com>
+
+	Archivod e configuración. Reordenando cosas en el core
+
+2009-05-06  José-Luis Segura Lucas  <josel.segura@gmail.com>
+
+	algunas llamadas a comprobarExistencia no llevan delante el self y podían fallar. Además, para un método con una línea mejor lo hacemos a pelo
+
+2009-05-06  José-Luis Segura Lucas  <josel.segura@gmail.com>
+
+	Sustituido algún if con raise detrás por assert, que va muy freshco ;)
+
+2009-05-06  Ricardo Marmolejo García  <makiolo@gmail.com>
+
+	Me faltaban un par de self.
+
+2009-05-05  Ricardo Marmolejo García  <makiolo@gmail.com>
+
+	- He hecho el glade más liquido, lo ibas fijado a 1024x768
+
+2009-05-05  José-Luis Segura Lucas  <josel.segura@gmail.com>
+
+	Cambiado nombre de la ventana principal (set_title) y algunos cambios incompletos en el glade
+
+2009-05-05  José-Luis Segura Lucas  <josel.segura@gmail.com>
+
+	Se ve la búsqueda
+
+2009-05-05  José-Luis Segura Lucas  <josel.segura@gmail.com>
+
+	Algunos cambios más en el glade. En gui.py el emacs ha hecho limpieza de espacios en blacno y demás, pero realmente no hay cambios. Cambios en el test.py para hacer unas pruebas, nada grave
+
+2009-05-05  Ricardo Marmolejo García  <makiolo@gmail.com>
+
+	- Cambio de paradigma a POO
+	- Hay que modularizar más, pero es un buen paso
+	- He programado los callbacks de Añadir archivos y Añadir carpetas, pero hay que programar la barra de progreso y meter filtros a los archivos para solo sean *.iso y *.rar
+	- Es un commit gordo, he podido meter muchos bugs con tanto self
+
+2009-05-04  Ricardo Marmolejo García  <makiolo@gmail.com>
+
+	probando el wrapper de GTK, es fácil de cojones xD aunque tienes muchas cosillas para pelearse :O
+
+2009-05-04  Ricardo Marmolejo García  <makiolo@gmail.com>
+
+	Eliminados sudos, wiithon necesita sudo para ser ejecutado
+	Saltos de linea en el acuerdo (y cambiado de ruta)
+
+2009-05-04  Ricardo Marmolejo García  <makiolo@gmail.com>
+
+	- arreglada una tabulación
+
+2009-05-04  Ricardo Marmolejo García  <makiolo@gmail.com>
+
+	- Añadido el código al wbfs que permite copiar de partición a partición
+	- Ahora no borra el ISO temporal generado por descomprimir un rar, habría que dar la opción en el GUI de borrar la ISO descomprimida o no.
+
+2009-05-04  José-Luis Segura Lucas  <josel.segura@gmail.com>
+
+	Se deja de usar Zenity (al fin) excepto para listar
+
+2009-05-04  José-Luis Segura Lucas  <josel.segura@gmail.com>
+
+	algunos cambios más
+
+2009-05-04  José-Luis Segura Lucas  <josel.segura@gmail.com>
+
+	Cambio en la interfaz para no mostrar la parte de filtros hasta tener la BD
+
+2009-05-04  José-Luis Segura Lucas  <josel.segura@gmail.com>
+
+	Cambios en el glade GUI, en gui.py (para cargar ese glade) y el cambio de la redimensión en Wiithon
+
+2009-05-04  Ricardo Marmolejo García  <makiolo@gmail.com>
+
+	Hay pausas en los listados
+	Corregido "Meter todo masivamente" no funcionaba correctamente
+	He cambiado trabajo como --trabajo
+	corregidos permisos
+	Otros cambios menores
+
+2009-05-03  Ricardo Marmolejo García  <makiolo@gmail.com>
+
+	Maquetado para instalar en /usr/local/share/wiithon
+
+2009-04-27  José-Luis Segura Lucas  <josel.segura@gmail.com>
+
+	Añadido otro archivo de interfaz en glade. Algunas cosillas ya pensadas para hacer "truqueles" de los míos...
+
+2009-04-27  José-Luis Segura Lucas  <josel.segura@gmail.com>
+
+	Pruebas para mostrar las alertas con GTK en vez de usar llamadas a zenity
+
+2009-04-23  José-Luis Segura Lucas  <josel.segura@gmail.com>
+
+	Añadida opción para poder arrancar sin GUI (--no-gui). Hay que hacer que los "popups" con zenity estén en la interfaz del programa para no sobrecargar el sistema con más aplicaciones
+
+2009-04-23  José-Luis Segura Lucas  <josel.segura@gmail.com>
+
+	Más cambios en wiithon con las opciones
+
+2009-04-23  José-Luis Segura Lucas  <josel.segura@gmail.com>
+
+	Añadido el archivo util donde meter todas las clases que puedan venir bien (como una clase lista sin repeticiones). Modificado Wiithon para usar getopt e imprimir la ayuda de una forma menos desorganizada
+
+2009-04-23  José-Luis Segura Lucas  <josel.segura@gmail.com>
+
+	Subida la interfaz con la flecha clickeable
+
+2009-04-23  José-Luis Segura Lucas  <josel.segura@gmail.com>
+
+	Añadido glade_wrapper para facilitar el acceso a los widgets en un .glade. Creada la interfaz aparte para usarla en siguiente modificación de wiithon. Traído el test.py para probar la interfaz de la clase WiithonGUI sin cargar el programa
+
+2009-04-23  Ricardo Marmolejo García  <makiolo@gmail.com>
+
+	- Los parametros desconocidos se esperan que sea ISO, RAR o carpeta
+	- listaJuegos la voy pasando por referencia, de manera que solo es llamada 1 vez en una sesión
+	- Añadidas funciones útiles de zenity
+	- Preparado codigo para comunicar la barra de progreso mientras se añade / extrae un juego
+
+2009-04-22  Ricardo Marmolejo García  <makiolo@gmail.com>
+
+	- Continuo investigando para redimensionar particiones WBFS
+	- Corregido un bug. which en archlinux cuando no encuentra su parametro pasa el error a consola. Es necesario redireccionarlo a null
+
+2009-04-22  Ricardo Marmolejo García  <makiolo@gmail.com>
+
+	- Corregido un schema
+	- make install depende construir wbfs
+
+2009-04-22  Ricardo Marmolejo García  <makiolo@gmail.com>
+
+	- He puesto en el Makefile como dependencia de instalar, desinstalar. Es discutible. He corregido los schemas y su ruta. Debe ser en /usr/share/gconf/schemas
+	- He implementado en el glade, lo que aprendi de tu test.py, pero siguelo tu, yo esta semana tengo que programar en java pal mobigame xD
+
+2009-04-22  Ricardo Marmolejo García  <makiolo@gmail.com>
+
+	Creo que es mejor quitar todo binario del repositorio trunk, si acaso tenerlos en "stable" para que la gente se lo baje precompilado, pero para desarrollo es muy incomodo porque continuamente nos pasamos los binarios el uno al otro y los "push" y "pull" son muy lentos.
+	Me mola como has dejado el Makefile, lo he tocado un poco.
+	wiithon tiene mas dependencias, no de compilación pero si de ejecucion:
+	- nautilus-actions (cuando tengamos el GUI, la intención es extinguirlo)
+	- imagemagick
+	- wget (es estandar de unix ?)
+	- rar 
+	
+	Estaría bien evitar el "make install" si le falta alguna dependencia.
+
+2009-04-22  Ricardo Marmolejo García  <makiolo@gmail.com>
+
+	He visto tu test, funciona bien
+	Mirate el glade que he hecho, es una primera version de como tenía yo pensada la interfaz, parecido al rhythmbox, lo que pasa es que tengo poca idea de como rellenar los TreeView ni como conectar los callbacks.
+	Mirate
+	El TreeView de abajo sería una tabla con al menos 5 columnas (ordenables), ID , Titulo y Tamaño , Tipo de Juego y Año.
+	El TreeView de la izquierda sería un listado de todos los tipos de juegos siendo el primero "Todos los tipos de juegos"
+	El TreeView de la derecha son todos los distintos años
+	La base de datos la podemos hacer en sqllite, pero primero quiero ver como se comporta gtk.
+
+2009-04-21  José Luis Segura Lucas  <josel.segura@gmail.com>
+
+	Prueba real de interfaz
+
+2009-04-21  José Luis Segura Lucas  <josel.segura@gmail.com>
+
+	Primerísima versión del GUI (ver con "glade-3")
+
+2009-04-21  José Luis Segura Lucas  <josel.segura@gmail.com>
+
+	Cambios en Makefile para la rama principal
+
+2009-04-21  Ricardo Marmolejo García  <makiolo@gmail.com>
+
+	Actualizados permisos
+	Empiezo a investigar codigo para redimensionar particiones WBFS
+
+2009-04-20  Ricardo Marmolejo García  <makiolo@gmail.com>
+
+	movimiento de carpetas
+	añadida una lista de tareas
+	cambios menores
+
+2009-04-20  Ricardo Marmolejo García  <makiolo@gmail.com>
+
+	- Pequeños arreglos
+	- Guardados precompilados en el repositorio
+
+2009-04-20  Ricardo Marmolejo García  <makiolo@gmail.com>
+
+	- Creando un proyecto en launchpad
+	- Corregido un problema al ordenar listas por titulo del juego
+	- LEEME.txt dividido en LEEME.txt e INSTALAR.txt
+	- Cambiada la licencia de Creative Commons con reconocimiento a GPLv3
+
+2009-04-20  Ricardo Marmolejo García  <makiolo@gmail.com>
+
+	- Cambiado el algoritmo de descarga de caratulas
+	- Cambiados permisos
+
+2009-04-20  Ricardo Marmolejo García  <makiolo@gmail.com>
+
+	NOVEDADES
+	------------------------------------
+	- Ahora cuando descomprimimos el ISO de un RAR , el ISO es borrado, pudiendo descomprimir infinitos RARs con solo 4,5 GB libres.
+	- Juegos ordenados alfabeticamente
+	
+	BUGS CORREGIDOS
+	------------------------------------
+	- Arreglos menores
+
+2009-04-19  Ricardo Marmolejo García  <makiolo@gmail.com>
+
+	NOVEDADES
+	----------------------------------
+	- Instar juegos desde el DVD, al estilo del usb loader, pero algo más lento porque dumpea a ISO y cuando termina mete la ISO.
+	- Comprobar Integridad de los juegos. Muchos de nuestros juegos pueden estar corruptos sin aún saberlo debido a el bug de borrado de las primeras versiones de WBFS
+	- Por tanto surgen 2 nuevos comandos:
+	wiithon instalar
+	wiithon comprobar
+	
+	BUGS CORREGIDOS
+	----------------------------------
+	- Ahora busca particiones WBFS en todo tipo de particiones, antes solo en discos USB.
+	- Corregido un problema detectando la partición en algunas distribuciones de GNU/Linux. En discos de 1 partición no asignan numero tipo /dev/sdaX llamandola /dev/sda, por tanto no cumplen el patrón y no eran detectados.
+	- Añadida la comprobación de Hermes (modificada por mi) para verificar qué juegos instalados se han visto afectados por el bug de borrado en libwbfs. Gracias kraff por el aviso
+	- Ahora muestra el nombre de la partición y el fabricante cuando no tengas juegos.
+	
+	CAMBIOS INTERNOS
+	----------------------------------
+	- He hecho unos primeros cambios en el Makefile segun consejos de Lk2
+	- He rediseñado el código del check de Hermes (goto para los errores , flags sin enumerados y "for" donde hay k poner "while")
+
+2009-04-17  Ricardo Marmolejo García  <makiolo@gmail.com>
+
+	BUGS CORREGIDOS
+	-----------------------------------------------
+	- Arreglado un fallo de representación, ahora estan mejor tabulados los resultados
+	- Arreglado el mostrar el fabricante del disco duro.
+	- Arreglado un problema con caracteres raros en expresiones regulares
+	- Ahora wbfs ha dejado de ser un enlace simbólico, esto permite que wiithon pueda ser instalado desde cualquier tipo de partición. (no necesariamente ext2/3)
+	- Hecho limpeza de binarios de wbfs innecesarios para wiithon
+	- Mejor presentados al usuario los casos en el que sin tener ningún juego, se intenta realizar alguna de las siguientes acciones: "listar , renombrar , extraer , borrar o descargar"
+	- La busqueda revursiva ahora no diferencia mayusculas de minusculas, antes no encontraba imagenes con extensiones como ".isO"
+
+2009-04-17  Ricardo Marmolejo García  <makiolo@gmail.com>
+
+	BUGS CORREGIDOS
+	-----------------------------------------------
+	- Ahora wiithon detecta bien las particiones WBFS para linux que no disponen de "udevinfo"
+	- Corregido un problema en el que asignaba mal el directorio de trabajo, cuando se usaba por nautilus, y las caratulas eran descargadas en /home/usuario
+
+2009-04-15  Ricardo Marmolejo García  <makiolo@gmail.com>
+
+	Versión 0.96
+	miércoles, 15 de abril de 2009
+	--------------------------------------------------------------------------------------------------------
+	NUEVA FUNCIONALIDAD
+	- Descarga de caratulas facilmente y automaticamente
+	- Cuando detecta más de una partición WBFS ahora aparece al lado el nombre del disco duro
+	- A partir de esta versión si un parametro no se le pasa el engorroso IDGAME, se pregunta el ID del juego (autonumeración hecha por wiithon)
+	- En Nautilus ahora hay 5 acciones, 5 de ellas siempre disponibles (listar,renombrar,extraer,borrar,descargar caratulas) y 1 (añadir ISO) solo cuando estamos sobre una imagen ISO.
+	- Al final he quitado que renombre al nombre del ISO cuando añades un ISO, el juego se metera con el nombre que propone el ISO y después se puede renombrar muy fácil desde el script de nautilus
+	
+	BUGS CORREGIDOS
+	- Corregido el bug de wbfs del borrado. Gracias Pedja
+	- Ahora instala en KDE sin problemas
+	- Mejorada autodetección de particiones. Detectaba como una partición el error del sudo si introducías mal la contraseña.
+	- Corregido en algunos puntos donde ponía WDFS en lugar de WBFS
+	- Existía un problema al añadir una ISO si en la ruta hay alguno de esto 2 caracteres : "[" o "]"
+	
+	CAMBIOS INTERNOS
+	- Muchas variables globales convertidas en locales
+	- Modificado el WBFS para que muestro los resultados en CSV y crear un interfaz entre withon y la librería WBFS modificada
+
+2009-04-10  Ricardo Marmolejo García  <makiolo@gmail.com>
+
+	- Añadidos precompilados de 32 bits para ejecutar como código cruzado en procesadores de 64 bits.
+	- Eliminado un warning al detectar particiones en la version de 64 bits
+
+2009-04-10  Ricardo Marmolejo García  <makiolo@gmail.com>
+
+	version inicial
+	0.95 rev1
+
