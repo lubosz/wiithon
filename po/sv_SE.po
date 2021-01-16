@@ -337,7 +337,7 @@ msgstr "TITEL"
 msgid "SI"
 msgstr "JA"
 
-#: cli.py:492 gui.py:1066 wiitdb_schema.py:326
+#: cli.py:492 gui.py:1066 wiitdb_schema.py:324
 msgid "NO"
 msgstr "NEJ"
 
@@ -1871,63 +1871,63 @@ msgstr ""
 msgid "Trabajo desconocido"
 msgstr "Okänt format"
 
-#: util.py:776
+#: util.py:802
 msgid "3D cover"
 msgstr ""
 
-#: util.py:778
+#: util.py:804
 msgid "Full cover"
 msgstr ""
 
-#: util.py:780
+#: util.py:806
 msgid "Normal cover"
 msgstr ""
 
-#: util.py:784
+#: util.py:810
 msgid "Custom disc"
 msgstr ""
 
-#: util.py:786
+#: util.py:812
 msgid "Original disc"
 msgstr ""
 
-#: wiitdb_schema.py:328
+#: wiitdb_schema.py:326
 msgid "No"
 msgstr "Nej"
 
-#: wiitdb_schema.py:336
+#: wiitdb_schema.py:334
 msgid "SI, 1j."
 msgstr "Ja, 1s."
 
-#: wiitdb_schema.py:338
+#: wiitdb_schema.py:336
 #, python-format
 msgid "Si, 1 jugador (%s)"
 msgstr "Ja, 1 spelare (%s)"
 
-#: wiitdb_schema.py:341
+#: wiitdb_schema.py:339
 #, python-format
 msgid "SI, %djs."
 msgstr "Ja, %ss"
 
-#: wiitdb_schema.py:343
+#: wiitdb_schema.py:341
 #, python-format
 msgid "Si, %d jugadores (%s)"
 msgstr "Ja, %d spelare (%s)"
 
-#: wiitdb_schema.py:350
+#: wiitdb_schema.py:348
 msgid "1j."
 msgstr "1s."
 
-#: wiitdb_schema.py:352
+#: wiitdb_schema.py:350
 msgid "1 jugador"
 msgstr "1 spelare"
 
-#: wiitdb_schema.py:355
+#: wiitdb_schema.py:353
 #, python-format
 msgid "%djs."
 msgstr "%ss"
 
-#: wiitdb_schema.py:357
+#: wiitdb_schema.py:355
 #, python-format
 msgid "%d jugadores"
 msgstr "%d spelare"
@@ -1965,63 +1965,63 @@ msgstr "Programmet körs med felaktiga inställningar"
 msgid "Interrumpido por el usuario"
 msgstr "Avbrutet av användraren"
 
-#~ msgid "Desea reemplazar la iso del juego %s?"
-#~ msgstr "Vill du byta ut ISO:n %s?"
+#~ msgid "Permitir establecer caratulas locales por arrastre"
+#~ msgstr "Tillåt lokal Drag&Släpp"
 
-#~ msgid "Tienes que seleccionar una particion WBFS para realizar esta accion"
-#~ msgstr "Du måste välja en WBFS-partition"
+#~ msgid "Permitir establecer caratulas desde http por arrastre"
+#~ msgstr "Tillåt http Drag&Släpp"
+
+#~ msgid "Permitir arrastrar juegos en ISO, RAR o directorios."
+#~ msgstr "Tillåt Drag&Släpp av spel (ISO/RAR/mappar) i fönstret"
 
 #, fuzzy
-#~ msgid "Extraer todos los juegos*"
-#~ msgstr "Kopiera alla spel*"
+#~ msgid "URL secundaria para WiiTDB"
+#~ msgstr "URL till WiiTDB databasen"
+
+#~ msgid "Numero de tareas que esperan en la cola."
+#~ msgstr "Antal aktiviteter i kö"
+
+#~ msgid "No se ha encontrado ninguna imagen ISO o RAR"
+#~ msgstr "Kunde inte hitta någon ISO- eller RAR-fil"
+
+#~ msgid "Buscar:"
+#~ msgstr "Sök:"
+
+#~ msgid "Fecha de lanzamiento: "
+#~ msgstr "Releasedatum:"
+
+#~ msgid "OPCIONALES: "
+#~ msgstr "VALFRIA TILLBEHÖR:"
+
+#~ msgid "ACCESORIOS: "
+#~ msgstr "KONTROLLER:"
+
+#~ msgid "Progreso de la tarea actual."
+#~ msgstr "Status på pågående uppgift."
+
+#~ msgid "Numero de juegos."
+#~ msgstr "Spelnummer"
+
+#~ msgid "Espacio usado / Espacio total"
+#~ msgstr "Fritt utrymme / Totalt utrymme"
+
+#~ msgid "+INFO"
+#~ msgstr "+INFO"
+
+#, fuzzy
+#~ msgid "WBFS"
+#~ msgstr "WBFS?"
 
 #, fuzzy
 #~ msgid "Opciones de extraccion"
 #~ msgstr "Kort datumformat"
 
 #, fuzzy
-#~ msgid "WBFS"
-#~ msgstr "WBFS?"
+#~ msgid "Extraer todos los juegos*"
+#~ msgstr "Kopiera alla spel*"
 
-#~ msgid "+INFO"
-#~ msgstr "+INFO"
+#~ msgid "Tienes que seleccionar una particion WBFS para realizar esta accion"
+#~ msgstr "Du måste välja en WBFS-partition"
 
-#~ msgid "Espacio usado / Espacio total"
-#~ msgstr "Fritt utrymme / Totalt utrymme"
-
-#~ msgid "Numero de juegos."
-#~ msgstr "Spelnummer"
-
-#~ msgid "Progreso de la tarea actual."
-#~ msgstr "Status på pågående uppgift."
-
-#~ msgid "ACCESORIOS: "
-#~ msgstr "KONTROLLER:"
-
-#~ msgid "OPCIONALES: "
-#~ msgstr "VALFRIA TILLBEHÖR:"
-
-#~ msgid "Fecha de lanzamiento: "
-#~ msgstr "Releasedatum:"
-
-#~ msgid "Buscar:"
-#~ msgstr "Sök:"
-
-#~ msgid "No se ha encontrado ninguna imagen ISO o RAR"
-#~ msgstr "Kunde inte hitta någon ISO- eller RAR-fil"
-
-#~ msgid "Numero de tareas que esperan en la cola."
-#~ msgstr "Antal aktiviteter i kö"
-
-#, fuzzy
-#~ msgid "URL secundaria para WiiTDB"
-#~ msgstr "URL till WiiTDB databasen"
-
-#~ msgid "Permitir arrastrar juegos en ISO, RAR o directorios."
-#~ msgstr "Tillåt Drag&Släpp av spel (ISO/RAR/mappar) i fönstret"
-
-#~ msgid "Permitir establecer caratulas desde http por arrastre"
-#~ msgstr "Tillåt http Drag&Släpp"
-
-#~ msgid "Permitir establecer caratulas locales por arrastre"
-#~ msgstr "Tillåt lokal Drag&Släpp"
+#~ msgid "Desea reemplazar la iso del juego %s?"
+#~ msgstr "Vill du byta ut ISO:n %s?"

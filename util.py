@@ -21,7 +21,7 @@ from gettext import gettext as _
 import sqlalchemy
 from sqlalchemy.orm import scoped_session, sessionmaker
 from sqlalchemy import create_engine
-from sqlalchemy.pool import NullPool
+from sqlalchemy.pool import NullPool, StaticPool, QueuePool
 
 import config
 
@@ -376,32 +376,40 @@ class NoDeberiaPasar(Exception):
 class CauseException(Exception):
     pass
 
+
 # lanzado por particion
 class SintaxisInvalida(Exception):
     pass
 
+
 def getBDD():
-    #db = create_engine(config.URI_ENGINE)
-    db = create_engine(config.URI_ENGINE+'?check_same_thread=False', poolclass=NullPool)
+    db = create_engine(config.URI_ENGINE+'?check_same_thread=False', poolclass=QueuePool, pool_size=20, )
     return db
+
 
 def crearBDD(metadatos):
     db = getBDD()
     metadatos.create_all(db)
-    
+
+
 def borrarBDD(metadatos):
     db = getBDD()
     metadatos.drop_all(db)    
 
+
 def getSesionBDD(db):
     # con scoped se resuelven todos los problemas de concurrencia!
     ##Session = scoped_session(sessionmaker(bind=db, autoflush=True, transactional=True))
-    Session = scoped_session(sessionmaker(bind=db, autoflush=True))
+
+    marker = sessionmaker(bind=db, autoflush=True)
+    Session = scoped_session(marker)
     session = Session()
     return session
 
+
 def sql_text(string):
-	return sqlalchemy.text(string)
+    return sqlalchemy.text(string)
+
 
 def call_out_file(comando):
     if config.DEBUG:
@@ -413,6 +421,7 @@ def call_out_file(comando):
         return False
     except TypeError:
         return False
+
 
 def call_out_null(comando):
     if config.DEBUG:
@@ -435,7 +444,8 @@ def call_out_screen(comando):
         return False
     except TypeError:
         return False
-        
+
+
 def descomprimirZIP(file_in, file_out):
     try:
         import zipfile
@@ -445,6 +455,7 @@ def descomprimirZIP(file_in, file_out):
     except:
         comando = 'unzip -o "%s" "%s"' % (file_in, file_out)
         call_out_null(comando)
+
 
 def parsear_a_XML(texto):
     texto = texto.replace("&" , "&amp;")
@@ -468,9 +479,11 @@ def encode_strange_characters_url(texto):
     texto = texto.replace(" " , "%20")
     texto = texto.replace(":" , "%3A")
     return texto
-    
+
+
 def strip_multiples_spaces(texto):
     return " ".join(texto.split())
+
 
 def setLanguage(locale = 'default'):
         
@@ -480,6 +493,7 @@ def setLanguage(locale = 'default'):
         lang = gettext.translation(config.APP, languages=[locale])
         lang.install()
         os.environ['LANGUAGE'] = locale
+
 
 def configurarLenguaje(inicial = 'default'):
 
@@ -513,6 +527,7 @@ def configurarLenguaje(inicial = 'default'):
         
     setLanguage(inicial)
 
+
 def get_lang_default(APP_LANGUAGE_LISTA):
     try:
         LANG = os.environ['LANG'].split('_')[0]
@@ -520,7 +535,6 @@ def get_lang_default(APP_LANGUAGE_LISTA):
         i = 0
         while not encontrado and i<len(APP_LANGUAGE_LISTA):
             value = APP_LANGUAGE_LISTA[i][0]
-            language = APP_LANGUAGE_LISTA[i][1]
             encontrado = value.lower() == LANG
             i += 1
         
@@ -531,9 +545,11 @@ def get_lang_default(APP_LANGUAGE_LISTA):
     except:
         return config.LANGUAGE_WIITHON_DEFAULT
 
+
 def remove_last_separator(text):
     text=text.rstrip(', ') 
     return text.rstrip(': ')
+
 
 def get_index_by_code(lista, code):
     i = 0
@@ -544,6 +560,7 @@ def get_index_by_code(lista, code):
             i += 1
     return -1
 
+
 def get_code_by_index(lista, index):
     i = 0
     for code, language in lista:
@@ -553,6 +570,7 @@ def get_code_by_index(lista, index):
             i += 1
     return None
 
+
 # True ---> space OK
 # False --> full disk
 def space_for_dvd_iso_wii(path):
@@ -560,8 +578,10 @@ def space_for_dvd_iso_wii(path):
     fs = os.statvfs(path)
     return ((fs[statvfs.F_BSIZE]*fs[statvfs.F_BAVAIL]/1024) >= 4693504)
 
+
 def esImagen(fichero):
     return  (getExtension(fichero)=="png") or (getExtension(fichero)=="jpg") or (getExtension(fichero)=="gif") or (getExtension(fichero)=="jpeg")
+
 
 ## check user group and permissions
 def check_gids():
@@ -578,11 +598,14 @@ def check_gids():
     except:
         return False
 
+
 def rand(min, max):
     return random.randint(min, max)
 
+
 def num_files_in_folder(folder):
     return len(os.listdir(folder))
+
 
 def getVersionRevision():
     revision = getSTDOUT("cat /usr/share/doc/wiithon/REVISION")
@@ -595,6 +618,7 @@ def getVersionRevision():
         version = cachos[0]
         revision = ''
     return version, revision
+
 
 class SesionWiiTDB:
 
@@ -703,6 +727,7 @@ class SesionWiiTDB:
         else:
             return None
 
+
 def get_title_for_search(juego):
 
     # valor inicial
@@ -723,6 +748,7 @@ def get_title_for_search(juego):
     title = encode_strange_characters_url(title)
 
     return title
+
 
 # FIXME: temporal solution
 def get_subinterval_type_disc_art(type_disc_art):

@@ -161,10 +161,10 @@ class Preferencias:
         self.iniciarPreferencia('password', 'PASS_WIITDB', defecto='', mostrar=cargarWidget, vbox=prefs_vbox_wiitdb, label=_('Password (para editar informacion en wiitdb.com)'))
         
         # caratulas
-        self.iniciarPreferencia('int', 'WIDTH_COVERS', defecto=160, mostrar=cargarWidget, vbox=prefs_vbox_caratulas, label=_('Ancho imagen caratula'))
-        self.iniciarPreferencia('int', 'HEIGHT_COVERS', defecto=224, mostrar=cargarWidget, vbox=prefs_vbox_caratulas, label=_('Altura imagen caratula'))
-        self.iniciarPreferencia('int', 'WIDTH_DISCS', defecto=160, mostrar=cargarWidget, vbox=prefs_vbox_caratulas, label=_('Ancho imagen disc-art'))
-        self.iniciarPreferencia('int', 'HEIGHT_DISCS', defecto=160, mostrar=cargarWidget, vbox=prefs_vbox_caratulas, label=_('Altura imagen disc-art'))
+        self.iniciarPreferencia('int', 'WIDTH_COVERS', defecto='160', mostrar=cargarWidget, vbox=prefs_vbox_caratulas, label=_('Ancho imagen caratula'))
+        self.iniciarPreferencia('int', 'HEIGHT_COVERS', defecto='224', mostrar=cargarWidget, vbox=prefs_vbox_caratulas, label=_('Altura imagen caratula'))
+        self.iniciarPreferencia('int', 'WIDTH_DISCS', defecto='160', mostrar=cargarWidget, vbox=prefs_vbox_caratulas, label=_('Ancho imagen disc-art'))
+        self.iniciarPreferencia('int', 'HEIGHT_DISCS', defecto='160', mostrar=cargarWidget, vbox=prefs_vbox_caratulas, label=_('Altura imagen disc-art'))
 
         cycle_covers = ""
         #   - flat
@@ -270,12 +270,12 @@ class Preferencias:
         self.iniciarPreferencia('memo', 'PROVIDER_DISCS', defecto=cycle_discs, mostrar=cargarWidget, vbox=prefs_vbox_caratulas, label=_('Proveedor de discos'))
         
         # Buscadores
-        self.iniciarPreferencia('string', 'BUSCAR_URL_GOOGLE', defecto="http://www.google.es/#hl=es&q=%s&meta=&aq=f&oq=&fp=5251967318b7af98", mostrar=cargarWidget, vbox=prefs_vbox_buscadores, label=_('URL de busqueda en Google. (%s es el nombre del juego)'))
-        self.iniciarPreferencia('string', 'BUSCAR_URL_WIKIPEDIA', defecto="http://es.wikipedia.org/w/index.php?title=Especial:Buscar&search=%s&fulltext=Buscar", mostrar=cargarWidget, vbox=prefs_vbox_buscadores, label=_('URL de busqueda en Wikipedia. (%s es el nombre del juego)'))
-        self.iniciarPreferencia('string', 'BUSCAR_URL_YOUTUBE', defecto="http://www.youtube.com/results?search_query=%s&search_type=&aq=f", mostrar=cargarWidget, vbox=prefs_vbox_buscadores, label=_('URL de busqueda en Youtube. (%s es el nombre del juego)'))
-        self.iniciarPreferencia('string', 'BUSCAR_URL_IGN', defecto="http://search.ign.com/products?query=%s", mostrar=cargarWidget, vbox=prefs_vbox_buscadores, label=_('URL de busqueda en IGN. (%s es el nombre del juego)'))
-        self.iniciarPreferencia('string', 'BUSCAR_URL_GAMESPOT', defecto="http://www.gamespot.com/search.html?qs=%s&om_act=convert&om_clk=search", mostrar=cargarWidget, vbox=prefs_vbox_buscadores, label=_('URL de busqueda en GameSpot. (%s es el nombre del juego)'))
-        self.iniciarPreferencia('string', 'BUSCAR_URL_VGCHARTZ', defecto="http://www.vgchartz.com/games/index.php?name=&keyword=%s&console=Wii&region=All&developer=&publisher=&genre=&boxart=Both&results=50&order=Hits", mostrar=cargarWidget, vbox=prefs_vbox_buscadores, label=_('URL de busqueda en VGChartz. (%s es el nombre del juego)'))
+        self.iniciarPreferencia('string', 'BUSCAR_URL_GOOGLE', defecto="http://www.google.es/#hl=es&q=wii %s&meta=&aq=f&oq=&fp=5251967318b7af98", mostrar=cargarWidget, vbox=prefs_vbox_buscadores, label=_('URL de busqueda en Google. (%s es el nombre del juego)'))
+        self.iniciarPreferencia('string', 'BUSCAR_URL_WIKIPEDIA', defecto="http://es.wikipedia.org/w/index.php?title=Especial:Buscar&search=wii %s&fulltext=Buscar", mostrar=cargarWidget, vbox=prefs_vbox_buscadores, label=_('URL de busqueda en Wikipedia. (%s es el nombre del juego)'))
+        self.iniciarPreferencia('string', 'BUSCAR_URL_YOUTUBE', defecto="http://www.youtube.com/results?search_query=wii %s&search_type=&aq=f", mostrar=cargarWidget, vbox=prefs_vbox_buscadores, label=_('URL de busqueda en Youtube. (%s es el nombre del juego)'))
+        self.iniciarPreferencia('string', 'BUSCAR_URL_IGN', defecto="https://es.ign.com/se/?model=article&video&order_by=-date&q=wii %s", mostrar=cargarWidget, vbox=prefs_vbox_buscadores, label=_('URL de busqueda en IGN. (%s es el nombre del juego)'))
+        self.iniciarPreferencia('string', 'BUSCAR_URL_GAMESPOT', defecto="https://www.gamespot.com/search/?i=site&q=wii %s", mostrar=cargarWidget, vbox=prefs_vbox_buscadores, label=_('URL de busqueda en GameSpot. (%s es el nombre del juego)'))
+        self.iniciarPreferencia('string', 'BUSCAR_URL_VGCHARTZ', defecto="https://www.vgchartz.com/games/games.php?name=%s&console=Wii&region=All&boxart=Both", mostrar=cargarWidget, vbox=prefs_vbox_buscadores, label=_('URL de busqueda en VGChartz. (%s es el nombre del juego)'))
 
     # indicar el vbox que inicia la preferencia
     def iniciarPreferencia(self, tipo, name, defecto = '', mostrar = False, vbox = None, label = '', datos_lista = None):

@@ -337,7 +337,7 @@ msgstr "TÍTULO"
 msgid "SI"
 msgstr "SIM"
 
-#: cli.py:492 gui.py:1066 wiitdb_schema.py:326
+#: cli.py:492 gui.py:1066 wiitdb_schema.py:324
 msgid "NO"
 msgstr "NO"
 
@@ -1862,63 +1862,63 @@ msgstr ""
 msgid "Trabajo desconocido"
 msgstr "Formato desconhecido"
 
-#: util.py:776
+#: util.py:802
 msgid "3D cover"
 msgstr ""
 
-#: util.py:778
+#: util.py:804
 msgid "Full cover"
 msgstr ""
 
-#: util.py:780
+#: util.py:806
 msgid "Normal cover"
 msgstr ""
 
-#: util.py:784
+#: util.py:810
 msgid "Custom disc"
 msgstr ""
 
-#: util.py:786
+#: util.py:812
 msgid "Original disc"
 msgstr ""
 
-#: wiitdb_schema.py:328
+#: wiitdb_schema.py:326
 msgid "No"
 msgstr "Não"
 
-#: wiitdb_schema.py:336
+#: wiitdb_schema.py:334
 msgid "SI, 1j."
 msgstr "Sim, 1j."
 
-#: wiitdb_schema.py:338
+#: wiitdb_schema.py:336
 #, python-format
 msgid "Si, 1 jugador (%s)"
 msgstr "Sim, 1 jogador (%s)"
 
-#: wiitdb_schema.py:341
+#: wiitdb_schema.py:339
 #, python-format
 msgid "SI, %djs."
 msgstr "Sim, %djs."
 
-#: wiitdb_schema.py:343
+#: wiitdb_schema.py:341
 #, python-format
 msgid "Si, %d jugadores (%s)"
 msgstr "Sim, %d jogadores (%s)"
 
-#: wiitdb_schema.py:350
+#: wiitdb_schema.py:348
 msgid "1j."
 msgstr "1j."
 
-#: wiitdb_schema.py:352
+#: wiitdb_schema.py:350
 msgid "1 jugador"
 msgstr "1 jogador"
 
-#: wiitdb_schema.py:355
+#: wiitdb_schema.py:353
 #, python-format
 msgid "%djs."
 msgstr "%djs."
 
-#: wiitdb_schema.py:357
+#: wiitdb_schema.py:355
 #, python-format
 msgid "%d jugadores"
 msgstr "%d jogadores"
@@ -1956,63 +1956,63 @@ msgstr "Programa executado com as opes incorretas."
 msgid "Interrumpido por el usuario"
 msgstr "Interrompido pelo usuário"
 
-#~ msgid "Desea reemplazar la iso del juego %s?"
-#~ msgstr "Deseja substituir a ISO do jogo %s?"
+#~ msgid "Permitir establecer caratulas locales por arrastre"
+#~ msgstr "Permitir configurar localização das imagens por arraste"
 
-#~ msgid "Tienes que seleccionar una particion WBFS para realizar esta accion"
-#~ msgstr "Você tem que selecionar uma partição WBFS para realizar esta ação"
+#~ msgid "Permitir establecer caratulas desde http por arrastre"
+#~ msgstr "Permitir configurar imagens de http por arraste"
+
+#~ msgid "Permitir arrastrar juegos en ISO, RAR o directorios."
+#~ msgstr "Permitir arrastar jogos em ISO, RAR ou diretórios."
 
 #, fuzzy
-#~ msgid "Extraer todos los juegos*"
-#~ msgstr "Copiar todos os jogos*"
+#~ msgid "URL secundaria para WiiTDB"
+#~ msgstr "URL Base de dados WiiTDB"
+
+#~ msgid "Numero de tareas que esperan en la cola."
+#~ msgstr "Número de tarefas que esperam na fila."
+
+#~ msgid "No se ha encontrado ninguna imagen ISO o RAR"
+#~ msgstr "Não foi encontrada nenhuma imagem ISO ou RAR"
+
+#~ msgid "Buscar:"
+#~ msgstr "Pesquisar:"
+
+#~ msgid "Fecha de lanzamiento: "
+#~ msgstr "Data de lançamento:"
+
+#~ msgid "OPCIONALES: "
+#~ msgstr "OPCIONAIS:"
+
+#~ msgid "ACCESORIOS: "
+#~ msgstr "ACCESÓRIOS: "
+
+#~ msgid "Progreso de la tarea actual."
+#~ msgstr "Progresso da tarefa atual."
+
+#~ msgid "Numero de juegos."
+#~ msgstr "Número de jogos."
+
+#~ msgid "Espacio usado / Espacio total"
+#~ msgstr "Espaço usado / Espaço total"
+
+#~ msgid "+INFO"
+#~ msgstr "+INFO"
+
+#, fuzzy
+#~ msgid "WBFS"
+#~ msgstr "WBFS?"
 
 #, fuzzy
 #~ msgid "Opciones de extraccion"
 #~ msgstr "Formato desconhecido"
 
 #, fuzzy
-#~ msgid "WBFS"
-#~ msgstr "WBFS?"
+#~ msgid "Extraer todos los juegos*"
+#~ msgstr "Copiar todos os jogos*"
 
-#~ msgid "+INFO"
-#~ msgstr "+INFO"
+#~ msgid "Tienes que seleccionar una particion WBFS para realizar esta accion"
+#~ msgstr "Você tem que selecionar uma partição WBFS para realizar esta ação"
 
-#~ msgid "Espacio usado / Espacio total"
-#~ msgstr "Espaço usado / Espaço total"
-
-#~ msgid "Numero de juegos."
-#~ msgstr "Número de jogos."
-
-#~ msgid "Progreso de la tarea actual."
-#~ msgstr "Progresso da tarefa atual."
-
-#~ msgid "ACCESORIOS: "
-#~ msgstr "ACCESÓRIOS: "
-
-#~ msgid "OPCIONALES: "
-#~ msgstr "OPCIONAIS:"
-
-#~ msgid "Fecha de lanzamiento: "
-#~ msgstr "Data de lançamento:"
-
-#~ msgid "Buscar:"
-#~ msgstr "Pesquisar:"
-
-#~ msgid "No se ha encontrado ninguna imagen ISO o RAR"
-#~ msgstr "Não foi encontrada nenhuma imagem ISO ou RAR"
-
-#~ msgid "Numero de tareas que esperan en la cola."
-#~ msgstr "Número de tarefas que esperam na fila."
-
-#, fuzzy
-#~ msgid "URL secundaria para WiiTDB"
-#~ msgstr "URL Base de dados WiiTDB"
-
-#~ msgid "Permitir arrastrar juegos en ISO, RAR o directorios."
-#~ msgstr "Permitir arrastar jogos em ISO, RAR ou diretórios."
-
-#~ msgid "Permitir establecer caratulas desde http por arrastre"
-#~ msgstr "Permitir configurar imagens de http por arraste"
-
-#~ msgid "Permitir establecer caratulas locales por arrastre"
-#~ msgstr "Permitir configurar localização das imagens por arraste"
+#~ msgid "Desea reemplazar la iso del juego %s?"
+#~ msgstr "Deseja substituir a ISO do jogo %s?"

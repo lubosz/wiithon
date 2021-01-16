@@ -5,8 +5,6 @@
 '''
 Documentación: http://www.sqlalchemy.org/docs/05/ormtutorial.html
 #define-and-create-a-table
-Ojo, mi ubuntu va con SQLAlchemy 0.4 pero el último es 0.5x
-Aquí un wiki con las diferencias:
 http://www.sqlalchemy.org/trac/wiki/05Migration
 '''
 
@@ -41,9 +39,9 @@ class Preferencia(Base):
     
     __tablename__ = "preferencias"
     
-    id = Column('id',Integer,primary_key=True)
+    id = Column('id',Integer, primary_key=True)
     campo = Column('campo', VARCHAR(255))
-    valor = Column('valor', Unicode(5000))
+    valor = Column('valor', Unicode(3072))
     tipo = Column('tipo', VARCHAR(255))
 
     def __init__(self, tipo = '', campo = '', valor = ''):
@@ -394,8 +392,6 @@ class Juego(Base):
     title = Column('title', Unicode(255))
     size = Column('size', Float)
     idParticion = Column("idParticion", Integer , ForeignKey('particion.idParticion'), nullable=False)
-    
-    #join_wiitdb = relation(JuegoWIITDB, primaryjoin=and_(idgame == JuegoWIITDB.idgame), foreign_keys=JuegoWIITDB.idJuego)
 
     def __init__(self , idgame , title , size):
         self.idgame = util.decode(idgame)
@@ -421,6 +417,7 @@ class Juego(Base):
     def getJuegoWIITDB(self):
         sql = util.decode("juego_wiitdb.idgame=='%s'" % (self.idgame))
         return session.query(JuegoWIITDB).filter(util.sql_text(sql)).first()
+
 
 class Particion(Base):
     __tablename__ = 'particion'

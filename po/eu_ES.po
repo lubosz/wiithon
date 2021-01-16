@@ -339,7 +339,7 @@ msgstr "TITULUA"
 msgid "SI"
 msgstr "BAI"
 
-#: cli.py:492 gui.py:1066 wiitdb_schema.py:326
+#: cli.py:492 gui.py:1066 wiitdb_schema.py:324
 msgid "NO"
 msgstr "EZ"
 
@@ -1835,66 +1835,66 @@ msgstr "WDF -> ISO bihurtzen: (%s -> %s)"
 msgid "Trabajo desconocido"
 msgstr "Zeregin ezezaguna"
 
-#: util.py:776
+#: util.py:802
 msgid "3D cover"
 msgstr ""
 
-#: util.py:778
+#: util.py:804
 msgid "Full cover"
 msgstr ""
 
-#: util.py:780
+#: util.py:806
 #, fuzzy
 msgid "Normal cover"
 msgstr "Normala"
 
-#: util.py:784
+#: util.py:810
 #, fuzzy
 msgid "Custom disc"
 msgstr "Pertsonalizatua"
 
-#: util.py:786
+#: util.py:812
 #, fuzzy
 msgid "Original disc"
 msgstr "Jatorrizkoa"
 
-#: wiitdb_schema.py:328
+#: wiitdb_schema.py:326
 msgid "No"
 msgstr "Ez"
 
-#: wiitdb_schema.py:336
+#: wiitdb_schema.py:334
 msgid "SI, 1j."
 msgstr "Bai, 1j."
 
-#: wiitdb_schema.py:338
+#: wiitdb_schema.py:336
 #, python-format
 msgid "Si, 1 jugador (%s)"
 msgstr "Bai, 1 jokalaria (%s)"
 
-#: wiitdb_schema.py:341
+#: wiitdb_schema.py:339
 #, python-format
 msgid "SI, %djs."
 msgstr "Bai, %dj."
 
-#: wiitdb_schema.py:343
+#: wiitdb_schema.py:341
 #, python-format
 msgid "Si, %d jugadores (%s)"
 msgstr "Bai, %d jokalari (%s"
 
-#: wiitdb_schema.py:350
+#: wiitdb_schema.py:348
 msgid "1j."
 msgstr "1j."
 
-#: wiitdb_schema.py:352
+#: wiitdb_schema.py:350
 msgid "1 jugador"
 msgstr "Jokalari bat"
 
-#: wiitdb_schema.py:355
+#: wiitdb_schema.py:353
 #, python-format
 msgid "%djs."
 msgstr "%djs."
 
-#: wiitdb_schema.py:357
+#: wiitdb_schema.py:355
 #, python-format
 msgid "%d jugadores"
 msgstr "%d jokalari"
@@ -1932,26 +1932,26 @@ msgstr "Programa okerreko aukerekin exekutatu da."
 msgid "Interrumpido por el usuario"
 msgstr "Erabiltzaileak etenda."
 
-#~ msgid "Desea reemplazar la iso del juego %s?"
-#~ msgstr "%s jokoaren ISOa ordeztu nahi duzu?"
-
-#~ msgid "URL secundaria para WiiTDB"
-#~ msgstr "WIITDB-ren bigarren URLa"
-
-#~ msgid "Formato ISO - para Grabacion DVD"
-#~ msgstr "ISO formatua - DVD grabaketarako"
-
-#~ msgid "Formato WBFS - para USBLoader-FAT32"
-#~ msgstr "WBFS formatua - USBLoader-FAT32"
-
-#~ msgid "Formato WDF - para Almacenamiento"
-#~ msgstr "WDF formatua - Biltegiratzeko"
-
-#~ msgid "Permitir arrastrar juegos en ISO, RAR o directorios."
-#~ msgstr "Onartu ISO jokoak, RAR edo direktorioak arrastatzea."
+#~ msgid "Permitir establecer caratulas locales por arrastre"
+#~ msgstr "Onartu karatula lokalak arrastatzen ezartzea"
 
 #~ msgid "Permitir establecer caratulas desde http por arrastre"
 #~ msgstr "Onartu http karatulak arrastatzen ezartzea"
 
-#~ msgid "Permitir establecer caratulas locales por arrastre"
-#~ msgstr "Onartu karatula lokalak arrastatzen ezartzea"
+#~ msgid "Permitir arrastrar juegos en ISO, RAR o directorios."
+#~ msgstr "Onartu ISO jokoak, RAR edo direktorioak arrastatzea."
+
+#~ msgid "Formato WDF - para Almacenamiento"
+#~ msgstr "WDF formatua - Biltegiratzeko"
+
+#~ msgid "Formato WBFS - para USBLoader-FAT32"
+#~ msgstr "WBFS formatua - USBLoader-FAT32"
+
+#~ msgid "Formato ISO - para Grabacion DVD"
+#~ msgstr "ISO formatua - DVD grabaketarako"
+
+#~ msgid "URL secundaria para WiiTDB"
+#~ msgstr "WIITDB-ren bigarren URLa"
+
+#~ msgid "Desea reemplazar la iso del juego %s?"
+#~ msgstr "%s jokoaren ISOa ordeztu nahi duzu?"

@@ -335,7 +335,7 @@ msgstr "TITRE"
 msgid "SI"
 msgstr "OUI"
 
-#: cli.py:492 gui.py:1066 wiitdb_schema.py:326
+#: cli.py:492 gui.py:1066 wiitdb_schema.py:324
 msgid "NO"
 msgstr "NON"
 
@@ -1840,66 +1840,66 @@ msgstr "Conversion WDF -> ISO : (%s -> %s)"
 msgid "Trabajo desconocido"
 msgstr "Emploi inconnu"
 
-#: util.py:776
+#: util.py:802
 msgid "3D cover"
 msgstr ""
 
-#: util.py:778
+#: util.py:804
 msgid "Full cover"
 msgstr ""
 
-#: util.py:780
+#: util.py:806
 #, fuzzy
 msgid "Normal cover"
 msgstr "Normal"
 
-#: util.py:784
+#: util.py:810
 #, fuzzy
 msgid "Custom disc"
 msgstr "Personnalisé"
 
-#: util.py:786
+#: util.py:812
 #, fuzzy
 msgid "Original disc"
 msgstr "Original"
 
-#: wiitdb_schema.py:328
+#: wiitdb_schema.py:326
 msgid "No"
 msgstr "Non"
 
-#: wiitdb_schema.py:336
+#: wiitdb_schema.py:334
 msgid "SI, 1j."
 msgstr "O, 1j."
 
-#: wiitdb_schema.py:338
+#: wiitdb_schema.py:336
 #, python-format
 msgid "Si, 1 jugador (%s)"
 msgstr "Oui, 1 jour (%s)"
 
-#: wiitdb_schema.py:341
+#: wiitdb_schema.py:339
 #, python-format
 msgid "SI, %djs."
 msgstr "O, %dj."
 
-#: wiitdb_schema.py:343
+#: wiitdb_schema.py:341
 #, python-format
 msgid "Si, %d jugadores (%s)"
 msgstr "Oui, %d joueurs (%s)"
 
-#: wiitdb_schema.py:350
+#: wiitdb_schema.py:348
 msgid "1j."
 msgstr "1j."
 
-#: wiitdb_schema.py:352
+#: wiitdb_schema.py:350
 msgid "1 jugador"
 msgstr "1 joueur"
 
-#: wiitdb_schema.py:355
+#: wiitdb_schema.py:353
 #, python-format
 msgid "%djs."
 msgstr "%dj."
 
-#: wiitdb_schema.py:357
+#: wiitdb_schema.py:355
 #, python-format
 msgid "%d jugadores"
 msgstr "%d joueurs"
@@ -1937,40 +1937,40 @@ msgstr "Programme lancé avec des paramètres incorrects."
 msgid "Interrumpido por el usuario"
 msgstr "Interrompu par l'utilisateur"
 
-#~ msgid "Desea reemplazar la iso del juego %s?"
-#~ msgstr "Souhaitez-vous remplacer l'ISO du jeu %s ?"
+#~ msgid "Permitir establecer caratulas locales por arrastre"
+#~ msgstr "Permettre le glisser-déposer"
 
-#~ msgid "Tienes que seleccionar una particion WBFS para realizar esta accion"
-#~ msgstr "Vous devez sélectionner une partition WBFS pour réaliser cette action"
+#~ msgid "Permitir establecer caratulas desde http por arrastre"
+#~ msgstr "Permettre le glisser-déposer http"
 
-#~ msgid "Extraer todos los juegos*"
-#~ msgstr "Extraire tous les jeux*"
-
-#~ msgid "Opciones de extraccion"
-#~ msgstr "Options d'extraction"
-
-#, fuzzy
-#~ msgid "WBFS"
-#~ msgstr "WBFS?"
-
-#~ msgid "Formato WDF - para Almacenamiento"
-#~ msgstr "Format WDF - pour stockage"
-
-#~ msgid "Formato WBFS - para USBLoader-FAT32"
-#~ msgstr "Format WBFS - pour USBLoader en FAT32"
-
-#~ msgid "Formato ISO - para Grabacion DVD"
-#~ msgstr "Format ISO - pour gravure DVD"
+#~ msgid "Permitir arrastrar juegos en ISO, RAR o directorios."
+#~ msgstr "Permettre le glisser-déposer de jeux (ISO/RAR/dossiers) dans la fenêtre"
 
 #, fuzzy
 #~ msgid "URL secundaria para WiiTDB"
 #~ msgstr "URL vers la base de données WiiTDB"
 
-#~ msgid "Permitir arrastrar juegos en ISO, RAR o directorios."
-#~ msgstr "Permettre le glisser-déposer de jeux (ISO/RAR/dossiers) dans la fenêtre"
+#~ msgid "Formato ISO - para Grabacion DVD"
+#~ msgstr "Format ISO - pour gravure DVD"
 
-#~ msgid "Permitir establecer caratulas desde http por arrastre"
-#~ msgstr "Permettre le glisser-déposer http"
+#~ msgid "Formato WBFS - para USBLoader-FAT32"
+#~ msgstr "Format WBFS - pour USBLoader en FAT32"
 
-#~ msgid "Permitir establecer caratulas locales por arrastre"
-#~ msgstr "Permettre le glisser-déposer"
+#~ msgid "Formato WDF - para Almacenamiento"
+#~ msgstr "Format WDF - pour stockage"
+
+#, fuzzy
+#~ msgid "WBFS"
+#~ msgstr "WBFS?"
+
+#~ msgid "Opciones de extraccion"
+#~ msgstr "Options d'extraction"
+
+#~ msgid "Extraer todos los juegos*"
+#~ msgstr "Extraire tous les jeux*"
+
+#~ msgid "Tienes que seleccionar una particion WBFS para realizar esta accion"
+#~ msgstr "Vous devez sélectionner une partition WBFS pour réaliser cette action"
+
+#~ msgid "Desea reemplazar la iso del juego %s?"
+#~ msgstr "Souhaitez-vous remplacer l'ISO du jeu %s ?"

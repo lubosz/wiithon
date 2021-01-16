@@ -662,37 +662,37 @@ class WiithonGUI(GtkBuilderWrapper):
             
     def menu_contextual_buscar_google(self, action):
         if self.isSelectedGame():
-            self.poolBash.nuevoTrabajoVerPagina(self.core.prefs.BUSCAR_URL_GOOGLE % ("wii %s" % util.get_title_for_search(self.sel_juego.obj)))
+            self.poolBash.nuevoTrabajoVerPagina(self.core.prefs.BUSCAR_URL_GOOGLE % ("%s" % util.get_title_for_search(self.sel_juego.obj)))
         else:
             self.alert("warning" , _("No has seleccionado ningun juego"))
         
     def menu_contextual_buscar_wikipedia(self, action):
         if self.isSelectedGame():
-            self.poolBash.nuevoTrabajoVerPagina(self.core.prefs.BUSCAR_URL_WIKIPEDIA % ("wii %s" % util.get_title_for_search(self.sel_juego.obj)))
+            self.poolBash.nuevoTrabajoVerPagina(self.core.prefs.BUSCAR_URL_WIKIPEDIA % ("%s" % util.get_title_for_search(self.sel_juego.obj)))
         else:
             self.alert("warning" , _("No has seleccionado ningun juego"))
         
     def menu_contextual_buscar_youtube(self, action):
         if self.isSelectedGame():
-            self.poolBash.nuevoTrabajoVerPagina(self.core.prefs.BUSCAR_URL_YOUTUBE % ("wii %s" % util.get_title_for_search(self.sel_juego.obj)))
+            self.poolBash.nuevoTrabajoVerPagina(self.core.prefs.BUSCAR_URL_YOUTUBE % ("%s" % util.get_title_for_search(self.sel_juego.obj)))
         else:
             self.alert("warning" , _("No has seleccionado ningun juego"))
         
     def menu_contextual_buscar_ign(self, action):
         if self.isSelectedGame():
-            self.poolBash.nuevoTrabajoVerPagina(self.core.prefs.BUSCAR_URL_IGN % ("wii %s" % util.get_title_for_search(self.sel_juego.obj)))
+            self.poolBash.nuevoTrabajoVerPagina(self.core.prefs.BUSCAR_URL_IGN % ("%s" % util.get_title_for_search(self.sel_juego.obj)))
         else:
             self.alert("warning" , _("No has seleccionado ningun juego"))
             
     def menu_contextual_buscar_gamespot(self, action):
         if self.isSelectedGame():
-            self.poolBash.nuevoTrabajoVerPagina(self.core.prefs.BUSCAR_URL_GAMESPOT % ("wii %s" % util.get_title_for_search(self.sel_juego.obj)))
+            self.poolBash.nuevoTrabajoVerPagina(self.core.prefs.BUSCAR_URL_GAMESPOT % ("%s" % util.get_title_for_search(self.sel_juego.obj)))
         else:
             self.alert("warning" , _("No has seleccionado ningun juego"))
             
     def menu_contextual_buscar_vgchartz(self, action):
         if self.isSelectedGame():
-            self.poolBash.nuevoTrabajoVerPagina(self.core.prefs.BUSCAR_URL_VGCHARTZ % ("wii %s" % util.get_title_for_search(self.sel_juego.obj)))
+            self.poolBash.nuevoTrabajoVerPagina(self.core.prefs.BUSCAR_URL_VGCHARTZ % ("%s" % util.get_title_for_search(self.sel_juego.obj)))
         else:
             self.alert("warning" , _("No has seleccionado ningun juego"))
 
